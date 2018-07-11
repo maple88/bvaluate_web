@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import login from '@/pages/login'
 import home from '@/pages/home'
-import collection from '@/pages/collection'
+import userCenter from '@/pages/userCenter/userCenter'
 
 Vue.use(Router)
 
@@ -17,8 +17,8 @@ export default new Router({
       component: login
     },
     {
-      path: '/collection',
-      component: collection
+      path: '/userCenter',
+      component: userCenter
     }
   ]
 })
