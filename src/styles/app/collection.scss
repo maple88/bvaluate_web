@@ -1,0 +1,332 @@
+.header{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	z-index: 99;
+	.tophead{
+		width: 100%;
+		height: 50px;
+		line-height: 50px;
+		background: #000;
+		color: #fff;
+		position: relative;
+		.container{position: relative;}
+		p{
+			margin: 0;
+			text-align: center;
+			font-size: 18px;
+		}
+		span{
+			position: absolute;
+			height: 100%;
+			top: 0;
+			right: 15px;
+		}
+	}
+	.mainhead{
+		width: 100%;
+		.navbar{
+			margin-bottom: 0;
+			border: 0;
+		}
+		.navbar-brand{
+			margin: 15px 0 0;
+			height: auto;
+		}
+		.navbar-nav{border: 0;}
+		.navbar-nav>li{
+			margin: 0 30px;
+			&.active{
+				a{
+					color: $mainColor;
+					background: transparent;
+					border-bottom: 5px solid $mainColor;
+				}
+			}
+		}
+		.navbar-nav>li>a{
+			color: $black;
+			font-size: 18px;
+			padding: 50px 8px 45px;
+			border-bottom: 5px solid transparent;
+		}
+		.navbar-nav.navbar-right{
+			margin-top: 15px;
+			a{
+				background: transparent;
+				padding: 0;
+				p{
+					margin: 5px 0 0;
+					font-size: 16px;
+					color: $mainColor;
+				}
+			}
+			.user{
+				width: 70px;
+				height: 70px;
+				border-radius: 50%;
+				overflow: hidden;
+				padding: 5px;
+				background: #e2ebf6;
+				border: 5px solid #eff4fa;
+				margin: 0 auto;
+				img{width: 100%;}
+			}
+			.dropdown-menu{
+				min-width: inherit;
+				width: 100%;
+				top: 110%;
+				box-shadow: none;
+				background: transparent;
+				border: 0;
+				a{
+					padding: 6px 0;
+					text-align: center;
+					color: #fff;
+					&:hover{background: $mainColor;}
+				}
+			}
+		}
+	}
+	@media (max-width: 1200px) {
+		.mainhead .navbar-nav > li{margin: 0 16px;}
+	}
+	@media (min-width: 768px) and (max-width: 992px) {
+		.navbar-header{
+			width: 100%;
+			display: flex;
+			justify-content: center;
+		}
+		.navbar-brand{padding: 15px 0 0;}
+		.mainhead .navbar-nav.navbar-right{margin-top: 0;}
+		.mainhead .navbar-nav > li > a{padding: 40px 8px 35px;}
+	}
+	@media (max-width: 768px) {
+		.mainhead .navbar-brand{
+			margin: 0;
+			width: 200px;
+		}
+		.navbar-brand>img{width: 100%;}
+		.navbar-toggle{margin-top: 15px;}
+		.navbar-collapse{
+			position: absolute;
+			z-index: 1;
+			background: #fff;
+			width: 100%;
+		}
+		.mainhead .navbar-nav > li > a{
+			padding: 15px;
+			border: 0!important;
+			text-align: center;
+		}
+		.mainhead .navbar-nav.navbar-right .dropdown-menu a{color: $black;}
+	}
+}
+.user-center{
+	background: url(../assets/userbg.jpg) no-repeat;
+	background-position: center;
+	background-size: cover;
+	padding: 20px 0 45px;
+	.usertainer{
+		width: 100%;
+		max-width: 700px;
+		padding: 0 15px;
+		margin: 0 auto;
+		.userimg{
+			margin: 0 auto 20px;
+			position: relative;
+			width: 160px;
+			height: 160px;
+			border-radius: 50%;
+			overflow: hidden;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			img{
+				width: 70%;
+				position: relative;
+				z-index: 1;
+			}
+			&:before{
+				content: "";
+				position: absolute;
+				width: 90%;
+				height: 90%;
+				background: #8dccf8;
+				opacity: 0.2;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				margin: auto;
+				border-radius: 50%;
+			}
+			&:after{
+				content: "";
+				position: absolute;
+				left: 0;
+				top: 0;
+				background: #8dccf8;
+				opacity: 0.2;
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.nickname{
+			font-size: 22px;
+			text-align: center;
+			color: #fff;
+			margin-bottom: 23px;
+			span{
+				margin-left: 10px;
+				font-size: 14px;
+				vertical-align: middle;
+				img{
+					margin-right: 6px;
+					vertical-align: middle;
+					transform: translateY(-3px);
+				}
+			}
+		}
+		.sign{
+			color: #fff;
+			font-size: 16px;
+			margin: 0 0 48px;
+			text-align: center;
+		}
+		.datalist{
+			text-align: center;
+			li{
+				position: relative;
+				width: 90px;
+				display: inline-block;
+				margin: 0 10px;
+				p{
+					font-size: 20px;
+					color: #fff;
+					margin: 0 0 10px;
+					text-align: center;
+				}
+				&:after{
+				    content: "";
+				    position: absolute;
+				    right: -12px;
+				    top: 17px;
+				    width: 1px;
+				    height: 38px;
+				    background: #fff;
+				}
+				&:last-child:after{background: transparent;}
+			}
+		}
+	}
+}
+.usernav{
+	height: 65px;
+	line-height: 65px;
+	background: #fff;
+	border-bottom: 1px solid #cfcfcf;
+	margin-bottom: 40px;
+	li{
+		display: inline-block;
+		font-size: 18px;
+		color: $black;
+		margin-right: 50px;
+		span{margin-left: 10px;}
+		&.active{
+			color: $mainColor;
+		}
+		&:last-child{margin-right: 0;}
+	}
+}
+.medialist{
+	.media{
+		display: flex;
+		padding: 16px 18px;
+		border-radius: 10px;
+		background: #fff;
+		margin-bottom: 20px;
+		.media-left{
+			min-width: 163px;
+			height: 163px;
+			overflow: hidden;
+			padding: 0;
+			margin-right: 20px;
+			img{width: 100%;}
+		}
+		.media-body{position: relative;}
+		.media-heading{
+		    font-size: 24px;
+		    color: #333;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		    white-space: nowrap;
+		    width: 60%;
+		    height: 30px;
+		    margin: 0 0 15px;
+		    cursor: pointer;
+		    transition: 0.3s;
+		    &:hover{color: $mainColor;}
+		}
+		.media-words{
+			font-size: 14px;
+			color: #333;
+			line-height: 1.8;
+			overflow : hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+		}
+		.media-bottom{
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			ul{
+				margin-bottom: 0;
+				li{
+					display: inline-block;
+					font-size: 16px;
+					color: #999;
+					margin-right: 28px;
+					i.love{
+						margin-right: 8px;
+						color: #ff0000;
+					}
+					&:last-child{margin-right: 0;}
+				}
+			}
+			.userimg{
+				width: 45px;
+				height: 45px;
+				padding: 5px;
+				border-radius: 50%;
+				overflow: hidden;
+				display: inline-block;
+				vertical-align: middle;
+				transform: translateY(-3px);
+				margin-right: 5px;
+				img{width: 100%;}
+			}
+			.tips{
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				display: inline-block;
+				font-size: 14px;
+				color: $mainColor;
+				border-radius: 6px;
+				padding: 1px 10px;
+				border: 1px solid $mainColor;
+				transition: 0.3s;
+			}
+		}
+		&:hover{
+			.tips{
+				background: $mainColor;
+				color: #fff;
+			}
+		}
+	}
+}
