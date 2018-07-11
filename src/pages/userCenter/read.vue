@@ -1,7 +1,11 @@
 <template>
 	<transition name="fade">
 		<div class="container">
-			<div class="medialist mt40">
+			<div class="headtips mt20">
+				<span>今天一共阅读25篇文章</span>
+				<span>清空</span>
+			</div>
+			<div class="medialist mt20">
 				<div class="media">
 					<div class="media-left media-middle">
 						<img class="media-object" src="../../assets/media.jpg">
@@ -13,7 +17,6 @@
 							<ul>
 								<li><div class="userimg"><img src="../../assets/logo_brand.png"></div>刘方平</li>
 								<li>5个小时前</li>
-								<li data-toggle="modal" data-target="#deleteModal" class="love"><i class="fa fa-heart"></i>已收藏</li>
 							</ul>
 							<div class="tips">新闻</div>
 						</div>
@@ -30,31 +33,12 @@
 							<ul>
 								<li><div class="userimg"><img src="../../assets/logo_brand.png"></div>刘方平</li>
 								<li>5个小时前</li>
-								<li class="love"><i class="fa fa-heart"></i>已收藏</li>
 							</ul>
 							<div class="tips">新闻</div>
 						</div>
 					</div>
 				</div>
 			</div>
-
-			<div class="modal fade collection-modal" id="deleteModal" tabindex="-1" role="dialog">
-			  <div class="modal-dialog" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			        <h4 class="modal-title">取消收藏</h4>
-			      </div>
-			      <div class="modal-body">
-			        <i class="fa fa-question-circle"></i>确定要取消收藏吗？
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-			        <button type="button" class="btn btn-primary">确定</button>
-			      </div>
-			    </div>
-			  </div>
-			</div><!-- /.modal -->
 		</div>
 	</transition>
 </template>

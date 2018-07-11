@@ -26,15 +26,14 @@
 			<div class="usernav">
 				<div class="container">
 					<ul>
-						<li 
-							v-for="(item, $index) in usertab"
-							:key="item.id"
-							:class="{active : item.isActive}"
-							@click=""
-						>{{item.title}}<span>{{item.num}}</span></li>
+						<li :class="{active : isContribute}" @click="contribute">投稿<span>25</span></li>
+						<li :class="{active : isRead}" @click="read">阅读<span>122</span></li>
+						<li :class="{active : isCollection}" @click="collection">收藏<span>120</span></li>
 					</ul>
 				</div>
 			</div>
+			<contribute v-if="tabcontent === 'isContribute'"/>
+			<read v-if="tabcontent === 'isRead'"/>
 			<collection v-if="tabcontent === 'isCollection'"/>
 		</div>
 	</div>
@@ -42,22 +41,44 @@
 
 <script>
 import vheader from '@/components/header.vue'
+import contribute from '@/pages/userCenter/contribute'
+import read from '@/pages/userCenter/read'
 import collection from '@/pages/userCenter/collection'
 
 export default {
 	components: {
     	vheader,
+    	contribute,
+    	read,
     	collection
   	},
   	data () {
   		return {
-  			usertab: [
-  				{ title: '投稿', num: '25', isActive: false},
-  				{ title: '阅读', num: '122', isActive: false},
-  				{ title: '收藏', num: '120', isActive: true}
-  			],
-	  		tabcontent: 'isCollection'
+  			isContribute: true,
+  			isRead: false,
+  			isCollection: false,
+	  		tabcontent: 'isContribute'
 	  	}
+  	},
+  	methods: {
+  		contribute () {
+  			this.isContribute = true,
+  			this.isRead = false,
+  			this.isCollection = false,
+  			this.tabcontent = 'isContribute'
+  		},
+  		read () {
+  			this.isContribute = false,
+  			this.isRead = true,
+  			this.isCollection = false,
+  			this.tabcontent = 'isRead'
+  		},
+  		collection () {
+  			this.isContribute = false,
+  			this.isRead = false,
+  			this.isCollection = true,
+  			this.tabcontent = 'isCollection'
+  		}
   	}
 }
 </script>
