@@ -1,5 +1,12 @@
 # apelink
 
+## npm install 到提示下载phantomjs的时候直接暂停然后npm run dev
+
+## npm run dev 报node-sass错误的话
+```
+npm rebuild node-sass
+```
+
 > APElink project
 
 ## Build Setup
