@@ -1,0 +1,156 @@
+.myProfile{
+	position: relative;
+	width: 100%;
+	min-height: 800px;
+	background: #fff;
+	box-shadow: 0 2px 3px 1px rgba(0, 0, 0, .3);
+	padding: 40px;
+	margin-bottom: 40px;
+	.left{
+		position: absolute;
+		.userbrand{
+			width: 155px;
+			height: 155px;
+			padding: 15px;
+			overflow: hidden;
+			img{width: 100%;}
+			margin-bottom: 45px;
+		}
+		.usertips{
+			font-size: 24px;
+			color: $mainColor;
+			text-align: center;
+		}
+	}
+	.right{
+		padding: 0 0 0 210px;
+		.list-item{
+			display: flex;
+			position: relative;
+			padding: 35px 0 0;
+			border-bottom: 1px solid #cfcfcf;
+			.tb-cell{
+				display: table-cell;
+				vertical-align: top;
+			}
+			.nickname{
+				font-size: 26px;
+			}
+			.leftips{
+				font-size: 20px;
+				color: #000;
+			    flex: 0 0 100px;
+			}
+			.edit{
+				cursor: pointer;
+				padding-left: 30px;
+			    padding-top: 3px;
+				i{
+					font-size: 18px;
+					margin-right: 8px;
+				}
+				font-size: 16px;
+				color: $mainColor;
+			}
+			.center{
+				max-width: 450px;
+				font-size: 20px;
+				padding-left: 50px;
+				margin-bottom: 35px;
+			}
+			.botoperate{
+				margin: 20px 0;
+				button{
+					font-size: 18px;
+					color: #666;
+					border: 1px solid #666;
+					border-radius: 3px;
+					padding: 4px 25px;
+					margin-right: 25px;
+					box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.3);
+					outline: none !important;
+					&:last-child{margin: 0;}
+					&.ok{
+						background: $mainColor;
+						color: #fff;
+						border-color: $mainColor;
+					}
+				}
+			}
+			.radiobox{
+				label{
+					font-size: 20px;
+					color: $black;
+					vertical-align: middle;
+					margin-right: 25px;
+					&:last-child{margin-right: 0;}
+				}
+				input{
+					margin-right: 5px;
+					position: static;
+				}
+			}
+			.editbox{
+				width: 100%;
+				padding-left: 50px;
+				textarea{
+					width: 100%;
+					resize: none;
+					border-color: #cfcfcf;
+				}
+			}
+		}
+		.item-head{
+			border: 0;
+			padding: 0;
+			.edit{
+				vertical-align: middle;
+				padding-top: 0;
+			}
+		}
+	}
+}
+.phoneModal-body{
+	.form-group{
+		display: flex;
+		align-items: center;
+		margin: 0 0 25px;
+		&:last-child{margin: 0;}
+	}
+	.control-label{
+		min-width: 105px;
+		font-size: 20px;
+		color: $black;
+		font-weight: normal;
+		text-align: right;
+		margin-right: 10px;
+		padding-top: 0;
+	}
+	input{
+		width: 100%;
+		height: 44px;
+		border: 1px solid $mainColor;
+		border-radius: 3px;
+		font-size: 16px;
+		color: $black;
+		padding: 0 10px;
+	}
+	.coderow{
+	    width: 100%;
+		display: flex;
+		.code-btn{
+			background: $mainColor;
+			color: #fff;
+			font-size: 16px;
+			margin-left: 20px;
+			min-width: 110px;
+		}
+	}
+	.help-block{
+		position: absolute;
+	    right: 15px;
+	    bottom: -15px;
+	    color: #e2621b;
+	    font-size: 12px;
+	}
+}

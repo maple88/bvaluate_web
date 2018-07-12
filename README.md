@@ -1,4 +1,4 @@
-# apelink
+# apelink project
 
 ## npm install 到提示下载phantomjs的时候直接暂停然后npm run dev
 
@@ -7,7 +7,7 @@
 npm rebuild node-sass
 ```
 
-> APElink project
+
 
 ## Build Setup
 
@@ -35,3 +35,10 @@ npm test
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+```
+.page
+	.header
+	.maintainer
+	.footer
+```

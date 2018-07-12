@@ -325,23 +325,23 @@
 	}
 }
 .collection-modal{
-	.modal-body{
-		text-align: center;
-		font-size: 20px;
-		color: $black;
-		i{
-			font-size: 50px;
-			color: $mainColor;
-			vertical-align: middle;
-			transform: translateY(-3px);
-			margin-right: 20px;
-		}
-	}
 	.modal-footer{border: 0;}
 	@media (min-width: 768px){
 		.modal-dialog {
 		    width: 520px;
 		}
+	}
+}
+.collection-modal-text{
+	text-align: center;
+	font-size: 20px;
+	color: $black;
+	i{
+		font-size: 50px;
+		color: $mainColor;
+		vertical-align: middle;
+		transform: translateY(-3px);
+		margin-right: 20px;
 	}
 }
 .newmedia{
