@@ -19,9 +19,10 @@
 			justify-content: center;
 			align-items: center;
 			img{
-				width: 70%;
+				width: 90%;
 				position: relative;
 				z-index: 1;
+				border-radius: 50%;
 			}
 			&:before{
 				content: "";
@@ -111,8 +112,14 @@
 			width: 120px;
 			height: 120px;
 		}
-		.usertainer .nickname{font-size: 16px;}
-		.usertainer .sign{font-size: 14px;}
+		.usertainer .nickname{
+			font-size: 16px;
+			margin-bottom: 15px;
+		}
+		.usertainer .sign{
+			font-size: 14px;
+		    margin: 0 0 30px;
+		}
 		.usertainer .datalist li p{font-size: 14px;}
 		.usertainer .datalist li{width: 65px;}
 	}
@@ -322,26 +329,6 @@
 		    background: transparent;
 		    color: #3991d1;
 		}
-	}
-}
-.collection-modal{
-	.modal-footer{border: 0;}
-	@media (min-width: 768px){
-		.modal-dialog {
-		    width: 520px;
-		}
-	}
-}
-.collection-modal-text{
-	text-align: center;
-	font-size: 20px;
-	color: $black;
-	i{
-		font-size: 50px;
-		color: $mainColor;
-		vertical-align: middle;
-		transform: translateY(-3px);
-		margin-right: 20px;
 	}
 }
 .newmedia{

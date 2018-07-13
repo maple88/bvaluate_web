@@ -1,5 +1,6 @@
 @import "variable";
 @import "layout";
+@import "model";
 @import "font-awesome.min.css";
 @import "app/components/header";
 
@@ -10,3 +11,5 @@
 @import "app/userCenter";
 // 个人资料
 @import "app/myProfile";
+// 关注
+@import "app/follow";

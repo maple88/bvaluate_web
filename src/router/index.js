@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import login from '@/pages/login'
-import home from '@/pages/home'
 import userCenter from '@/pages/userCenter/userCenter'
 import myProfile from '@/pages/myProfile'
+import follow from '@/pages/follow'
 
 Vue.use(Router)
 
@@ -24,6 +24,10 @@ export default new Router({
     {
       path: '/myProfile',
       component: myProfile
+    },
+    {
+      path: '/follow',
+      component: follow
     }
   ]
 })
