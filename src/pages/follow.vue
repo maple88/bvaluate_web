@@ -2,11 +2,11 @@
 	<div class="page">
 		<vheader/>
 		<div class="maintainer">
-			<!-- content here -->
+			<div style="height: 2000px;"></div>
 		</div>
 
 		<div class="footer">
-			<div class="top">
+			<!-- <div class="top">
 				<div class="container">
 					<div class="flexbox">
 						<ul>
@@ -23,15 +23,15 @@
 							<li>APELINK</li>
 							<li>
 								<ul class="network">
-									<li><a href="#"><div style="background: url(../assets/footer/f1.png)"></div></a></li>
-									<li><a href="#"><div style="background: url(../assets/footer/f2.png)"></div></a></li>
-									<li><a href="#"><div style="background: url(../assets/footer/f3.png)"></div></a></li>
-									<li><a href="#"><div style="background: url(../assets/footer/f4.png)"></div></a></li>
-									<li><a href="#"><div style="background: url(../assets/footer/f5.png)"></div></a></li>
-									<li><a href="#"><div style="background: url(../assets/footer/f6.png)"></div></a></li>
-									<li><a href="#"><div style="background: url(../assets/footer/f7.png)"></div></a></li>
-									<li><a href="#"><div style="background: url(../assets/footer/f8.png)"></div></a></li>
-									<li><a href="#"><div style="background: url(../assets/footer/f10.png)"></div></a></li>
+									<li><a href="#"><div style="background-image: url(../assets/footer/f1.png)"></div></a></li>
+									<li><a href="#"><div style="background-image: url(../assets/footer/f2.png)"></div></a></li>
+									<li><a href="#"><div style="background-image: url(../assets/footer/f3.png)"></div></a></li>
+									<li><a href="#"><div style="background-image: url(../assets/footer/f4.png)"></div></a></li>
+									<li><a href="#"><div style="background-image: url(../assets/footer/f5.png)"></div></a></li>
+									<li><a href="#"><div style="background-image: url(../assets/footer/f6.png)"></div></a></li>
+									<li><a href="#"><div style="background-image: url(../assets/footer/f7.png)"></div></a></li>
+									<li><a href="#"><div style="background-image: url(../assets/footer/f8.png)"></div></a></li>
+									<li><a href="#"><div style="background-image: url(../assets/footer/f10.png)"></div></a></li>
 								</ul>
 							</li>
 						</ul>
@@ -39,14 +39,24 @@
 							<li>For ICOs</li>
 							<li><a href="#">Publish new ICO</a></li>
 							<li><a href="#">ICO Analyzre</a></li>
-							<li><a href="#"></a></li>
-							<li><a href="#"></a></li>
-							<li><a href="#"></a></li>
+							<li><a href="#">Premium Listing</a></li>
+							<li><a href="#">Widgets</a></li>
+							<li><a href="#">For al</a></li>
+						</ul>
+						<ul>
+							<li>For ALL</li>
+							<li><a href="#">ICO Listing</a></li>
+							<li><a href="#">People of Blockchsin</a></li>
+							<li><a href="#">ICO Whitelist</a></li>
+							<li><a href="#">Agencies</a></li>
+							<li><a href="#">Exchanges</a></li>
+							<li><a href="#">Experts</a></li>
+							<li><a href="#">ROL calculator</a></li>
 						</ul>
 					</div>
 				</div>
-			</div>
-			<div class="bottom"></div>
+			</div> -->
+			<div class="bottom">aaaa</div>
 		</div>
 	</div>
 </template>
