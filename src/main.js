@@ -6,10 +6,10 @@ import router from './router'
 import $ from 'jquery'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min'
-import vheader from './components/header'
+import header from '@/components/header.vue'
 
 Vue.config.productionTip = false
-Vue.component('vheader', vheader)
+Vue.component('vheader', header)
 
 /* eslint-disable no-new */
 new Vue({

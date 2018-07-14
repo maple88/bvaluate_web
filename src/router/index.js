@@ -4,7 +4,7 @@ import login from '@/pages/login'
 import userCenter from '@/pages/userCenter/userCenter'
 import my from '@/pages/myProfile'
 import follow from '@/pages/follow'
-import home from '../pages/home'
+import home from '@/pages/home'
 
 Vue.use(Router)
 

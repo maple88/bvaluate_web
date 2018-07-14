@@ -1,14 +1,66 @@
-.footer{
-	background: #000;
-	color: #fff;
-	.network{
-		li>a>div{
-			width: 52px;
-			height: 52px;
-			display: inline-block;
-			background-repeat: no-repeat;
-			background-size: 100%;
-			background-position: center;
-		}
-	}
+#top_banner {
+  .swiper-wrapper {
+    .swiper-slide {
+      height: 554px;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      .banner_div {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        img {
+          height: 90px;
+        }
+        span {
+          color: #ffffff;
+          font-size: 49px;
+        }
+        span.plus {
+          padding-left: 44px;
+          padding-right: 44px;
+        }
+        span.name {
+          font-family: "黑体";
+          letter-spacing: 8px;
+        }
+      }
+    }
+  }
+}
+
+.footer {
+  background: #000;
+  color: #fff;
+  .network {
+    li > a > div {
+      width: 52px;
+      height: 52px;
+      display: inline-block;
+      background-repeat: no-repeat;
+      background-size: 100%;
+      background-position: center;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  #top_banner .swiper-wrapper .swiper-slide {
+    height: 365px;
+    .banner_div {
+      .show_box {
+        text-align: center;
+      }
+      text-align: center;
+      img {
+
+      }
+      span {
+        width: 100%;
+        display: block;
+      }
+    }
+  }
 }
