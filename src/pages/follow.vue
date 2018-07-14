@@ -19,6 +19,31 @@
         <!-- 如果需要分页器 -->
         <div class="swiper-pagination"></div>
       </div>
+      <div class="tool_bar">
+        <div class="container">
+          <div class="clearfix">
+            <div class="search_bar">
+              <input type="text" id="keyword"/>
+              <div class="search-btn">
+                <i class="fa fa-search"></i>
+              </div>
+            </div>
+            <div class="label_bar">
+              <div class="label_box">
+                <button class="all_btn">全部</button>
+                <ul class="clearfix">
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                </ul>
+                <img class="open_label" src="../assets/follow/down.png"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="footer">
