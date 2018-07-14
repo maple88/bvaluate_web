@@ -1,5 +1,6 @@
 <template>
   <div class="page">
+    <vheader/>
     <div class="maintainer">
       <p>我在这里</p>
       <p>我在这里</p>
