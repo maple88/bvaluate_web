@@ -12,6 +12,14 @@ a, a:hover{text-decoration: none !important; transition: 0.3s;}
 	.mt20{margin-top: 10px!important;}
 	.mt40{margin-top: 20px!important;}
 }
+// absolute是避免在移动端ios下fixed不能固定的问题
+.header{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	z-index: 99;
+}
 .maintainer{
 	position: absolute;
 	width: 100%;
@@ -30,4 +38,9 @@ a, a:hover{text-decoration: none !important; transition: 0.3s;}
 }
 .fade-enter, .fade-leave-to{
   opacity: 0;
+}
+// PC下的header为fixed
+@media (min-width: 992px) {
+	.header{position: fixed !important;}
+	.maintainer{position: static;}
 }
