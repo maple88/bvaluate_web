@@ -220,13 +220,207 @@
                   <div class="tips">评</div>
                 </div>
               </div>
-              <img src="../assets/home/topban.jpg" class="topbanimg">
+              <!-- <img src="../assets/home/topban.jpg" class="topbanimg"> -->
             </div>
             <div class="bottomflex">
               <div class="section1">
                 <div class="head">团队</div>
+                <div class="swiper-container" id="home-team">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                          <div class="item">
+                            <img src="../assets/logo_brand.png">
+                            <p class="name">Deian roljic</p>
+                            <p class="posi">创始人加首席执行者</p>
+                            <div class="i"><i class="fa fa-linkedin"></i></div>
+                          </div>
+                          <div class="item">
+                            <img src="../assets/logo_brand.png">
+                            <p class="name">Deian roljic</p>
+                            <p class="posi">创始人加首席执行者</p>
+                            <div class="i on"><i class="fa fa-linkedin"></i></div>
+                          </div>
+                          <div class="item">
+                            <img src="../assets/logo_brand.png">
+                            <p class="name">Deian roljic</p>
+                            <p class="posi">创始人加首席执行者</p>
+                            <div class="i on"><i class="fa fa-linkedin"></i></div>
+                          </div>
+                          <div class="item">
+                            <img src="../assets/logo_brand.png">
+                            <p class="name">Deian roljic</p>
+                            <p class="posi">创始人加首席执行者</p>
+                            <div class="i on"><i class="fa fa-linkedin"></i></div>
+                          </div>
+                          <div class="item">
+                            <img src="../assets/logo_brand.png">
+                            <p class="name">Deian roljic</p>
+                            <p class="posi">创始人加首席执行者</p>
+                            <div class="i on"><i class="fa fa-linkedin"></i></div>
+                          </div>
+                          <div class="item">
+                            <img src="../assets/logo_brand.png">
+                            <p class="name">Deian roljic</p>
+                            <p class="posi">创始人加首席执行者</p>
+                            <div class="i on"><i class="fa fa-linkedin"></i></div>
+                          </div>
+                          <div class="item">
+                            <img src="../assets/logo_brand.png">
+                            <p class="name">Deian roljic</p>
+                            <p class="posi">创始人加首席执行者</p>
+                            <div class="i on"><i class="fa fa-linkedin"></i></div>
+                          </div>
+                          <div class="item">
+                            <img src="../assets/logo_brand.png">
+                            <p class="name">Deian roljic</p>
+                            <p class="posi">创始人加首席执行者</p>
+                            <div class="i on"><i class="fa fa-linkedin"></i></div>
+                          </div>
+                          <div class="item">
+                            <img src="../assets/logo_brand.png">
+                            <p class="name">Deian roljic</p>
+                            <p class="posi">创始人加首席执行者</p>
+                            <div class="i on"><i class="fa fa-linkedin"></i></div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
               </div>
-              <div class="section2">22</div>
+              <div class="section2">
+                <div class="head home-newstabs">
+                  <a href="#" class="active">最新资讯</a>
+                  <a href="#">推文</a>
+                  <a href="#">微博</a>
+                </div>
+                <div class="swiper-container" id="home-news">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                          <!-- 最新资讯 推文 微博 -->
+                          <div class="swiper-container" id="home-newslist">
+                              <div class="swiper-wrapper">
+                                  <div class="swiper-slide">
+                                    <div class="item hasdate">
+                                      <div class="left"><p class="day">22</p><p>2018-05</p></div>
+                                      <div class="right">
+                                        <p class="tit"><a href="#">Whatever is worth doing is worth doing well Whatever is worth doing is worth doing well</a></p>
+                                        <p class="des">Hey Andrew, We will be announcing release detailsin the coming weeks, stay tuned on our official hannels! t.me/vividtoken Hey Andrew, We will be announcing</p>
+                                        <div class="bottom">
+                                          <div class="userinfo">
+                                            <div class="user">
+                                              <img src="../assets/logo_brand.png">
+                                              <span>刘方平</span>
+                                            </div>
+                                            <span class="usertime">5月17日    18:17</span>
+                                          </div>
+                                          <span class="tips">资讯</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="item">
+                                      <div class="left"><img src="../assets/home/nicon.png"></div>
+                                      <div class="right">
+                                        <p class="des">Hey Andrew, We will be announcing release detailsin the coming weeks, stay tuned on our official hannels! t.me/vividtoken Hey Andrew, We will be announcing</p>
+                                        <div class="bottom">
+                                          <span class="name">博主</span>
+                                          <span class="time">2018-06-02    18:00</span>
+                                          <span class="tips">新闻</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="item">
+                                      <div class="left"><img src="../assets/home/nicon.png"></div>
+                                      <div class="right">
+                                        <p class="des">Hey Andrew, We will be announcing release detailsin the coming weeks, stay tuned on our official hannels! t.me/vividtoken Hey Andrew, We will be announcing</p>
+                                        <div class="bottom">
+                                          <span class="name">博主</span>
+                                          <span class="time">2018-06-02    18:00</span>
+                                          <span class="tips">新闻</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="item">
+                                      <div class="left"><img src="../assets/home/nicon.png"></div>
+                                      <div class="right">
+                                        <p class="des">Hey Andrew, We will be announcing release detailsin the coming weeks, stay tuned on our official hannels! t.me/vividtoken Hey Andrew, We will be announcing</p>
+                                        <div class="bottom">
+                                          <span class="name">博主</span>
+                                          <span class="time">2018-06-02    18:00</span>
+                                          <span class="tips">新闻</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="item">
+                                      <div class="left"><img src="../assets/home/nicon.png"></div>
+                                      <div class="right">
+                                        <p class="des">Hey Andrew, We will be announcing release detailsin the coming weeks, stay tuned on our official hannels! t.me/vividtoken Hey Andrew, We will be announcing</p>
+                                        <div class="bottom">
+                                          <span class="name">博主</span>
+                                          <span class="time">2018-06-02    18:00</span>
+                                          <span class="tips">新闻</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="swiper-scrollbar"></div>
+                        </div>
+                        <div class="swiper-slide">Slide 2</div>
+                        <div class="swiper-slide">Slide 3</div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="df-container container hotindustry2">
+        <div class="row">
+          <div class="section-head">
+            <div class="headtit">热门行业</div>
+            <a href="#" class="more">浏览更多</a>
+          </div>
+          <div class="modulelist">
+            <div class="item">
+              <div class="left"><img src="../assets/home/hi.jpg"></div>
+              <div class="right">
+                <p class="tit">平台</p>
+                <p class="smtit">最新资讯</p>
+                <ul class="list">
+                  <li><a href="#">伊利诺伊州区块链法案“腹死胎中”</a></li>
+                  <li><a href="#">LongHash孵化项目 everiToken</a></li>
+                  <li><a href="#">比特币谷歌搜索量急剧下降 区块</a></li>
+                  <li><a href="#">傻瓜版的数字货币？sopay你还</a></li>
+                </ul>
+                <ul class="rtlist">
+                  <li>相关项目</li>
+                  <li><a href="#">EOS</a></li>
+                  <li><a href="#">Datablockchain</a></li>
+                  <li><a href="#">0x</a></li>
+                  <li><a href="#">Paymon</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="item">
+              <div class="left"><img src="../assets/home/hi.jpg"></div>
+              <div class="right">
+                <p class="tit">平台</p>
+                <p class="smtit">最新资讯</p>
+                <ul class="list">
+                  <li><a href="#">伊利诺伊州区块链法案“腹死胎中”</a></li>
+                  <li><a href="#">LongHash孵化项目 everiToken</a></li>
+                  <li><a href="#">比特币谷歌搜索量急剧下降 区块</a></li>
+                  <li><a href="#">傻瓜版的数字货币？sopay你还</a></li>
+                </ul>
+                <ul class="rtlist">
+                  <li>相关项目</li>
+                  <li><a href="#">EOS</a></li>
+                  <li><a href="#">Datablockchain</a></li>
+                  <li><a href="#">0x</a></li>
+                  <li><a href="#">Paymon</a></li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -238,7 +432,63 @@
 </template>
 
 <script>
-  export default {}
+  import Swiper from 'swiper'
+  export default {
+    mounted () {
+      new Swiper('#home-team', {
+        observer: true,
+        observeParents: true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable :true,
+        }
+        // breakpoints: {
+        //   1200: {
+        //     slidesPerView: 4,
+        //     spaceBetween: 35
+        //   },
+        //   992: {
+        //     slidesPerView: 3,
+        //     spaceBetween: 35
+        //   },
+        //   768: {
+        //     slidesPerView: 2,
+        //     spaceBetween: 35
+        //   },
+        //   400: {
+        //     slidesPerView: 1,
+        //     spaceBetween: 35
+        //   }
+        // }
+      })
+      let homeNewsSwiper = new Swiper('#home-news', {
+        observer: true,
+        observeParents: true,
+        on: {
+          slideChangeTransitionStart: function() {
+            $(".home-newstabs .active").removeClass('active');
+            $(".home-newstabs a").eq(this.activeIndex).addClass('active');
+          }
+        }
+      })
+      $(".home-newstabs a").on('click', function(e) {
+        e.preventDefault()
+        $(".home-newstabs .active").removeClass('active')
+        $(this).addClass('active')
+        homeNewsSwiper.slideTo($(this).index())
+      })
+      new Swiper('#home-newslist', {
+        direction: 'vertical',
+        slidesPerView: 'auto',
+        freeMode: true,
+        scrollbar: {
+          el: '.swiper-scrollbar',
+          // hide: true,
+        },
+        mousewheel: true
+      })
+    }
+  }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
