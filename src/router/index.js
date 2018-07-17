@@ -6,6 +6,7 @@ import my from '@/pages/myProfile'
 import follow from '@/pages/follow'
 import home from '@/pages/home'
 import industry from '@/pages/industry'
+import recommend from '@/pages/recommend'
 
 Vue.use(Router)
 
@@ -38,6 +39,10 @@ export default new Router({
     {
       path: '/industry',
       component: industry
+    },
+    {
+      path: '/recommend',
+      component: recommend
     }
   ]
 })
