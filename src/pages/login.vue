@@ -118,7 +118,7 @@
 				</div>
 			</div>
 		</div>
-		<p class="footer">备案号</p>
+		<p class="login_footer">备案号</p>
 	</div>
 </template>
 
