@@ -33,17 +33,33 @@
                 <div class="swiper-container" id="follow_swiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                      11
-                    </div>
-                    <div class="swiper-slide">
-                      111
-                    </div>
-                    <div class="swiper-slide">
-                      11
+                      <ul class="clearfix">
+                        <li>
+                          <div class="item_box">platform</div>
+                        </li>
+                        <li>
+                          <div class="item_box">标签</div>
+                        </li>
+                        <li>
+                          <div class="item_box">标签</div>
+                        </li>
+                        <li>
+                          <div class="item_box">标签</div>
+                        </li>
+                        <li>
+                          <div class="item_box">标签</div>
+                        </li>
+                        <li>
+                          <div class="item_box">标签</div>
+                        </li>
+                      </ul>
                     </div>
                   </div>
-                  <!-- 如果需要分页器 -->
-                  <div class="swiper-pagination"></div>
+                  <!-- 如果需要滚动条 -->
+                  <!--<div class="swiper-scrollbar"></div>-->
+                </div>
+                <div class="follow_btn">
+                  <div class="follow"><i class="fa fa-plus"></i>关注</div>
                 </div>
               </div>
             </div>
@@ -151,57 +167,136 @@
               </div>
             </div>
             <div class="right">
-              <div class="hot_title">
-                <div class="title_icon">
-                  <img src="../assets/follow/hot_text.png"/>
+              <div class="right_item">
+                <div class="hot_title">
+                  <div class="title_icon">
+                    <img src="../assets/follow/hot_text.png"/>
+                  </div>
+                  <h4>24小时热文</h4>
                 </div>
-                <h4>24小时热文</h4>
+                <div class="hot_content">
+                  <ul>
+                    <li>
+                      <div class="list_item">
+                        <div class="item_left">
+                          <img :src="img3"/>
+                        </div>
+                        <div class="item_body">
+                          <h4>Whatever is worth doing is worth doing well</h4>
+                          <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
+                        </div>
+                      </div>
+                      <div class="item_bottom">
+                        <p>2018-05-26</p>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="list_item">
+                        <div class="item_left">
+                          <img :src="img3"/>
+                        </div>
+                        <div class="item_body">
+                          <h4>Whatever is worth doing is worth doing well</h4>
+                          <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
+                        </div>
+                      </div>
+                      <div class="item_bottom">
+                        <p>2018-05-26</p>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="list_item">
+                        <div class="item_left">
+                          <img :src="img3"/>
+                        </div>
+                        <div class="item_body">
+                          <h4>Whatever is worth doing is worth doing well</h4>
+                          <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
+                        </div>
+                      </div>
+                      <div class="item_bottom">
+                        <p>2018-05-26</p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
               </div>
-              <div class="hot_content">
-                <ul>
-                  <li>
-                    <div class="list_item">
-                      <div class="item_left">
-                        <img :src="img3"/>
+              <div class="right_item margin_top">
+                <div class="hot_title">
+                  <div class="title_icon">
+                    <img src="../assets/follow/tweet.png"/>
+                  </div>
+                  <h4>
+                    <span class="tab" :class="{active:isActive}" @click="isActive = true">
+                      推文
+                    </span>
+                    <span class="vertical">|</span>
+                    <span class="tab" :class="{active:!isActive}" @click="isActive = false">
+                      微博
+                    </span>
+                  </h4>
+                  <span class="look_more">查看更多</span>
+                </div>
+                <div class="hot_content">
+                  <ul>
+                    <li>
+                      <div class="list_item">
+                        <div class="item_left tweet">
+                          <img src="../assets/follow/tweet_header.png"/>
+                        </div>
+                        <div class="item_body tweet">
+                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing</p>
+                          <div class="body_bottom">
+                            <p>博主</p>
+                            <p class="time">2018-05-26</p>
+                          </div>
+                        </div>
                       </div>
-                      <div class="item_body">
-                        <h4>Whatever is worth doing is worth doing well</h4>
-                        <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
+                    </li>
+                    <li>
+                      <div class="list_item">
+                        <div class="item_left tweet">
+                          <img src="../assets/follow/tweet_header.png"/>
+                        </div>
+                        <div class="item_body tweet">
+                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing</p>
+                          <div class="body_bottom">
+                            <p>博主</p>
+                            <p class="time">2018-05-26</p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div class="item_bottom">
-                      <p>2018-05-26</p>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="list_item">
-                      <div class="item_left">
-                        <img :src="img3"/>
+                    </li>
+                    <li>
+                      <div class="list_item">
+                        <div class="item_left tweet">
+                          <img src="../assets/follow/tweet_header.png"/>
+                        </div>
+                        <div class="item_body tweet">
+                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing</p>
+                          <div class="body_bottom">
+                            <p>博主</p>
+                            <p class="time">2018-05-26</p>
+                          </div>
+                        </div>
                       </div>
-                      <div class="item_body">
-                        <h4>Whatever is worth doing is worth doing well</h4>
-                        <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
+                    </li>
+                    <li>
+                      <div class="list_item">
+                        <div class="item_left tweet">
+                          <img src="../assets/follow/tweet_header.png"/>
+                        </div>
+                        <div class="item_body tweet">
+                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing</p>
+                          <div class="body_bottom">
+                            <p>博主</p>
+                            <p class="time">2018-05-26</p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div class="item_bottom">
-                      <p>2018-05-26</p>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="list_item">
-                      <div class="item_left">
-                        <img :src="img3"/>
-                      </div>
-                      <div class="item_body">
-                        <h4>Whatever is worth doing is worth doing well</h4>
-                        <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
-                      </div>
-                    </div>
-                    <div class="item_bottom">
-                      <p>2018-05-26</p>
-                    </div>
-                  </li>
-                </ul>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -327,9 +422,11 @@
         colorList: ['red', 'yellow', 'gray', 'pink'],
         banner1: img1,
         img2: img2,
-        img3: img3
+        img3: img3,
+        isActive: true
       }
     },
+    methods: {},
     mounted() {
       new Swiper('#top_banner', {
         loop: true,
@@ -349,9 +446,12 @@
         }
       })
       new Swiper('#follow_swiper', {
+        direction: 'horizontal',
+        slidesPerView: 'auto',
         freeMode: true,
-        slidesPerView : 2
-      })
+        mousewheel: true,
+      });
+
     }
   }
 </script>

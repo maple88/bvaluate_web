@@ -145,57 +145,59 @@
               </div>
             </div>
             <div class="right">
-              <div class="hot_title">
-                <div class="title_icon">
-                  <img src="../assets/follow/hot_text.png"/>
+              <div class="right_item">
+                <div class="hot_title">
+                  <div class="title_icon">
+                    <img src="../assets/follow/hot_text.png"/>
+                  </div>
+                  <h4>24小时热文</h4>
                 </div>
-                <h4>24小时热文</h4>
-              </div>
-              <div class="hot_content">
-                <ul>
-                  <li>
-                    <div class="list_item">
-                      <div class="item_left">
-                        <img :src="img3"/>
+                <div class="hot_content">
+                  <ul>
+                    <li>
+                      <div class="list_item">
+                        <div class="item_left">
+                          <img :src="img3"/>
+                        </div>
+                        <div class="item_body">
+                          <h4>Whatever is worth doing is worth doing well</h4>
+                          <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
+                        </div>
                       </div>
-                      <div class="item_body">
-                        <h4>Whatever is worth doing is worth doing well</h4>
-                        <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
+                      <div class="item_bottom">
+                        <p>2018-05-26</p>
                       </div>
-                    </div>
-                    <div class="item_bottom">
-                      <p>2018-05-26</p>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="list_item">
-                      <div class="item_left">
-                        <img :src="img3"/>
+                    </li>
+                    <li>
+                      <div class="list_item">
+                        <div class="item_left">
+                          <img :src="img3"/>
+                        </div>
+                        <div class="item_body">
+                          <h4>Whatever is worth doing is worth doing well</h4>
+                          <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
+                        </div>
                       </div>
-                      <div class="item_body">
-                        <h4>Whatever is worth doing is worth doing well</h4>
-                        <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
+                      <div class="item_bottom">
+                        <p>2018-05-26</p>
                       </div>
-                    </div>
-                    <div class="item_bottom">
-                      <p>2018-05-26</p>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="list_item">
-                      <div class="item_left">
-                        <img :src="img3"/>
+                    </li>
+                    <li>
+                      <div class="list_item">
+                        <div class="item_left">
+                          <img :src="img3"/>
+                        </div>
+                        <div class="item_body">
+                          <h4>Whatever is worth doing is worth doing well</h4>
+                          <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
+                        </div>
                       </div>
-                      <div class="item_body">
-                        <h4>Whatever is worth doing is worth doing well</h4>
-                        <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
+                      <div class="item_bottom">
+                        <p>2018-05-26</p>
                       </div>
-                    </div>
-                    <div class="item_bottom">
-                      <p>2018-05-26</p>
-                    </div>
-                  </li>
-                </ul>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
