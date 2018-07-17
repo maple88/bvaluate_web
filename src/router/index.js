@@ -5,6 +5,7 @@ import userCenter from '@/pages/userCenter/userCenter'
 import my from '@/pages/myProfile'
 import follow from '@/pages/follow'
 import home from '@/pages/home'
+import industry from '@/pages/industry'
 
 Vue.use(Router)
 
@@ -33,6 +34,10 @@ export default new Router({
     {
       path: '/index',
       component: home
+    },
+    {
+      path: '/industry',
+      component: industry
     }
   ]
 })
