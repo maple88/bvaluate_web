@@ -222,6 +222,12 @@
               </div>
               <img src="../assets/home/topban.jpg" class="topbanimg">
             </div>
+            <div class="bottomflex">
+              <div class="section1">
+                <div class="head">团队</div>
+              </div>
+              <div class="section2">22</div>
+            </div>
           </div>
         </div>
       </div>

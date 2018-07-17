@@ -463,11 +463,22 @@
 							text-align: center;
 							background: $mainColor;
 							position: absolute;
-							right: 0;
-							bottom: 0;
+							right: 25px;
+							bottom: 15px;
 							font-weight: normal;
 						}
 					}
+				}
+			}
+			.bottomflex{
+				display: flex;
+				.section1, .section2{
+					border: 1px solid #cfcfcf;
+				    width: 100%;
+				}
+				.section1{
+					min-width: 49%;
+					margin-right: 6px;
 				}
 			}
 		}
