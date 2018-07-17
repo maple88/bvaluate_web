@@ -7,6 +7,7 @@ import $ from 'jquery'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min'
 import header from '@/components/header.vue'
+import 'swiper/dist/css/swiper.min.css';
 
 Vue.config.productionTip = false
 Vue.component('vheader', header)

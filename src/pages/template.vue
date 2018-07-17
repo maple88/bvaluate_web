@@ -3,7 +3,9 @@
 		<div class="header"></div>
 		<div class="maintainer">
 			<!-- content here -->
+
 		</div>
+
 	</div>
 </template>
 
