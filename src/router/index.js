@@ -8,6 +8,7 @@ import home from '@/pages/home'
 import industry from '@/pages/industry'
 import recommend from '@/pages/recommend'
 import article from '@/pages/article'
+import project from '@/pages/project'
 
 Vue.use(Router)
 
@@ -48,6 +49,10 @@ export default new Router({
     {
       path: '/article',
       component: article
+    },
+    {
+      path: '/project',
+      component: project
     }
   ]
 })
