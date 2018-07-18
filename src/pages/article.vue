@@ -32,7 +32,7 @@
                   <div class="article_right">
                     <span class="look">查看全文</span>
                     <span class="look_count"><i class="fa fa-eye"></i>1000人</span>
-                    <span class="share"><i class="fa fa-share-alt"></i></span>
+                    <span class="share" @click.stop="showAllShare($event)"><i class="fa fa-share-alt"></i></span>
                     <span class="follow"><i class="fa fa-heart"></i></span>
                   </div>
                 </div>
@@ -100,7 +100,66 @@
               </div>
             </div>
             <div class="right">
-              <div class="right_item">
+              <div class="author_infor">
+                <div class="author_box">
+                  <div class="author_left">
+                    <img src="../assets/follow/apelink.png" alt="">
+                  </div>
+                  <div class="author_right">
+                    <h4>才不可以吃辣椒酱</h4>
+                    <button class="follow_btn" v-show="!follow" @click="follow = true">
+                      <img src="../assets/follow/icon-follow.png"/>关注
+                      <div class="arrow"></div>
+                    </button>
+                    <button class="followed_btn" v-show="follow" @click="follow = false">
+                      <div class="arrow"></div>
+                      <img src="../assets/follow/icon-followed.png"/>已关注
+                    </button>
+                  </div>
+                </div>
+                <div class="author_news">
+                  <ul class="news_ul">
+                    <li class="news_li">
+                      <p>
+                        作为新杭州人的你是否也在困扰，买车容易，车牌摇号+车位伤不起？
+                      </p>
+                      <p class="time">2018-04-09</p>
+                    </li>
+                    <li class="news_li">
+                      <p>
+                        作为新杭州人的你是否也在困扰，买车容易，车牌摇号+车位伤不起？
+                      </p>
+                      <p class="time">2018-04-09</p>
+                    </li>
+                    <li class="news_li">
+                      <p>
+                        作为新杭州人的你是否也在困扰，买车容易，车牌摇号+车位伤不起？
+                      </p>
+                      <p class="time">2018-04-09</p>
+                    </li>
+                    <li class="news_li">
+                      <p>
+                        作为新杭州人的你是否也在困扰，买车容易，车牌摇号+车位伤不起？
+                      </p>
+                      <p class="time">2018-04-09</p>
+                    </li>
+                  </ul>
+                  <p></p>
+                </div>
+              </div>
+              <div class="adv_swiper">
+                <div class="swiper-container" id="right_swiper">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide" :style="'background-image: url('+img3+')'"></div>
+                    <div class="swiper-slide" :style="'background-image: url('+img3+')'"></div>
+                    <div class="swiper-slide" :style="'background-image: url('+img3+')'"></div>
+                  </div>
+                  <!-- 如果需要分页器 -->
+                  <div class="swiper-button-prev"></div><!--左箭头-->
+                  <div class="swiper-button-next"></div><!--右箭头-->
+                </div>
+              </div>
+              <div class="right_item margin_top">
                 <div class="hot_title">
                   <div class="title_icon">
                     <img src="../assets/follow/hot_text.png"/>
@@ -260,7 +319,17 @@
         </div>
       </div>
     </div>
-
+    <div class="popover fade bottom in" role="tooltip" id="popover91482">
+      <div class="arrow" style="left: 50%;"></div>
+      <div class="popover-content">
+        <ul>
+          <li class="wechat"><i class="fa fa-wechat"></i></li>
+          <li class="weibo"><i class="fa fa-weibo"></i></li>
+          <li class="qq"><i class="fa fa-qq"></i></li>
+          <li class="more">更多分享</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -278,7 +347,44 @@
         colorList: ['red', 'yellow', 'gray', 'pink'],
         banner1: img1,
         img2: img2,
-        img3: img3
+        img3: img3,
+        follow: false
+      }
+    },
+    methods: {
+      showAllShare(obj) {
+        let $this = $(obj.target);
+        let Hwith = $this.offset().left - ($('#popover91482').width() / 2);
+        let Htop = $this.offset().top + $this.height();
+        if (Hwith + $('#popover91482').width() > $(document).width()) {
+          let arrowWidth = $(document).width() - $('#popover91482').width();
+          arrowWidth = $this.offset().left - arrowWidth;
+          $('#popover91482').css({
+            right: 15,
+            top: Htop,
+            display: 'block',
+            left: 'auto'
+          })
+          $('#popover91482').find('.arrow').css({
+            left: arrowWidth + 24
+          })
+        } else {
+          $('#popover91482').css({
+            left: Hwith,
+            top: Htop,
+            display: 'block'
+          })
+          $('#popover91482').find('.arrow').css({
+            left: '50%'
+          })
+        }
+        obj.stopPropagation()
+        $(document).bind('click', function () {
+          $('#popover91482').css('display', 'none');
+        });
+        $('#popover91482').click(function (e) {
+          e.stopPropagation()
+        })
       }
     },
     mounted() {
@@ -292,8 +398,10 @@
           disableOnInteraction: false,
         },
       })
-      new Swiper('#adv_banner', {
-        loop: false,
+      new Swiper('#right_swiper', {
+        autoplay: {
+          disableOnInteraction: false,
+        },
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
