@@ -443,9 +443,9 @@
           </div>
         </div>
       </div>
-    </div>
 
-    <div style="height: 1000px;"></div>
+      <vfooter/>
+    </div>
   </div>
 </template>
 
