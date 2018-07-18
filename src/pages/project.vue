@@ -3,6 +3,8 @@
 		<vheader/>
 		<div class="maintainer">
 			<!-- content here -->
+			<div class="leftlayout"></div>
+			<div class="rightlayout"></div>
 
 			<vfooter/>
 		</div>
