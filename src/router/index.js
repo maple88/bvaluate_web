@@ -5,6 +5,9 @@ import userCenter from '@/pages/userCenter/userCenter'
 import my from '@/pages/myProfile'
 import follow from '@/pages/follow'
 import home from '@/pages/home'
+import industry from '@/pages/industry'
+import recommend from '@/pages/recommend'
+import article from '@/pages/article'
 
 Vue.use(Router)
 
@@ -33,6 +36,18 @@ export default new Router({
     {
       path: '/index',
       component: home
+    },
+    {
+      path: '/industry',
+      component: industry
+    },
+    {
+      path: '/recommend',
+      component: recommend
+    },
+    {
+      path: '/article',
+      component: article
     }
   ]
 })

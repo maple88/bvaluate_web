@@ -8,9 +8,12 @@ import 'swiper/dist/css/swiper.min.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min'
 import header from '@/components/header.vue'
+import footer from '@/components/footer.vue'
+import 'swiper/dist/css/swiper.min.css';
 
 Vue.config.productionTip = false
 Vue.component('vheader', header)
+Vue.component('vfooter', footer)
 
 /* eslint-disable no-new */
 new Vue({

@@ -29,16 +29,38 @@
               </div>
             </div>
             <div class="label_bar">
-              <div class="label_box">
-                <button class="all_btn">全部</button>
-                <ul class="clearfix">
-                  <li><span>标签</span></li>
-                  <li><span>标签</span></li>
-                  <li><span>标签</span></li>
-                  <li><span>标签</span></li>
-                  <li><span>标签</span></li>
-                </ul>
-                <img class="open_label" src="../assets/follow/down.png"/>
+              <div class="follow_box">
+                <div class="swiper-container" id="follow_swiper">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                      <ul class="clearfix">
+                        <li>
+                          <div class="item_box">platform</div>
+                        </li>
+                        <li>
+                          <div class="item_box">标签</div>
+                        </li>
+                        <li>
+                          <div class="item_box">标签</div>
+                        </li>
+                        <li>
+                          <div class="item_box">标签</div>
+                        </li>
+                        <li>
+                          <div class="item_box">标签</div>
+                        </li>
+                        <li>
+                          <div class="item_box">标签</div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- 如果需要滚动条 -->
+                  <!--<div class="swiper-scrollbar"></div>-->
+                </div>
+                <div class="follow_btn">
+                  <div class="follow"><i class="fa fa-plus"></i>关注</div>
+                </div>
               </div>
             </div>
           </div>
@@ -199,11 +221,188 @@
                   </ul>
                 </div>
               </div>
+              <div class="right_item margin_top">
+                <div class="hot_title">
+                  <div class="title_icon">
+                    <img src="../assets/follow/tweet.png"/>
+                  </div>
+                  <h4>
+                    <span class="tab" :class="{active:isActive}" @click="isActive = true">
+                      推文
+                    </span>
+                    <span class="vertical">|</span>
+                    <span class="tab" :class="{active:!isActive}" @click="isActive = false">
+                      微博
+                    </span>
+                  </h4>
+                  <span class="look_more">查看更多</span>
+                </div>
+                <div class="hot_content">
+                  <ul>
+                    <li>
+                      <div class="list_item">
+                        <div class="item_left tweet">
+                          <img src="../assets/follow/tweet_header.png"/>
+                        </div>
+                        <div class="item_body tweet">
+                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing</p>
+                          <div class="body_bottom">
+                            <p>博主</p>
+                            <p class="time">2018-05-26</p>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="list_item">
+                        <div class="item_left tweet">
+                          <img src="../assets/follow/tweet_header.png"/>
+                        </div>
+                        <div class="item_body tweet">
+                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing</p>
+                          <div class="body_bottom">
+                            <p>博主</p>
+                            <p class="time">2018-05-26</p>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="list_item">
+                        <div class="item_left tweet">
+                          <img src="../assets/follow/tweet_header.png"/>
+                        </div>
+                        <div class="item_body tweet">
+                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing</p>
+                          <div class="body_bottom">
+                            <p>博主</p>
+                            <p class="time">2018-05-26</p>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="list_item">
+                        <div class="item_left tweet">
+                          <img src="../assets/follow/tweet_header.png"/>
+                        </div>
+                        <div class="item_body tweet">
+                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing</p>
+                          <div class="body_bottom">
+                            <p>博主</p>
+                            <p class="time">2018-05-26</p>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <vfooter/>
+      <div class="footer">
+        <div class="top">
+          <div class="fish_container">
+            <div class="flexbox clearfix">
+              <ul>
+                <li class="apelink_logo">
+                  APELINK
+                  <img src="../assets/follow/bottom_logo.png"/>
+                </li>
+                <li><a href="#">Stats & facts</a></li>
+                <li><a href="#">Media</a></li>
+                <li><a href="#">API</a></li>
+                <li><a href="#">Mobile app (Android)</a></li>
+                <li><a href="#">Chrome Eidget</a></li>
+                <li><a href="#">Firefox Widget</a></li>
+                <li><a href="#">Benchy</a></li>
+              </ul>
+              <ul class="logo_box">
+                <li>APELINK</li>
+                <li>
+                  <ul class="network clearfix">
+                    <li>
+                      <a href="#">
+                        <div class="icon1"></div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <div class="icon2"></div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <div class="icon3"></div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <div class="icon4"></div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <div class="icon5"></div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <div class="icon6"></div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <div class="icon7"></div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <div class="icon8"></div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <div class="icon9"></div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <div class="icon10"></div>
+                      </a>
+                    </li>
+
+                  </ul>
+                </li>
+              </ul>
+              <ul>
+                <li>For ICOs</li>
+                <li><a href="#">Publish new ICO</a></li>
+                <li><a href="#">ICO Analyzre</a></li>
+                <li><a href="#">Premium Listing</a></li>
+                <li><a href="#">Widgets</a></li>
+                <li><a href="#">For al</a></li>
+              </ul>
+              <ul>
+                <li>For ALL</li>
+                <li><a href="#">ICO Listing</a></li>
+                <li><a href="#">People of Blockchsin</a></li>
+                <li><a href="#">ICO Whitelist</a></li>
+                <li><a href="#">Agencies</a></li>
+                <li><a href="#">Exchanges</a></li>
+                <li><a href="#">Experts</a></li>
+                <li><a href="#">ROL calculator</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="bottom">
+          <p>备案号</p>
+          <p>版权信息</p>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -223,9 +422,11 @@
         colorList: ['red', 'yellow', 'gray', 'pink'],
         banner1: img1,
         img2: img2,
-        img3: img3
+        img3: img3,
+        isActive: true
       }
     },
+    methods: {},
     mounted() {
       new Swiper('#top_banner', {
         loop: true,
@@ -244,6 +445,13 @@
           prevEl: '.swiper-button-prev',
         }
       })
+      new Swiper('#follow_swiper', {
+        direction: 'horizontal',
+        slidesPerView: 'auto',
+        freeMode: true,
+        mousewheel: true,
+      });
+
     }
   }
 </script>
