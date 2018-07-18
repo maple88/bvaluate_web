@@ -100,7 +100,10 @@
               </div>
             </div>
             <div class="right">
-              <div class="right_item">
+              <div class="author_box">
+                
+              </div>
+              <div class="right_item margin_top">
                 <div class="hot_title">
                   <div class="title_icon">
                     <img src="../assets/follow/hot_text.png"/>
