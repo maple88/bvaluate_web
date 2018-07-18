@@ -450,7 +450,63 @@
 </template>
 
 <script>
-  
+  import Swiper from 'swiper'
+  export default {
+    mounted () {
+      new Swiper('#home-team', {
+        observer: true,
+        observeParents: true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable :true,
+        }
+        // breakpoints: {
+        //   1200: {
+        //     slidesPerView: 4,
+        //     spaceBetween: 35
+        //   },
+        //   992: {
+        //     slidesPerView: 3,
+        //     spaceBetween: 35
+        //   },
+        //   768: {
+        //     slidesPerView: 2,
+        //     spaceBetween: 35
+        //   },
+        //   400: {
+        //     slidesPerView: 1,
+        //     spaceBetween: 35
+        //   }
+        // }
+      })
+      let homeNewsSwiper = new Swiper('#home-news', {
+        observer: true,
+        observeParents: true,
+        on: {
+          slideChangeTransitionStart: function() {
+            $(".home-newstabs .active").removeClass('active');
+            $(".home-newstabs a").eq(this.activeIndex).addClass('active');
+          }
+        }
+      })
+      $(".home-newstabs a").on('click', function(e) {
+        e.preventDefault()
+        $(".home-newstabs .active").removeClass('active')
+        $(this).addClass('active')
+        homeNewsSwiper.slideTo($(this).index())
+      })
+      new Swiper('#home-newslist', {
+        direction: 'vertical',
+        slidesPerView: 'auto',
+        freeMode: true,
+        scrollbar: {
+          el: '.swiper-scrollbar',
+          // hide: true,
+        },
+        mousewheel: true
+      })
+    }
+  }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
