@@ -56,7 +56,7 @@
           APELINk
         </div>
       </div>
-      <div class="df-container container home-newslist">
+      <!-- <div class="df-container container home-newslist">
         <div class="section-head">
           <div class="headtit">新闻头条</div>
           <a href="#" class="more">浏览更多</a>
@@ -220,7 +220,6 @@
                   <div class="tips">评</div>
                 </div>
               </div>
-              <!-- <img src="../assets/home/topban.jpg" class="topbanimg"> -->
             </div>
             <div class="bottomflex">
               <div class="section1">
@@ -296,7 +295,6 @@
                 <div class="swiper-container" id="home-news">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                          <!-- 最新资讯 推文 微博 -->
                           <div class="swiper-container" id="home-newslist">
                               <div class="swiper-wrapper">
                                   <div class="swiper-slide">
@@ -374,7 +372,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="df-container container hotindustry2">
         <div class="row">
           <div class="section-head">
@@ -388,10 +386,10 @@
                 <p class="tit">平台</p>
                 <p class="smtit">最新资讯</p>
                 <ul class="list">
-                  <li><a href="#">伊利诺伊州区块链法案“腹死胎中”</a></li>
-                  <li><a href="#">LongHash孵化项目 everiToken</a></li>
-                  <li><a href="#">比特币谷歌搜索量急剧下降 区块</a></li>
-                  <li><a href="#">傻瓜版的数字货币？sopay你还</a></li>
+                  <li><a href="#">伊利诺伊州区块链法案“腹死胎中”伊利诺伊州区块链法案“腹死胎中”</a></li>
+                  <li><a href="#">LongHash孵化项目 everiTokenLongHash孵化项目</a></li>
+                  <li><a href="#">比特币谷歌搜索量急剧下降 区块比特币谷歌搜索量急剧下降</a></li>
+                  <li><a href="#">傻瓜版的数字货币？sopay你还傻瓜版的数字货币？sopay你还</a></li>
                 </ul>
                 <ul class="rtlist">
                   <li>相关项目</li>
@@ -408,10 +406,30 @@
                 <p class="tit">平台</p>
                 <p class="smtit">最新资讯</p>
                 <ul class="list">
-                  <li><a href="#">伊利诺伊州区块链法案“腹死胎中”</a></li>
-                  <li><a href="#">LongHash孵化项目 everiToken</a></li>
-                  <li><a href="#">比特币谷歌搜索量急剧下降 区块</a></li>
-                  <li><a href="#">傻瓜版的数字货币？sopay你还</a></li>
+                  <li><a href="#">伊利诺伊州区块链法案“腹死胎中”伊利诺伊州区块链法案“腹死胎中”</a></li>
+                  <li><a href="#">LongHash孵化项目 everiTokenLongHash孵化项目</a></li>
+                  <li><a href="#">比特币谷歌搜索量急剧下降 区块比特币谷歌搜索量急剧下降</a></li>
+                  <li><a href="#">傻瓜版的数字货币？sopay你还傻瓜版的数字货币？sopay你还</a></li>
+                </ul>
+                <ul class="rtlist">
+                  <li>相关项目</li>
+                  <li><a href="#">EOS</a></li>
+                  <li><a href="#">Datablockchain</a></li>
+                  <li><a href="#">0x</a></li>
+                  <li><a href="#">Paymon</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="item">
+              <div class="left"><img src="../assets/home/hi.jpg"></div>
+              <div class="right">
+                <p class="tit">平台</p>
+                <p class="smtit">最新资讯</p>
+                <ul class="list">
+                  <li><a href="#">伊利诺伊州区块链法案“腹死胎中”伊利诺伊州区块链法案“腹死胎中”</a></li>
+                  <li><a href="#">LongHash孵化项目 everiTokenLongHash孵化项目</a></li>
+                  <li><a href="#">比特币谷歌搜索量急剧下降 区块比特币谷歌搜索量急剧下降</a></li>
+                  <li><a href="#">傻瓜版的数字货币？sopay你还傻瓜版的数字货币？sopay你还</a></li>
                 </ul>
                 <ul class="rtlist">
                   <li>相关项目</li>
@@ -432,63 +450,7 @@
 </template>
 
 <script>
-  import Swiper from 'swiper'
-  export default {
-    mounted () {
-      new Swiper('#home-team', {
-        observer: true,
-        observeParents: true,
-        pagination: {
-          el: '.swiper-pagination',
-          clickable :true,
-        }
-        // breakpoints: {
-        //   1200: {
-        //     slidesPerView: 4,
-        //     spaceBetween: 35
-        //   },
-        //   992: {
-        //     slidesPerView: 3,
-        //     spaceBetween: 35
-        //   },
-        //   768: {
-        //     slidesPerView: 2,
-        //     spaceBetween: 35
-        //   },
-        //   400: {
-        //     slidesPerView: 1,
-        //     spaceBetween: 35
-        //   }
-        // }
-      })
-      let homeNewsSwiper = new Swiper('#home-news', {
-        observer: true,
-        observeParents: true,
-        on: {
-          slideChangeTransitionStart: function() {
-            $(".home-newstabs .active").removeClass('active');
-            $(".home-newstabs a").eq(this.activeIndex).addClass('active');
-          }
-        }
-      })
-      $(".home-newstabs a").on('click', function(e) {
-        e.preventDefault()
-        $(".home-newstabs .active").removeClass('active')
-        $(this).addClass('active')
-        homeNewsSwiper.slideTo($(this).index())
-      })
-      new Swiper('#home-newslist', {
-        direction: 'vertical',
-        slidesPerView: 'auto',
-        freeMode: true,
-        scrollbar: {
-          el: '.swiper-scrollbar',
-          // hide: true,
-        },
-        mousewheel: true
-      })
-    }
-  }
+  
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
