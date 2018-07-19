@@ -3,6 +3,25 @@
 		<vheader/>
 		<div class="maintainer">
 			<!-- content here -->
+			<div class="project-banner">
+				<div class="container">
+					<div class="left">4.8</div>
+					<div class="right">
+						<div class="top">
+							<div class="imgbrand"><img src="../assets/project/imgbrand.jpg"></div>
+							<div class="info">
+								<div class="tit">
+									StopTheFakes
+									<div class="followbtn" v-if="isFollow">+ 关注</div>
+									<div class="followbtn on" v-if="!isFollow">已关注</div>
+								</div>
+								<p class="smtit">Eligma是AI和blockchain基于认知商务</p>
+							</div>
+						</div>
+						<p class="des">streamr（数据）是一个p2p网络的去中心。数据源可以连接到整个网络中的任何节点，然后数被发布，并且网络立即被发送到订户。通过分片模式实现横向扩展。Eligma，一个认知的商务平台，将现有的电子商务和二手市场连接成一点停止用户。利用人工智能和Eligma blockchain技术…</p>
+					</div>
+				</div>
+			</div>
 			<div class="container flexlayout">
 				<div class="leftlayout">
 					<div class="section1">
@@ -338,7 +357,160 @@
             </div>
 					</div>
 				</div>
-				<div class="rightlayout"></div>
+				<div class="rightlayout">
+					<div class="section5">
+						<div class="rightlayouthead">FOLLOW US</div>
+						<div class="swiper-container section-swiper">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                	<div class="col4">
+	                  <div class="item">
+	                  	<img src="../assets/project/f1.png">
+	                  	<p>Facebook</p>
+	                  </div>
+                 	</div>
+                 	<div class="col4">
+	                  <div class="item">
+	                  	<img src="../assets/project/f2.png">
+	                  	<p>Twitter</p>
+	                  </div>
+                 	</div>
+                 	<div class="col4">
+	                  <div class="item">
+	                  	<img src="../assets/project/f3.png">
+	                  	<p>telegram</p>
+	                  </div>
+                 	</div>
+                 	<div class="col4">
+	                  <div class="item">
+	                  	<img src="../assets/project/f4.png">
+	                  	<p>bitcointalk</p>
+	                  </div>
+                 	</div>
+                 	<div class="col4">
+	                  <div class="item">
+	                  	<img src="../assets/project/f5.png">
+	                  	<p>Discord</p>
+	                  </div>
+                 	</div>
+                 	<div class="col4">
+	                  <div class="item">
+	                  	<img src="../assets/project/f6.png">
+	                  	<p>Github</p>
+	                  </div>
+                 	</div>
+                 	<div class="col4">
+	                  <div class="item">
+	                  	<img src="../assets/project/f7.png">
+	                  	<p>Instagram</p>
+	                  </div>
+                 	</div>
+                 	<div class="col4">
+	                  <div class="item">
+	                  	<img src="../assets/project/f8.png">
+	                  	<p>Medium</p>
+	                  </div>
+                 	</div>
+                 	<div class="col4">
+	                  <div class="item">
+	                  	<img src="../assets/project/f9.png">
+	                  	<p>reddit</p>
+	                  </div>
+                 	</div>
+                 	<div class="col4">
+	                  <div class="item">
+	                  	<img src="../assets/project/f10.png">
+	                  	<p>Blog</p>
+	                  </div>
+                 	</div>
+                 	<div class="col4">
+	                  <div class="item">
+	                  	<img src="../assets/project/f11.png">
+	                  	<p>gitter</p>
+	                  </div>
+                 	</div>
+                 	<div class="col4">
+	                  <div class="item">
+	                  	<img src="../assets/project/f12.png">
+	                  	<p>Google</p>
+	                  </div>
+                 	</div>
+                 	<div class="col4">
+	                  <div class="item">
+	                  	<img src="../assets/project/f13.png">
+	                  	<p>heroku</p>
+	                  </div>
+                 	</div>
+                 	<div class="col4">
+	                  <div class="item">
+	                  	<img src="../assets/project/f14.png">
+	                  	<p>linkedin</p>
+	                  </div>
+                 	</div>
+                 	<div class="col4">
+	                  <div class="item">
+	                  	<img src="../assets/project/f15.png">
+	                  	<p>Naver</p>
+	                  </div>
+                 	</div>
+                 	<div class="col4">
+	                  <div class="item">
+	                  	<img src="../assets/project/f16.png">
+	                  	<p>slack</p>
+	                  </div>
+                 	</div>
+                 	<div class="col4">
+	                  <div class="item">
+	                  	<img src="../assets/project/f17.png">
+	                  	<p>stack</p>
+	                  </div>
+                 	</div>
+                 	<div class="col4">
+	                  <div class="item">
+	                  	<img src="../assets/project/f18.png">
+	                  	<p>steemit</p>
+	                  </div>
+                 	</div>
+                 	<div class="col4">
+	                  <div class="item">
+	                  	<img src="../assets/project/f19.png">
+	                  	<p>youtube</p>
+	                  </div>
+                 	</div>
+                </div>
+              </div>
+              <div class="swiper-scrollbar"></div>
+            </div>
+            <div class="swiper-container advert-swiper">
+					    <div class="swiper-wrapper">
+				        <div class="swiper-slide"><img src="../assets/project/advert.jpg"></div>
+				        <div class="swiper-slide"><img src="../assets/project/advert.jpg"></div>
+				        <div class="swiper-slide"><img src="../assets/project/advert.jpg"></div>
+					    </div>
+					    <div class="swiper-pagination"></div>
+					    <div class="swiper-button-prev"><i class="fa fa-angle-left"></i></div>
+					    <div class="swiper-button-next"><i class="fa fa-angle-right"></i></div>
+            </div>
+					</div>
+					<div class="section6">
+						<div class="rightlayouthead">项目推荐</div>
+						<div class="item">
+							<a href="#">
+								<div class="ibanner"><img src="../assets/project/recommend-banner.jpg"></div>
+								<div class="info">
+									<div class="left"><img src="../assets/project/recommend.jpg"></div>
+									<div class="right">
+										<div class="head">
+											<p class="tit">CASPER</p>
+											<p class="smtit">DApps的新机会</p>
+										</div>
+										<p class="num">9.2 <i class="fa fa-angle-right"></i></p>
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
 			</div>
 
 			<vfooter/>
@@ -350,6 +522,11 @@
 <script>
 	import Swiper from 'swiper'
   export default {
+  	data () {
+  		return {
+  			isFollow: true
+  		}
+  	},
     mounted () {
       // let homeNewsSwiper = new Swiper('#home-news', {
       //   observer: true,
@@ -375,6 +552,19 @@
           el: '.swiper-scrollbar'
         },
         mousewheel: true
+      })
+      new Swiper('.advert-swiper', {
+        autoplay: {
+	        disableOnInteraction: false
+	      },
+	      pagination: {
+				  el: '.swiper-pagination',
+				  clickable :true
+				},
+				navigation: {
+					nextEl: '.swiper-button-next',
+					prevEl: '.swiper-button-prev'
+				}
       })
     }
   }
