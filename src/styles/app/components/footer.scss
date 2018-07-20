@@ -9,6 +9,7 @@
     .fish_container {
       .flexbox {
         display: flex;
+        flex-direction: row;
         > ul {
           float: left;
           width: 23%;
@@ -119,7 +120,7 @@
         .flexbox {
           flex-wrap: wrap;
           > ul {
-            min-width: 50%;
+            flex: 0 0 49%;
             &.logo_box {
               width: 50%;
             }

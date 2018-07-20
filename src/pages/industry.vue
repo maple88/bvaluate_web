@@ -23,7 +23,7 @@
         <div class="fish_container">
           <div class="clearfix">
             <div class="search_bar">
-              <input type="text" id="keyword"/>
+              <input type="text" id="keyword" placeholder="腾讯回应抖音起诉">
               <div class="search-btn">
                 <i class="fa fa-search"></i>
               </div>
@@ -245,7 +245,7 @@
                           <img src="../assets/follow/tweet_header.png"/>
                         </div>
                         <div class="item_body tweet">
-                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing</p>
+                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever is worth doing is worth doing Whatever is worth doing</p>
                           <div class="body_bottom">
                             <p>博主</p>
                             <p class="time">2018-05-26</p>
@@ -259,7 +259,7 @@
                           <img src="../assets/follow/tweet_header.png"/>
                         </div>
                         <div class="item_body tweet">
-                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing</p>
+                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever is worth doing is worth doing Whatever is worth doing</p>
                           <div class="body_bottom">
                             <p>博主</p>
                             <p class="time">2018-05-26</p>
@@ -273,7 +273,7 @@
                           <img src="../assets/follow/tweet_header.png"/>
                         </div>
                         <div class="item_body tweet">
-                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing</p>
+                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever is worth doing is worth doing Whatever is worth doing</p>
                           <div class="body_bottom">
                             <p>博主</p>
                             <p class="time">2018-05-26</p>
@@ -287,7 +287,7 @@
                           <img src="../assets/follow/tweet_header.png"/>
                         </div>
                         <div class="item_body tweet">
-                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing</p>
+                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever is worth doing is worth doing Whatever is worth doing</p>
                           <div class="body_bottom">
                             <p>博主</p>
                             <p class="time">2018-05-26</p>

@@ -210,6 +210,8 @@
     .usertainer .datalist li {
       width: 65px;
     }
+    .usertainer .nickname.author{font-size: 18px;}
+    .usertainer .occupation{font-size: 16px;}
   }
 }
 
@@ -687,4 +689,18 @@
       margin-bottom: 20px;
     }
   }
+}
+@media (max-width: 500px) {
+  .author_article .follow_list ul > li .list-item .medialist .media .media-left{
+    min-width: 70px;
+    height: 70px;
+    margin-right: 15px;
+  }
+  .author_article .follow_list ul > li .list-item .medialist .media .media-left .newimg_box .date_box .day{font-size: 20px;}
+  .author_article .follow_list ul > li .list-item .medialist .media .media-left .newimg_box .date_box .years{font-size: 12px;}
+  .author_article .follow_list ul > li .list-item .medialist .media .media-heading{
+    font-size: 16px;
+    height: 20px;
+  }
+  .author_article .follow_list ul > li .list-item .medialist .media .media-words{font-size: 13px;}
 }

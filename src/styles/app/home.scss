@@ -4,6 +4,8 @@
 	top: 0;
 	width: 100%;
 	z-index: 99;
+	background: transparent;
+	transition: .3s;
 	.tophead{
 		width: 100%;
 		height: 50px;
@@ -24,7 +26,7 @@
 			right: 15px;
 		}
 	}
-	.navbar-default .navbar-toggle .icon-bar{background-color: #fff;}
+	.navbar-default .navbar-toggle .icon-bar{background-color: #fff; transition: .3s;}
 	.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover{background: transparent;}
 	.mainhead{
 		width: 100%;
@@ -39,6 +41,7 @@
 			height: auto;
 			position: absolute;
 			z-index: 1;
+			.blue{display: none;}
 		}
 		.navbar-nav{border: 0;}
 		.navbar-nav>li{
@@ -129,10 +132,17 @@
 			line-height: 40px;
 		}
 	}
+	&.hasbg{
+		background: #fff;
+		position: fixed;
+		.navbar-default .navbar-toggle .icon-bar{background-color: #888;}
+		.mainhead .navbar-brand .blue{display: block;}
+		.mainhead .navbar-brand .white{display: none;}
+	}
 }
 .home-maintainer{
 	padding-top: 0;
-	position: static;
+	// position: static;
 	.home-banner{
 		width: 100%;
 		position: relative;
@@ -727,6 +737,8 @@
 			.intabcontent {
 			    padding: 0;
 			}
+			.intabcontent .bottomflex .section2{height: auto !important;}
+			.intabcontent .bottomflex .section2 #home-newslist{height: 300px;}
 			.intabcontent .topban .info .toplist-item .tit{font-size: 18px;}
 			.intabcontent .topban .info .toplist-item .smtit{font-size: 14px; margin-bottom: 10px;}
 			.intabcontent .topban .info .toplist-item .des{font-size: 13px;}
@@ -833,13 +845,13 @@
 				    	border-bottom: 1px solid #cfcfcf;
 				    	padding-bottom: 15px;
 				    	li{
-				    		width: 80%;
-				    		overflow : hidden;
-							text-overflow: ellipsis;
-							display: -webkit-box;
-							-webkit-line-clamp: 1;
-							-webkit-box-orient: vertical;
 				    		a{
+				    			width: 80%;
+					    		overflow : hidden;
+								text-overflow: ellipsis;
+								display: -webkit-box;
+								-webkit-line-clamp: 1;
+								-webkit-box-orient: vertical;
 				    			font-size: 12px;
 				    			color: #666666;
 				    			transition: .3s;
@@ -881,6 +893,7 @@
 			.modulelist .item .left{
 				min-width: 115px;
 			    flex: 0 0 115px;
+			    margin-top: 7px;
 			}
 			.modulelist .item .right .list li{width: 100%;}
 			.modulelist .item .right{padding: 0 10px;}
@@ -888,6 +901,7 @@
 			.modulelist .item .right .smtit{font-size: 14px;}
 			.modulelist .item .right .rtlist li:first-child{font-size: 14px;}
 			.modulelist .item .right .rtlist li a{font-size: 12px;}
+			.modulelist .item .right .list li a{width: 100%}
 		}
 		@media (max-width: 576px) {
 			.modulelist .item{
