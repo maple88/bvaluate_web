@@ -23,43 +23,50 @@
               <div class="inputInner" v-if="loginForm">
                 <div class="input-group">
                   <div class="input-group-addon"><img src="../assets/login/icon1.png"></div>
-                  <input type="text" class="form-control" placeholder="手机号/账号">
-                  <span class="help-block">
+                  <input type="text" class="form-control" v-model="loginUser.phoneNumber" placeholder="手机号/账号"
+                         @focus="errorMsg.loginUser.phoneNumber = ''">
+                  <span class="help-block" v-if="errorMsg.loginUser.phoneNumber">
 										<img src="../assets/login/iclose.png">
-										请输入正确的手机号码格式！
+										{{errorMsg.loginUser.phoneNumber}}
 									</span>
                 </div>
                 <div class="input-group">
                   <div class="input-group-addon"><img src="../assets/login/icon2.png"></div>
-                  <input type="password" class="form-control" placeholder="密码">
-                  <span class="help-block">
+                  <input type="password" class="form-control" v-model="loginUser.password" placeholder="密码"
+                         @focus="errorMsg.loginUser.password = ''">
+                  <span class="help-block" v-if="errorMsg.loginUser.password">
 										<img src="../assets/login/iclose.png">
-										密码错误！
+										{{errorMsg.loginUser.password}}
 									</span>
                 </div>
                 <div class="input-group submit-group">
-                  <button type="button" class="btn ok-btn">登录</button>
+                  <button type="button" class="btn ok-btn" @click="loginSubmit">登录</button>
                 </div>
                 <div class="other-group">
                   <label class="remember">
-                    <input type="checkbox"> 记住我
+                    <input type="checkbox" checked> 记住我
                   </label>
                   <span @click="resetpwd()">忘记密码</span>
                 </div>
                 <div class="other-login">
                   <div class="head">第三方登录</div>
                   <ul>
-                    <li><img src="../assets/login/wechat.png">
-                      <p>微信</p></li>
-                    <li><img src="../assets/login/qq.png">
-                      <p>QQ</p></li>
+                    <li>
+                      <img src="../assets/login/wechat.png">
+                      <p>微信</p>
+                    </li>
+                    <li>
+                      <img src="../assets/login/qq.png">
+                      <p>QQ</p>
+                    </li>
                   </ul>
                 </div>
               </div>
               <div class="inputInner" v-if="registerForm">
                 <div class="input-group">
                   <div class="input-group-addon"><img src="../assets/login/icon1.png"></div>
-                  <input type="text" class="form-control" v-model="registerUser.nickName" placeholder="你的昵称">
+                  <input type="text" class="form-control" v-model="registerUser.nickName" placeholder="你的昵称"
+                         @focus="errorMsg.registerUser.nickName = ''">
                   <span class="help-block" v-if="errorMsg.registerUser.nickName">
 										<img src="../assets/login/iclose.png">
 										{{errorMsg.registerUser.nickName}}
@@ -67,7 +74,8 @@
                 </div>
                 <div class="input-group">
                   <div class="input-group-addon"><img src="../assets/login/icon3.png"></div>
-                  <input type="text" class="form-control" v-model="registerUser.phoneNumber" placeholder="手机号">
+                  <input type="text" class="form-control" v-model="registerUser.phoneNumber" placeholder="手机号"
+                         @focus="errorMsg.registerUser.phoneNumber = ''">
                   <span class="help-block" v-if="errorMsg.registerUser.phoneNumber">
 										<img src="../assets/login/iclose.png">
 										{{errorMsg.registerUser.phoneNumber}}
@@ -82,7 +90,8 @@
                   <input type="password" class="form-control" v-model="registerUser.confirmpsd" placeholder="确认密码">
                 </div>
                 <div class="code">
-                  <input type="text" v-model="registerUser.code" placeholder="输入验证码">
+                  <input type="text" v-model="registerUser.code" placeholder="输入验证码"
+                         @focus="errorMsg.registerUser.code = ''">
                   <span class="help-block" v-if="errorMsg.registerUser.code">
 										<img src="../assets/login/iclose.png">
 										{{errorMsg.registerUser.code}}
@@ -146,11 +155,19 @@
           password: '',
           confirmpsd: ''
         },
+        loginUser: {
+          phoneNumber: '',
+          password: ''
+        },
         errorMsg: {
           registerUser: {
             nickName: '',
             phoneNumber: '',
             code: ''
+          },
+          loginUser: {
+            phoneNumber: '',
+            password: ''
           }
         },
         sendBtnText: '获取验证码',
@@ -159,23 +176,44 @@
       }
     },
     mounted() {
-      this.getNews()
     },
     methods: {
-      getNews() {
-        this.$axios.get('/api/traditional/categories').then(function (res) {
-          console.log(res)
-        })
+      loginSubmit() {
+        let phoneNumber = this.loginUser.phoneNumber;
+        let password = this.loginUser.password;
+        if (phoneNumber == null || phoneNumber === undefined || phoneNumber === '') {
+          this.errorMsg.loginUser.phoneNumber = '请输入手机号码/账号'
+        } else if (password == null || password === undefined || password === '') {
+          this.errorMsg.loginUser.password = '请输入密码'
+        } else {
+          let that = this;
+          let json = {
+            phoneNumber: phoneNumber,
+            password: password
+          }
+          that.$axios.post('/api/login', json).then(function (res) {
+            let data = res.data
+            let uid = data.uid
+            let token = data.token
+            let phoneNumber = data.phoneNumber
+            let expirationDate = data.expirationDate
+            localStorage.setItem('expirationDate', expirationDate)
+            localStorage.setItem('uid', uid)
+            localStorage.setItem('token', token)
+            localStorage.setItem('phoneNumber', phoneNumber)
+            that.$router.push('/index')
+          })
+        }
       },
       sendCode() {
         let phone = this.registerUser.phoneNumber
         if (/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phone)) {
           let that = this;
           let json = {
-            phoneNumber: this.registerUser.phoneNumber,
+            phoneNumber: phone,
             codeType: '1003'
           }
-          that.$axios.post('/api/apelink/login/code', json).then(function (res) {
+          that.$axios.post('/api/login/code', json).then(function (res) {
             console.log(res)
           })
           let auth_timetimer = setInterval(() => {
