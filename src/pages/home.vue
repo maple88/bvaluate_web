@@ -18,17 +18,20 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#"><img src="../assets/logo-white.png"></a>
+              <router-link to="/index" class="navbar-brand">
+                <img src="../assets/logo-white.png" class="white">
+                <img src="../assets/logo.png" class="blue">
+              </router-link>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="#">首页</a></li>
-                <li><a href="#">关注</a></li>
-                <li><a href="#">项目</a></li>
-                <li><a href="#">作者</a></li>
-                <li><a href="#">个人中心</a></li>
+                <router-link tag="li" to="/index" active-class="active"><a>首页</a></router-link>
+                <router-link tag="li" to="/follow" active-class="active"><a>关注</a></router-link>
+                <router-link tag="li" to="/project" active-class="active"><a>项目</a></router-link>
+                <router-link tag="li" to="/author" active-class="active"><a>作者</a></router-link>
+                <router-link tag="li" to="/userCenter" active-class="active"><a>个人中心</a></router-link>
               </ul>
               <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
@@ -37,7 +40,8 @@
                     <p>糖果数：1450</p>
                   </a>
                   <ul class="dropdown-menu">
-                    <li><a href="#">设置</a></li>
+                    <router-link tag="li" to="/my"><a>设置</a></router-link>
+                    <!-- <li><a href="#">设置</a></li> -->
                     <li><a href="#">退出</a></li>
                   </ul>
                 </li>
@@ -47,7 +51,7 @@
         </nav>
       </div>
     </div>
-    <div class="maintainer home-maintainer">
+    <div class="maintainer home-maintainer" @scroll.passive="showheader" ref="box">
       <div class="home-banner">
         <img src="../assets/home/home-banner.jpg" class="bgimg">
         <div class="bannerwds">
@@ -56,7 +60,7 @@
           APELINk
         </div>
       </div>
-      <!-- <div class="df-container container home-newslist">
+      <div class="df-container container home-newslist">
         <div class="section-head">
           <div class="headtit">新闻头条</div>
           <a href="#" class="more">浏览更多</a>
@@ -165,7 +169,8 @@
         <div class="row">
           <div class="section-head">
             <div class="headtit">热门行业</div>
-            <a href="#" class="more">浏览更多</a>
+            <!-- <a href="#" class="more">浏览更多</a> -->
+            <router-link to="/industry" class="more">浏览更多</router-link>
           </div>
           <div class="inlist">
             <ul>
@@ -372,12 +377,12 @@
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
       <div class="df-container container hotindustry2">
         <div class="row">
           <div class="section-head">
             <div class="headtit">热门行业</div>
-            <a href="#" class="more">浏览更多</a>
+            <router-link to="/industry" class="more">浏览更多</router-link>
           </div>
           <div class="modulelist">
             <div class="item">
@@ -500,11 +505,20 @@
         slidesPerView: 'auto',
         freeMode: true,
         scrollbar: {
-          el: '.swiper-scrollbar',
-          // hide: true,
+          el: '.swiper-scrollbar'
         },
         mousewheel: true
       })
+    },
+    methods: {
+      showheader () {
+        let arr = document.getElementsByClassName('home-header')
+        if (this.$refs.box.scrollTop >= 10) {
+          arr[0].classList.add('hasbg')
+        } else {
+          arr[0].classList.remove('hasbg')
+        }
+      }
     }
   }
 </script>

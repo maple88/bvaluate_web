@@ -73,14 +73,21 @@
 				min-width: inherit;
 				width: 100%;
 				top: 110%;
-				box-shadow: none;
-				background: transparent;
-				border: 0;
 				a{
 					padding: 6px 0;
 					text-align: center;
-					color: #fff;
-					&:hover{background: $mainColor;}
+					color: $black;
+					&:hover{
+						background: $mainColor;
+						color: #fff;
+					}
+				}
+				li.active{
+					background: transparent;
+					a{
+						color: $mainColor;
+						background: transparent;
+					}
 				}
 			}
 		}
@@ -120,6 +127,12 @@
 		.tophead{
 			height: 40px;
 			line-height: 40px;
+		}
+		.mainhead .navbar-nav.navbar-right .dropdown-menu{
+			box-shadow: none;
+			background: transparent;
+			border: 0;
+			a{color: $black;}
 		}
 	}
 }

@@ -17,17 +17,17 @@
 			        <span class="icon-bar"></span>
 			        <span class="icon-bar"></span>
 			      </button>
-			      <a class="navbar-brand" href="#"><img src="../assets/logo.png"></a>
+			      <router-link to="/index" class="navbar-brand"><img src="../assets/logo.png"></router-link>
 			    </div>
 
 			    <!-- Collect the nav links, forms, and other content for toggling -->
 			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			      <ul class="nav navbar-nav">
-			        <li class="active"><a href="#">首页</a></li>
-			        <li><a href="#">关注</a></li>
-			        <li><a href="#">项目</a></li>
-			        <li><a href="#">作者</a></li>
-			        <li><a href="#">个人中心</a></li>
+			        <router-link tag="li" to="/index" active-class="active"><a>首页</a></router-link>
+			        <router-link tag="li" to="/follow" active-class="active"><a>关注</a></router-link>
+			        <router-link tag="li" to="/project" active-class="active"><a>项目</a></router-link>
+			        <router-link tag="li" to="/author" active-class="active"><a>作者</a></router-link>
+			        <router-link tag="li" to="/userCenter" active-class="active"><a>个人中心</a></router-link>
 			      </ul>
 			      <ul class="nav navbar-nav navbar-right">
 			        <li class="dropdown">
@@ -36,7 +36,8 @@
 			          	<p>糖果数：1450</p>
 			          </a>
 			          <ul class="dropdown-menu">
-			            <li><a href="#">设置</a></li>
+			          	<router-link tag="li" to="/my"><a>设置</a></router-link>
+			            <!-- <li><a href="#">设置</a></li> -->
 			            <li><a href="#">退出</a></li>
 			          </ul>
 			        </li>

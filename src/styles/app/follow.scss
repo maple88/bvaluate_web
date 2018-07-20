@@ -88,7 +88,7 @@
             top: 0px;
             .follow {
               border: 2px solid #333;
-              padding: 5px 20px;
+              padding: 3px 15px;
               border-radius: 50px;
               cursor: pointer;
               i {
@@ -111,7 +111,7 @@
                       cursor: pointer;
                       background-color: $mainColor;
                       color: #ffffff;
-                      font-size: 18px;
+                      font-size: 14px;
                       padding: 5px 20px;
                       border-radius: 50px;
                     }
@@ -167,7 +167,7 @@
       }
       .search_bar {
         float: right;
-        width: 40%;
+        width: 30%;
         position: relative;
         #keyword {
           width: 100%;
@@ -301,7 +301,6 @@
                     font-size: 20px;
                     height: 23px;
                     width: 100%;
-                    color: #333333;
                     margin-bottom: 8px;
                   }
                   .media-words {
@@ -450,20 +449,20 @@
           flex-direction: row;
           position: relative;
           .title_icon {
-            width: 54px;
-            height: 54px;
+            width: 40px;
+            height: 40px;
             border: 1px solid #f5f5f5;
             display: flex;
             justify-content: center;
             align-items: center;
             img {
-              width: 27px;
-              height: 27px;
+              width: 25px;
+              height: 25px;
             }
           }
           h4 {
-            padding-top: 5px;
-            font-size: 21px;
+            padding-top: 2px;
+            font-size: 18px;
             padding-left: 15px;
             .vertical {
               padding-left: 5px;
@@ -480,7 +479,7 @@
           }
           .look_more {
             position: absolute;
-            top: 19px;
+            top: 12px;
             right: 0px;
             font-size: 12px;
             color: #333333;
@@ -646,6 +645,11 @@
                 display: -webkit-box;
                 -webkit-line-clamp: 1;
                 -webkit-box-orient: vertical;
+                cursor: pointer;
+                transition: .3s;
+                &:hover{
+                  color: $mainColor;
+                }
               }
               > p {
                 font-size: 12px;
@@ -1112,4 +1116,29 @@
       }
     }
   }
+}
+@media (max-width: 768px) {
+  .follow_content .clearfix > .center .follow_list ul > li .list-item .medialist .media .media-heading{
+    font-size: 16px;
+    height: auto;
+  }
+  .follow_content .clearfix > .center .follow_list ul > li .list-item .medialist .media .media-words{font-size: 13px;}
+  .follow_content .clearfix > .center .follow_list ul > li .list-item .medialist .media .media-left{
+    min-width: 70px;
+    height: 70px;
+    margin-right: 15px;
+  }
+  .follow_content .clearfix > .center .follow_list ul > li .list-item .medialist .media .media-left .newimg_box .date_box .day{font-size: 20px;}
+  .follow_content .clearfix > .center .follow_list ul > li .list-item .medialist .media .media-left .newimg_box .date_box .year{font-size: 12px;}
+  .follow_content .clearfix > .right .right_item .hot_content .list_item .item_body h4{
+    font-size: 16px;
+    height: 18px;
+    margin: 0 0 8px;
+  }
+  .follow_content .clearfix > .right .right_item .hot_content .list_item .item_left{
+    flex: 0 0 70px;
+    height: 70px;
+  }
+  .follow_content .clearfix > .right .right_item .hot_title h4{font-size: 16px;}
+  .follow_content .clearfix > .right .right_item .hot_title h4 .vertical{top: 0;}
 }

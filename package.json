@@ -13,9 +13,12 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@tinymce/tinymce-vue": "^1.0.8",
+    "axios": "^0.18.0",
     "bootstrap": "^3.3.7",
     "jquery": "^2.2.3",
     "swiper": "^4.3.3",
+    "tinymce": "^4.8.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },

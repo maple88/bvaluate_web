@@ -103,7 +103,6 @@
       .editbox {
         width: 100%;
         padding-left: 50px;
-        border-bottom: 1px solid #3991d1;
         margin-bottom: -1px;
         textarea {
           font-size: 16px;
@@ -120,6 +119,8 @@
           max-width: 400px;
           border: 0;
           outline: none;
+          border-radius: 0;
+          border-bottom: 1px solid #3991d1;
         }
       }
     }

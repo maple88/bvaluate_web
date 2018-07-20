@@ -14,6 +14,7 @@ import author from '@/pages/author'
 Vue.use(Router)
 
 export default new Router({
+  linkExactActiveClass: 'active',
   routes: [
     {
       path: '/',
@@ -59,5 +60,12 @@ export default new Router({
       path: '/author',
       component: author
     }
-  ]
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  }
 })
