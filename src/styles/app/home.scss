@@ -699,7 +699,7 @@
               width: 100% !important;
             }
           }
-          #home-newslist {
+          .home_newslist_style {
             height: 493px;
             .swiper-slide {
               height: auto;
@@ -717,6 +717,19 @@
                 height: 93px;
                 border-radius: 50%;
                 margin-right: 10px;
+                &.hasbg {
+                  position: relative;
+                  img {
+                    position: absolute;
+                    left: 0px;
+                    top: 0px;
+                    z-index: 1;
+                    filter: blur(1px);
+                  }
+                  p {
+                    z-index: 2;
+                  }
+                }
                 img {
                   width: 100%;
                 }
@@ -846,7 +859,7 @@
       .intabcontent .bottomflex .section2 {
         height: auto !important;
       }
-      .intabcontent .bottomflex .section2 #home-newslist {
+      .intabcontent .bottomflex .section2 .home_newslist_style {
         height: 300px;
       }
       .intabcontent .topban .info .toplist-item .tit {
@@ -891,7 +904,7 @@
       }
     }
     @media (max-width: 576px) {
-      .intabcontent .bottomflex .section2 #home-newslist .item .left {
+      .intabcontent .bottomflex .section2 .home_newslist_style .item .left {
         min-width: 60px;
         height: 60px;
       }
@@ -900,14 +913,14 @@
         padding: 15px 0;
         height: 520px;
       }
-      .intabcontent .bottomflex .section2 #home-newslist .swiper-slide {
+      .intabcontent .bottomflex .section2 .home_newslist_style .swiper-slide {
         padding: 0 15px;
       }
-      .intabcontent .bottomflex .section2 #home-newslist .item {
+      .intabcontent .bottomflex .section2 .home_newslist_style .item {
         padding: 15px 0;
       }
-      .intabcontent .bottomflex .section2 #home-newslist .item .right .name,
-      .intabcontent .bottomflex .section2 #home-newslist .item .right .time {
+      .intabcontent .bottomflex .section2 .home_newslist_style .item .right .name,
+      .intabcontent .bottomflex .section2 .home_newslist_style .item .right .time {
         font-size: 12px;
       }
       .intabcontent .bottomflex .section1 .head,

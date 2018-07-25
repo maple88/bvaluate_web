@@ -252,12 +252,15 @@
                 <div class="swiper-container" id="home-news">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                      <div class="swiper-container" id="home-newslist">
+                      <div class="swiper-container home_newslist_style" id="home-newslist1">
                         <div class="swiper-wrapper">
                           <div class="swiper-slide">
                             <div class="item hasdate" v-for="icoNew in icoNews.content">
-                              <div class="left"><p class="day">{{icoNew.urlTime | showDay }}</p>
-                                <p>{{icoNew.urlTime | showYear}}</p></div>
+                              <div class="left" :class="(icoNew.titlePicture != ''&& icoNew.titlePicture )?'hasbg':'' ">
+                                <img :src="icoNew.titlePicture ">
+                                <p class="day">{{icoNew.urlTime | showDay }}</p>
+                                <p>{{icoNew.urlTime | showYear}}</p>
+                              </div>
                               <div class="right">
                                 <p class="tit">
                                   <a href="#">
@@ -269,13 +272,13 @@
                                 </p>
                                 <div class="bottom">
                                   <div class="userinfo">
-                                    <div class="user" :is="icoNew.siteName">
+                                    <div class="user" v-if="icoNew.siteName">
                                       <!--<img src="../assets/logo_brand.png">-->
                                       <span>{{icoNew.siteName}}</span>
                                     </div>
-                                    <div class="user" :is="!icoNew.siteName">
+                                    <div class="user" v-else>
                                       <img src="../assets/logo_brand.png">
-                                      <span>{{icoNew.author }}</span>
+                                      <span>{{icoNew.author }}{{!(icoNew.siteName)}}</span>
                                     </div>
                                     <span class="usertime">{{icoNew.urlTime }}</span>
                                   </div>
@@ -298,11 +301,115 @@
                             </div>
                           </div>
                         </div>
+                        <div class="swiper-scrollbar"></div>
                       </div>
-                      <div class="swiper-scrollbar"></div>
                     </div>
-                    <div class="swiper-slide">Slide 2</div>
-                    <div class="swiper-slide">Slide 3</div>
+                    <div class="swiper-slide">
+                      <!--<div class="swiper-container home_newslist_style" id="home-newslist2">-->
+                      <!--<div class="swiper-wrapper">-->
+                      <!--<div class="swiper-slide">-->
+                      <!--<div class="item hasdate" v-for="icoNew in icoNews.content">-->
+                      <!--<div class="left" :class="(icoNew.titlePicture != ''&& icoNew.titlePicture )?'hasbg':'' ">-->
+                      <!--<img :src="icoNew.titlePicture ">-->
+                      <!--<p class="day">{{icoNew.urlTime | showDay }}</p>-->
+                      <!--<p>{{icoNew.urlTime | showYear}}</p>-->
+                      <!--</div>-->
+                      <!--<div class="right">-->
+                      <!--<p class="tit">-->
+                      <!--<a href="#">-->
+                      <!--{{icoNew.title }}-->
+                      <!--</a>-->
+                      <!--</p>-->
+                      <!--<p class="des">-->
+                      <!--{{icoNew.content }}-->
+                      <!--</p>-->
+                      <!--<div class="bottom">-->
+                      <!--<div class="userinfo">-->
+                      <!--<div class="user" :is="icoNew.siteName">-->
+                      <!--&lt;!&ndash;<img src="../assets/logo_brand.png">&ndash;&gt;-->
+                      <!--<span>{{icoNew.siteName}}</span>-->
+                      <!--</div>-->
+                      <!--<div class="user" :is="!icoNew.siteName">-->
+                      <!--<img src="../assets/logo_brand.png">-->
+                      <!--<span>{{icoNew.author }}</span>-->
+                      <!--</div>-->
+                      <!--<span class="usertime">{{icoNew.urlTime }}</span>-->
+                      <!--</div>-->
+                      <!--<span class="tips">{{icoNew.grouptName}}</span>-->
+                      <!--</div>-->
+                      <!--</div>-->
+                      <!--</div>-->
+                      <!--<div class="item">-->
+                      <!--<div class="left"><img src="../assets/home/nicon.png"></div>-->
+                      <!--<div class="right">-->
+                      <!--<p class="des">Hey Andrew, We will be announcing release detailsin the coming weeks,-->
+                      <!--stay tuned on our official hannels! t.me/vividtoken Hey Andrew, We will be-->
+                      <!--announcing</p>-->
+                      <!--<div class="bottom">-->
+                      <!--<span class="name">博主</span>-->
+                      <!--<span class="time">2018-06-02    18:00</span>-->
+                      <!--<span class="tips">新闻</span>-->
+                      <!--</div>-->
+                      <!--</div>-->
+                      <!--</div>-->
+                      <!--</div>-->
+                      <!--</div>-->
+                      <!--<div class="swiper-scrollbar"></div>-->
+                      <!--</div>-->
+                    </div>
+                    <div class="swiper-slide">
+                      <!--<div class="swiper-container home_newslist_style" id="home-newslist3">-->
+                      <!--<div class="swiper-wrapper">-->
+                      <!--<div class="swiper-slide">-->
+                      <!--<div class="item hasdate" v-for="icoNew in icoNews.content">-->
+                      <!--<div class="left" :class="(icoNew.titlePicture != ''&& icoNew.titlePicture )?'hasbg':'' ">-->
+                      <!--<img :src="icoNew.titlePicture ">-->
+                      <!--<p class="day">{{icoNew.urlTime | showDay }}</p>-->
+                      <!--<p>{{icoNew.urlTime | showYear}}</p>-->
+                      <!--</div>-->
+                      <!--<div class="right">-->
+                      <!--<p class="tit">-->
+                      <!--<a href="#">-->
+                      <!--{{icoNew.title }}-->
+                      <!--</a>-->
+                      <!--</p>-->
+                      <!--<p class="des">-->
+                      <!--{{icoNew.content }}-->
+                      <!--</p>-->
+                      <!--<div class="bottom">-->
+                      <!--<div class="userinfo">-->
+                      <!--<div class="user" :is="icoNew.siteName">-->
+                      <!--&lt;!&ndash;<img src="../assets/logo_brand.png">&ndash;&gt;-->
+                      <!--<span>{{icoNew.siteName}}</span>-->
+                      <!--</div>-->
+                      <!--<div class="user" :is="!icoNew.siteName">-->
+                      <!--<img src="../assets/logo_brand.png">-->
+                      <!--<span>{{icoNew.author }}</span>-->
+                      <!--</div>-->
+                      <!--<span class="usertime">{{icoNew.urlTime }}</span>-->
+                      <!--</div>-->
+                      <!--<span class="tips">{{icoNew.grouptName}}</span>-->
+                      <!--</div>-->
+                      <!--</div>-->
+                      <!--</div>-->
+                      <!--<div class="item">-->
+                      <!--<div class="left"><img src="../assets/home/nicon.png"></div>-->
+                      <!--<div class="right">-->
+                      <!--<p class="des">Hey Andrew, We will be announcing release detailsin the coming weeks,-->
+                      <!--stay tuned on our official hannels! t.me/vividtoken Hey Andrew, We will be-->
+                      <!--announcing</p>-->
+                      <!--<div class="bottom">-->
+                      <!--<span class="name">博主</span>-->
+                      <!--<span class="time">2018-06-02    18:00</span>-->
+                      <!--<span class="tips">新闻</span>-->
+                      <!--</div>-->
+                      <!--</div>-->
+                      <!--</div>-->
+                      <!--</div>-->
+                      <!--</div>-->
+                      <!--<div class="swiper-scrollbar"></div>-->
+                      <!--</div>-->
+                    </div>
                   </div>
                 </div>
               </div>
@@ -441,7 +548,29 @@
         $(this).addClass('active')
         homeNewsSwiper.slideTo($(this).index())
       })
-      new Swiper('#home-newslist', {
+      new Swiper('#home-newslist1', {
+        direction: 'vertical',
+        slidesPerView: 'auto',
+        freeMode: true,
+        scrollbar: {
+          el: '.swiper-scrollbar'
+        },
+        mousewheel: true,
+        observer: true,
+        observeParents: true
+      })
+      new Swiper('#home-newslist2', {
+        direction: 'vertical',
+        slidesPerView: 'auto',
+        freeMode: true,
+        scrollbar: {
+          el: '.swiper-scrollbar'
+        },
+        mousewheel: true,
+        observer: true,
+        observeParents: true
+      })
+      new Swiper('#home-newslist3', {
         direction: 'vertical',
         slidesPerView: 'auto',
         freeMode: true,
