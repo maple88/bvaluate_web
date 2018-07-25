@@ -180,7 +180,7 @@
           </div>
           <div class="inlist">
             <ul>
-              <li :class="index == 0 ? 'on': ''" v-for="(item,index) in hottestProject">
+              <li :class="index == 0 ? 'on': ''" v-for="(item,index) in hottestProject" @click="changeProject(item)">
                 <img :src="'http://'+item.logoSrc " class="inlistimg">
                 <div class="mask">
                   <p>{{item.project}}</p>
@@ -193,32 +193,28 @@
               <div class="info">
                 <div class="toplist-item">
                   <div class="left">
-                    <p class="tit">Datablockchain (PreICO) <i class="fa fa-heart"></i></p>
-                    <p class="smtit">Merging Big Data, AI And Blockchain</p>
-                    <p class="des">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum
-                      laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales
-                      pulvinar tempor. Cum sociis natoque penatibuset magnis dis parturient montes, nascetur ridiculus
-                      mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien
-                      nunc eget.</p>
+                    <p class="tit">{{showProject.project}}<i class="fa fa-heart"></i></p>
+                    <p class="smtit">{{showProject.introduction }}</p>
+                    <p class="des">{{showProject.irAbstract }}</p>
                   </div>
-                  <div class="right"><img src="../assets/home/ibing.jpg"></div>
+                  <div class="right"><img :src="'http://'+showProject.logoSrc"></div>
                 </div>
                 <div class="mid">
-                  <p><span>代币</span>FSN</p>
+                  <p><span>代币</span>{{showProject.token }}</p>
                   <p><span>价格</span>IETH=400FSN</p>
                 </div>
                 <div class="bottom">
                   <ul>
                     <li>folow us:</li>
-                    <li><a href="#"><img src="../assets/home/f1.png"></a></li>
-                    <li><a href="#"><img src="../assets/home/f2.png"></a></li>
-                    <li><a href="#"><img src="../assets/home/f3.png"></a></li>
-                    <li><a href="#"><img src="../assets/home/f4.png"></a></li>
-                    <li><a href="#"><img src="../assets/home/f5.png"></a></li>
-                    <li><a href="#"><img src="../assets/home/f6.png"></a></li>
-                    <li><a href="#"><img src="../assets/home/f8.png"></a></li>
-                    <li><a href="#"><img src="../assets/home/f9.png"></a></li>
-                    <li><a href="#"><img src="../assets/home/f10.png"></a></li>
+                    <li><a :href="showProject.outerFaceBook "><img src="../assets/home/f1.png"></a></li>
+                    <li><a :href="showProject.outerTwitter "><img src="../assets/home/f2.png"></a></li>
+                    <li><a :href="showProject.outerTelegram "><img src="../assets/home/f3.png"></a></li>
+                    <li><a :href="showProject.outerBitCoinTalk "><img src="../assets/home/f4.png"></a></li>
+                    <li><a :href="showProject.outerInstagram "><img src="../assets/home/f5.png"></a></li>
+                    <li><a :href="showProject.outerGitHub"><img src="../assets/home/f6.png"></a></li>
+                    <li><a :href="showProject.outerMedium  "><img src="../assets/home/f8.png"></a></li>
+                    <li><a :href="showProject.outerQuora "><img src="../assets/home/f9.png"></a></li>
+                    <li><a :href="showProject.outerReddit "><img src="../assets/home/f10.png"></a></li>
                   </ul>
                   <div class="tips">评</div>
                 </div>
@@ -229,60 +225,18 @@
                 <div class="head">团队</div>
                 <div class="swiper-container" id="home-team">
                   <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                      <div class="item">
-                        <img src="../assets/logo_brand.png">
-                        <p class="name">Deian roljic</p>
-                        <p class="posi">创始人加首席执行者</p>
-                        <div class="i"><i class="fa fa-linkedin"></i></div>
-                      </div>
-                      <div class="item">
-                        <img src="../assets/logo_brand.png">
-                        <p class="name">Deian roljic</p>
-                        <p class="posi">创始人加首席执行者</p>
-                        <div class="i on"><i class="fa fa-linkedin"></i></div>
-                      </div>
-                      <div class="item">
-                        <img src="../assets/logo_brand.png">
-                        <p class="name">Deian roljic</p>
-                        <p class="posi">创始人加首席执行者</p>
-                        <div class="i on"><i class="fa fa-linkedin"></i></div>
-                      </div>
-                      <div class="item">
-                        <img src="../assets/logo_brand.png">
-                        <p class="name">Deian roljic</p>
-                        <p class="posi">创始人加首席执行者</p>
-                        <div class="i on"><i class="fa fa-linkedin"></i></div>
-                      </div>
-                      <div class="item">
-                        <img src="../assets/logo_brand.png">
-                        <p class="name">Deian roljic</p>
-                        <p class="posi">创始人加首席执行者</p>
-                        <div class="i on"><i class="fa fa-linkedin"></i></div>
-                      </div>
-                      <div class="item">
-                        <img src="../assets/logo_brand.png">
-                        <p class="name">Deian roljic</p>
-                        <p class="posi">创始人加首席执行者</p>
-                        <div class="i on"><i class="fa fa-linkedin"></i></div>
-                      </div>
-                      <div class="item">
-                        <img src="../assets/logo_brand.png">
-                        <p class="name">Deian roljic</p>
-                        <p class="posi">创始人加首席执行者</p>
-                        <div class="i on"><i class="fa fa-linkedin"></i></div>
-                      </div>
-                      <div class="item">
-                        <img src="../assets/logo_brand.png">
-                        <p class="name">Deian roljic</p>
-                        <p class="posi">创始人加首席执行者</p>
-                        <div class="i on"><i class="fa fa-linkedin"></i></div>
-                      </div>
-                      <div class="item">
-                        <img src="../assets/logo_brand.png">
-                        <p class="name">Deian roljic</p>
-                        <p class="posi">创始人加首席执行者</p>
-                        <div class="i on"><i class="fa fa-linkedin"></i></div>
+                    <div class="swiper-slide" v-for="item in showProject.partner ">
+                      <!--<div class="item">-->
+                      <!--<img src="../assets/logo_brand.png">-->
+                      <!--<p class="name">Deian roljic</p>-->
+                      <!--<p class="posi">创始人加首席执行者</p>-->
+                      <!--<div class="i"><i class="fa fa-linkedin"></i></div>-->
+                      <!--</div>-->
+                      <div class="item" v-for="partner in item">
+                        <img :src="partner.image">
+                        <p class="name">{{partner.h3}}</p>
+                        <p class="posi">{{partner.h4}}</p>
+                        <div class="i on"><a :href="partner.linkin"></a><i class="fa fa-linkedin"></i></div>
                       </div>
                     </div>
                   </div>
@@ -301,63 +255,31 @@
                       <div class="swiper-container" id="home-newslist">
                         <div class="swiper-wrapper">
                           <div class="swiper-slide">
-                            <div class="item hasdate">
-                              <div class="left"><p class="day">22</p>
-                                <p>2018-05</p></div>
+                            <div class="item hasdate" v-for="icoNew in icoNews.content">
+                              <div class="left"><p class="day">{{icoNew.urlTime | showDay }}</p>
+                                <p>{{icoNew.urlTime | showYear}}</p></div>
                               <div class="right">
-                                <p class="tit"><a href="#">Whatever is worth doing is worth doing well Whatever is worth
-                                  doing is worth doing well</a></p>
-                                <p class="des">Hey Andrew, We will be announcing release detailsin the coming weeks,
-                                  stay tuned on our official hannels! t.me/vividtoken Hey Andrew, We will be
-                                  announcing</p>
+                                <p class="tit">
+                                  <a href="#">
+                                    {{icoNew.title }}
+                                  </a>
+                                </p>
+                                <p class="des">
+                                  {{icoNew.content }}
+                                </p>
                                 <div class="bottom">
                                   <div class="userinfo">
-                                    <div class="user">
-                                      <img src="../assets/logo_brand.png">
-                                      <span>刘方平</span>
+                                    <div class="user" :is="icoNew.siteName">
+                                      <!--<img src="../assets/logo_brand.png">-->
+                                      <span>{{icoNew.siteName}}</span>
                                     </div>
-                                    <span class="usertime">5月17日    18:17</span>
+                                    <div class="user" :is="!icoNew.siteName">
+                                      <img src="../assets/logo_brand.png">
+                                      <span>{{icoNew.author }}</span>
+                                    </div>
+                                    <span class="usertime">{{icoNew.urlTime }}</span>
                                   </div>
-                                  <span class="tips">资讯</span>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="item">
-                              <div class="left"><img src="../assets/home/nicon.png"></div>
-                              <div class="right">
-                                <p class="des">Hey Andrew, We will be announcing release detailsin the coming weeks,
-                                  stay tuned on our official hannels! t.me/vividtoken Hey Andrew, We will be
-                                  announcing</p>
-                                <div class="bottom">
-                                  <span class="name">博主</span>
-                                  <span class="time">2018-06-02    18:00</span>
-                                  <span class="tips">新闻</span>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="item">
-                              <div class="left"><img src="../assets/home/nicon.png"></div>
-                              <div class="right">
-                                <p class="des">Hey Andrew, We will be announcing release detailsin the coming weeks,
-                                  stay tuned on our official hannels! t.me/vividtoken Hey Andrew, We will be
-                                  announcing</p>
-                                <div class="bottom">
-                                  <span class="name">博主</span>
-                                  <span class="time">2018-06-02    18:00</span>
-                                  <span class="tips">新闻</span>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="item">
-                              <div class="left"><img src="../assets/home/nicon.png"></div>
-                              <div class="right">
-                                <p class="des">Hey Andrew, We will be announcing release detailsin the coming weeks,
-                                  stay tuned on our official hannels! t.me/vividtoken Hey Andrew, We will be
-                                  announcing</p>
-                                <div class="bottom">
-                                  <span class="name">博主</span>
-                                  <span class="time">2018-06-02    18:00</span>
-                                  <span class="tips">新闻</span>
+                                  <span class="tips">{{icoNew.grouptName}}</span>
                                 </div>
                               </div>
                             </div>
@@ -470,7 +392,28 @@
   export default {
     data() {
       return {
-        hottestProject: []
+        hottestProject: [],
+        showProject: {},
+        icoNews: {
+          index: 1,
+          content: []
+        }
+      }
+    },
+    filters: {
+      showDay(obj) {
+        let myDate = new Date(obj);
+        return myDate.getDate()
+      },
+      showYear(obj) {
+        let myDate = new Date(obj);
+        let month = myDate.getMonth()
+        if (month < 9) {
+          month = '0' + (month + 1)
+        } else {
+          month = month + 1
+        }
+        return myDate.getFullYear() + '-' + month
       }
     },
     mounted() {
@@ -481,24 +424,6 @@
           el: '.swiper-pagination',
           clickable: true,
         }
-        // breakpoints: {
-        //   1200: {
-        //     slidesPerView: 4,
-        //     spaceBetween: 35
-        //   },
-        //   992: {
-        //     slidesPerView: 3,
-        //     spaceBetween: 35
-        //   },
-        //   768: {
-        //     slidesPerView: 2,
-        //     spaceBetween: 35
-        //   },
-        //   400: {
-        //     slidesPerView: 1,
-        //     spaceBetween: 35
-        //   }
-        // }
       });
       let homeNewsSwiper = new Swiper('#home-news', {
         observer: true,
@@ -523,11 +448,21 @@
         scrollbar: {
           el: '.swiper-scrollbar'
         },
-        mousewheel: true
+        mousewheel: true,
+        observer: true,
+        observeParents: true
       })
       this.getHottestProject()
     },
     methods: {
+      initIcoNews(obj) {
+        let ico = obj.project;
+        let dataType = 'NEWS';
+        let that = this
+        that.$axios.get('http://104.43.242.70:8090/apelink/ICO/icoLatestNews?ico=' + ico + '&dataType=' + dataType).then(function (res) {
+          that.icoNews.content = res.data.content
+        })
+      },
       showheader() {
         let arr = document.getElementsByClassName('home-header')
         if (this.$refs.box.scrollTop >= 10) {
@@ -541,9 +476,41 @@
         that.$axios.get('http://104.43.242.70:8090/apelink/ICO/top5').then(function (res) {
           if (res.status === 200) {
             that.hottestProject = res.data
-            console.log(res.data)
+            if (res.data.length >= 1) {
+              that.showProject = res.data[0]
+            }
+            let partner = JSON.parse('[' + that.showProject.partner + ']')
+            that.showProject.partner = that.initPartner(partner)
+            that.initIcoNews(that.showProject)
           }
         })
+      },
+      initPartner(obj) {
+        let objArr = []
+        let arr = []
+        let num = 0
+        for (let i = 0; i < obj.length; i++) {
+          num++
+          arr.push(obj[i])
+          if (i >= obj.length - 1) {
+            num = 9
+          }
+          if (num > 7) {
+            objArr.push(arr)
+            arr = []
+            num = 0
+          }
+        }
+        console.log(objArr)
+        return objArr
+      },
+      changeProject(obj) {
+        console.log(obj.partner)
+        obj.partner = null
+        // let partner = JSON.parse('[' + obj.partner + ']');
+        // console.log(partner)
+        // obj.partner = this.initPartner(partner);
+        this.showProject = obj;
       }
     }
   }
