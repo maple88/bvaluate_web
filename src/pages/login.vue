@@ -191,7 +191,7 @@
             phoneNumber: phoneNumber,
             password: password
           }
-          that.$axios.post('http://104.43.242.70:8090/apelink/login', json).then(function (res) {
+          that.$axios.post('/api/apelink/login', json).then(function (res) {
             let data = res.data
             let uid = data.uid
             let token = data.token

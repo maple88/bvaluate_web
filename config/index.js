@@ -53,7 +53,16 @@ module.exports = {
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: './',
-
+    proxyTable: {
+      '/api': {
+        target: 'http://23.101.9.18:8090/apelink',
+        secure: false,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': '/'
+        }
+      }
+    },
     /**
      * Source Maps
      */

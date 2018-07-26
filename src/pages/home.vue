@@ -201,7 +201,7 @@
                 </div>
                 <div class="mid">
                   <p><span>代币</span>{{showProject.token }}</p>
-                  <p><span>价格</span>IETH=400FSN</p>
+                  <p><span>价格</span>{{showProject.price }}</p>
                 </div>
                 <div class="bottom">
                   <ul>
@@ -504,7 +504,8 @@
         icoNews: {
           index: 1,
           content: []
-        }
+        },
+        hostNews: []
       }
     },
     filters: {
@@ -582,14 +583,29 @@
         observeParents: true
       })
       this.getHottestProject()
+      this.iniHotIndustries()
     },
     methods: {
       initIcoNews(obj) {
         let ico = obj.project;
         let dataType = 'NEWS';
         let that = this
-        that.$axios.get('http://104.43.242.70:8090/apelink/ICO/icoLatestNews?ico=' + ico + '&dataType=' + dataType).then(function (res) {
+        that.$axios.get('/api/ICO/icoLatestNews?ico=' + ico + '&dataType=' + dataType).then(function (res) {
           that.icoNews.content = res.data.content
+        })
+      },
+      initHotNews() {
+        // let ico = obj.project;
+        // let dataType = 'NEWS';
+        // let that = this
+        // that.$axios.get('/api/ICO/icoLatestNews?ico=' + ico + '&dataType=' + dataType).then(function (res) {
+        //   that.icoNews.content = res.data.content
+        // })
+      },
+      iniHotIndustries() {
+        let that = this
+        that.$axios.get('/api/ICO/hotestIndustries').then(function (res) {
+          console.log(res)
         })
       },
       showheader() {
@@ -602,7 +618,7 @@
       },
       getHottestProject() {
         let that = this;
-        that.$axios.get('http://104.43.242.70:8090/apelink/ICO/top5').then(function (res) {
+        that.$axios.get('/api/ICO/top5').then(function (res) {
           if (res.status === 200) {
             that.hottestProject = res.data
             if (res.data.length >= 1) {
