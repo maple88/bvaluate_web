@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://104.43.242.70:8090/apelink',
+        target: 'http://23.101.9.18:8090/apelink',
         secure: false,
         changeOrigin: true,
         pathRewrite: {
