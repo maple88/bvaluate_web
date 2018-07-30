@@ -64,7 +64,7 @@
       <div class="df-container container home-newslist">
         <div class="section-head">
           <div class="headtit">新闻头条</div>
-          <a href="#" class="more">浏览更多</a>
+          <router-link to="/recommend" class="more">浏览更多</router-link>
         </div>
         <div class="df-row row newslist">
 

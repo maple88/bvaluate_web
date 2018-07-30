@@ -44,13 +44,10 @@
           <div class="clearfix">
             <div class="left">
               <ul class="menu_box">
-                <li class="active">推荐</li>
-                <li>推荐推荐</li>
-                <li>推荐</li>
-                <li>推荐</li>
-                <li>推荐</li>
-                <li>推荐</li>
-                <li>推荐</li>
+                <li :class="index == classShow?'active':''" v-for="(classfy,index) in newsClassfy"
+                    v-if="classfy.showInList" @click="changeClassfy(index)">
+                  {{classfy.categoryName}}
+                </li>
               </ul>
             </div>
             <div class="center">
@@ -75,31 +72,34 @@
                   <li>
                     <div class="list-item">
                       <div class="medialist">
-                        <div class="media">
+                        <div class="media" v-for="news in newsList">
                           <div class="media-left media-middle">
                             <div class="newimg_box">
-                              <img :src="img3"/>
+                              <img v-if="news.titlePicture" :src="news.titlePicture"/>
                               <div class="date_box">
-                                <span class="day">22</span>
-                                <span class="years">2018-05</span>
+                                <span class="day">{{news.urlTime | showDay}}</span>
+                                <span class="years">{{news.urlTime | showYear}}</span>
                               </div>
                             </div>
                           </div>
                           <div class="media-body">
-                            <h4 class="media-heading">Whatever is worth doing is worth doing well Whatever is worth
-                              doing is worth</h4>
-                            <p class="media-words">Whatever is worth doing is worth doing well, Whatever isworth doing
-                              is worth doingwel,Whatever isworth doing is worth doing wel,Whatever is worth doing is
-                              worth doing well, Whatever isworth doingis worth doing wel,</p>
+                            <h4 class="media-heading">
+                              {{news.title }}
+                            </h4>
+                            <p class="media-words">
+                              {{news.content }}
+                            </p>
                             <div class="media-bottom">
                               <ul>
                                 <li>
-                                  <div class="userimg"><img src="../assets/follow/user_head.png"></div>
-                                  刘方平
+                                  <div class="userimg">
+                                    <img src="../assets/follow/user_head.png">
+                                  </div>
+                                  {{news.author }}
                                 </li>
-                                <li>5月17日 18:17</li>
+                                <li>{{news.urlTime}}</li>
                               </ul>
-                              <div class="tips">新闻</div>
+                              <div class="tips">{{news.grouptName}}</div>
                             </div>
                           </div>
                         </div>
@@ -453,10 +453,49 @@
         banner1: img1,
         img2: img2,
         img3: img3,
-        isActive: true
+        isActive: true,
+        newsClassfy: [],
+        classShow: 0,
+        newsList: []
       }
     },
-    methods: {},
+    filters: {
+      showDay(obj) {
+        let myDate = new Date(obj);
+        return myDate.getDate()
+      },
+      showYear(obj) {
+        let myDate = new Date(obj);
+        let month = myDate.getMonth()
+        if (month < 9) {
+          month = '0' + (month + 1)
+        } else {
+          month = month + 1
+        }
+        return myDate.getFullYear() + '-' + month
+      }
+    },
+    methods: {
+      getNewsClassfy() {
+        let that = this
+        that.$axios.get('/api/traditional/categories').then(function (res) {
+          that.newsClassfy = res.data;
+          if (that.newsClassfy.length > 0) {
+            that.initNewsList(that.newsClassfy[0].categoryId)
+          }
+        })
+      },
+      changeClassfy(index) {
+        this.classShow = index;
+      },
+      initNewsList(categoryId) {
+        let that = this;
+        let url = '/api/traditional/categoryList?category=' + categoryId
+        that.$axios.get(url).then(function (res) {
+          that.newsList = res.data.content;
+        })
+      }
+    },
     mounted() {
       new Swiper('#top_banner', {
         loop: true,
@@ -467,14 +506,15 @@
         autoplay: {
           disableOnInteraction: false,
         },
-      })
+      });
       new Swiper('#adv_banner', {
         loop: false,
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
         }
-      })
+      });
+      this.getNewsClassfy()
     }
   }
 </script>
