@@ -102,7 +102,7 @@
           <div class="inlist">
             <ul>
               <li :class="index == prjAct ? 'on': ''" v-for="(item,index) in hottestProject"
-                  @click="changeProject($even,item,index)">
+                  @click="changeProject(item,index)">
                 <img :src="'http://'+item.logoSrc " class="inlistimg">
                 <div class="mask">
                   <p>{{item.project}}</p>
@@ -506,9 +506,9 @@
         observeParents: true
       })
       this.getHottestProject()
-      // this.iniHotIndustries()
-      // this.initHotNews()
+      this.iniHotIndustries()
       this.initHotNews()
+      this.getDataByICOName('EOS')
     },
     methods: {
       initIcoNews(obj) {
@@ -516,7 +516,6 @@
         let dataType = 'NEWS';
         let that = this
         that.$axios.get('/api/ICO/icoLatestNews?ico=' + ico + '&dataType=' + dataType).then(function (res) {
-          console.log(res)
           that.icoNews.content = res.data.content
         })
       },
@@ -578,7 +577,7 @@
         }
         return objArr
       },
-      changeProject(e, obj, index) {
+      changeProject(obj, index) {
         this.prjAct = index
         try {
           let partner = JSON.parse('[' + obj.partner + ']');
@@ -588,6 +587,12 @@
           this.showProject = obj;
           this.initIcoNews(this.showProject)
         }
+      },
+      getDataByICOName(categoryName) {
+        let that = this
+        that.$axios.get('/api/ICO/relatedICO?categoryName=' + categoryName).then(function (res) {
+          console.log(res)
+        })
       }
     }
   }

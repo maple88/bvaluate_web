@@ -90,7 +90,7 @@
                 <input type="tel">
               </div>
               <div class="form-group">
-                <label for="inputPassword" class="control-label">验证码</label>
+                <label class="control-label">验证码</label>
                 <div class="coderow">
                   <input type="text">
                   <button type="button" class="btn code-btn">获取验证码</button>
@@ -121,7 +121,7 @@
                 <input type="email">
               </div>
               <div class="form-group">
-                <label for="inputPassword" class="control-label">验证码</label>
+                <label class="control-label">验证码</label>
                 <div class="coderow">
                   <input type="text">
                   <button type="button" class="btn code-btn">获取验证码</button>
@@ -198,7 +198,8 @@
         },
         editsignbox: {
           show: true
-        }
+        },
+        aplinkUser: {}
       }
     },
     methods: {
@@ -213,7 +214,34 @@
       // 取消编辑
       editcancel(obj) {
         obj.show = !obj.show
+      },
+      loginInfo(uid, token) {
+
+      },
+      getMyProfile() {
+        let token = localStorage.getItem('apelink_user_token')
+        if (token !== null && token !== '' && token !== undefined) {
+          let that = this;
+          let uid = localStorage.getItem('apelink_user_uid')
+          let url = '/api/user/info';
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'get',
+            url: url,
+            headers: headers
+          }).then(function (res) {
+            that.aplinkUser = res.data
+            console.log(res)
+          }).catch(function (res) {
+            console.log(res)
+          })
+        } else {
+          this.$router.push('/login')
+        }
       }
+    },
+    mounted() {
+      this.getMyProfile()
     }
   }
 </script>

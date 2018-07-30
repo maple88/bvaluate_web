@@ -279,6 +279,9 @@
                 that.errorMsg.loginUser.phoneNumber = '账号不正确';
                 break;
               case '9002':
+                that.errorMsg.loginUser.password = '密码格式不正确';
+                break;
+              case '9008':
                 that.errorMsg.loginUser.password = '密码不正确';
                 break;
               default:
@@ -520,22 +523,6 @@
         } else {
           this.errorMsg.registerUser.nickName = '请输入为14个英文字符或7个汉字'
         }
-      },
-      loginInfo(uid, token) {
-        let that = this;
-        let url = '/api/user/info';
-        let headers = {'uid': uid, 'Authorization': token};
-        that.$axios({
-          method: 'get',
-          url: url,
-          headers: headers
-        }).then(function (res) {
-          if (res) {
-            that.login()
-          }
-        }).catch(function (res) {
-          console.log(res)
-        })
       },
       strLength(str) {
         let len = 0;
