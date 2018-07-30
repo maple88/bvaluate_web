@@ -23,43 +23,54 @@
               <div class="inputInner" v-if="loginForm">
                 <div class="input-group">
                   <div class="input-group-addon"><img src="../assets/login/icon1.png"></div>
-                  <input type="text" class="form-control" placeholder="手机号/账号">
-                  <span class="help-block">
+                  <input type="text" class="form-control" v-model="loginUser.phoneNumber" placeholder="手机号/账号"
+                         @focus="errorMsg.loginUser.phoneNumber = ''">
+                  <span class="help-block" v-if="errorMsg.loginUser.phoneNumber">
 										<img src="../assets/login/iclose.png">
-										请输入正确的手机号码格式！
+										{{errorMsg.loginUser.phoneNumber}}
 									</span>
                 </div>
                 <div class="input-group">
                   <div class="input-group-addon"><img src="../assets/login/icon2.png"></div>
-                  <input type="password" class="form-control" placeholder="密码">
-                  <span class="help-block">
+                  <input type="password" class="form-control" v-model="loginUser.password" placeholder="密码"
+                         @focus="errorMsg.loginUser.password = ''">
+                  <span class="help-block" v-if="errorMsg.loginUser.password">
 										<img src="../assets/login/iclose.png">
-										密码错误！
+										{{errorMsg.loginUser.password}}
 									</span>
                 </div>
                 <div class="input-group submit-group">
-                  <button type="button" class="btn ok-btn">登录</button>
+                  <button type="button" class="btn ok-btn" @click="loginSubmit">登录</button>
                 </div>
                 <div class="other-group">
                   <label class="remember">
-                    <input type="checkbox"> 记住我
+                    <input type="checkbox" checked> 记住我
                   </label>
                   <span @click="resetpwd()">忘记密码</span>
                 </div>
                 <div class="other-login">
                   <div class="head">第三方登录</div>
                   <ul>
-                    <li><img src="../assets/login/wechat.png">
-                      <p>微信</p></li>
-                    <li><img src="../assets/login/qq.png">
-                      <p>QQ</p></li>
+                    <li>
+                      <img src="../assets/login/wechat.png">
+                      <p>微信</p>
+                    </li>
+                    <li>
+                      <img src="../assets/login/qq.png">
+                      <p>QQ</p>
+                    </li>
                   </ul>
                 </div>
               </div>
               <div class="inputInner" v-if="registerForm">
                 <div class="input-group">
                   <div class="input-group-addon"><img src="../assets/login/icon1.png"></div>
-                  <input type="text" class="form-control" v-model="registerUser.nickName" placeholder="你的昵称">
+                  <input type="text" class="form-control" v-model="registerUser.nickName"
+                         maxlength="14"
+                         placeholder="你的昵称"
+                         @focus="errorMsg.registerUser.nickName = ''"
+                         @blur="checkNickName()"
+                  >
                   <span class="help-block" v-if="errorMsg.registerUser.nickName">
 										<img src="../assets/login/iclose.png">
 										{{errorMsg.registerUser.nickName}}
@@ -67,7 +78,10 @@
                 </div>
                 <div class="input-group">
                   <div class="input-group-addon"><img src="../assets/login/icon3.png"></div>
-                  <input type="text" class="form-control" v-model="registerUser.phoneNumber" placeholder="手机号">
+                  <input type="text" class="form-control" v-model="registerUser.phoneNumber" placeholder="手机号"
+                         @focus="errorMsg.registerUser.phoneNumber = ''"
+                         @blur="checkPhoneNumber()"
+                  >
                   <span class="help-block" v-if="errorMsg.registerUser.phoneNumber">
 										<img src="../assets/login/iclose.png">
 										{{errorMsg.registerUser.phoneNumber}}
@@ -75,48 +89,92 @@
                 </div>
                 <div class="input-group">
                   <div class="input-group-addon"><img src="../assets/login/icon2.png"></div>
-                  <input type="password" class="form-control" v-model="registerUser.password" placeholder="密码">
+                  <input type="password" class="form-control" v-model="registerUser.password" placeholder="密码"
+                         @focus="errorMsg.registerUser.password = ''"
+                         @blur="checkPassword(true)"
+                  >
+                  <span class="help-block" v-if="errorMsg.registerUser.password">
+										<img src="../assets/login/iclose.png">
+										{{errorMsg.registerUser.password}}
+									</span>
                 </div>
                 <div class="input-group">
                   <div class="input-group-addon"><img src="../assets/login/icon2.png"></div>
-                  <input type="password" class="form-control" v-model="registerUser.confirmpsd" placeholder="确认密码">
+                  <input type="password" class="form-control" v-model="registerUser.confirmpsd" placeholder="确认密码"
+                         @focus="errorMsg.registerUser.confirmpsd = ''"
+                         @blur="checkPassword(false)"
+                  >
+                  <span class="help-block" v-if="errorMsg.registerUser.confirmpsd">
+										<img src="../assets/login/iclose.png">
+										{{errorMsg.registerUser.confirmpsd}}
+									</span>
                 </div>
-                <div class="code">
-                  <input type="text" v-model="registerUser.code" placeholder="输入验证码">
+                <div class="input-group code">
+                  <input type="text" v-model="registerUser.code" placeholder="输入验证码"
+                         @focus="errorMsg.registerUser.code = ''">
                   <span class="help-block" v-if="errorMsg.registerUser.code">
 										<img src="../assets/login/iclose.png">
 										{{errorMsg.registerUser.code}}
 									</span>
-                  <div class="code-btn" :disabled="sendBtn" @click.stop="sendCode">{{sendBtnText}}</div>
+                  <button class="code-btn" :disabled="registerSendBtn" @click.stop="sendCode">
+                    <img :src="loading" v-show="registerShowloading"/>
+                    {{registerSendBtnText}}
+                  </button>
                 </div>
                 <div class="input-group submit-group">
-                  <button type="button" class="btn ok-btn">注册</button>
+                  <button type="button" class="btn ok-btn" @click.stop="registerSubmit()">注册</button>
                 </div>
                 <p class="register-tips">点击“注册”即表示您同意并愿意接收<br>APELINE<span>用户此协议</span>和<span>隐私政策</span></p>
               </div>
               <div class="inputInner" v-if="resetpwdForm">
                 <div class="input-group">
                   <div class="input-group-addon"><img src="../assets/login/icon1.png"></div>
-                  <input type="text" class="form-control" placeholder="手机号">
-                  <span class="help-block">
+                  <input type="text" class="form-control" v-model="resetpwdUser.phoneNumber" placeholder="手机号"
+                         @focus="errorMsg.resetpwdUser.phoneNumber = ''"
+                         @blur="checkResetPhoneNumber"
+                  >
+                  <span class="help-block" v-if="errorMsg.resetpwdUser.phoneNumber">
 										<img src="../assets/login/iclose.png">
-										请输入正确的手机号码格式！
+										{{errorMsg.resetpwdUser.phoneNumber}}
 									</span>
                 </div>
                 <div class="input-group">
                   <div class="input-group-addon"><img src="../assets/login/icon2.png"></div>
-                  <input type="password" class="form-control" placeholder="重置密码">
+                  <input type="password" class="form-control" v-model="resetpwdUser.password" placeholder="重置密码"
+                         @focus="errorMsg.resetpwdUser.password = ''"
+                         @blur="checkResetPassword(true)"
+                  >
+                  <span class="help-block" v-if="errorMsg.resetpwdUser.password">
+										<img src="../assets/login/iclose.png">
+										{{errorMsg.resetpwdUser.password}}
+									</span>
                 </div>
                 <div class="input-group">
                   <div class="input-group-addon"><img src="../assets/login/icon2.png"></div>
-                  <input type="password" class="form-control" placeholder="确认密码">
+                  <input type="password" class="form-control" v-model="resetpwdUser.confirmpsd" placeholder="确认密码"
+                         @focus="errorMsg.resetpwdUser.confirmpsd = ''"
+                         @blur="checkResetPassword(false)"
+                  >
+                  <span class="help-block" v-if="errorMsg.resetpwdUser.confirmpsd">
+										<img src="../assets/login/iclose.png">
+										{{errorMsg.resetpwdUser.confirmpsd}}
+									</span>
                 </div>
-                <div class="code">
-                  <input type="text" placeholder="输入验证码">
-                  <div class="code-btn">获取验证码</div>
+                <div class="code input-group">
+                  <input type="text" placeholder="输入验证码" v-model="resetpwdUser.code"
+                         @focus="errorMsg.resetpwdUser.code = ''"
+                  >
+                  <span class="help-block" v-if="errorMsg.resetpwdUser.code">
+										<img src="../assets/login/iclose.png">
+										{{errorMsg.resetpwdUser.code}}
+									</span>
+                  <button class="code-btn" :disabled="resetPwdSendBtn" @click.stop="sendresetPwdCode">
+                    <img :src="loading" v-show="resetPwdShowloading"/>
+                    {{resetPwdSendBtnText}}
+                  </button>
                 </div>
                 <div class="input-group submit-group">
-                  <button type="button" class="btn ok-btn">重置密码</button>
+                  <button type="button" class="btn ok-btn" @click="resetpwdSubmit">重置密码</button>
                 </div>
               </div>
             </div>
@@ -129,6 +187,7 @@
 </template>
 
 <script>
+  let loading = require('../assets/login/loading.gif')
   export default {
     data() {
       return {
@@ -146,53 +205,425 @@
           password: '',
           confirmpsd: ''
         },
+        loginUser: {
+          phoneNumber: '',
+          password: ''
+        },
+        resetpwdUser: {
+          code: '',
+          phoneNumber: '',
+          password: '',
+          confirmpsd: ''
+        },
         errorMsg: {
           registerUser: {
             nickName: '',
             phoneNumber: '',
-            code: ''
+            code: '',
+            confirmpsd: '',
+            password: ''
+          },
+          resetpwdUser: {
+            code: '',
+            phoneNumber: '',
+            password: '',
+            confirmpsd: ''
+          },
+          loginUser: {
+            phoneNumber: '',
+            password: ''
           }
         },
-        sendBtnText: '获取验证码',
-        auth_time: 60,
-        sendBtn: false
+        register_time: 60,
+        registerSendBtnText: '获取验证码',
+        registerSendBtn: true,
+        registerShowloading: false,
+        resetPwd_time: 60,
+        resetPwdSendBtnText: '获取验证码',
+        resetPwdSendBtn: true,
+        resetPwdShowloading: false,
+        loading: loading
       }
     },
     mounted() {
-      this.getNews()
     },
     methods: {
-      getNews() {
-        this.$axios.get('/api/traditional/categories').then(function (res) {
+      loginSubmit() {
+        let phoneNumber = this.loginUser.phoneNumber;
+        let password = this.loginUser.password;
+        if (phoneNumber == null || phoneNumber === undefined || phoneNumber === '') {
+          this.errorMsg.loginUser.phoneNumber = '请输入手机号码/账号'
+        } else if (password == null || password === undefined || password === '') {
+          this.errorMsg.loginUser.password = '请输入密码'
+        } else {
+          let that = this;
+          let json = {
+            phoneNumber: phoneNumber,
+            password: password
+          }
+          that.$axios.post('/api/login', json).then(function (res) {
+            let data = res.data;
+            let uid = data.uid;
+            let token = data.token;
+            let phoneNumber = data.phoneNumber;
+            let expirationDate = data.expirationDate;
+            localStorage.setItem('apelink_user_expirationDate', expirationDate);
+            localStorage.setItem('apelink_user_uid', uid);
+            localStorage.setItem('apelink_user_token', token);
+            localStorage.setItem('apelink_user_phoneNumber', phoneNumber);
+            that.$router.push('/index')
+          }).catch(function (res) {
+            let msgCode = res.response.data.message
+            switch (msgCode) {
+              case '9019':
+                that.errorMsg.loginUser.phoneNumber = '账号不正确';
+                break;
+              case '9002':
+                that.errorMsg.loginUser.password = '密码不正确';
+                break;
+              default:
+                that.errorMsg.loginUser.phoneNumber = '网络错误，请重新登录';
+            }
+          })
+        }
+      },
+      registerSubmit() {
+        let pass = true;
+        let phoneNumber = this.registerUser.phoneNumber;
+        let password = this.registerUser.password;
+        let code = this.registerUser.code;
+        let confirmpsd = this.registerUser.confirmpsd;
+        let nickName = this.registerUser.nickName;
+        if (nickName !== null && nickName !== '' && nickName !== undefined) {
+          if (this.strLength(nickName) > 14) {
+            pass = false;
+            this.errorMsg.registerUser.nickName = '请输入为14个英文字符或7个汉字'
+          }
+        } else {
+          pass = false;
+          this.errorMsg.registerUser.nickName = '昵称不能为空'
+        }
+        if (phoneNumber !== null && phoneNumber !== '' && phoneNumber !== undefined) {
+          if (!(/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phoneNumber))) {
+            pass = false;
+            this.errorMsg.registerUser.phoneNumber = '请输入正确格式的手机号码'
+          }
+        } else {
+          pass = false;
+          this.errorMsg.registerUser.phoneNumber = '手机号码不能为空'
+        }
+        if (password !== null && password !== '' && password !== undefined) {
+          if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(this.registerUser.password)) {
+            if (this.registerUser.confirmpsd !== this.registerUser.password) {
+              pass = false;
+              this.errorMsg.registerUser.password = '两次输入不一致'
+            }
+          } else {
+            pass = false;
+            this.errorMsg.registerUser.password = '只允许输入6-14个英文大小写和数字'
+          }
+        } else {
+          pass = false;
+          this.errorMsg.registerUser.password = '密码不能为空'
+        }
+        if (confirmpsd !== null && confirmpsd !== '' && confirmpsd !== undefined) {
+          if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(this.registerUser.password)) {
+            if (this.registerUser.confirmpsd !== this.registerUser.password) {
+              pass = false;
+              this.errorMsg.registerUser.confirmpsd = '两次输入不一致'
+            }
+          } else {
+            pass = false;
+            this.errorMsg.registerUser.confirmpsd = '只允许输入6-14个英文大小写和数字'
+          }
+        } else {
+          pass = false;
+          this.errorMsg.registerUser.confirmpsd = '密码不能为空'
+        }
+        if (!(code !== null && code !== '' && code !== undefined)) {
+          pass = false;
+          this.errorMsg.registerUser.code = '手机验证码不能为空'
+        }
+        if (pass) {
+          let that = this;
+          let url = '/api/user';
+          let json = {
+            nickName: nickName,
+            code: code,
+            phoneNumber: phoneNumber,
+            password: password
+          }
+          that.$axios.post(url, json).then(function (res) {
+            console.log(res)
+          })
+        }
+        else {
+          console.log('有错')
+        }
+      },
+      resetpwdSubmit() {
+        let pass = true;
+        let phoneNumber = this.resetpwdUser.phoneNumber;
+        let password = this.resetpwdUser.password;
+        let code = this.resetpwdUser.code;
+        let confirmpsd = this.resetpwdUser.confirmpsd;
+        if (phoneNumber !== null && phoneNumber !== '' && phoneNumber !== undefined) {
+          if (!(/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phoneNumber))) {
+            pass = false;
+            this.errorMsg.resetpwdUser.phoneNumber = '请输入正确格式的手机号码'
+          }
+        } else {
+          pass = false;
+          this.errorMsg.resetpwdUser.phoneNumber = '手机号码不能为空'
+        }
+        if (password !== null && password !== '' && password !== undefined) {
+          if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(this.resetpwdUser.password)) {
+            if (this.resetpwdUser.confirmpsd !== this.resetpwdUser.password) {
+              pass = false;
+              this.errorMsg.resetpwdUser.password = '两次输入不一致'
+            }
+          } else {
+            pass = false;
+            this.errorMsg.resetpwdUser.password = '只允许输入6-14个英文大小写和数字'
+          }
+        } else {
+          pass = false;
+          this.errorMsg.resetpwdUser.password = '密码不能为空'
+        }
+        if (confirmpsd !== null && confirmpsd !== '' && confirmpsd !== undefined) {
+          if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(this.resetpwdUser.password)) {
+            if (this.resetpwdUser.confirmpsd !== this.resetpwdUser.password) {
+              pass = false;
+              this.errorMsg.resetpwdUser.confirmpsd = '两次输入不一致'
+            }
+          } else {
+            pass = false;
+            this.errorMsg.resetpwdUser.confirmpsd = '只允许输入6-14个英文大小写和数字'
+          }
+        } else {
+          pass = false;
+          this.errorMsg.resetpwdUser.confirmpsd = '密码不能为空'
+        }
+        if (!(code !== null && code !== '' && code !== undefined)) {
+          pass = false;
+          this.errorMsg.resetpwdUser.code = '手机验证码不能为空'
+        }
+        if (pass) {
+          let url = '/api/user/retrievePassword?phoneNumber=' + phoneNumber + '&code=' + code + '&password=' + password;
+          let that = this
+          that.$axios.post(url).then(function (res) {
+            if (res.data) {
+              that.login()
+            }
+          })
+        } else {
+          console.log('不通过')
+        }
+      },
+      checkPassword(type) {
+        if (type) {
+          if (this.registerUser.password != null && this.registerUser.password !== '' && this.registerUser.password !== undefined) {
+            if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(this.registerUser.password)) {
+              if (this.registerUser.confirmpsd != null && this.registerUser.confirmpsd !== '' && this.registerUser.confirmpsd !== undefined) {
+                if (this.registerUser.confirmpsd !== this.registerUser.password) {
+                  this.errorMsg.registerUser.password = '两次输入不一致'
+                } else {
+                  this.errorMsg.registerUser.confirmpsd = ''
+                }
+              }
+            } else {
+              this.errorMsg.registerUser.password = '只允许输入6-14个英文大小写和数字'
+            }
+          }
+        } else {
+          if (this.registerUser.confirmpsd !== this.registerUser.password) {
+            this.errorMsg.registerUser.confirmpsd = '两次输入不一致'
+          } else {
+            this.errorMsg.registerUser.password = ''
+          }
+        }
+      },
+      checkPhoneNumber() {
+        if (this.registerUser.phoneNumber != null && this.registerUser.phoneNumber !== '' && this.registerUser.phoneNumber !== undefined) {
+          let phone = this.registerUser.phoneNumber;
+          if (/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phone)) {
+            let that = this;
+            let url = '/api/user/phoneCheck?phoneNumber=' + phone;
+            that.$axios.post(url).then(function (res) {
+              if (res.data) {
+                that.errorMsg.registerUser.phoneNumber = '该手机号码已经注册'
+              } else {
+                that.registerSendBtn = false
+              }
+            }).catch(function (res) {
+              console.log(res)
+            })
+          } else {
+            this.errorMsg.registerUser.phoneNumber = '请输入正确格式的手机号码'
+          }
+        }
+      },
+      checkResetPassword(type) {
+        if (type) {
+          console.log(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(this.resetpwdUser.password))
+          if (this.resetpwdUser.password != null && this.resetpwdUser.password !== '' && this.resetpwdUser.password !== undefined) {
+            if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(this.resetpwdUser.password)) {
+              if (this.resetpwdUser.confirmpsd != null && this.resetpwdUser.confirmpsd !== '' && this.resetpwdUser.confirmpsd !== undefined) {
+                if (this.resetpwdUser.confirmpsd !== this.resetpwdUser.password) {
+                  this.errorMsg.resetpwdUser.password = '两次输入不一致'
+                } else {
+                  this.errorMsg.resetpwdUser.confirmpsd = ''
+                }
+              }
+            } else {
+              this.errorMsg.resetpwdUser.password = '只允许输入6-14个英文大小写和数字'
+            }
+          }
+        } else {
+          if (this.resetpwdUser.confirmpsd !== this.resetpwdUser.password) {
+            this.errorMsg.resetpwdUser.confirmpsd = '两次输入不一致'
+          } else {
+            this.errorMsg.resetpwdUser.password = ''
+          }
+        }
+      },
+      checkResetPhoneNumber() {
+        if (this.resetpwdUser.phoneNumber != null && this.resetpwdUser.phoneNumber !== '' && this.resetpwdUser.phoneNumber !== undefined) {
+          let phone = this.resetpwdUser.phoneNumber;
+          if (/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phone)) {
+            let that = this;
+            let url = '/api/user/phoneCheck?phoneNumber=' + phone;
+            that.$axios.post(url).then(function (res) {
+              if (!res.data) {
+                that.errorMsg.resetpwdUser.phoneNumber = '该手机号码未被注册，请从新输入'
+              } else {
+                that.resetPwdSendBtn = false
+              }
+            })
+          } else {
+            this.errorMsg.resetpwdUser.phoneNumber = '请输入正确格式的手机号码'
+          }
+        }
+      },
+      checkNickName() {
+        let nickName = this.registerUser.nickName;
+        if (this.strLength(nickName) <= 14) {
+          let that = this;
+          let url = '/api/user/nickNameExist?nickName=' + nickName;
+          that.$axios.post(url).then(function (res) {
+            if (res.data) {
+              that.errorMsg.registerUser.nickName = '该昵称已被注册'
+            }
+          }).catch(function (res) {
+            console.log(res)
+          })
+        } else {
+          this.errorMsg.registerUser.nickName = '请输入为14个英文字符或7个汉字'
+        }
+      },
+      loginInfo(uid, token) {
+        let that = this;
+        let url = '/api/user/info';
+        let headers = {'uid': uid, 'Authorization': token};
+        that.$axios({
+          method: 'get',
+          url: url,
+          headers: headers
+        }).then(function (res) {
+          if (res) {
+            that.login()
+          }
+        }).catch(function (res) {
           console.log(res)
         })
       },
+      strLength(str) {
+        let len = 0;
+        for (let i = 0; i < str.length; i++) {
+          let c = str.charCodeAt(i);
+          if ((c >= 0x0001 && c <= 0x007e) || (0xff60 <= c && c <= 0xff9f)) {
+            len++;
+          }
+          else {
+            len += 2;
+          }
+        }
+        return len;
+      },
       sendCode() {
+        this.registerSendBtn = true;
         let phone = this.registerUser.phoneNumber
+        this.registerSendBtnText = '';
+        this.registerShowloading = true;
         if (/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phone)) {
           let that = this;
-          let json = {
-            phoneNumber: this.registerUser.phoneNumber,
-            codeType: '1003'
-          }
-          that.$axios.post('/api/apelink/login/code', json).then(function (res) {
-            console.log(res)
-          })
-          let auth_timetimer = setInterval(() => {
-            this.auth_time--
-            this.sendBtnText = '重新发送(' + this.auth_time + 's)'
-            if (this.auth_time <= 0) {
-              this.auth_time = 60
-              this.sendBtnText = '发送验证码'
-              this.sendBtn = false
-              clearInterval(auth_timetimer)
+          let url = '/api/login/code?phoneNumber=' + phone + '&codeType=1002'
+          that.$axios.post(url).then(function (res) {
+            that.registerShowloading = false;
+            if (res.status == 200) {
+              if (res.data) {
+                let auth_timetimer = setInterval(() => {
+                  that.register_time--
+                  that.registerSendBtnText = '重新发送(' + that.register_time + 's)'
+                  if (that.register_time <= 0) {
+                    that.register_time = 60
+                    that.registerSendBtnText = '获取验证码'
+                    that.registerSendBtn = false
+                    clearInterval(auth_timetimer)
+                  }
+                }, 1000)
+                that.register_time--
+                that.registerSendBtnText = '重新发送(' + that.register_time + 's)'
+              }
             }
-          }, 1000)
-          this.sendBtn = true
-          this.auth_time--
-          this.sendBtnText = '重新发送(' + this.auth_time + 's)'
+          }).catch(function (res) {
+            that.registerSendBtn = false;
+            that.registerShowloading = false;
+            that.registerSendBtnText = '获取验证码'
+          })
         } else {
           this.errorMsg.registerUser.phoneNumber = '请输入正确格式的手机号'
+          this.registerSendBtnText = '获取验证码'
+          this.registerShowloading = false;
+          this.registerSendBtn = false;
+        }
+      },
+      sendresetPwdCode() {
+        this.resetPwdSendBtn = true;
+        let phone = this.resetpwdUser.phoneNumber
+        this.resetPwdSendBtnText = '';
+        this.resetPwdShowloading = true;
+        if (/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phone)) {
+          let that = this;
+          let url = '/api/login/code?phoneNumber=' + phone + '&codeType=1003'
+          that.$axios.post(url).then(function (res) {
+            that.resetPwdShowloading = false;
+            if (res.status == 200) {
+              if (res.data) {
+                let auth_timetimer = setInterval(() => {
+                  that.resetPwd_time--
+                  that.resetPwdSendBtnText = '重新发送(' + that.resetPwd_time + 's)'
+                  if (that.resetPwd_time <= 0) {
+                    that.resetPwd_time = 60
+                    that.resetPwdSendBtnText = '获取验证码'
+                    that.resetPwdSendBtn = false
+                    clearInterval(auth_timetimer)
+                  }
+                }, 1000)
+                that.resetPwd_time--
+                that.resetPwdSendBtnText = '重新发送(' + that.resetPwd_time + 's)'
+              }
+            }
+          }).catch(function (res) {
+            that.resetPwdSendBtn = false;
+            that.resetPwdShowloading = false;
+            that.resetPwdSendBtnText = '获取验证码'
+          })
+        } else {
+          this.errorMsg.resetpwdUser.phoneNumber = '请输入正确格式的手机号'
+          this.resetPwdSendBtnText = '获取验证码'
+          this.resetPwdShowloading = false;
+          this.resetPwdSendBtn = false;
         }
       },
       login() {
