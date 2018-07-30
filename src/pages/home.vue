@@ -68,7 +68,7 @@
         </div>
         <div class="df-row row newslist">
 
-          <div class="df-col col-md-3 col-sm-4 col-xs-6" v-for="(news,$index) in hostNews" :if="$index < 3">
+          <div class="df-col col-md-3 col-sm-4 col-xs-6" v-for="news in hostNews">
             <div class="item">
               <a href="#">
                 <div class="img-box"><img :src="news.titlePicture"></div>
