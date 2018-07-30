@@ -68,19 +68,20 @@
         </div>
         <div class="df-row row newslist">
 
-          <div class="df-col col-md-3 col-sm-4 col-xs-6">
+          <div class="df-col col-md-3 col-sm-4 col-xs-6" v-for="(news,$index) in hostNews" :if="$index < 3">
             <div class="item">
               <a href="#">
-                <div class="img-box"><img src="../assets/news.jpg"></div>
+                <div class="img-box"><img :src="news.titlePicture"></div>
                 <div class="info">
-                  <p class="tips">行业<span>2018年06月05日</span></p>
-                  <p class="tit">在你自己的手中采取事情：不放弃你的权力。</p>
-                  <p class="des">Lorem ipsum dolor sit amet，consectetur adipisicing elit，sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua。U en minim minim ven ven ven ven ven ven</p>
+                  <p class="tips">{{news.grouptName}}<span>{{news.urlDate}}</span></p>
+                  <p class="tit">{{news.title}}</p>
+                  <p class="des">
+                    {{news.content}}
+                  </p>
                   <div class="bottom">
                     <div class="left">
                       <div class="userimg"><img src="../assets/logo_brand.png"></div>
-                      Sunny
+                      {{news.author}}
                     </div>
                     <div class="right">阅读全文</div>
                   </div>
@@ -88,87 +89,6 @@
               </a>
             </div>
           </div>
-          <div class="df-col col-md-3 col-sm-4 col-xs-6">
-            <div class="item">
-              <a href="#">
-                <div class="img-box"><img src="../assets/news.jpg"></div>
-                <div class="info">
-                  <p class="tips">行业<span>2018年06月05日</span></p>
-                  <p class="tit">在你自己的手中采取事情：不放弃你的权力。</p>
-                  <p class="des">Lorem ipsum dolor sit amet，consectetur adipisicing elit，sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua。U en minim minim ven ven ven ven ven ven</p>
-                  <div class="bottom">
-                    <div class="left">
-                      <div class="userimg"><img src="../assets/logo_brand.png"></div>
-                      Sunny
-                    </div>
-                    <div class="right">阅读全文</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="df-col col-md-3 col-sm-4 col-xs-6">
-            <div class="item">
-              <a href="#">
-                <div class="img-box"><img src="../assets/news.jpg"></div>
-                <div class="info">
-                  <p class="tips">行业<span>2018年06月05日</span></p>
-                  <p class="tit">在你自己的手中采取事情：不放弃你的权力。</p>
-                  <p class="des">Lorem ipsum dolor sit amet，consectetur adipisicing elit，sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua。U en minim minim ven ven ven ven ven ven</p>
-                  <div class="bottom">
-                    <div class="left">
-                      <div class="userimg"><img src="../assets/logo_brand.png"></div>
-                      Sunny
-                    </div>
-                    <div class="right">阅读全文</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="df-col col-md-3 col-sm-4 col-xs-6">
-            <div class="item">
-              <a href="#">
-                <div class="img-box"><img src="../assets/news.jpg"></div>
-                <div class="info">
-                  <p class="tips">行业<span>2018年06月05日</span></p>
-                  <p class="tit">在你自己的手中采取事情：不放弃你的权力。</p>
-                  <p class="des">Lorem ipsum dolor sit amet，consectetur adipisicing elit，sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua。U en minim minim ven ven ven ven ven ven</p>
-                  <div class="bottom">
-                    <div class="left">
-                      <div class="userimg"><img src="../assets/logo_brand.png"></div>
-                      Sunny
-                    </div>
-                    <div class="right">阅读全文</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="df-col col-md-3 col-sm-4 col-xs-6">
-            <div class="item">
-              <a href="#">
-                <div class="img-box"><img src="../assets/news.jpg"></div>
-                <div class="info">
-                  <p class="tips">行业<span>2018年06月05日</span></p>
-                  <p class="tit">在你自己的手中采取事情：不放弃你的权力。</p>
-                  <p class="des">Lorem ipsum dolor sit amet，consectetur adipisicing elit，sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua。U en minim minim ven ven ven ven ven ven</p>
-                  <div class="bottom">
-                    <div class="left">
-                      <div class="userimg"><img src="../assets/logo_brand.png"></div>
-                      Sunny
-                    </div>
-                    <div class="right">阅读全文</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-
         </div>
       </div>
       <div class="df-container container hotindustry">
@@ -180,7 +100,8 @@
           </div>
           <div class="inlist">
             <ul>
-              <li :class="index == 0 ? 'on': ''" v-for="(item,index) in hottestProject" @click="changeProject(item)">
+              <li :class="index == prjAct ? 'on': ''" v-for="(item,index) in hottestProject"
+                  @click="changeProject($even,item,index)">
                 <img :src="'http://'+item.logoSrc " class="inlistimg">
                 <div class="mask">
                   <p>{{item.project}}</p>
@@ -505,7 +426,8 @@
           index: 1,
           content: []
         },
-        hostNews: []
+        hostNews: [],
+        prjAct: 0
       }
     },
     filters: {
@@ -583,7 +505,9 @@
         observeParents: true
       })
       this.getHottestProject()
-      this.iniHotIndustries()
+      // this.iniHotIndustries()
+      // this.initHotNews()
+      this.initHotNews()
     },
     methods: {
       initIcoNews(obj) {
@@ -591,16 +515,21 @@
         let dataType = 'NEWS';
         let that = this
         that.$axios.get('/api/ICO/icoLatestNews?ico=' + ico + '&dataType=' + dataType).then(function (res) {
+          console.log(res)
           that.icoNews.content = res.data.content
         })
       },
       initHotNews() {
-        // let ico = obj.project;
-        // let dataType = 'NEWS';
-        // let that = this
-        // that.$axios.get('/api/ICO/icoLatestNews?ico=' + ico + '&dataType=' + dataType).then(function (res) {
-        //   that.icoNews.content = res.data.content
-        // })
+        let categoryId = 100001;
+        let that = this
+        that.$axios.get('/api/traditional/list?categoryId=' + categoryId).then(function (res) {
+          if (res.status === 200) {
+            let content = res.data.content;
+            for (let i = 0; (i < content.length && i < 8); i++) {
+              that.hostNews.push(content[i])
+            }
+          }
+        })
       },
       iniHotIndustries() {
         let that = this
@@ -640,22 +569,24 @@
           if (i >= obj.length - 1) {
             num = 9
           }
-          if (num > 7) {
+          if (num > 8) {
             objArr.push(arr)
             arr = []
             num = 0
           }
         }
-        console.log(objArr)
         return objArr
       },
-      changeProject(obj) {
-        console.log(obj.partner)
-        obj.partner = null
-        // let partner = JSON.parse('[' + obj.partner + ']');
-        // console.log(partner)
-        // obj.partner = this.initPartner(partner);
-        this.showProject = obj;
+      changeProject(e, obj, index) {
+        this.prjAct = index
+        try {
+          let partner = JSON.parse('[' + obj.partner + ']');
+          obj.partner = this.initPartner(partner);
+        } catch (e) {
+        } finally {
+          this.showProject = obj;
+          this.initIcoNews(this.showProject)
+        }
       }
     }
   }
