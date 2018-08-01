@@ -520,9 +520,9 @@
         })
       },
       initHotNews() {
-        let categoryId = 100001;
+        let categoryName = '首页-新闻列表';
         let that = this
-        that.$axios.get('/api/traditional/list?categoryId=' + categoryId).then(function (res) {
+        that.$axios.get('/api/traditional/list?categoryName=' + categoryName).then(function (res) {
           if (res.status === 200) {
             let content = res.data.content;
             for (let i = 0; (i < content.length && i < 8); i++) {
