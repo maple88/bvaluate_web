@@ -29,6 +29,17 @@
               </div>
             </div>
             <div class="label_bar">
+              <div class="label_box">
+                <button class="all_btn">全部</button>
+                <ul class="clearfix">
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                </ul>
+                <img class="open_label" src="../assets/follow/down.png"/>
+              </div>
               <div class="news_box">
                 <div class="news_title">
                   <span>最新动态</span>
@@ -45,7 +56,7 @@
             <div class="left">
               <ul class="menu_box">
                 <li :class="index == classShow?'active':''" v-for="(classfy,index) in newsClassfy"
-                    v-if="classfy.showInList" @click="changeClassfy(index)">
+                    v-if="classfy.showInList" @click="changeClassfy(classfy.categoryId,index)">
                   {{classfy.categoryName}}
                 </li>
               </ul>
@@ -72,7 +83,8 @@
                   <li>
                     <div class="list-item">
                       <div class="medialist">
-                        <div class="media" v-for="news in newsList">
+                        <div class="media" v-for="news in newsList"
+                             @click="$router.push('/article?sid=' + news.sid)">
                           <div class="media-left media-middle">
                             <div class="newimg_box">
                               <img v-if="news.titlePicture" :src="news.titlePicture"/>
@@ -83,7 +95,7 @@
                             </div>
                           </div>
                           <div class="media-body">
-                            <h4 class="media-heading">
+                            <h4 class="media-heading" :title="news.title">
                               {{news.title }}
                             </h4>
                             <p class="media-words">
@@ -92,41 +104,19 @@
                             <div class="media-bottom">
                               <ul>
                                 <li>
-                                  <div class="userimg">
+                                  <div class="userimg"
+                                       v-if="(news.author !== 'NULL' && news.author !== null && news.author !== '')">
                                     <img src="../assets/follow/user_head.png">
                                   </div>
-                                  {{news.author }}
+                                  {{
+                                  (news.author !== 'NULL'
+                                  && news.author !== null
+                                  && news.author !== '')?news.author:news.siteName
+                                  }}
                                 </li>
                                 <li>{{news.urlTime}}</li>
                               </ul>
-                              <div class="tips">{{news.grouptName}}</div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="media">
-                          <div class="media-left media-middle">
-                            <div class="newimg_box">
-                              <div class="date_box">
-                                <span class="day">22</span>
-                                <span class="years">2018-05</span>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="media-body">
-                            <h4 class="media-heading">Whatever is worth doing is worth doing well Whatever is worth
-                              doing is worth</h4>
-                            <p class="media-words">Whatever is worth doing is worth doing well, Whatever isworth doing
-                              is worth doingwel,Whatever isworth doing is worth doing wel,Whatever is worth doing is
-                              worth doing well, Whatever isworth doingis worth doing wel,</p>
-                            <div class="media-bottom">
-                              <ul>
-                                <li>
-                                  <div class="userimg"><img src="../assets/logo_brand.png"></div>
-                                  刘方平
-                                </li>
-                                <li>5月17日 18:17</li>
-                              </ul>
-                              <div class="tips">新闻</div>
+                              <div class="tips">{{news.channel}}</div>
                             </div>
                           </div>
                         </div>
@@ -136,7 +126,10 @@
                 </ul>
               </div>
               <div class="loading_more">
-                <button>加载更多</button>
+                <button :disabled="showloading" @click.stop="reloadMore(categoryId)">
+                  <img v-if="showloading" :src="loading"/>
+                  <span v-if="!showloading">加载更多</span>
+                </button>
               </div>
             </div>
             <div class="right">
@@ -172,48 +165,17 @@
                 </div>
                 <div class="hot_content">
                   <ul>
-                    <li class="news_flash">
+                    <li class="news_flash" v-for="(flash,index) in flashList">
                       <div class="news_item">
                         <div class="radio_box">
-                          <div class="radio_circle first"></div>
+                          <div class="radio_circle" :class="index==0?'first':''"></div>
                         </div>
                         <div class="item_time">
-                          <span>4分钟前</span>
+                          <span>{{flash.urlTime | dataFormat}}</span>
                         </div>
                         <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing Whatever is worth</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing is worth doing Whatever is
-                            worth doing is worth doing</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="news_flash">
-                      <div class="news_item">
-                        <div class="radio_box">
-                          <div class="radio_circle"></div>
-                        </div>
-                        <div class="item_time">
-                          <span>4分钟前</span>
-                        </div>
-                        <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing Whatever is worth</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing is worth doing Whatever is
-                            worth doing is worth doing</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="news_flash">
-                      <div class="news_item">
-                        <div class="radio_box">
-                          <div class="radio_circle"></div>
-                        </div>
-                        <div class="item_time">
-                          <span>4分钟前</span>
-                        </div>
-                        <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing Whatever is worth</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing is worth doing Whatever is
-                            worth doing is worth doing</p>
+                          <h4 @click.stop="$router.push('/article?sid=' + flash.sid)">{{flash.title}}</h4>
+                          <p>{{flash.content}}</p>
                         </div>
                       </div>
                     </li>
@@ -230,98 +192,24 @@
                 </div>
                 <div class="hot_content current">
                   <ul>
-                    <li class="news_flash">
+                    <li class="news_flash" v-for="(affair,index) in affairList">
                       <div class="news_item nolink">
                         <div class="radio_box">
-                          <div class="radio_circle first"></div>
+                          <div class="radio_circle" :class="index == 0 ? 'first':''"></div>
                         </div>
                         <div class="item_time">
-                          <span>4分钟前</span>
+                          <span>{{affair.urlTime | dataFormat}}</span>
                         </div>
-                        <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing Whatever is worth</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing is worth doing Whatever is
-                            worth doing is worth doing</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="news_flash">
-                      <div class="news_item nolink">
-                        <div class="radio_box">
-                          <div class="radio_circle"></div>
-                        </div>
-                        <div class="item_time">
-                          <span>4分钟前</span>
-                        </div>
-                        <div class="item_body hasImg">
-                          <div class="content">
-                            <h4>Whatever is worth doing is worth doing Whatever is worth</h4>
-                            <p>Whatever is worth doing is worth doing Whatever is worth doing is worth doing Whatever is
-                              worth doing is worth doing</p>
+                        <div class="item_body" :class="affair.titlePicture ? 'hasImg' : ''">
+                          <div class="content" v-if="affair.titlePicture">
+                            <h4 @click.stop="$router.push('/article?sid=' + affair.sid)">{{affair.title}}</h4>
+                            <p>{{affair.content}}</p>
                           </div>
-                          <div class="content_img">
-                            <img :src="img3"/>
+                          <div class="content_img" v-if="affair.titlePicture">
+                            <img :src="affair.titlePicture"/>
                           </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="news_flash">
-                      <div class="news_item nolink">
-                        <div class="radio_box">
-                          <div class="radio_circle"></div>
-                        </div>
-                        <div class="item_time">
-                          <span>4分钟前</span>
-                        </div>
-                        <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing Whatever is worth</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing is worth doing Whatever is
-                            worth doing is worth doing</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="news_flash">
-                      <div class="news_item nolink">
-                        <div class="radio_box">
-                          <div class="radio_circle"></div>
-                        </div>
-                        <div class="item_time">
-                          <span>4分钟前</span>
-                        </div>
-                        <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing Whatever is worth</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing is worth doing Whatever is
-                            worth doing is worth doing</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="news_flash">
-                      <div class="news_item nolink">
-                        <div class="radio_box">
-                          <div class="radio_circle"></div>
-                        </div>
-                        <div class="item_time">
-                          <span>4分钟前</span>
-                        </div>
-                        <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing Whatever is worth</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing is worth doing Whatever is
-                            worth doing is worth doing</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="news_flash">
-                      <div class="news_item nolink">
-                        <div class="radio_box">
-                          <div class="radio_circle"></div>
-                        </div>
-                        <div class="item_time">
-                          <span>4分钟前</span>
-                        </div>
-                        <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing Whatever is worth</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing is worth doing Whatever is
-                            worth doing is worth doing</p>
+                          <h4 v-if="!affair.titlePicture">{{affair.title}}</h4>
+                          <p v-if="!affair.titlePicture">{{affair.content}}</p>
                         </div>
                       </div>
                     </li>
@@ -441,9 +329,10 @@
 <script>
   import Swiper from 'swiper';
 
-  let img1 = require('../assets/follow/banner01.png')
-  let img2 = require('../assets/follow/adv01.png')
-  let img3 = require('../assets/media.jpg')
+  let img1 = require('../assets/follow/banner01.png');
+  let img2 = require('../assets/follow/adv01.png');
+  let img3 = require('../assets/media.jpg');
+  let loading = require('../assets/login/loading.gif');
 
 
   export default {
@@ -456,7 +345,14 @@
         isActive: true,
         newsClassfy: [],
         classShow: 0,
-        newsList: []
+        newsList: [],
+        loading: loading,
+        showloading: true,
+        pageSize: 10,
+        categoryId: 0,
+        flashList: [],
+        affairList: [],
+        testDate: '2018-07-31 15:16:00'
       }
     },
     filters: {
@@ -473,6 +369,31 @@
           month = month + 1
         }
         return myDate.getFullYear() + '-' + month
+      },
+      dataFormat(obj) {
+        let myDate = new Date(obj);
+        let mydata = myDate.getDate();
+        let nowDate = new Date();
+        let nowdata = nowDate.getDate();
+        let myhour = myDate.getHours();
+        let nowhour = nowDate.getHours();
+        let myMin = myDate.getMinutes()
+        let nowMin = nowDate.getMinutes()
+        if (nowdata - mydata < 7 && nowdata - mydata > 1) {
+          return nowdata - mydata + '天前'
+        } else if (nowdata - mydata <= 1 && Math.abs(myhour - nowhour) > 1 && Math.abs(myhour - nowhour) < 24) {
+          return Math.abs(myhour - nowhour) + '小时前'
+        } else if (Math.abs(myhour - nowhour) <= 1 && Math.abs(myDate.getMinutes() - nowDate.getMinutes()) > 1 && Math.abs(myDate.getMinutes() - nowDate.getMinutes()) < 60) {
+          return Math.abs(myDate.getMinutes() - nowDate.getMinutes()) + '分钟前'
+        } else if (Math.abs(myDate.getMinutes() - nowDate.getMinutes()) <= 1) {
+          return Math.abs(myDate.getSeconds() - nowDate.getSeconds()) + '秒前'
+        } else {
+          let month = myDate.getMonth()
+          if (month < 9) {
+            month = '0' + month
+          }
+          return month + '-' + mydata
+        }
       }
     },
     methods: {
@@ -485,16 +406,36 @@
           }
         })
       },
-      changeClassfy(index) {
+      changeClassfy(categoryId, index) {
+        this.showloading = true;
         this.classShow = index;
+        this.newsList = [];
+        this.pageSize = 10;
+        this.initNewsList(categoryId)
       },
       initNewsList(categoryId) {
         let that = this;
-        let url = '/api/traditional/categoryList?category=' + categoryId
+        that.categoryId = categoryId;
+        let url = '/api/traditional/categoryList?category=' + categoryId + '&pageSize=' + this.pageSize
         that.$axios.get(url).then(function (res) {
           that.newsList = res.data.content;
+          that.showloading = false;
         })
-      }
+      },
+      reloadMore(categoryId) {
+        this.showloading = true;
+        this.pageSize += 5;
+        this.initNewsList(categoryId);
+      },
+      initRightNews(categoryId, pageSize, callback) {
+        let that = this;
+        that.categoryId = categoryId;
+        let thisCallback = callback;
+        let url = '/api/traditional/categoryList?category=' + categoryId + '&pageSize=' + pageSize
+        that.$axios.get(url).then(function (res) {
+          thisCallback(res.data.content);
+        })
+      },
     },
     mounted() {
       new Swiper('#top_banner', {
@@ -514,7 +455,16 @@
           prevEl: '.swiper-button-prev',
         }
       });
-      this.getNewsClassfy()
+      let that = this;
+      this.getNewsClassfy();
+      //获取最新资讯
+      this.initRightNews('285141', 3, function (res) {
+        that.flashList = res;
+      })
+      //获取国家资讯
+      this.initRightNews('269953', 5, function (res) {
+        that.affairList = res;
+      })
     }
   }
 </script>

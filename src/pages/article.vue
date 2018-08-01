@@ -37,9 +37,15 @@
                   </div>
                 </div>
                 <div class="label_box">
-                  <div v-if="articleContent.countryCategory !== 'NULL'" class="label_item">{{articleContent.countryCategory}}</div>
-                  <div v-if="articleContent.industryCategory !== 'NULL'" class="label_item">{{articleContent.industryCategory}}</div>
-                  <div v-if="articleContent.projectCategory !== 'NULL'" class="label_item">{{articleContent.projectCategory}}</div>
+                  <div v-if="articleContent.countryCategory !== 'NULL'" class="label_item">
+                    {{articleContent.countryCategory}}
+                  </div>
+                  <div v-if="articleContent.industryCategory !== 'NULL'" class="label_item">
+                    {{articleContent.industryCategory}}
+                  </div>
+                  <div v-if="articleContent.projectCategory !== 'NULL'" class="label_item">
+                    {{articleContent.projectCategory}}
+                  </div>
                 </div>
                 <div class="article_content">
                   <p>{{articleContent.content}}</p>
@@ -52,7 +58,8 @@
                   </div>
                 </div>
                 <div class="article_statement">
-                  <p>声明：本文系<span>{{articleContent.siteName}}</span>原创稿件，版权属<span>{{articleContent.siteName}}</span>所有，未经授权不得转载，已经协议授权的媒体下载使用时须注明"稿件来源：<span>{{articleContent.siteName}}</span>"，违者将依法追究责任。</p>
+                  <p>声明：本文系<span>{{articleContent.siteName}}</span>原创稿件，版权属<span>{{articleContent.siteName}}</span>所有，未经授权不得转载，已经协议授权的媒体下载使用时须注明"稿件来源：<span>{{articleContent.siteName}}</span>"，违者将依法追究责任。
+                  </p>
                 </div>
               </div>
             </div>
@@ -346,23 +353,25 @@
           e.stopPropagation()
         })
       },
-      getDetailData () {
+      getDetailData() {
         let that = this
         let sid = this.$route.query.sid
-        that.$axios.get('/api/traditional/detail?sid=' + sid ).then(function (res) {
-          // console.log(res)
-          that.articleContent = res.data
-          that.industryName = res.data.industryCategory
-        })
+        if (sid !== null && sid !== '' && sid !== undefined) {
+          that.$axios.get('/api/traditional/detail?sid=' + sid).then(function (res) {
+            // console.log(res)
+            that.articleContent = res.data
+            that.industryName = res.data.industryCategory
+          })
+        }
       },
-      getHotnewsData () {
+      getHotnewsData() {
         let that = this
-        that.$axios.get('/api/traditional/hotNews?ndustryName='+ that.industryName +'&pageSize=3').then(function (res) {
+        that.$axios.get('/api/traditional/hotNews?ndustryName=' + that.industryName + '&pageSize=3').then(function (res) {
           console.log(res)
           that.hotNews = res.data.content
         })
       },
-      goToArticle (sid) {
+      goToArticle(sid) {
         this.$router.push('/article?sid=' + sid)
       }
     },
@@ -388,6 +397,9 @@
       })
       this.getDetailData()
       this.getHotnewsData()
+    },
+    watch: {
+      '$route': 'getDetailData'
     }
   }
 </script>
