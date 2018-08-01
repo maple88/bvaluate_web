@@ -40,6 +40,39 @@
                 </ul>
                 <img class="open_label" src="../assets/follow/down.png"/>
               </div>
+              <div class="follow_box">
+                <div class="swiper-container" id="follow_swiper">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                      <ul class="clearfix">
+                        <li>
+                          <div class="item_box">platform</div>
+                        </li>
+                        <li>
+                          <div class="item_box">标签</div>
+                        </li>
+                        <li>
+                          <div class="item_box">标签</div>
+                        </li>
+                        <li>
+                          <div class="item_box">标签</div>
+                        </li>
+                        <li>
+                          <div class="item_box">标签</div>
+                        </li>
+                        <li>
+                          <div class="item_box">标签</div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- 如果需要滚动条 -->
+                  <!--<div class="swiper-scrollbar"></div>-->
+                </div>
+                <div class="follow_btn">
+                  <div class="follow"><i class="fa fa-plus"></i>关注</div>
+                </div>
+              </div>
               <div class="news_box">
                 <div class="news_title">
                   <span>最新动态</span>
