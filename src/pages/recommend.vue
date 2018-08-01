@@ -29,11 +29,31 @@
               </div>
             </div>
             <div class="label_bar">
-              <div class="news_box">
+              <div v-if="newType == 1" class="news_box">
                 <div class="news_title">
                   <span>最新动态</span>
                 </div>
                 <p>作为新杭州人的你是否也在困扰，买车容易送车难，不可能不送车~</p>
+              </div>
+              <div v-if="newType == 2" class="label_box">
+                <ul class="clearfix" :class="labelMore?'open':''">
+                  <li><span class="active">全部</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                </ul>
+                <img src="../assets/follow/down.png" class="open_label" :class="labelMore?'open':''"
+                     @click="labelMore = !labelMore"/>
               </div>
             </div>
           </div>
@@ -343,7 +363,9 @@
         categoryName: 0,
         flashList: [],
         affairList: [],
-        testDate: '2018-07-31 15:16:00'
+        testDate: '2018-07-31 15:16:00',
+        labelMore: false,
+        newType: 1
       }
     },
     filters: {
