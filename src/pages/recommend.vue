@@ -29,50 +29,6 @@
               </div>
             </div>
             <div class="label_bar">
-              <div class="label_box">
-                <button class="all_btn">全部</button>
-                <ul class="clearfix">
-                  <li><span>标签</span></li>
-                  <li><span>标签</span></li>
-                  <li><span>标签</span></li>
-                  <li><span>标签</span></li>
-                  <li><span>标签</span></li>
-                </ul>
-                <img class="open_label" src="../assets/follow/down.png"/>
-              </div>
-              <div class="follow_box">
-                <div class="swiper-container" id="follow_swiper">
-                  <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                      <ul class="clearfix">
-                        <li>
-                          <div class="item_box">platform</div>
-                        </li>
-                        <li>
-                          <div class="item_box">标签</div>
-                        </li>
-                        <li>
-                          <div class="item_box">标签</div>
-                        </li>
-                        <li>
-                          <div class="item_box">标签</div>
-                        </li>
-                        <li>
-                          <div class="item_box">标签</div>
-                        </li>
-                        <li>
-                          <div class="item_box">标签</div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <!-- 如果需要滚动条 -->
-                  <!--<div class="swiper-scrollbar"></div>-->
-                </div>
-                <div class="follow_btn">
-                  <div class="follow"><i class="fa fa-plus"></i>关注</div>
-                </div>
-              </div>
               <div class="news_box">
                 <div class="news_title">
                   <span>最新动态</span>
@@ -89,7 +45,7 @@
             <div class="left">
               <ul class="menu_box">
                 <li :class="index == classShow?'active':''" v-for="(classfy,index) in newsClassfy"
-                    v-if="classfy.showInList" @click="changeClassfy(classfy.categoryId,index)">
+                    v-if="classfy.showInList" @click="changeClassfy(classfy.categoryName,index)">
                   {{classfy.categoryName}}
                 </li>
               </ul>
@@ -149,7 +105,9 @@
                                 </li>
                                 <li>{{news.urlTime}}</li>
                               </ul>
-                              <div class="tips">{{news.channel}}</div>
+                              <div class="tips">
+                                {{news.industryCategory | showLable(news.countryCategory,news.projectCategory)}}
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -159,7 +117,7 @@
                 </ul>
               </div>
               <div class="loading_more">
-                <button :disabled="showloading" @click.stop="reloadMore(categoryId)">
+                <button :disabled="showloading" @click.stop="reloadMore(categoryName)">
                   <img v-if="showloading" :src="loading"/>
                   <span v-if="!showloading">加载更多</span>
                 </button>
@@ -381,8 +339,8 @@
         newsList: [],
         loading: loading,
         showloading: true,
-        pageSize: 10,
-        categoryId: 0,
+        pageSize: 20,
+        categoryName: 0,
         flashList: [],
         affairList: [],
         testDate: '2018-07-31 15:16:00'
@@ -427,6 +385,24 @@
           }
           return month + '-' + mydata
         }
+      },
+      showLable(label1, label2, lable3) {
+        if (label1 != null && label1 !== undefined && label1 !== '' && label1 != 'NULL') {
+          let arr = label1.split(';')
+          return arr[0]
+        } else {
+          if (label2 != null && label2 !== undefined && label2 !== '' && label2 != 'NULL') {
+            let arr = label1.split(';')
+            return arr[0]
+          } else {
+            if (lable3 != null && lable3 !== undefined && lable3 !== '' && lable3 != 'NULL') {
+              let arr = label1.split(';')
+              return arr[0]
+            } else {
+              return '标签'
+            }
+          }
+        }
       }
     },
     methods: {
@@ -435,36 +411,36 @@
         that.$axios.get('/api/traditional/categories').then(function (res) {
           that.newsClassfy = res.data;
           if (that.newsClassfy.length > 0) {
-            that.initNewsList(that.newsClassfy[0].categoryId)
+            that.initNewsList(that.newsClassfy[0].categoryName)
           }
         })
       },
-      changeClassfy(categoryId, index) {
+      changeClassfy(categoryName, index) {
         this.showloading = true;
         this.classShow = index;
         this.newsList = [];
         this.pageSize = 10;
-        this.initNewsList(categoryId)
+        this.initNewsList(categoryName)
       },
-      initNewsList(categoryId) {
+      initNewsList(categoryName) {
         let that = this;
-        that.categoryId = categoryId;
-        let url = '/api/traditional/categoryList?category=' + categoryId + '&pageSize=' + this.pageSize
+        that.categoryName = categoryName;
+        let url = '/api/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + this.pageSize
         that.$axios.get(url).then(function (res) {
           that.newsList = res.data.content;
           that.showloading = false;
         })
       },
-      reloadMore(categoryId) {
+      reloadMore(categoryName) {
         this.showloading = true;
-        this.pageSize += 5;
-        this.initNewsList(categoryId);
+        this.pageSize += 10;
+        this.initNewsList(categoryName);
       },
-      initRightNews(categoryId, pageSize, callback) {
+      initRightNews(categoryName, pageSize, callback) {
         let that = this;
-        that.categoryId = categoryId;
+        that.categoryName = categoryName;
         let thisCallback = callback;
-        let url = '/api/traditional/categoryList?category=' + categoryId + '&pageSize=' + pageSize
+        let url = '/api/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + pageSize
         that.$axios.get(url).then(function (res) {
           thisCallback(res.data.content);
         })
@@ -491,11 +467,11 @@
       let that = this;
       this.getNewsClassfy();
       //获取最新资讯
-      this.initRightNews('285141', 3, function (res) {
+      this.initRightNews('快讯', 3, function (res) {
         that.flashList = res;
       })
       //获取国家资讯
-      this.initRightNews('269953', 5, function (res) {
+      this.initRightNews('国家时事', 5, function (res) {
         that.affairList = res;
       })
     }

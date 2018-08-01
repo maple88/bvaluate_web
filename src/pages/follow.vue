@@ -30,9 +30,8 @@
             </div>
             <div class="label_bar">
               <div class="label_box">
-                <button class="all_btn">全部</button>
                 <ul class="clearfix">
-                  <li><span>标签</span></li>
+                  <li class="all_btn"><span>标签</span></li>
                   <li><span>标签</span></li>
                   <li><span>标签</span></li>
                   <li><span>标签</span></li>
