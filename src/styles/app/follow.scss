@@ -635,7 +635,7 @@
             }
             .item_body {
               padding-left: 10px;
-              width: 100%;
+              width: calc(100% - 81px);
               .body_bottom {
                 position: relative;
                 font-size: 12px;
@@ -655,11 +655,10 @@
                 color: #333333;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 1;
-                -webkit-box-orient: vertical;
+                white-space: nowrap;
                 cursor: pointer;
                 transition: .3s;
+                line-height: 1.2;
                 &:hover {
                   color: $mainColor;
                 }

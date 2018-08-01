@@ -70,23 +70,33 @@
 
           <div class="df-col col-md-3 col-sm-4 col-xs-6" v-for="news in hostNews">
             <div class="item">
-              <router-link :to="'/article?sid=' + news.sid">
-                <div class="img-box"><img :src="news.titlePicture"></div>
+              <a>
+                <div class="img-box" @click="$router.push('/article?sid=' + news.sid)"><img :src="news.titlePicture">
+                </div>
                 <div class="info">
-                  <p class="tips">{{news.grouptName}}<span>{{news.urlDate}}</span></p>
-                  <p class="tit">{{news.title}}</p>
+                  <p class="tips">
+                    {{news.industryCategory | showLable(news.countryCategory,news.projectCategory)}}
+                    <span>{{news.urlDate}}</span>
+                  </p>
+                  <p class="tit" :title="news.title" @click="$router.push('/article?sid=' + news.sid)">
+                    {{news.title}}
+                  </p>
                   <p class="des">
                     {{news.content}}
                   </p>
                   <div class="bottom">
                     <div class="left">
-                      <div class="userimg"><img src="../assets/logo_brand.png"></div>
-                      {{news.author}}
+                      <div class="userimg"
+                           v-if="!(news.siteName!==null && news.siteName !== '' && news.siteName !== undefined && news.siteName!='NULL')">
+                        <img src="../assets/logo_brand.png">
+                      </div>
+                      {{(news.siteName!==null && news.siteName !== '' && news.siteName !== undefined &&
+                      news.siteName!='NULL')?news.siteName:news.author }}
                     </div>
-                    <div class="right">阅读全文</div>
+                    <div class="right" @click="$router.push('/article?sid=' + news.sid)">阅读全文</div>
                   </div>
                 </div>
-              </router-link>
+              </a>
             </div>
           </div>
 
@@ -99,7 +109,7 @@
             <!-- <a href="#" class="more">浏览更多</a> -->
             <router-link to="/industry" class="more">浏览更多</router-link>
           </div>
-          <div class="inlist">
+          <div class="inlist" v-if="hottestProject.length>0">
             <ul>
               <li :class="index == prjAct ? 'on': ''" v-for="(item,index) in hottestProject"
                   @click="changeProject(item,index)">
@@ -110,7 +120,7 @@
               </li>
             </ul>
           </div>
-          <div class="intabcontent">
+          <div class="intabcontent" v-if="hottestProject.length>0">
             <div class="topban">
               <div class="info">
                 <div class="toplist-item">
@@ -313,63 +323,19 @@
             <router-link to="/industry" class="more">浏览更多</router-link>
           </div>
           <div class="modulelist">
-            <div class="item">
+            <div class="item" v-for="item in hostIndustries">
               <div class="left"><img src="../assets/home/hi.jpg"></div>
               <div class="right">
-                <p class="tit">平台</p>
+                <p class="tit">{{item.categoryName}}</p>
                 <p class="smtit">最新资讯</p>
                 <ul class="list">
-                  <li><a href="#">伊利诺伊州区块链法案“腹死胎中”伊利诺伊州区块链法案“腹死胎中”</a></li>
-                  <li><a href="#">LongHash孵化项目 everiTokenLongHash孵化项目</a></li>
-                  <li><a href="#">比特币谷歌搜索量急剧下降 区块比特币谷歌搜索量急剧下降</a></li>
-                  <li><a href="#">傻瓜版的数字货币？sopay你还傻瓜版的数字货币？sopay你还</a></li>
+                  <li v-for="content in item.content">
+                    <a href="#">{{content.title}}</a>
+                  </li>
                 </ul>
                 <ul class="rtlist">
                   <li>相关项目</li>
-                  <li><a href="#">EOS</a></li>
-                  <li><a href="#">Datablockchain</a></li>
-                  <li><a href="#">0x</a></li>
-                  <li><a href="#">Paymon</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="item">
-              <div class="left"><img src="../assets/home/hi.jpg"></div>
-              <div class="right">
-                <p class="tit">平台</p>
-                <p class="smtit">最新资讯</p>
-                <ul class="list">
-                  <li><a href="#">伊利诺伊州区块链法案“腹死胎中”伊利诺伊州区块链法案“腹死胎中”</a></li>
-                  <li><a href="#">LongHash孵化项目 everiTokenLongHash孵化项目</a></li>
-                  <li><a href="#">比特币谷歌搜索量急剧下降 区块比特币谷歌搜索量急剧下降</a></li>
-                  <li><a href="#">傻瓜版的数字货币？sopay你还傻瓜版的数字货币？sopay你还</a></li>
-                </ul>
-                <ul class="rtlist">
-                  <li>相关项目</li>
-                  <li><a href="#">EOS</a></li>
-                  <li><a href="#">Datablockchain</a></li>
-                  <li><a href="#">0x</a></li>
-                  <li><a href="#">Paymon</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="item">
-              <div class="left"><img src="../assets/home/hi.jpg"></div>
-              <div class="right">
-                <p class="tit">平台</p>
-                <p class="smtit">最新资讯</p>
-                <ul class="list">
-                  <li><a href="#">伊利诺伊州区块链法案“腹死胎中”伊利诺伊州区块链法案“腹死胎中”</a></li>
-                  <li><a href="#">LongHash孵化项目 everiTokenLongHash孵化项目</a></li>
-                  <li><a href="#">比特币谷歌搜索量急剧下降 区块比特币谷歌搜索量急剧下降</a></li>
-                  <li><a href="#">傻瓜版的数字货币？sopay你还傻瓜版的数字货币？sopay你还</a></li>
-                </ul>
-                <ul class="rtlist">
-                  <li>相关项目</li>
-                  <li><a href="#">EOS</a></li>
-                  <li><a href="#">Datablockchain</a></li>
-                  <li><a href="#">0x</a></li>
-                  <li><a href="#">Paymon</a></li>
+                  <li v-for="project in item.project"><a href="#">{{project.project}}</a></li>
                 </ul>
               </div>
             </div>
@@ -397,13 +363,18 @@
           weibo: []
         },
         hostNews: [],
-        prjAct: 0
+        prjAct: 0,
+        hostIndustries: []
       }
     },
     filters: {
       showDay(obj) {
         let myDate = new Date(obj);
-        return myDate.getDate()
+        let day = myDate.getDate();
+        if (day < 10) {
+          day = '0' + day
+        }
+        return day
       },
       showYear(obj) {
         let myDate = new Date(obj);
@@ -414,6 +385,24 @@
           month = month + 1
         }
         return myDate.getFullYear() + '-' + month
+      },
+      showLable(label1, label2, lable3) {
+        if (label1 != null && label1 !== undefined && label1 !== '' && label1 != 'NULL') {
+          let arr = label1.split(';')
+          return arr[0]
+        } else {
+          if (label2 != null && label2 !== undefined && label2 !== '' && label2 != 'NULL') {
+            let arr = label1.split(';')
+            return arr[0]
+          } else {
+            if (lable3 != null && lable3 !== undefined && lable3 !== '' && lable3 != 'NULL') {
+              let arr = label1.split(';')
+              return arr[0]
+            } else {
+              return '标签'
+            }
+          }
+        }
       }
     },
     mounted() {
@@ -434,13 +423,13 @@
             $(".home-newstabs a").eq(this.activeIndex).addClass('active');
           }
         }
-      })
+      });
       $(".home-newstabs a").on('click', function (e) {
-        e.preventDefault()
-        $(".home-newstabs .active").removeClass('active')
-        $(this).addClass('active')
+        e.preventDefault();
+        $(".home-newstabs .active").removeClass('active');
+        $(this).addClass('active');
         homeNewsSwiper.slideTo($(this).index())
-      })
+      });
       new Swiper('#home-newslist1', {
         direction: 'vertical',
         slidesPerView: 'auto',
@@ -451,7 +440,7 @@
         mousewheel: true,
         observer: true,
         observeParents: true
-      })
+      });
       new Swiper('#home-newslist2', {
         direction: 'vertical',
         slidesPerView: 'auto',
@@ -462,7 +451,7 @@
         mousewheel: true,
         observer: true,
         observeParents: true
-      })
+      });
       new Swiper('#home-newslist3', {
         direction: 'vertical',
         slidesPerView: 'auto',
@@ -473,11 +462,10 @@
         mousewheel: true,
         observer: true,
         observeParents: true
-      })
-      this.getHottestProject()
-      this.iniHotIndustries()
-      this.initHotNews()
-      this.getDataByICOName('EOS')
+      });
+      this.getHottestProject();
+      this.iniHotIndustries();
+      this.initHotNews();
     },
     methods: {
       initIcoNews(obj) {
@@ -486,7 +474,6 @@
         let that = this
         that.$axios.get('/api/traditional/icoNews?icoName=' + ico + '&categoryId=290001').then(function (res) {
           that.icoNews.content = res.data.content
-          console.log(res.data.content)
         })
       },
       inittuiwen(obj) {
@@ -494,7 +481,6 @@
         let that = this
         that.$axios.get('/api/traditional/icoNews?icoName=' + ico + '&categoryId=290002').then(function (res) {
           that.icoNews.tuiwen = res.data.content
-          // console.log(res.data.content)
         })
       },
       initweibo(obj) {
@@ -502,7 +488,6 @@
         let that = this
         that.$axios.get('/api/traditional/icoNews?icoName=' + ico + '&categoryId=290004').then(function (res) {
           that.icoNews.weibo = res.data.content
-          // console.log(res.data.content)
         })
       },
       initHotNews() {
@@ -520,7 +505,20 @@
       iniHotIndustries() {
         let that = this
         that.$axios.get('/api/ICO/hotestIndustries').then(function (res) {
-          console.log(res)
+          // that.hostIndustries = res.data
+          let data = res.data
+          for (let i = 0; i < data.length; i++) {
+            let Industry = {};
+            Industry.categoryName = data[i].categoryName;
+            that.$axios.get('/api/ICO/relatedICO?categoryName=' + Industry.categoryName + '&pageSize=4').then(function (res) {
+              Industry.project = res.data;
+              that.$axios.get('/api/traditional/categoryList?categoryName=' + Industry.categoryName + '&pageSize=4').then(function (res) {
+                Industry.content = res.data.content;
+                that.hostIndustries.push(Industry);
+                console.log(that.hostIndustries)
+              })
+            })
+          }
         })
       },
       showheader() {
@@ -577,13 +575,13 @@
           this.inittuiwen(this.showProject)
           this.initweibo(this.showProject)
         }
-      },
-      getDataByICOName(categoryName) {
-        let that = this
-        that.$axios.get('/api/ICO/relatedICO?categoryName=' + categoryName).then(function (res) {
-          console.log(res)
-        })
       }
+      // getDataByICOName(categoryName) {
+      //   let that = this
+      //   that.$axios.get('/api/ICO/relatedICO?categoryName=' + categoryName).then(function (res) {
+      //     console.log(res)
+      //   })
+      // }
     }
   }
 </script>
