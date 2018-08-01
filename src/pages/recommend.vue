@@ -143,7 +143,7 @@
                 </button>
               </div>
             </div>
-            <div class="right">
+            <div v-if="newType == 1" class="right">
               <div class="link_box">
                 <div class="item">
                   <i class="fa fa-facebook"></i>
@@ -222,6 +222,62 @@
                           <h4 v-if="!affair.titlePicture">{{affair.title}}</h4>
                           <p v-if="!affair.titlePicture">{{affair.content}}</p>
                         </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div v-if="newType == 2" class="right">
+              <div class="right_item">
+                <div class="hot_title">
+                  <div class="title_icon">
+                    <img src="../assets/follow/hot_text.png"/>
+                  </div>
+                  <h4>24小时热文</h4>
+                </div>
+                <div class="hot_content">
+                  <ul>
+                    <li>
+                      <div class="list_item">
+                        <div class="item_left">
+                          <img :src="img3"/>
+                        </div>
+                        <div class="item_body">
+                          <h4>Whatever is worth doing is worth doing well</h4>
+                          <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
+                        </div>
+                      </div>
+                      <div class="item_bottom">
+                        <p>2018-05-26</p>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="list_item">
+                        <div class="item_left">
+                          <img :src="img3"/>
+                        </div>
+                        <div class="item_body">
+                          <h4>Whatever is worth doing is worth doing well</h4>
+                          <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
+                        </div>
+                      </div>
+                      <div class="item_bottom">
+                        <p>2018-05-26</p>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="list_item">
+                        <div class="item_left">
+                          <img :src="img3"/>
+                        </div>
+                        <div class="item_body">
+                          <h4>Whatever is worth doing is worth doing well</h4>
+                          <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
+                        </div>
+                      </div>
+                      <div class="item_bottom">
+                        <p>2018-05-26</p>
                       </div>
                     </li>
                   </ul>
@@ -438,6 +494,11 @@
         })
       },
       changeClassfy(categoryName, index) {
+        if (categoryName == '关注') {
+          this.newType = 2
+        } else {
+          this.newType = 1
+        }
         this.showloading = true;
         this.classShow = index;
         this.newsList = [];

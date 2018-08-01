@@ -46,10 +46,10 @@
         .news_box {
           position: relative;
           padding-left: 122px;
-          padding-top: 8px;
+          padding-top: 7px;
           .news_title {
             position: absolute;
-            top: 2px;
+            top: 1px;
             left: 0px;
             color: #fff;
             padding: 7px 12px;
@@ -74,6 +74,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            margin-bottom: 0px;
           }
         }
         .follow_box {
