@@ -746,6 +746,7 @@
                   -webkit-line-clamp: 3;
                   -webkit-box-orient: vertical;
                   margin-bottom: 10px;
+                  word-break: break-word;
                 }
                 .bottom {
                   position: relative;
@@ -767,7 +768,7 @@
                   border-radius: 15px;
                   display: inline-block;
                   position: absolute;
-                  top: -2px;
+                  top: 2px;
                   right: 0;
                 }
               }

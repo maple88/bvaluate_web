@@ -127,7 +127,7 @@
                 </div>
                 <div class="bottom">
                   <ul>
-                    <li>folow us:</li>
+                    <li>follow us:</li>
                     <li><a :href="showProject.outerFaceBook "><img src="../assets/home/f1.png"></a></li>
                     <li><a :href="showProject.outerTwitter "><img src="../assets/home/f2.png"></a></li>
                     <li><a :href="showProject.outerTelegram "><img src="../assets/home/f3.png"></a></li>
@@ -171,7 +171,7 @@
                   <a href="#">推文</a>
                   <a href="#">微博</a>
                 </div>
-                <div class="swiper-container" id="home-news">
+                <div class="swiper-container" id="home-news" style="width: 100%;">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
                       <div class="swiper-container home_newslist_style" id="home-newslist1">
@@ -202,9 +202,9 @@
                                       <img src="../assets/logo_brand.png">
                                       <span>{{icoNew.author }}{{!(icoNew.siteName)}}</span>
                                     </div>
-                                    <span class="usertime">{{icoNew.urlTime }}</span>
+                                    <span class="usertime">{{icoNew.urlTime}}</span>
                                   </div>
-                                  <span class="tips">{{icoNew.grouptName}}</span>
+                                  <span class="tips">{{icoNew.channel}}</span>
                                 </div>
                               </div>
                             </div>
@@ -227,57 +227,24 @@
                       </div>
                     </div>
                     <div class="swiper-slide">
-                      <!--<div class="swiper-container home_newslist_style" id="home-newslist2">-->
-                      <!--<div class="swiper-wrapper">-->
-                      <!--<div class="swiper-slide">-->
-                      <!--<div class="item hasdate" v-for="icoNew in icoNews.content">-->
-                      <!--<div class="left" :class="(icoNew.titlePicture != ''&& icoNew.titlePicture )?'hasbg':'' ">-->
-                      <!--<img :src="icoNew.titlePicture ">-->
-                      <!--<p class="day">{{icoNew.urlTime | showDay }}</p>-->
-                      <!--<p>{{icoNew.urlTime | showYear}}</p>-->
-                      <!--</div>-->
-                      <!--<div class="right">-->
-                      <!--<p class="tit">-->
-                      <!--<a href="#">-->
-                      <!--{{icoNew.title }}-->
-                      <!--</a>-->
-                      <!--</p>-->
-                      <!--<p class="des">-->
-                      <!--{{icoNew.content }}-->
-                      <!--</p>-->
-                      <!--<div class="bottom">-->
-                      <!--<div class="userinfo">-->
-                      <!--<div class="user" :is="icoNew.siteName">-->
-                      <!--&lt;!&ndash;<img src="../assets/logo_brand.png">&ndash;&gt;-->
-                      <!--<span>{{icoNew.siteName}}</span>-->
-                      <!--</div>-->
-                      <!--<div class="user" :is="!icoNew.siteName">-->
-                      <!--<img src="../assets/logo_brand.png">-->
-                      <!--<span>{{icoNew.author }}</span>-->
-                      <!--</div>-->
-                      <!--<span class="usertime">{{icoNew.urlTime }}</span>-->
-                      <!--</div>-->
-                      <!--<span class="tips">{{icoNew.grouptName}}</span>-->
-                      <!--</div>-->
-                      <!--</div>-->
-                      <!--</div>-->
-                      <!--<div class="item">-->
-                      <!--<div class="left"><img src="../assets/home/nicon.png"></div>-->
-                      <!--<div class="right">-->
-                      <!--<p class="des">Hey Andrew, We will be announcing release detailsin the coming weeks,-->
-                      <!--stay tuned on our official hannels! t.me/vividtoken Hey Andrew, We will be-->
-                      <!--announcing</p>-->
-                      <!--<div class="bottom">-->
-                      <!--<span class="name">博主</span>-->
-                      <!--<span class="time">2018-06-02    18:00</span>-->
-                      <!--<span class="tips">新闻</span>-->
-                      <!--</div>-->
-                      <!--</div>-->
-                      <!--</div>-->
-                      <!--</div>-->
-                      <!--</div>-->
-                      <!--<div class="swiper-scrollbar"></div>-->
-                      <!--</div>-->
+                      <div class="swiper-container home_newslist_style" id="home-newslist2">
+                        <div class="swiper-wrapper">
+                          <div class="swiper-slide">
+                            <div class="item" v-for="icoNew in icoNews.tuiwen">
+                              <div class="left"><img src="../assets/home/nicon.png" :src="icoNew.titlePicture"></div>
+                              <div class="right">
+                                <p class="des">{{icoNew.content}}</p>
+                                <div class="bottom">
+                                  <span class="name">{{icoNew.author }}{{!(icoNew.siteName)}}</span>
+                                  <span class="time">{{icoNew.urlTime}}</span>
+                                  <span class="tips">{{icoNew.channel}}</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="swiper-scrollbar"></div>
+                      </div>
                     </div>
                     <div class="swiper-slide">
                       <!--<div class="swiper-container home_newslist_style" id="home-newslist3">-->
@@ -425,7 +392,9 @@
         showProject: {},
         icoNews: {
           index: 1,
-          content: []
+          content: [],
+          tuiwen: [],
+          weibo: []
         },
         hostNews: [],
         prjAct: 0
@@ -513,10 +482,27 @@
     methods: {
       initIcoNews(obj) {
         let ico = obj.project;
-        let dataType = 'NEWS';
+        // let dataType = 'NEWS';
         let that = this
-        that.$axios.get('/api/ICO/icoLatestNews?ico=' + ico + '&dataType=' + dataType).then(function (res) {
+        that.$axios.get('/api/traditional/icoNews?icoName=' + ico + '&categoryId=290001').then(function (res) {
           that.icoNews.content = res.data.content
+          console.log(res.data.content)
+        })
+      },
+      inittuiwen(obj) {
+        let ico = obj.project;
+        let that = this
+        that.$axios.get('/api/traditional/icoNews?icoName=' + ico + '&categoryId=290002').then(function (res) {
+          that.icoNews.tuiwen = res.data.content
+          // console.log(res.data.content)
+        })
+      },
+      initweibo(obj) {
+        let ico = obj.project;
+        let that = this
+        that.$axios.get('/api/traditional/icoNews?icoName=' + ico + '&categoryId=290004').then(function (res) {
+          that.icoNews.weibo = res.data.content
+          // console.log(res.data.content)
         })
       },
       initHotNews() {
@@ -556,6 +542,8 @@
             let partner = JSON.parse('[' + that.showProject.partner + ']')
             that.showProject.partner = that.initPartner(partner)
             that.initIcoNews(that.showProject)
+            that.inittuiwen(that.showProject)
+            that.initweibo(that.showProject)
           }
         })
       },
@@ -586,6 +574,8 @@
         } finally {
           this.showProject = obj;
           this.initIcoNews(this.showProject)
+          this.inittuiwen(this.showProject)
+          this.initweibo(this.showProject)
         }
       },
       getDataByICOName(categoryName) {
