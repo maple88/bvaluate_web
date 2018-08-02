@@ -29,20 +29,22 @@
               </div>
             </div>
             <div class="label_bar">
+              <!-- <keep-alive> -->
               <transition name="fade">
-                <div v-if="newType == 1" class="news_box">
+                <div v-show="newType == 1" class="news_box">
                   <div class="news_title">
                     <span>最新动态</span>
                   </div>
                   <div class="swiper-container" id="news_swiper">
                     <div class="swiper-wrapper">
-                      <div class="swiper-slide"><p>作为新杭州人的你是否也在困扰，买车容易送车难，不可能不送车~</p></div>
-                      <div class="swiper-slide"><p>作为新杭州人的你是否也在困扰，买车容易送车难，不可能不送车~</p></div>
-                      <div class="swiper-slide"><p>作为新杭州人的你是否也在困扰，买车容易送车难，不可能不送车~</p></div>
+                      <div class="swiper-slide"><p>11111作为新杭州人的你是否也在困扰，买车容易送车难，不可能不送车~</p></div>
+                      <div class="swiper-slide"><p>22222作为新杭州人的你是否也在困扰，买车容易送车难，不可能不送车~</p></div>
+                      <div class="swiper-slide"><p>33333作为新杭州人的你是否也在困扰，买车容易送车难，不可能不送车~</p></div>
                     </div>
                   </div>
                 </div>
               </transition>
+              <!-- </keep-alive> -->
               <keep-alive>
                 <transition name="fade">
                   <div v-if="newType == 2" class="label_box">
@@ -758,9 +760,13 @@
           prevEl: '.swiper-button-prev',
         }
       });
-      new Swiper('#news_swiper', {
+      var newsSwiper = new Swiper('#news_swiper', {
+        autoplay: {
+          delay: 1500,
+          disableOnInteraction: false
+        },
         direction: 'vertical',
-        observer: true,		            //修改swiper自己或子元素时，自动初始化swiper
+        observer: true,
         observeParents: true,
         loop: true
       });
