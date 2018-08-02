@@ -28,37 +28,52 @@
         <div class="leftlayout">
           <div class="section1">
             <div class="sectiontabs">
-              <a href="javascript:;" class="active">新闻</a>
-              <a href="javascript:;">评级文章</a>
+              <a href="javascript:;" :class="atvNewOrGrade==1?'active':''"
+                 @click.stop="iniNewOrGrade(project.project,'290001') , atvNewOrGrade=1">新闻</a>
+              <a href="javascript:;" :class="atvNewOrGrade==2?'active':''"
+                 @click.stop="iniNewOrGrade(project.project,'290000') , atvNewOrGrade=2">评级文章</a>
             </div>
             <div class="swiper-container section-swiper">
+              <div class="loading_box" v-if="showLoading1">
+                <img style="width: 50px" :src="loading"/>
+              </div>
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                  <div class="media">
+                  <div class="media" v-for="item in NewOrGrade">
                     <div class="media-left media-middle">
                       <div class="newimg_box">
-                        <img src="../assets/media.jpg"/>
+                        <img v-if="item.titlePicture" :src="item.titlePicture"/>
                         <div class="date_box">
-                          <span class="day">22</span>
-                          <span class="years">2018-05</span>
+                          <span class="day">{{item.urlTime | showDay}}</span>
+                          <span class="years">{{item.urlTime | showYear}}</span>
                         </div>
                       </div>
                     </div>
                     <div class="media-body">
-                      <h4 class="media-heading">Whatever is worth doing is worth doing well Whatever is worth
-                        doing is worth</h4>
-                      <p class="media-words">Whatever is worth doing is worth doing well, Whatever isworth doing
-                        is worth doingwel,Whatever isworth doing is worth doing wel,Whatever is worth doing is
-                        worth doing well, Whatever isworth doingis worth doing wel,</p>
+                      <h4 class="media-heading" :title="item.title">
+                        {{item.title }}
+                      </h4>
+                      <p class="media-words">
+                        {{item.content }}
+                      </p>
                       <div class="media-bottom">
                         <ul>
                           <li>
-                            <div class="userimg"><img src="../assets/follow/user_head.png"></div>
-                            刘方平
+                            <div class="userimg"
+                                 v-if="!(item.siteName !== 'NULL' && item.siteName !== null && item.siteName !== '')">
+                              <img src="../assets/follow/user_head.png">
+                            </div>
+                            {{
+                            (item.siteName !== 'NULL'
+                            && item.siteName !== null
+                            && item.siteName !== '')?item.siteName:item.author
+                            }}
                           </li>
-                          <li>5月17日 18:17</li>
+                          <li>{{item.urlTime}}</li>
                         </ul>
-                        <div class="tips">新闻</div>
+                        <div class="tips">
+                          {{item.industryCategory | showLable(item.countryCategory,item.projectCategory)}}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -317,31 +332,21 @@
           </div>
           <div class="section4">
             <div class="sectiontabs">
-              <a href="javascript:;" class="active">推文</a>
-              <a href="javascript:;">微博</a>
+              <a href="javascript:;" :class="atvTwitterOrWeibo==1?'active':''"
+                 @click.stop="iniNewOrGrade(project.project,'290002') , atvTwitterOrWeibo=1">推文</a>
+              <a href="javascript:;" :class="atvTwitterOrWeibo==2?'active':''"
+                 @click.stop="iniNewOrGrade(project.project,'290004') , atvTwitterOrWeibo=2">微博</a>
             </div>
             <div class="swiper-container section-swiper">
+              <div class="loading_box" v-if="showLoading2">
+                <img style="width: 50px" :src="loading"/>
+              </div>
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                  <div class="item">
+                  <div class="item" v-for="item in TwitterOrWeibo">
                     <div class="left"><img src="../assets/home/nicon.png"></div>
                     <div class="right">
-                      <p class="des">Hey Andrew, We will be announcing release detailsin the coming weeks, stay tuned on
-                        our official hannels! t.me/vividtoken Hey Andrew, We will be announcing Hey Andrew, We will be
-                        announcing release detailsin the coming weeks</p>
-                      <div class="bottom">
-                        <span class="name">博主</span>
-                        <span class="time">2018-06-02    18:00</span>
-                        <span class="tips">新闻</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="item">
-                    <div class="left"><img src="../assets/home/nicon.png"></div>
-                    <div class="right">
-                      <p class="des">Hey Andrew, We will be announcing release detailsin the coming weeks, stay tuned on
-                        our official hannels! t.me/vividtoken Hey Andrew, We will be announcing Hey Andrew, We will be
-                        announcing release detailsin the coming weeks</p>
+                      <p class="des">{{item.content }}</p>
                       <div class="bottom">
                         <span class="name">博主</span>
                         <span class="time">2018-06-02    18:00</span>
@@ -548,7 +553,6 @@
           </div>
         </div>
       </div>
-
       <vfooter/>
     </div>
 
@@ -558,31 +562,37 @@
 <script>
   import Swiper from 'swiper'
 
+  let loading = require('../assets/login/loading.gif');
+
   export default {
     data() {
       return {
         isFollow: true,
         project: {},
-        NewOrGrade: {}
+        NewOrGrade: [],
+        TwitterOrWeibo: [],
+        atvNewOrGrade: 1,
+        atvTwitterOrWeibo: 1,
+        loading: loading,
+        showLoading1: true,
+        showLoading2: true
       }
     },
     mounted() {
-      $(".sectiontabs a").on('click', function (e) {
-        e.preventDefault()
-        $(this).parents(".sectiontabs").find("a").removeClass('active')
-        $(this).addClass('active')
-        // homeNewsSwiper.slideTo($(this).index())
-      })
       new Swiper('.section-swiper', {
         direction: 'vertical',
         slidesPerView: 'auto',
         freeMode: true,
+        observer: true,
+        observeParents: true,
         scrollbar: {
           el: '.swiper-scrollbar'
         },
         mousewheel: true
       })
       new Swiper('.advert-swiper', {
+        observer: true,
+        observeParents: true,
         autoplay: {
           disableOnInteraction: false
         },
@@ -597,6 +607,44 @@
       })
       this.initProject();
     },
+    filters: {
+      showDay(obj) {
+        let myDate = new Date(obj);
+        let day = myDate.getDate()
+        if (day < 9) {
+          day = '0' + (day + 1)
+        }
+        return day
+      },
+      showYear(obj) {
+        let myDate = new Date(obj);
+        let month = myDate.getMonth()
+        if (month < 9) {
+          month = '0' + (month + 1)
+        } else {
+          month = month + 1
+        }
+        return myDate.getFullYear() + '-' + month
+      },
+      showLable(label1, label2, lable3) {
+        if (label1 != null && label1 !== undefined && label1 !== '' && label1 != 'NULL') {
+          let arr = label1.split(';')
+          return arr[0]
+        } else {
+          if (label2 != null && label2 !== undefined && label2 !== '' && label2 != 'NULL') {
+            let arr = label1.split(';')
+            return arr[0]
+          } else {
+            if (lable3 != null && lable3 !== undefined && lable3 !== '' && lable3 != 'NULL') {
+              let arr = label1.split(';')
+              return arr[0]
+            } else {
+              return '标签'
+            }
+          }
+        }
+      }
+    },
     methods: {
       initProject() {
         let that = this;
@@ -607,15 +655,31 @@
             let partner = that.project.partner;
             partner = JSON.parse('[' + partner + ']');
             that.project.partner = partner;
+            //290001
+            that.iniNewOrGrade(that.project.project, '290001')
+            that.iniTwitterOrWeibo(that.project.project, '290002')
           })
         } else {
           that.$router.push('/index')
         }
       },
-      iniNewOrGrade() {
+      iniNewOrGrade(projectName, categoryId) {
+        this.NewOrGrade = []
+        this.showLoading1 = true;
         let that = this;
-        that.$axios.get('/api/ICO/id/' + sid).then(function (res) {
-
+        that.$axios.get('/api/traditional/icoNews?icoName=' + projectName + '&categoryId=' + categoryId).then(function (res) {
+          that.NewOrGrade = res.data.content;
+          that.showLoading1 = false;
+        })
+      },
+      iniTwitterOrWeibo(projectName, categoryId) {
+        this.TwitterOrWeibo = []
+        this.showLoading2 = true;
+        let that = this;
+        that.$axios.get('/api/traditional/icoNews?icoName=' + projectName + '&categoryId=' + categoryId).then(function (res) {
+          console.log(res.data.content)
+          that.TwitterOrWeibo = res.data.content;
+          that.showLoading2 = false;
         })
       }
     }
