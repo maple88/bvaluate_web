@@ -613,7 +613,10 @@
         }
       },
       iniNewOrGrade() {
+        let that = this;
+        that.$axios.get('/api/ICO/id/' + sid).then(function (res) {
 
+        })
       }
     }
   }
