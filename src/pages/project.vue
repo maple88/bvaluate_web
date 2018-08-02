@@ -333,9 +333,9 @@
           <div class="section4">
             <div class="sectiontabs">
               <a href="javascript:;" :class="atvTwitterOrWeibo==1?'active':''"
-                 @click.stop="iniNewOrGrade(project.project,'290002') , atvTwitterOrWeibo=1">推文</a>
+                 @click.stop="iniTwitterOrWeibo(project.project,'290002') , atvTwitterOrWeibo=1">推文</a>
               <a href="javascript:;" :class="atvTwitterOrWeibo==2?'active':''"
-                 @click.stop="iniNewOrGrade(project.project,'290004') , atvTwitterOrWeibo=2">微博</a>
+                 @click.stop="iniTwitterOrWeibo(project.project,'290004') , atvTwitterOrWeibo=2">微博</a>
             </div>
             <div class="swiper-container section-swiper">
               <div class="loading_box" v-if="showLoading2">
