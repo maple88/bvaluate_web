@@ -295,7 +295,21 @@
                     </div>
                     <div class="hot_content">
                       <ul>
-                        <li>
+                        <li v-for="(item, index) in hotNews" :key="item.sid">
+                          <div class="list_item">
+                            <div class="item_left">
+                              <img :src="item.titlePicture"/>
+                            </div>
+                            <div class="item_body">
+                              <h4>{{item.title}}</h4>
+                              <p>{{item.content}}</p>
+                            </div>
+                          </div>
+                          <div class="item_bottom">
+                            <p>{{item.urlDate}}</p>
+                          </div>
+                        </li>
+                        <!-- <li>
                           <div class="list_item">
                             <div class="item_left">
                               <img :src="img3"/>
@@ -322,21 +336,7 @@
                           <div class="item_bottom">
                             <p>2018-05-26</p>
                           </div>
-                        </li>
-                        <li>
-                          <div class="list_item">
-                            <div class="item_left">
-                              <img :src="img3"/>
-                            </div>
-                            <div class="item_body">
-                              <h4>Whatever is worth doing is worth doing well</h4>
-                              <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
-                            </div>
-                          </div>
-                          <div class="item_bottom">
-                            <p>2018-05-26</p>
-                          </div>
-                        </li>
+                        </li> -->
                       </ul>
                     </div>
                   </div>
@@ -355,7 +355,21 @@
                     </div>
                     <div class="hot_content">
                       <ul>
-                        <li>
+                        <li v-for="(item, index) in hotNews" :key="item.sid">
+                          <div class="list_item">
+                            <div class="item_left">
+                              <img :src="item.titlePicture"/>
+                            </div>
+                            <div class="item_body">
+                              <h4>{{item.title}}</h4>
+                              <p>{{item.content}}</p>
+                            </div>
+                          </div>
+                          <div class="item_bottom">
+                            <p>{{item.urlDate}}</p>
+                          </div>
+                        </li>
+                        <!-- <li>
                           <div class="list_item">
                             <div class="item_left">
                               <img :src="img3"/>
@@ -382,21 +396,7 @@
                           <div class="item_bottom">
                             <p>2018-05-26</p>
                           </div>
-                        </li>
-                        <li>
-                          <div class="list_item">
-                            <div class="item_left">
-                              <img :src="img3"/>
-                            </div>
-                            <div class="item_body">
-                              <h4>Whatever is worth doing is worth doing well</h4>
-                              <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
-                            </div>
-                          </div>
-                          <div class="item_bottom">
-                            <p>2018-05-26</p>
-                          </div>
-                        </li>
+                        </li> -->
                       </ul>
                     </div>
                   </div>
@@ -430,11 +430,11 @@
                               <div class="body_bottom">
                                 <p>博主</p>
                                 <p class="time">2018-05-26</p>
-                              </div>
+                              </div>               
                             </div>
                           </div>
                         </li>
-                        <li>
+                        <!-- <li>
                           <div class="list_item">
                             <div class="item_left tweet">
                               <img src="../assets/follow/tweet_header.png"/>
@@ -481,7 +481,7 @@
                               </div>
                             </div>
                           </div>
-                        </li>
+                        </li> -->
                       </ul>
                     </div>
                   </div>
@@ -624,7 +624,9 @@
         affairList: [],
         testDate: '2018-07-31 15:16:00',
         labelMore: false,
-        newType: 1
+        newType: 1,
+        industryName: "",
+        hotNews: []
       }
     },
     filters: {
@@ -696,11 +698,21 @@
           }
         })
       },
+      getHotnews () {
+        let that = this
+        that.$axios.get('/api/traditional/hotNews?industryName='+ that.industryName +'&pageSize=3').then(function (res) {
+          if (that.newsClassfy.length > 0) {
+            that.hotNews = res.data.content
+          }
+        })
+      },
       changeClassfy(categoryName, index) {
         if (categoryName == '关注') {
           this.newType = 2;
+          this.industryName = "关注"
         } else if (categoryName == '平台') {
           this.newType = 3;
+          this.industryName = "平台"
           new Swiper('#follow_swiper', {
             direction: 'horizontal',
             slidesPerView: 'auto',
@@ -717,6 +729,7 @@
         this.newsList = [];
         this.pageSize = 20;
         this.initNewsList(categoryName)
+        this.getHotnews()
       },
       initNewsList(categoryName) {
         let that = this;
