@@ -29,9 +29,8 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
                 <router-link tag="li" to="/index" active-class="active"><a>首页</a></router-link>
-                <router-link tag="li" to="/follow" active-class="active"><a>关注</a></router-link>
-                <router-link tag="li" to="/project" active-class="active"><a>项目</a></router-link>
-                <router-link tag="li" to="/author" active-class="active"><a>作者</a></router-link>
+                <router-link tag="li" to="/recommend" active-class="active"><a>新闻</a></router-link>
+                、
                 <router-link tag="li" to="/userCenter" active-class="active"><a>个人中心</a></router-link>
               </ul>
               <ul class="nav navbar-nav navbar-right">
@@ -125,7 +124,12 @@
               <div class="info">
                 <div class="toplist-item">
                   <div class="left">
-                    <p class="tit">{{showProject.project}}<i class="fa fa-heart"></i></p>
+                    <p class="tit">
+                      <span class="title" @click.stop="$router.push('/project?sid=' + showProject.sid)">
+                        {{showProject.project}}
+                      </span>
+                      <i class="fa fa-heart"></i>
+                    </p>
                     <p class="smtit">{{showProject.introduction }}</p>
                     <p class="des">{{showProject.irAbstract }}</p>
                   </div>
