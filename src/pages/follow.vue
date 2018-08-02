@@ -30,15 +30,24 @@
             </div>
             <div class="label_bar">
               <div class="label_box">
-                <button class="all_btn">全部</button>
-                <ul class="clearfix">
+                <ul class="clearfix" :class="labelMore?'open':''">
+                  <li><span class="active">全部</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
+                  <li><span>标签</span></li>
                   <li><span>标签</span></li>
                   <li><span>标签</span></li>
                   <li><span>标签</span></li>
                   <li><span>标签</span></li>
                   <li><span>标签</span></li>
                 </ul>
-                <img class="open_label" src="../assets/follow/down.png"/>
+                <img src="../assets/follow/down.png" class="open_label" :class="labelMore?'open':''"
+                     @click="labelMore = !labelMore"/>
               </div>
             </div>
           </div>
@@ -223,7 +232,8 @@
         colorList: ['red', 'yellow', 'gray', 'pink'],
         banner1: img1,
         img2: img2,
-        img3: img3
+        img3: img3,
+        labelMore: false
       }
     },
     mounted() {

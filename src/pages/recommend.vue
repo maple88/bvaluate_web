@@ -29,12 +29,81 @@
               </div>
             </div>
             <div class="label_bar">
-              <div class="news_box">
-                <div class="news_title">
-                  <span>最新动态</span>
+              <transition name="fade">
+                <div v-if="newType == 1" class="news_box">
+                  <div class="news_title">
+                    <span>最新动态</span>
+                  </div>
+                  <div class="swiper-container" id="news_swiper">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide"><p>作为新杭州人的你是否也在困扰，买车容易送车难，不可能不送车~</p></div>
+                      <div class="swiper-slide"><p>作为新杭州人的你是否也在困扰，买车容易送车难，不可能不送车~</p></div>
+                      <div class="swiper-slide"><p>作为新杭州人的你是否也在困扰，买车容易送车难，不可能不送车~</p></div>
+                    </div>
+                  </div>
                 </div>
-                <p>作为新杭州人的你是否也在困扰，买车容易送车难，不可能不送车~</p>
-              </div>
+              </transition>
+              <keep-alive>
+                <transition name="fade">
+                  <div v-if="newType == 2" class="label_box">
+                    <ul class="clearfix" :class="labelMore?'open':''">
+                      <li><span class="active">全部</span></li>
+                      <li><span>标签</span></li>
+                      <li><span>标签</span></li>
+                      <li><span>标签</span></li>
+                      <li><span>标签</span></li>
+                      <li><span>标签</span></li>
+                      <li><span>标签</span></li>
+                      <li><span>标签</span></li>
+                      <li><span>标签</span></li>
+                      <li><span>标签</span></li>
+                      <li><span>标签</span></li>
+                      <li><span>标签</span></li>
+                      <li><span>标签</span></li>
+                      <li><span>标签</span></li>
+                    </ul>
+                    <img src="../assets/follow/down.png" class="open_label" :class="labelMore?'open':''"
+                         @click="labelMore = !labelMore"/>
+                  </div>
+                </transition>
+              </keep-alive>
+              <keep-alive>
+                <transition name="fade">
+                  <div v-if="newType == 3" class="follow_box">
+                    <div class="swiper-container" id="follow_swiper">
+                      <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                          <ul class="clearfix">
+                            <li>
+                              <div class="item_box">platform</div>
+                            </li>
+                            <li>
+                              <div class="item_box">标签</div>
+                            </li>
+                            <li>
+                              <div class="item_box">标签</div>
+                            </li>
+                            <li>
+                              <div class="item_box">标签</div>
+                            </li>
+                            <li>
+                              <div class="item_box">标签</div>
+                            </li>
+                            <li>
+                              <div class="item_box">标签</div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <!-- 如果需要滚动条 -->
+                      <!--<div class="swiper-scrollbar"></div>-->
+                    </div>
+                    <div class="follow_btn">
+                      <div class="follow"><i class="fa fa-plus"></i>关注</div>
+                    </div>
+                  </div>
+                </transition>
+              </keep-alive>
             </div>
           </div>
         </div>
@@ -45,7 +114,7 @@
             <div class="left">
               <ul class="menu_box">
                 <li :class="index == classShow?'active':''" v-for="(classfy,index) in newsClassfy"
-                    v-if="classfy.showInList" @click="changeClassfy(index)">
+                    v-if="classfy.showInList" @click="changeClassfy(classfy.categoryName,index)">
                   {{classfy.categoryName}}
                 </li>
               </ul>
@@ -72,7 +141,8 @@
                   <li>
                     <div class="list-item">
                       <div class="medialist">
-                        <div class="media" v-for="news in newsList">
+                        <div class="media" v-for="news in newsList"
+                             @click="$router.push('/article?sid=' + news.sid)">
                           <div class="media-left media-middle">
                             <div class="newimg_box">
                               <img v-if="news.titlePicture" :src="news.titlePicture"/>
@@ -83,7 +153,7 @@
                             </div>
                           </div>
                           <div class="media-body">
-                            <h4 class="media-heading">
+                            <h4 class="media-heading" :title="news.title">
                               {{news.title }}
                             </h4>
                             <p class="media-words">
@@ -92,41 +162,21 @@
                             <div class="media-bottom">
                               <ul>
                                 <li>
-                                  <div class="userimg">
+                                  <div class="userimg"
+                                       v-if="(news.author !== 'NULL' && news.author !== null && news.author !== '')">
                                     <img src="../assets/follow/user_head.png">
                                   </div>
-                                  {{news.author }}
+                                  {{
+                                  (news.author !== 'NULL'
+                                  && news.author !== null
+                                  && news.author !== '')?news.author:news.siteName
+                                  }}
                                 </li>
                                 <li>{{news.urlTime}}</li>
                               </ul>
-                              <div class="tips">{{news.grouptName}}</div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="media">
-                          <div class="media-left media-middle">
-                            <div class="newimg_box">
-                              <div class="date_box">
-                                <span class="day">22</span>
-                                <span class="years">2018-05</span>
+                              <div class="tips">
+                                {{news.industryCategory | showLable(news.countryCategory,news.projectCategory)}}
                               </div>
-                            </div>
-                          </div>
-                          <div class="media-body">
-                            <h4 class="media-heading">Whatever is worth doing is worth doing well Whatever is worth
-                              doing is worth</h4>
-                            <p class="media-words">Whatever is worth doing is worth doing well, Whatever isworth doing
-                              is worth doingwel,Whatever isworth doing is worth doing wel,Whatever is worth doing is
-                              worth doing well, Whatever isworth doingis worth doing wel,</p>
-                            <div class="media-bottom">
-                              <ul>
-                                <li>
-                                  <div class="userimg"><img src="../assets/logo_brand.png"></div>
-                                  刘方平
-                                </li>
-                                <li>5月17日 18:17</li>
-                              </ul>
-                              <div class="tips">新闻</div>
                             </div>
                           </div>
                         </div>
@@ -136,199 +186,306 @@
                 </ul>
               </div>
               <div class="loading_more">
-                <button>加载更多</button>
+                <button :disabled="showloading" @click.stop="reloadMore(categoryName)">
+                  <img v-if="showloading" :src="loading"/>
+                  <span v-if="!showloading">加载更多</span>
+                </button>
               </div>
             </div>
-            <div class="right">
-              <div class="link_box">
-                <div class="item">
-                  <i class="fa fa-facebook"></i>
-                  <p>Facebook</p>
-                </div>
-                <div class="item">
-                  <i class="fa fa-twitter"></i>
-                  <p>Twitter</p>
-                </div>
-                <div class="item">
-                  <i class="fa fa-instagram"></i>
-                  <p>Instagram</p>
-                </div>
-                <div class="item">
-                  <i class="fa fa-google-plus"></i>
-                  <p>Google</p>
-                </div>
-                <div class="item">
-                  <i class="fa fa-pinterest"></i>
-                  <p>Pinterest</p>
-                </div>
-              </div>
-              <div class="right_item">
-                <div class="hot_title">
-                  <div class="title_icon">
-                    <img src="../assets/follow/news_flash.png"/>
+            <keep-alive>
+              <transition name="fade">
+                <div v-if="newType == 1" class="right">
+                  <div class="link_box">
+                    <div class="item">
+                      <i class="fa fa-facebook"></i>
+                      <p>Facebook</p>
+                    </div>
+                    <div class="item">
+                      <i class="fa fa-twitter"></i>
+                      <p>Twitter</p>
+                    </div>
+                    <div class="item">
+                      <i class="fa fa-instagram"></i>
+                      <p>Instagram</p>
+                    </div>
+                    <div class="item">
+                      <i class="fa fa-google-plus"></i>
+                      <p>Google</p>
+                    </div>
+                    <div class="item">
+                      <i class="fa fa-pinterest"></i>
+                      <p>Pinterest</p>
+                    </div>
                   </div>
-                  <h4>快讯</h4>
-                  <span class="look_more">查看更多</span>
-                </div>
-                <div class="hot_content">
-                  <ul>
-                    <li class="news_flash">
-                      <div class="news_item">
-                        <div class="radio_box">
-                          <div class="radio_circle first"></div>
-                        </div>
-                        <div class="item_time">
-                          <span>4分钟前</span>
-                        </div>
-                        <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing Whatever is worth</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing is worth doing Whatever is
-                            worth doing is worth doing</p>
-                        </div>
+                  <div class="right_item">
+                    <div class="hot_title">
+                      <div class="title_icon">
+                        <img src="../assets/follow/news_flash.png"/>
                       </div>
-                    </li>
-                    <li class="news_flash">
-                      <div class="news_item">
-                        <div class="radio_box">
-                          <div class="radio_circle"></div>
-                        </div>
-                        <div class="item_time">
-                          <span>4分钟前</span>
-                        </div>
-                        <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing Whatever is worth</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing is worth doing Whatever is
-                            worth doing is worth doing</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="news_flash">
-                      <div class="news_item">
-                        <div class="radio_box">
-                          <div class="radio_circle"></div>
-                        </div>
-                        <div class="item_time">
-                          <span>4分钟前</span>
-                        </div>
-                        <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing Whatever is worth</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing is worth doing Whatever is
-                            worth doing is worth doing</p>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="right_item margin_top">
-                <div class="hot_title">
-                  <div class="title_icon">
-                    <img src="../assets/follow/real_time.png"/>
+                      <h4>快讯</h4>
+                      <span class="look_more">查看更多</span>
+                    </div>
+                    <div class="hot_content">
+                      <ul>
+                        <li class="news_flash" v-for="(flash,index) in flashList">
+                          <div class="news_item">
+                            <div class="radio_box">
+                              <div class="radio_circle" :class="index==0?'first':''"></div>
+                            </div>
+                            <div class="item_time">
+                              <span>{{flash.urlTime | dataFormat}}</span>
+                            </div>
+                            <div class="item_body">
+                              <h4 @click.stop="$router.push('/article?sid=' + flash.sid)">{{flash.title}}</h4>
+                              <p>{{flash.content}}</p>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
-                  <h4>国家时事</h4>
-                  <span class="look_more">查看更多</span>
-                </div>
-                <div class="hot_content current">
-                  <ul>
-                    <li class="news_flash">
-                      <div class="news_item nolink">
-                        <div class="radio_box">
-                          <div class="radio_circle first"></div>
-                        </div>
-                        <div class="item_time">
-                          <span>4分钟前</span>
-                        </div>
-                        <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing Whatever is worth</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing is worth doing Whatever is
-                            worth doing is worth doing</p>
-                        </div>
+                  <div class="right_item margin_top">
+                    <div class="hot_title">
+                      <div class="title_icon">
+                        <img src="../assets/follow/real_time.png"/>
                       </div>
-                    </li>
-                    <li class="news_flash">
-                      <div class="news_item nolink">
-                        <div class="radio_box">
-                          <div class="radio_circle"></div>
-                        </div>
-                        <div class="item_time">
-                          <span>4分钟前</span>
-                        </div>
-                        <div class="item_body hasImg">
-                          <div class="content">
-                            <h4>Whatever is worth doing is worth doing Whatever is worth</h4>
-                            <p>Whatever is worth doing is worth doing Whatever is worth doing is worth doing Whatever is
-                              worth doing is worth doing</p>
+                      <h4>国家时事</h4>
+                      <span class="look_more">查看更多</span>
+                    </div>
+                    <div class="hot_content current">
+                      <ul>
+                        <li class="news_flash" v-for="(affair,index) in affairList">
+                          <div class="news_item nolink">
+                            <div class="radio_box">
+                              <div class="radio_circle" :class="index == 0 ? 'first':''"></div>
+                            </div>
+                            <div class="item_time">
+                              <span>{{affair.urlTime | dataFormat}}</span>
+                            </div>
+                            <div class="item_body" :class="affair.titlePicture ? 'hasImg' : ''">
+                              <div class="content" v-if="affair.titlePicture">
+                                <h4 @click.stop="$router.push('/article?sid=' + affair.sid)">{{affair.title}}</h4>
+                                <p>{{affair.content}}</p>
+                              </div>
+                              <div class="content_img" v-if="affair.titlePicture">
+                                <img :src="affair.titlePicture"/>
+                              </div>
+                              <h4 v-if="!affair.titlePicture">{{affair.title}}</h4>
+                              <p v-if="!affair.titlePicture">{{affair.content}}</p>
+                            </div>
                           </div>
-                          <div class="content_img">
-                            <img :src="img3"/>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="news_flash">
-                      <div class="news_item nolink">
-                        <div class="radio_box">
-                          <div class="radio_circle"></div>
-                        </div>
-                        <div class="item_time">
-                          <span>4分钟前</span>
-                        </div>
-                        <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing Whatever is worth</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing is worth doing Whatever is
-                            worth doing is worth doing</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="news_flash">
-                      <div class="news_item nolink">
-                        <div class="radio_box">
-                          <div class="radio_circle"></div>
-                        </div>
-                        <div class="item_time">
-                          <span>4分钟前</span>
-                        </div>
-                        <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing Whatever is worth</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing is worth doing Whatever is
-                            worth doing is worth doing</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="news_flash">
-                      <div class="news_item nolink">
-                        <div class="radio_box">
-                          <div class="radio_circle"></div>
-                        </div>
-                        <div class="item_time">
-                          <span>4分钟前</span>
-                        </div>
-                        <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing Whatever is worth</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing is worth doing Whatever is
-                            worth doing is worth doing</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="news_flash">
-                      <div class="news_item nolink">
-                        <div class="radio_box">
-                          <div class="radio_circle"></div>
-                        </div>
-                        <div class="item_time">
-                          <span>4分钟前</span>
-                        </div>
-                        <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing Whatever is worth</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing is worth doing Whatever is
-                            worth doing is worth doing</p>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </transition>
+            </keep-alive>
+            <keep-alive>
+              <transition name="fade">
+                <div v-if="newType == 2" class="right">
+                  <div class="right_item">
+                    <div class="hot_title">
+                      <div class="title_icon">
+                        <img src="../assets/follow/hot_text.png"/>
+                      </div>
+                      <h4>24小时热文</h4>
+                    </div>
+                    <div class="hot_content">
+                      <ul>
+                        <li>
+                          <div class="list_item">
+                            <div class="item_left">
+                              <img :src="img3"/>
+                            </div>
+                            <div class="item_body">
+                              <h4>Whatever is worth doing is worth doing well</h4>
+                              <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
+                            </div>
+                          </div>
+                          <div class="item_bottom">
+                            <p>2018-05-26</p>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="list_item">
+                            <div class="item_left">
+                              <img :src="img3"/>
+                            </div>
+                            <div class="item_body">
+                              <h4>Whatever is worth doing is worth doing well</h4>
+                              <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
+                            </div>
+                          </div>
+                          <div class="item_bottom">
+                            <p>2018-05-26</p>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="list_item">
+                            <div class="item_left">
+                              <img :src="img3"/>
+                            </div>
+                            <div class="item_body">
+                              <h4>Whatever is worth doing is worth doing well</h4>
+                              <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
+                            </div>
+                          </div>
+                          <div class="item_bottom">
+                            <p>2018-05-26</p>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </transition>
+            </keep-alive>
+            <keep-alive>
+              <transition name="fade">
+                <div v-if="newType == 3" class="right">
+                  <div class="right_item">
+                    <div class="hot_title">
+                      <div class="title_icon">
+                        <img src="../assets/follow/hot_text.png"/>
+                      </div>
+                      <h4>24小时热文</h4>
+                    </div>
+                    <div class="hot_content">
+                      <ul>
+                        <li>
+                          <div class="list_item">
+                            <div class="item_left">
+                              <img :src="img3"/>
+                            </div>
+                            <div class="item_body">
+                              <h4>Whatever is worth doing is worth doing well</h4>
+                              <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
+                            </div>
+                          </div>
+                          <div class="item_bottom">
+                            <p>2018-05-26</p>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="list_item">
+                            <div class="item_left">
+                              <img :src="img3"/>
+                            </div>
+                            <div class="item_body">
+                              <h4>Whatever is worth doing is worth doing well</h4>
+                              <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
+                            </div>
+                          </div>
+                          <div class="item_bottom">
+                            <p>2018-05-26</p>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="list_item">
+                            <div class="item_left">
+                              <img :src="img3"/>
+                            </div>
+                            <div class="item_body">
+                              <h4>Whatever is worth doing is worth doing well</h4>
+                              <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
+                            </div>
+                          </div>
+                          <div class="item_bottom">
+                            <p>2018-05-26</p>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="right_item margin_top">
+                    <div class="hot_title">
+                      <div class="title_icon">
+                        <img src="../assets/follow/tweet.png"/>
+                      </div>
+                      <h4>
+                    <span class="tab" :class="{active:isActive}" @click="isActive = true">
+                      推文
+                    </span>
+                        <span class="vertical">|</span>
+                        <span class="tab" :class="{active:!isActive}" @click="isActive = false">
+                      微博
+                    </span>
+                      </h4>
+                      <span class="look_more">查看更多</span>
+                    </div>
+                    <div class="hot_content">
+                      <ul>
+                        <li>
+                          <div class="list_item">
+                            <div class="item_left tweet">
+                              <img src="../assets/follow/tweet_header.png"/>
+                            </div>
+                            <div class="item_body tweet">
+                              <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever
+                                is
+                                worth doing is worth doing Whatever is worth doing</p>
+                              <div class="body_bottom">
+                                <p>博主</p>
+                                <p class="time">2018-05-26</p>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="list_item">
+                            <div class="item_left tweet">
+                              <img src="../assets/follow/tweet_header.png"/>
+                            </div>
+                            <div class="item_body tweet">
+                              <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever
+                                is
+                                worth doing is worth doing Whatever is worth doing</p>
+                              <div class="body_bottom">
+                                <p>博主</p>
+                                <p class="time">2018-05-26</p>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="list_item">
+                            <div class="item_left tweet">
+                              <img src="../assets/follow/tweet_header.png"/>
+                            </div>
+                            <div class="item_body tweet">
+                              <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever
+                                is
+                                worth doing is worth doing Whatever is worth doing</p>
+                              <div class="body_bottom">
+                                <p>博主</p>
+                                <p class="time">2018-05-26</p>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="list_item">
+                            <div class="item_left tweet">
+                              <img src="../assets/follow/tweet_header.png"/>
+                            </div>
+                            <div class="item_body tweet">
+                              <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever
+                                is
+                                worth doing is worth doing Whatever is worth doing</p>
+                              <div class="body_bottom">
+                                <p>博主</p>
+                                <p class="time">2018-05-26</p>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </transition>
+            </keep-alive>
           </div>
         </div>
       </div>
@@ -441,10 +598,10 @@
 <script>
   import Swiper from 'swiper';
 
-  let img1 = require('../assets/follow/banner01.png')
-  let img2 = require('../assets/follow/adv01.png')
-  let img3 = require('../assets/media.jpg')
-
+  let img1 = require('../assets/follow/banner01.png');
+  let img2 = require('../assets/follow/adv01.png');
+  let img3 = require('../assets/media.jpg');
+  let loading = require('../assets/login/loading.gif');
 
   export default {
     data() {
@@ -456,7 +613,16 @@
         isActive: true,
         newsClassfy: [],
         classShow: 0,
-        newsList: []
+        newsList: [],
+        loading: loading,
+        showloading: true,
+        pageSize: 20,
+        categoryName: 0,
+        flashList: [],
+        affairList: [],
+        testDate: '2018-07-31 15:16:00',
+        labelMore: false,
+        newType: 1
       }
     },
     filters: {
@@ -473,6 +639,49 @@
           month = month + 1
         }
         return myDate.getFullYear() + '-' + month
+      },
+      dataFormat(obj) {
+        let myDate = new Date(obj);
+        let mydata = myDate.getDate();
+        let nowDate = new Date();
+        let nowdata = nowDate.getDate();
+        let myhour = myDate.getHours();
+        let nowhour = nowDate.getHours();
+        let myMin = myDate.getMinutes()
+        let nowMin = nowDate.getMinutes()
+        if (nowdata - mydata < 7 && nowdata - mydata > 1) {
+          return nowdata - mydata + '天前'
+        } else if (nowdata - mydata <= 1 && Math.abs(myhour - nowhour) > 1 && Math.abs(myhour - nowhour) < 24) {
+          return Math.abs(myhour - nowhour) + '小时前'
+        } else if (Math.abs(myhour - nowhour) <= 1 && Math.abs(myDate.getMinutes() - nowDate.getMinutes()) > 1 && Math.abs(myDate.getMinutes() - nowDate.getMinutes()) < 60) {
+          return Math.abs(myDate.getMinutes() - nowDate.getMinutes()) + '分钟前'
+        } else if (Math.abs(myDate.getMinutes() - nowDate.getMinutes()) <= 1) {
+          return Math.abs(myDate.getSeconds() - nowDate.getSeconds()) + '秒前'
+        } else {
+          let month = myDate.getMonth()
+          if (month < 9) {
+            month = '0' + month
+          }
+          return month + '-' + mydata
+        }
+      },
+      showLable(label1, label2, lable3) {
+        if (label1 != null && label1 !== undefined && label1 !== '' && label1 != 'NULL') {
+          let arr = label1.split(';')
+          return arr[0]
+        } else {
+          if (label2 != null && label2 !== undefined && label2 !== '' && label2 != 'NULL') {
+            let arr = label1.split(';')
+            return arr[0]
+          } else {
+            if (lable3 != null && lable3 !== undefined && lable3 !== '' && lable3 != 'NULL') {
+              let arr = label1.split(';')
+              return arr[0]
+            } else {
+              return '标签'
+            }
+          }
+        }
       }
     },
     methods: {
@@ -481,20 +690,55 @@
         that.$axios.get('/api/traditional/categories').then(function (res) {
           that.newsClassfy = res.data;
           if (that.newsClassfy.length > 0) {
-            that.initNewsList(that.newsClassfy[0].categoryId)
+            that.initNewsList(that.newsClassfy[0].categoryName)
           }
         })
       },
-      changeClassfy(index) {
+      changeClassfy(categoryName, index) {
+        if (categoryName == '关注') {
+          this.newType = 2;
+        } else if (categoryName == '平台') {
+          this.newType = 3;
+          new Swiper('#follow_swiper', {
+            direction: 'horizontal',
+            slidesPerView: 'auto',
+            freeMode: true,
+            mousewheel: true,
+            observer: true,		            //修改swiper自己或子元素时，自动初始化swiper
+            observeParents: true
+          });
+        } else {
+          this.newType = 1
+        }
+        this.showloading = true;
         this.classShow = index;
+        this.newsList = [];
+        this.pageSize = 20;
+        this.initNewsList(categoryName)
       },
-      initNewsList(categoryId) {
+      initNewsList(categoryName) {
         let that = this;
-        let url = '/api/traditional/categoryList?category=' + categoryId
+        that.categoryName = categoryName;
+        let url = '/api/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + this.pageSize
         that.$axios.get(url).then(function (res) {
           that.newsList = res.data.content;
+          that.showloading = false;
         })
-      }
+      },
+      reloadMore(categoryName) {
+        this.showloading = true;
+        this.pageSize += 10;
+        this.initNewsList(categoryName);
+      },
+      initRightNews(categoryName, pageSize, callback) {
+        let that = this;
+        that.categoryName = categoryName;
+        let thisCallback = callback;
+        let url = '/api/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + pageSize
+        that.$axios.get(url).then(function (res) {
+          thisCallback(res.data.content);
+        })
+      },
     },
     mounted() {
       new Swiper('#top_banner', {
@@ -514,7 +758,22 @@
           prevEl: '.swiper-button-prev',
         }
       });
-      this.getNewsClassfy()
+      new Swiper('#news_swiper', {
+        direction: 'vertical',
+        observer: true,		            //修改swiper自己或子元素时，自动初始化swiper
+        observeParents: true,
+        loop: true
+      });
+      let that = this;
+      this.getNewsClassfy();
+      //获取最新资讯
+      this.initRightNews('快讯', 3, function (res) {
+        that.flashList = res;
+      })
+      //获取国家资讯
+      this.initRightNews('国家时事', 5, function (res) {
+        that.affairList = res;
+      })
     }
   }
 </script>
