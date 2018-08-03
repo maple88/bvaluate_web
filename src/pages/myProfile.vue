@@ -11,11 +11,11 @@
           <div class="right">
             <div class="list-item item-head">
               <div class="showbox" v-show="editnicknamebox.show">
-                <div class="tb-cell nickname">{{user.nickname}}</div>
+                <div class="tb-cell nickname">{{user.nickName}}</div>
                 <div class="tb-cell edit" @click="edit(editnicknamebox)"><i class="fa fa-pencil"></i>修改</div>
               </div>
               <div class="tb-cell nicknamedit editbox" v-show="!editnicknamebox.show">
-                <input type="text" maxlength="8" v-model="user.nickname" @keyup.enter="editnicknameok(editnicknamebox)">
+                <input type="text" maxlength="8" v-model="user.nickName" @keyup.enter="editnicknameok(editnicknamebox)">
               </div>
             </div>
             <div class="list-item">
@@ -42,20 +42,20 @@
             <div class="list-item xs-sign">
               <div class="tb-cell leftips">个人说明：</div>
               <div class="showbox" v-show="editsignbox.show">
-                <div class="tb-cell center">{{user.sign}}</div>
+                <div class="tb-cell center" v-html="showSynopsis"></div>
                 <div class="tb-cell edit" @click="edit(editsignbox)"><i class="fa fa-pencil"></i>修改</div>
               </div>
               <div class="tb-cell editbox" v-show="!editsignbox.show">
-                <textarea v-model="user.sign" rows="8"></textarea>
+                <textarea v-model="user.synopsis" rows="8"></textarea>
                 <div class="botoperate">
-                  <button type="button" class="btn ok">保存</button>
+                  <button type="button" class="btn ok" @click="editSynopsis(editsignbox)">保存</button>
                   <button type="button" class="btn" @click="editcancel(editsignbox)">取消</button>
                 </div>
               </div>
             </div>
             <div class="list-item">
               <div class="tb-cell leftips">手机：</div>
-              <div class="tb-cell center">137****462</div>
+              <div class="tb-cell center">{{user.phoneNumber | showPhone}}</div>
               <div class="tb-cell edit" data-toggle="modal" data-target="#phoneModal"><i class="fa fa-pencil"></i>修改
               </div>
             </div>
@@ -150,29 +150,30 @@
               <div class="form-group">
                 <label class="control-label">旧的密码</label>
                 <div class="coderow">
-                  <input type="password">
-                  <div type="button" class="btn rightips text-success">验证成功</div>
+                  <input type="password" v-model="user.oldPassword">
+                  <div type="button" class="btn rightips"></div>
+                  <!--<div type="button" class="btn rightips text-success">验证成功</div>-->
                   <!-- <div type="button" class="btn code-btn text-danger">密码错误</div> -->
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputPassword" class="control-label">新密码</label>
+                <label class="control-label">新密码</label>
                 <div class="coderow">
-                  <input type="password">
+                  <input type="password" v-model="user.newPassword">
                   <div type="button" class="btn rightips"></div>
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputPassword" class="control-label">确认密码</label>
-                <div class="coderow">
+                <label class="control-label">确认密码</label>
+                <div class="coderow" v-model="user.newPassword">
                   <input type="password">
-                  <div type="button" class="btn rightips text-danger">密码不一致</div>
+                  <div type="button" class="btn rightips text-danger">{{showErrow?'':'密码不一致'}}</div>
                 </div>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" @click="">确定</button>
           </div>
         </div>
       </div>
@@ -187,9 +188,14 @@
         shownicknamebox: true,
         showsexbox: true,
         user: {
-          nickname: '才不可以吃辣椒酱',
-          sign: '后海有树的院子，夏代有工的玉，此时此刻的云，二十来岁的你--可遇不可求的事。'
+          nickName: '',
+          synopsis: '',
+          phoneNumber: '',
+          oldPassword: '',
+          newPassword: '',
+          ensurePwd: ''
         },
+        showErrow: true,
         editnicknamebox: {
           show: true
         },
@@ -209,7 +215,43 @@
       },
       // 回车确定昵称
       editnicknameok(obj) {
-        obj.show = !obj.show
+        let json = {
+          nickName: this.user.nickName
+        };
+        let that = this
+        that.editInfor(json, function (res) {
+          if (res.data) {
+            localStorage.setItem('apelink_user_nickName', that.user.nickName);
+            obj.show = !obj.show
+          } else {
+            obj.show = !obj.show
+          }
+        })
+      },
+      editPassword(obj) {
+        let json = {
+          oldPassword: this.user.oldPassword,
+          newPassword: this.user.newPassword
+        };
+        let that = this;
+        that.editInfor(json, function (res) {
+          if (res.data) {
+            obj.show = !obj.show
+          }
+        })
+      },
+      editSynopsis(obj) {
+        let json = {
+          synopsis: this.user.synopsis
+        };
+        let that = this
+        that.editInfor(json, function (res) {
+          if (res.data) {
+            localStorage.setItem('apelink_user_synopsis', that.user.synopsis);
+            obj.show = !obj.show
+          } else {
+          }
+        })
       },
       // 取消编辑
       editcancel(obj) {
@@ -219,16 +261,58 @@
 
       },
       getMyProfile() {
-        let token = localStorage.getItem('apelink_user_token')
+        let token = localStorage.getItem('apelink_user_token');
         if (token !== null && token !== '' && token !== undefined) {
-
+          let nickName = localStorage.getItem('apelink_user_nickName');
+          let phoneNumber = localStorage.getItem('apelink_user_phoneNumber');
+          let synopsis = localStorage.getItem('apelink_user_synopsis');
+          this.user.phoneNumber = phoneNumber;
+          this.user.nickName = nickName;
+          this.user.synopsis = synopsis;
+          // let nickName = localStorage.getItem('apelink_user_token');
         } else {
           this.$router.push('/login')
         }
+      },
+      editInfor(json, callback) {
+        let that = this;
+        let uid = localStorage.getItem('apelink_user_uid');
+        let token = localStorage.getItem('apelink_user_token');
+        let url = '/api/user/modify';
+        let headers = {'uid': uid, 'Authorization': token};
+        let thatCallback = callback;
+        that.$axios({
+          method: 'put',
+          url: url,
+          headers: headers,
+          data: json
+        }).then(function (res) {
+          thatCallback(res)
+        })
       }
     },
     mounted() {
       this.getMyProfile()
+    },
+    watch: {
+      '$route': 'getMyProfile'
+    },
+    filters: {
+      showPhone(obj) {
+        let old = obj.substring(3, 8);
+        return obj.replace(old, '******');
+      },
+    },
+    computed: {
+      showSynopsis: function () {
+        let obj = this.user.synopsis
+        // let obj = '我是超人~~狠狠的超人'
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'null') {
+          return obj
+        } else {
+          return '<font style="font-size: 12px">（此人很懒，什么都没留下）</font>'
+        }
+      }
     }
   }
 </script>
