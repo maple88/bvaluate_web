@@ -406,11 +406,11 @@
                         <img src="../assets/follow/tweet.png"/>
                       </div>
                       <h4>
-                    <span class="tab" :class="{active:isActive}" @click="isActive = true">
+                    <span class="tab" :class="{active:isActive}" @click="isActive = true, getNews('280001')">
                       推文
                     </span>
                         <span class="vertical">|</span>
-                        <span class="tab" :class="{active:!isActive}" @click="isActive = false">
+                        <span class="tab" :class="{active:!isActive}" @click="isActive = false, getNews('280002')">
                       微博
                     </span>
                       </h4>
@@ -418,18 +418,16 @@
                     </div>
                     <div class="hot_content">
                       <ul>
-                        <li>
+                        <li v-for="(item, index) in news" :key="item.sid">
                           <div class="list_item">
                             <div class="item_left tweet">
-                              <img src="../assets/follow/tweet_header.png"/>
+                              <img :src="item.titlePicture"/>
                             </div>
                             <div class="item_body tweet">
-                              <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever
-                                is
-                                worth doing is worth doing Whatever is worth doing</p>
+                              <p class="tweet">{{item.content}}</p>
                               <div class="body_bottom">
-                                <p>博主</p>
-                                <p class="time">2018-05-26</p>
+                                <p>{{item.author}}</p>
+                                <p class="time">{{item.urlDate}}</p>
                               </div>               
                             </div>
                           </div>
@@ -626,7 +624,8 @@
         labelMore: false,
         newType: 1,
         industryName: "",
-        hotNews: []
+        hotNews: [],
+        news: []
       }
     },
     filters: {
@@ -706,6 +705,14 @@
           }
         })
       },
+      getNews (newsnum) {
+        let that = this
+        that.$axios.get('/api/traditional/news?searchBy='+ that.industryName +'&categoryId='+ newsnum +'&pageSize=4').then(function (res) {
+          if (that.newsClassfy.length > 0) {
+            that.news = res.data.content
+          }
+        })
+      },
       changeClassfy(categoryName, index) {
         if (categoryName == '关注') {
           this.newType = 2;
@@ -730,6 +737,7 @@
         this.pageSize = 20;
         this.initNewsList(categoryName)
         this.getHotnews()
+        this.getNews('280001')
       },
       initNewsList(categoryName) {
         let that = this;
