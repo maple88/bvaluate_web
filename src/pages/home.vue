@@ -476,21 +476,21 @@
         let ico = obj.project;
         // let dataType = 'NEWS';
         let that = this
-        that.$axios.get('/api/traditional/icoNews?icoName=' + ico + '&categoryId=290001').then(function (res) {
+        that.$axios.get('/api/traditional/news?searchBy=' + ico + '&categoryId=290001').then(function (res) {
           that.icoNews.content = res.data.content
         })
       },
       inittuiwen(obj) {
         let ico = obj.project;
         let that = this
-        that.$axios.get('/api/traditional/icoNews?icoName=' + ico + '&categoryId=290002').then(function (res) {
+        that.$axios.get('/api/traditional/news?searchBy=' + ico + '&categoryId=290002').then(function (res) {
           that.icoNews.tuiwen = res.data.content
         })
       },
       initweibo(obj) {
         let ico = obj.project;
         let that = this
-        that.$axios.get('/api/traditional/icoNews?icoName=' + ico + '&categoryId=290004').then(function (res) {
+        that.$axios.get('/api/traditional/news?searchBy=' + ico + '&categoryId=290004').then(function (res) {
           that.icoNews.weibo = res.data.content
         })
       },
