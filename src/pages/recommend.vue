@@ -406,11 +406,11 @@
                         <img src="../assets/follow/tweet.png"/>
                       </div>
                       <h4>
-                    <span class="tab" :class="{active:isActive}" @click="isActive = true, getNews('280001')">
+                    <span class="tab" :class="{active:isActive}" @click="isActive = true, getNews('280001'), show_news_img = tuiwen">
                       推文
                     </span>
                         <span class="vertical">|</span>
-                        <span class="tab" :class="{active:!isActive}" @click="isActive = false, getNews('280002')">
+                        <span class="tab" :class="{active:!isActive}" @click="isActive = false, getNews('280002'), show_news_img = weibo">
                       微博
                     </span>
                       </h4>
@@ -421,7 +421,7 @@
                         <li v-for="(item, index) in news" :key="item.sid">
                           <div class="list_item">
                             <div class="item_left tweet">
-                              <img :src="tuiwen"/>
+                              <img :src="show_news_img"/>
                             </div>
                             <div class="item_body tweet">
                               <p class="tweet">{{item.content}}</p>
@@ -603,7 +603,7 @@
   let img3 = require('../assets/media.jpg');
   let loading = require('../assets/login/loading.gif');
   let tuiwen = require('../assets/home/nicon.png');
-  let weibo = require('../assets/follow/tweet_header.png');
+  let weibo = require('../assets/home/weibo.png');
 
   export default {
     data() {
@@ -628,7 +628,9 @@
         industryName: "",
         hotNews: [],
         news: [],
-        news_img: "",
+        tuiwen: tuiwen,
+        weibo: weibo,
+        show_news_img: tuiwen,
       }
     },
     filters: {

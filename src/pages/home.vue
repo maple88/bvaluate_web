@@ -119,7 +119,7 @@
               </li>
             </ul>
           </div>
-          <div class="intabcontent" v-if="hottestProject.length>0">
+          <div class="intabcontent" v-show="hottestProject.length>0">
             <div class="topban">
               <div class="info">
                 <div class="toplist-item">
@@ -159,9 +159,9 @@
             <div class="bottomflex">
               <div class="section1">
                 <div class="head">团队</div>
-                <div class="swiper-container" id="home-team">
+                <div class="swiper-container" id="home-team"> 
                   <div class="swiper-wrapper">
-                    <div class="swiper-slide" v-for="item in showProject.partner ">
+                    <div class="swiper-slide" v-for="item in showProject.partner">
                       <!--<div class="item">-->
                       <!--<img src="../assets/logo_brand.png">-->
                       <!--<p class="name">Deian roljic</p>-->
@@ -181,9 +181,9 @@
               </div>
               <div class="section2">
                 <div class="head home-newstabs">
-                  <a href="#" class="active">最新资讯</a>
-                  <a href="#">推文</a>
-                  <a href="#">微博</a>
+                  <a href="javascript:;" class="active">最新资讯</a>
+                  <a href="javascript:;">推文</a>
+                  <a href="javascript:;">微博</a>
                 </div>
                 <div class="swiper-container" id="home-news" style="width: 100%;">
                   <div class="swiper-wrapper">
@@ -245,12 +245,12 @@
                         <div class="swiper-wrapper">
                           <div class="swiper-slide">
                             <div class="item" v-for="icoNew in icoNews.tuiwen">
-                              <div class="left"><img src="../assets/home/nicon.png" :src="icoNew.titlePicture"></div>
+                              <div class="left"><img src="../assets/home/nicon.png" :src="tuiwen"></div>
                               <div class="right">
                                 <p class="des">{{icoNew.content}}</p>
                                 <div class="bottom">
                                   <span class="name">{{icoNew.author }}{{!(icoNew.siteName)}}</span>
-                                  <span class="time">{{icoNew.urlTime}}</span>
+                                  <span class="time">{{icoNew.urlDate}}</span>
                                   <span class="tips">{{icoNew.channel}}</span>
                                 </div>
                               </div>
@@ -261,6 +261,26 @@
                       </div>
                     </div>
                     <div class="swiper-slide">
+                      <div class="swiper-container home_newslist_style" id="home-newslist3">
+                        <div class="swiper-wrapper">
+                          <div class="swiper-slide">
+                            <div class="item" v-for="icoNew in icoNews.tuiwen">
+                              <div class="left"><img src="../assets/home/nicon.png" :src="weibo"></div>
+                              <div class="right">
+                                <p class="des">{{icoNew.content}}</p>
+                                <div class="bottom">
+                                  <span class="name">{{icoNew.author }}{{!(icoNew.siteName)}}</span>
+                                  <span class="time">{{icoNew.urlDate}}</span>
+                                  <span class="tips">{{icoNew.channel}}</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="swiper-scrollbar"></div>
+                      </div>
+                    </div>
+                    <!-- <div class="swiper-slide"> -->
                       <!--<div class="swiper-container home_newslist_style" id="home-newslist3">-->
                       <!--<div class="swiper-wrapper">-->
                       <!--<div class="swiper-slide">-->
@@ -312,7 +332,7 @@
                       <!--</div>-->
                       <!--<div class="swiper-scrollbar"></div>-->
                       <!--</div>-->
-                    </div>
+                    <!-- </div> -->
                   </div>
                 </div>
               </div>
@@ -346,7 +366,6 @@
           </div>
         </div>
       </div>
-
       <vfooter/>
     </div>
   </div>
@@ -354,6 +373,8 @@
 
 <script>
   import Swiper from 'swiper'
+  let tuiwen = require('../assets/home/nicon.png')
+  let weibo = require('../assets/home/weibo.png')
 
   export default {
     data() {
@@ -370,6 +391,8 @@
         prjAct: 0,
         hostIndustries: [],
         candy: 0,
+        tuiwen: tuiwen,
+        weibo: weibo
       }
     },
     filters: {
@@ -420,6 +443,7 @@
         }
       });
       let homeNewsSwiper = new Swiper('#home-news', {
+        // effect : 'fade',
         observer: true,
         observeParents: true,
         on: {
@@ -435,17 +459,7 @@
         $(this).addClass('active');
         homeNewsSwiper.slideTo($(this).index())
       });
-      new Swiper('#home-newslist1', {
-        direction: 'vertical',
-        slidesPerView: 'auto',
-        freeMode: true,
-        scrollbar: {
-          el: '.swiper-scrollbar'
-        },
-        mousewheel: true,
-        observer: true,
-        observeParents: true
-      });
+      
       new Swiper('#home-newslist2', {
         direction: 'vertical',
         slidesPerView: 'auto',
@@ -480,6 +494,17 @@
         let that = this
         that.$axios.get('/api/traditional/news?searchBy=' + ico + '&categoryId=290001').then(function (res) {
           that.icoNews.content = res.data.content
+          new Swiper('#home-newslist1', {
+            direction: 'vertical',
+            slidesPerView: 'auto',
+            freeMode: true,
+            mousewheel: true,
+            observer: true,
+            observeParents: true,
+            scrollbar: {
+              el: '.swiper-scrollbar'
+            }
+          });
         })
       },
       initCandy() {
