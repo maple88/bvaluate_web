@@ -32,7 +32,7 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
                   <div class="user"><img src="../assets/logo_brand.png"></div>
-                  <p>糖果数：1450</p>
+                  <p>糖果数：{{candy}}</p>
                 </a>
                 <ul class="dropdown-menu">
                   <router-link tag="li" to="/my"><a>设置</a></router-link>
@@ -49,7 +49,21 @@
 </template>
 
 <script>
-  export default {}
+  export default {
+    data() {
+      return {
+        candy: 100,
+      }
+    },
+    mounted() {
+      this.initCandy()
+    },
+    methods: {
+      initCandy() {
+        this.candy = localStorage.getItem('apelink_user_candies')
+      }
+    }
+  }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
