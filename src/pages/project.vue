@@ -667,7 +667,7 @@
         this.NewOrGrade = []
         this.showLoading1 = true;
         let that = this;
-        that.$axios.get('/api/traditional/icoNews?icoName=' + projectName + '&categoryId=' + categoryId).then(function (res) {
+        that.$axios.get('/api/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId).then(function (res) {
           that.NewOrGrade = res.data.content;
           that.showLoading1 = false;
         })
@@ -676,7 +676,7 @@
         this.TwitterOrWeibo = []
         this.showLoading2 = true;
         let that = this;
-        that.$axios.get('/api/traditional/icoNews?icoName=' + projectName + '&categoryId=' + categoryId).then(function (res) {
+        that.$axios.get('/api/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId).then(function (res) {
           console.log(res.data.content)
           that.TwitterOrWeibo = res.data.content;
           that.showLoading2 = false;
