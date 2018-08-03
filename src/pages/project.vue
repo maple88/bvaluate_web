@@ -333,9 +333,9 @@
           <div class="section4">
             <div class="sectiontabs">
               <a href="javascript:;" :class="atvTwitterOrWeibo==1?'active':''"
-                 @click.stop="iniTwitterOrWeibo(project.project,'290002') , atvTwitterOrWeibo=1">推文</a>
+                 @click.stop="iniTwitterOrWeibo(project.project,'290002') , atvTwitterOrWeibo=1 , showIcon = nicon ">推文</a>
               <a href="javascript:;" :class="atvTwitterOrWeibo==2?'active':''"
-                 @click.stop="iniTwitterOrWeibo(project.project,'290004') , atvTwitterOrWeibo=2">微博</a>
+                 @click.stop="iniTwitterOrWeibo(project.project,'290004') , atvTwitterOrWeibo=2 , showIcon = weibo">微博</a>
             </div>
             <div class="swiper-container section-swiper">
               <div class="loading_box" v-if="showLoading2">
@@ -344,7 +344,7 @@
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
                   <div class="item" v-for="item in TwitterOrWeibo">
-                    <div class="left"><img src="../assets/home/nicon.png"></div>
+                    <div class="left"><img :src="showIcon"></div>
                     <div class="right">
                       <p class="des">{{item.content }}</p>
                       <div class="bottom">
@@ -533,16 +533,16 @@
               <div class="swiper-button-next"><i class="fa fa-angle-right"></i></div>
             </div>
           </div>
-          <div class="section6">
+          <div class="section6" v-if="recommendProjects">
             <div class="rightlayouthead">项目推荐</div>
-            <div class="item">
+            <div class="item" v-for="project in recommendProjects">
               <a href="#">
                 <div class="ibanner"><img src="../assets/project/recommend-banner.jpg"></div>
                 <div class="info">
                   <div class="left"><img src="../assets/project/recommend.jpg"></div>
                   <div class="right">
                     <div class="head">
-                      <p class="tit">CASPER</p>
+                      <p class="tit">{{project.project}}</p>
                       <p class="smtit">DApps的新机会</p>
                     </div>
                     <p class="num">9.2 <i class="fa fa-angle-right"></i></p>
@@ -563,6 +563,8 @@
   import Swiper from 'swiper'
 
   let loading = require('../assets/login/loading.gif');
+  let nicon = require('../assets/home/nicon.png');
+  let weibo = require('../assets/home/weibo.png');
 
   export default {
     data() {
@@ -575,7 +577,11 @@
         atvTwitterOrWeibo: 1,
         loading: loading,
         showLoading1: true,
-        showLoading2: true
+        showLoading2: true,
+        nicon: nicon,
+        weibo: weibo,
+        showIcon: nicon,
+        recommendProjects: {}
       }
     },
     mounted() {
@@ -583,16 +589,14 @@
         direction: 'vertical',
         slidesPerView: 'auto',
         freeMode: true,
-        observer: true,
-        observeParents: true,
         scrollbar: {
           el: '.swiper-scrollbar'
         },
-        mousewheel: true
-      })
-      new Swiper('.advert-swiper', {
+        mousewheel: true,
         observer: true,
         observeParents: true,
+      })
+      new Swiper('.advert-swiper', {
         autoplay: {
           disableOnInteraction: false
         },
@@ -603,7 +607,9 @@
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev'
-        }
+        },
+        observer: true,
+        observeParents: true,
       })
       this.initProject();
     },
@@ -656,8 +662,15 @@
             partner = JSON.parse('[' + partner + ']');
             that.project.partner = partner;
             //290001
-            that.iniNewOrGrade(that.project.project, '290001')
-            that.iniTwitterOrWeibo(that.project.project, '290002')
+            that.iniNewOrGrade(that.project.project, '290001');
+            that.iniTwitterOrWeibo(that.project.project, '290002');
+            let categoryNameList = that.project.industryCategory;
+            if (categoryNameList != null && categoryNameList !== '' && categoryNameList !== undefined) {
+              let arr = categoryNameList.split(';');
+              let categoryName = arr[0];
+              that.initRecommendProjects(categoryName);
+            }
+
           })
         } else {
           that.$router.push('/index')
@@ -677,9 +690,15 @@
         this.showLoading2 = true;
         let that = this;
         that.$axios.get('/api/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId).then(function (res) {
-          console.log(res.data.content)
           that.TwitterOrWeibo = res.data.content;
           that.showLoading2 = false;
+        })
+      },
+      initRecommendProjects(categoryName) {
+        let that = this;
+        that.$axios.get('/api/ICO/relatedICO?categoryName=' + categoryName).then(function (res) {
+          console.log(res)
+          that.recommendProjects = res.data
         })
       }
     }

@@ -221,20 +221,7 @@
       getMyProfile() {
         let token = localStorage.getItem('apelink_user_token')
         if (token !== null && token !== '' && token !== undefined) {
-          let that = this;
-          let uid = localStorage.getItem('apelink_user_uid')
-          let url = '/api/user/info';
-          let headers = {'uid': uid, 'Authorization': token};
-          that.$axios({
-            method: 'get',
-            url: url,
-            headers: headers
-          }).then(function (res) {
-            that.aplinkUser = res.data
-            console.log(res)
-          }).catch(function (res) {
-            console.log(res)
-          })
+
         } else {
           this.$router.push('/login')
         }

@@ -278,40 +278,40 @@
 
             // let token = localStorage.getItem('apelink_user_token')
             // if (token !== null && token !== '' && token !== undefined) {
-              // let that = this;
-              // let uid = localStorage.getItem('apelink_user_uid')
-              let url = '/api/user/info';
-              let headers = {'uid': uid, 'Authorization': token};
-              that.$axios({
-                method: 'get',
-                url: url,
-                headers: headers
-              }).then(function (res) {
-                that.aplinkUser = res.data
-                console.log(res)
-                localStorage.setItem('apelink_user_candies', res.data.candies);
-                localStorage.setItem('apelink_user_nickName', res.data.nickName);
-                localStorage.setItem('apelink_user_signedIn', res.data.signedIn);
-                if(res.data.signedIn){
-                  that.$router.push('/index')
-                }else{
-                  let url = '/api/user/signIn';
-                  that.$axios({
-                    method: 'post',
-                    url: url,
-                    headers: headers
-                  }).then(function (res) {
-                    if(res.data){
-                      that.$router.push('/index')
-                    }
-                    console.log(res.data)
-                  })
-                }
-              }).catch(function (res) {
-                console.log(res)
-              })
+            // let that = this;
+            // let uid = localStorage.getItem('apelink_user_uid')
+            let url = '/api/user/info';
+            let headers = {'uid': uid, 'Authorization': token};
+            that.$axios({
+              method: 'get',
+              url: url,
+              headers: headers
+            }).then(function (res) {
+              that.aplinkUser = res.data
+              console.log(res)
+              localStorage.setItem('apelink_user_candies', res.data.candies);
+              localStorage.setItem('apelink_user_nickName', res.data.nickName);
+              localStorage.setItem('apelink_user_signedIn', res.data.signedIn);
+              if (res.data.signedIn) {
+                that.$router.push('/index')
+              } else {
+                let url = '/api/user/signIn';
+                that.$axios({
+                  method: 'post',
+                  url: url,
+                  headers: headers
+                }).then(function (res) {
+                  if (res.data) {
+                    that.$router.push('/index')
+                  }
+                  console.log(res.data)
+                })
+              }
+            }).catch(function (res) {
+              console.log(res)
+            })
             // } else {
-              // this.$router.push('/login')
+            // this.$router.push('/login')
             // }
 
 
@@ -392,7 +392,7 @@
         }
         if (pass) {
           let that = this;
-          let url = '/api/user';
+          let url = '/api/user/register';
           let json = {
             nickName: nickName,
             code: code,
