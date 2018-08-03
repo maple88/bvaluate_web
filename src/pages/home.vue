@@ -37,7 +37,7 @@
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
                     <div class="user"><img src="../assets/logo_brand.png"></div>
-                    <p>糖果数：1450</p>
+                    <p>糖果数：{{candy}}</p>
                   </a>
                   <ul class="dropdown-menu">
                     <router-link tag="li" to="/my"><a>设置</a></router-link>
@@ -368,7 +368,8 @@
         },
         hostNews: [],
         prjAct: 0,
-        hostIndustries: []
+        hostIndustries: [],
+        candy: 0,
       }
     },
     filters: {
@@ -470,6 +471,7 @@
       this.getHottestProject();
       this.iniHotIndustries();
       this.initHotNews();
+      this.initCandy();
     },
     methods: {
       initIcoNews(obj) {
@@ -479,6 +481,9 @@
         that.$axios.get('/api/traditional/news?searchBy=' + ico + '&categoryId=290001').then(function (res) {
           that.icoNews.content = res.data.content
         })
+      },
+      initCandy() {
+        this.candy = localStorage.getItem('apelink_user_candies')
       },
       inittuiwen(obj) {
         let ico = obj.project;
