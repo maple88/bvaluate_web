@@ -421,7 +421,7 @@
                         <li v-for="(item, index) in news" :key="item.sid">
                           <div class="list_item">
                             <div class="item_left tweet">
-                              <img :src="item.titlePicture"/>
+                              <img :src="tuiwen"/>
                             </div>
                             <div class="item_body tweet">
                               <p class="tweet">{{item.content}}</p>
@@ -602,6 +602,8 @@
   let img2 = require('../assets/follow/adv01.png');
   let img3 = require('../assets/media.jpg');
   let loading = require('../assets/login/loading.gif');
+  let tuiwen = require('../assets/home/nicon.png');
+  let weibo = require('../assets/follow/tweet_header.png');
 
   export default {
     data() {
@@ -625,7 +627,8 @@
         newType: 1,
         industryName: "",
         hotNews: [],
-        news: []
+        news: [],
+        news_img: "",
       }
     },
     filters: {
