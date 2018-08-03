@@ -5,11 +5,11 @@
       <div class="user-center">
         <div class="usertainer">
           <div class="userimg"><img src="../../assets/logo_brand.png"></div>
-          <p class="nickname">才不可以吃辣椒酱<span><img src="../../assets/authen.png">个人</span></p>
-          <p class="sign">后海有树的院子，夏代有工的玉，此时此刻的云，二十来岁的你--可遇不可求的事。</p>
+          <p class="nickname">{{nickName}}<span><img src="../../assets/authen.png">个人</span></p>
+          <p class="sign" v-html="showSynopsis"></p>
           <ul class="datalist">
             <li>
-              <p>46</p>
+              <p>{{candy}}</p>
               <p>糖果数</p>
             </li>
             <li>
@@ -59,12 +59,45 @@
         isCollection: false,
         tabcontent: 'isContribute',
         currentTab: 'contribute',
-        num: 1
+        num: 1,
+        candy: 0,
+        phoneNumber: 0,
+        nickName: '',
+        synopsis: ''
       }
+    },
+    mounted() {
+      this.initCandy()
     },
     methods: {
       toggleTab: function (tab) {
         this.currentTab = tab;
+      },
+      initCandy() {
+        let token = localStorage.getItem('apelink_user_token');
+        if (token !== null && token !== '' && token !== undefined) {
+          this.candy = localStorage.getItem('apelink_user_candies')
+          let nickName = localStorage.getItem('apelink_user_nickName');
+          let phoneNumber = localStorage.getItem('apelink_user_phoneNumber');
+          let synopsis = localStorage.getItem('apelink_user_synopsis');
+          this.phoneNumber = phoneNumber;
+          this.nickName = nickName;
+          this.synopsis = synopsis;
+          // let nickName = localStorage.getItem('apelink_user_token');
+        } else {
+          this.$router.push('/login')
+        }
+      }
+    },
+    computed: {
+      showSynopsis: function () {
+        let obj = this.synopsis
+        // let obj = '我是超人~~狠狠的超人'
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'null') {
+          return obj
+        } else {
+          return '<font style="font-size: 16px">（此人很懒，什么都没留下）</font>'
+        }
       }
     }
   }
