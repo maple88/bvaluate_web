@@ -16,6 +16,9 @@
       margin-bottom: 45px;
       cursor: pointer;
       position: relative;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
       &:hover {
         .edit_bg {
           opacity: 1;

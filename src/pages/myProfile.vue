@@ -5,13 +5,13 @@
       <div class="container">
         <div class="myProfile mt20">
           <div class="left">
-            <div class="userbrand">
+            <div class="userbrand" :style="'background-image: url('+ user.profileUrl +')'">
 
               <div class="edit_bg">
                 <span>点击修改头像</span>
               </div>
-              <input type="file"/>
-              <img src="../assets/user/default.png">
+              <input type="file" accept="image/*" multiple="multiple" @change="changeImg($event)"/>
+              <!--<img src="../assets/user/default.png">-->
               <!--<img :src="user.profileUrl">-->
             </div>
             <p class="usertips">个人资料</p>
@@ -188,6 +188,7 @@
 </template>
 
 <script>
+  let loading = require('../assets/login/loading.gif')
   export default {
     data() {
       return {
@@ -216,7 +217,8 @@
         editsignbox: {
           show: true
         },
-        aplinkUser: {}
+        aplinkUser: {},
+        loading: loading
       }
     },
     methods: {
@@ -358,6 +360,67 @@
         }).then(function (res) {
           thatCallback(res)
         })
+      },
+      changeImg(e) {
+        let token = localStorage.getItem('token')
+        let _this = this
+        let oldUrl = _this.user.profileUrl
+        _this.user.profileUrl = _this.loading
+        let imgLimit = 1024
+        let files = e.target.files
+        let image = new Image()
+        if (files.length > 0) {
+          let dd = 0
+          let timer = setInterval(function () {
+            if (files.item(dd).type !== 'image/png' && files.item(dd).type !== 'image/jpeg' && files.item(dd).type !== 'image/gif') {
+              return false
+            }
+            if (files.item(dd).size > imgLimit * 102400) {
+            } else {
+              image.src = window.URL.createObjectURL(files.item(dd))
+              image.onload = function () {
+                // 默认按比例压缩
+                let w = image.width
+                let h = image.height
+                let scale = w / h
+                w = 200
+                h = w / scale
+                // 默认图片质量为0.7，quality值越小，所绘制出的图像越模糊
+                let quality = 0.7
+                let canvas = document.createElement('canvas')
+                let ctx = canvas.getContext('2d')
+                // 创建属性节点
+                let anw = document.createAttribute('width')
+                anw.nodeValue = w
+                let anh = document.createAttribute('height')
+                anh.nodeValue = h
+                canvas.setAttributeNode(anw)
+                canvas.setAttributeNode(anh)
+                ctx.drawImage(image, 0, 0, w, h)
+                let ext = image.src.substring(image.src.lastIndexOf('.') + 1).toLowerCase()
+                let base64 = canvas.toDataURL('image/' + ext, quality)
+                if (_this.user.profileUrl !== null || _this.user.profileUrl !== undefined || _this.user.profileUrl !== '') {
+                  let json = {
+                    profileBase64: base64
+                  }
+                  try {
+                    _this.editInfor(json, function (res) {
+                      _this.user.profileUrl = base64
+                      console.log(res)
+                    })
+                  } catch (e) {
+                    _this.user.profileUrl = oldUrl
+                  }
+                }
+              }
+            }
+            if (dd < files.length - 1) {
+              dd++
+            } else {
+              clearInterval(timer)
+            }
+          }, 1000)
+        }
       }
     },
     mounted() {

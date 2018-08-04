@@ -104,7 +104,6 @@
         <div class="row">
           <div class="section-head">
             <div class="headtit">热门行业</div>
-            <!-- <a href="#" class="more">浏览更多</a> -->
             <router-link to="/industry" class="more">浏览更多</router-link>
           </div>
           <div class="inlist" v-if="hottestProject.length>0">
@@ -161,12 +160,6 @@
                 <div class="swiper-container" id="home-team">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide" v-for="item in showProject.partner">
-                      <!--<div class="item">-->
-                      <!--<img src="../assets/logo_brand.png">-->
-                      <!--<p class="name">Deian roljic</p>-->
-                      <!--<p class="posi">创始人加首席执行者</p>-->
-                      <!--<div class="i"><i class="fa fa-linkedin"></i></div>-->
-                      <!--</div>-->
                       <div class="item" v-for="partner in item">
                         <img :src="partner.image">
                         <p class="name">{{partner.h3}}</p>
@@ -221,19 +214,6 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="item">
-                              <div class="left"><img src="../assets/home/nicon.png"></div>
-                              <div class="right">
-                                <p class="des">Hey Andrew, We will be announcing release detailsin the coming weeks,
-                                  stay tuned on our official hannels! t.me/vividtoken Hey Andrew, We will be
-                                  announcing</p>
-                                <div class="bottom">
-                                  <span class="name">博主</span>
-                                  <span class="time">2018-06-02    18:00</span>
-                                  <span class="tips">新闻</span>
-                                </div>
-                              </div>
-                            </div>
                           </div>
                         </div>
                         <div class="swiper-scrollbar"></div>
@@ -279,59 +259,6 @@
                         <div class="swiper-scrollbar"></div>
                       </div>
                     </div>
-                    <!-- <div class="swiper-slide"> -->
-                    <!--<div class="swiper-container home_newslist_style" id="home-newslist3">-->
-                    <!--<div class="swiper-wrapper">-->
-                    <!--<div class="swiper-slide">-->
-                    <!--<div class="item hasdate" v-for="icoNew in icoNews.content">-->
-                    <!--<div class="left" :class="(icoNew.titlePicture != ''&& icoNew.titlePicture )?'hasbg':'' ">-->
-                    <!--<img :src="icoNew.titlePicture ">-->
-                    <!--<p class="day">{{icoNew.urlTime | showDay }}</p>-->
-                    <!--<p>{{icoNew.urlTime | showYear}}</p>-->
-                    <!--</div>-->
-                    <!--<div class="right">-->
-                    <!--<p class="tit">-->
-                    <!--<a href="#">-->
-                    <!--{{icoNew.title }}-->
-                    <!--</a>-->
-                    <!--</p>-->
-                    <!--<p class="des">-->
-                    <!--{{icoNew.content }}-->
-                    <!--</p>-->
-                    <!--<div class="bottom">-->
-                    <!--<div class="userinfo">-->
-                    <!--<div class="user" :is="icoNew.siteName">-->
-                    <!--&lt;!&ndash;<img src="../assets/logo_brand.png">&ndash;&gt;-->
-                    <!--<span>{{icoNew.siteName}}</span>-->
-                    <!--</div>-->
-                    <!--<div class="user" :is="!icoNew.siteName">-->
-                    <!--<img src="../assets/logo_brand.png">-->
-                    <!--<span>{{icoNew.author }}</span>-->
-                    <!--</div>-->
-                    <!--<span class="usertime">{{icoNew.urlTime }}</span>-->
-                    <!--</div>-->
-                    <!--<span class="tips">{{icoNew.grouptName}}</span>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="item">-->
-                    <!--<div class="left"><img src="../assets/home/nicon.png"></div>-->
-                    <!--<div class="right">-->
-                    <!--<p class="des">Hey Andrew, We will be announcing release detailsin the coming weeks,-->
-                    <!--stay tuned on our official hannels! t.me/vividtoken Hey Andrew, We will be-->
-                    <!--announcing</p>-->
-                    <!--<div class="bottom">-->
-                    <!--<span class="name">博主</span>-->
-                    <!--<span class="time">2018-06-02    18:00</span>-->
-                    <!--<span class="tips">新闻</span>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="swiper-scrollbar"></div>-->
-                    <!--</div>-->
-                    <!-- </div> -->
                   </div>
                 </div>
               </div>
@@ -415,17 +342,32 @@
         return myDate.getFullYear() + '-' + month
       },
       showLable(label1, label2, lable3) {
-        if (label1 != null && label1 !== undefined && label1 !== '' && label1 != 'NULL') {
-          let arr = label1.split(';')
-          return arr[0]
-        } else {
-          if (label2 != null && label2 !== undefined && label2 !== '' && label2 != 'NULL') {
-            let arr = label1.split(';')
+        if (label1 != null && label1 !== undefined && label1 !== '' && label1 !== 'NULL') {
+          let has = label1.indexOf(';')
+          if (has >= 0) {
+            let arr = label1.split(';');
             return arr[0]
           } else {
-            if (lable3 != null && lable3 !== undefined && lable3 !== '' && lable3 != 'NULL') {
-              let arr = label1.split(';')
+            return label1
+          }
+        } else {
+          if (label2 != null && label2 !== undefined && label2 !== '' && label2 !== 'NULL') {
+            let has = label2.indexOf(';')
+            if (has >= 0) {
+              let arr = label2.split(';');
               return arr[0]
+            } else {
+              return label2
+            }
+          } else {
+            if (lable3 != null && lable3 !== undefined && lable3 !== '' && lable3 !== 'NULL') {
+              let has = lable3.indexOf(';')
+              if (has >= 0) {
+                let arr = lable3.split(';');
+                return arr[0]
+              } else {
+                return lable3
+              }
             } else {
               return '标签'
             }
@@ -549,7 +491,6 @@
               that.$axios.get('/api/traditional/categoryList?categoryName=' + Industry.categoryName + '&pageSize=4').then(function (res) {
                 Industry.content = res.data.content;
                 that.hostIndustries.push(Industry);
-                console.log(that.hostIndustries)
               })
             })
           }
@@ -610,12 +551,6 @@
           this.initweibo(this.showProject)
         }
       }
-      // getDataByICOName(categoryName) {
-      //   let that = this
-      //   that.$axios.get('/api/ICO/relatedICO?categoryName=' + categoryName).then(function (res) {
-      //     console.log(res)
-      //   })
-      // }
     }
   }
 </script>
