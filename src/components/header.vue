@@ -28,10 +28,10 @@
               <router-link tag="li" to="/recommend" active-class="active"><a>新闻</a></router-link>
               <router-link tag="li" to="/userCenter" active-class="active"><a>个人中心</a></router-link>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right" v-if="token">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                  <div class="user"><img :src="profileUrl"></div>
+                  <div class="user" :style="'background-image: url('+ profileUrl +')'"></div>
                   <p>糖果数：{{candy}}</p>
                 </a>
                 <ul class="dropdown-menu">
@@ -53,7 +53,8 @@
     data() {
       return {
         candy: 100,
-        profileUrl: ''
+        profileUrl: '',
+        token: ''
       }
     },
     mounted() {
@@ -63,6 +64,7 @@
       initUser() {
         this.candy = localStorage.getItem('apelink_user_candies')
         this.profileUrl = localStorage.getItem('apelink_user_profileUrl')
+        this.token = localStorage.getItem('apelink_user_token')
       }
     }
   }
