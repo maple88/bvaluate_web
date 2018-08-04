@@ -126,7 +126,8 @@
                       <span class="title" @click.stop="$router.push('/project?sid=' + showProject.sid)">
                         {{showProject.project}}
                       </span>
-                      <i class="fa fa-heart"></i>
+                      <i class="fa fa-heart" v-if="!isFollow" @click="setFollow()"></i>
+                      <i class="fa fa-heart on" v-if="isFollow" @click="isFollow = false"></i>
                     </p>
                     <p class="smtit">{{showProject.introduction }}</p>
                     <p class="des">{{showProject.irAbstract }}</p>
@@ -319,7 +320,8 @@
         hostIndustries: [],
         candy: 0,
         tuiwen: tuiwen,
-        weibo: weibo
+        weibo: weibo,
+        isFollow: false
       }
     },
     filters: {
@@ -430,6 +432,40 @@
       this.initCandy();
     },
     methods: {
+      setFollow() {
+        let that = this
+        let token = localStorage.getItem('apelink_user_token')
+        let uid = localStorage.getItem('apelink_user_uid')
+        let url = '/api/individual/add?type=ICO&sid=' + that.showProject.sid;
+        let headers = {'uid': uid, 'Authorization': token};
+        that.$axios({
+          method: 'post',
+          url: url,
+          headers: headers
+        }).then(function (res) {
+          that.isFollow = true
+        })
+      },
+      getfollowboolean (project) {
+        console.log(project)
+        let that = this
+        let token = localStorage.getItem('apelink_user_token')
+        let uid = localStorage.getItem('apelink_user_uid')
+        let checkurl = '/api/individual/check?type=ICO&sidOrName=' + project;
+        let headers = {'uid': uid, 'Authorization': token};
+        that.$axios({
+          method: 'post',
+          url: checkurl,
+          headers: headers
+        }).then(function (res) {
+          console.log(res.data)
+          if (res.data) {
+            that.isFollow = true
+          } else {
+            that.isFollow = false
+          }
+        })
+      },
       initIcoNews(obj) {
         let ico = obj.project;
         // let dataType = 'NEWS';
@@ -517,6 +553,7 @@
             that.initIcoNews(that.showProject)
             that.inittuiwen(that.showProject)
             that.initweibo(that.showProject)
+            that.getfollowboolean(that.showProject.project)
           }
         })
       },
@@ -549,6 +586,7 @@
           this.initIcoNews(this.showProject)
           this.inittuiwen(this.showProject)
           this.initweibo(this.showProject)
+          this.getfollowboolean(this.showProject.project)
         }
       }
     }

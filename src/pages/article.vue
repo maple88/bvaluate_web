@@ -400,20 +400,6 @@
       goToArticle(sid) {
         this.$router.push('/article?sid=' + sid)
       },
-      setUnfollow() {
-        let that = this
-        let token = localStorage.getItem('apelink_user_token')
-        let uid = localStorage.getItem('apelink_user_uid')
-        let url = '/api//individual/delete?type=NEWS';
-        let headers = {'uid': uid, 'Authorization': token};
-        that.$axios({
-          method: 'DELETE',
-          url: url,
-          headers: headers
-        }).then(function (res) {
-
-        })
-      },
       setFollow() {
         let that = this
         let token = localStorage.getItem('apelink_user_token')
