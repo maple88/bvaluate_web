@@ -34,20 +34,20 @@
                     <span class="look_count"><i class="fa fa-eye"></i>1000人</span>
                     <span class="share" @click.stop="showAllShare($event)"><i class="fa fa-share-alt"></i></span>
                     <span class="follow">
-                      <i class="fa fa-heart" v-show="!isFollow" @click="isFollow = true"></i>
+                      <i class="fa fa-heart" v-show="!isFollow" @click="setFollow()"></i>
                       <i class="fa fa-heart followed" v-show="isFollow" @click="isFollow = false"></i>
                     </span>
                   </div>
                 </div>
                 <div class="label_box">
                   <div v-if="articleContent.countryCategory !== 'NULL'" class="label_item">
-                    {{articleContent.countryCategory}}
+                    {{articleContent.countryCategory | showLable}}
                   </div>
                   <div v-if="articleContent.industryCategory !== 'NULL'" class="label_item">
-                    {{articleContent.industryCategory}}
+                    {{articleContent.industryCategory | showLable}}
                   </div>
                   <div v-if="articleContent.projectCategory !== 'NULL'" class="label_item">
-                    {{articleContent.projectCategory}}
+                    {{articleContent.projectCategory | showLable}}
                   </div>
                 </div>
                 <div class="article_content">
@@ -74,11 +74,11 @@
                   </div>
                   <div class="author_right">
                     <h4>才不可以吃辣椒酱</h4>
-                    <button class="follow_btn" v-show="!follow" @click="follow = true">
+                    <button class="follow_btn" v-if="!follow" @click="follow = true">
                       <img src="../assets/follow/icon-follow.png"/>关注
                       <div class="arrow"></div>
                     </button>
-                    <button class="followed_btn" v-show="follow" @click="unfollow()">
+                    <button class="followed_btn" v-if="follow" @click="follow = false">
                       <div class="arrow"></div>
                       <img src="../assets/follow/icon-followed.png"/>已关注
                     </button>
@@ -358,6 +358,8 @@
         })
       },
       getDetailData() {
+        let path = this.$route.path
+        if(path === '/article'){
         let that = this
         let sid = this.$route.query.sid
         let token = localStorage.getItem('apelink_user_token')
@@ -369,8 +371,6 @@
             // console.log(res)
             that.articleContent = res.data
             that.industryName = res.data.industryCategory
-            /*判断有没有登录
-              判断有无关注*/
             // that.SignBoolean()
             if (token !== null && token !== '' && token !== undefined) {
               let checkurl =  '/api/individual/check?type=NEWS&sidOrName='+ that.articleContent.sid ;
@@ -379,13 +379,16 @@
                 url: checkurl,
                 headers: headers
               }).then(function (res) {
-                if(res){
+                console.log(that.isFollow)
+                if(res.data){
                   that.isFollow = true
                 }
               })
             }
           })
         }
+        }
+        
       },
       getHotnewsData() {
         let that = this
@@ -422,7 +425,7 @@
           url: url,
           headers: headers
         }).then(function (res) {
-
+          that.isFollow = true
         })
       }
     },
@@ -448,10 +451,20 @@
       })
       this.getDetailData()
       this.getHotnewsData()
-      this.gatFollowlist()
     },
     watch: {
       '$route': 'getDetailData'
+    },
+    filters: {
+      showLable (value) {
+        let has = value.indexOf(';')
+        if (has >= 0) {
+          let arr = value.split(';');
+          return arr[0]
+        } else {
+          return value
+        }
+      }
     }
   }
 </script>
