@@ -69,6 +69,11 @@
     mounted() {
       this.initCandy()
     },
+    beforeRouteEnter(to, from, next) {
+      next(vm => {
+        vm.initCandy()
+      })
+    },
     methods: {
       toggleTab: function (tab) {
         this.currentTab = tab;
