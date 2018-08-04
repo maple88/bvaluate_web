@@ -359,36 +359,36 @@
       },
       getDetailData() {
         let path = this.$route.path
-        if(path === '/article'){
-        let that = this
-        let sid = this.$route.query.sid
-        let token = localStorage.getItem('apelink_user_token')
-        let uid = localStorage.getItem('apelink_user_uid')
-        let url = '/api/individual/add?type=NEWS&sid='+ that.articleContent.sid ;
-        let headers = {'uid': uid, 'Authorization': token};
-        if (sid !== null && sid !== '' && sid !== undefined) {
-          that.$axios.get('/api/traditional/detail?sid=' + sid).then(function (res) {
-            // console.log(res)
-            that.articleContent = res.data
-            that.industryName = res.data.industryCategory
-            // that.SignBoolean()
-            if (token !== null && token !== '' && token !== undefined) {
-              let checkurl =  '/api/individual/check?type=NEWS&sidOrName='+ that.articleContent.sid ;
-              that.$axios({
-                method: 'post',
-                url: checkurl,
-                headers: headers
-              }).then(function (res) {
-                console.log(that.isFollow)
-                if(res.data){
-                  that.isFollow = true
-                }
-              })
-            }
-          })
+        if (path === '/article') {
+          let that = this
+          let sid = this.$route.query.sid
+          let token = localStorage.getItem('apelink_user_token')
+          let uid = localStorage.getItem('apelink_user_uid')
+          let url = '/api/individual/add?type=NEWS&sid=' + that.articleContent.sid;
+          let headers = {'uid': uid, 'Authorization': token};
+          if (sid !== null && sid !== '' && sid !== undefined) {
+            that.$axios.get('/api/traditional/detail?sid=' + sid).then(function (res) {
+              that.articleContent = res.data
+              that.industryName = res.data.industryCategory
+              if (token !== null && token !== '' && token !== undefined) {
+                let checkurl = '/api/individual/check?type=NEWS&sidOrName=' + that.articleContent.sid;
+                that.$axios({
+                  method: 'post',
+                  url: checkurl,
+                  headers: headers
+                }).then(function (res) {
+                  console.log(res.data)
+                  if (res.data) {
+                    that.isFollow = true
+                  } else {
+                    that.isFollow = false
+                  }
+                })
+              }
+            })
+          }
         }
-        }
-        
+
       },
       getHotnewsData() {
         let that = this
@@ -400,7 +400,7 @@
       goToArticle(sid) {
         this.$router.push('/article?sid=' + sid)
       },
-      setUnfollow () {
+      setUnfollow() {
         let that = this
         let token = localStorage.getItem('apelink_user_token')
         let uid = localStorage.getItem('apelink_user_uid')
@@ -414,11 +414,11 @@
 
         })
       },
-      setFollow () {
+      setFollow() {
         let that = this
         let token = localStorage.getItem('apelink_user_token')
         let uid = localStorage.getItem('apelink_user_uid')
-        let url = '/api/individual/add?type=NEWS&sid='+ that.articleContent.sid ;
+        let url = '/api/individual/add?type=NEWS&sid=' + that.articleContent.sid;
         let headers = {'uid': uid, 'Authorization': token};
         that.$axios({
           method: 'post',
@@ -449,14 +449,16 @@
           prevEl: '.swiper-button-prev',
         }
       })
-      this.getDetailData()
+      this.getDetailData();
       this.getHotnewsData()
     },
-    watch: {
-      '$route': 'getDetailData'
+    beforeRouteEnter(to, from, next) {
+      next(vm => {
+        vm.getDetailData()
+      })
     },
     filters: {
-      showLable (value) {
+      showLable(value) {
         let has = value.indexOf(';')
         if (has >= 0) {
           let arr = value.split(';');
