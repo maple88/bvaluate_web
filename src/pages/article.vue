@@ -379,10 +379,8 @@
                 }).then(function (res) {
                   console.log(res.data)
                   if (res.data) {
-                    console.log('关注了')
                     that.isFollow = true
                   } else {
-                    console.log('未关注')
                     that.isFollow = false
                   }
                 })
