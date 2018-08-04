@@ -267,19 +267,10 @@
             let token = data.token;
             let phoneNumber = data.phoneNumber;
             let expirationDate = data.expirationDate;
-            // localStorage.setItem('apelink_user_candies', candies);
-            // localStorage.setItem('apelink_user_nickName', nickName);
             localStorage.setItem('apelink_user_expirationDate', expirationDate);
-            // localStorage.setItem('apelink_user_signedIn', signedIn);
             localStorage.setItem('apelink_user_uid', uid);
             localStorage.setItem('apelink_user_token', token);
             localStorage.setItem('apelink_user_phoneNumber', phoneNumber);
-
-
-            // let token = localStorage.getItem('apelink_user_token')
-            // if (token !== null && token !== '' && token !== undefined) {
-            // let that = this;
-            // let uid = localStorage.getItem('apelink_user_uid')
             let url = '/api/user/info';
             let headers = {'uid': uid, 'Authorization': token};
             that.$axios({
@@ -287,11 +278,30 @@
               url: url,
               headers: headers
             }).then(function (res) {
-              that.aplinkUser = res.data
-              console.log(res)
+              that.aplinkUser = res.data;
               localStorage.setItem('apelink_user_candies', res.data.candies);
               localStorage.setItem('apelink_user_nickName', res.data.nickName);
               localStorage.setItem('apelink_user_signedIn', res.data.signedIn);
+              let synopsis = res.data.synopsis
+              let profileUrl = res.data.profileUrl
+              let email = res.data.email
+              let sex = res.data.sex
+              if (!(synopsis != null && synopsis !== undefined && synopsis !== '' && synopsis !== 'null')) {
+                synopsis = ''
+              }
+              if (!(profileUrl != null && profileUrl !== undefined && profileUrl !== '' && profileUrl !== 'null')) {
+                profileUrl = ''
+              }
+              if (!(email != null && email !== undefined && email !== '' && email !== 'null')) {
+                email = ''
+              }
+              if (sex < 1) {
+                sex = 1
+              }
+              localStorage.setItem('apelink_user_synopsis', synopsis);
+              localStorage.setItem('apelink_user_profileUrl', profileUrl);
+              localStorage.setItem('apelink_user_email', email);
+              localStorage.setItem('apelink_user_sex', sex);
               if (res.data.signedIn) {
                 that.$router.push('/index')
               } else {
@@ -310,11 +320,6 @@
             }).catch(function (res) {
               console.log(res)
             })
-            // } else {
-            // this.$router.push('/login')
-            // }
-
-
           }).catch(function (res) {
             let msgCode = res.response.data.message
             switch (msgCode) {

@@ -651,29 +651,35 @@
         }
       }
     },
+    watch: {
+      '$route': 'initProject'
+    },
     methods: {
       initProject() {
-        let that = this;
-        let sid = this.$route.query.sid
-        if (sid != null && sid != '' && sid != undefined) {
-          that.$axios.get('/api/ICO/id/' + sid).then(function (res) {
-            that.project = res.data;
-            let partner = that.project.partner;
-            partner = JSON.parse('[' + partner + ']');
-            that.project.partner = partner;
-            //290001
-            that.iniNewOrGrade(that.project.project, '290001');
-            that.iniTwitterOrWeibo(that.project.project, '290002');
-            let categoryNameList = that.project.industryCategory;
-            if (categoryNameList != null && categoryNameList !== '' && categoryNameList !== undefined) {
-              let arr = categoryNameList.split(';');
-              let categoryName = arr[0];
-              that.initRecommendProjects(categoryName);
-            }
+        let path = this.$route.path;
+        if (path === '/project') {
+          let that = this;
+          let sid = this.$route.query.sid
+          if (sid != null && sid != '' && sid != undefined) {
+            that.$axios.get('/api/ICO/id/' + sid).then(function (res) {
+              that.project = res.data;
+              let partner = that.project.partner;
+              partner = JSON.parse('[' + partner + ']');
+              that.project.partner = partner;
+              //290001
+              that.iniNewOrGrade(that.project.project, '290001');
+              that.iniTwitterOrWeibo(that.project.project, '290002');
+              let categoryNameList = that.project.industryCategory;
+              if (categoryNameList != null && categoryNameList !== '' && categoryNameList !== undefined) {
+                let arr = categoryNameList.split(';');
+                let categoryName = arr[0];
+                that.initRecommendProjects(categoryName);
+              }
 
-          })
-        } else {
-          that.$router.push('/index')
+            })
+          } else {
+            that.$router.push('/index')
+          }
         }
       },
       iniNewOrGrade(projectName, categoryId) {

@@ -5,36 +5,44 @@
       <div class="container">
         <div class="myProfile mt20">
           <div class="left">
-            <div class="userbrand"><img src="../assets/logo_brand.png"></div>
+            <div class="userbrand" :style="'background-image: url('+ user.profileUrl +')'">
+
+              <div class="edit_bg">
+                <span>点击修改头像</span>
+              </div>
+              <input type="file" accept="image/*" multiple="multiple" @change="changeImg($event)"/>
+              <!--<img src="../assets/user/default.png">-->
+              <!--<img :src="user.profileUrl">-->
+            </div>
             <p class="usertips">个人资料</p>
           </div>
           <div class="right">
             <div class="list-item item-head">
               <div class="showbox" v-show="editnicknamebox.show">
-                <div class="tb-cell nickname">{{user.nickname}}</div>
+                <div class="tb-cell nickname">{{user.nickName}}</div>
                 <div class="tb-cell edit" @click="edit(editnicknamebox)"><i class="fa fa-pencil"></i>修改</div>
               </div>
               <div class="tb-cell nicknamedit editbox" v-show="!editnicknamebox.show">
-                <input type="text" maxlength="8" v-model="user.nickname" @keyup.enter="editnicknameok(editnicknamebox)">
+                <input type="text" maxlength="8" v-model="user.nickName" @keyup.enter="editnicknameok(editnicknamebox)">
               </div>
             </div>
             <div class="list-item">
               <div class="tb-cell leftips">性别：</div>
               <div class="showbox" v-show="editsexbox.show">
-                <div class="tb-cell center">女</div>
+                <div class="tb-cell center">{{showSex}}</div>
                 <div class="tb-cell edit" @click="edit(editsexbox)"><i class="fa fa-pencil"></i>修改</div>
               </div>
               <div class="tb-cell editbox" v-show="!editsexbox.show">
                 <div class="radiobox">
                   <label class="radio-inline">
-                    <input type="radio" name="sex" value="male"> 男
+                    <input type="radio" name="sex" value="2" :checked="user.sex == 2" v-model="user.sex"> 男
                   </label>
                   <label class="radio-inline">
-                    <input type="radio" name="sex" value="female" checked> 女
+                    <input type="radio" name="sex" value="3" :checked="user.sex == 3" v-model="user.sex"> 女
                   </label>
                 </div>
                 <div class="botoperate">
-                  <button type="button" class="btn ok">保存</button>
+                  <button type="button" class="btn ok" @click="editSex(editsexbox)">保存</button>
                   <button type="button" class="btn" @click="editcancel(editsexbox)">取消</button>
                 </div>
               </div>
@@ -42,26 +50,26 @@
             <div class="list-item xs-sign">
               <div class="tb-cell leftips">个人说明：</div>
               <div class="showbox" v-show="editsignbox.show">
-                <div class="tb-cell center">{{user.sign}}</div>
+                <div class="tb-cell center" v-html="showSynopsis"></div>
                 <div class="tb-cell edit" @click="edit(editsignbox)"><i class="fa fa-pencil"></i>修改</div>
               </div>
               <div class="tb-cell editbox" v-show="!editsignbox.show">
-                <textarea v-model="user.sign" rows="8"></textarea>
+                <textarea v-model="user.synopsis" rows="8"></textarea>
                 <div class="botoperate">
-                  <button type="button" class="btn ok">保存</button>
+                  <button type="button" class="btn ok" @click="editSynopsis(editsignbox)">保存</button>
                   <button type="button" class="btn" @click="editcancel(editsignbox)">取消</button>
                 </div>
               </div>
             </div>
             <div class="list-item">
               <div class="tb-cell leftips">手机：</div>
-              <div class="tb-cell center">137****462</div>
+              <div class="tb-cell center">{{user.phoneNumber | showPhone}}</div>
               <div class="tb-cell edit" data-toggle="modal" data-target="#phoneModal"><i class="fa fa-pencil"></i>修改
               </div>
             </div>
             <div class="list-item">
               <div class="tb-cell leftips">邮箱：</div>
-              <div class="tb-cell center emailstyle">1032458611@qq.com</div>
+              <div class="tb-cell center emailstyle" v-html="showEmail"></div>
               <div class="tb-cell edit" data-toggle="modal" data-target="#emailModal"><i class="fa fa-pencil"></i>修改
               </div>
             </div>
@@ -118,7 +126,7 @@
             <form class="form-horizontal">
               <div class="form-group">
                 <label class="control-label">邮箱</label>
-                <input type="email">
+                <input type="email" v-model="user.email">
               </div>
               <div class="form-group">
                 <label class="control-label">验证码</label>
@@ -150,29 +158,28 @@
               <div class="form-group">
                 <label class="control-label">旧的密码</label>
                 <div class="coderow">
-                  <input type="password">
-                  <div type="button" class="btn rightips text-success">验证成功</div>
-                  <!-- <div type="button" class="btn code-btn text-danger">密码错误</div> -->
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputPassword" class="control-label">新密码</label>
-                <div class="coderow">
-                  <input type="password">
+                  <input type="password" v-model="user.oldPassword">
                   <div type="button" class="btn rightips"></div>
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputPassword" class="control-label">确认密码</label>
+                <label class="control-label">新密码</label>
                 <div class="coderow">
-                  <input type="password">
-                  <div type="button" class="btn rightips text-danger">密码不一致</div>
+                  <input type="password" v-model="user.newPassword" @focus="newPwdError=''">
+                  <div type="button" class="btn rightips text-danger">{{newPwdError}}</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label">确认密码</label>
+                <div class="coderow">
+                  <input type="password" v-model="user.ensurePwd" @focus="ensurePwdError=''">
+                  <div type="button" class="btn rightips text-danger">{{ensurePwdError}}</div>
                 </div>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+            <button type="button" class="btn btn-primary" @click="resetPwd()">确定</button>
           </div>
         </div>
       </div>
@@ -181,15 +188,26 @@
 </template>
 
 <script>
+  let loading = require('../assets/login/loading.gif')
   export default {
     data() {
       return {
         shownicknamebox: true,
         showsexbox: true,
         user: {
-          nickname: '才不可以吃辣椒酱',
-          sign: '后海有树的院子，夏代有工的玉，此时此刻的云，二十来岁的你--可遇不可求的事。'
+          nickName: '',
+          synopsis: '',
+          phoneNumber: '',
+          oldPassword: '',
+          newPassword: '',
+          ensurePwd: '',
+          profileUrl: '',
+          email: '',
+          oldSex: '',
+          sex: ''
         },
+        newPwdError: '',
+        ensurePwdError: '',
         editnicknamebox: {
           show: true
         },
@@ -199,7 +217,8 @@
         editsignbox: {
           show: true
         },
-        aplinkUser: {}
+        aplinkUser: {},
+        loading: loading
       }
     },
     methods: {
@@ -209,7 +228,45 @@
       },
       // 回车确定昵称
       editnicknameok(obj) {
-        obj.show = !obj.show
+        let json = {
+          nickName: this.user.nickName
+        };
+        let that = this
+        that.editInfor(json, function (res) {
+          if (res.data) {
+            localStorage.setItem('apelink_user_nickName', that.user.nickName);
+            obj.show = !obj.show
+          } else {
+            obj.show = !obj.show
+          }
+        })
+      },
+      editSynopsis(obj) {
+        let json = {
+          synopsis: this.user.synopsis
+        };
+        let that = this
+        that.editInfor(json, function (res) {
+          if (res.data) {
+            localStorage.setItem('apelink_user_synopsis', that.user.synopsis);
+            obj.show = !obj.show
+          } else {
+          }
+        })
+      },
+      editSex(obj) {
+        let json = {
+          sex: this.user.sex
+        };
+        let that = this;
+        that.editInfor(json, function (res) {
+          if (res.data) {
+            localStorage.setItem('apelink_user_sex', that.user.sex);
+            that.user.oldSex = that.user.sex;
+            obj.show = !obj.show
+          } else {
+          }
+        })
       },
       // 取消编辑
       editcancel(obj) {
@@ -218,17 +275,203 @@
       loginInfo(uid, token) {
 
       },
-      getMyProfile() {
-        let token = localStorage.getItem('apelink_user_token')
-        if (token !== null && token !== '' && token !== undefined) {
+      resetPwd() {
+        let pass = true;
+        let newPassword = this.user.newPassword;
+        let ensurePwd = this.user.ensurePwd;
+        console.log('newPassword: ' + newPassword)
+        console.log('oldPassword: ' + this.user.oldPassword)
+        console.log('ensurePwd: ' + ensurePwd)
 
+        if (newPassword !== null && newPassword !== '' && newPassword !== undefined) {
+          if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(newPassword)) {
+            if (ensurePwd !== newPassword) {
+              pass = false;
+              this.newPwdError = '两次输入不一致'
+            }
+          } else {
+            pass = false;
+            this.newPwdError = '只允许输入6-14个英文大小写和数字'
+          }
+        } else {
+          pass = false;
+          this.newPwdError = '密码不能为空'
+        }
+        if (ensurePwd !== null && ensurePwd !== '' && ensurePwd !== undefined) {
+          if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(ensurePwd)) {
+            if (ensurePwd !== newPassword) {
+              pass = false;
+              this.ensurePwdError = '两次输入不一致'
+            }
+          } else {
+            pass = false;
+            this.ensurePwdError = '只允许输入6-14个英文大小写和数字'
+          }
+        } else {
+          pass = false;
+          this.ensurePwdError = '密码不能为空'
+        }
+        if (pass) {
+          let json = {
+            oldPassword: this.user.oldPassword,
+            newPassword: this.user.newPassword
+          }
+          this.editInfor(json, function (res) {
+            console.log(res)
+            if (res.data) {
+              $('#pwdModal').modal('hide')
+            }
+          })
+        }
+      },
+      getMyProfile() {
+        let token = localStorage.getItem('apelink_user_token');
+        if (token !== null && token !== '' && token !== undefined) {
+          let nickName = localStorage.getItem('apelink_user_nickName');
+          let phoneNumber = localStorage.getItem('apelink_user_phoneNumber');
+          let synopsis = localStorage.getItem('apelink_user_synopsis');
+          let profileUrl = localStorage.getItem('apelink_user_profileUrl');
+          let email = localStorage.getItem('apelink_user_email');
+          let sex = localStorage.getItem('apelink_user_sex');
+          let oldSex = localStorage.getItem('apelink_user_sex');
+          this.user.phoneNumber = phoneNumber;
+          this.user.nickName = nickName;
+          this.user.synopsis = synopsis;
+          this.user.profileUrl = profileUrl;
+          this.user.email = email;
+          this.user.sex = sex;
+          this.user.oldSex = sex;
         } else {
           this.$router.push('/login')
+        }
+      },
+      editInfor(json, callback) {
+        let that = this;
+        let uid = localStorage.getItem('apelink_user_uid');
+        let token = localStorage.getItem('apelink_user_token');
+        let url = '/api/user/modify';
+        let headers = {'uid': uid, 'Authorization': token};
+        let thatCallback = callback;
+        that.$axios({
+          method: 'put',
+          url: url,
+          headers: headers,
+          data: json
+        }).then(function (res) {
+          thatCallback(res)
+        })
+      },
+      changeImg(e) {
+        let token = localStorage.getItem('token')
+        let _this = this
+        let oldUrl = _this.user.profileUrl
+        _this.user.profileUrl = _this.loading
+        let imgLimit = 1024
+        let files = e.target.files
+        let image = new Image()
+        if (files.length > 0) {
+          let dd = 0
+          let timer = setInterval(function () {
+            if (files.item(dd).type !== 'image/png' && files.item(dd).type !== 'image/jpeg' && files.item(dd).type !== 'image/gif') {
+              return false
+            }
+            if (files.item(dd).size > imgLimit * 102400) {
+            } else {
+              image.src = window.URL.createObjectURL(files.item(dd))
+              image.onload = function () {
+                // 默认按比例压缩
+                let w = image.width
+                let h = image.height
+                let scale = w / h
+                w = 200
+                h = w / scale
+                // 默认图片质量为0.7，quality值越小，所绘制出的图像越模糊
+                let quality = 0.7
+                let canvas = document.createElement('canvas')
+                let ctx = canvas.getContext('2d')
+                // 创建属性节点
+                let anw = document.createAttribute('width')
+                anw.nodeValue = w
+                let anh = document.createAttribute('height')
+                anh.nodeValue = h
+                canvas.setAttributeNode(anw)
+                canvas.setAttributeNode(anh)
+                ctx.drawImage(image, 0, 0, w, h)
+                let ext = image.src.substring(image.src.lastIndexOf('.') + 1).toLowerCase()
+                let base64 = canvas.toDataURL('image/' + ext, quality)
+                if (_this.user.profileUrl !== null || _this.user.profileUrl !== undefined || _this.user.profileUrl !== '') {
+                  let json = {
+                    profileBase64: base64
+                  }
+                  try {
+                    _this.editInfor(json, function (res) {
+                      _this.user.profileUrl = base64
+                      console.log(res)
+                    })
+                  } catch (e) {
+                    _this.user.profileUrl = oldUrl
+                  }
+                }
+              }
+            }
+            if (dd < files.length - 1) {
+              dd++
+            } else {
+              clearInterval(timer)
+            }
+          }, 1000)
         }
       }
     },
     mounted() {
       this.getMyProfile()
+    },
+    watch: {
+      '$route': 'getMyProfile'
+    },
+    filters: {
+      showPhone(obj) {
+        let old = obj.substring(3, 8);
+        return obj.replace(old, '******');
+      },
+      showSex(obj) {
+        let str = '未知'
+        if (obj === 2) {
+          str = '男'
+        } else if (obj === 3) {
+          str = '女'
+        }
+        return str
+      }
+    },
+    computed: {
+      showSynopsis: function () {
+        let obj = this.user.synopsis
+        // let obj = '我是超人~~狠狠的超人'
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'null') {
+          return obj
+        } else {
+          return '<font style="font-size: 12px">（此人很懒，什么都没留下）</font>'
+        }
+      },
+      showEmail: function () {
+        let obj = this.user.email
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'null') {
+          return obj
+        } else {
+          return '<font style="font-size: 12px">（未绑定邮箱）</font>'
+        }
+      },
+      showSex() {
+        let obj = this.user.oldSex
+        let str = '未知'
+        if (obj === '2') {
+          str = '男'
+        } else if (obj === '3') {
+          str = '女'
+        }
+        return str
+      }
     }
   }
 </script>

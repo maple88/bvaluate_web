@@ -31,7 +31,7 @@
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                  <div class="user"><img src="../assets/logo_brand.png"></div>
+                  <div class="user"><img :src="profileUrl"></div>
                   <p>糖果数：{{candy}}</p>
                 </a>
                 <ul class="dropdown-menu">
@@ -53,14 +53,16 @@
     data() {
       return {
         candy: 100,
+        profileUrl: ''
       }
     },
     mounted() {
-      this.initCandy()
+      this.initUser()
     },
     methods: {
-      initCandy() {
+      initUser() {
         this.candy = localStorage.getItem('apelink_user_candies')
+        this.profileUrl = localStorage.getItem('apelink_user_profileUrl')
       }
     }
   }
