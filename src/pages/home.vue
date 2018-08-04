@@ -32,10 +32,10 @@
                 <router-link tag="li" to="/recommend" active-class="active"><a>新闻</a></router-link>
                 <router-link tag="li" to="/userCenter" active-class="active"><a>个人中心</a></router-link>
               </ul>
-              <ul class="nav navbar-nav navbar-right">
+              <ul v-if="token" class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                    <div class="user"><img src="../assets/logo_brand.png"></div>
+                    <div class="user" :style="'background-image: url('+ profileUrl +')'"></div>
                     <p>糖果数：{{candy}}</p>
                   </a>
                   <ul class="dropdown-menu">
@@ -319,7 +319,9 @@
         hostIndustries: [],
         candy: 0,
         tuiwen: tuiwen,
-        weibo: weibo
+        weibo: weibo,
+        profileUrl: '',
+        token: ''
       }
     },
     filters: {
@@ -451,6 +453,8 @@
       },
       initCandy() {
         this.candy = localStorage.getItem('apelink_user_candies')
+        this.profileUrl = localStorage.getItem('apelink_user_profileUrl')
+        this.token = localStorage.getItem('apelink_user_token')
       },
       inittuiwen(obj) {
         let ico = obj.project;
