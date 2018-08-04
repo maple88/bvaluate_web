@@ -193,7 +193,10 @@
           phoneNumber: '',
           oldPassword: '',
           newPassword: '',
-          ensurePwd: ''
+          ensurePwd: '',
+          profileUrl: '',
+          email: '',
+          sex: ''
         },
         showErrow: true,
         editnicknamebox: {
@@ -266,10 +269,15 @@
           let nickName = localStorage.getItem('apelink_user_nickName');
           let phoneNumber = localStorage.getItem('apelink_user_phoneNumber');
           let synopsis = localStorage.getItem('apelink_user_synopsis');
+          let profileUrl = localStorage.getItem('apelink_user_profileUrl');
+          let email = localStorage.getItem('apelink_user_email');
+          let sex = localStorage.getItem('apelink_user_sex');
           this.user.phoneNumber = phoneNumber;
           this.user.nickName = nickName;
           this.user.synopsis = synopsis;
-          // let nickName = localStorage.getItem('apelink_user_token');
+          this.user.profileUrl = profileUrl;
+          this.user.email = email;
+          this.user.sex = sex;
         } else {
           this.$router.push('/login')
         }
@@ -302,6 +310,15 @@
         let old = obj.substring(3, 8);
         return obj.replace(old, '******');
       },
+      showSex(obj) {
+        let str = '未知'
+        if (obj === 2) {
+          str = '男'
+        } else if (obj === 3) {
+          str = '女'
+        }
+        return str
+      }
     },
     computed: {
       showSynopsis: function () {

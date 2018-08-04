@@ -30,7 +30,6 @@
               <ul class="nav navbar-nav">
                 <router-link tag="li" to="/index" active-class="active"><a>首页</a></router-link>
                 <router-link tag="li" to="/recommend" active-class="active"><a>新闻</a></router-link>
-                、
                 <router-link tag="li" to="/userCenter" active-class="active"><a>个人中心</a></router-link>
               </ul>
               <ul class="nav navbar-nav navbar-right">
@@ -159,7 +158,7 @@
             <div class="bottomflex">
               <div class="section1">
                 <div class="head">团队</div>
-                <div class="swiper-container" id="home-team"> 
+                <div class="swiper-container" id="home-team">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide" v-for="item in showProject.partner">
                       <!--<div class="item">-->
@@ -281,57 +280,57 @@
                       </div>
                     </div>
                     <!-- <div class="swiper-slide"> -->
-                      <!--<div class="swiper-container home_newslist_style" id="home-newslist3">-->
-                      <!--<div class="swiper-wrapper">-->
-                      <!--<div class="swiper-slide">-->
-                      <!--<div class="item hasdate" v-for="icoNew in icoNews.content">-->
-                      <!--<div class="left" :class="(icoNew.titlePicture != ''&& icoNew.titlePicture )?'hasbg':'' ">-->
-                      <!--<img :src="icoNew.titlePicture ">-->
-                      <!--<p class="day">{{icoNew.urlTime | showDay }}</p>-->
-                      <!--<p>{{icoNew.urlTime | showYear}}</p>-->
-                      <!--</div>-->
-                      <!--<div class="right">-->
-                      <!--<p class="tit">-->
-                      <!--<a href="#">-->
-                      <!--{{icoNew.title }}-->
-                      <!--</a>-->
-                      <!--</p>-->
-                      <!--<p class="des">-->
-                      <!--{{icoNew.content }}-->
-                      <!--</p>-->
-                      <!--<div class="bottom">-->
-                      <!--<div class="userinfo">-->
-                      <!--<div class="user" :is="icoNew.siteName">-->
-                      <!--&lt;!&ndash;<img src="../assets/logo_brand.png">&ndash;&gt;-->
-                      <!--<span>{{icoNew.siteName}}</span>-->
-                      <!--</div>-->
-                      <!--<div class="user" :is="!icoNew.siteName">-->
-                      <!--<img src="../assets/logo_brand.png">-->
-                      <!--<span>{{icoNew.author }}</span>-->
-                      <!--</div>-->
-                      <!--<span class="usertime">{{icoNew.urlTime }}</span>-->
-                      <!--</div>-->
-                      <!--<span class="tips">{{icoNew.grouptName}}</span>-->
-                      <!--</div>-->
-                      <!--</div>-->
-                      <!--</div>-->
-                      <!--<div class="item">-->
-                      <!--<div class="left"><img src="../assets/home/nicon.png"></div>-->
-                      <!--<div class="right">-->
-                      <!--<p class="des">Hey Andrew, We will be announcing release detailsin the coming weeks,-->
-                      <!--stay tuned on our official hannels! t.me/vividtoken Hey Andrew, We will be-->
-                      <!--announcing</p>-->
-                      <!--<div class="bottom">-->
-                      <!--<span class="name">博主</span>-->
-                      <!--<span class="time">2018-06-02    18:00</span>-->
-                      <!--<span class="tips">新闻</span>-->
-                      <!--</div>-->
-                      <!--</div>-->
-                      <!--</div>-->
-                      <!--</div>-->
-                      <!--</div>-->
-                      <!--<div class="swiper-scrollbar"></div>-->
-                      <!--</div>-->
+                    <!--<div class="swiper-container home_newslist_style" id="home-newslist3">-->
+                    <!--<div class="swiper-wrapper">-->
+                    <!--<div class="swiper-slide">-->
+                    <!--<div class="item hasdate" v-for="icoNew in icoNews.content">-->
+                    <!--<div class="left" :class="(icoNew.titlePicture != ''&& icoNew.titlePicture )?'hasbg':'' ">-->
+                    <!--<img :src="icoNew.titlePicture ">-->
+                    <!--<p class="day">{{icoNew.urlTime | showDay }}</p>-->
+                    <!--<p>{{icoNew.urlTime | showYear}}</p>-->
+                    <!--</div>-->
+                    <!--<div class="right">-->
+                    <!--<p class="tit">-->
+                    <!--<a href="#">-->
+                    <!--{{icoNew.title }}-->
+                    <!--</a>-->
+                    <!--</p>-->
+                    <!--<p class="des">-->
+                    <!--{{icoNew.content }}-->
+                    <!--</p>-->
+                    <!--<div class="bottom">-->
+                    <!--<div class="userinfo">-->
+                    <!--<div class="user" :is="icoNew.siteName">-->
+                    <!--&lt;!&ndash;<img src="../assets/logo_brand.png">&ndash;&gt;-->
+                    <!--<span>{{icoNew.siteName}}</span>-->
+                    <!--</div>-->
+                    <!--<div class="user" :is="!icoNew.siteName">-->
+                    <!--<img src="../assets/logo_brand.png">-->
+                    <!--<span>{{icoNew.author }}</span>-->
+                    <!--</div>-->
+                    <!--<span class="usertime">{{icoNew.urlTime }}</span>-->
+                    <!--</div>-->
+                    <!--<span class="tips">{{icoNew.grouptName}}</span>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="item">-->
+                    <!--<div class="left"><img src="../assets/home/nicon.png"></div>-->
+                    <!--<div class="right">-->
+                    <!--<p class="des">Hey Andrew, We will be announcing release detailsin the coming weeks,-->
+                    <!--stay tuned on our official hannels! t.me/vividtoken Hey Andrew, We will be-->
+                    <!--announcing</p>-->
+                    <!--<div class="bottom">-->
+                    <!--<span class="name">博主</span>-->
+                    <!--<span class="time">2018-06-02    18:00</span>-->
+                    <!--<span class="tips">新闻</span>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="swiper-scrollbar"></div>-->
+                    <!--</div>-->
                     <!-- </div> -->
                   </div>
                 </div>
@@ -373,6 +372,7 @@
 
 <script>
   import Swiper from 'swiper'
+
   let tuiwen = require('../assets/home/nicon.png')
   let weibo = require('../assets/home/weibo.png')
 
@@ -459,7 +459,7 @@
         $(this).addClass('active');
         homeNewsSwiper.slideTo($(this).index())
       });
-      
+
       new Swiper('#home-newslist2', {
         direction: 'vertical',
         slidesPerView: 'auto',
