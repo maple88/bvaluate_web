@@ -33,7 +33,10 @@
                     <a :href="articleContent.urlName" class="look">查看全文</a>
                     <span class="look_count"><i class="fa fa-eye"></i>1000人</span>
                     <span class="share" @click.stop="showAllShare($event)"><i class="fa fa-share-alt"></i></span>
-                    <span class="follow"><i class="fa fa-heart"></i></span>
+                    <span class="follow">
+                      <i class="fa fa-heart" v-show="!isFollow" @click="isFollow = true"></i>
+                      <i class="fa fa-heart followed" v-show="isFollow" @click="isFollow = false"></i>
+                    </span>
                   </div>
                 </div>
                 <div class="label_box">
@@ -75,7 +78,7 @@
                       <img src="../assets/follow/icon-follow.png"/>关注
                       <div class="arrow"></div>
                     </button>
-                    <button class="followed_btn" v-show="follow" @click="follow = false">
+                    <button class="followed_btn" v-show="follow" @click="unfollow()">
                       <div class="arrow"></div>
                       <img src="../assets/follow/icon-followed.png"/>已关注
                     </button>
@@ -315,7 +318,8 @@
         follow: false,
         articleContent: {},
         hotNews: [],
-        industryName: ""
+        industryName: "",
+        isFollow: false
       }
     },
     methods: {
@@ -356,11 +360,30 @@
       getDetailData() {
         let that = this
         let sid = this.$route.query.sid
+        let token = localStorage.getItem('apelink_user_token')
+        let uid = localStorage.getItem('apelink_user_uid')
+        let url = '/api/individual/add?type=NEWS&sid='+ that.articleContent.sid ;
+        let headers = {'uid': uid, 'Authorization': token};
         if (sid !== null && sid !== '' && sid !== undefined) {
           that.$axios.get('/api/traditional/detail?sid=' + sid).then(function (res) {
             // console.log(res)
             that.articleContent = res.data
             that.industryName = res.data.industryCategory
+            /*判断有没有登录
+              判断有无关注*/
+            // that.SignBoolean()
+            if (token !== null && token !== '' && token !== undefined) {
+              let checkurl =  '/api/individual/check?type=NEWS&sidOrName='+ that.articleContent.sid ;
+              that.$axios({
+                method: 'post',
+                url: checkurl,
+                headers: headers
+              }).then(function (res) {
+                if(res){
+                  that.isFollow = true
+                }
+              })
+            }
           })
         }
       },
@@ -373,6 +396,34 @@
       },
       goToArticle(sid) {
         this.$router.push('/article?sid=' + sid)
+      },
+      setUnfollow () {
+        let that = this
+        let token = localStorage.getItem('apelink_user_token')
+        let uid = localStorage.getItem('apelink_user_uid')
+        let url = '/api//individual/delete?type=NEWS';
+        let headers = {'uid': uid, 'Authorization': token};
+        that.$axios({
+          method: 'DELETE',
+          url: url,
+          headers: headers
+        }).then(function (res) {
+
+        })
+      },
+      setFollow () {
+        let that = this
+        let token = localStorage.getItem('apelink_user_token')
+        let uid = localStorage.getItem('apelink_user_uid')
+        let url = '/api/individual/add?type=NEWS&sid='+ that.articleContent.sid ;
+        let headers = {'uid': uid, 'Authorization': token};
+        that.$axios({
+          method: 'post',
+          url: url,
+          headers: headers
+        }).then(function (res) {
+
+        })
       }
     },
     mounted() {
@@ -397,6 +448,7 @@
       })
       this.getDetailData()
       this.getHotnewsData()
+      this.gatFollowlist()
     },
     watch: {
       '$route': 'getDetailData'

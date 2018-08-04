@@ -539,13 +539,13 @@
               <a href="#">
                 <div class="ibanner"><img src="../assets/project/recommend-banner.jpg"></div>
                 <div class="info">
-                  <div class="left"><img src="../assets/project/recommend.jpg"></div>
+                  <div class="left"><img :src="'http://' + project.logoSrc"></div>
                   <div class="right">
                     <div class="head">
                       <p class="tit">{{project.project}}</p>
-                      <p class="smtit">DApps的新机会</p>
+                      <p class="smtit">{{project.introduction}}</p>
                     </div>
-                    <p class="num">9.2 <i class="fa fa-angle-right"></i></p>
+                    <p class="num">{{project.totalScore}} <i class="fa fa-angle-right"></i></p>
                   </div>
                 </div>
               </a>
