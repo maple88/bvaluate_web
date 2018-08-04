@@ -833,7 +833,8 @@
                 color: #14d214;
               }
               .follow {
-                color: #ff0000;
+                i{color: #ccc;}
+                i.followed{color: #ff0000;}
               }
             }
           }
