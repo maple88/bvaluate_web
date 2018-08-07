@@ -246,6 +246,7 @@
       }
     },
     mounted() {
+
     },
     methods: {
       loginSubmit() {
@@ -333,7 +334,7 @@
                 that.errorMsg.loginUser.password = '密码不正确';
                 break;
               default:
-                that.errorMsg.loginUser.phoneNumber = '网络错误，请重新登录';
+                that.errorMsg.loginUser.phoneNumber = msgCode;
             }
           })
         }
@@ -691,6 +692,16 @@
         this.registerForm = false
         this.resetpwdForm = true
       }
+    },
+    beforeRouteEnter(to, from, next) {
+      next(vm => {
+        let query = vm.$route.query.page
+        if (query === 'register') {
+          vm.register()
+        } else {
+          vm.login()
+        }
+      })
     }
   }
 </script>

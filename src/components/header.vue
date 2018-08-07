@@ -50,6 +50,9 @@
 
 <script>
   export default {
+    props: {
+      parantProfileUrl: String
+    },
     data() {
       return {
         candy: 100,
@@ -60,11 +63,21 @@
     mounted() {
       this.initUser()
     },
+    beforeRouteEnter(to, from, next) {
+      next(vm => {
+        vm.initUser()
+      })
+    },
     methods: {
       initUser() {
         this.candy = localStorage.getItem('apelink_user_candies')
         this.profileUrl = localStorage.getItem('apelink_user_profileUrl')
         this.token = localStorage.getItem('apelink_user_token')
+        console.log('外面:' + this.parantProfileUrl)
+        if (this.parantProfileUrl) {
+          console.log('进来')
+          this.profileUrl = this.parantProfileUrl
+        }
       }
     }
   }

@@ -37,9 +37,9 @@
                   </div>
                   <div class="swiper-container" id="news_swiper">
                     <div class="swiper-wrapper">
-                      <div class="swiper-slide"><p>11111作为新杭州人的你是否也在困扰，买车容易送车难，不可能不送车~</p></div>
-                      <div class="swiper-slide"><p>22222作为新杭州人的你是否也在困扰，买车容易送车难，不可能不送车~</p></div>
-                      <div class="swiper-slide"><p>33333作为新杭州人的你是否也在困扰，买车容易送车难，不可能不送车~</p></div>
+                      <div class="swiper-slide" v-for="news in rollingNew">
+                        <p>{{news.title}}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -406,11 +406,13 @@
                         <img src="../assets/follow/tweet.png"/>
                       </div>
                       <h4>
-                    <span class="tab" :class="{active:isActive}" @click="isActive = true, getNews('280001'), show_news_img = tuiwen">
+                    <span class="tab" :class="{active:isActive}"
+                          @click="isActive = true, getNews('280001'), show_news_img = tuiwen">
                       推文
                     </span>
                         <span class="vertical">|</span>
-                        <span class="tab" :class="{active:!isActive}" @click="isActive = false, getNews('280002'), show_news_img = weibo">
+                        <span class="tab" :class="{active:!isActive}"
+                              @click="isActive = false, getNews('280002'), show_news_img = weibo">
                       微博
                     </span>
                       </h4>
@@ -428,7 +430,7 @@
                               <div class="body_bottom">
                                 <p>{{item.author}}</p>
                                 <p class="time">{{item.urlDate}}</p>
-                              </div>               
+                              </div>
                             </div>
                           </div>
                         </li>
@@ -631,6 +633,7 @@
         tuiwen: tuiwen,
         weibo: weibo,
         show_news_img: tuiwen,
+        rollingNew: []
       }
     },
     filters: {
@@ -693,6 +696,18 @@
       }
     },
     methods: {
+      getRollingNew() {
+        let that = this;
+        let categoryName = '最新动态';
+        let url = '/api/traditional/categoryList?categoryName=' + categoryName + '&pageSize=5';
+        that.$axios.get(url).then(function (res) {
+          that.rollingNew = res.data.content;
+          that.$nextTick(() => {  // 下一个UI帧再初始化swiper
+            that.initSwiper();
+          });
+          console.log(that.rollingNew)
+        })
+      },
       getNewsClassfy() {
         let that = this
         that.$axios.get('/api/traditional/categories').then(function (res) {
@@ -702,17 +717,17 @@
           }
         })
       },
-      getHotnews () {
+      getHotnews() {
         let that = this
-        that.$axios.get('/api/traditional/hotNews?industryName='+ that.industryName +'&pageSize=3').then(function (res) {
+        that.$axios.get('/api/traditional/hotNews?industryName=' + that.industryName + '&pageSize=3').then(function (res) {
           if (that.newsClassfy.length > 0) {
             that.hotNews = res.data.content
           }
         })
       },
-      getNews (newsnum) {
+      getNews(newsnum) {
         let that = this
-        that.$axios.get('/api/traditional/news?searchBy='+ that.industryName +'&categoryId='+ newsnum +'&pageSize=4').then(function (res) {
+        that.$axios.get('/api/traditional/news?searchBy=' + that.industryName + '&categoryId=' + newsnum + '&pageSize=4').then(function (res) {
           if (that.newsClassfy.length > 0) {
             that.news = res.data.content
           }
@@ -767,6 +782,19 @@
           thisCallback(res.data.content);
         })
       },
+      initSwiper() {
+        let newsSwiper = new Swiper('#news_swiper', {
+          autoplay: {
+            delay: 1500,
+            disableOnInteraction: false
+          },
+          direction: 'vertical',
+          observer: true,
+          observeParents: true,
+          loop: true,
+          slidesPerView: 'auto',
+        });
+      }
     },
     mounted() {
       new Swiper('#top_banner', {
@@ -786,18 +814,10 @@
           prevEl: '.swiper-button-prev',
         }
       });
-      var newsSwiper = new Swiper('#news_swiper', {
-        autoplay: {
-          delay: 1500,
-          disableOnInteraction: false
-        },
-        direction: 'vertical',
-        observer: true,
-        observeParents: true,
-        loop: true
-      });
       let that = this;
       this.getNewsClassfy();
+      //获取最新动态
+      this.getRollingNew();
       //获取最新资讯
       this.initRightNews('快讯', 3, function (res) {
         that.flashList = res;

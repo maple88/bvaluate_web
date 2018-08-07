@@ -79,10 +79,16 @@
       li {
         margin: 10px 0;
       }
+      span {
+        color: #ffffff;
+      }
       a {
         background: transparent;
         padding: 0;
         margin: 0;
+        &.label_a {
+
+        }
         p {
           margin: 5px 0 0;
           font-size: 16px;
@@ -644,7 +650,11 @@
           // min-width: 49%;
           // margin-right: 6px;
           #home-team {
+            height: 100%;
             padding-bottom: 40px;
+            .swiper-pagination {
+              bottom: 25px;
+            }
             .swiper-slide {
               display: flex;
               flex-wrap: wrap;

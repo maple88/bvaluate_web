@@ -45,6 +45,19 @@
                   </ul>
                 </li>
               </ul>
+              <ul v-if="!token" class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                  <p>
+                    <router-link to="/login" class="label_a">
+                      登录
+                    </router-link>
+                    <span>/</span>
+                    <router-link to="/login?page=register" class="label_a">
+                      注册
+                    </router-link>
+                  </p>
+                </li>
+              </ul>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
         </nav>
@@ -488,9 +501,10 @@
         })
       },
       initCandy() {
-        this.candy = localStorage.getItem('apelink_user_candies')
-        this.profileUrl = localStorage.getItem('apelink_user_profileUrl')
-        this.token = localStorage.getItem('apelink_user_token')
+        this.candy = localStorage.getItem('apelink_user_candies');
+        this.profileUrl = localStorage.getItem('apelink_user_profileUrl');
+        this.token = localStorage.getItem('apelink_user_token');
+        console.log('ssss')
       },
       inittuiwen(obj) {
         let ico = obj.project;
@@ -557,7 +571,7 @@
             that.initIcoNews(that.showProject)
             that.inittuiwen(that.showProject)
             that.initweibo(that.showProject)
-            that.getfollowboolean(that.showProject.project)
+            that.getfollowboolean(that.showProject.sid)
           }
         })
       },
@@ -590,7 +604,7 @@
           this.initIcoNews(this.showProject)
           this.inittuiwen(this.showProject)
           this.initweibo(this.showProject)
-          this.getfollowboolean(this.showProject.project)
+          this.getfollowboolean(this.showProject.sid)
         }
       }
     }
