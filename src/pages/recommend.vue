@@ -37,7 +37,9 @@
                   </div>
                   <div class="swiper-container" id="news_swiper">
                     <div class="swiper-wrapper">
-                      <div class="swiper-slide" v-for="news in rollingNew">
+                      <div class="swiper-slide" v-for="news in rollingNew" :title="news.title"
+                           @click="goArticle('/article',{sid:news.sid})"
+                      >
                         <p>{{news.title}}</p>
                       </div>
                     </div>
@@ -125,16 +127,16 @@
               <div class="adv_box">
                 <div class="swiper-container" id="adv_banner">
                   <div class="swiper-wrapper">
-                    <div class="swiper-slide" :style="'background-image: url('+img2+')'"></div>
-                    <div class="swiper-slide" :style="'background-image: url('+img2+')'"></div>
-                    <div class="swiper-slide" :style="'background-image: url('+img2+')'"></div>
+                    <div class="swiper-slide" :style="'background-image: url('+banner1+')'"></div>
+                    <div class="swiper-slide" :style="'background-image: url('+banner1+')'"></div>
+                    <div class="swiper-slide" :style="'background-image: url('+banner1+')'"></div>
                   </div>
                   <!-- 如果需要分页器 -->
                   <div class="swiper-button-prev"></div><!--左箭头-->
                   <div class="swiper-button-next"></div><!--右箭头-->
                 </div>
                 <div class="adv_infor">
-                  <h4>宝马中国</h4>
+                  <h4>广告位</h4>
                   <button>了解更多</button>
                 </div>
               </div>
@@ -228,7 +230,7 @@
                       <span class="look_more">查看更多</span>
                     </div>
                     <div class="hot_content">
-                      <ul>
+                      <ul class="scoll_style">
                         <li class="news_flash" v-for="(flash,index) in flashList">
                           <div class="news_item">
                             <div class="radio_box">
@@ -369,34 +371,6 @@
                             <p>{{item.urlDate}}</p>
                           </div>
                         </li>
-                        <!-- <li>
-                          <div class="list_item">
-                            <div class="item_left">
-                              <img :src="img3"/>
-                            </div>
-                            <div class="item_body">
-                              <h4>Whatever is worth doing is worth doing well</h4>
-                              <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
-                            </div>
-                          </div>
-                          <div class="item_bottom">
-                            <p>2018-05-26</p>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="list_item">
-                            <div class="item_left">
-                              <img :src="img3"/>
-                            </div>
-                            <div class="item_body">
-                              <h4>Whatever is worth doing is worth doing well</h4>
-                              <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
-                            </div>
-                          </div>
-                          <div class="item_bottom">
-                            <p>2018-05-26</p>
-                          </div>
-                        </li> -->
                       </ul>
                     </div>
                   </div>
@@ -696,6 +670,10 @@
       }
     },
     methods: {
+      goArticle(url, query) {
+        let routeData = this.$router.resolve({path: url, query: query});
+        window.open(routeData.href, '_blank');
+      },
       getRollingNew() {
         let that = this;
         let categoryName = '最新动态';
@@ -794,6 +772,12 @@
           loop: true,
           slidesPerView: 'auto',
         });
+        newsSwiper.el.onmouseover = function () {
+          newsSwiper.autoplay.stop();
+        }
+        newsSwiper.el.onmouseout = function () {
+          newsSwiper.autoplay.start();
+        }
       }
     },
     mounted() {
@@ -819,7 +803,7 @@
       //获取最新动态
       this.getRollingNew();
       //获取最新资讯
-      this.initRightNews('快讯', 3, function (res) {
+      this.initRightNews('快讯', 20, function (res) {
         that.flashList = res;
       })
       //获取国家资讯

@@ -785,7 +785,14 @@
                   -webkit-line-clamp: 3;
                   -webkit-box-orient: vertical;
                   margin-bottom: 10px;
-                  word-break: break-word;
+                  max-height: 39px;
+                  &.cursor_style {
+                    cursor: pointer;
+                    transition: color .3s;
+                    &:hover {
+                      color: $mainColor;
+                    }
+                  }
                 }
                 .bottom {
                   position: relative;
@@ -809,6 +816,14 @@
                   position: absolute;
                   top: 2px;
                   right: 0;
+                  &.cursor_style {
+                    cursor: pointer;
+                    transition: color, background-color .3s;
+                    &:hover {
+                      color: #FFFFFF;
+                      background-color: $mainColor;
+                    }
+                  }
                 }
               }
               &.hasdate {
@@ -837,9 +852,13 @@
                     display: -webkit-box;
                     -webkit-line-clamp: 1;
                     -webkit-box-orient: vertical;
+                    a {
+                      max-height: 39px;
+                    }
                   }
                   .des {
                     -webkit-line-clamp: 2;
+                    max-height: 39px;
                   }
                   .bottom {
                     .userinfo {

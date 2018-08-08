@@ -3,7 +3,7 @@
     <div class="home-header">
       <div class="tophead">
         <div class="container">
-          <p>APELINk</p>
+          <p>APELINK</p>
           <span>中/EN</span>
         </div>
       </div>
@@ -69,7 +69,7 @@
         <div class="bannerwds">
           <img src="../assets/logo_brand.png">
           <span>+</span>
-          APELINk
+          APELINK
         </div>
       </div>
       <div class="df-container container home-newslist">
@@ -82,14 +82,14 @@
           <div class="df-col col-md-3 col-sm-4 col-xs-6" v-for="news in hostNews">
             <div class="item">
               <a>
-                <div class="img-box" @click="$router.push('/article?sid=' + news.sid)"><img :src="news.titlePicture">
+                <div class="img-box" @click="goArticle('/article',{sid:news.sid})"><img :src="news.titlePicture">
                 </div>
                 <div class="info">
                   <p class="tips">
                     {{news.industryCategory | showLable(news.countryCategory,news.projectCategory)}}
                     <span>{{news.urlDate}}</span>
                   </p>
-                  <p class="tit" :title="news.title" @click="$router.push('/article?sid=' + news.sid)">
+                  <p class="tit" :title="news.title" @click="goArticle('/article',{sid:news.sid})">
                     {{news.title}}
                   </p>
                   <p class="des">
@@ -104,7 +104,7 @@
                       {{(news.siteName!==null && news.siteName !== '' && news.siteName !== undefined &&
                       news.siteName!='NULL')?news.siteName:news.author }}
                     </div>
-                    <div class="right" @click="$router.push('/article?sid=' + news.sid)">阅读全文</div>
+                    <div class="right" @click="goArticle('/article',{sid:news.sid})">阅读全文</div>
                   </div>
                 </div>
               </a>
@@ -116,14 +116,13 @@
       <div class="df-container container hotindustry">
         <div class="row">
           <div class="section-head">
-            <div class="headtit">热门行业</div>
-            <router-link to="/industry" class="more">浏览更多</router-link>
+            <div class="headtit">推荐项目</div>
           </div>
           <div class="inlist" v-if="hottestProject.length>0">
             <ul>
               <li :class="index == prjAct ? 'on': ''" v-for="(item,index) in hottestProject"
                   @click="changeProject(item,index)">
-                <img :src="'http://'+item.logoSrc " class="inlistimg">
+                <img :src="item.logoSrc " class="inlistimg">
                 <div class="mask">
                   <p>{{item.project}}</p>
                 </div>
@@ -205,7 +204,7 @@
                               </div>
                               <div class="right">
                                 <p class="tit">
-                                  <a href="#">
+                                  <a href="javascript:;" @click="goArticle('/article',{sid:icoNew.sid})">
                                     {{icoNew.title }}
                                   </a>
                                 </p>
@@ -224,7 +223,7 @@
                                     </div>
                                     <span class="usertime">{{icoNew.urlTime}}</span>
                                   </div>
-                                  <span class="tips">{{icoNew.channel}}</span>
+                                  <span class="tips cursor_style">{{icoNew.industryCategory | showLable(icoNew.countryCategory,icoNew.projectCategory)}}</span>
                                 </div>
                               </div>
                             </div>
@@ -240,11 +239,12 @@
                             <div class="item" v-for="icoNew in icoNews.tuiwen">
                               <div class="left"><img src="../assets/home/nicon.png" :src="tuiwen"></div>
                               <div class="right">
-                                <p class="des">{{icoNew.content}}</p>
+                                <p class="des cursor_style" @click="goArticle('/article',{sid:icoNew.sid})">
+                                  {{icoNew.content}}</p>
                                 <div class="bottom">
                                   <span class="name">{{icoNew.author }}{{!(icoNew.siteName)}}</span>
                                   <span class="time">{{icoNew.urlDate}}</span>
-                                  <span class="tips">{{icoNew.channel}}</span>
+                                  <span class="tips cursor_style">{{icoNew.industryCategory | showLable(icoNew.countryCategory,icoNew.projectCategory)}}</span>
                                 </div>
                               </div>
                             </div>
@@ -260,11 +260,12 @@
                             <div class="item" v-for="icoNew in icoNews.tuiwen">
                               <div class="left"><img src="../assets/home/nicon.png" :src="weibo"></div>
                               <div class="right">
-                                <p class="des">{{icoNew.content}}</p>
+                                <p class="des cursor_style" @click="goArticle('/article',{sid:icoNew.sid})">
+                                  {{icoNew.content}}</p>
                                 <div class="bottom">
                                   <span class="name">{{icoNew.author }}{{!(icoNew.siteName)}}</span>
                                   <span class="time">{{icoNew.urlDate}}</span>
-                                  <span class="tips">{{icoNew.channel}}</span>
+                                  <span class="tips cursor_style">{{icoNew.industryCategory | showLable(icoNew.countryCategory,icoNew.projectCategory)}}</span>
                                 </div>
                               </div>
                             </div>
@@ -284,7 +285,7 @@
         <div class="row">
           <div class="section-head">
             <div class="headtit">热门行业</div>
-            <router-link to="/industry" class="more">浏览更多</router-link>
+            <router-link to="/recommend" class="more">浏览更多</router-link>
           </div>
           <div class="modulelist">
             <div class="item" v-for="item in hostIndustries">
@@ -294,12 +295,14 @@
                 <p class="smtit">最新资讯</p>
                 <ul class="list">
                   <li v-for="content in item.content">
-                    <a href="#">{{content.title}}</a>
+                    <a href="javascript:;" @click="goArticle('/article',{sid:content.sid})">{{content.title}}</a>
                   </li>
                 </ul>
                 <ul class="rtlist">
                   <li>相关项目</li>
-                  <li v-for="project in item.project"><a href="#">{{project.project}}</a></li>
+                  <li v-for="project in item.project">
+                    <a href="javascript:;" @click="goArticle('/project',{sid:project.sid})">{{project.project}}</a>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -447,6 +450,10 @@
       this.initCandy();
     },
     methods: {
+      goArticle(url, query) {
+        let routeData = this.$router.resolve({path: url, query: query});
+        window.open(routeData.href, '_blank');
+      },
       setFollow() {
         let that = this
         let token = localStorage.getItem('apelink_user_token')
