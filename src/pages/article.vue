@@ -137,10 +137,10 @@
                   <ul>
                     <li v-for="(item, index) in hotNews" :key="item.sid" @click="goToArticle(item.sid)">
                       <div class="list_item">
-                        <div class="item_left">
+                        <div class="item_left" v-if="item.titlePicture">
                           <img :src="item.titlePicture"/>
                         </div>
-                        <div class="item_body">
+                        <div class="item_body" :class="item.titlePicture?'':'noPicture'">
                           <h4>{{item.title}}</h4>
                           <p>{{item.content}}</p>
                         </div>
@@ -149,34 +149,6 @@
                         <p>{{item.urlDate}}</p>
                       </div>
                     </li>
-                    <!-- <li>
-                      <div class="list_item">
-                        <div class="item_left">
-                          <img :src="img3"/>
-                        </div>
-                        <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing well</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
-                        </div>
-                      </div>
-                      <div class="item_bottom">
-                        <p>2018-05-26</p>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="list_item">
-                        <div class="item_left">
-                          <img :src="img3"/>
-                        </div>
-                        <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing well</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
-                        </div>
-                      </div>
-                      <div class="item_bottom">
-                        <p>2018-05-26</p>
-                      </div>
-                    </li> -->
                   </ul>
                 </div>
               </div>

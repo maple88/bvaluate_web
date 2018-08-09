@@ -23,15 +23,15 @@
         <div class="fish_container">
           <div class="clearfix">
             <div class="search_bar">
-              <input type="text" id="keyword"/>
+              <input type="text" id="keyword" v-model="searchKey" @keyup.enter="changeClassfy(searchKey,-1)"/>
               <div class="search-btn">
-                <i class="fa fa-search"></i>
+                <i class="fa fa-search" @click="changeClassfy(searchKey,-1)"></i>
               </div>
             </div>
             <div class="label_bar">
               <!-- <keep-alive> -->
               <transition name="fade">
-                <div v-show="newType == 1" class="news_box">
+                <div v-show="newType === 1 || newType === -1" class="news_box">
                   <div class="news_title">
                     <span>最新动态</span>
                   </div>
@@ -117,7 +117,7 @@
           <div class="clearfix">
             <div class="left">
               <ul class="menu_box">
-                <li :class="index == classShow?'active':''" v-for="(classfy,index) in newsClassfy"
+                <li :class="index === classShow?'active':''" v-for="(classfy,index) in newsClassfy"
                     v-if="classfy.showInList" @click="changeClassfy(classfy.categoryName,index)">
                   {{classfy.categoryName}}
                 </li>
@@ -145,10 +145,9 @@
                   <li>
                     <div class="list-item">
                       <div class="medialist">
-                        <div class="media" v-for="news in newsList"
-                             @click="$router.push('/article?sid=' + news.sid)">
+                        <div class="media" v-for="news in newsList">
                           <div class="media-left media-middle">
-                            <div class="newimg_box">
+                            <div class="newimg_box" @click="goArticle('/article',{sid:news.sid})">
                               <img v-if="news.titlePicture" :src="news.titlePicture"/>
                               <div class="date_box">
                                 <span class="day">{{news.urlTime | showDay}}</span>
@@ -157,7 +156,7 @@
                             </div>
                           </div>
                           <div class="media-body">
-                            <h4 class="media-heading" :title="news.title">
+                            <h4 class="media-heading" :title="news.title" @click="goArticle('/article',{sid:news.sid})">
                               {{news.title }}
                             </h4>
                             <p class="media-words">
@@ -198,7 +197,7 @@
             </div>
             <keep-alive>
               <transition name="fade">
-                <div v-if="newType == 1" class="right">
+                <div v-if="newType == 1 || newType==-1" class="right">
                   <div class="link_box">
                     <div class="item">
                       <i class="fa fa-facebook"></i>
@@ -227,7 +226,6 @@
                         <img src="../assets/follow/news_flash.png"/>
                       </div>
                       <h4>快讯</h4>
-                      <span class="look_more">查看更多</span>
                     </div>
                     <div class="hot_content">
                       <ul class="scoll_style">
@@ -240,7 +238,7 @@
                               <span>{{flash.urlTime | dataFormat}}</span>
                             </div>
                             <div class="item_body">
-                              <h4 @click.stop="$router.push('/article?sid=' + flash.sid)">{{flash.title}}</h4>
+                              <h4 @click="goArticle('/article',{sid:flash.sid})">{{flash.title}}</h4>
                               <p>{{flash.content}}</p>
                             </div>
                           </div>
@@ -254,7 +252,6 @@
                         <img src="../assets/follow/real_time.png"/>
                       </div>
                       <h4>国家时事</h4>
-                      <span class="look_more">查看更多</span>
                     </div>
                     <div class="hot_content current">
                       <ul>
@@ -268,13 +265,15 @@
                             </div>
                             <div class="item_body" :class="affair.titlePicture ? 'hasImg' : ''">
                               <div class="content" v-if="affair.titlePicture">
-                                <h4 @click.stop="$router.push('/article?sid=' + affair.sid)">{{affair.title}}</h4>
+                                <h4 @click="goArticle('/article',{sid:affair.sid})">{{affair.title}}</h4>
                                 <p>{{affair.content}}</p>
                               </div>
-                              <div class="content_img" v-if="affair.titlePicture">
+                              <div class="content_img" v-if="affair.titlePicture"
+                                   @click="goArticle('/article',{sid:affair.sid})">
                                 <img :src="affair.titlePicture"/>
                               </div>
-                              <h4 v-if="!affair.titlePicture">{{affair.title}}</h4>
+                              <h4 v-if="!affair.titlePicture" @click="goArticle('/article',{sid:affair.sid})">
+                                {{affair.title}}</h4>
                               <p v-if="!affair.titlePicture">{{affair.content}}</p>
                             </div>
                           </div>
@@ -299,11 +298,12 @@
                       <ul>
                         <li v-for="(item, index) in hotNews" :key="item.sid">
                           <div class="list_item">
-                            <div class="item_left">
+                            <div class="item_left" v-if="item.titlePicture"
+                                 @click="goArticle('/article',{sid:item.sid})">
                               <img :src="item.titlePicture"/>
                             </div>
-                            <div class="item_body">
-                              <h4>{{item.title}}</h4>
+                            <div class="item_body" :class="item.titlePicture?'':'noPicture'">
+                              <h4 @click="goArticle('/article',{sid:item.sid})">{{item.title}}</h4>
                               <p>{{item.content}}</p>
                             </div>
                           </div>
@@ -311,34 +311,6 @@
                             <p>{{item.urlDate}}</p>
                           </div>
                         </li>
-                        <!-- <li>
-                          <div class="list_item">
-                            <div class="item_left">
-                              <img :src="img3"/>
-                            </div>
-                            <div class="item_body">
-                              <h4>Whatever is worth doing is worth doing well</h4>
-                              <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
-                            </div>
-                          </div>
-                          <div class="item_bottom">
-                            <p>2018-05-26</p>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="list_item">
-                            <div class="item_left">
-                              <img :src="img3"/>
-                            </div>
-                            <div class="item_body">
-                              <h4>Whatever is worth doing is worth doing well</h4>
-                              <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
-                            </div>
-                          </div>
-                          <div class="item_bottom">
-                            <p>2018-05-26</p>
-                          </div>
-                        </li> -->
                       </ul>
                     </div>
                   </div>
@@ -359,11 +331,11 @@
                       <ul>
                         <li v-for="(item, index) in hotNews" :key="item.sid">
                           <div class="list_item">
-                            <div class="item_left">
+                            <div class="item_left" v-if="item.titlePicture">
                               <img :src="item.titlePicture"/>
                             </div>
-                            <div class="item_body">
-                              <h4>{{item.title}}</h4>
+                            <div class="item_body" :class="item.titlePicture?'':'noPicture'">
+                              <h4 @click="goArticle('/article',{sid:item.sid})">{{item.title}}</h4>
                               <p>{{item.content}}</p>
                             </div>
                           </div>
@@ -390,7 +362,6 @@
                       微博
                     </span>
                       </h4>
-                      <span class="look_more">查看更多</span>
                     </div>
                     <div class="hot_content">
                       <ul>
@@ -400,7 +371,7 @@
                               <img :src="show_news_img"/>
                             </div>
                             <div class="item_body tweet">
-                              <p class="tweet">{{item.content}}</p>
+                              <p class="tweet" @click="goArticle('/article',{sid:item.sid})">{{item.content}}</p>
                               <div class="body_bottom">
                                 <p>{{item.author}}</p>
                                 <p class="time">{{item.urlDate}}</p>
@@ -607,7 +578,8 @@
         tuiwen: tuiwen,
         weibo: weibo,
         show_news_img: tuiwen,
-        rollingNew: []
+        rollingNew: [],
+        searchKey: ''
       }
     },
     filters: {
@@ -695,9 +667,9 @@
           }
         })
       },
-      getHotnews() {
+      getHotnews(industryName) {
         let that = this
-        that.$axios.get('/api/traditional/hotNews?industryName=' + that.industryName + '&pageSize=3').then(function (res) {
+        that.$axios.get('/api/traditional/hotNews?industryName=' + industryName + '&pageSize=10').then(function (res) {
           if (that.newsClassfy.length > 0) {
             that.hotNews = res.data.content
           }
@@ -705,42 +677,46 @@
       },
       getNews(newsnum) {
         let that = this
-        that.$axios.get('/api/traditional/news?searchBy=' + that.industryName + '&categoryId=' + newsnum + '&pageSize=4').then(function (res) {
+        that.$axios.get('/api/traditional/news?searchBy=' + this.industryName + '&categoryId=' + newsnum + '&pageSize=10').then(function (res) {
           if (that.newsClassfy.length > 0) {
             that.news = res.data.content
           }
         })
       },
       changeClassfy(categoryName, index) {
-        if (categoryName == '关注') {
+        if (categoryName === '关注') {
           this.newType = 2;
-          this.industryName = "关注"
-        } else if (categoryName == '平台') {
-          this.newType = 3;
-          this.industryName = "平台"
-          new Swiper('#follow_swiper', {
-            direction: 'horizontal',
-            slidesPerView: 'auto',
-            freeMode: true,
-            mousewheel: true,
-            observer: true,		            //修改swiper自己或子元素时，自动初始化swiper
-            observeParents: true
-          });
+        } else if (categoryName === '推荐') {
+          this.newType = 1;
         } else {
-          this.newType = 1
+          this.newType = 3;
         }
+        if (index === -1) {
+          this.newType = index;
+          let that = this;
+          this.initRightNews('快讯', 20, function (res) {
+            that.flashList = res;
+          })
+          this.initNewsList('', categoryName);
+        } else {
+          this.initNewsList(categoryName);
+        }
+        this.industryName = categoryName;
         this.showloading = true;
         this.classShow = index;
         this.newsList = [];
         this.pageSize = 20;
-        this.initNewsList(categoryName)
-        this.getHotnews()
+
+        this.getHotnews(categoryName);
         this.getNews('280001')
       },
-      initNewsList(categoryName) {
+      initNewsList(categoryName, search) {
         let that = this;
         that.categoryName = categoryName;
-        let url = '/api/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + this.pageSize
+        let url = '/api/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + this.pageSize;
+        if (search !== null && search !== '' && search !== undefined) {
+          url += '&search=' + search;
+        }
         that.$axios.get(url).then(function (res) {
           that.newsList = res.data.content;
           that.showloading = false;
@@ -803,11 +779,11 @@
       //获取最新动态
       this.getRollingNew();
       //获取最新资讯
-      this.initRightNews('快讯', 20, function (res) {
+      this.initRightNews('快讯', 10, function (res) {
         that.flashList = res;
       })
       //获取国家资讯
-      this.initRightNews('国家时事', 5, function (res) {
+      this.initRightNews('国家时事', 10, function (res) {
         that.affairList = res;
       })
     }
