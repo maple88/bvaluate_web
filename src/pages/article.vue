@@ -25,12 +25,16 @@
                 </div>
                 <div class="article_tool">
                   <div class="article_left">
-                    <span class="user_name">{{articleContent.author}}</span>
+                    <span class="user_name">{{
+                                  (articleContent.siteName !== 'NULL'
+                                  && articleContent.siteName !== null
+                                  && articleContent.siteName !== '')?articleContent.siteName:articleContent.author
+                                  }}</span>
                     <a :href="articleContent.urlName" class="publish_data">{{articleContent.urlTime}}</a>
                     <!-- <span class="publish_time">13:20</span> -->
                   </div>
                   <div class="article_right">
-                    <a :href="articleContent.urlName" class="look">查看全文</a>
+                    <a href="javascript:;" class="look" @click="showArticle = true">查看原文</a>
                     <span class="look_count"><i class="fa fa-eye"></i>1000人</span>
                     <span class="share" @click.stop="showAllShare($event)"><i class="fa fa-share-alt"></i></span>
                     <span class="follow">
@@ -54,11 +58,15 @@
                   <p>{{articleContent.content}}</p>
                 </div>
                 <div class="article_original">
-                  <div class="title">原文</div>
-                  <div class="original">
-                    <h4>{{articleContent.title}}</h4>
-                    <p>{{articleContent.content}}</p>
-                  </div>
+                  <transition name="fade">
+                    <div class="title" v-if="showArticle">原文</div>
+                  </transition>
+                  <transition name="fade">
+                    <div class="original" v-if="showArticle">
+                      <h4>{{articleContent.title}}</h4>
+                      <p>{{articleContent.content}}</p>
+                    </div>
+                  </transition>
                 </div>
                 <div class="article_statement">
                   <p>声明：本文系<span>{{articleContent.siteName}}</span>原创稿件，版权属<span>{{articleContent.siteName}}</span>所有，未经授权不得转载，已经协议授权的媒体下载使用时须注明"稿件来源：<span>{{articleContent.siteName}}</span>"，违者将依法追究责任。
@@ -291,7 +299,8 @@
         articleContent: {},
         hotNews: [],
         industryName: "",
-        isFollow: false
+        isFollow: false,
+        showArticle: false
       }
     },
     methods: {

@@ -23,9 +23,10 @@
         <div class="fish_container">
           <div class="clearfix">
             <div class="search_bar">
-              <input type="text" id="keyword" v-model="searchKey" @keyup.enter="changeClassfy(searchKey,-1)"/>
+              <input type="text" id="keyword" v-model="searchKey"
+                     @keyup.enter="goUrl('/recommend',{searchkey:searchKey})"/>
               <div class="search-btn">
-                <i class="fa fa-search" @click="changeClassfy(searchKey,-1)"></i>
+                <i class="fa fa-search" @click="goUrl('/recommend',{searchkey:searchKey})"></i>
               </div>
             </div>
             <div class="label_bar">
@@ -379,54 +380,6 @@
                             </div>
                           </div>
                         </li>
-                        <!-- <li>
-                          <div class="list_item">
-                            <div class="item_left tweet">
-                              <img src="../assets/follow/tweet_header.png"/>
-                            </div>
-                            <div class="item_body tweet">
-                              <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever
-                                is
-                                worth doing is worth doing Whatever is worth doing</p>
-                              <div class="body_bottom">
-                                <p>博主</p>
-                                <p class="time">2018-05-26</p>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="list_item">
-                            <div class="item_left tweet">
-                              <img src="../assets/follow/tweet_header.png"/>
-                            </div>
-                            <div class="item_body tweet">
-                              <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever
-                                is
-                                worth doing is worth doing Whatever is worth doing</p>
-                              <div class="body_bottom">
-                                <p>博主</p>
-                                <p class="time">2018-05-26</p>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="list_item">
-                            <div class="item_left tweet">
-                              <img src="../assets/follow/tweet_header.png"/>
-                            </div>
-                            <div class="item_body tweet">
-                              <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever
-                                is
-                                worth doing is worth doing Whatever is worth doing</p>
-                              <div class="body_bottom">
-                                <p>博主</p>
-                                <p class="time">2018-05-26</p>
-                              </div>
-                            </div>
-                          </div>
-                        </li> -->
                       </ul>
                     </div>
                   </div>
@@ -642,9 +595,15 @@
       }
     },
     methods: {
+      initPage() {
+
+      },
       goArticle(url, query) {
         let routeData = this.$router.resolve({path: url, query: query});
         window.open(routeData.href, '_blank');
+      },
+      goUrl(url, query) {
+        this.$router.push({path: url, query: query});
       },
       getRollingNew() {
         let that = this;
@@ -688,12 +647,24 @@
           this.newType = 2;
         } else if (categoryName === '推荐') {
           this.newType = 1;
+          //获取最新动态
+          this.getRollingNew();
+          //获取国家资讯
+          this.initRightNews('国家时事', 10, function (res) {
+            that.affairList = res;
+          });
+          this.initRightNews('快讯', 20, function (res) {
+            that.flashList = res;
+          });
         } else {
           this.newType = 3;
         }
         if (index === -1) {
           this.newType = index;
           let that = this;
+          this.initRightNews('国家时事', 10, function (res) {
+            that.affairList = res;
+          });
           this.initRightNews('快讯', 20, function (res) {
             that.flashList = res;
           })
@@ -775,17 +746,24 @@
         }
       });
       let that = this;
+      let categoryName = ''
+      let page = this.$route.query.page;
+      let searchkey = this.$route.query.searchkey;
+      let showpage = 0;
+      if (!(page !== null && page !== '' && page !== undefined)) {
+        categoryName = '推荐'
+        if (searchkey !== null && searchkey !== '' && searchkey !== undefined) {
+          categoryName = searchkey;
+          showpage = -1;
+        }
+      }
+      this.changeClassfy(categoryName, 0);
       this.getNewsClassfy();
-      //获取最新动态
-      this.getRollingNew();
       //获取最新资讯
       this.initRightNews('快讯', 10, function (res) {
         that.flashList = res;
       })
-      //获取国家资讯
-      this.initRightNews('国家时事', 10, function (res) {
-        that.affairList = res;
-      })
+
     }
   }
 </script>
