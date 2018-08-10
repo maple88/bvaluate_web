@@ -5,7 +5,8 @@
       <div class="container">
         <div class="myProfile mt20">
           <div class="left">
-            <div class="userbrand" :style="'background-image: url('+ user.profileUrl +')'">
+            <div class="userbrand"
+                 :style="(user.profileUrl !==null && user.profileUrl !== '' && user.profileUrl !== 'NULL' && user.profileUrl !== undefined)?'background-image: url('+ user.profileUrl +')':'background-image: url('+ default_header +')'">
 
               <div class="edit_bg">
                 <span>点击修改头像</span>
@@ -193,7 +194,8 @@
 </template>
 
 <script>
-  let loading = require('../assets/login/loading.gif')
+  let loading = require('../assets/login/loading.gif');
+  let default_header = require('../assets/user/default-header.png');
   export default {
     data() {
       return {
@@ -230,7 +232,8 @@
           show: true
         },
         aplinkUser: {},
-        loading: loading
+        loading: loading,
+        default_header: default_header
       }
     },
     methods: {

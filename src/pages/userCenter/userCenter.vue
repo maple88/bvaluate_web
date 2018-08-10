@@ -4,8 +4,18 @@
     <div class="maintainer">
       <div class="user-center">
         <div class="usertainer">
-          <div class="userimg"><img src="../../assets/logo_brand.png"></div>
-          <p class="nickname">{{nickName}}<span><img src="../../assets/authen.png">个人</span></p>
+          <div class="userimg">
+            <div class="user_header"
+                 :style="(profileUrl !==null && profileUrl !== '' && profileUrl !== 'NULL' && profileUrl !== undefined)
+                       ?'background-image: url('+ profileUrl +')':'background-image: url('+ default_header +')'"
+            ></div>
+          </div>
+          <p class="nickname">{{nickName}}
+            <span>
+              <!--<img src="../../assets/authen.png">-->
+              个人
+            </span>
+          </p>
           <p class="sign" v-html="showSynopsis"></p>
           <ul class="datalist">
             <li>
@@ -38,11 +48,13 @@
 </template>
 
 <script>
-  import vheader from '@/components/header.vue'
-  import contribute from '@/pages/userCenter/contribute'
-  import read from '@/pages/userCenter/read'
-  import collection from '@/pages/userCenter/collection'
-  import creat from '@/pages/userCenter/creat'
+  import vheader from '@/components/header.vue';
+  import contribute from '@/pages/userCenter/contribute';
+  import read from '@/pages/userCenter/read';
+  import collection from '@/pages/userCenter/collection';
+  import creat from '@/pages/userCenter/creat';
+
+  let default_header = require('../../assets/user/default-header.png');
 
   export default {
     components: {
@@ -63,7 +75,9 @@
         candy: 0,
         phoneNumber: 0,
         nickName: '',
-        synopsis: ''
+        synopsis: '',
+        profileUrl: '',
+        default_header: default_header
       }
     },
     mounted() {
@@ -85,6 +99,7 @@
           let nickName = localStorage.getItem('apelink_user_nickName');
           let phoneNumber = localStorage.getItem('apelink_user_phoneNumber');
           let synopsis = localStorage.getItem('apelink_user_synopsis');
+          this.profileUrl = localStorage.getItem('apelink_user_profileUrl');
           this.phoneNumber = phoneNumber;
           this.nickName = nickName;
           this.synopsis = synopsis;

@@ -35,7 +35,10 @@
               <ul v-if="token" class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                    <div class="user" :style="'background-image: url('+ profileUrl +')'"></div>
+                    <div class="user"
+                         :style="(profileUrl !==null && profileUrl !== '' && profileUrl !== 'NULL' && profileUrl !== undefined)
+                       ?'background-image: url('+ profileUrl +')':'background-image: url('+ default_header +')'"
+                    ></div>
                     <p>糖果数：{{candy}}</p>
                   </a>
                   <ul class="dropdown-menu">
@@ -321,6 +324,7 @@
 
   let tuiwen = require('../assets/home/nicon.png')
   let weibo = require('../assets/home/weibo.png')
+  let default_header = require('../assets/user/default-header.png');
 
   export default {
     data() {
@@ -341,7 +345,8 @@
         weibo: weibo,
         isFollow: false,
         profileUrl: '',
-        token: ''
+        token: '',
+        default_header: default_header
       }
     },
     filters: {

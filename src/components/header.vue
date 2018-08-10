@@ -31,7 +31,10 @@
             <ul class="nav navbar-nav navbar-right" v-if="token">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                  <div class="user" :style="'background-image: url('+ profileUrl +')'"></div>
+                  <div class="user"
+                       :style="(profileUrl !==null && profileUrl !== '' && profileUrl !== 'NULL' && profileUrl !== undefined)
+                       ?'background-image: url('+ profileUrl +')':'background-image: url('+ default_header +')'"
+                  ></div>
                   <p>糖果数：{{candy}}</p>
                 </a>
                 <ul class="dropdown-menu">
@@ -51,6 +54,7 @@
 </template>
 
 <script>
+  let default_header = require('../assets/user/default-header.png');
   export default {
     props: {
       parantProfileUrl: String
@@ -59,7 +63,8 @@
       return {
         candy: 100,
         profileUrl: '',
-        token: ''
+        token: '',
+        default_header: default_header
       }
     },
     mounted() {
