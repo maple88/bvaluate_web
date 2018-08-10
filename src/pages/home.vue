@@ -41,7 +41,9 @@
                   <ul class="dropdown-menu">
                     <router-link tag="li" to="/my"><a>设置</a></router-link>
                     <!-- <li><a href="#">设置</a></li> -->
-                    <li><a href="#">退出</a></li>
+                    <li>
+                      <a href="javascript:;" @click="logout()">退出</a>
+                    </li>
                   </ul>
                 </li>
               </ul>
@@ -449,7 +451,26 @@
       this.initHotNews();
       this.initCandy();
     },
+    beforeRouteEnter(to, from, next) {
+      next(vm => {
+        vm.initCandy()
+      })
+    },
     methods: {
+      logout() {
+        localStorage.removeItem('apelink_user_candies');
+        localStorage.removeItem('apelink_user_email');
+        localStorage.removeItem('apelink_user_expirationDate');
+        localStorage.removeItem('apelink_user_nickName');
+        localStorage.removeItem('apelink_user_phoneNumber');
+        localStorage.removeItem('apelink_user_profileUrl');
+        localStorage.removeItem('apelink_user_sex');
+        localStorage.removeItem('apelink_user_signedIn');
+        localStorage.removeItem('apelink_user_synopsis');
+        localStorage.removeItem('apelink_user_token');
+        localStorage.removeItem('apelink_user_uid');
+        this.$router.push('/login');
+      },
       goArticle(url, query) {
         let routeData = this.$router.resolve({path: url, query: query});
         window.open(routeData.href, '_blank');

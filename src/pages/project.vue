@@ -582,11 +582,14 @@
         weibo: weibo,
         showIcon: nicon,
         recommendProjects: {},
-        sectionSwiper: {}
+        newSwiper: {},
+        NewOrGradeNo: 1,
+        NGewOrGrade: '290001'
       }
     },
     mounted() {
-      new Swiper('.section-swiper', {
+      let that = this;
+      this.newSwiper = new Swiper('.section-swiper', {
         direction: 'vertical',
         slidesPerView: 'auto',
         freeMode: true,
@@ -596,6 +599,27 @@
         // mousewheel: true,
         observer: true,
         observeParents: true,
+        on: {
+          momentumBounce: function () {
+            let swiper = this
+            if (swiper.translate < -100) {
+              swiper.allowTouchMove = false;//禁止触摸
+              swiper.params.virtualTranslate = true;//定住不给回弹
+              that.$axios.get('/api/traditional/news?searchBy=' + that.project.project + '&categoryId=' + that.NGewOrGrade + '&pageNo=' + that.NewOrGradeNo).then(function (res) {
+                that.NewOrGradeNo++;
+                for (let i = 0; i < res.data.content.length; i++) {
+                  that.NewOrGrade.push(res.data.content[i])
+                }
+                console.log(that.NewOrGrade)
+                that.$nextTick(() => {  // 下一个UI帧再初始化swiper
+                  that.newSwiper[0].update()
+                });
+                swiper.params.virtualTranslate = false;
+                swiper.allowTouchMove = true;
+              })
+            }
+          }
+        }
       });
       new Swiper('.advert-swiper', {
         autoplay: {
@@ -611,7 +635,7 @@
         },
         observer: true,
         observeParents: true,
-      })
+      });
       this.initProject();
     },
     filters: {
@@ -672,7 +696,7 @@
               partner = JSON.parse(partner);
               that.project.partner = partner;
               //290001
-              that.iniNewOrGrade(that.project.project, '290001');
+              that.iniNewOrGrade(that.project.project, '290001', 1);
               that.iniTwitterOrWeibo(that.project.project, '290002');
               let categoryNameList = that.project.industryCategory;
               if (categoryNameList != null && categoryNameList !== '' && categoryNameList !== undefined) {
@@ -686,26 +710,33 @@
           }
         }
       },
-      iniNewOrGrade(projectName, categoryId) {
+      iniNewOrGrade(projectName, categoryId, pageNo) {
         this.NewOrGrade = []
         this.showLoading1 = true;
         let that = this;
-        that.$axios.get('/api/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId).then(function (res) {
+        that.$axios.get('/api/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId + '&pageNo=' + pageNo).then(function (res) {
+          if (that.NewOrGrade > 0) {
+            that.NewOrGrade.concat(res.data.content);
+          } else {
+            that.NewOrGrade = res.data.content;
+          }
           that.$nextTick(() => {  // 下一个UI帧再初始化swiper
-            new Swiper('.section-swiper', {
-              direction: 'vertical',
-              slidesPerView: 'auto',
-              freeMode: true,
-              scrollbar: {
-                el: '.swiper-scrollbar'
-              },
-              // mousewheel: true,
-              observer: true,
-              observeParents: true,
-            });
+            that.newSwiper[0].update()
           });
-          that.NewOrGrade = res.data.content;
           that.showLoading1 = false;
+        })
+      },
+      loadMoreNewOrGrade(projectName, categoryId, pageNo) {
+        let that = this;
+        that.$axios.get('/api/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId + '&pageNo=' + pageNo).then(function (res) {
+          if (that.NewOrGrade > 0) {
+            that.NewOrGrade.concat(res.data.content);
+          } else {
+            that.NewOrGrade = res.data.content;
+          }
+          that.$nextTick(() => {  // 下一个UI帧再初始化swiper
+            that.newSwiper[0].update()
+          });
         })
       },
       iniTwitterOrWeibo(projectName, categoryId) {
@@ -733,7 +764,6 @@
       initRecommendProjects(categoryName) {
         let that = this;
         that.$axios.get('/api/ICO/relatedICO?categoryName=' + categoryName).then(function (res) {
-          console.log(res)
           that.recommendProjects = res.data
         })
       }
