@@ -24,9 +24,9 @@
           <div class="clearfix">
             <div class="search_bar">
               <input type="text" id="keyword" v-model="searchKey"
-                     @keyup.enter="goUrl('/recommend',{searchkey:searchKey})"/>
+                     @keyup.enter="changeClassfy(searchKey,-1)"/>
               <div class="search-btn">
-                <i class="fa fa-search" @click="goUrl('/recommend',{searchkey:searchKey})"></i>
+                <i class="fa fa-search" @click="changeClassfy(searchKey,-1)"></i>
               </div>
             </div>
             <div class="label_bar">
@@ -118,7 +118,8 @@
           <div class="clearfix">
             <div class="left">
               <ul class="menu_box">
-                <li :class="index === classShow?'active':''" v-for="(classfy,index) in newsClassfy"
+                <li ref="left_menu" class="left_menu" :class="index === classShow?'active':''"
+                    v-for="(classfy,index) in newsClassfy"
                     v-if="classfy.showInList" @click="changeClassfy(classfy.categoryName,index)">
                   {{classfy.categoryName}}
                 </li>
@@ -532,7 +533,7 @@
         weibo: weibo,
         show_news_img: tuiwen,
         rollingNew: [],
-        searchKey: ''
+        searchKey: '',
       }
     },
     filters: {
@@ -614,14 +615,13 @@
           that.$nextTick(() => {  // 下一个UI帧再初始化swiper
             that.initSwiper();
           });
-          console.log(that.rollingNew)
         })
       },
-      getNewsClassfy() {
+      getNewsClassfy(show) {
         let that = this
         that.$axios.get('/api/traditional/categories').then(function (res) {
           that.newsClassfy = res.data;
-          if (that.newsClassfy.length > 0) {
+          if (that.newsClassfy.length > 0 && show) {
             that.initNewsList(that.newsClassfy[0].categoryName)
           }
         })
@@ -643,6 +643,7 @@
         })
       },
       changeClassfy(categoryName, index) {
+        this.categoryName = categoryName;
         if (categoryName === '关注') {
           this.newType = 2;
         } else if (categoryName === '推荐') {
@@ -669,6 +670,7 @@
             that.flashList = res;
           })
           this.initNewsList('', categoryName);
+          this.getRollingNew();
         } else {
           this.initNewsList(categoryName);
         }
@@ -725,6 +727,10 @@
         newsSwiper.el.onmouseout = function () {
           newsSwiper.autoplay.start();
         }
+      },
+      showWhereActive(activeName) {
+        let li = this.$refs.left_menu[0].innerText;
+        console.log(li);
       }
     },
     mounted() {
@@ -746,24 +752,23 @@
         }
       });
       let that = this;
-      let categoryName = ''
-      let page = this.$route.query.page;
-      let searchkey = this.$route.query.searchkey;
+      let categoryName = '推荐';
       let showpage = 0;
-      if (!(page !== null && page !== '' && page !== undefined)) {
-        categoryName = '推荐'
-        if (searchkey !== null && searchkey !== '' && searchkey !== undefined) {
-          categoryName = searchkey;
-          showpage = -1;
-        }
+      let showActive = false;
+      let country = this.$route.query.country;
+      if (country !== null && country !== '' && country !== undefined && country !== 'NULL') {
+        categoryName = country;
+        showpage = -1;
+      } else {
+        showActive = true;
       }
-      this.changeClassfy(categoryName, 0);
-      this.getNewsClassfy();
+      this.getNewsClassfy(showActive);
+      this.changeClassfy(categoryName, showpage);
+      this.showWhereActive('软件');
       //获取最新资讯
       this.initRightNews('快讯', 10, function (res) {
         that.flashList = res;
       })
-
     }
   }
 </script>
