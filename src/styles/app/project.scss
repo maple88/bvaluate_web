@@ -135,7 +135,10 @@
 .flexlayout {
   display: flex;
   .section-swiper {
-    height: 640px;
+    max-height: 640px;
+    height: auto;
+    min-height: 150px;
+    //height: 640px;
     position: relative;
     .loading_box {
       position: absolute;
@@ -581,6 +584,12 @@
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             margin-bottom: 10px;
+            height: 60px;
+            cursor: pointer;
+            transition: color .3s;
+            &:hover {
+              color: $mainColor;
+            }
           }
           .bottom {
             position: relative;
@@ -608,6 +617,7 @@
             -webkit-transition: 0.3s;
             transition: 0.3s;
             transform: translateY(2px);
+            cursor: pointer;
           }
         }
         &.hasdate {
@@ -682,7 +692,8 @@
       margin-bottom: 10px;
       border-top: 4px solid #3e3e3e;
       .section-swiper {
-        height: 640px;
+        max-height: 640px;
+        height: auto;
         .swiper-slide {
           display: flex;
           flex-direction: row;

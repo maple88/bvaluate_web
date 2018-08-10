@@ -8,7 +8,7 @@
           <div class="left">{{project.totalScore }}</div>
           <div class="right">
             <div class="top">
-              <div class="imgbrand"><img :src="'http://' + project.logoSrc "></div>
+              <div class="imgbrand"><img :src="project.logoSrc "></div>
               <div class="info">
                 <div class="tit">
                   {{project.project}}
@@ -33,7 +33,7 @@
               <a href="javascript:;" :class="atvNewOrGrade==2?'active':''"
                  @click.stop="iniNewOrGrade(project.project,'290000') , atvNewOrGrade=2">评级文章</a>
             </div>
-            <div class="swiper-container section-swiper">
+            <div class="swiper-container section-swiper" id="newOrGradeSwiper">
               <div class="loading_box" v-if="showLoading1">
                 <img style="width: 50px" :src="loading"/>
               </div>
@@ -267,7 +267,7 @@
                       <div class="left"><img src="../assets/project/x15.png"></div>
                       <div class="right">
                         <p class="tit">PREICO价格</p>
-                        <p class="time">{{project.pricePreICO }}</p>
+                        <p class="time price">{{project.pricePreICO }}</p>
                       </div>
                     </div>
                   </div>
@@ -276,7 +276,7 @@
                       <div class="left"><img src="../assets/project/x15.png"></div>
                       <div class="right">
                         <p class="tit">ICO价格</p>
-                        <p class="time">{{project.priceICO }}</p>
+                        <p class="time price">{{project.priceICO }}</p>
                       </div>
                     </div>
                   </div>
@@ -346,11 +346,11 @@
                   <div class="item" v-for="item in TwitterOrWeibo">
                     <div class="left"><img :src="showIcon"></div>
                     <div class="right">
-                      <p class="des">{{item.content }}</p>
+                      <p class="des" @click="goArticle('/article',{sid:item.sid})">{{item.content }}</p>
                       <div class="bottom">
-                        <span class="name">博主</span>
-                        <span class="time">2018-06-02    18:00</span>
-                        <span class="tips">新闻</span>
+                        <span class="name">{{item.author}}</span>
+                        <span class="time">{{item.urlTime}}</span>
+                        <span class="tips"> {{item.industryCategory | showLable(item.countryCategory,item.projectCategory)}}</span>
                       </div>
                     </div>
                   </div>
@@ -536,10 +536,10 @@
           <div class="section6" v-if="recommendProjects">
             <div class="rightlayouthead">项目推荐</div>
             <div class="item" v-for="project in recommendProjects">
-              <a href="#">
+              <router-link :to="'/project?sid='+project.sid">
                 <div class="ibanner"><img src="../assets/project/recommend-banner.jpg"></div>
                 <div class="info">
-                  <div class="left"><img :src="'http://' + project.logoSrc"></div>
+                  <div class="left"><img :src="project.logoSrc"></div>
                   <div class="right">
                     <div class="head">
                       <p class="tit">{{project.project}}</p>
@@ -548,7 +548,7 @@
                     <p class="num">{{project.totalScore}} <i class="fa fa-angle-right"></i></p>
                   </div>
                 </div>
-              </a>
+              </router-link>
             </div>
           </div>
         </div>
@@ -581,7 +581,8 @@
         nicon: nicon,
         weibo: weibo,
         showIcon: nicon,
-        recommendProjects: {}
+        recommendProjects: {},
+        sectionSwiper: {}
       }
     },
     mounted() {
@@ -592,10 +593,10 @@
         scrollbar: {
           el: '.swiper-scrollbar'
         },
-        mousewheel: true,
+        // mousewheel: true,
         observer: true,
         observeParents: true,
-      })
+      });
       new Swiper('.advert-swiper', {
         autoplay: {
           disableOnInteraction: false
@@ -655,6 +656,10 @@
       '$route': 'initProject'
     },
     methods: {
+      goArticle(url, query) {
+        let routeData = this.$router.resolve({path: url, query: query});
+        window.open(routeData.href, '_blank');
+      },
       initProject() {
         let path = this.$route.path;
         if (path === '/project') {
@@ -664,7 +669,7 @@
             that.$axios.get('/api/ICO/id/' + sid).then(function (res) {
               that.project = res.data;
               let partner = that.project.partner;
-              partner = JSON.parse('[' + partner + ']');
+              partner = JSON.parse(partner);
               that.project.partner = partner;
               //290001
               that.iniNewOrGrade(that.project.project, '290001');
@@ -675,7 +680,6 @@
                 let categoryName = arr[0];
                 that.initRecommendProjects(categoryName);
               }
-
             })
           } else {
             that.$router.push('/index')
@@ -687,6 +691,19 @@
         this.showLoading1 = true;
         let that = this;
         that.$axios.get('/api/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId).then(function (res) {
+          that.$nextTick(() => {  // 下一个UI帧再初始化swiper
+            new Swiper('.section-swiper', {
+              direction: 'vertical',
+              slidesPerView: 'auto',
+              freeMode: true,
+              scrollbar: {
+                el: '.swiper-scrollbar'
+              },
+              // mousewheel: true,
+              observer: true,
+              observeParents: true,
+            });
+          });
           that.NewOrGrade = res.data.content;
           that.showLoading1 = false;
         })
@@ -696,6 +713,19 @@
         this.showLoading2 = true;
         let that = this;
         that.$axios.get('/api/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId).then(function (res) {
+          that.$nextTick(() => {  // 下一个UI帧再初始化swiper
+            new Swiper('.section-swiper', {
+              direction: 'vertical',
+              slidesPerView: 'auto',
+              freeMode: true,
+              scrollbar: {
+                el: '.swiper-scrollbar'
+              },
+              // mousewheel: true,
+              observer: true,
+              observeParents: true,
+            });
+          });
           that.TwitterOrWeibo = res.data.content;
           that.showLoading2 = false;
         })

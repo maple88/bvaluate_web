@@ -469,7 +469,6 @@
         })
       },
       getfollowboolean(project) {
-        console.log(project)
         let that = this
         let token = localStorage.getItem('apelink_user_token')
         let uid = localStorage.getItem('apelink_user_uid')
@@ -480,7 +479,6 @@
           url: checkurl,
           headers: headers
         }).then(function (res) {
-          console.log(res.data)
           if (res.data) {
             that.isFollow = true
           } else {
@@ -511,7 +509,6 @@
         this.candy = localStorage.getItem('apelink_user_candies');
         this.profileUrl = localStorage.getItem('apelink_user_profileUrl');
         this.token = localStorage.getItem('apelink_user_token');
-        console.log('ssss')
       },
       inittuiwen(obj) {
         let ico = obj.project;
@@ -573,7 +570,7 @@
             if (res.data.length >= 1) {
               that.showProject = res.data[0]
             }
-            let partner = JSON.parse('[' + that.showProject.partner + ']')
+            let partner = JSON.parse(that.showProject.partner)
             that.showProject.partner = that.initPartner(partner)
             that.initIcoNews(that.showProject)
             that.inittuiwen(that.showProject)
@@ -583,18 +580,19 @@
         })
       },
       initPartner(obj) {
-        let objArr = []
-        let arr = []
-        let num = 0
+        let objArr = [];
+        let arr = [];
+        let num = 0;
+        console.log(obj)
         for (let i = 0; i < obj.length; i++) {
-          num++
-          arr.push(obj[i])
+          num++;
+          arr.push(obj[i]);
           if (i >= obj.length - 1) {
             num = 9
           }
           if (num > 8) {
-            objArr.push(arr)
-            arr = []
+            objArr.push(arr);
+            arr = [];
             num = 0
           }
         }
@@ -603,7 +601,7 @@
       changeProject(obj, index) {
         this.prjAct = index
         try {
-          let partner = JSON.parse('[' + obj.partner + ']');
+          let partner = JSON.parse(obj.partner);
           obj.partner = this.initPartner(partner);
         } catch (e) {
         } finally {
