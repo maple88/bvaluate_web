@@ -29,9 +29,9 @@
           <div class="section1">
             <div class="sectiontabs">
               <a href="javascript:;" :class="atvNewOrGrade==1?'active':''"
-                 @click.stop="iniNewOrGrade(project.project,'290001') , atvNewOrGrade=1">新闻</a>
+                 @click.stop="iniNewOrGrade(project.project,'290001') , atvNewOrGrade=1,NGewOrGrade = '290001',NewOrGradeNo=2">新闻</a>
               <a href="javascript:;" :class="atvNewOrGrade==2?'active':''"
-                 @click.stop="iniNewOrGrade(project.project,'290000') , atvNewOrGrade=2">评级文章</a>
+                 @click.stop="iniNewOrGrade(project.project,'290000') , atvNewOrGrade=2,NGewOrGrade = '290000',NewOrGradeNo=2">评级文章</a>
             </div>
             <div class="swiper-container section-swiper" id="newOrGradeSwiper">
               <div class="loading_box" v-if="showLoading1">
@@ -86,7 +86,7 @@
             <div class="sectiontabs">
               <div class="headtit">团队</div>
             </div>
-            <div class="swiper-container section-swiper" style="max-height: 690px;">
+            <div class="swiper-container section-swiper orther_swiper">
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
                   <div class="col4" v-for="partner in project.partner">
@@ -133,7 +133,7 @@
                 </div>
               </div>
             </div>
-            <div class="swiper-container section-swiper">
+            <div class="swiper-container section-swiper orther_swiper">
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
                   <div class="col4" v-if="project.preICOStartDate">
@@ -333,11 +333,11 @@
           <div class="section4">
             <div class="sectiontabs">
               <a href="javascript:;" :class="atvTwitterOrWeibo==1?'active':''"
-                 @click.stop="iniTwitterOrWeibo(project.project,'290002') , atvTwitterOrWeibo=1 , showIcon = nicon ">推文</a>
+                 @click.stop="iniTwitterOrWeibo(project.project,'290002') , atvTwitterOrWeibo=1 , showIcon = nicon ,TWewOrGrade = '290004',TWewOrGradeNo=2">推文</a>
               <a href="javascript:;" :class="atvTwitterOrWeibo==2?'active':''"
-                 @click.stop="iniTwitterOrWeibo(project.project,'290004') , atvTwitterOrWeibo=2 , showIcon = weibo">微博</a>
+                 @click.stop="iniTwitterOrWeibo(project.project,'290004') , atvTwitterOrWeibo=2 , showIcon = weibo,TWewOrGrade = '290004',TWewOrGradeNo=2">微博</a>
             </div>
-            <div class="swiper-container section-swiper">
+            <div class="swiper-container section-swiper" id="twitterOrWeiboSwiper">
               <div class="loading_box" v-if="showLoading2">
                 <img style="width: 50px" :src="loading"/>
               </div>
@@ -363,7 +363,7 @@
         <div class="rightlayout">
           <div class="section5">
             <div class="rightlayouthead">FOLLOW US</div>
-            <div class="swiper-container section-swiper">
+            <div class="swiper-container section-swiper orther_swiper">
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
                   <div class="col4" v-if="project.outerFaceBook">
@@ -583,43 +583,25 @@
         showIcon: nicon,
         recommendProjects: {},
         newSwiper: {},
-        NewOrGradeNo: 1,
-        NGewOrGrade: '290001'
+        tWSwiper: {},
+        NewOrGradeNo: 2,
+        NGewOrGrade: '290001',
+        TWewOrGradeNo: 2,
+        TWewOrGrade: '290002'
       }
     },
     mounted() {
       let that = this;
-      this.newSwiper = new Swiper('.section-swiper', {
+      new Swiper('.orther_swiper', {
         direction: 'vertical',
         slidesPerView: 'auto',
         freeMode: true,
         scrollbar: {
-          el: '.swiper-scrollbar'
+          el: '.swiper-scrollbar',
         },
         // mousewheel: true,
         observer: true,
-        observeParents: true,
-        on: {
-          momentumBounce: function () {
-            let swiper = this
-            if (swiper.translate < -100) {
-              swiper.allowTouchMove = false;//禁止触摸
-              swiper.params.virtualTranslate = true;//定住不给回弹
-              that.$axios.get('/api/traditional/news?searchBy=' + that.project.project + '&categoryId=' + that.NGewOrGrade + '&pageNo=' + that.NewOrGradeNo).then(function (res) {
-                that.NewOrGradeNo++;
-                for (let i = 0; i < res.data.content.length; i++) {
-                  that.NewOrGrade.push(res.data.content[i])
-                }
-                console.log(that.NewOrGrade)
-                that.$nextTick(() => {  // 下一个UI帧再初始化swiper
-                  that.newSwiper[0].update()
-                });
-                swiper.params.virtualTranslate = false;
-                swiper.allowTouchMove = true;
-              })
-            }
-          }
-        }
+        observeParents: true
       });
       new Swiper('.advert-swiper', {
         autoplay: {
@@ -696,7 +678,7 @@
               partner = JSON.parse(partner);
               that.project.partner = partner;
               //290001
-              that.iniNewOrGrade(that.project.project, '290001', 1);
+              that.iniNewOrGrade(that.project.project, '290001');
               that.iniTwitterOrWeibo(that.project.project, '290002');
               let categoryNameList = that.project.industryCategory;
               if (categoryNameList != null && categoryNameList !== '' && categoryNameList !== undefined) {
@@ -710,33 +692,47 @@
           }
         }
       },
-      iniNewOrGrade(projectName, categoryId, pageNo) {
+      iniNewOrGrade(projectName, categoryId) {
         this.NewOrGrade = []
         this.showLoading1 = true;
         let that = this;
-        that.$axios.get('/api/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId + '&pageNo=' + pageNo).then(function (res) {
-          if (that.NewOrGrade > 0) {
-            that.NewOrGrade.concat(res.data.content);
-          } else {
-            that.NewOrGrade = res.data.content;
-          }
+        that.$axios.get('/api/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId).then(function (res) {
+          that.NewOrGrade = res.data.content;
           that.$nextTick(() => {  // 下一个UI帧再初始化swiper
-            that.newSwiper[0].update()
+            this.newSwiper = new Swiper('#newOrGradeSwiper', {
+              direction: 'vertical',
+              slidesPerView: 'auto',
+              freeMode: true,
+              scrollbar: {
+                el: '.swiper-scrollbar',
+              },
+              // mousewheel: true,
+              observer: true,
+              observeParents: true,
+              on: {
+                momentumBounce: function () {
+                  let swiper = this
+                  if (swiper.translate < -100) {
+                    swiper.allowTouchMove = false;//禁止触摸
+                    swiper.params.virtualTranslate = true;//定住不给回弹
+                    that.$axios.get('/api/traditional/news?searchBy=' + that.project.project + '&categoryId=' + that.NGewOrGrade + '&pageNo=' + that.NewOrGradeNo).then(function (res) {
+                      that.NewOrGradeNo++;
+                      for (let i = 0; i < res.data.content.length; i++) {
+                        that.NewOrGrade.push(res.data.content[i])
+                      }
+                      console.log(that.NewOrGrade)
+                      that.$nextTick(() => {  // 下一个UI帧再初始化swiper
+                        swiper.update()
+                      });
+                      swiper.params.virtualTranslate = false;
+                      swiper.allowTouchMove = true;
+                    })
+                  }
+                }
+              }
+            });
           });
           that.showLoading1 = false;
-        })
-      },
-      loadMoreNewOrGrade(projectName, categoryId, pageNo) {
-        let that = this;
-        that.$axios.get('/api/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId + '&pageNo=' + pageNo).then(function (res) {
-          if (that.NewOrGrade > 0) {
-            that.NewOrGrade.concat(res.data.content);
-          } else {
-            that.NewOrGrade = res.data.content;
-          }
-          that.$nextTick(() => {  // 下一个UI帧再初始化swiper
-            that.newSwiper[0].update()
-          });
         })
       },
       iniTwitterOrWeibo(projectName, categoryId) {
@@ -744,20 +740,40 @@
         this.showLoading2 = true;
         let that = this;
         that.$axios.get('/api/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId).then(function (res) {
+          that.TwitterOrWeibo = res.data.content;
           that.$nextTick(() => {  // 下一个UI帧再初始化swiper
-            new Swiper('.section-swiper', {
+            this.tWSwiper = new Swiper('#twitterOrWeiboSwiper', {
               direction: 'vertical',
               slidesPerView: 'auto',
               freeMode: true,
               scrollbar: {
-                el: '.swiper-scrollbar'
+                el: '.swiper-scrollbar',
               },
               // mousewheel: true,
               observer: true,
               observeParents: true,
+              on: {
+                momentumBounce: function () {
+                  let swiper = this
+                  if (swiper.translate < -100) {
+                    swiper.allowTouchMove = false;//禁止触摸
+                    swiper.params.virtualTranslate = true;//定住不给回弹
+                    that.$axios.get('/api/traditional/news?searchBy=' + that.project.project + '&categoryId=' + that.TWewOrGrade + '&pageNo=' + that.TWewOrGradeNo).then(function (res) {
+                      that.TWewOrGradeNo++;
+                      for (let i = 0; i < res.data.content.length; i++) {
+                        that.TwitterOrWeibo.push(res.data.content[i])
+                      }
+                      that.$nextTick(() => {  // 下一个UI帧再初始化swiper
+                        swiper.update()
+                      });
+                      swiper.params.virtualTranslate = false;
+                      swiper.allowTouchMove = true;
+                    })
+                  }
+                }
+              }
             });
           });
-          that.TwitterOrWeibo = res.data.content;
           that.showLoading2 = false;
         })
       },
