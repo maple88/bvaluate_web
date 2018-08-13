@@ -75,37 +75,12 @@
               <keep-alive>
                 <transition name="fade">
                   <div v-if="newType == 3" class="follow_box">
-                    <div class="swiper-container" id="follow_swiper">
-                      <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                          <ul class="clearfix">
-                            <li>
-                              <div class="item_box">platform</div>
-                            </li>
-                            <li>
-                              <div class="item_box">标签</div>
-                            </li>
-                            <li>
-                              <div class="item_box">标签</div>
-                            </li>
-                            <li>
-                              <div class="item_box">标签</div>
-                            </li>
-                            <li>
-                              <div class="item_box">标签</div>
-                            </li>
-                            <li>
-                              <div class="item_box">标签</div>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      <!-- 如果需要滚动条 -->
-                      <!--<div class="swiper-scrollbar"></div>-->
-                    </div>
-                    <div class="follow_btn">
-                      <div class="follow"><i class="fa fa-plus"></i>关注</div>
-                    </div>
+                    <span class="item_box">{{industryName}}</span>
+                    <button class="follow" checked>
+                      <i class="fa fa-plus"></i>
+                      <i class="fa fa-check"></i>
+                      关注
+                    </button>
                   </div>
                 </transition>
               </keep-alive>
@@ -592,8 +567,9 @@
           if (obj.indexOf(';') > 0) {
             let arr = obj.split(';')
             return arr[0];
+          } else {
+            return obj;
           }
-          return obj;
         }
         return obj;
       },
@@ -620,6 +596,23 @@
       '$route': 'initPageDate'
     },
     methods: {
+      setFollow() {
+        let that = this
+        let token = localStorage.getItem('apelink_user_token');
+        let uid = localStorage.getItem('apelink_user_uid');
+        let url = '/api/individual/add?type=INDUSTRY&name=' + that.industryName;
+        let headers = {'uid': uid, 'Authorization': token};
+        that.$axios({
+          method: 'post',
+          url: url,
+          headers: headers
+        }).then(function (res) {
+          console.log(res)
+          if (res.data) {
+
+          }
+        })
+      },
       goIndustryByIndustry(obj) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
@@ -669,7 +662,6 @@
               if (newsClass[i] === industry) {
                 showpage = i;
               }
-              console.log(newsClass[i]);
             }
             show = false;
           }

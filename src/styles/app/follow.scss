@@ -95,10 +95,32 @@
           width: auto;
           position: relative;
           padding-right: 125px;
+          margin-top: 7px;
+          .item_box {
+            padding: 7px 15px;
+            background-color: $mainColor;
+            border-radius: 50px;
+            color: #ffffff;
+            margin-right: 5px;
+          }
+          .follow {
+            padding: 6px 15px;
+            border-radius: 50px;
+            color: #333333;
+            border: 1px solid #333333;
+            cursor: pointer;
+            margin: 0px;
+            background-color: transparent;
+            transition: border, box-shadow .2s;
+            i {
+              margin-right: 15px;
+            }
+            &:hover {
+              box-shadow: 0 0 10px 1px rgba(0, 0, 0, .4);
+              border-color: #999999;
+            }
+          }
           .follow_btn {
-            position: absolute;
-            right: 15px;
-            top: 0px;
             .follow {
               border: 2px solid #333;
               padding: 3px 15px;
