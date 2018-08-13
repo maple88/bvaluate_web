@@ -296,6 +296,10 @@
             font-size: 12px;
             color: #cfcfcf;
           }
+          .tips {
+            font-size: 14px;
+            color: $mainColor;
+          }
         }
         .tit {
           display: inline-block;
@@ -814,7 +818,7 @@
                   border-radius: 15px;
                   display: inline-block;
                   position: absolute;
-                  top: 2px;
+                  top: -1px;
                   right: 0;
                   &.cursor_style {
                     cursor: pointer;
@@ -846,6 +850,7 @@
                   }
                 }
                 .right {
+                  width: 100%;
                   .tit {
                     overflow: hidden;
                     text-overflow: ellipsis;

@@ -179,9 +179,26 @@
                                 </li>
                                 <li>{{news.urlTime}}</li>
                               </ul>
-                              <div class="tips">
-                                {{news.industryCategory | showLable(news.countryCategory,news.projectCategory)}}
+                              <div class="tips"
+                                   v-if="news.industryCategory !==null && news.industryCategory !== '' && news.industryCategory !==undefined && news.industryCategory !=='NULL'"
+                                   @click="goIndustryByIndustry(news.industryCategory)"
+                              >
+                                {{news.industryCategory | labelFormat}}
                               </div>
+                              <div class="tips"
+                                   v-else-if="news.countryCategory !==null && news.countryCategory !== '' && news.countryCategory !==undefined && news.countryCategory !=='NULL'"
+                                   @click="goIndustryByCountry(news.countryCategory)"
+                              >
+                                {{news.countryCategory | labelFormat}}
+                              </div>
+                              <div class="tips"
+                                   v-else="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL'"
+                              >
+                                {{news.projectCategory | labelFormat}}
+                              </div>
+                              <!--<div class="tips" v-html="news.industryCategory">-->
+                              <!--{{news.industryCategory | showLable(news.countryCategory,news.projectCategory)}}-->
+                              <!--</div>-->
                             </div>
                           </div>
                         </div>
@@ -570,6 +587,16 @@
           return month + '-' + mydata
         }
       },
+      labelFormat(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            return arr[0];
+          }
+          return obj;
+        }
+        return obj;
+      },
       showLable(label1, label2, lable3) {
         if (label1 != null && label1 !== undefined && label1 !== '' && label1 != 'NULL') {
           let arr = label1.split(';')
@@ -589,7 +616,28 @@
         }
       }
     },
+    watch: {
+      '$route': 'initPageDate'
+    },
     methods: {
+      goIndustryByIndustry(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        this.$router.push('/recommend?industry=' + obj);
+      },
+      goIndustryByCountry(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        this.$router.push('/recommend?country=' + obj);
+      },
       goArticle(url, query) {
         let routeData = this.$router.resolve({path: url, query: query});
         window.open(routeData.href, '_blank');
@@ -608,12 +656,24 @@
           });
         })
       },
-      getNewsClassfy(show) {
+      getNewsClassfy(show, categoryName, showpage) {
         let that = this
         that.$axios.get('/api/traditional/categories').then(function (res) {
           let arr = ['推荐', '关注'];
           that.newsClassfy = arr.concat(res.data);
-          console.log(that.newsClassfy);
+          let industry = that.$route.query.industry;
+          if (industry !== null && industry !== '' && industry !== undefined && industry !== 'NULL') {
+            categoryName = industry;
+            let newsClass = that.newsClassfy;
+            for (let i = 0; i < newsClass.length; i++) {
+              if (newsClass[i] === industry) {
+                showpage = i;
+              }
+              console.log(newsClass[i]);
+            }
+            show = false;
+          }
+          that.changeClassfy(categoryName, showpage);
           if (that.newsClassfy.length > 0 && show) {
             that.initNewsList(that.newsClassfy[0])
           }
@@ -672,7 +732,6 @@
         this.classShow = index;
         this.newsList = [];
         this.pageSize = 20;
-
         this.getHotnews(categoryName);
         this.getNews('280001');
       },
@@ -716,14 +775,27 @@
         });
         newsSwiper.el.onmouseover = function () {
           newsSwiper.autoplay.stop();
-        }
+        };
         newsSwiper.el.onmouseout = function () {
           newsSwiper.autoplay.start();
         }
       },
-      showWhereActive(activeName) {
-        let li = this.$refs.left_menu[0].innerText;
-        console.log(li);
+      initPageDate() {
+        let path = this.$route.path;
+        if (path === '/recommend') {
+          let that = this;
+          let categoryName = '推荐';
+          let showpage = 0;
+          let showActive = false;
+          let country = this.$route.query.country;
+          if (country !== null && country !== '' && country !== undefined && country !== 'NULL') {
+            categoryName = country;
+            showpage = -1;
+          } else {
+            showActive = true;
+          }
+          this.getNewsClassfy(showActive, categoryName, showpage);
+        }
       }
     },
     mounted() {
@@ -744,24 +816,7 @@
           prevEl: '.swiper-button-prev',
         }
       });
-      let that = this;
-      let categoryName = '推荐';
-      let showpage = 0;
-      let showActive = false;
-      let country = this.$route.query.country;
-      if (country !== null && country !== '' && country !== undefined && country !== 'NULL') {
-        categoryName = country;
-        showpage = -1;
-      } else {
-        showActive = true;
-      }
-      this.getNewsClassfy(showActive);
-      this.changeClassfy(categoryName, showpage);
-      this.showWhereActive('软件');
-      // //获取最新资讯
-      // this.initRightNews('快讯', 10, function (res) {
-      //   that.flashList = res;
-      // })
+      this.initPageDate()
     }
   }
 </script>

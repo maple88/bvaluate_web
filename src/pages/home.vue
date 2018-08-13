@@ -91,7 +91,23 @@
                 </div>
                 <div class="info">
                   <p class="tips">
-                    {{news.industryCategory | showLable(news.countryCategory,news.projectCategory)}}
+                  <span class="tips"
+                        v-if="news.industryCategory !==null && news.industryCategory !== '' && news.industryCategory !==undefined && news.industryCategory !=='NULL'"
+                        @click="goIndustryByIndustry(news.industryCategory)"
+                  >
+                    {{news.industryCategory | labelFormat}}
+                  </span>
+                    <span class="tips"
+                          v-else-if="news.countryCategory !==null && news.countryCategory !== '' && news.countryCategory !==undefined && news.countryCategory !=='NULL'"
+                          @click="goIndustryByCountry(news.countryCategory)"
+                    >
+                    {{news.countryCategory | labelFormat}}
+                  </span>
+                    <span class="tips"
+                          v-else="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL'"
+                    >
+                    {{news.projectCategory | labelFormat}}
+                  </span>
                     <span>{{news.urlDate}}</span>
                   </p>
                   <p class="tit" :title="news.title" @click="goArticle('/article',{sid:news.sid})">
@@ -149,7 +165,7 @@
                     <p class="smtit">{{showProject.introduction }}</p>
                     <p class="des">{{showProject.irAbstract }}</p>
                   </div>
-                  <div class="right"><img :src="'http://'+showProject.logoSrc"></div>
+                  <div class="right"><img :src="showProject.logoSrc"></div>
                 </div>
                 <div class="mid">
                   <p><span>代币</span>{{showProject.token }}</p>
@@ -228,7 +244,23 @@
                                     </div>
                                     <span class="usertime">{{icoNew.urlTime}}</span>
                                   </div>
-                                  <span class="tips cursor_style">{{icoNew.industryCategory | showLable(icoNew.countryCategory,icoNew.projectCategory)}}</span>
+                                  <span class="tips cursor_style"
+                                        v-if="icoNew.industryCategory !==null && icoNew.industryCategory !== '' && icoNew.industryCategory !==undefined && icoNew.industryCategory !=='NULL'"
+                                        @click="goIndustryByIndustry(icoNew.industryCategory)"
+                                  >
+                                    {{icoNew.industryCategory | labelFormat}}
+                                  </span>
+                                  <span class="tips cursor_style"
+                                        v-else-if="icoNew.countryCategory !==null && icoNew.countryCategory !== '' && icoNew.countryCategory !==undefined && icoNew.countryCategory !=='NULL'"
+                                        @click="goIndustryByCountry(icoNew.countryCategory)"
+                                  >
+                                    {{icoNew.countryCategory | labelFormat}}
+                                  </span>
+                                  <span class="tips cursor_style"
+                                        v-else="icoNew.projectCategory !==null && icoNew.projectCategory !== '' && icoNew.projectCategory !==undefined && icoNew.projectCategory !=='NULL'"
+                                  >
+                                    {{icoNew.projectCategory | labelFormat}}
+                                  </span>
                                 </div>
                               </div>
                             </div>
@@ -249,7 +281,23 @@
                                 <div class="bottom">
                                   <span class="name">{{icoNew.author }}{{!(icoNew.siteName)}}</span>
                                   <span class="time">{{icoNew.urlDate}}</span>
-                                  <span class="tips cursor_style">{{icoNew.industryCategory | showLable(icoNew.countryCategory,icoNew.projectCategory)}}</span>
+                                  <span class="tips cursor_style"
+                                        v-if="icoNew.industryCategory !==null && icoNew.industryCategory !== '' && icoNew.industryCategory !==undefined && icoNew.industryCategory !=='NULL'"
+                                        @click="goIndustryByIndustry(icoNew.industryCategory)"
+                                  >
+                                    {{icoNew.industryCategory | labelFormat}}
+                                  </span>
+                                  <span class="tips cursor_style"
+                                        v-else-if="icoNew.countryCategory !==null && icoNew.countryCategory !== '' && icoNew.countryCategory !==undefined && icoNew.countryCategory !=='NULL'"
+                                        @click="goIndustryByCountry(icoNew.countryCategory)"
+                                  >
+                                    {{icoNew.countryCategory | labelFormat}}
+                                  </span>
+                                  <span class="tips cursor_style"
+                                        v-else="icoNew.projectCategory !==null && icoNew.projectCategory !== '' && icoNew.projectCategory !==undefined && icoNew.projectCategory !=='NULL'"
+                                  >
+                                    {{icoNew.projectCategory | labelFormat}}
+                                  </span>
                                 </div>
                               </div>
                             </div>
@@ -270,7 +318,23 @@
                                 <div class="bottom">
                                   <span class="name">{{icoNew.author }}{{!(icoNew.siteName)}}</span>
                                   <span class="time">{{icoNew.urlDate}}</span>
-                                  <span class="tips cursor_style">{{icoNew.industryCategory | showLable(icoNew.countryCategory,icoNew.projectCategory)}}</span>
+                                  <span class="tips cursor_style"
+                                        v-if="icoNew.industryCategory !==null && icoNew.industryCategory !== '' && icoNew.industryCategory !==undefined && icoNew.industryCategory !=='NULL'"
+                                        @click="goIndustryByIndustry(icoNew.industryCategory)"
+                                  >
+                                    {{icoNew.industryCategory | labelFormat}}
+                                  </span>
+                                  <span class="tips cursor_style"
+                                        v-else-if="icoNew.countryCategory !==null && icoNew.countryCategory !== '' && icoNew.countryCategory !==undefined && icoNew.countryCategory !=='NULL'"
+                                        @click="goIndustryByCountry(icoNew.countryCategory)"
+                                  >
+                                    {{icoNew.countryCategory | labelFormat}}
+                                  </span>
+                                  <span class="tips cursor_style"
+                                        v-else="icoNew.projectCategory !==null && icoNew.projectCategory !== '' && icoNew.projectCategory !==undefined && icoNew.projectCategory !=='NULL'"
+                                  >
+                                    {{icoNew.projectCategory | labelFormat}}
+                                  </span>
                                 </div>
                               </div>
                             </div>
@@ -368,6 +432,16 @@
         }
         return myDate.getFullYear() + '-' + month
       },
+      labelFormat(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            return arr[0];
+          }
+          return obj;
+        }
+        return obj;
+      },
       showLable(label1, label2, lable3) {
         if (label1 != null && label1 !== undefined && label1 !== '' && label1 !== 'NULL') {
           let has = label1.indexOf(';')
@@ -462,6 +536,24 @@
       })
     },
     methods: {
+      goIndustryByIndustry(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        this.$router.push('/recommend?industry=' + obj);
+      },
+      goIndustryByCountry(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        this.$router.push('/recommend?country=' + obj);
+      },
       logout() {
         localStorage.removeItem('apelink_user_candies');
         localStorage.removeItem('apelink_user_email');
@@ -596,7 +688,7 @@
             if (res.data.length >= 1) {
               that.showProject = res.data[0]
             }
-            let partner = JSON.parse('[' + that.showProject.partner + ']');
+            let partner = JSON.parse(that.showProject.partner);
             that.showProject.partner = that.initPartner(partner);
             that.initIcoNews(that.showProject);
             that.inittuiwen(that.showProject);
@@ -627,7 +719,7 @@
       changeProject(obj, index) {
         this.prjAct = index
         try {
-          let partner = JSON.parse('[' + obj.partner + ']');
+          let partner = JSON.parse(obj.partner);
           obj.partner = this.initPartner(partner);
         } catch (e) {
         } finally {
