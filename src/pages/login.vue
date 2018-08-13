@@ -178,6 +178,9 @@
                 </div>
               </div>
             </div>
+            <transition name="fade">
+              <vtips :tipText="tipText" v-if="showTip"/>
+            </transition>
           </div>
         </div>
       </div>
@@ -242,7 +245,9 @@
         resetPwdSendBtnText: '获取验证码',
         resetPwdSendBtn: true,
         resetPwdShowloading: false,
-        loading: loading
+        loading: loading,
+        tipText: '',
+        showTip: false
       }
     },
     mounted() {
@@ -313,7 +318,12 @@
                   headers: headers
                 }).then(function (res) {
                   if (res.data) {
-                    that.$router.push('/index')
+                    that.showTip = true;
+                    that.tipText = '登录成功';
+                    setTimeout(() => {
+                      that.$router.push('/index')
+                      that.login()
+                    }, 1000);
                   }
                   console.log(res.data)
                 })
@@ -406,8 +416,12 @@
             password: password
           }
           that.$axios.post(url, json).then(function (res) {
-            console.log(res)
-            that.login()
+            that.showTip = true;
+            that.tipText = '注册成功';
+            setTimeout(() => {
+              that.showTip = false;
+              that.login()
+            }, 2000);
           })
         }
         else {
@@ -466,7 +480,12 @@
           let that = this
           that.$axios.post(url).then(function (res) {
             if (res.data) {
-              that.login()
+              that.showTip = true;
+              that.tipText = '重置成功';
+              setTimeout(() => {
+                that.showTip = false;
+                that.login()
+              }, 2000);
             }
           })
         } else {

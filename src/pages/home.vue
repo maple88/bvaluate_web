@@ -592,15 +592,15 @@
         let that = this;
         that.$axios.get('/api/ICO/top5').then(function (res) {
           if (res.status === 200) {
-            that.hottestProject = res.data
+            that.hottestProject = res.data;
             if (res.data.length >= 1) {
               that.showProject = res.data[0]
             }
-            let partner = JSON.parse(that.showProject.partner)
-            that.showProject.partner = that.initPartner(partner)
-            that.initIcoNews(that.showProject)
-            that.inittuiwen(that.showProject)
-            that.initweibo(that.showProject)
+            let partner = JSON.parse('[' + that.showProject.partner + ']');
+            that.showProject.partner = that.initPartner(partner);
+            that.initIcoNews(that.showProject);
+            that.inittuiwen(that.showProject);
+            that.initweibo(that.showProject);
             that.getfollowboolean(that.showProject.sid)
           }
         })
@@ -627,7 +627,7 @@
       changeProject(obj, index) {
         this.prjAct = index
         try {
-          let partner = JSON.parse(obj.partner);
+          let partner = JSON.parse('[' + obj.partner + ']');
           obj.partner = this.initPartner(partner);
         } catch (e) {
         } finally {
