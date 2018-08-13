@@ -120,8 +120,8 @@
               <ul class="menu_box">
                 <li ref="left_menu" class="left_menu" :class="index === classShow?'active':''"
                     v-for="(classfy,index) in newsClassfy"
-                    v-if="classfy.showInList" @click="changeClassfy(classfy.categoryName,index)">
-                  {{classfy.categoryName}}
+                    v-if="classfy" @click="changeClassfy(classfy,index)">
+                  {{classfy}}
                 </li>
               </ul>
             </div>
@@ -197,196 +197,190 @@
                 </button>
               </div>
             </div>
-            <keep-alive>
-              <transition name="fade">
-                <div v-if="newType == 1 || newType==-1" class="right">
-                  <div class="link_box">
-                    <div class="item">
-                      <i class="fa fa-facebook"></i>
-                      <p>Facebook</p>
-                    </div>
-                    <div class="item">
-                      <i class="fa fa-twitter"></i>
-                      <p>Twitter</p>
-                    </div>
-                    <div class="item">
-                      <i class="fa fa-instagram"></i>
-                      <p>Instagram</p>
-                    </div>
-                    <div class="item">
-                      <i class="fa fa-google-plus"></i>
-                      <p>Google</p>
-                    </div>
-                    <div class="item">
-                      <i class="fa fa-pinterest"></i>
-                      <p>Pinterest</p>
-                    </div>
+            <transition name="fade">
+              <div v-if="newType == 1 || newType==-1" class="right">
+                <div class="link_box">
+                  <div class="item">
+                    <i class="fa fa-facebook"></i>
+                    <p>Facebook</p>
                   </div>
-                  <div class="right_item">
-                    <div class="hot_title">
-                      <div class="title_icon">
-                        <img src="../assets/follow/news_flash.png"/>
-                      </div>
-                      <h4>快讯</h4>
-                    </div>
-                    <div class="hot_content">
-                      <ul class="scoll_style">
-                        <li class="news_flash" v-for="(flash,index) in flashList">
-                          <div class="news_item">
-                            <div class="radio_box">
-                              <div class="radio_circle" :class="index==0?'first':''"></div>
-                            </div>
-                            <div class="item_time">
-                              <span>{{flash.urlTime | dataFormat}}</span>
-                            </div>
-                            <div class="item_body">
-                              <h4 @click="goArticle('/article',{sid:flash.sid})">{{flash.title}}</h4>
-                              <p>{{flash.content}}</p>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
+                  <div class="item">
+                    <i class="fa fa-twitter"></i>
+                    <p>Twitter</p>
                   </div>
-                  <div class="right_item margin_top">
-                    <div class="hot_title">
-                      <div class="title_icon">
-                        <img src="../assets/follow/real_time.png"/>
-                      </div>
-                      <h4>国家时事</h4>
-                    </div>
-                    <div class="hot_content current">
-                      <ul>
-                        <li class="news_flash" v-for="(affair,index) in affairList">
-                          <div class="news_item nolink">
-                            <div class="radio_box">
-                              <div class="radio_circle" :class="index == 0 ? 'first':''"></div>
-                            </div>
-                            <div class="item_time">
-                              <span>{{affair.urlTime | dataFormat}}</span>
-                            </div>
-                            <div class="item_body" :class="affair.titlePicture ? 'hasImg' : ''">
-                              <div class="content" v-if="affair.titlePicture">
-                                <h4 @click="goArticle('/article',{sid:affair.sid})">{{affair.title}}</h4>
-                                <p>{{affair.content}}</p>
-                              </div>
-                              <div class="content_img" v-if="affair.titlePicture"
-                                   @click="goArticle('/article',{sid:affair.sid})">
-                                <img :src="affair.titlePicture"/>
-                              </div>
-                              <h4 v-if="!affair.titlePicture" @click="goArticle('/article',{sid:affair.sid})">
-                                {{affair.title}}</h4>
-                              <p v-if="!affair.titlePicture">{{affair.content}}</p>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
+                  <div class="item">
+                    <i class="fa fa-instagram"></i>
+                    <p>Instagram</p>
+                  </div>
+                  <div class="item">
+                    <i class="fa fa-google-plus"></i>
+                    <p>Google</p>
+                  </div>
+                  <div class="item">
+                    <i class="fa fa-pinterest"></i>
+                    <p>Pinterest</p>
                   </div>
                 </div>
-              </transition>
-            </keep-alive>
-            <keep-alive>
-              <transition name="fade">
-                <div v-if="newType == 2" class="right">
-                  <div class="right_item">
-                    <div class="hot_title">
-                      <div class="title_icon">
-                        <img src="../assets/follow/hot_text.png"/>
-                      </div>
-                      <h4>24小时热文</h4>
+                <div class="right_item">
+                  <div class="hot_title">
+                    <div class="title_icon">
+                      <img src="../assets/follow/news_flash.png"/>
                     </div>
-                    <div class="hot_content">
-                      <ul>
-                        <li v-for="(item, index) in hotNews" :key="item.sid">
-                          <div class="list_item">
-                            <div class="item_left" v-if="item.titlePicture"
-                                 @click="goArticle('/article',{sid:item.sid})">
-                              <img :src="item.titlePicture"/>
-                            </div>
-                            <div class="item_body" :class="item.titlePicture?'':'noPicture'">
-                              <h4 @click="goArticle('/article',{sid:item.sid})">{{item.title}}</h4>
-                              <p>{{item.content}}</p>
-                            </div>
+                    <h4>快讯</h4>
+                  </div>
+                  <div class="hot_content">
+                    <ul class="scoll_style">
+                      <li class="news_flash" v-for="(flash,index) in flashList">
+                        <div class="news_item">
+                          <div class="radio_box">
+                            <div class="radio_circle" :class="index==0?'first':''"></div>
                           </div>
-                          <div class="item_bottom">
-                            <p>{{item.urlDate}}</p>
+                          <div class="item_time">
+                            <span>{{flash.urlTime | dataFormat}}</span>
                           </div>
-                        </li>
-                      </ul>
-                    </div>
+                          <div class="item_body">
+                            <h4 @click="goArticle('/article',{sid:flash.sid})">{{flash.title}}</h4>
+                            <p>{{flash.content}}</p>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
                   </div>
                 </div>
-              </transition>
-            </keep-alive>
-            <keep-alive>
-              <transition name="fade">
-                <div v-if="newType == 3" class="right">
-                  <div class="right_item">
-                    <div class="hot_title">
-                      <div class="title_icon">
-                        <img src="../assets/follow/hot_text.png"/>
-                      </div>
-                      <h4>24小时热文</h4>
+                <div class="right_item margin_top">
+                  <div class="hot_title">
+                    <div class="title_icon">
+                      <img src="../assets/follow/real_time.png"/>
                     </div>
-                    <div class="hot_content">
-                      <ul>
-                        <li v-for="(item, index) in hotNews" :key="item.sid">
-                          <div class="list_item">
-                            <div class="item_left" v-if="item.titlePicture">
-                              <img :src="item.titlePicture"/>
-                            </div>
-                            <div class="item_body" :class="item.titlePicture?'':'noPicture'">
-                              <h4 @click="goArticle('/article',{sid:item.sid})">{{item.title}}</h4>
-                              <p>{{item.content}}</p>
-                            </div>
-                          </div>
-                          <div class="item_bottom">
-                            <p>{{item.urlDate}}</p>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
+                    <h4>国家时事</h4>
                   </div>
-                  <div class="right_item margin_top">
-                    <div class="hot_title">
-                      <div class="title_icon">
-                        <img src="../assets/follow/tweet.png"/>
-                      </div>
-                      <h4>
+                  <div class="hot_content current">
+                    <ul>
+                      <li class="news_flash" v-for="(affair,index) in affairList">
+                        <div class="news_item nolink">
+                          <div class="radio_box">
+                            <div class="radio_circle" :class="index == 0 ? 'first':''"></div>
+                          </div>
+                          <div class="item_time">
+                            <span>{{affair.urlTime | dataFormat}}</span>
+                          </div>
+                          <div class="item_body" :class="affair.titlePicture ? 'hasImg' : ''">
+                            <div class="content" v-if="affair.titlePicture">
+                              <h4 @click="goArticle('/article',{sid:affair.sid})">{{affair.title}}</h4>
+                              <p>{{affair.content}}</p>
+                            </div>
+                            <div class="content_img" v-if="affair.titlePicture"
+                                 @click="goArticle('/article',{sid:affair.sid})">
+                              <img :src="affair.titlePicture"/>
+                            </div>
+                            <h4 v-if="!affair.titlePicture" @click="goArticle('/article',{sid:affair.sid})">
+                              {{affair.title}}</h4>
+                            <p v-if="!affair.titlePicture">{{affair.content}}</p>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </transition>
+            <transition name="fade">
+              <div v-if="newType == 2" class="right">
+                <div class="right_item">
+                  <div class="hot_title">
+                    <div class="title_icon">
+                      <img src="../assets/follow/hot_text.png"/>
+                    </div>
+                    <h4>24小时热文</h4>
+                  </div>
+                  <div class="hot_content">
+                    <ul>
+                      <li v-for="(item, index) in hotNews" :key="item.sid">
+                        <div class="list_item">
+                          <div class="item_left" v-if="item.titlePicture"
+                               @click="goArticle('/article',{sid:item.sid})">
+                            <img :src="item.titlePicture"/>
+                          </div>
+                          <div class="item_body" :class="item.titlePicture?'':'noPicture'">
+                            <h4 @click="goArticle('/article',{sid:item.sid})">{{item.title}}</h4>
+                            <p>{{item.content}}</p>
+                          </div>
+                        </div>
+                        <div class="item_bottom">
+                          <p>{{item.urlDate}}</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </transition>
+            <transition name="fade">
+              <div v-if="newType == 3" class="right">
+                <div class="right_item">
+                  <div class="hot_title">
+                    <div class="title_icon">
+                      <img src="../assets/follow/hot_text.png"/>
+                    </div>
+                    <h4>24小时热文</h4>
+                  </div>
+                  <div class="hot_content">
+                    <ul>
+                      <li v-for="(item, index) in hotNews" :key="item.sid">
+                        <div class="list_item">
+                          <div class="item_left" v-if="item.titlePicture">
+                            <img :src="item.titlePicture"/>
+                          </div>
+                          <div class="item_body" :class="item.titlePicture?'':'noPicture'">
+                            <h4 @click="goArticle('/article',{sid:item.sid})">{{item.title}}</h4>
+                            <p>{{item.content}}</p>
+                          </div>
+                        </div>
+                        <div class="item_bottom">
+                          <p>{{item.urlDate}}</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="right_item margin_top">
+                  <div class="hot_title">
+                    <div class="title_icon">
+                      <img src="../assets/follow/tweet.png"/>
+                    </div>
+                    <h4>
                     <span class="tab" :class="{active:isActive}"
                           @click="isActive = true, getNews('280001'), show_news_img = tuiwen">
                       推文
                     </span>
-                        <span class="vertical">|</span>
-                        <span class="tab" :class="{active:!isActive}"
-                              @click="isActive = false, getNews('280002'), show_news_img = weibo">
+                      <span class="vertical">|</span>
+                      <span class="tab" :class="{active:!isActive}"
+                            @click="isActive = false, getNews('280002'), show_news_img = weibo">
                       微博
                     </span>
-                      </h4>
-                    </div>
-                    <div class="hot_content">
-                      <ul>
-                        <li v-for="(item, index) in news" :key="item.sid">
-                          <div class="list_item">
-                            <div class="item_left tweet">
-                              <img :src="show_news_img"/>
-                            </div>
-                            <div class="item_body tweet">
-                              <p class="tweet" @click="goArticle('/article',{sid:item.sid})">{{item.content}}</p>
-                              <div class="body_bottom">
-                                <p>{{item.author}}</p>
-                                <p class="time">{{item.urlDate}}</p>
-                              </div>
+                    </h4>
+                  </div>
+                  <div class="hot_content">
+                    <ul>
+                      <li v-for="(item, index) in news" :key="item.sid">
+                        <div class="list_item">
+                          <div class="item_left tweet">
+                            <img :src="show_news_img"/>
+                          </div>
+                          <div class="item_body tweet">
+                            <p class="tweet" @click="goArticle('/article',{sid:item.sid})">{{item.content}}</p>
+                            <div class="body_bottom">
+                              <p>{{item.author}}</p>
+                              <p class="time">{{item.urlDate}}</p>
                             </div>
                           </div>
-                        </li>
-                      </ul>
-                    </div>
+                        </div>
+                      </li>
+                    </ul>
                   </div>
                 </div>
-              </transition>
-            </keep-alive>
+              </div>
+            </transition>
           </div>
         </div>
       </div>
@@ -596,9 +590,6 @@
       }
     },
     methods: {
-      initPage() {
-
-      },
       goArticle(url, query) {
         let routeData = this.$router.resolve({path: url, query: query});
         window.open(routeData.href, '_blank');
@@ -620,9 +611,11 @@
       getNewsClassfy(show) {
         let that = this
         that.$axios.get('/api/traditional/categories').then(function (res) {
-          that.newsClassfy = res.data;
+          let arr = ['推荐', '关注'];
+          that.newsClassfy = arr.concat(res.data);
+          console.log(that.newsClassfy);
           if (that.newsClassfy.length > 0 && show) {
-            that.initNewsList(that.newsClassfy[0].categoryName)
+            that.initNewsList(that.newsClassfy[0])
           }
         })
       },
@@ -651,11 +644,11 @@
           //获取最新动态
           this.getRollingNew();
           //获取国家资讯
-          this.initRightNews('国家时事', 10, function (res) {
-            that.affairList = res;
+          this.initRightNews('国家时事', 10, res => {
+            this.affairList = res;
           });
-          this.initRightNews('快讯', 20, function (res) {
-            that.flashList = res;
+          this.initRightNews('快讯', 20, res => {
+            this.flashList = res;
           });
         } else {
           this.newType = 3;
@@ -681,7 +674,7 @@
         this.pageSize = 20;
 
         this.getHotnews(categoryName);
-        this.getNews('280001')
+        this.getNews('280001');
       },
       initNewsList(categoryName, search) {
         let that = this;
@@ -765,10 +758,10 @@
       this.getNewsClassfy(showActive);
       this.changeClassfy(categoryName, showpage);
       this.showWhereActive('软件');
-      //获取最新资讯
-      this.initRightNews('快讯', 10, function (res) {
-        that.flashList = res;
-      })
+      // //获取最新资讯
+      // this.initRightNews('快讯', 10, function (res) {
+      //   that.flashList = res;
+      // })
     }
   }
 </script>
