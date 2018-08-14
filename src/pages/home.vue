@@ -677,7 +677,7 @@
           let data = res.data
           for (let i = 0; i < data.length; i++) {
             let Industry = {};
-            Industry.categoryName = data[i].categoryName;
+            Industry.categoryName = data[i];
             that.$axios.get('/api/ICO/relatedICO?categoryName=' + Industry.categoryName + '&pageSize=4').then(function (res) {
               Industry.project = res.data;
               that.$axios.get('/api/traditional/categoryList?categoryName=' + Industry.categoryName + '&pageSize=4').then(function (res) {
