@@ -1,9 +1,9 @@
 <template>
-  <div class="header">
+  <div class="header" :class="scroll">
     <div class="tophead">
       <div class="container">
         <p>APELINk</p>
-        <span>中/EN</span>
+        <!--<span>中/EN</span>-->
       </div>
     </div>
     <div class="mainhead">
@@ -30,7 +30,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right" v-if="token">
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                <a href="#" class="dropdown-toggle header_name" data-toggle="dropdown" role="button">
                   <div class="user"
                        :style="(profileUrl !==null && profileUrl !== '' && profileUrl !== 'NULL' && profileUrl !== undefined)
                        ?'background-image: url('+ profileUrl +')':'background-image: url('+ default_header +')'"
@@ -64,11 +64,13 @@
         candy: 100,
         profileUrl: '',
         token: '',
-        default_header: default_header
+        default_header: default_header,
+        scroll: ''
       }
     },
     mounted() {
-      this.initUser()
+      window.addEventListener('scroll', this.handleScroll)
+      this.initUser();
     },
     watch: {
       '$route': 'initUser'
@@ -96,6 +98,15 @@
         if (this.parantProfileUrl) {
           this.profileUrl = this.parantProfileUrl
         }
+      },
+      handleScroll(e) {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+        if (scrollTop > 100) {
+          this.scroll = 'scroll';
+        } else {
+          this.scroll = '';
+        }
+
       }
     }
   }

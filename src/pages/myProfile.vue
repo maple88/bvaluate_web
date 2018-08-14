@@ -164,7 +164,8 @@
                 <label class="control-label">旧的密码</label>
                 <div class="coderow">
                   <input type="password" v-model="user.oldPassword" @focus="oldPwdError=''">
-                  <div type=" button" class="btn rightips newStyle  text-danger">{{oldPwdError}}
+                  <div type=" button" class="btn rightips newStyle  text-danger">
+                    {{oldPwdError}}
                   </div>
                 </div>
               </div>
@@ -256,6 +257,7 @@
           }
         })
       },
+      //修改简介
       editSynopsis(obj) {
         let json = {
           synopsis: this.user.synopsis
@@ -269,6 +271,7 @@
           }
         })
       },
+      //修改性别
       editSex(obj) {
         let json = {
           sex: this.user.sex
@@ -289,9 +292,11 @@
       },
       //提交修改邮件验证
       editEmail() {
+        let email = this.user.newEmail;
+        let code = this.user.emailCode;
         let json = {
-          email: this.user.newEmail,
-          code: this.user.emailCode
+          email: email,
+          code: code
         }
         console.log(json)
         this.editInfor(json, function (res) {
@@ -299,6 +304,8 @@
             localStorage.setItem('apelink_user_email', res.data.email);
             $('#emailModal').modal('hide')
           }
+        }, res => {
+          console.log(res.message);
         })
       },
       //发送邮件验证码
@@ -321,10 +328,11 @@
             headers: headers,
           }).then(function (res) {
             that.emailError_show = true;
-            that.sendEmailBtn = true
+            that.sendEmailBtn = true;
             let clearTime = setInterval(() => {
               that.email_time--;
-              if (that.email_time <= 1) {
+              if (that.email_time <= 0) {
+                that.email_time = 60;
                 that.emailError_show = false;
                 that.sendEmailBtn = false;
                 clearInterval(clearTime);
@@ -338,10 +346,17 @@
         let pass = true;
         let newPassword = this.user.newPassword;
         let ensurePwd = this.user.ensurePwd;
-        console.log('newPassword: ' + newPassword)
-        console.log('oldPassword: ' + this.user.oldPassword)
-        console.log('ensurePwd: ' + ensurePwd)
-
+        let oldPassword = this.user.oldPassword;
+        if (oldPassword !== null && oldPassword !== '' && oldPassword !== undefined) {
+          if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(newPassword)) {
+          } else {
+            pass = false;
+            this.oldPwdError = '只允许输入6-14个英文大小写和数字'
+          }
+        } else {
+          pass = false;
+          this.oldPwdError = '密码不能为空'
+        }
         if (newPassword !== null && newPassword !== '' && newPassword !== undefined) {
           if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(newPassword)) {
             if (ensurePwd !== newPassword) {
@@ -371,7 +386,6 @@
           this.ensurePwdError = '密码不能为空'
         }
         if (pass) {
-          let oldPassword = this.user.oldPassword;
           let that = this;
           let uid = localStorage.getItem('apelink_user_uid');
           let token = localStorage.getItem('apelink_user_token');
