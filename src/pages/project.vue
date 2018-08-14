@@ -101,7 +101,7 @@
             <div class="sectiontabs">
               <div class="headtit">团队</div>
             </div>
-            <div class="swiper-container section-swiper orther_swiper">
+            <div class="swiper-container section-swiper orther_swiper" id="partnerSwiper">
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
                   <div class="col4" v-for="partner in project.partner">
@@ -619,7 +619,8 @@
         NewOrGradeNo: 2,
         NGewOrGrade: '290001',
         TWewOrGradeNo: 2,
-        TWewOrGrade: '290002'
+        TWewOrGrade: '290002',
+        ortherSwiper: {}
       }
     },
     mounted() {
@@ -751,6 +752,19 @@
               let partner = that.project.partner;
               partner = JSON.parse(partner);
               that.project.partner = partner;
+              that.$nextTick(() => {  // 下一个UI帧再初始化swiper
+                this.ortherSwiper = new Swiper('#partnerSwiper', {
+                  direction: 'vertical',
+                  slidesPerView: 'auto',
+                  freeMode: true,
+                  scrollbar: {
+                    el: '.swiper-scrollbar',
+                  },
+                  // mousewheel: true,
+                  observer: true,
+                  observeParents: true
+                });
+              });
               //290001
               that.iniNewOrGrade(that.project.project, '290001');
               that.iniTwitterOrWeibo(that.project.project, '290002');
