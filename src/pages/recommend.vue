@@ -53,22 +53,23 @@
                   <div v-if="newType == 2" class="label_box">
                     <ul class="clearfix" :class="labelMore?'open':''">
                       <li><span class="active">全部</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
+                      <li v-for="item in followICO">
+                        <span @click="goProjectByName(item.result.project)">{{item.result.project}}</span>
+                      </li>
+                      <li v-for="item in followIndustry">
+                        <span @click="goIndustryByIndustry(item.result)">{{item.result}}</span>
+                      </li>
+                      <li v-for="item in followAuthor">
+                        <span>{{item.result}}</span>
+                      </li>
+                      <li v-for="item in followCountry">
+                        <span @click="goIndustryByCountry(item.result)">{{item.result}}</span>
+                      </li>
                     </ul>
                     <img src="../assets/follow/down.png" class="open_label" :class="labelMore?'open':''"
-                         @click="labelMore = !labelMore"/>
+                         @click="labelMore = !labelMore"
+                         v-if="(followICO.length + followIndustry.length + followAuthor.length + followCountry.length)>5"
+                    />
                   </div>
                 </transition>
               </keep-alive>
@@ -76,12 +77,18 @@
                 <transition name="fade">
                   <div v-if="newType == 3" class="follow_box">
                     <span class="item_box">{{industryName}}</span>
-                    <button class="follow" checked>
-                      <i class="fa fa-plus"></i>
-                      <i class="fa fa-check"></i>
-                      <span>关注</span>
-                      <span>已关注</span>
-                    </button>
+                    <transition name="fade">
+                      <button class="follow" v-if="!projectFollow" @click="setFollow()">
+                        <i class="fa fa-plus"></i>
+                        <span>关注</span>
+                      </button>
+                    </transition>
+                    <transition name="fade">
+                      <button class="followed" v-if="projectFollow" @click="projectFollow = !projectFollow">
+                        <i class="fa fa-check"></i>
+                        <span>已关注</span>
+                      </button>
+                    </transition>
                   </div>
                 </transition>
               </keep-alive>
@@ -522,6 +529,11 @@
         show_news_img: tuiwen,
         rollingNew: [],
         searchKey: '',
+        projectFollow: false,
+        followICO: [],
+        followCountry: [],
+        followAuthor: [],
+        followIndustry: []
       }
     },
     filters: {
@@ -599,7 +611,7 @@
     },
     methods: {
       setFollow() {
-        let that = this
+        let that = this;
         let token = localStorage.getItem('apelink_user_token');
         let uid = localStorage.getItem('apelink_user_uid');
         let url = '/api/individual/add?type=INDUSTRY&name=' + that.industryName;
@@ -611,7 +623,40 @@
         }).then(function (res) {
           console.log(res)
           if (res.data) {
-
+            that.projectFollow = true;
+          }
+        });
+      },
+      getFollowList(type, callback) {
+        let that = this
+        let token = localStorage.getItem('apelink_user_token')
+        let uid = localStorage.getItem('apelink_user_uid')
+        let url = '/api/individual/list?type=' + type;
+        let headers = {'uid': uid, 'Authorization': token};
+        let thisCallback = callback;
+        that.$axios({
+          method: 'get',
+          url: url,
+          headers: headers
+        }).then(function (res) {
+          thisCallback(res)
+        })
+      },
+      getfollowboolean() {
+        let that = this;
+        let token = localStorage.getItem('apelink_user_token');
+        let uid = localStorage.getItem('apelink_user_uid');
+        let checkurl = '/api/individual/check?type=INDUSTRY&sidOrName=' + that.industryName;
+        let headers = {'uid': uid, 'Authorization': token};
+        that.$axios({
+          method: 'post',
+          url: checkurl,
+          headers: headers
+        }).then(function (res) {
+          if (res.data) {
+            that.projectFollow = true
+          } else {
+            that.projectFollow = false
           }
         })
       },
@@ -622,7 +667,8 @@
             obj = arr[0];
           }
         }
-        this.$router.push('/project?project=' + obj);
+        let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
+        window.open(routeData.href, '_blank');
       },
       goIndustryByIndustry(obj) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
@@ -631,7 +677,8 @@
             obj = arr[0];
           }
         }
-        this.$router.push('/recommend?industry=' + obj);
+        let routeData = this.$router.resolve({path: '/recommend', query: {industry: obj}});
+        window.open(routeData.href, '_blank');
       },
       goIndustryByCountry(obj) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
@@ -640,7 +687,8 @@
             obj = arr[0];
           }
         }
-        this.$router.push('/recommend?country=' + obj);
+        let routeData = this.$router.resolve({path: '/recommend', query: {country: obj}});
+        window.open(routeData.href, '_blank');
       },
       goArticle(url, query) {
         let routeData = this.$router.resolve({path: url, query: query});
@@ -698,10 +746,29 @@
           }
         })
       },
+      getAllFollow() {
+        this.getFollowList('ICO', res => {
+          console.log(res.data.content);
+          this.followICO = res.data.content;
+        });
+        this.getFollowList('COUNTRY', res => {
+          console.log(res.data.content);
+          this.followCountry = res.data.content;
+        });
+        this.getFollowList('AUTHOR', res => {
+          console.log(res.data.content);
+          this.followAuthor = res.data.content;
+        });
+        this.getFollowList('INDUSTRY', res => {
+          console.log(res.data.content);
+          this.followIndustry = res.data.content;
+        })
+      },
       changeClassfy(categoryName, index) {
         this.categoryName = categoryName;
         if (categoryName === '关注') {
           this.newType = 2;
+          this.getAllFollow();
         } else if (categoryName === '推荐') {
           this.newType = 1;
           //获取最新动态
@@ -735,6 +802,7 @@
         this.classShow = index;
         this.newsList = [];
         this.pageSize = 20;
+        this.getfollowboolean();
         this.getHotnews(categoryName);
         this.getNews('280001');
       },

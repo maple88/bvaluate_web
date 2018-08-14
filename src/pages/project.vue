@@ -712,7 +712,8 @@
             obj = arr[0];
           }
         }
-        this.$router.push('/project?project=' + obj);
+        let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
+        window.open(routeData.href, '_blank');
       },
       goIndustryByIndustry(obj) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
@@ -721,7 +722,8 @@
             obj = arr[0];
           }
         }
-        this.$router.push('/recommend?industry=' + obj);
+        let routeData = this.$router.resolve({path: '/recommend', query: {industry: obj}});
+        window.open(routeData.href, '_blank');
       },
       goIndustryByCountry(obj) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
@@ -730,7 +732,8 @@
             obj = arr[0];
           }
         }
-        this.$router.push('/recommend?country=' + obj);
+        let routeData = this.$router.resolve({path: '/recommend', query: {country: obj}});
+        window.open(routeData.href, '_blank');
       },
       goArticle(url, query) {
         let routeData = this.$router.resolve({path: url, query: query});
