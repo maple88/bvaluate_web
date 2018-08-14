@@ -276,7 +276,12 @@
                         <div class="swiper-wrapper">
                           <div class="swiper-slide">
                             <div class="item" v-for="icoNew in icoNews.tuiwen">
-                              <div class="left"><img src="../assets/home/nicon.png" :src="tuiwen"></div>
+                              <div class="left TorW"
+                                   :class="(icoNew.titlePicture != ''&& icoNew.titlePicture )?'hasbg':'' ">
+                                <img :src="tuiwen ">
+                                <p>{{icoNew.urlDate}}</p>
+                              </div>
+                              <!--<div class="left"><img src="../assets/home/nicon.png" :src="tuiwen"></div>-->
                               <div class="right">
                                 <p class="des cursor_style" @click="goArticle('/article',{sid:icoNew.sid})">
                                   {{icoNew.content}}</p>
@@ -314,7 +319,11 @@
                         <div class="swiper-wrapper">
                           <div class="swiper-slide">
                             <div class="item" v-for="icoNew in icoNews.tuiwen">
-                              <div class="left"><img src="../assets/home/nicon.png" :src="weibo"></div>
+                              <div class="left TorW"
+                                   :class="(icoNew.titlePicture != ''&& icoNew.titlePicture )?'hasbg':'' ">
+                                <img :src="weibo ">
+                                <p>{{icoNew.urlDate}}</p>
+                              </div>
                               <div class="right">
                                 <p class="des cursor_style" @click="goArticle('/article',{sid:icoNew.sid})">
                                   {{icoNew.content}}</p>
@@ -390,7 +399,7 @@
 <script>
   import Swiper from 'swiper'
 
-  let tuiwen = require('../assets/home/nicon.png')
+  let tuiwen = require('../assets/home/tuite.png')
   let weibo = require('../assets/home/weibo.png')
   let default_header = require('../assets/user/default-header.png');
 
