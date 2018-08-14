@@ -106,6 +106,11 @@
                     v-if="classfy" @click="changeClassfy(classfy,index)">
                   {{classfy}}
                 </li>
+                <li v-if="classfyPageSizeShow" class="loadMoreClassfy" @click="loadMoreClassfy()">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </li>
               </ul>
             </div>
             <div class="center">
@@ -131,7 +136,8 @@
                     <div class="list-item">
                       <div class="medialist">
                         <div class="media" v-for="news in newsList">
-                          <div class="media-left media-middle">
+                          <div class="media-left media-middle"
+                               v-if="news.dataType === 'NEWS'||news.dataType === 'WEIXIN'">
                             <div class="newimg_box" @click="goArticle('/article',{sid:news.sid})">
                               <img v-if="news.titlePicture" :src="news.titlePicture"/>
                               <div class="date_box">
@@ -140,24 +146,36 @@
                               </div>
                             </div>
                           </div>
+                          <div class="media-left media-middle"
+                               v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'">
+                            <div class="newimg_box TorW" @click="goArticle('/article',{sid:news.sid})">
+                              <img :src="news.dataType === 'WEIBO'?weibo:tuiwen"/>
+                              <span class="day">{{news.urlDate }}</span>
+                            </div>
+                          </div>
                           <div class="media-body">
-                            <h4 class="media-heading" :title="news.title" @click="goArticle('/article',{sid:news.sid})">
+                            <h4 class="media-heading" :title="news.title" @click="goArticle('/article',{sid:news.sid})"
+                                v-if="!(news.dataType === 'WEIBO' || news.dataType === 'TWITTER')">
                               {{news.title }}
                             </h4>
-                            <p class="media-words">
+                            <p class="media-words TorW" v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'"
+                               @click="goArticle('/article',{sid:news.sid})">
+                              {{news.content }}
+                            </p>
+                            <p class=" media-words" v-else>
                               {{news.content }}
                             </p>
                             <div class="media-bottom">
                               <ul>
                                 <li>
                                   <div class="userimg"
-                                       v-if="(news.author !== 'NULL' && news.author !== null && news.author !== '')">
+                                       v-if="!(news.siteName !== 'NULL' && news.siteName !== null && news.siteName !== '')">
                                     <img src="../assets/follow/user_head.png">
                                   </div>
                                   {{
-                                  (news.author !== 'NULL'
-                                  && news.author !== null
-                                  && news.author !== '')?news.author:news.siteName
+                                  (news.siteName !== 'NULL'
+                                  && news.siteName !== null
+                                  && news.siteName !== '')?news.siteName:news.author
                                   }}
                                 </li>
                                 <li>{{news.urlTime}}</li>
@@ -367,6 +385,7 @@
                         <div class="list_item">
                           <div class="item_left tweet">
                             <img :src="show_news_img"/>
+                            <span class="day">{{item.urlDate }}</span>
                           </div>
                           <div class="item_body tweet">
                             <p class="tweet" @click="goArticle('/article',{sid:item.sid})">{{item.content}}</p>
@@ -498,8 +517,8 @@
   let img2 = require('../assets/follow/adv01.png');
   let img3 = require('../assets/media.jpg');
   let loading = require('../assets/login/loading.gif');
-  let tuiwen = require('../assets/home/nicon.png');
-  let weibo = require('../assets/home/weibo.png');
+  let tuiwen = require('../assets/home/tuite.png')
+  let weibo = require('../assets/home/weibo.png')
 
   export default {
     data() {
@@ -533,7 +552,9 @@
         followICO: [],
         followCountry: [],
         followAuthor: [],
-        followIndustry: []
+        followIndustry: [],
+        classfyPageSize: 30,
+        classfyPageSizeShow: true
       }
     },
     filters: {
@@ -710,7 +731,7 @@
       },
       getNewsClassfy(show, categoryName, showpage) {
         let that = this
-        that.$axios.get('/api/traditional/categories').then(function (res) {
+        that.$axios.get('/api/traditional/categories?pageSize=' + this.classfyPageSize).then(function (res) {
           let arr = ['推荐', '关注'];
           that.newsClassfy = arr.concat(res.data);
           let industry = that.$route.query.industry;
@@ -730,6 +751,19 @@
           }
         })
       },
+      loadMoreClassfy() {
+        this.classfyPageSize += 20;
+        let that = this;
+        that.$axios.get('/api/traditional/categories?pageSize=' + this.classfyPageSize).then(res => {
+          let num = res.data.length - (that.newsClassfy.length - 2)
+          if (num < 10) {
+            this.classfyPageSizeShow = false;
+          }
+          let arr = ['推荐', '关注'];
+          that.newsClassfy = arr.concat(res.data);
+          console.log();
+        })
+      },
       getHotnews(industryName) {
         let that = this
         that.$axios.get('/api/traditional/hotNews?industryName=' + industryName + '&pageSize=10').then(function (res) {
@@ -737,7 +771,8 @@
             that.hotNews = res.data.content
           }
         })
-      },
+      }
+      ,
       getNews(newsnum) {
         let that = this
         that.$axios.get('/api/traditional/news?searchBy=' + this.industryName + '&categoryId=' + newsnum + '&pageSize=10').then(function (res) {
@@ -745,7 +780,8 @@
             that.news = res.data.content
           }
         })
-      },
+      }
+      ,
       getAllFollow() {
         this.getFollowList('ICO', res => {
           console.log(res.data.content);
@@ -763,7 +799,8 @@
           console.log(res.data.content);
           this.followIndustry = res.data.content;
         })
-      },
+      }
+      ,
       changeClassfy(categoryName, index) {
         this.categoryName = categoryName;
         if (categoryName === '关注') {
@@ -805,7 +842,8 @@
         this.getfollowboolean();
         this.getHotnews(categoryName);
         this.getNews('280001');
-      },
+      }
+      ,
       initNewsList(categoryName, search) {
         let that = this;
         that.categoryName = categoryName;
@@ -817,12 +855,14 @@
           that.newsList = res.data.content;
           that.showloading = false;
         })
-      },
+      }
+      ,
       reloadMore(categoryName) {
         this.showloading = true;
         this.pageSize += 10;
         this.initNewsList(categoryName);
-      },
+      }
+      ,
       initRightNews(categoryName, pageSize, callback) {
         let that = this;
         that.categoryName = categoryName;
@@ -831,7 +871,8 @@
         that.$axios.get(url).then(function (res) {
           thisCallback(res.data.content);
         })
-      },
+      }
+      ,
       initSwiper() {
         let newsSwiper = new Swiper('#news_swiper', {
           autoplay: {
@@ -850,7 +891,8 @@
         newsSwiper.el.onmouseout = function () {
           newsSwiper.autoplay.start();
         }
-      },
+      }
+      ,
       initPageDate() {
         let path = this.$route.path;
         if (path === '/recommend') {
