@@ -254,8 +254,11 @@
           overflow: hidden;
           padding: 0;
           margin-right: 20px;
+          border-radius: 20px;
           img {
             width: 100%;
+            object-fit: cover;
+            height: 100%;
           }
         }
         .media-body {
@@ -569,6 +572,22 @@
           height: 93px;
           border-radius: 50%;
           margin-right: 10px;
+          &.TorW {
+            background-color: #797979;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            img {
+              width: 54px;
+              margin-bottom: -10px;
+            }
+            span {
+              font-size: 13px;
+              color: #ffffff;
+            }
+          }
           img {
             width: 100%;
           }
@@ -1023,10 +1042,6 @@
       height: 75px;
       align-items: center;
       padding: 0;
-    }
-    .leftlayout .section4 .item .left {
-      min-width: 60px;
-      height: 60px;
     }
     .leftlayout .section4 .item {
       padding: 14px 10px;

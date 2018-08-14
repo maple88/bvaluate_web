@@ -755,7 +755,7 @@
         this.classfyPageSize += 20;
         let that = this;
         that.$axios.get('/api/traditional/categories?pageSize=' + this.classfyPageSize).then(res => {
-          let num = res.data.length - (that.newsClassfy.length - 2)
+          let num = res.data.length - (that.newsClassfy.length - 2);
           if (num < 10) {
             this.classfyPageSizeShow = false;
           }

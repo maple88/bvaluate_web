@@ -359,7 +359,10 @@
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
                   <div class="item" v-for="item in TwitterOrWeibo">
-                    <div class="left"><img :src="showIcon"></div>
+                    <div class="left TorW">
+                      <img :src="showIcon"/>
+                      <span class="day">{{item.urlDate }}</span>
+                    </div>
                     <div class="right">
                       <p class="des" @click="goArticle('/article',{sid:item.sid})">{{item.content }}</p>
                       <div class="bottom">
@@ -595,7 +598,7 @@
   import Swiper from 'swiper'
 
   let loading = require('../assets/login/loading.gif');
-  let nicon = require('../assets/home/nicon.png');
+  let nicon = require('../assets/home/tuite.png');
   let weibo = require('../assets/home/weibo.png');
 
   export default {
@@ -619,8 +622,7 @@
         NewOrGradeNo: 2,
         NGewOrGrade: '290001',
         TWewOrGradeNo: 2,
-        TWewOrGrade: '290002',
-        ortherSwiper: {}
+        TWewOrGrade: '290002'
       }
     },
     mounted() {
@@ -753,7 +755,7 @@
               partner = JSON.parse(partner);
               that.project.partner = partner;
               that.$nextTick(() => {  // 下一个UI帧再初始化swiper
-                this.ortherSwiper = new Swiper('#partnerSwiper', {
+                new Swiper('#partnerSwiper', {
                   direction: 'vertical',
                   slidesPerView: 'auto',
                   freeMode: true,

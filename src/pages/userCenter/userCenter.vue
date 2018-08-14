@@ -37,7 +37,7 @@
         <div class="container">
           <ul>
             <li @click="toggleTab('contribute'), num = 1" :class="{active: num === 1}">投稿<span>25</span></li>
-            <li @click="toggleTab('read'), num = 2" :class="{active: num === 2}">阅读<span>122</span></li>
+            <!--<li @click="toggleTab('read'), num = 2" :class="{active: num === 2}">阅读<span>122</span></li>-->
             <li @click="toggleTab('collection'), num = 3" :class="{active: num === 3}">收藏<span>120</span></li>
           </ul>
         </div>
