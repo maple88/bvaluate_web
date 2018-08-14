@@ -104,6 +104,7 @@
             margin-right: 5px;
           }
           .follow {
+            outline: none;
             padding: 6px 15px;
             border-radius: 50px;
             color: #333333;
@@ -360,6 +361,7 @@
                   }
                   border-radius: 6px;
                   .media-left {
+                    border-radius: 20px;
                     min-width: 116px;
                     height: 116px;
                     .newimg_box {

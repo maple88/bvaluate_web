@@ -79,7 +79,8 @@
                     <button class="follow" checked>
                       <i class="fa fa-plus"></i>
                       <i class="fa fa-check"></i>
-                      关注
+                      <span>关注</span>
+                      <span>已关注</span>
                     </button>
                   </div>
                 </transition>
@@ -168,6 +169,7 @@
                               </div>
                               <div class="tips"
                                    v-else="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL'"
+                                   @click="goProjectByName(news.projectCategory)"
                               >
                                 {{news.projectCategory | labelFormat}}
                               </div>
@@ -612,6 +614,15 @@
 
           }
         })
+      },
+      goProjectByName(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        this.$router.push('/project?project=' + obj);
       },
       goIndustryByIndustry(obj) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {

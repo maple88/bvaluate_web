@@ -105,6 +105,7 @@
                   </span>
                     <span class="tips"
                           v-else="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL'"
+                          @click="goProjectByName(icoNew.projectCategory)"
                     >
                     {{news.projectCategory | labelFormat}}
                   </span>
@@ -258,6 +259,7 @@
                                   </span>
                                   <span class="tips cursor_style"
                                         v-else="icoNew.projectCategory !==null && icoNew.projectCategory !== '' && icoNew.projectCategory !==undefined && icoNew.projectCategory !=='NULL'"
+                                        @click="goProjectByName(icoNew.projectCategory)"
                                   >
                                     {{icoNew.projectCategory | labelFormat}}
                                   </span>
@@ -295,6 +297,7 @@
                                   </span>
                                   <span class="tips cursor_style"
                                         v-else="icoNew.projectCategory !==null && icoNew.projectCategory !== '' && icoNew.projectCategory !==undefined && icoNew.projectCategory !=='NULL'"
+                                        @click="goProjectByName(icoNew.projectCategory)"
                                   >
                                     {{icoNew.projectCategory | labelFormat}}
                                   </span>
@@ -332,6 +335,7 @@
                                   </span>
                                   <span class="tips cursor_style"
                                         v-else="icoNew.projectCategory !==null && icoNew.projectCategory !== '' && icoNew.projectCategory !==undefined && icoNew.projectCategory !=='NULL'"
+                                        @click="goProjectByName(icoNew.projectCategory)"
                                   >
                                     {{icoNew.projectCategory | labelFormat}}
                                   </span>
@@ -536,6 +540,15 @@
       })
     },
     methods: {
+      goProjectByName(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        this.$router.push('/project?project=' + obj);
+      },
       goIndustryByIndustry(obj) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {

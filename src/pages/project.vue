@@ -50,7 +50,7 @@
                       </div>
                     </div>
                     <div class="media-body">
-                      <h4 class="media-heading" :title="item.title">
+                      <h4 class="media-heading" :title="item.title" @click="goArticle('/article',{sid:item.sid})">
                         {{item.title }}
                       </h4>
                       <p class="media-words">
@@ -71,8 +71,23 @@
                           </li>
                           <li>{{item.urlTime}}</li>
                         </ul>
-                        <div class="tips">
-                          {{item.industryCategory | showLable(item.countryCategory,item.projectCategory)}}
+                        <div class="tips"
+                             v-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
+                             @click="goIndustryByIndustry(item.industryCategory)"
+                        >
+                          {{item.industryCategory | labelFormat}}
+                        </div>
+                        <div class="tips"
+                             v-else-if="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
+                             @click="goIndustryByCountry(item.countryCategory)"
+                        >
+                          {{item.countryCategory | labelFormat}}
+                        </div>
+                        <div class="tips"
+                             v-else="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
+                             @click="goProjectByName(item.projectCategory)"
+                        >
+                          {{item.projectCategory | labelFormat}}
                         </div>
                       </div>
                     </div>
@@ -350,7 +365,24 @@
                       <div class="bottom">
                         <span class="name">{{item.author}}</span>
                         <span class="time">{{item.urlTime}}</span>
-                        <span class="tips"> {{item.industryCategory | showLable(item.countryCategory,item.projectCategory)}}</span>
+                        <span class="tips"
+                              v-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
+                              @click="goIndustryByIndustry(item.industryCategory)"
+                        >
+                          {{item.industryCategory | labelFormat}}
+                        </span>
+                        <span class="tips"
+                              v-else-if="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
+                              @click="goIndustryByCountry(item.countryCategory)"
+                        >
+                          {{item.countryCategory | labelFormat}}
+                        </span>
+                        <span class="tips"
+                              v-else="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
+                              @click="goProjectByName(news.projectCategory)"
+                        >
+                          {{item.projectCategory | labelFormat}}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -639,6 +671,17 @@
         }
         return myDate.getFullYear() + '-' + month
       },
+      labelFormat(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            return arr[0];
+          } else {
+            return obj;
+          }
+        }
+        return obj;
+      },
       showLable(label1, label2, lable3) {
         if (label1 != null && label1 !== undefined && label1 !== '' && label1 != 'NULL') {
           let arr = label1.split(';')
@@ -662,6 +705,33 @@
       '$route': 'initProject'
     },
     methods: {
+      goProjectByName(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        this.$router.push('/project?project=' + obj);
+      },
+      goIndustryByIndustry(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        this.$router.push('/recommend?industry=' + obj);
+      },
+      goIndustryByCountry(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        this.$router.push('/recommend?country=' + obj);
+      },
       goArticle(url, query) {
         let routeData = this.$router.resolve({path: url, query: query});
         window.open(routeData.href, '_blank');
@@ -670,8 +740,9 @@
         let path = this.$route.path;
         if (path === '/project') {
           let that = this;
-          let sid = this.$route.query.sid
-          if (sid != null && sid != '' && sid != undefined) {
+          let sid = this.$route.query.sid;
+          let project = this.$route.query.project;
+          if (sid != null && sid !== '' && sid !== undefined) {
             that.$axios.get('/api/ICO/id/' + sid).then(function (res) {
               that.project = res.data;
               let partner = that.project.partner;
@@ -686,9 +757,25 @@
                 let categoryName = arr[0];
                 that.initRecommendProjects(categoryName);
               }
-            })
+            });
+          } else if (project != null && project !== '' && project !== undefined) {
+            that.$axios.get('/api/ICO/name/' + project).then(function (res) {
+              that.project = res.data;
+              let partner = that.project.partner;
+              partner = JSON.parse(partner);
+              that.project.partner = partner;
+              //290001
+              that.iniNewOrGrade(that.project.project, '290001');
+              that.iniTwitterOrWeibo(that.project.project, '290002');
+              let categoryNameList = that.project.industryCategory;
+              if (categoryNameList != null && categoryNameList !== '' && categoryNameList !== undefined) {
+                let arr = categoryNameList.split(';');
+                let categoryName = arr[0];
+                that.initRecommendProjects(categoryName);
+              }
+            });
           } else {
-            that.$router.push('/index')
+            // that.$router.push('/index')
           }
         }
       },
@@ -699,7 +786,7 @@
         that.$axios.get('/api/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId).then(function (res) {
           that.NewOrGrade = res.data.content;
           that.$nextTick(() => {  // 下一个UI帧再初始化swiper
-            this.newSwiper = new Swiper('#newOrGradeSwiper', {
+            that.newSwiper = new Swiper('#newOrGradeSwiper', {
               direction: 'vertical',
               slidesPerView: 'auto',
               freeMode: true,
@@ -742,7 +829,7 @@
         that.$axios.get('/api/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId).then(function (res) {
           that.TwitterOrWeibo = res.data.content;
           that.$nextTick(() => {  // 下一个UI帧再初始化swiper
-            this.tWSwiper = new Swiper('#twitterOrWeiboSwiper', {
+            that.tWSwiper = new Swiper('#twitterOrWeiboSwiper', {
               direction: 'vertical',
               slidesPerView: 'auto',
               freeMode: true,
