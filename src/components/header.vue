@@ -2,7 +2,7 @@
   <div class="header" :class="scroll">
     <div class="tophead">
       <div class="container">
-        <p>APELINk</p>
+        <p>APELINK</p>
         <!--<span>中/EN</span>-->
       </div>
     </div>

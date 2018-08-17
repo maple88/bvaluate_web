@@ -377,12 +377,13 @@
                 .media {
                   .media-heading {
                     font-size: 20px;
-                    height: 23px;
+                    max-height: 23px;
                     width: 100%;
                     margin-bottom: 8px;
                   }
                   .media-words {
                     font-size: 14px;
+                    max-height: 47px;
                     &.TorW {
                       -webkit-line-clamp: 3;
                       cursor: pointer;
@@ -602,6 +603,9 @@
           & > ul {
             height: 457px;
             overflow-y: auto;
+            &.long_ul {
+              height: auto;
+            }
             &::-webkit-scrollbar {
               display: none
             }
@@ -808,6 +812,7 @@
                 cursor: pointer;
                 transition: .3s;
                 line-height: 1.2;
+                max-height: 21px;
                 &:hover {
                   color: $mainColor;
                 }
@@ -820,6 +825,7 @@
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
+                max-height: 33px;
                 &.tweet {
                   min-height: 54px;
                   -webkit-line-clamp: 3;
@@ -1003,6 +1009,12 @@
               margin-top: 5px;
               margin-right: 10px;
               font-size: 10px;
+              cursor: pointer;
+              transition: all .3s;
+              &:hover {
+                border-color: $mainColor;
+                color: $mainColor;
+              }
             }
           }
           .article_content {
@@ -1164,6 +1176,12 @@
                   display: -webkit-box;
                   -webkit-line-clamp: 2;
                   -webkit-box-orient: vertical;
+                  max-height: 40px;
+                  cursor: pointer;
+                  transition: color .3s;
+                  &:hover {
+                    color: $mainColor;
+                  }
                   &.time {
                     font-size: 10px;
                     text-align: right;

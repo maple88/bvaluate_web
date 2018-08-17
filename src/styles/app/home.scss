@@ -315,7 +315,7 @@
           line-clamp: 2;
           cursor: pointer;
           -webkit-box-orient: vertical;
-          height: 46px;
+          max-height: 46px;
           position: relative;
         }
         .des {
@@ -330,7 +330,7 @@
           line-clamp: 5;
           -webkit-box-orient: vertical;
           position: relative;
-          height: 108px;
+          max-height: 108px;
         }
         .bottom {
           border-top: 1px solid #f5f5f5;
@@ -553,6 +553,7 @@
                 font-size: 22px;
                 color: #888888;
                 margin-left: 10px;
+                cursor: pointer;
                 &.on {
                   color: #ff0000;
                 }
@@ -669,9 +670,10 @@
               width: 33.33%;
               text-align: center;
               img {
-                width: 40px;
+                width: 55px;
+                height: 55px;
                 margin-bottom: 8px;
-                border-radius: 50px;
+                border-radius: 100px;
               }
               .name {
                 font-size: 12px;
@@ -824,7 +826,7 @@
                   margin-right: 20px;
                 }
                 .time {
-                  font-size: 16px;
+                  font-size: 13px;
                   color: #666;
                 }
                 .tips {

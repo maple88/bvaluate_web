@@ -91,24 +91,25 @@
                 </div>
                 <div class="info">
                   <p class="tips">
-                  <span class="tips"
-                        v-if="news.industryCategory !==null && news.industryCategory !== '' && news.industryCategory !==undefined && news.industryCategory !=='NULL'"
-                        @click="goIndustryByIndustry(news.industryCategory)"
-                  >
+                     <span class="tips"
+                           v-if="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL'"
+                           @click="goProjectByName(news.projectCategory)"
+                     >
+                    {{news.projectCategory | labelFormat}}
+                  </span>
+                    <span class="tips"
+                          v-else-if="news.industryCategory !==null && news.industryCategory !== '' && news.industryCategory !==undefined && news.industryCategory !=='NULL'"
+                          @click="goIndustryByIndustry(news.industryCategory)"
+                    >
                     {{news.industryCategory | labelFormat}}
                   </span>
                     <span class="tips"
-                          v-else-if="news.countryCategory !==null && news.countryCategory !== '' && news.countryCategory !==undefined && news.countryCategory !=='NULL'"
+                          v-else="news.countryCategory !==null && news.countryCategory !== '' && news.countryCategory !==undefined && news.countryCategory !=='NULL'"
                           @click="goIndustryByCountry(news.countryCategory)"
                     >
                     {{news.countryCategory | labelFormat}}
                   </span>
-                    <span class="tips"
-                          v-else="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL'"
-                          @click="goProjectByName(icoNew.projectCategory)"
-                    >
-                    {{news.projectCategory | labelFormat}}
-                  </span>
+
                     <span>{{news.urlDate}}</span>
                   </p>
                   <p class="tit" :title="news.title" @click="goArticle('/article',{sid:news.sid})">
@@ -161,7 +162,7 @@
                         {{showProject.project}}
                       </span>
                       <i class="fa fa-heart" v-if="!isFollow" @click="setFollow()"></i>
-                      <i class="fa fa-heart on" v-if="isFollow" @click="isFollow = false"></i>
+                      <i class="fa fa-heart on" v-if="isFollow" @click="deleteFollow(showProject.collected)"></i>
                     </p>
                     <p class="smtit">{{showProject.introduction }}</p>
                     <p class="des">{{showProject.irAbstract }}</p>
@@ -238,30 +239,31 @@
                                     <div class="user" v-if="icoNew.siteName">
                                       <!--<img src="../assets/logo_brand.png">-->
                                       <span>{{icoNew.siteName}}</span>
+                                      <span class="usertime">{{icoNew.urlTime}}</span>
                                     </div>
                                     <div class="user" v-else>
                                       <img src="../assets/logo_brand.png">
                                       <span>{{icoNew.author }}{{!(icoNew.siteName)}}</span>
+                                      <span class="usertime">{{icoNew.urlTime}}</span>
                                     </div>
-                                    <span class="usertime">{{icoNew.urlTime}}</span>
                                   </div>
                                   <span class="tips cursor_style"
-                                        v-if="icoNew.industryCategory !==null && icoNew.industryCategory !== '' && icoNew.industryCategory !==undefined && icoNew.industryCategory !=='NULL'"
+                                        v-if="icoNew.projectCategory !==null && icoNew.projectCategory !== '' && icoNew.projectCategory !==undefined && icoNew.projectCategory !=='NULL'"
+                                        @click="goProjectByName(icoNew.projectCategory)"
+                                  >
+                                    {{icoNew.projectCategory | labelFormat}}
+                                  </span>
+                                  <span class="tips cursor_style"
+                                        v-else-if="icoNew.industryCategory !==null && icoNew.industryCategory !== '' && icoNew.industryCategory !==undefined && icoNew.industryCategory !=='NULL'"
                                         @click="goIndustryByIndustry(icoNew.industryCategory)"
                                   >
                                     {{icoNew.industryCategory | labelFormat}}
                                   </span>
                                   <span class="tips cursor_style"
-                                        v-else-if="icoNew.countryCategory !==null && icoNew.countryCategory !== '' && icoNew.countryCategory !==undefined && icoNew.countryCategory !=='NULL'"
+                                        v-else="icoNew.countryCategory !==null && icoNew.countryCategory !== '' && icoNew.countryCategory !==undefined && icoNew.countryCategory !=='NULL'"
                                         @click="goIndustryByCountry(icoNew.countryCategory)"
                                   >
                                     {{icoNew.countryCategory | labelFormat}}
-                                  </span>
-                                  <span class="tips cursor_style"
-                                        v-else="icoNew.projectCategory !==null && icoNew.projectCategory !== '' && icoNew.projectCategory !==undefined && icoNew.projectCategory !=='NULL'"
-                                        @click="goProjectByName(icoNew.projectCategory)"
-                                  >
-                                    {{icoNew.projectCategory | labelFormat}}
                                   </span>
                                 </div>
                               </div>
@@ -289,22 +291,22 @@
                                   <span class="name">{{icoNew.author }}{{!(icoNew.siteName)}}</span>
                                   <span class="time">{{icoNew.urlDate}}</span>
                                   <span class="tips cursor_style"
-                                        v-if="icoNew.industryCategory !==null && icoNew.industryCategory !== '' && icoNew.industryCategory !==undefined && icoNew.industryCategory !=='NULL'"
+                                        v-if="icoNew.projectCategory !==null && icoNew.projectCategory !== '' && icoNew.projectCategory !==undefined && icoNew.projectCategory !=='NULL'"
+                                        @click="goProjectByName(icoNew.projectCategory)"
+                                  >
+                                    {{icoNew.projectCategory | labelFormat}}
+                                  </span>
+                                  <span class="tips cursor_style"
+                                        v-else-if="icoNew.industryCategory !==null && icoNew.industryCategory !== '' && icoNew.industryCategory !==undefined && icoNew.industryCategory !=='NULL'"
                                         @click="goIndustryByIndustry(icoNew.industryCategory)"
                                   >
                                     {{icoNew.industryCategory | labelFormat}}
                                   </span>
                                   <span class="tips cursor_style"
-                                        v-else-if="icoNew.countryCategory !==null && icoNew.countryCategory !== '' && icoNew.countryCategory !==undefined && icoNew.countryCategory !=='NULL'"
+                                        v-else="icoNew.countryCategory !==null && icoNew.countryCategory !== '' && icoNew.countryCategory !==undefined && icoNew.countryCategory !=='NULL'"
                                         @click="goIndustryByCountry(icoNew.countryCategory)"
                                   >
                                     {{icoNew.countryCategory | labelFormat}}
-                                  </span>
-                                  <span class="tips cursor_style"
-                                        v-else="icoNew.projectCategory !==null && icoNew.projectCategory !== '' && icoNew.projectCategory !==undefined && icoNew.projectCategory !=='NULL'"
-                                        @click="goProjectByName(icoNew.projectCategory)"
-                                  >
-                                    {{icoNew.projectCategory | labelFormat}}
                                   </span>
                                 </div>
                               </div>
@@ -331,23 +333,24 @@
                                   <span class="name">{{icoNew.author }}{{!(icoNew.siteName)}}</span>
                                   <span class="time">{{icoNew.urlDate}}</span>
                                   <span class="tips cursor_style"
-                                        v-if="icoNew.industryCategory !==null && icoNew.industryCategory !== '' && icoNew.industryCategory !==undefined && icoNew.industryCategory !=='NULL'"
+                                        v-if="icoNew.projectCategory !==null && icoNew.projectCategory !== '' && icoNew.projectCategory !==undefined && icoNew.projectCategory !=='NULL'"
+                                        @click="goProjectByName(icoNew.projectCategory)"
+                                  >
+                                    {{icoNew.projectCategory | labelFormat}}
+                                  </span>
+                                  <span class="tips cursor_style"
+                                        v-else-if="icoNew.industryCategory !==null && icoNew.industryCategory !== '' && icoNew.industryCategory !==undefined && icoNew.industryCategory !=='NULL'"
                                         @click="goIndustryByIndustry(icoNew.industryCategory)"
                                   >
                                     {{icoNew.industryCategory | labelFormat}}
                                   </span>
                                   <span class="tips cursor_style"
-                                        v-else-if="icoNew.countryCategory !==null && icoNew.countryCategory !== '' && icoNew.countryCategory !==undefined && icoNew.countryCategory !=='NULL'"
+                                        v-else="icoNew.countryCategory !==null && icoNew.countryCategory !== '' && icoNew.countryCategory !==undefined && icoNew.countryCategory !=='NULL'"
                                         @click="goIndustryByCountry(icoNew.countryCategory)"
                                   >
                                     {{icoNew.countryCategory | labelFormat}}
                                   </span>
-                                  <span class="tips cursor_style"
-                                        v-else="icoNew.projectCategory !==null && icoNew.projectCategory !== '' && icoNew.projectCategory !==undefined && icoNew.projectCategory !=='NULL'"
-                                        @click="goProjectByName(icoNew.projectCategory)"
-                                  >
-                                    {{icoNew.projectCategory | labelFormat}}
-                                  </span>
+
                                 </div>
                               </div>
                             </div>
@@ -515,29 +518,6 @@
         $(this).addClass('active');
         homeNewsSwiper.slideTo($(this).index())
       });
-
-      new Swiper('#home-newslist2', {
-        direction: 'vertical',
-        slidesPerView: 'auto',
-        freeMode: true,
-        scrollbar: {
-          el: '.swiper-scrollbar'
-        },
-        mousewheel: true,
-        observer: true,
-        observeParents: true
-      });
-      new Swiper('#home-newslist3', {
-        direction: 'vertical',
-        slidesPerView: 'auto',
-        freeMode: true,
-        scrollbar: {
-          el: '.swiper-scrollbar'
-        },
-        mousewheel: true,
-        observer: true,
-        observeParents: true
-      });
       this.getHottestProject();
       this.iniHotIndustries();
       this.initHotNews();
@@ -599,17 +579,44 @@
       },
       setFollow() {
         let that = this
-        let token = localStorage.getItem('apelink_user_token')
-        let uid = localStorage.getItem('apelink_user_uid')
-        let url = '/api/individual/add?type=ICO&sid=' + that.showProject.sid;
-        let headers = {'uid': uid, 'Authorization': token};
-        that.$axios({
-          method: 'post',
-          url: url,
-          headers: headers
-        }).then(function (res) {
-          that.isFollow = true
-        })
+        let token = localStorage.getItem('apelink_user_token');
+        if (token) {
+          let uid = localStorage.getItem('apelink_user_uid');
+          let url = '/api/individual/add?type=ICO&sid=' + that.showProject.sid;
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'post',
+            url: url,
+            headers: headers
+          }).then(function (res) {
+            if (res.data) {
+              that.isFollow = true
+            }
+          })
+        } else {
+          alert('请先登录');
+        }
+      },
+      deleteFollow(cid) {
+        let that = this
+        let token = localStorage.getItem('apelink_user_token');
+        if (token) {
+          let uid = localStorage.getItem('apelink_user_uid');
+          let url = '/api/individual/delete?cid=' + cid;
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'DELETE',
+            url: url,
+            headers: headers
+          }).then(function (res) {
+            if (res.data) {
+              that.isFollow = true
+            }
+
+          })
+        } else {
+          alert('请先登录。')
+        }
       },
       getfollowboolean(project) {
         let that = this
@@ -634,17 +641,19 @@
         // let dataType = 'NEWS';
         let that = this
         that.$axios.get('/api/traditional/news?searchBy=' + ico + '&categoryId=290001').then(function (res) {
-          that.icoNews.content = res.data.content
-          new Swiper('#home-newslist1', {
-            direction: 'vertical',
-            slidesPerView: 'auto',
-            freeMode: true,
-            mousewheel: true,
-            observer: true,
-            observeParents: true,
-            scrollbar: {
-              el: '.swiper-scrollbar'
-            }
+          that.icoNews.content = res.data.content;
+          that.$nextTick(() => {  // 下一个UI帧再初始化swiper
+            new Swiper('#home-newslist1', {
+              direction: 'vertical',
+              slidesPerView: 'auto',
+              freeMode: true,
+              mousewheel: true,
+              observer: true,
+              observeParents: true,
+              scrollbar: {
+                el: '.swiper-scrollbar'
+              }
+            });
           });
         })
       },
@@ -657,14 +666,40 @@
         let ico = obj.project;
         let that = this
         that.$axios.get('/api/traditional/news?searchBy=' + ico + '&categoryId=290002').then(function (res) {
-          that.icoNews.tuiwen = res.data.content
+          that.icoNews.tuiwen = res.data.content;
+          that.$nextTick(() => {  // 下一个UI帧再初始化swiper
+            new Swiper('#home-newslist2', {
+              direction: 'vertical',
+              slidesPerView: 'auto',
+              freeMode: true,
+              mousewheel: true,
+              observer: true,
+              observeParents: true,
+              scrollbar: {
+                el: '.swiper-scrollbar'
+              }
+            });
+          });
         })
       },
       initweibo(obj) {
         let ico = obj.project;
         let that = this
         that.$axios.get('/api/traditional/news?searchBy=' + ico + '&categoryId=290004').then(function (res) {
-          that.icoNews.weibo = res.data.content
+          that.icoNews.weibo = res.data.content;
+          that.$nextTick(() => {  // 下一个UI帧再初始化swiper
+            new Swiper('#home-newslist3', {
+              direction: 'vertical',
+              slidesPerView: 'auto',
+              freeMode: true,
+              mousewheel: true,
+              observer: true,
+              observeParents: true,
+              scrollbar: {
+                el: '.swiper-scrollbar'
+              }
+            });
+          });
         })
       },
       initHotNews() {
@@ -707,7 +742,14 @@
       },
       getHottestProject() {
         let that = this;
-        that.$axios.get('/api/ICO/top5').then(function (res) {
+        let uid = localStorage.getItem('apelink_user_uid')
+        let url = '/api/ICO/top5';
+        let headers = {'uid': uid};
+        that.$axios({
+          method: 'get',
+          url: url,
+          headers: headers
+        }).then(function (res) {
           if (res.status === 200) {
             that.hottestProject = res.data;
             if (res.data.length >= 1) {
@@ -718,9 +760,14 @@
             that.initIcoNews(that.showProject);
             that.inittuiwen(that.showProject);
             that.initweibo(that.showProject);
-            that.getfollowboolean(that.showProject.sid)
+            // that.getfollowboolean(that.showProject.sid)
+            if (that.showProject.collected) {
+              that.isFollow = true
+            } else {
+              that.isFollow = false
+            }
           }
-        })
+        });
       },
       initPartner(obj) {
         let objArr = [];
@@ -749,10 +796,14 @@
         } catch (e) {
         } finally {
           this.showProject = obj;
-          this.initIcoNews(this.showProject)
-          this.inittuiwen(this.showProject)
-          this.initweibo(this.showProject)
-          this.getfollowboolean(this.showProject.sid)
+          this.initIcoNews(this.showProject);
+          this.inittuiwen(this.showProject);
+          this.initweibo(this.showProject);
+          if (this.showProject.collected) {
+            this.isFollow = true
+          } else {
+            this.isFollow = false
+          }
         }
       }
     }

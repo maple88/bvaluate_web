@@ -114,7 +114,7 @@
                   </div>
                 </div>
               </div>
-              <div class="swiper-scrollbar"></div>
+              <!--<div class="swiper-scrollbar"></div>-->
             </div>
           </div>
           <div class="section3">
@@ -342,7 +342,7 @@
                   </div>
                 </div>
               </div>
-              <div class="swiper-scrollbar"></div>
+              <!--<div class="swiper-scrollbar"></div>-->
             </div>
           </div>
           <div class="section4">
@@ -631,10 +631,7 @@
         direction: 'vertical',
         slidesPerView: 'auto',
         freeMode: true,
-        scrollbar: {
-          el: '.swiper-scrollbar',
-        },
-        // mousewheel: true,
+        mousewheel: true,
         observer: true,
         observeParents: true
       });
@@ -762,7 +759,7 @@
                   scrollbar: {
                     el: '.swiper-scrollbar',
                   },
-                  // mousewheel: true,
+                  mousewheel: true,
                   observer: true,
                   observeParents: true
                 });
@@ -812,7 +809,7 @@
               scrollbar: {
                 el: '.swiper-scrollbar',
               },
-              // mousewheel: true,
+              mousewheel: true,
               observer: true,
               observeParents: true,
               on: {
@@ -855,7 +852,7 @@
               scrollbar: {
                 el: '.swiper-scrollbar',
               },
-              // mousewheel: true,
+              mousewheel: true,
               observer: true,
               observeParents: true,
               on: {

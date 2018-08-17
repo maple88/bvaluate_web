@@ -32,7 +32,7 @@
             <div class="label_bar">
               <!-- <keep-alive> -->
               <transition name="fade">
-                <div v-show="newType === 1 || newType === -1" class="news_box">
+                <div v-show="newType === 1" class="news_box">
                   <div class="news_title">
                     <span>最新动态</span>
                   </div>
@@ -821,7 +821,6 @@
           this.newType = 3;
         }
         if (index === -1) {
-          this.newType = index;
           let that = this;
           this.initRightNews('国家时事', 10, function (res) {
             that.affairList = res;
