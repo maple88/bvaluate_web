@@ -443,7 +443,6 @@
                   url: checkAuthorurl,
                   headers: headers
                 }).then(function (res) {
-                  console.log(res.data);
                   if (res.data) {
                     that.follow = true
                   } else {
@@ -514,7 +513,6 @@
       getHotnewsData() {
         let that = this
         that.$axios.get('/api/traditional/hotNews?ndustryName=' + that.industryName + '&pageSize=10').then(function (res) {
-          console.log(res)
           that.hotNews = res.data.content
         })
       },
@@ -561,7 +559,6 @@
       getNewsForAuthor(author) {
         let that = this
         that.$axios.get('/api/traditional/authorRelatedNews?author=' + author + '&pageSize=5').then(function (res) {
-          console.log(res)
           that.newsForAuthor = res.data.content;
         })
       },

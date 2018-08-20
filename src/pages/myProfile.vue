@@ -298,14 +298,12 @@
           email: email,
           code: code
         }
-        console.log(json)
         this.editInfor(json, function (res) {
           if (res.data) {
             localStorage.setItem('apelink_user_email', res.data.email);
             $('#emailModal').modal('hide')
           }
         }, res => {
-          console.log(res.message);
         })
       },
       //发送邮件验证码
@@ -313,7 +311,6 @@
         let eamil = this.user.newEmail;
         let myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
         if (!(eamil !== null && eamil !== '' && eamil !== undefined)) {
-          console.log('sss')
           this.emailError_msg = '邮箱不能为空'
         } else if (!myreg.test(eamil)) {
           this.emailError_msg = '请输入正确格式的邮箱'

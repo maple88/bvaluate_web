@@ -639,7 +639,6 @@
           url: url,
           headers: headers
         }).then(function (res) {
-          console.log(res)
           if (res.data) {
             that.projectFollow = true;
           }
@@ -760,7 +759,6 @@
           }
           let arr = ['推荐', '关注'];
           that.newsClassfy = arr.concat(res.data);
-          console.log();
         })
       },
       getHotnews(industryName) {
@@ -783,19 +781,15 @@
       ,
       getAllFollow() {
         this.getFollowList('ICO', res => {
-          console.log(res.data.content);
           this.followICO = res.data.content;
         });
         this.getFollowList('COUNTRY', res => {
-          console.log(res.data.content);
           this.followCountry = res.data.content;
         });
         this.getFollowList('AUTHOR', res => {
-          console.log(res.data.content);
           this.followAuthor = res.data.content;
         });
         this.getFollowList('INDUSTRY', res => {
-          console.log(res.data.content);
           this.followIndustry = res.data.content;
         })
       }

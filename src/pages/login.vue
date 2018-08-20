@@ -325,11 +325,9 @@
                       that.login()
                     }, 1000);
                   }
-                  console.log(res.data)
                 })
               }
             }).catch(function (res) {
-              console.log(res)
             })
           }).catch(function (res) {
             let msgCode = res.response.data.message
@@ -425,7 +423,6 @@
           })
         }
         else {
-          console.log('有错')
         }
       },
       resetpwdSubmit() {
@@ -489,7 +486,6 @@
             }
           })
         } else {
-          console.log('不通过')
         }
       },
       checkPassword(type) {
@@ -528,7 +524,6 @@
                 that.registerSendBtn = false
               }
             }).catch(function (res) {
-              console.log(res)
             })
           } else {
             this.errorMsg.registerUser.phoneNumber = '请输入正确格式的手机号码'
@@ -537,7 +532,6 @@
       },
       checkResetPassword(type) {
         if (type) {
-          console.log(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(this.resetpwdUser.password))
           if (this.resetpwdUser.password != null && this.resetpwdUser.password !== '' && this.resetpwdUser.password !== undefined) {
             if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(this.resetpwdUser.password)) {
               if (this.resetpwdUser.confirmpsd != null && this.resetpwdUser.confirmpsd !== '' && this.resetpwdUser.confirmpsd !== undefined) {
@@ -587,7 +581,6 @@
               that.errorMsg.registerUser.nickName = '该昵称已被注册'
             }
           }).catch(function (res) {
-            console.log(res)
           })
         } else {
           this.errorMsg.registerUser.nickName = '请输入为14个英文字符或7个汉字'

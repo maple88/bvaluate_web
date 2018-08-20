@@ -654,6 +654,7 @@
       });
       this.initProject();
       this.scrollNewOrGrade();
+      this.scrollTWewOrGrade();
     },
     filters: {
       showDay(obj) {
@@ -720,6 +721,9 @@
             let that = this;
             that.$axios.get('/api/traditional/news?searchBy=' + that.project.project + '&categoryId=' + that.NGewOrGrade + '&pageNo=' + that.NewOrGradeNo).then(function (res) {
               that.NewOrGradeNo++;
+              if (res.data.content.length < 10) {
+                
+              }
               for (let i = 0; i < res.data.content.length; i++) {
                 that.NewOrGrade.push(res.data.content[i])
               }
@@ -728,7 +732,7 @@
           }
         });
       },
-      scrollNewOrGrade() {
+      scrollTWewOrGrade() {
         let $this = document.getElementById('twitterOrWeiboSwiper');
         let finished = true;
         $this.addEventListener('scroll', () => {

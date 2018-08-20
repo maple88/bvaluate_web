@@ -270,7 +270,6 @@
                             </div>
                           </div>
                         </div>
-                        <div class="swiper-scrollbar"></div>
                       </div>
                     </div>
                     <div class="swiper-slide">
@@ -278,8 +277,7 @@
                         <div class="swiper-wrapper">
                           <div class="swiper-slide">
                             <div class="item" v-for="icoNew in icoNews.tuiwen">
-                              <div class="left TorW"
-                                   :class="(icoNew.titlePicture != ''&& icoNew.titlePicture )?'hasbg':'' ">
+                              <div class="left TorW">
                                 <img :src="tuiwen ">
                                 <p>{{icoNew.urlDate}}</p>
                               </div>
@@ -313,14 +311,13 @@
                             </div>
                           </div>
                         </div>
-                        <div class="swiper-scrollbar"></div>
                       </div>
                     </div>
                     <div class="swiper-slide">
                       <div class="swiper-container home_newslist_style" id="home-newslist3">
                         <div class="swiper-wrapper">
                           <div class="swiper-slide">
-                            <div class="item" v-for="icoNew in icoNews.tuiwen">
+                            <div class="item" v-for="icoNew in icoNews.weibo">
                               <div class="left TorW"
                                    :class="(icoNew.titlePicture != ''&& icoNew.titlePicture )?'hasbg':'' ">
                                 <img :src="weibo ">
@@ -356,7 +353,6 @@
                             </div>
                           </div>
                         </div>
-                        <div class="swiper-scrollbar"></div>
                       </div>
                     </div>
                   </div>
@@ -426,7 +422,10 @@
         isFollow: false,
         profileUrl: '',
         token: '',
-        default_header: default_header
+        default_header: default_header,
+        newsNo: 1,
+        tuiwenNo: 1,
+        weiboNo: 1,
       }
     },
     filters: {
@@ -522,6 +521,9 @@
       this.iniHotIndustries();
       this.initHotNews();
       this.initCandy();
+      this.scrollNews();
+      this.scrollTuiwen();
+      this.scrollWeibo();
     },
     beforeRouteEnter(to, from, next) {
       next(vm => {
@@ -529,6 +531,66 @@
       })
     },
     methods: {
+      scrollNews() {
+        let $this = document.getElementById('home-newslist1');
+        let finished = true;
+        $this.addEventListener('scroll', () => {
+          let boxTop = $this.scrollTop;
+          let boxHeight = $this.scrollHeight;
+          let offsetHeight = $this.offsetHeight;
+          if ((boxTop / (boxHeight - offsetHeight) >= 0.90) && finished) {
+            finished = false;
+            let that = this;
+            that.$axios.get('/api/traditional/news?searchBy=' + that.showProject.project + '&categoryId=290001&pageNo=' + that.newsNo).then(function (res) {
+              that.newsNo++;
+              for (let i = 0; i < res.data.content.length; i++) {
+                that.icoNews.content.push(res.data.content[i])
+              }
+              finished = true;
+            });
+          }
+        });
+      },
+      scrollTuiwen() {
+        let $this = document.getElementById('home-newslist2');
+        let finished = true;
+        $this.addEventListener('scroll', () => {
+          let boxTop = $this.scrollTop;
+          let boxHeight = $this.scrollHeight;
+          let offsetHeight = $this.offsetHeight;
+          if ((boxTop / (boxHeight - offsetHeight) >= 0.90) && finished) {
+            finished = false;
+            let that = this;
+            that.$axios.get('/api/traditional/news?searchBy=' + that.showProject.project + '&categoryId=290002&pageNo=' + that.tuiwenNo).then(function (res) {
+              that.tuiwenNo++;
+              for (let i = 0; i < res.data.content.length; i++) {
+                that.icoNews.tuiwen.push(res.data.content[i])
+              }
+              finished = true;
+            });
+          }
+        });
+      },
+      scrollWeibo() {
+        let $this = document.getElementById('home-newslist3');
+        let finished = true;
+        $this.addEventListener('scroll', () => {
+          let boxTop = $this.scrollTop;
+          let boxHeight = $this.scrollHeight;
+          let offsetHeight = $this.offsetHeight;
+          if ((boxTop / (boxHeight - offsetHeight) >= 0.90) && finished) {
+            finished = false;
+            let that = this;
+            that.$axios.get('/api/traditional/news?searchBy=' + that.showProject.project + '&categoryId=290004&pageNo=' + that.weiboNo).then(function (res) {
+              that.weiboNo++;
+              for (let i = 0; i < res.data.content.length; i++) {
+                that.icoNews.weibo.push(res.data.content[i])
+              }
+              finished = true;
+            });
+          }
+        });
+      },
       goProjectByName(obj) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
@@ -638,23 +700,10 @@
       },
       initIcoNews(obj) {
         let ico = obj.project;
-        // let dataType = 'NEWS';
         let that = this
-        that.$axios.get('/api/traditional/news?searchBy=' + ico + '&categoryId=290001').then(function (res) {
+        that.$axios.get('/api/traditional/news?searchBy=' + ico + '&categoryId=290001&pageNo=' + that.newsNo).then(function (res) {
+          that.newsNo++;
           that.icoNews.content = res.data.content;
-          that.$nextTick(() => {  // 下一个UI帧再初始化swiper
-            new Swiper('#home-newslist1', {
-              direction: 'vertical',
-              slidesPerView: 'auto',
-              freeMode: true,
-              mousewheel: true,
-              observer: true,
-              observeParents: true,
-              scrollbar: {
-                el: '.swiper-scrollbar'
-              }
-            });
-          });
         })
       },
       initCandy() {
@@ -665,41 +714,17 @@
       inittuiwen(obj) {
         let ico = obj.project;
         let that = this
-        that.$axios.get('/api/traditional/news?searchBy=' + ico + '&categoryId=290002').then(function (res) {
+        that.$axios.get('/api/traditional/news?searchBy=' + ico + '&categoryId=290002&pageNo=' + that.tuiwenNo).then(function (res) {
+          that.tuiwenNo++;
           that.icoNews.tuiwen = res.data.content;
-          that.$nextTick(() => {  // 下一个UI帧再初始化swiper
-            new Swiper('#home-newslist2', {
-              direction: 'vertical',
-              slidesPerView: 'auto',
-              freeMode: true,
-              mousewheel: true,
-              observer: true,
-              observeParents: true,
-              scrollbar: {
-                el: '.swiper-scrollbar'
-              }
-            });
-          });
         })
       },
       initweibo(obj) {
         let ico = obj.project;
         let that = this
-        that.$axios.get('/api/traditional/news?searchBy=' + ico + '&categoryId=290004').then(function (res) {
+        that.$axios.get('/api/traditional/news?searchBy=' + ico + '&categoryId=290004&pageNo=' + that.weiboNo).then(function (res) {
+          that.weiboNo++;
           that.icoNews.weibo = res.data.content;
-          that.$nextTick(() => {  // 下一个UI帧再初始化swiper
-            new Swiper('#home-newslist3', {
-              direction: 'vertical',
-              slidesPerView: 'auto',
-              freeMode: true,
-              mousewheel: true,
-              observer: true,
-              observeParents: true,
-              scrollbar: {
-                el: '.swiper-scrollbar'
-              }
-            });
-          });
         })
       },
       initHotNews() {
@@ -773,7 +798,6 @@
         let objArr = [];
         let arr = [];
         let num = 0;
-        console.log(obj)
         for (let i = 0; i < obj.length; i++) {
           num++;
           arr.push(obj[i]);

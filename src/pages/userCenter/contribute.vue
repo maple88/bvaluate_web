@@ -68,7 +68,6 @@
     },
     methods: {
       creatArticle() {
-        console.log('sss')
         this.$emit('toggleTab', 'creat')
       }
     }
