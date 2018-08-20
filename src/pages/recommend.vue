@@ -181,26 +181,23 @@
                                 <li>{{news.urlTime}}</li>
                               </ul>
                               <div class="tips"
-                                   v-if="news.industryCategory !==null && news.industryCategory !== '' && news.industryCategory !==undefined && news.industryCategory !=='NULL'"
+                                   v-if="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL'"
+                                   @click="goProjectByName(news.projectCategory)"
+                              >
+                                {{news.projectCategory | labelFormat}}
+                              </div>
+                              <div class="tips"
+                                   v-else-if="news.industryCategory !==null && news.industryCategory !== '' && news.industryCategory !==undefined && news.industryCategory !=='NULL'"
                                    @click="goIndustryByIndustry(news.industryCategory)"
                               >
                                 {{news.industryCategory | labelFormat}}
                               </div>
                               <div class="tips"
-                                   v-else-if="news.countryCategory !==null && news.countryCategory !== '' && news.countryCategory !==undefined && news.countryCategory !=='NULL'"
+                                   v-else="news.countryCategory !==null && news.countryCategory !== '' && news.countryCategory !==undefined && news.countryCategory !=='NULL'"
                                    @click="goIndustryByCountry(news.countryCategory)"
                               >
                                 {{news.countryCategory | labelFormat}}
                               </div>
-                              <div class="tips"
-                                   v-else="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL'"
-                                   @click="goProjectByName(news.projectCategory)"
-                              >
-                                {{news.projectCategory | labelFormat}}
-                              </div>
-                              <!--<div class="tips" v-html="news.industryCategory">-->
-                              <!--{{news.industryCategory | showLable(news.countryCategory,news.projectCategory)}}-->
-                              <!--</div>-->
                             </div>
                           </div>
                         </div>
@@ -666,20 +663,22 @@
       getfollowboolean() {
         let that = this;
         let token = localStorage.getItem('apelink_user_token');
-        let uid = localStorage.getItem('apelink_user_uid');
-        let checkurl = '/api/individual/check?type=INDUSTRY&sidOrName=' + that.industryName;
-        let headers = {'uid': uid, 'Authorization': token};
-        that.$axios({
-          method: 'post',
-          url: checkurl,
-          headers: headers
-        }).then(function (res) {
-          if (res.data) {
-            that.projectFollow = true
-          } else {
-            that.projectFollow = false
-          }
-        })
+        if (token) {
+          let uid = localStorage.getItem('apelink_user_uid');
+          let checkurl = '/api/individual/check?type=INDUSTRY&sidOrName=' + that.industryName;
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'post',
+            url: checkurl,
+            headers: headers
+          }).then(function (res) {
+            if (res.data) {
+              that.projectFollow = true
+            } else {
+              that.projectFollow = false
+            }
+          })
+        }
       },
       goProjectByName(obj) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {

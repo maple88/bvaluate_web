@@ -32,7 +32,24 @@
                 </li>
                 <li>5个小时前</li>
               </ul>
-              <div class="tips">新闻</div>
+              <div class="tips"
+                   v-if="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
+                   @click="goProjectByName(item.projectCategory)"
+              >
+                {{item.projectCategory | labelFormat}}
+              </div>
+              <div class="tips"
+                   v-else-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
+                   @click="goIndustryByIndustry(item.industryCategory)"
+              >
+                {{item.industryCategory | labelFormat}}
+              </div>
+              <div class="tips"
+                   v-else="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
+                   @click="goIndustryByCountry(item.countryCategory)"
+              >
+                {{item.countryCategory | labelFormat}}
+              </div>
             </div>
           </div>
         </div>
@@ -44,6 +61,11 @@
 <script>
 
   export default {
+    data() {
+      return {
+        item: []
+      }
+    },
     methods: {
       creatArticle() {
         console.log('sss')

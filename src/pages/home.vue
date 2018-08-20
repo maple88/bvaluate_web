@@ -380,7 +380,7 @@
                 <p class="smtit">最新资讯</p>
                 <ul class="list">
                   <li v-for="content in item.content">
-                    <a href="javascript:;" @click="goArticle('/article',{sid:content.sid})">{{content.title}}</a>
+                    <a :title="content.title" href="javascript:;" @click="goArticle('/article',{sid:content.sid})">{{content.title}}</a>
                   </li>
                 </ul>
                 <ul class="rtlist">

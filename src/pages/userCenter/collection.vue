@@ -24,10 +24,27 @@
                 </li>
                 <li>{{item.result.urlDate | dataFormat}}</li>
                 <li data-toggle="modal" data-target="#deleteModal" class="love" @click="deleteCid = item.cid">
-                	<i class="fa fa-heart"></i>已收藏
+                  <i class="fa fa-heart"></i>已收藏
                 </li>
               </ul>
-              <div class="tips">新闻</div>
+              <div class="tips"
+                   v-if="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
+                   @click="goProjectByName(item.projectCategory)"
+              >
+                {{item.projectCategory | labelFormat}}
+              </div>
+              <div class="tips"
+                   v-else-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
+                   @click="goIndustryByIndustry(item.industryCategory)"
+              >
+                {{item.industryCategory | labelFormat}}
+              </div>
+              <div class="tips"
+                   v-else="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
+                   @click="goIndustryByCountry(item.countryCategory)"
+              >
+                {{item.countryCategory | labelFormat}}
+              </div>
             </div>
           </div>
         </div>
@@ -82,12 +99,12 @@
   export default {
     data() {
       return {
-      	deleteCid: '',
+        deleteCid: '',
         newsList: []
       }
     },
-    mounted () {
-    	this.getFollowList()
+    mounted() {
+      this.getFollowList()
     },
     methods: {
       getFollowList() {
@@ -101,7 +118,7 @@
           url: url,
           headers: headers
         }).then(function (res) {
-        	that.newsList = res.data.content
+          that.newsList = res.data.content
         })
       },
       setUnfollow(cid) {
@@ -115,15 +132,15 @@
           url: url,
           headers: headers
         }).then(function (res) {
-        	$('#deleteModal').modal('hide')
-        	if(res.data){
-        		that.getFollowList()
-        	}
+          $('#deleteModal').modal('hide')
+          if (res.data) {
+            that.getFollowList()
+          }
         })
       }
     },
     filters: {
-    	dataFormat(obj) {
+      dataFormat(obj) {
         let myDate = new Date(obj);
         let mydata = myDate.getDate();
         let nowDate = new Date();

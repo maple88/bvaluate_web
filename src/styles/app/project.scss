@@ -1,5 +1,5 @@
 .project-banner {
-  background: url(../assets/project/probanner.jpg) no-repeat;
+  background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   color: #fff;
@@ -57,7 +57,6 @@
         margin-left: 20px;
         &.on {
           background: #1355b3;
-          cursor: default;
         }
       }
     }

@@ -3,7 +3,7 @@
     <vheader/>
     <div class="maintainer">
       <!-- content here -->
-      <div class="project-banner">
+      <div class="project-banner" :style="'background: url('+banner+')'">
         <div class="container">
           <div class="left">{{project.totalScore }}</div>
           <div class="right">
@@ -12,8 +12,8 @@
               <div class="info">
                 <div class="tit">
                   {{project.project}}
-                  <div class="followbtn" v-if="isFollow">+ 关注</div>
-                  <div class="followbtn on" v-if="!isFollow">已关注</div>
+                  <div class="followbtn" v-if="!isFollow" @click="setFollow()">+ 关注</div>
+                  <div class="followbtn on" v-if="isFollow" @click="deleteFollow(project.collected)">√ 已关注</div>
                 </div>
                 <p class="smtit">{{project.introduction }}</p>
               </div>
@@ -72,22 +72,22 @@
                           <li>{{item.urlTime}}</li>
                         </ul>
                         <div class="tips"
-                             v-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
+                             v-if="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
+                             @click="goProjectByName(item.projectCategory)"
+                        >
+                          {{item.projectCategory | labelFormat}}
+                        </div>
+                        <div class="tips"
+                             v-else-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
                              @click="goIndustryByIndustry(item.industryCategory)"
                         >
                           {{item.industryCategory | labelFormat}}
                         </div>
                         <div class="tips"
-                             v-else-if="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
+                             v-else="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
                              @click="goIndustryByCountry(item.countryCategory)"
                         >
                           {{item.countryCategory | labelFormat}}
-                        </div>
-                        <div class="tips"
-                             v-else="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
-                             @click="goProjectByName(item.projectCategory)"
-                        >
-                          {{item.projectCategory | labelFormat}}
                         </div>
                       </div>
                     </div>
@@ -369,22 +369,22 @@
                         <span class="name">{{item.author}}</span>
                         <span class="time">{{item.urlTime}}</span>
                         <span class="tips"
-                              v-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
+                              v-if="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
+                              @click="goProjectByName(item.projectCategory)"
+                        >
+                          {{item.projectCategory | labelFormat}}
+                        </span>
+                        <span class="tips"
+                              v-else-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
                               @click="goIndustryByIndustry(item.industryCategory)"
                         >
                           {{item.industryCategory | labelFormat}}
                         </span>
                         <span class="tips"
-                              v-else-if="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
+                              v-else="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
                               @click="goIndustryByCountry(item.countryCategory)"
                         >
                           {{item.countryCategory | labelFormat}}
-                        </span>
-                        <span class="tips"
-                              v-else="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
-                              @click="goProjectByName(news.projectCategory)"
-                        >
-                          {{item.projectCategory | labelFormat}}
                         </span>
                       </div>
                     </div>
@@ -600,11 +600,12 @@
   let loading = require('../assets/login/loading.gif');
   let nicon = require('../assets/home/tuite.png');
   let weibo = require('../assets/home/weibo.png');
+  let banner = require('../assets/project/probanner.jpg');
 
   export default {
     data() {
       return {
-        isFollow: true,
+        isFollow: false,
         project: {},
         NewOrGrade: [],
         TwitterOrWeibo: [],
@@ -622,7 +623,8 @@
         NewOrGradeNo: 2,
         NGewOrGrade: '290001',
         TWewOrGradeNo: 2,
-        TWewOrGrade: '290002'
+        TWewOrGrade: '290002',
+        banner: banner
       }
     },
     mounted() {
@@ -705,6 +707,47 @@
       '$route': 'initProject'
     },
     methods: {
+      setFollow() {
+        let that = this
+        let token = localStorage.getItem('apelink_user_token');
+        if (token) {
+          let uid = localStorage.getItem('apelink_user_uid');
+          let url = '/api/individual/add?type=ICO&sid=' + that.project.sid;
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'post',
+            url: url,
+            headers: headers
+          }).then(function (res) {
+            if (res.data) {
+              that.isFollow = true
+            }
+          })
+        } else {
+          alert('请先登录');
+        }
+      },
+      deleteFollow(cid) {
+        let that = this
+        let token = localStorage.getItem('apelink_user_token');
+        if (token) {
+          let uid = localStorage.getItem('apelink_user_uid');
+          let url = '/api/individual/delete?cid=' + cid;
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'DELETE',
+            url: url,
+            headers: headers
+          }).then(function (res) {
+            if (res.data) {
+              that.isFollow = false
+            }
+
+          })
+        } else {
+          alert('请先登录。')
+        }
+      },
       goProjectByName(obj) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
@@ -746,7 +789,14 @@
           let sid = this.$route.query.sid;
           let project = this.$route.query.project;
           if (sid != null && sid !== '' && sid !== undefined) {
-            that.$axios.get('/api/ICO/id/' + sid).then(function (res) {
+            let uid = localStorage.getItem('apelink_user_uid')
+            let url = '/api/ICO/id/' + sid;
+            let headers = {'uid': uid};
+            that.$axios({
+              method: 'get',
+              url: url,
+              headers: headers
+            }).then(function (res) {
               that.project = res.data;
               let partner = that.project.partner;
               partner = JSON.parse(partner);
@@ -764,7 +814,11 @@
                   observeParents: true
                 });
               });
-              //290001
+              if (that.project.collected) {
+                that.isFollow = true
+              } else {
+                that.isFollow = false
+              }
               that.iniNewOrGrade(that.project.project, '290001');
               that.iniTwitterOrWeibo(that.project.project, '290002');
               let categoryNameList = that.project.industryCategory;
@@ -775,12 +829,36 @@
               }
             });
           } else if (project != null && project !== '' && project !== undefined) {
-            that.$axios.get('/api/ICO/name/' + project).then(function (res) {
+            let uid = localStorage.getItem('apelink_user_uid')
+            let url = '/api/ICO/name/' + project;
+            let headers = {'uid': uid};
+            that.$axios({
+              method: 'get',
+              url: url,
+              headers: headers
+            }).then(function (res) {
               that.project = res.data;
               let partner = that.project.partner;
               partner = JSON.parse(partner);
               that.project.partner = partner;
-              //290001
+              that.$nextTick(() => {  // 下一个UI帧再初始化swiper
+                new Swiper('#partnerSwiper', {
+                  direction: 'vertical',
+                  slidesPerView: 'auto',
+                  freeMode: true,
+                  scrollbar: {
+                    el: '.swiper-scrollbar',
+                  },
+                  mousewheel: true,
+                  observer: true,
+                  observeParents: true
+                });
+              });
+              if (that.project.collected) {
+                that.isFollow = true
+              } else {
+                that.isFollow = false
+              }
               that.iniNewOrGrade(that.project.project, '290001');
               that.iniTwitterOrWeibo(that.project.project, '290002');
               let categoryNameList = that.project.industryCategory;
