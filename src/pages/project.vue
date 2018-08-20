@@ -94,7 +94,7 @@
                   </div>
                 </div>
               </div>
-              <div class="swiper-scrollbar"></div>
+              <!--<div class="swiper-scrollbar"></div>-->
             </div>
           </div>
           <div class="section2">
@@ -555,7 +555,7 @@
                   <!--</div>-->
                 </div>
               </div>
-              <div class="swiper-scrollbar"></div>
+              <!--<div class="swiper-scrollbar"></div>-->
             </div>
             <div class="swiper-container advert-swiper">
               <div class="swiper-wrapper">
@@ -653,6 +653,7 @@
         observeParents: true,
       });
       this.initProject();
+      this.scrollNewOrGrade();
     },
     filters: {
       showDay(obj) {
@@ -707,6 +708,46 @@
       '$route': 'initProject'
     },
     methods: {
+      scrollNewOrGrade() {
+        let $this = document.getElementById('newOrGradeSwiper');
+        let finished = true;
+        $this.addEventListener('scroll', () => {
+          let boxTop = $this.scrollTop;
+          let boxHeight = $this.scrollHeight;
+          let offsetHeight = $this.offsetHeight;
+          if ((boxTop / (boxHeight - offsetHeight) >= 0.90) && finished) {
+            finished = false;
+            let that = this;
+            that.$axios.get('/api/traditional/news?searchBy=' + that.project.project + '&categoryId=' + that.NGewOrGrade + '&pageNo=' + that.NewOrGradeNo).then(function (res) {
+              that.NewOrGradeNo++;
+              for (let i = 0; i < res.data.content.length; i++) {
+                that.NewOrGrade.push(res.data.content[i])
+              }
+              finished = true;
+            });
+          }
+        });
+      },
+      scrollNewOrGrade() {
+        let $this = document.getElementById('twitterOrWeiboSwiper');
+        let finished = true;
+        $this.addEventListener('scroll', () => {
+          let boxTop = $this.scrollTop;
+          let boxHeight = $this.scrollHeight;
+          let offsetHeight = $this.offsetHeight;
+          if ((boxTop / (boxHeight - offsetHeight) >= 0.90) && finished) {
+            finished = false;
+            let that = this;
+            that.$axios.get('/api/traditional/news?searchBy=' + that.project.project + '&categoryId=' + that.TWewOrGrade + '&pageNo=' + that.TWewOrGradeNo).then(function (res) {
+              that.TWewOrGradeNo++;
+              for (let i = 0; i < res.data.content.length; i++) {
+                that.TwitterOrWeibo.push(res.data.content[i])
+              }
+              finished = true;
+            });
+          }
+        });
+      },
       setFollow() {
         let that = this
         let token = localStorage.getItem('apelink_user_token');
@@ -879,40 +920,6 @@
         let that = this;
         that.$axios.get('/api/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId).then(function (res) {
           that.NewOrGrade = res.data.content;
-          that.$nextTick(() => {  // 下一个UI帧再初始化swiper
-            that.newSwiper = new Swiper('#newOrGradeSwiper', {
-              direction: 'vertical',
-              slidesPerView: 'auto',
-              freeMode: true,
-              scrollbar: {
-                el: '.swiper-scrollbar',
-              },
-              mousewheel: true,
-              observer: true,
-              observeParents: true,
-              on: {
-                momentumBounce: function () {
-                  let swiper = this
-                  if (swiper.translate < -100) {
-                    swiper.allowTouchMove = false;//禁止触摸
-                    swiper.params.virtualTranslate = true;//定住不给回弹
-                    that.$axios.get('/api/traditional/news?searchBy=' + that.project.project + '&categoryId=' + that.NGewOrGrade + '&pageNo=' + that.NewOrGradeNo).then(function (res) {
-                      that.NewOrGradeNo++;
-                      for (let i = 0; i < res.data.content.length; i++) {
-                        that.NewOrGrade.push(res.data.content[i])
-                      }
-                      console.log(that.NewOrGrade)
-                      that.$nextTick(() => {  // 下一个UI帧再初始化swiper
-                        swiper.update()
-                      });
-                      swiper.params.virtualTranslate = false;
-                      swiper.allowTouchMove = true;
-                    })
-                  }
-                }
-              }
-            });
-          });
           that.showLoading1 = false;
         })
       },
@@ -922,39 +929,6 @@
         let that = this;
         that.$axios.get('/api/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId).then(function (res) {
           that.TwitterOrWeibo = res.data.content;
-          that.$nextTick(() => {  // 下一个UI帧再初始化swiper
-            that.tWSwiper = new Swiper('#twitterOrWeiboSwiper', {
-              direction: 'vertical',
-              slidesPerView: 'auto',
-              freeMode: true,
-              scrollbar: {
-                el: '.swiper-scrollbar',
-              },
-              mousewheel: true,
-              observer: true,
-              observeParents: true,
-              on: {
-                momentumBounce: function () {
-                  let swiper = this
-                  if (swiper.translate < -100) {
-                    swiper.allowTouchMove = false;//禁止触摸
-                    swiper.params.virtualTranslate = true;//定住不给回弹
-                    that.$axios.get('/api/traditional/news?searchBy=' + that.project.project + '&categoryId=' + that.TWewOrGrade + '&pageNo=' + that.TWewOrGradeNo).then(function (res) {
-                      that.TWewOrGradeNo++;
-                      for (let i = 0; i < res.data.content.length; i++) {
-                        that.TwitterOrWeibo.push(res.data.content[i])
-                      }
-                      that.$nextTick(() => {  // 下一个UI帧再初始化swiper
-                        swiper.update()
-                      });
-                      swiper.params.virtualTranslate = false;
-                      swiper.allowTouchMove = true;
-                    })
-                  }
-                }
-              }
-            });
-          });
           that.showLoading2 = false;
         })
       },
