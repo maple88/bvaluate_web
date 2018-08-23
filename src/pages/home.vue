@@ -158,7 +158,7 @@
                 <div class="toplist-item">
                   <div class="left">
                     <p class="tit">
-                      <span class="title" @click.stop="$router.push('/project?sid=' + showProject.sid)">
+                      <span class="title" @click.stop="goArticle('/project',{sid: showProject.sid}) ">
                         {{showProject.project}}
                       </span>
                       <i class="fa fa-heart" v-if="!isFollow" @click="setFollow()"></i>
@@ -200,7 +200,11 @@
                         <img :src="partner.image">
                         <p class="name">{{partner.h3}}</p>
                         <p class="posi">{{partner.h4}}</p>
-                        <div class="i on"><a :href="partner.linkin"></a><i class="fa fa-linkedin"></i></div>
+                        <div class="i" :class="partner.linkin?'on':''">
+                          <a :href="partner.linkin" target="_blank">
+                            <i class="fa fa-linkedin"></i>
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -527,7 +531,8 @@
     },
     beforeRouteEnter(to, from, next) {
       next(vm => {
-        vm.initCandy()
+        vm.initCandy();
+        vm.getHottestProject();
       })
     },
     methods: {
@@ -652,6 +657,7 @@
             headers: headers
           }).then(function (res) {
             if (res.data) {
+              alert('关注成功');
               that.isFollow = true
             }
           })
@@ -660,25 +666,25 @@
         }
       },
       deleteFollow(cid) {
-        let that = this
-        let token = localStorage.getItem('apelink_user_token');
-        if (token) {
-          let uid = localStorage.getItem('apelink_user_uid');
-          let url = '/api/individual/delete?cid=' + cid;
-          let headers = {'uid': uid, 'Authorization': token};
-          that.$axios({
-            method: 'DELETE',
-            url: url,
-            headers: headers
-          }).then(function (res) {
-            if (res.data) {
-              that.isFollow = true
-            }
-
-          })
-        } else {
-          alert('请先登录。')
-        }
+        // let that = this
+        // let token = localStorage.getItem('apelink_user_token');
+        // if (token) {
+        //   let uid = localStorage.getItem('apelink_user_uid');
+        //   let url = '/api/individual/delete?cid=' + cid;
+        //   let headers = {'uid': uid, 'Authorization': token};
+        //   that.$axios({
+        //     method: 'DELETE',
+        //     url: url,
+        //     headers: headers
+        //   }).then(function (res) {
+        //     if (res.data) {
+        //       that.isFollow = true
+        //     }
+        //
+        //   })
+        // } else {
+        //   alert('请先登录。')
+        // }
       },
       getfollowboolean(project) {
         let that = this
@@ -810,6 +816,7 @@
             num = 0
           }
         }
+        console.log(objArr);
         return objArr
       },
       changeProject(obj, index) {
