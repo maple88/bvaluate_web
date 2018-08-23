@@ -36,9 +36,11 @@
       <div class="usernav">
         <div class="container">
           <ul>
-            <li @click="toggleTab('contribute'), num = 1" :class="{active: num === 1}">投稿<span>25</span></li>
+            <li @click="toggleTab('contribute'), num = 1" :class="{active: num === 1}">
+              投稿<span>{{myNewsList.length}}</span></li>
             <!--<li @click="toggleTab('read'), num = 2" :class="{active: num === 2}">阅读<span>122</span></li>-->
-            <li @click="toggleTab('collection'), num = 3" :class="{active: num === 3}">收藏<span>120</span></li>
+            <li @click="toggleTab('collection'), num = 3" :class="{active: num === 3}">
+              收藏<span>{{newsList.length}}</span></li>
           </ul>
         </div>
       </div>
@@ -77,11 +79,14 @@
         nickName: '',
         synopsis: '',
         profileUrl: '',
-        default_header: default_header
+        default_header: default_header,
+        newsList: [],
+        myNewsList: [],
       }
     },
     mounted() {
-      this.initCandy()
+      this.initCandy();
+      this.getFollowList()
     },
     beforeRouteEnter(to, from, next) {
       next(vm => {
@@ -91,6 +96,34 @@
     methods: {
       toggleTab: function (tab) {
         this.currentTab = tab;
+      },
+      getFollowList() {
+        let that = this
+        let token = localStorage.getItem('apelink_user_token')
+        let uid = localStorage.getItem('apelink_user_uid')
+        let url = '/api/traditional/authorRelatedNews?author=' + this.nickName;
+        let headers = {'uid': uid, 'Authorization': token};
+        that.$axios({
+          method: 'get',
+          url: url,
+          headers: headers
+        }).then(function (res) {
+          that.myNewsList = res.data.content
+        })
+      },
+      getFollowList() {
+        let that = this
+        let token = localStorage.getItem('apelink_user_token')
+        let uid = localStorage.getItem('apelink_user_uid')
+        let url = '/api/individual/list?type=NEWS';
+        let headers = {'uid': uid, 'Authorization': token};
+        that.$axios({
+          method: 'get',
+          url: url,
+          headers: headers
+        }).then(function (res) {
+          that.newsList = res.data.content
+        })
       },
       initCandy() {
         let token = localStorage.getItem('apelink_user_token');

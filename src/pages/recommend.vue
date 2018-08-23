@@ -24,15 +24,15 @@
           <div class="clearfix">
             <div class="search_bar">
               <input type="text" id="keyword" v-model="searchKey"
-                     @keyup.enter="changeClassfy(searchKey,-1)"/>
+                     @keyup.enter="changeClassfy(searchKey,-2)"/>
               <div class="search-btn">
-                <i class="fa fa-search" @click="changeClassfy(searchKey,-1)"></i>
+                <i class="fa fa-search" @click="changeClassfy(searchKey,-2)"></i>
               </div>
             </div>
             <div class="label_bar">
               <!-- <keep-alive> -->
               <transition name="fade">
-                <div v-show="newType === 1" class="news_box">
+                <div v-show="newType === 1 || newType === -2" class="news_box">
                   <div class="news_title">
                     <span>最新动态</span>
                   </div>
@@ -155,15 +155,12 @@
                           </div>
                           <div class="media-body">
                             <h4 class="media-heading" :title="news.title" @click="goArticle('/article',{sid:news.sid})"
-                                v-if="!(news.dataType === 'WEIBO' || news.dataType === 'TWITTER')">
-                              {{news.title }}
+                                v-if="!(news.dataType === 'WEIBO' || news.dataType === 'TWITTER')" v-html="news.title ">
                             </h4>
                             <p class="media-words TorW" v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'"
-                               @click="goArticle('/article',{sid:news.sid})">
-                              {{news.content }}
+                               @click="goArticle('/article',{sid:news.sid})" v-html="news.content ">
                             </p>
-                            <p class=" media-words" v-else>
-                              {{news.content }}
+                            <p class=" media-words" v-else v-html="news.content ">
                             </p>
                             <div class="media-bottom">
                               <ul>
@@ -214,7 +211,7 @@
               </div>
             </div>
             <transition name="fade">
-              <div v-if="newType == 1 || newType==-1" class="right">
+              <div v-if="newType == 1 || newType==-2" class="right">
                 <div class="link_box">
                   <div class="item">
                     <i class="fa fa-facebook"></i>
@@ -245,7 +242,7 @@
                     <h4>快讯</h4>
                   </div>
                   <div class="hot_content">
-                    <ul class="scoll_style">
+                    <ul class="scoll_style" id="scoll_scoll_style">
                       <li class="news_flash" v-for="(flash,index) in flashList">
                         <div class="news_item">
                           <div class="radio_box">
@@ -271,7 +268,7 @@
                     <h4>国家时事</h4>
                   </div>
                   <div class="hot_content current">
-                    <ul>
+                    <ul class="long_ul">
                       <li class="news_flash" v-for="(affair,index) in affairList">
                         <div class="news_item nolink">
                           <div class="radio_box">
@@ -300,37 +297,37 @@
                 </div>
               </div>
             </transition>
-            <transition name="fade">
-              <div v-if="newType == 2" class="right">
-                <div class="right_item">
-                  <div class="hot_title">
-                    <div class="title_icon">
-                      <img src="../assets/follow/hot_text.png"/>
-                    </div>
-                    <h4>24小时热文</h4>
-                  </div>
-                  <div class="hot_content">
-                    <ul>
-                      <li v-for="(item, index) in hotNews" :key="item.sid">
-                        <div class="list_item">
-                          <div class="item_left" v-if="item.titlePicture"
-                               @click="goArticle('/article',{sid:item.sid})">
-                            <img :src="item.titlePicture"/>
-                          </div>
-                          <div class="item_body" :class="item.titlePicture?'':'noPicture'">
-                            <h4 @click="goArticle('/article',{sid:item.sid})">{{item.title}}</h4>
-                            <p>{{item.content}}</p>
-                          </div>
-                        </div>
-                        <div class="item_bottom">
-                          <p>{{item.urlDate}}</p>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </transition>
+            <!--<transition name="fade">-->
+            <!--<div v-if="newType == 2" class="right">-->
+            <!--<div class="right_item">-->
+            <!--<div class="hot_title">-->
+            <!--<div class="title_icon">-->
+            <!--<img src="../assets/follow/hot_text.png"/>-->
+            <!--</div>-->
+            <!--<h4>24小时热文</h4>-->
+            <!--</div>-->
+            <!--<div class="hot_content">-->
+            <!--<ul>-->
+            <!--<li v-for="(item, index) in hotNews" :key="item.sid">-->
+            <!--<div class="list_item">-->
+            <!--<div class="item_left" v-if="item.titlePicture"-->
+            <!--@click="goArticle('/article',{sid:item.sid})">-->
+            <!--<img :src="item.titlePicture"/>-->
+            <!--</div>-->
+            <!--<div class="item_body" :class="item.titlePicture?'':'noPicture'">-->
+            <!--<h4 @click="goArticle('/article',{sid:item.sid})">{{item.title}}</h4>-->
+            <!--<p>{{item.content}}</p>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div class="item_bottom">-->
+            <!--<p>{{item.urlDate}}</p>-->
+            <!--</div>-->
+            <!--</li>-->
+            <!--</ul>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</transition>-->
             <transition name="fade">
               <div v-if="newType == 3" class="right">
                 <div class="right_item">
@@ -377,7 +374,7 @@
                     </h4>
                   </div>
                   <div class="hot_content">
-                    <ul>
+                    <ul class="long_ul">
                       <li v-for="(item, index) in news" :key="item.sid">
                         <div class="list_item">
                           <div class="item_left tweet">
@@ -551,7 +548,8 @@
         followAuthor: [],
         followIndustry: [],
         classfyPageSize: 30,
-        classfyPageSizeShow: true
+        classfyPageSizeShow: true,
+        flashPageSize: 20,
       }
     },
     filters: {
@@ -768,8 +766,7 @@
             that.hotNews = res.data.content
           }
         })
-      }
-      ,
+      },
       getNews(newsnum) {
         let that = this
         that.$axios.get('/api/traditional/news?searchBy=' + this.industryName + '&categoryId=' + newsnum + '&pageSize=10').then(function (res) {
@@ -777,8 +774,7 @@
             that.news = res.data.content
           }
         })
-      }
-      ,
+      },
       getAllFollow() {
         this.getFollowList('ICO', res => {
           this.followICO = res.data.content;
@@ -792,8 +788,25 @@
         this.getFollowList('INDUSTRY', res => {
           this.followIndustry = res.data.content;
         })
-      }
-      ,
+      },
+      scrollFlash() {
+        let $this = document.getElementById('scoll_scoll_style');
+        let finished = true;
+        $this.addEventListener('scroll', () => {
+          let boxTop = $this.scrollTop;
+          let boxHeight = $this.scrollHeight;
+          let offsetHeight = $this.offsetHeight;
+          if ((boxTop / (boxHeight - offsetHeight) >= 0.80) && finished) {
+            finished = false;
+            let that = this;
+            this.initRightNews('快讯', this.flashPageSize, res => {
+              this.flashPageSize += 20;
+              this.flashList = res;
+              finished = true;
+            });
+          }
+        });
+      },
       changeClassfy(categoryName, index) {
         this.categoryName = categoryName;
         if (categoryName === '关注') {
@@ -807,7 +820,8 @@
           this.initRightNews('国家时事', 10, res => {
             this.affairList = res;
           });
-          this.initRightNews('快讯', 20, res => {
+          this.initRightNews('快讯', this.flashPageSize, res => {
+            this.flashPageSize += 20;
             this.flashList = res;
           });
         } else {
@@ -818,11 +832,24 @@
           this.initRightNews('国家时事', 10, function (res) {
             that.affairList = res;
           });
-          this.initRightNews('快讯', 20, function (res) {
-            that.flashList = res;
-          })
+          this.initRightNews('快讯', this.flashPageSize, res => {
+            this.flashPageSize += 20;
+            this.flashList = res;
+          });
           this.initNewsList('', categoryName);
           this.getRollingNew();
+        } else if (index === -2) {
+          let that = this;
+          this.initRightNews('国家时事', 10, function (res) {
+            that.affairList = res;
+          });
+          this.initRightNews('快讯', this.flashPageSize, res => {
+            this.flashPageSize += 20;
+            this.flashList = res;
+          });
+          this.initNewsList('', categoryName);
+          this.getRollingNew();
+          this.newType = -2;
         } else {
           this.initNewsList(categoryName);
         }
@@ -834,8 +861,7 @@
         this.getfollowboolean();
         this.getHotnews(categoryName);
         this.getNews('280001');
-      }
-      ,
+      },
       initNewsList(categoryName, search) {
         let that = this;
         that.categoryName = categoryName;
@@ -845,16 +871,30 @@
         }
         that.$axios.get(url).then(function (res) {
           that.newsList = res.data.content;
+          if (search !== null && search !== '' && search !== undefined) {
+            let allData = that.newsList;
+            for (let i = 0; i < allData.length; i++) {
+              allData[i].title = that.replaceAll(allData[i].title, search, '<font color="red">' + search + '</font>');
+              allData[i].content = that.replaceAll(allData[i].content, search, '<font color="red">' + search + '</font>');
+              console.log(allData[i].title)
+            }
+          }
           that.showloading = false;
         })
-      }
-      ,
+      },
       reloadMore(categoryName) {
         this.showloading = true;
         this.pageSize += 10;
-        this.initNewsList(categoryName);
-      }
-      ,
+        let search = this.searchKey;
+        let country = this.$route.query.country;
+        if (search !== null && search !== '' && search !== undefined) {
+          this.initNewsList('', search);
+        } else if (country !== null && country !== '' && country !== undefined) {
+          this.initNewsList('', country);
+        } else {
+          this.initNewsList(categoryName);
+        }
+      },
       initRightNews(categoryName, pageSize, callback) {
         let that = this;
         that.categoryName = categoryName;
@@ -863,8 +903,7 @@
         that.$axios.get(url).then(function (res) {
           thisCallback(res.data.content);
         })
-      }
-      ,
+      },
       initSwiper() {
         let newsSwiper = new Swiper('#news_swiper', {
           autoplay: {
@@ -883,8 +922,7 @@
         newsSwiper.el.onmouseout = function () {
           newsSwiper.autoplay.start();
         }
-      }
-      ,
+      },
       initPageDate() {
         let path = this.$route.path;
         if (path === '/recommend') {
@@ -901,6 +939,10 @@
           }
           this.getNewsClassfy(showActive, categoryName, showpage);
         }
+      },
+      replaceAll(text, FindText, RepText) {
+        let regExp = new RegExp(FindText, "g");
+        return text.replace(regExp, RepText);
       }
     },
     mounted() {
@@ -922,6 +964,7 @@
         }
       });
       this.initPageDate()
+      this.scrollFlash()
     }
   }
 </script>
