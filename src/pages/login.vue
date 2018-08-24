@@ -23,7 +23,7 @@
               <div class="inputInner" v-if="loginForm">
                 <div class="input-group">
                   <div class="input-group-addon"><img src="../assets/login/icon1.png"></div>
-                  <input type="text" class="form-control" v-model="loginUser.phoneNumber" placeholder="手机号/账号"
+                  <input type="text" class="form-control" v-model="loginUser.phoneNumber" placeholder="手机号"
                          @focus="errorMsg.loginUser.phoneNumber = ''">
                   <span class="help-block" v-if="errorMsg.loginUser.phoneNumber">
 										<img src="../assets/login/iclose.png">

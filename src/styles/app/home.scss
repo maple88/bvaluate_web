@@ -83,7 +83,7 @@
         color: #ffffff;
       }
       a {
-        background: transparent;
+        background: transparent !important;
         padding: 0;
         margin: 0;
         &.label_a {
@@ -343,6 +343,9 @@
             color: #999;
             display: flex;
             align-items: center;
+            .author {
+              cursor: pointer;
+            }
             .userimg {
               width: 25px;
               height: 25px;
@@ -819,6 +822,7 @@
                 }
               }
               .right {
+                width: 100%;
                 .des {
                   font-size: 12px;
                   color: $black;
@@ -845,6 +849,7 @@
                   font-size: 16px;
                   color: #666;
                   margin-right: 20px;
+                  cursor: pointer;
                 }
                 .time {
                   font-size: 13px;
@@ -923,6 +928,7 @@
                           font-size: 12px;
                           color: #999999;
                           margin-left: 5px;
+                          cursor: pointer;
                         }
                       }
                       .usertime {
