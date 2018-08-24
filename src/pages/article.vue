@@ -54,7 +54,8 @@
                     <span class="share" @click.stop="showAllShare($event)"><i class="fa fa-share-alt"></i></span>
                     <span class="follow">
                       <i class="fa fa-heart" v-show="!isFollow" @click="setFollow()"></i>
-                      <i class="fa fa-heart followed" v-show="isFollow" @click="isFollow = false"></i>
+                      <i class="fa fa-heart followed" v-show="isFollow"
+                         @click="deleteFollow(articleContent.collected)"></i>
                     </span>
                   </div>
                 </div>
@@ -104,7 +105,7 @@
                       <img src="../assets/follow/icon-follow.png"/>关注
                       <div class="arrow"></div>
                     </button>
-                    <button class="followed_btn" v-if="follow" @click="follow = false">
+                    <button class="followed_btn" v-if="follow" @click="deleteAuthorFollow(articleContent.author)">
                       <div class="arrow"></div>
                       <img src="../assets/follow/icon-followed.png"/>已关注
                     </button>
@@ -491,7 +492,7 @@
 
       },
       deleteFollow(cid) {
-        let that = this
+        let that = this;
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid');
@@ -503,7 +504,50 @@
             headers: headers
           }).then(function (res) {
             if (res.data) {
-              that.isFollow = true
+              that.isFollow = false;
+            }
+          })
+        } else {
+          alert('请先登录。')
+        }
+      },
+      deleteAuthorFollow(author) {
+        // this.projectFollow = false;
+        let token = localStorage.getItem('apelink_user_token')
+        if (token) {
+          let uid = localStorage.getItem('apelink_user_uid')
+          let that = this;
+          let url = '/api/individual/list?type=AUTHOR';
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'get',
+            url: url,
+            headers: headers
+          }).then(res => {
+            let list = res.data.content;
+            let cid = '';
+            for (let i = 0; i < list.length; i++) {
+              let authorName = list[i].result;
+              if (author === authorName) {
+                cid = list[i].cid;
+                break
+              }
+            }
+            if (cid !== '') {
+              console.log(cid);
+              let deteleUrl = '/api/individual/delete?cid=' + cid;
+              that.$axios({
+                method: 'DELETE',
+                url: deteleUrl,
+                headers: headers
+              }).then(function (res) {
+                if (res.data) {
+                  that.follow = false;
+                  alert('已取消关注');
+                }
+              })
+            } else {
+              alert('你没有关注此作者。')
             }
           })
         } else {
@@ -532,7 +576,8 @@
             url: url,
             headers: headers
           }).then(function (res) {
-            that.isFollow = true
+            // that.isFollow = true
+            that.getDetailData();
           });
         } else {
           alert('请先登录。')
@@ -551,6 +596,7 @@
             headers: headers
           }).then(function (res) {
             that.follow = true
+            that.getDetailData();
           });
         } else {
           alert('请先登录。')

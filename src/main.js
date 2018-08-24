@@ -12,6 +12,7 @@ import footer from '@/components/footer.vue'
 import tip from '@/components/tip.vue'
 import 'swiper/dist/css/swiper.min.css'
 import axios from 'axios'
+import '@/styles/main.scss'
 
 Vue.prototype.$axios = axios;
 Vue.config.productionTip = false;

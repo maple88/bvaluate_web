@@ -4,7 +4,7 @@
       <div class="tophead">
         <div class="container">
           <p>APELINK</p>
-          <span>中/EN</span>
+          <!--<span>中/EN</span>-->
         </div>
       </div>
       <div class="mainhead">
@@ -124,8 +124,14 @@
                            v-if="!(news.siteName!==null && news.siteName !== '' && news.siteName !== undefined && news.siteName!='NULL')">
                         <img src="../assets/logo_brand.png">
                       </div>
-                      {{(news.siteName!==null && news.siteName !== '' && news.siteName !== undefined &&
-                      news.siteName!='NULL')?news.siteName:news.author }}
+                      <span v-if="news.siteName!==null && news.siteName !== '' && news.siteName !== undefined &&
+                      news.siteName!='NULL'" @click="goArticle('/author',{author: news.siteName,type: 'siteName'})"
+                            class="author">
+                        {{news.siteName}}
+                      </span>
+                      <span v-else @click="goArticle('/author',{author: news.author,type: 'author'})" class="author">
+                        {{ news.author}}
+                      </span>
                     </div>
                     <div class="right" @click="goArticle('/article',{sid:news.sid})">阅读全文</div>
                   </div>
@@ -240,12 +246,14 @@
                                 </p>
                                 <div class="bottom">
                                   <div class="userinfo">
-                                    <div class="user" v-if="icoNew.siteName">
+                                    <div class="user" v-if="icoNew.siteName && icoNew.siteName !== 'NULL'"
+                                         @click="goArticle('/author',{author: icoNew.siteName,type: 'siteName'})">
                                       <!--<img src="../assets/logo_brand.png">-->
                                       <span>{{icoNew.siteName}}</span>
                                       <span class="usertime">{{icoNew.urlTime}}</span>
                                     </div>
-                                    <div class="user" v-else>
+                                    <div class="user" v-else
+                                         @click="goArticle('/author',{author: icoNew.author,type: 'author'})">
                                       <img src="../assets/logo_brand.png">
                                       <span>{{icoNew.author }}{{!(icoNew.siteName)}}</span>
                                       <span class="usertime">{{icoNew.urlTime}}</span>
@@ -290,7 +298,14 @@
                                 <p class="des cursor_style" @click="goArticle('/article',{sid:icoNew.sid})">
                                   {{icoNew.content}}</p>
                                 <div class="bottom">
-                                  <span class="name">{{icoNew.author }}{{!(icoNew.siteName)}}</span>
+                                  <span class="name" v-if="icoNew.siteName && icoNew.siteName !== 'NULL'"
+                                        @click="goArticle('/author',{author: icoNew.siteName,type: 'siteName'})">
+                                    {{(icoNew.siteName)}}
+                                  </span>
+                                  <span class="name"
+                                        @click="goArticle('/author',{author: icoNew.author,type: 'author'})" v-else>
+                                    {{icoNew.author }}
+                                  </span>
                                   <span class="time">{{icoNew.urlDate}}</span>
                                   <span class="tips cursor_style"
                                         v-if="icoNew.projectCategory !==null && icoNew.projectCategory !== '' && icoNew.projectCategory !==undefined && icoNew.projectCategory !=='NULL'"
@@ -331,7 +346,14 @@
                                 <p class="des cursor_style" @click="goArticle('/article',{sid:icoNew.sid})">
                                   {{icoNew.content}}</p>
                                 <div class="bottom">
-                                  <span class="name">{{icoNew.author }}{{!(icoNew.siteName)}}</span>
+                                  <span class="name" v-if="icoNew.siteName && icoNew.siteName !== 'NULL'"
+                                        @click="goArticle('/author',{author: icoNew.siteName,type: 'siteName'})">
+                                    {{(icoNew.siteName)}}
+                                  </span>
+                                  <span class="name"
+                                        @click="goArticle('/author',{author: icoNew.author,type: 'author'})" v-else>
+                                    {{icoNew.author }}
+                                  </span>
                                   <span class="time">{{icoNew.urlDate}}</span>
                                   <span class="tips cursor_style"
                                         v-if="icoNew.projectCategory !==null && icoNew.projectCategory !== '' && icoNew.projectCategory !==undefined && icoNew.projectCategory !=='NULL'"

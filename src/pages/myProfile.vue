@@ -135,9 +135,10 @@
               <div class="form-group">
                 <label class="control-label">验证码</label>
                 <div class="coderow">
-                  <input type="text" v-model="user.emailCode">
-                  <button type="button" :disabled="sendEmailBtn" class="btn code-btn" @click="sendEmail">获取验证码
+                  <input type="text" v-model="user.emailCode" @focus="emailCodeError_msg=''">
+                  <button type="button" :disabled="sendEmailBtn" class="btn code-btn" @click="sendEmail">发送验证邮件
                   </button>
+                  <div type="button" class="btn rightips newStyle text-danger">{{emailCodeError_msg}}</div>
                 </div>
                 <p v-if="emailError_show" class="help-block">{{email_time}}s后重新获取</p>
               </div>
@@ -234,7 +235,8 @@
         },
         aplinkUser: {},
         loading: loading,
-        default_header: default_header
+        default_header: default_header,
+        emailCodeError_msg: ''
       }
     },
     methods: {
@@ -304,6 +306,7 @@
             $('#emailModal').modal('hide')
           }
         }, res => {
+          this.emailCodeError_msg = res.response.data.message;
         })
       },
       //发送邮件验证码
@@ -369,14 +372,9 @@
           this.newPwdError = '密码不能为空'
         }
         if (ensurePwd !== null && ensurePwd !== '' && ensurePwd !== undefined) {
-          if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(ensurePwd)) {
-            if (ensurePwd !== newPassword) {
-              pass = false;
-              this.ensurePwdError = '两次输入不一致'
-            }
-          } else {
+          if (ensurePwd !== newPassword) {
             pass = false;
-            this.ensurePwdError = '只允许输入6-14个英文大小写和数字'
+            this.ensurePwdError = '两次输入不一致'
           }
         } else {
           pass = false;

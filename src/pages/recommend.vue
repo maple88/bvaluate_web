@@ -77,18 +77,14 @@
                 <transition name="fade">
                   <div v-if="newType == 3" class="follow_box">
                     <span class="item_box">{{industryName}}</span>
-                    <transition name="fade">
-                      <button class="follow" v-if="!projectFollow" @click="setFollow()">
-                        <i class="fa fa-plus"></i>
-                        <span>关注</span>
-                      </button>
-                    </transition>
-                    <transition name="fade">
-                      <button class="followed" v-if="projectFollow" @click="projectFollow = !projectFollow">
-                        <i class="fa fa-check"></i>
-                        <span>已关注</span>
-                      </button>
-                    </transition>
+                    <button class="follow" v-if="!projectFollow" @click="setFollow()">
+                      <i class="fa fa-plus"></i>
+                      <span>关注</span>
+                    </button>
+                    <button class="followed" v-if="projectFollow" @click="deleteFollow(industryName)">
+                      <i class="fa fa-check"></i>
+                      <span>已关注</span>
+                    </button>
                   </div>
                 </transition>
               </keep-alive>
@@ -164,16 +160,16 @@
                             </p>
                             <div class="media-bottom">
                               <ul>
-                                <li>
-                                  <div class="userimg"
-                                       v-if="!(news.siteName !== 'NULL' && news.siteName !== null && news.siteName !== '')">
+                                <li
+                                  v-if="!(news.siteName !== 'NULL' && news.siteName !== null && news.siteName !== '')"
+                                  @click="goArticle('/author',{author: news.author,type: 'author'})">
+                                  <div class="userimg">
                                     <img src="../assets/follow/user_head.png">
                                   </div>
-                                  {{
-                                  (news.siteName !== 'NULL'
-                                  && news.siteName !== null
-                                  && news.siteName !== '')?news.siteName:news.author
-                                  }}
+                                  {{news.author}}
+                                </li>
+                                <li v-else @click="goArticle('/author',{author: news.siteName,type: 'siteName'})">
+                                  {{news.siteName}}
                                 </li>
                                 <li>{{news.urlTime}}</li>
                               </ul>
@@ -338,7 +334,7 @@
                     <h4>24小时热文</h4>
                   </div>
                   <div class="hot_content">
-                    <ul>
+                    <ul class="long_ul">
                       <li v-for="(item, index) in hotNews" :key="item.sid">
                         <div class="list_item">
                           <div class="item_left" v-if="item.titlePicture">
@@ -550,6 +546,7 @@
         classfyPageSize: 30,
         classfyPageSizeShow: true,
         flashPageSize: 20,
+        country: ''
       }
     },
     filters: {
@@ -639,8 +636,51 @@
         }).then(function (res) {
           if (res.data) {
             that.projectFollow = true;
+            alert('关注成功');
           }
         });
+      },
+      deleteFollow(industry) {
+        // this.projectFollow = false;
+        let token = localStorage.getItem('apelink_user_token')
+        if (token) {
+          let uid = localStorage.getItem('apelink_user_uid')
+          let that = this;
+          let url = '/api/individual/list?type=INDUSTRY';
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'get',
+            url: url,
+            headers: headers
+          }).then(res => {
+            let list = res.data.content;
+            let cid = '';
+            for (let i = 0; i < list.length; i++) {
+              let industryName = list[i].result;
+              if (industry === industryName) {
+                cid = list[i].cid;
+                break
+              }
+            }
+            if (cid !== '') {
+              console.log(cid);
+              let deteleUrl = '/api/individual/delete?cid=' + cid;
+              that.$axios({
+                method: 'DELETE',
+                url: deteleUrl,
+                headers: headers
+              }).then(function (res) {
+                if (res.data) {
+                  that.projectFollow = false;
+                  alert('已取消关注');
+                }
+
+              })
+            }
+          })
+        } else {
+          alert('请先登录。')
+        }
       },
       getFollowList(type, callback) {
         let that = this
@@ -828,6 +868,7 @@
           this.newType = 3;
         }
         if (index === -1) {
+          console.log('-1')
           let that = this;
           this.initRightNews('国家时事', 10, function (res) {
             that.affairList = res;
@@ -839,6 +880,7 @@
           this.initNewsList('', categoryName);
           this.getRollingNew();
         } else if (index === -2) {
+          console.log('-2')
           let that = this;
           this.initRightNews('国家时事', 10, function (res) {
             that.affairList = res;
@@ -851,16 +893,43 @@
           this.getRollingNew();
           this.newType = -2;
         } else {
-          this.initNewsList(categoryName);
+          if (categoryName === '关注') {
+            this.getAllFollowList()
+          } else {
+            this.initNewsList(categoryName);
+          }
         }
         this.industryName = categoryName;
         this.showloading = true;
         this.classShow = index;
         this.newsList = [];
         this.pageSize = 20;
-        this.getfollowboolean();
-        this.getHotnews(categoryName);
-        this.getNews('280001');
+        if (categoryName === '关注') {
+
+        } else {
+          this.getfollowboolean();
+          this.getHotnews(categoryName);
+          this.getNews('280001');
+        }
+      },
+      getAllFollowList() {
+        let that = this;
+        let token = localStorage.getItem('apelink_user_token');
+        let uid = localStorage.getItem('apelink_user_uid');
+        let url = '/api/individual/list?type=NEWS';
+        let headers = {'uid': uid, 'Authorization': token};
+        that.$axios({
+          method: 'get',
+          url: url,
+          headers: headers
+        }).then(function (res) {
+          let data = res.data.content;
+          that.newsList = [];
+          for (let i = 0; i < data.length; i++) {
+            that.newsList.push(data[i].result)
+          }
+          that.showloading = false;
+        })
       },
       initNewsList(categoryName, search) {
         let that = this;
@@ -876,7 +945,6 @@
             for (let i = 0; i < allData.length; i++) {
               allData[i].title = that.replaceAll(allData[i].title, search, '<font color="red">' + search + '</font>');
               allData[i].content = that.replaceAll(allData[i].content, search, '<font color="red">' + search + '</font>');
-              console.log(allData[i].title)
             }
           }
           that.showloading = false;
@@ -886,7 +954,7 @@
         this.showloading = true;
         this.pageSize += 10;
         let search = this.searchKey;
-        let country = this.$route.query.country;
+        let country = this.country;
         if (search !== null && search !== '' && search !== undefined) {
           this.initNewsList('', search);
         } else if (country !== null && country !== '' && country !== undefined) {
@@ -933,6 +1001,7 @@
           let country = this.$route.query.country;
           if (country !== null && country !== '' && country !== undefined && country !== 'NULL') {
             categoryName = country;
+            this.country = country;
             showpage = -1;
           } else {
             showActive = true;

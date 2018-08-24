@@ -722,7 +722,7 @@
             that.$axios.get('/api/traditional/news?searchBy=' + that.project.project + '&categoryId=' + that.NGewOrGrade + '&pageNo=' + that.NewOrGradeNo).then(function (res) {
               that.NewOrGradeNo++;
               if (res.data.content.length < 10) {
-                
+
               }
               for (let i = 0; i < res.data.content.length; i++) {
                 that.NewOrGrade.push(res.data.content[i])
@@ -765,7 +765,7 @@
             headers: headers
           }).then(function (res) {
             if (res.data) {
-              that.isFollow = true
+              that.initProject();
             }
           })
         } else {
