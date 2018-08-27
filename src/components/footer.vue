@@ -5,7 +5,7 @@
             <div class="flexbox clearfix">
               <ul>
                 <li class="apelink_logo">
-                  APELINK
+                  Bvaluate
                   <img src="../assets/follow/bottom_logo.png"/>
                 </li>
                 <li><a href="#">Stats & facts</a></li>

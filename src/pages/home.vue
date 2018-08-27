@@ -3,7 +3,7 @@
     <div class="home-header">
       <div class="tophead">
         <div class="container">
-          <p>APELINK</p>
+          <p>Bvaluate</p>
           <!--<span>中/EN</span>-->
         </div>
       </div>
@@ -21,7 +21,7 @@
               </button>
               <router-link to="/index" class="navbar-brand">
                 <img src="../assets/logo-white.png" class="white">
-                <img src="../assets/logo.png" class="blue">
+                <img src="../assets/logo-white.png" class="blue">
               </router-link>
             </div>
 
@@ -74,7 +74,7 @@
         <div class="bannerwds">
           <img src="../assets/logo_brand.png">
           <span>+</span>
-          APELINK
+          Bvaluate
         </div>
       </div>
       <div class="df-container container home-newslist">
@@ -424,8 +424,8 @@
 <script>
   import Swiper from 'swiper'
 
-  let tuiwen = require('../assets/home/tuite.png')
-  let weibo = require('../assets/home/weibo.png')
+  let tuiwen = require('../assets/home/tuite.png');
+  let weibo = require('../assets/home/weibo.png');
   let default_header = require('../assets/user/default-header.png');
 
   export default {
