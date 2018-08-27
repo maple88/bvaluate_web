@@ -2,7 +2,7 @@
   <div class="header" :class="scroll">
     <div class="tophead">
       <div class="container">
-        <p>APELINK</p>
+        <p>Bvaluate</p>
         <!--<span>中/EN</span>-->
       </div>
     </div>

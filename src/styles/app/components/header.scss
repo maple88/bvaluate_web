@@ -4,7 +4,7 @@
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, .2);
     top: -50px;
     .mainhead .navbar-nav > li > a {
-      padding: 25px 8px 30px;
+      padding: 22px 8px 22px;
     }
     .mainhead .navbar-nav.navbar-right a.header_name {
       padding: 0px;
@@ -17,6 +17,10 @@
     }
     .mainhead .navbar-brand {
       margin: -5px 0 0;
+    }
+    .mainhead .navbar-nav.navbar-right .user {
+      width: 60px;
+      height: 60px;
     }
   }
   .tophead {
@@ -95,6 +99,7 @@
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
+        transition: width, height .3s;
         img {
           width: 100%;
         }

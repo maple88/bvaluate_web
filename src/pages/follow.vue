@@ -9,7 +9,7 @@
               <div class="show_box">
                 <img src="../assets/follow/apelink.png"/>
                 <span class="plus">+</span>
-                <span class="name">APELINK</span>
+                <span class="name">Bvaluate</span>
               </div>
             </div>
           </div>

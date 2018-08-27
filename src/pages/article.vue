@@ -183,7 +183,7 @@
             <div class="flexbox clearfix">
               <ul>
                 <li class="apelink_logo">
-                  APELINK
+                  Bvaluate
                   <img src="../assets/follow/bottom_logo.png"/>
                 </li>
                 <li><a href="#">Stats & facts</a></li>
@@ -195,7 +195,7 @@
                 <li><a href="#">Benchy</a></li>
               </ul>
               <ul class="logo_box">
-                <li>APELINK</li>
+                <li>Bvaluate</li>
                 <li>
                   <ul class="network clearfix">
                     <li>
