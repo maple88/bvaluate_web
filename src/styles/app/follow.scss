@@ -963,6 +963,9 @@
               span {
                 display: inline-block;
               }
+              .user_name {
+                cursor: pointer;
+              }
               .user_name, .publish_data {
                 padding-right: 15px;
               }
@@ -1090,6 +1093,7 @@
                 color: #333333;
                 font-size: 17px;
                 margin-top: 0px;
+                cursor: pointer;
               }
               .follow_btn {
                 padding: 5px 10px;

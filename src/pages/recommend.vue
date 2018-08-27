@@ -573,13 +573,14 @@
         let nowhour = nowDate.getHours();
         let myMin = myDate.getMinutes()
         let nowMin = nowDate.getMinutes()
-        if (nowdata - mydata < 7 && nowdata - mydata > 1) {
+        //
+        if (nowdata - mydata < 7 && nowdata - mydata >= 1) {
           return nowdata - mydata + '天前'
-        } else if (nowdata - mydata <= 1 && Math.abs(myhour - nowhour) > 1 && Math.abs(myhour - nowhour) < 24) {
+        } else if (nowdata - mydata < 1 && Math.abs(myhour - nowhour) >= 1 && Math.abs(myhour - nowhour) < 24) {
           return Math.abs(myhour - nowhour) + '小时前'
-        } else if (Math.abs(myhour - nowhour) <= 1 && Math.abs(myDate.getMinutes() - nowDate.getMinutes()) > 1 && Math.abs(myDate.getMinutes() - nowDate.getMinutes()) < 60) {
+        } else if (Math.abs(myhour - nowhour) < 1 && Math.abs(myDate.getMinutes() - nowDate.getMinutes()) >= 1 && Math.abs(myDate.getMinutes() - nowDate.getMinutes()) < 60) {
           return Math.abs(myDate.getMinutes() - nowDate.getMinutes()) + '分钟前'
-        } else if (Math.abs(myDate.getMinutes() - nowDate.getMinutes()) <= 1) {
+        } else if (Math.abs(myDate.getMinutes() - nowDate.getMinutes()) < 1) {
           return Math.abs(myDate.getSeconds() - nowDate.getSeconds()) + '秒前'
         } else {
           let month = myDate.getMonth()

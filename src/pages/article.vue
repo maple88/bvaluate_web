@@ -40,11 +40,15 @@
                 </div>
                 <div class="article_tool">
                   <div class="article_left">
-                    <span class="user_name">{{
-                                  (articleContent.siteName !== 'NULL'
-                                  && articleContent.siteName !== null
-                                  && articleContent.siteName !== '')?articleContent.siteName:articleContent.author
-                                  }}</span>
+                    <span class="user_name"
+                          v-if="!(articleContent.siteName !== 'NULL' && articleContent.siteName !== null && articleContent.siteName !== '')"
+                          @click="goArticle('/author',{author: articleContent.author,type: 'author'})">
+                      {{articleContent.author}}
+                    </span>
+                    <span class="user_name" v-else
+                          @click="goArticle('/author',{author: articleContent.siteName,type: 'siteName'})">
+                      {{articleContent.siteName}}
+                    </span>
                     <a :href="articleContent.urlName" class="publish_data">{{articleContent.urlTime}}</a>
                     <!-- <span class="publish_time">13:20</span> -->
                   </div>
@@ -100,7 +104,15 @@
                     <img src="../assets/follow/apelink.png" alt="">
                   </div>
                   <div class="author_right">
-                    <h4>{{articleContent.author}}</h4>
+                    <h4 class="user_name"
+                        v-if="!(articleContent.siteName !== 'NULL' && articleContent.siteName !== null && articleContent.siteName !== '')"
+                        @click="goArticle('/author',{author: articleContent.author,type: 'author'})">
+                      {{articleContent.author}}
+                    </h4>
+                    <h4 class="user_name" v-else
+                        @click="goArticle('/author',{author: articleContent.siteName,type: 'siteName'})">
+                      {{articleContent.siteName}}
+                    </h4>
                     <button class="follow_btn" v-if="!follow" @click="setAuthorFollow()">
                       <img src="../assets/follow/icon-follow.png"/>关注
                       <div class="arrow"></div>
@@ -417,7 +429,7 @@
               headers: headers
             }).then(function (res) {
               that.articleContent = res.data
-              that.getNewsForAuthor(that.articleContent.author);
+              that.getNewsForAuthor(that.articleContent);
               if (that.articleContent.collected) {
                 that.isFollow = true
               } else {
@@ -602,7 +614,9 @@
           alert('请先登录。')
         }
       },
-      getNewsForAuthor(author) {
+      getNewsForAuthor(obj) {
+        let author = '';
+        (obj.siteName && obj.siteName !== 'NULL') ? author = obj.siteName : author = obj.author;
         let that = this
         that.$axios.get('/api/traditional/authorRelatedNews?author=' + author + '&pageSize=5').then(function (res) {
           that.newsForAuthor = res.data.content;

@@ -1,5 +1,5 @@
 .user-center {
-  background: url(../assets/userbg.jpg) no-repeat;
+  background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   padding: 20px 0 45px;
@@ -271,6 +271,14 @@
   }
 }
 
+.mt40 {
+  margin-bottom: 50px;
+}
+
+.minh163 {
+  min-height: 163px;
+}
+
 .medialist {
   .media {
     display: flex;
@@ -303,8 +311,68 @@
       overflow: hidden;
       padding: 0;
       margin-right: 20px;
+      .newimg_box {
+        height: 100%;
+        width: 100%;
+        background-color: #797979;
+        position: relative;
+        cursor: pointer;
+        &.TorW {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-wrap: wrap;
+          img {
+            width: 65px;
+            height: auto;
+            object-fit: contain;
+            filter: blur(0px);
+            margin-bottom: -25px;
+          }
+          span {
+            font-size: 13px;
+            color: #ffffff;
+          }
+        }
+        img {
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+          filter: blur(1px);
+        }
+        .date_box {
+          position: absolute;
+          left: 0px;
+          top: 0px;
+          z-index: 11;
+          width: 100%;
+          height: 100%;
+          text-align: center;
+          padding-top: 15px;
+          .day {
+            display: block;
+            font-size: 65px;
+            color: #ffffff;
+          }
+          .years {
+            font-size: 20px;
+            display: block;
+            color: #ffffff;
+          }
+          @media (max-width: 768px) {
+            .day {
+              font-size: 21px;
+            }
+            .years {
+              font-size: 12px;
+            }
+          }
+        }
+      }
       img {
         width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
     }
     .media-body {
@@ -346,6 +414,9 @@
           font-size: 16px;
           color: #999;
           margin-right: 28px;
+          .author {
+            cursor: pointer;
+          }
           i {
             margin-right: 8px;
           }
@@ -717,6 +788,9 @@
                 ul {
                   > li {
                     font-size: 12px;
+                    .author {
+                      cursor: pointer;
+                    }
                   }
                 }
               }

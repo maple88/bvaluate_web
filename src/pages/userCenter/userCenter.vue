@@ -2,7 +2,7 @@
   <div class="page">
     <vheader/>
     <div class="maintainer">
-      <div class="user-center">
+      <div class="user-center" :style="'background-image: url('+userbg+')'">
         <div class="usertainer">
           <div class="userimg">
             <div class="user_header"
@@ -57,6 +57,7 @@
   import creat from '@/pages/userCenter/creat';
 
   let default_header = require('../../assets/user/default-header.png');
+  let userbg = require('../../assets/userbg.jpg');
 
   export default {
     components: {
@@ -82,6 +83,7 @@
         default_header: default_header,
         newsList: [],
         myNewsList: [],
+        userbg: userbg,
       }
     },
     mounted() {

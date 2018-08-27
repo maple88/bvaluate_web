@@ -104,7 +104,7 @@
                   <input type="text">
                   <button type="button" class="btn code-btn">获取验证码</button>
                 </div>
-                <p class="help-block">60s后重新获取</p>
+                <p class="help-block" v-if="moblieError_show">60s后重新获取</p>
               </div>
             </form>
           </div>
@@ -224,6 +224,7 @@
         emailError_show: false,
         emailError_msg: '',
         ensurePwdError: '',
+        moblieError_show: false,
         editnicknamebox: {
           show: true
         },

@@ -2,7 +2,7 @@
   <div class="page">
     <vheader/>
     <div class="maintainer">
-      <div class="user-center">
+      <div class="user-center" :style="'background-image: url('+userbg+')'">
         <div class="usertainer author">
           <div class="userimg"><img src="../assets/logo_brand.png"></div>
 
@@ -77,10 +77,10 @@
                               <div class="userimg">
                                 <img src="../assets/follow/user_head.png">
                               </div>
-                              {{news.author}}
+                              <span class="author">{{news.author}}</span>
                             </li>
                             <li v-else @click="goArticle('/author',{author: news.siteName,type: 'siteName'})">
-                              {{news.siteName}}
+                              <span class="author">{{news.siteName}}</span>
                             </li>
                             <li>{{news.urlTime}}</li>
                           </ul>
@@ -126,6 +126,7 @@
   let loading = require('../assets/login/loading.gif');
   let tuiwen = require('../assets/home/tuite.png');
   let weibo = require('../assets/home/weibo.png');
+  let userbg = require('../assets/userbg.jpg');
   export default {
     data() {
       return {
@@ -138,7 +139,8 @@
         weibo: weibo,
         newsForAuthor: [],
         loading: loading,
-        showloading: true
+        showloading: true,
+        userbg: userbg
       }
     },
     mounted() {
