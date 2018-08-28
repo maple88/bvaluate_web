@@ -546,6 +546,8 @@
         classfyPageSize: 30,
         classfyPageSizeShow: true,
         flashPageSize: 20,
+        followListNo: 1,
+        followListPageSize: 20,
         country: ''
       }
     },
@@ -917,8 +919,8 @@
         let that = this;
         let token = localStorage.getItem('apelink_user_token');
         let uid = localStorage.getItem('apelink_user_uid');
-        let url = '/api/individual/list?type=NEWS';
-        let headers = {'uid': uid, 'Authorization': token};
+        let url = '/api/traditional/collectionNews?pageNo=' + this.followListNo + '&pageSize=' + this.followListPageSize;
+        let headers = {'uid': uid};
         that.$axios({
           method: 'get',
           url: url,
