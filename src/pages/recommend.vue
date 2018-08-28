@@ -871,7 +871,6 @@
           this.newType = 3;
         }
         if (index === -1) {
-          console.log('-1')
           let that = this;
           this.initRightNews('国家时事', 10, function (res) {
             that.affairList = res;
@@ -883,7 +882,6 @@
           this.initNewsList('', categoryName);
           this.getRollingNew();
         } else if (index === -2) {
-          console.log('-2')
           let that = this;
           this.initRightNews('国家时事', 10, function (res) {
             that.affairList = res;
@@ -897,6 +895,7 @@
           this.newType = -2;
         } else {
           if (categoryName === '关注') {
+            this.newsList = []
             this.getAllFollowList()
           } else {
             this.initNewsList(categoryName);
@@ -916,6 +915,7 @@
         }
       },
       getAllFollowList() {
+        this.showloading = true;
         let that = this;
         let token = localStorage.getItem('apelink_user_token');
         let uid = localStorage.getItem('apelink_user_uid');
@@ -927,10 +927,11 @@
           headers: headers
         }).then(function (res) {
           let data = res.data.content;
-          that.newsList = [];
-          for (let i = 0; i < data.length; i++) {
-            that.newsList.push(data[i].result)
-          }
+          console.log(data);
+          that.newsList = that.newsList.concat(data)
+          that.showloading = false;
+          that.followListNo++;
+        }).catch(function (res) {
           that.showloading = false;
         })
       },
@@ -951,19 +952,25 @@
             }
           }
           that.showloading = false;
+        }).catch(function (res) {
+          that.showloading = false;
         })
       },
       reloadMore(categoryName) {
-        this.showloading = true;
-        this.pageSize += 10;
-        let search = this.searchKey;
-        let country = this.country;
-        if (search !== null && search !== '' && search !== undefined) {
-          this.initNewsList('', search);
-        } else if (country !== null && country !== '' && country !== undefined) {
-          this.initNewsList('', country);
+        if (categoryName === '关注') {
+          this.getAllFollowList()
         } else {
-          this.initNewsList(categoryName);
+          this.showloading = true;
+          this.pageSize += 10;
+          let search = this.searchKey;
+          let country = this.country;
+          if (search !== null && search !== '' && search !== undefined) {
+            this.initNewsList('', search);
+          } else if (country !== null && country !== '' && country !== undefined) {
+            this.initNewsList('', country);
+          } else {
+            this.initNewsList(categoryName);
+          }
         }
       },
       initRightNews(categoryName, pageSize, callback) {
