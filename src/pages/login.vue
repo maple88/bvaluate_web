@@ -321,6 +321,7 @@
                     that.showTip = true;
                     that.tipText = '登录成功';
                     setTimeout(() => {
+                      that.showTip = false;
                       that.$router.push('/index')
                       that.login()
                     }, 1000);
