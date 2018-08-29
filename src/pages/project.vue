@@ -5,7 +5,7 @@
       <!-- content here -->
       <div class="project-banner" :style="'background: url('+banner+')'">
         <div class="container">
-          <div class="left">{{project.totalScore }}</div>
+          <div class="left">{{project.totalScore |  showTatolCore}}</div>
           <div class="right">
             <div class="top">
               <div class="imgbrand"><img :src="project.logoSrc "></div>
@@ -125,26 +125,30 @@
               <div class="left">
                 <img src="../assets/project/head.png">
                 <div class="info">
-                  <p class="num">{{project.totalScore }}</p>
+                  <p class="num">{{project.totalScore | showTatolCore}}</p>
                   <p>{{project.experts}}位专家评级</p>
                 </div>
               </div>
               <div class="right">
                 <div class="numitem">
-                  <p class="num">{{project.icoprofile?project.icoprofile:'-' }}</p>
-                  <p>首发评分</p>
-                </div>
-                <div class="numitem">
-                  <p class="num">{{project.teamScore }}</p>
+                  <p class="num">{{project.teamScore | showTatolCore}}</p>
                   <p>团队评分</p>
                 </div>
                 <div class="numitem">
-                  <p class="num">{{project.visionScore }}</p>
-                  <p>前景评分</p>
+                  <p class="num">{{project.fundamentalScore | showTatolCore }}</p>
+                  <p>基本面</p>
                 </div>
                 <div class="numitem">
-                  <p class="num">{{project.productScore }}</p>
-                  <p>产品评分</p>
+                  <p class="num">{{project.marketScore | showTatolCore}}</p>
+                  <p>市场</p>
+                </div>
+                <div class="numitem">
+                  <p class="num">{{project.fundSupervisionScore | showTatolCore}}</p>
+                  <p>资金监管</p>
+                </div>
+                <div class="numitem">
+                  <p class="num">{{project.technicalAnalysisScore |showTatolCore }}</p>
+                  <p>技术</p>
                 </div>
               </div>
             </div>
@@ -580,7 +584,7 @@
                       <p class="tit">{{project.project}}</p>
                       <p class="smtit">{{project.introduction}}</p>
                     </div>
-                    <p class="num">{{project.totalScore}} <i class="fa fa-angle-right"></i></p>
+                    <p class="num">{{project.totalScore | showTatolCore}} <i class="fa fa-angle-right"></i></p>
                   </div>
                 </div>
               </router-link>
@@ -657,6 +661,9 @@
       this.scrollTWewOrGrade();
     },
     filters: {
+      showTatolCore(obj){
+        return parseFloat(obj).toFixed(2);
+      },
       showDay(obj) {
         let myDate = new Date(obj);
         let day = myDate.getDate()
