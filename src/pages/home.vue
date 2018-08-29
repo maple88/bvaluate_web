@@ -173,7 +173,13 @@
                     <p class="smtit">{{showProject.introduction }}</p>
                     <p class="des">{{showProject.irAbstract }}</p>
                   </div>
-                  <div class="right"><img :src="showProject.logoSrc"></div>
+                  <div class="right">
+                    <img :src="showProject.logoSrc">
+                    <div class="totalcroeBox">
+                      <p class="totalcroe">{{showProject.totalScore | showTatolCore}}</p>
+                      <p class="totalcroeText">总分</p>
+                    </div>
+                  </div>
                 </div>
                 <div class="mid">
                   <p><span>代币</span>{{showProject.token }}</p>
@@ -455,6 +461,9 @@
       }
     },
     filters: {
+      showTatolCore(obj){
+        return parseFloat(obj).toFixed(2);
+      },
       showDay(obj) {
         let myDate = new Date(obj);
         let day = myDate.getDate();
