@@ -10,6 +10,7 @@ import recommend from '@/pages/recommend'
 import article from '@/pages/article'
 import project from '@/pages/project'
 import author from '@/pages/author'
+import list from '@/pages/list'
 
 Vue.use(Router)
 
@@ -23,6 +24,10 @@ export default new Router({
     {
       path: '/login',
       component: login
+    },
+    {
+      path: '/list',
+      component: list
     },
     {
       path: '/userCenter',
