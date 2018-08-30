@@ -401,8 +401,8 @@
             <router-link to="/recommend" class="more">浏览更多</router-link>
           </div>
           <div class="modulelist">
-            <div class="item" v-for="item in hostIndustries">
-              <div class="left"><img src="../assets/home/hi.jpg"></div>
+            <div class="item" v-for="(item,index) in hostIndustries">
+              <div class="left"><img :src="item.bgImage"></div>
               <div class="right">
                 <p class="tit">{{item.categoryName}}</p>
                 <p class="smtit">最新资讯</p>
@@ -433,6 +433,13 @@
   let tuiwen = require('../assets/home/tuite.png');
   let weibo = require('../assets/home/weibo.png');
   let default_header = require('../assets/user/default-header.png');
+  let img1 = require('../assets/home/img1.jpg');
+  let img2 = require('../assets/home/img2.jpg');
+  let img3 = require('../assets/home/img3.jpg');
+  let img4 = require('../assets/home/img4.jpg');
+  let img5 = require('../assets/home/img5.jpg');
+  let img6 = require('../assets/home/img6.jpg');
+
 
   export default {
     data() {
@@ -458,10 +465,20 @@
         newsNo: 1,
         tuiwenNo: 1,
         weiboNo: 1,
+        img: [
+          img1, img2, img3, img4, img5, img6
+        ],
+        img1: img1,
+        img2: img2,
+        img3: img3,
+        img4: img4,
+        img5: img5,
+        img6: img6,
+
       }
     },
     filters: {
-      showTatolCore(obj){
+      showTatolCore(obj) {
         return parseFloat(obj).toFixed(2);
       },
       showDay(obj) {
@@ -784,6 +801,19 @@
           for (let i = 0; i < data.length; i++) {
             let Industry = {};
             Industry.categoryName = data[i];
+            if(Industry.categoryName === '货币'){
+              Industry.bgImage = img1;
+            }else if(Industry.categoryName === '投资'){
+              Industry.bgImage = img2;
+            }else if(Industry.categoryName === '平台'){
+              Industry.bgImage = img3;
+            }else if(Industry.categoryName === '加密货币'){
+              Industry.bgImage = img4;
+            }else if(Industry.categoryName === '网络'){
+              Industry.bgImage = img5;
+            }else if(Industry.categoryName === '交易所'){
+              Industry.bgImage = img6;
+            }
             that.$axios.get('/api/ICO/relatedICO?categoryName=' + Industry.categoryName + '&pageSize=4').then(function (res) {
               Industry.project = res.data;
               that.$axios.get('/api/traditional/categoryList?categoryName=' + Industry.categoryName + '&pageSize=4').then(function (res) {
