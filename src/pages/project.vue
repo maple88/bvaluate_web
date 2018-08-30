@@ -109,7 +109,12 @@
                       <img :src="partner.image">
                       <p class="name">{{partner.h3}}</p>
                       <p class="posi">{{partner.h4}}</p>
-                      <div class="i"><a :href="partner.u"><i class="fa fa-linkedin"></i></a></div>
+                      <div class="i" :class="partner.linkin?'on':''">
+                        <a :href="partner.linkin" target="_blank">
+                          <i class="fa fa-linkedin"></i>
+                        </a>
+                      </div>
+                      <!--<div class="i"><a :href="partner.u"><i class="fa fa-linkedin"></i></a></div>-->
                     </div>
                   </div>
                 </div>
