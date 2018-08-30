@@ -16,45 +16,45 @@
                 </div>
                 <div class="listBox_content">
                   <div class="table-responsive">
-                  <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>项目名称</th>
-                      <th>团队真实性</th>
-                      <th>团队社交活跃度</th>
-                      <th>团队关联度</th>
-                      <th>白书皮</th>
-                      <th>行业热度</th>
-                      <th>媒体关注度</th>
-                      <th>宣传力度</th>
-                      <th>负面影响</th>
-                      <th>钱包监控</th>
-                      <th>代码活跃度</th>
-                      <th>总分</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="tr_default" v-for="(item,index) in list">
-                      <td v-if="index === 0" class="tr_first"><span>{{index + 1 }}</span></td>
-                      <td v-else-if="index === 1" class="tr_second"><span>{{index + 1 }}</span></td>
-                      <td v-else-if="index === 2" class="tr_third"><span>{{index + 1 }}</span></td>
-                      <td v-else><span>{{index + 1 }}</span></td>
-                      <td  :class="index === 0? 'tr_first':''">项目名称</td>
-                      <td :class="index === 0? 'tr_first':''">100%</td>
-                      <td :class="index === 0? 'tr_first':''">100%</td>
-                      <td :class="index === 0? 'tr_first':''">100%</td>
-                      <td :class="index === 0? 'tr_first':''">100%</td>
-                      <td :class="index === 0? 'tr_first':''">100%</td>
-                      <td :class="index === 0? 'tr_first':''">100%</td>
-                      <td :class="index === 0? 'tr_first':''">100%</td>
-                      <td :class="index === 0? 'tr_first':''">100%</td>
-                      <td :class="index === 0? 'tr_first':''">100%</td>
-                      <td :class="index === 0? 'tr_first':''">100%</td>
-                      <td :class="index === 0? 'tr_first':''">100%</td>
-                    </tr>
-                    </tbody>
-                  </table>
+                    <table class="table table-striped table-hover">
+                      <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>项目名称</th>
+                        <th>团队真实性</th>
+                        <th>团队社交活跃度</th>
+                        <th>团队关联度</th>
+                        <th>白书皮</th>
+                        <th>行业热度</th>
+                        <th>媒体关注度</th>
+                        <th>宣传力度</th>
+                        <th>负面影响</th>
+                        <th>钱包监控</th>
+                        <th>代码活跃度</th>
+                        <th>总分</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr class="tr_default" v-for="(item,index) in list">
+                        <td v-if="index === 0" class="tr_first"><span>{{index + 1 }}</span></td>
+                        <td v-else-if="index === 1" class="tr_second"><span>{{index + 1 }}</span></td>
+                        <td v-else-if="index === 2" class="tr_third"><span>{{index + 1 }}</span></td>
+                        <td v-else><span>{{index + 1 }}</span></td>
+                        <td :class="index === 0? 'tr_first':''">项目名称</td>
+                        <td :class="index === 0? 'tr_first':''">100%</td>
+                        <td :class="index === 0? 'tr_first':''">100%</td>
+                        <td :class="index === 0? 'tr_first':''">100%</td>
+                        <td :class="index === 0? 'tr_first':''">100%</td>
+                        <td :class="index === 0? 'tr_first':''">100%</td>
+                        <td :class="index === 0? 'tr_first':''">100%</td>
+                        <td :class="index === 0? 'tr_first':''">100%</td>
+                        <td :class="index === 0? 'tr_first':''">100%</td>
+                        <td :class="index === 0? 'tr_first':''">100%</td>
+                        <td :class="index === 0? 'tr_first':''">100%</td>
+                        <td :class="index === 0? 'tr_first':''">100%</td>
+                      </tr>
+                      </tbody>
+                    </table>
                   </div>
                   <div class="moreBox">
                     <button class="relaodMore">加载更多</button>
@@ -83,47 +83,47 @@
                   </div>
                 </div>
                 <div class="table-responsive">
-                <table class="table table-striped table-hover">
-                  <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>货币名称</th>
-                    <th>成交额（一天）</th>
-                    <th>价格</th>
-                    <th>涨幅</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr class="tr_default">
-                    <td class="tr_first"><span>1</span></td>
-                    <td>项目名称</td>
-                    <td>￥120万</td>
-                    <td>￥1.89</td>
-                    <td>87.81%</td>
-                  </tr>
-                  <tr class="tr_default">
-                    <td class="tr_second"><span>2</span></td>
-                    <td>项目名称</td>
-                    <td>￥120万</td>
-                    <td>￥1.89</td>
-                    <td>87.81%</td>
-                  </tr>
-                  <tr class="tr_default">
-                    <td class="tr_third"><span>3</span></td>
-                    <td>项目名称</td>
-                    <td>￥120万</td>
-                    <td>￥1.89</td>
-                    <td>87.81%</td>
-                  </tr>
-                  <tr class="tr_default">
-                    <td><span>4</span></td>
-                    <td>项目名称</td>
-                    <td>￥120万</td>
-                    <td>￥1.89</td>
-                    <td>87.81%</td>
-                  </tr>
-                  </tbody>
-                </table>
+                  <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>货币名称</th>
+                      <th>成交额（一天）</th>
+                      <th>价格</th>
+                      <th>涨幅</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="tr_default">
+                      <td class="tr_first"><span>1</span></td>
+                      <td>项目名称</td>
+                      <td>￥120万</td>
+                      <td>￥1.89</td>
+                      <td>87.81%</td>
+                    </tr>
+                    <tr class="tr_default">
+                      <td class="tr_second"><span>2</span></td>
+                      <td>项目名称</td>
+                      <td>￥120万</td>
+                      <td>￥1.89</td>
+                      <td>87.81%</td>
+                    </tr>
+                    <tr class="tr_default">
+                      <td class="tr_third"><span>3</span></td>
+                      <td>项目名称</td>
+                      <td>￥120万</td>
+                      <td>￥1.89</td>
+                      <td>87.81%</td>
+                    </tr>
+                    <tr class="tr_default">
+                      <td><span>4</span></td>
+                      <td>项目名称</td>
+                      <td>￥120万</td>
+                      <td>￥1.89</td>
+                      <td>87.81%</td>
+                    </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
               <div class="letf_list_down">
@@ -134,47 +134,47 @@
                   </div>
                 </div>
                 <div class="table-responsive">
-                <table class="table table-striped table-hover">
-                  <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>货币名称</th>
-                    <th>成交额（一天）</th>
-                    <th>价格</th>
-                    <th>跌幅</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr class="tr_default">
-                    <td class="tr_first"><span>1</span></td>
-                    <td>项目名称</td>
-                    <td>￥120万</td>
-                    <td>￥1.89</td>
-                    <td>87.81%</td>
-                  </tr>
-                  <tr class="tr_default">
-                    <td class="tr_second"><span>2</span></td>
-                    <td>项目名称</td>
-                    <td>￥120万</td>
-                    <td>￥1.89</td>
-                    <td>87.81%</td>
-                  </tr>
-                  <tr class="tr_default">
-                    <td class="tr_third"><span>3</span></td>
-                    <td>项目名称</td>
-                    <td>￥120万</td>
-                    <td>￥1.89</td>
-                    <td>87.81%</td>
-                  </tr>
-                  <tr class="tr_default">
-                    <td><span>4</span></td>
-                    <td>项目名称</td>
-                    <td>￥120万</td>
-                    <td>￥1.89</td>
-                    <td>87.81%</td>
-                  </tr>
-                  </tbody>
-                </table>
+                  <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>货币名称</th>
+                      <th>成交额（一天）</th>
+                      <th>价格</th>
+                      <th>跌幅</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="tr_default">
+                      <td class="tr_first"><span>1</span></td>
+                      <td>项目名称</td>
+                      <td>￥120万</td>
+                      <td>￥1.89</td>
+                      <td>87.81%</td>
+                    </tr>
+                    <tr class="tr_default">
+                      <td class="tr_second"><span>2</span></td>
+                      <td>项目名称</td>
+                      <td>￥120万</td>
+                      <td>￥1.89</td>
+                      <td>87.81%</td>
+                    </tr>
+                    <tr class="tr_default">
+                      <td class="tr_third"><span>3</span></td>
+                      <td>项目名称</td>
+                      <td>￥120万</td>
+                      <td>￥1.89</td>
+                      <td>87.81%</td>
+                    </tr>
+                    <tr class="tr_default">
+                      <td><span>4</span></td>
+                      <td>项目名称</td>
+                      <td>￥120万</td>
+                      <td>￥1.89</td>
+                      <td>87.81%</td>
+                    </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -284,15 +284,15 @@
       </div>
     </div>
     <!--<div class="popover fade bottom in" role="tooltip" id="popover91482">-->
-      <!--<div class="arrow" style="left: 50%;"></div>-->
-      <!--<div class="popover-content">-->
-        <!--<ul>-->
-          <!--<li class="wechat"><i class="fa fa-wechat"></i></li>-->
-          <!--<li class="weibo"><i class="fa fa-weibo"></i></li>-->
-          <!--<li class="qq"><i class="fa fa-qq"></i></li>-->
-          <!--<li class="more">更多分享</li>-->
-        <!--</ul>-->
-      <!--</div>-->
+    <!--<div class="arrow" style="left: 50%;"></div>-->
+    <!--<div class="popover-content">-->
+    <!--<ul>-->
+    <!--<li class="wechat"><i class="fa fa-wechat"></i></li>-->
+    <!--<li class="weibo"><i class="fa fa-weibo"></i></li>-->
+    <!--<li class="qq"><i class="fa fa-qq"></i></li>-->
+    <!--<li class="more">更多分享</li>-->
+    <!--</ul>-->
+    <!--</div>-->
     <!--</div>-->
   </div>
 </template>
@@ -308,14 +308,13 @@
   export default {
     data() {
       return {
-        list: [1,1,1,1,1,1,1,1,1,1,11,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,],
+        list: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,],
         banner1: img1,
         img2: img2,
         img3: img3,
       }
     },
-    methods: {
-    },
+    methods: {},
     mounted() {
       new Swiper('#right_swiper', {
         autoplay: {
@@ -327,8 +326,7 @@
         }
       })
     },
-    filters: {
-    }
+    filters: {}
   }
 </script>
 

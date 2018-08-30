@@ -54,6 +54,9 @@
     text-align: center;
     padding-top: 10px;
     padding-bottom: 10px;
+    p {
+      margin: 0;
+    }
   }
   .network {
     li > a > div {
@@ -141,7 +144,9 @@
                   float: left;
                 }
               }
-              &:first-child{font-size: 16px;}
+              &:first-child {
+                font-size: 16px;
+              }
             }
             > li.apelink_logo {
               position: relative;
@@ -155,7 +160,7 @@
         }
       }
     }
-    .network li > a > div{
+    .network li > a > div {
       margin-top: 5px;
       margin-bottom: 5px;
     }
