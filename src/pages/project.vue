@@ -11,7 +11,7 @@
               <div class="imgbrand"><img :src="project.logoSrc "></div>
               <div class="info">
                 <div class="tit">
-                  {{project.project}}
+                  <a :href="project.outer" target="_blank"> {{project.project}}</a>
                   <div class="followbtn" v-if="!isFollow" @click="setFollow()">+ 关注</div>
                   <div class="followbtn on" v-if="isFollow" @click="deleteFollow(project.collected)">√ 已关注</div>
                 </div>
@@ -482,86 +482,7 @@
                       </div>
                     </a>
                   </div>
-                  <!--<div class="col4" v-if=project>-->
-                  <!--<a :href="project">-->
-                  <!--<div class="item">-->
-                  <!--<img src="../assets/project/f10.png">-->
-                  <!--<p>Blog</p>-->
-                  <!--</div>-->
-                  <!--</a>-->
-                  <!--</div>-->
-                  <!--<div class="col4" v-if=project>-->
-                  <!--<a :href="project">-->
-                  <!--<div class="item">-->
-                  <!--<img src="../assets/project/f11.png">-->
-                  <!--<p>gitter</p>-->
-                  <!--</div>-->
-                  <!--</a>-->
-                  <!--</div>-->
-                  <!--<div class="col4" v-if=project>-->
-                  <!--<a :href="project">-->
-                  <!--<div class="item">-->
-                  <!--<img src="../assets/project/f12.png">-->
-                  <!--<p>Google</p>-->
-                  <!--</div>-->
-                  <!--</a>-->
-                  <!--</div>-->
-                  <!--<div class="col4" v-if=project>-->
-                  <!--<a :href="project">-->
-                  <!--<div class="item">-->
-                  <!--<img src="../assets/project/f13.png">-->
-                  <!--<p>heroku</p>-->
-                  <!--</div>-->
-                  <!--</a>-->
-                  <!--</div>-->
-                  <!--<div class="col4" v-if=project>-->
-                  <!--<a :href="project">-->
-                  <!--<div class="item">-->
-                  <!--<img src="../assets/project/f14.png">-->
-                  <!--<p>linkedin</p>-->
-                  <!--</div>-->
-                  <!--</a>-->
-                  <!--</div>-->
-                  <!--<div class="col4">-->
-                  <!--<a :href="project">-->
-                  <!--<div class="item">-->
-                  <!--<img src="../assets/project/f15.png">-->
-                  <!--<p>Naver</p>-->
-                  <!--</div>-->
-                  <!--</a>-->
-                  <!--</div>-->
-                  <!--<div class="col4">-->
-                  <!--<a :href="project">-->
-                  <!--<div class="item">-->
-                  <!--<img src="../assets/project/f16.png">-->
-                  <!--<p>slack</p>-->
-                  <!--</div>-->
-                  <!--</a>-->
-                  <!--</div>-->
-                  <!--<div class="col4">-->
-                  <!--<a :href="project">-->
-                  <!--<div class="item">-->
-                  <!--<img src="../assets/project/f17.png">-->
-                  <!--<p>stack</p>-->
-                  <!--</div>-->
-                  <!--</a>-->
-                  <!--</div>-->
-                  <!--<div class="col4">-->
-                  <!--<a :href="project">-->
-                  <!--<div class="item">-->
-                  <!--<img src="../assets/project/f18.png">-->
-                  <!--<p>steemit</p>-->
-                  <!--</div>-->
-                  <!--</a>-->
-                  <!--</div>-->
-                  <!--<div class="col4">-->
-                  <!--<a :href="project">-->
-                  <!--<div class="item">-->
-                  <!--<img src="../assets/project/f19.png">-->
-                  <!--<p>youtube</p>-->
-                  <!--</div>-->
-                  <!--</a>-->
-                  <!--</div>-->
+
                 </div>
               </div>
               <!--<div class="swiper-scrollbar"></div>-->
