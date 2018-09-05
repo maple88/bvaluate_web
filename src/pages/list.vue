@@ -40,24 +40,26 @@
                         <td v-else-if="index === 1" class="tr_second"><span>{{index + 1 }}</span></td>
                         <td v-else-if="index === 2" class="tr_third"><span>{{index + 1 }}</span></td>
                         <td v-else><span>{{index + 1 }}</span></td>
-                        <td :class="index === 0? 'tr_first':''">{{item.project}}</td>
-                        <td :class="index === 0? 'tr_first':''">{{item.teamAuthenticity }}</td>
-                        <td :class="index === 0? 'tr_first':''">{{item.teamSocialActivity }}</td>
-                        <td :class="index === 0? 'tr_first':''">{{item.projectTeamRelation }}</td>
-                        <td :class="index === 0? 'tr_first':''">{{item.whitpaperAnalysis }}</td>
-                        <td :class="index === 0? 'tr_first':''">{{item.industryAnalysis }}</td>
-                        <td :class="index === 0? 'tr_first':''">{{item.mediaAttention }}</td>
-                        <td :class="index === 0? 'tr_first':''">{{item.advertisingDegree }}</td>
-                        <td :class="index === 0? 'tr_first':''">{{item.negativeImpact }}</td>
-                        <td :class="index === 0? 'tr_first':''">{{item.walletSupervision }}</td>
-                        <td :class="index === 0? 'tr_first':''">{{item.githubActivity }}</td>
-                        <td :class="index === 0? 'tr_first':''">{{item.rankingTotalScore }}</td>
+                        <td class="tr_first cursor_style" @click.stop="goArticle('/project',{sid: item.sid}) ">
+                          <h4 :title="item.project">{{item.project}}</h4>
+                        </td>
+                        <td>{{item.teamAuthenticity }}</td>
+                        <td>{{item.teamSocialActivity }}</td>
+                        <td>{{item.projectTeamRelation }}</td>
+                        <td>{{item.whitpaperAnalysis }}</td>
+                        <td>{{item.industryAnalysis }}</td>
+                        <td>{{item.mediaAttention }}</td>
+                        <td>{{item.advertisingDegree }}</td>
+                        <td>{{item.negativeImpact }}</td>
+                        <td>{{item.walletSupervision }}</td>
+                        <td>{{item.githubActivity }}</td>
+                        <td>{{item.rankingTotalScore }}</td>
                       </tr>
                       </tbody>
                     </table>
                   </div>
                   <div class="moreBox" v-if="!(showloading === -1)">
-                    <button :disabled="showloading" class="relaodMore" @click="getDate()">
+                    <button :disabled="showloading" class="relaodMore" @click="reMore()">
                       <img v-if="showloading" :src="loading"/>
                       <span v-if="!showloading">加载更多</span>
                     </button>
@@ -102,7 +104,9 @@
                       <td v-else-if="index === 1" class="tr_second"><span>{{index + 1 }}</span></td>
                       <td v-else-if="index === 2" class="tr_third"><span>{{index + 1 }}</span></td>
                       <td v-else><span>{{index + 1 }}</span></td>
-                      <td>{{item.name}}</td>
+                      <td class="tr_first cursor_style" @click.stop="goArticle('/project',{sid: item.sid}) ">
+                        <h4 :title="item.name">{{item.name}}</h4>
+                      </td>
                       <td>{{item.turnover1day}}</td>
                       <td>{{item.price}}</td>
                       <td>{{item.increase}}</td>
@@ -135,7 +139,9 @@
                       <td v-else-if="index === 1" class="tr_second"><span>{{index + 1 }}</span></td>
                       <td v-else-if="index === 2" class="tr_third"><span>{{index + 1 }}</span></td>
                       <td v-else><span>{{index + 1 }}</span></td>
-                      <td>{{item.name}}</td>
+                      <td class="tr_first cursor_style" @click.stop="goArticle('/project',{sid: item.sid}) ">
+                        <h4 :title="item.name">{{item.name}}</h4>
+                      </td>
                       <td>{{item.turnover1day}}</td>
                       <td>{{item.price}}</td>
                       <td>{{item.increase}}</td>
@@ -289,6 +295,10 @@
       }
     },
     methods: {
+      goArticle(url, query) {
+        let routeData = this.$router.resolve({path: url, query: query});
+        window.open(routeData.href, '_blank');
+      },
       getDate() {
         let that = this;
         that.showloading = true;
@@ -300,6 +310,16 @@
           }
           that.pageSize += 50;
         });
+      },
+      reMore() {
+        let token = localStorage.getItem('apelink_user_token');
+        if (token) {
+          getDate()
+        } else {
+          if (confirm('登陆后查看后续榜单...')) {
+            this.$router.push('/login');
+          }
+        }
       },
       getUpList() {
         let that = this;

@@ -1,10 +1,10 @@
 <template>
-  <div id="login">
+  <div id="login" :style="'background-image: url('+bg+')'">
     <div class="container main">
       <div class="row">
         <div class="col-md-6 col-xs-12 left">
           <p class="p1">welcome！</p>
-          <p class="p2">APELINk</p>
+          <p class="p2">BVALUATE</p>
           <p class="p3">搜索全球资讯，掌握最新动态</p>
         </div>
         <div class="col-md-6 col-xs-12">
@@ -190,10 +190,12 @@
 </template>
 
 <script>
-  let loading = require('../assets/login/loading.gif')
+  let loading = require('../assets/login/loading.gif');
+  let bg = require('../assets/login/login_bg.jpg')
   export default {
     data() {
       return {
+        bg: bg,
         login_register_head: true,
         resetpwd_head: false,
         isLogin: true,

@@ -131,7 +131,7 @@
                 <img src="../assets/project/head.png">
                 <div class="info">
                   <p class="num">{{project.totalScore | showTatolCore}}</p>
-                  <p>{{project.experts}}位专家评级</p>
+                  <!--<p>{{project.experts}}位专家评级</p>-->
                 </div>
               </div>
               <div class="right">
