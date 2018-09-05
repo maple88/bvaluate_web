@@ -10,8 +10,8 @@
                 <div class="listBox_top">
                   <h4 class="list_title">全球项目榜单</h4>
                   <div class="tabBtn">
-                    <button class="btnStyle active">周榜</button>
-                    <button class="btnStyle">月榜</button>
+                    <button class="btnStyle" :class="type==='周榜'?'active':''" @click="changeList('周榜')">周榜</button>
+                    <button class="btnStyle" :class="type==='月榜'?'active':''" @click="changeList('月榜')">月榜</button>
                   </div>
                 </div>
                 <div class="listBox_content">
@@ -40,24 +40,27 @@
                         <td v-else-if="index === 1" class="tr_second"><span>{{index + 1 }}</span></td>
                         <td v-else-if="index === 2" class="tr_third"><span>{{index + 1 }}</span></td>
                         <td v-else><span>{{index + 1 }}</span></td>
-                        <td :class="index === 0? 'tr_first':''">项目名称</td>
-                        <td :class="index === 0? 'tr_first':''">100%</td>
-                        <td :class="index === 0? 'tr_first':''">100%</td>
-                        <td :class="index === 0? 'tr_first':''">100%</td>
-                        <td :class="index === 0? 'tr_first':''">100%</td>
-                        <td :class="index === 0? 'tr_first':''">100%</td>
-                        <td :class="index === 0? 'tr_first':''">100%</td>
-                        <td :class="index === 0? 'tr_first':''">100%</td>
-                        <td :class="index === 0? 'tr_first':''">100%</td>
-                        <td :class="index === 0? 'tr_first':''">100%</td>
-                        <td :class="index === 0? 'tr_first':''">100%</td>
-                        <td :class="index === 0? 'tr_first':''">100%</td>
+                        <td :class="index === 0? 'tr_first':''">{{item.project}}</td>
+                        <td :class="index === 0? 'tr_first':''">{{item.teamAuthenticity }}</td>
+                        <td :class="index === 0? 'tr_first':''">{{item.teamSocialActivity }}</td>
+                        <td :class="index === 0? 'tr_first':''">{{item.projectTeamRelation }}</td>
+                        <td :class="index === 0? 'tr_first':''">{{item.whitpaperAnalysis }}</td>
+                        <td :class="index === 0? 'tr_first':''">{{item.industryAnalysis }}</td>
+                        <td :class="index === 0? 'tr_first':''">{{item.mediaAttention }}</td>
+                        <td :class="index === 0? 'tr_first':''">{{item.advertisingDegree }}</td>
+                        <td :class="index === 0? 'tr_first':''">{{item.negativeImpact }}</td>
+                        <td :class="index === 0? 'tr_first':''">{{item.walletSupervision }}</td>
+                        <td :class="index === 0? 'tr_first':''">{{item.githubActivity }}</td>
+                        <td :class="index === 0? 'tr_first':''">{{item.rankingTotalScore }}</td>
                       </tr>
                       </tbody>
                     </table>
                   </div>
                   <div class="moreBox">
-                    <button class="relaodMore">加载更多</button>
+                    <button :disabled="showloading" class="relaodMore">
+                      <img v-if="showloading" :src="loading"/>
+                      <span v-if="!showloading">加载更多</span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -94,33 +97,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="tr_default">
-                      <td class="tr_first"><span>1</span></td>
-                      <td>项目名称</td>
-                      <td>￥120万</td>
-                      <td>￥1.89</td>
-                      <td>87.81%</td>
-                    </tr>
-                    <tr class="tr_default">
-                      <td class="tr_second"><span>2</span></td>
-                      <td>项目名称</td>
-                      <td>￥120万</td>
-                      <td>￥1.89</td>
-                      <td>87.81%</td>
-                    </tr>
-                    <tr class="tr_default">
-                      <td class="tr_third"><span>3</span></td>
-                      <td>项目名称</td>
-                      <td>￥120万</td>
-                      <td>￥1.89</td>
-                      <td>87.81%</td>
-                    </tr>
-                    <tr class="tr_default">
-                      <td><span>4</span></td>
-                      <td>项目名称</td>
-                      <td>￥120万</td>
-                      <td>￥1.89</td>
-                      <td>87.81%</td>
+                    <tr class="tr_default" v-for="(item,index) in upList">
+                      <td v-if="index === 0" class="tr_first"><span>{{index + 1 }}</span></td>
+                      <td v-else-if="index === 1" class="tr_second"><span>{{index + 1 }}</span></td>
+                      <td v-else-if="index === 2" class="tr_third"><span>{{index + 1 }}</span></td>
+                      <td v-else><span>{{index + 1 }}</span></td>
+                      <td>{{item.name}}</td>
+                      <td>{{item.turnover1day}}</td>
+                      <td>{{item.price}}</td>
+                      <td>{{item.increase}}</td>
                     </tr>
                     </tbody>
                   </table>
@@ -145,33 +130,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="tr_default">
-                      <td class="tr_first"><span>1</span></td>
-                      <td>项目名称</td>
-                      <td>￥120万</td>
-                      <td>￥1.89</td>
-                      <td>87.81%</td>
-                    </tr>
-                    <tr class="tr_default">
-                      <td class="tr_second"><span>2</span></td>
-                      <td>项目名称</td>
-                      <td>￥120万</td>
-                      <td>￥1.89</td>
-                      <td>87.81%</td>
-                    </tr>
-                    <tr class="tr_default">
-                      <td class="tr_third"><span>3</span></td>
-                      <td>项目名称</td>
-                      <td>￥120万</td>
-                      <td>￥1.89</td>
-                      <td>87.81%</td>
-                    </tr>
-                    <tr class="tr_default">
-                      <td><span>4</span></td>
-                      <td>项目名称</td>
-                      <td>￥120万</td>
-                      <td>￥1.89</td>
-                      <td>87.81%</td>
+                    <tr class="tr_default" v-for="(item,index) in downList">
+                      <td v-if="index === 0" class="tr_first"><span>{{index + 1 }}</span></td>
+                      <td v-else-if="index === 1" class="tr_second"><span>{{index + 1 }}</span></td>
+                      <td v-else-if="index === 2" class="tr_third"><span>{{index + 1 }}</span></td>
+                      <td v-else><span>{{index + 1 }}</span></td>
+                      <td>{{item.name}}</td>
+                      <td>{{item.turnover1day}}</td>
+                      <td>{{item.price}}</td>
+                      <td>{{item.increase}}</td>
                     </tr>
                     </tbody>
                   </table>
@@ -300,21 +267,53 @@
 <script>
   import Swiper from 'swiper';
 
-  let img1 = require('../assets/follow/banner01.png')
-  let img2 = require('../assets/follow/adv01.png')
-  let img3 = require('../assets/media.jpg')
+  let img1 = require('../assets/follow/banner01.png');
+  let img2 = require('../assets/follow/adv01.png');
+  let img3 = require('../assets/media.jpg');
+  let loading = require('../assets/login/loading.gif');
 
 
   export default {
     data() {
       return {
-        list: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,],
+        list: [],
         banner1: img1,
         img2: img2,
         img3: img3,
+        showloading: true,
+        loading: loading,
+        type: '周榜',
+        upList: [],
+        downList: []
       }
     },
-    methods: {},
+    methods: {
+      getDate() {
+        let that = this;
+        that.showloading = true;
+        that.$axios.get('/api/hotICO/list?type=' + that.type).then(function (res) {
+          that.list = res.data;
+          that.showloading = false;
+        });
+      },
+      getUpList() {
+        let that = this;
+        that.$axios.get('/api/hotICO/priceList?type=inc&pageSize=15').then(function (res) {
+          that.upList = res.data;
+        });
+      },
+      getDownList() {
+        let that = this;
+        that.$axios.get('/api/hotICO/priceList?type=dec&pageSize=15').then(function (res) {
+          that.downList = res.data;
+        });
+      },
+      changeList(type) {
+        this.type = type;
+        this.list = [];
+        this.getDate();
+      }
+    },
     mounted() {
       new Swiper('#right_swiper', {
         autoplay: {
@@ -325,6 +324,9 @@
           prevEl: '.swiper-button-prev',
         }
       })
+      this.getUpList();
+      this.getDate();
+      this.getDownList()
     },
     filters: {}
   }

@@ -905,30 +905,30 @@
   }
 }
 
-#list_page{
-  .list_container{
+#list_page {
+  .list_container {
     max-width: none;
-    .clearfix{
-      .center{
-        .listBox{
+    .clearfix {
+      .center {
+        .listBox {
           background-color: #fff;
-          box-shadow: 0 0 5px 1px rgba(0,0,0,.1);
+          box-shadow: 0 0 5px 1px rgba(0, 0, 0, .1);
           padding-left: 15px;
           padding-right: 15px;
           padding-bottom: 20px;
-          .listBox_top{
+          .listBox_top {
             padding: 10px 0;
             position: relative;
-            .list_title{
+            .list_title {
               font-size: 20px;
               border-left: 2px solid #333;
               padding-left: 10px;
             }
-            .tabBtn{
+            .tabBtn {
               position: absolute;
               right: 0px;
               top: 15px;
-              .btnStyle{
+              .btnStyle {
                 border: 1px solid #c3c3c3;
                 background-color: transparent;
                 padding: 3px 15px;
@@ -938,29 +938,32 @@
                 border-radius: 5px;
                 margin-left: 10px;
                 transition: all .3s;
-                &:hover{
+                &:hover {
                   background-color: #ececec;
                 }
-                &:focus{
+                &:focus {
                   outline: none;
                 }
-                &.active{
+                &.active {
                   background-color: $mainColor;
                   color: #fff;
-                  border-color: $mainColor ;
+                  border-color: $mainColor;
                 }
               }
             }
           }
-          .listBox_content{
-            table{
+          .listBox_content {
+            table {
               text-align: center;
-              th{
+              th {
                 text-align: center;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
               }
-              .tr_default{
-                td:first-child{
-                  span{
+              .tr_default {
+                td:first-child {
+                  span {
                     background-color: #aeaeae;
                     color: #fff;
                     display: block;
@@ -968,9 +971,9 @@
                     text-align: center;
                   }
                 }
-                td.tr_first{
+                td.tr_first {
                   color: $mainColor;
-                  span{
+                  span {
                     background-color: $mainColor;
                     color: #fff;
                     display: block;
@@ -978,9 +981,9 @@
                     text-align: center;
                   }
                 }
-                td.tr_second{
+                td.tr_second {
                   //color: $mainColor;
-                  span{
+                  span {
                     background-color: #00b7bc;
                     color: #fff;
                     display: block;
@@ -988,9 +991,9 @@
                     text-align: center;
                   }
                 }
-                td.tr_third{
+                td.tr_third {
                   //color: $mainColor;
-                  span{
+                  span {
                     background-color: #3cdb84;
                     color: #fff;
                     display: block;
@@ -1000,40 +1003,43 @@
                 }
               }
             }
-            .relaodMore{
+            .relaodMore {
               background-color: transparent;
               border: 1px solid #c1c1c1;
               width: 100%;
               padding: 5px 0;
               border-radius: 5px;
+              img {
+                width: 45px;
+              }
             }
           }
         }
       }
-      .right{
-        #list_page_adv{
+      .right {
+        #list_page_adv {
           margin-top: 0px;
           height: 320px;
         }
-        .letf_list_up{
+        .letf_list_up {
           margin-top: 20px;
           background-color: #fff;
-          box-shadow: 0 0 5px 1px rgba(0,0,0,.1);
+          box-shadow: 0 0 5px 1px rgba(0, 0, 0, .1);
           padding: 0 15px 5px 15px;
           position: relative;
-          .listBox_top{
+          .listBox_top {
             padding: 10px 0;
             position: relative;
-            .list_title{
+            .list_title {
               font-size: 20px;
               border-left: 2px solid #333;
               padding-left: 10px;
             }
-            .tabBtn{
+            .tabBtn {
               position: absolute;
               right: 0px;
               top: 15px;
-              .btnStyle{
+              .btnStyle {
                 border: 1px solid #c3c3c3;
                 background-color: transparent;
                 padding: 3px 15px;
@@ -1043,30 +1049,33 @@
                 border-radius: 5px;
                 margin-left: 10px;
                 transition: all .3s;
-                &:hover{
+                &:hover {
                   background-color: #ececec;
                 }
-                &:focus{
+                &:focus {
                   outline: none;
                 }
-                &.active{
+                &.active {
                   background-color: $mainColor;
                   color: #fff;
-                  border-color: $mainColor ;
+                  border-color: $mainColor;
                 }
               }
             }
           }
-          table{
+          table {
             text-align: center;
-            th{
+            th {
               text-align: center;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
 
-            .tr_default{
+            .tr_default {
               //color: $mainColor;
-              td:first-child{
-                span{
+              td:first-child {
+                span {
                   background-color: #aeaeae;
                   color: #fff;
                   display: block;
@@ -1074,11 +1083,16 @@
                   text-align: center;
                 }
               }
-              td:last-child{
+              td:nth-child(2) {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              }
+              td:last-child {
                 color: #00bb29;
               }
-              td.tr_first{
-                span{
+              td.tr_first {
+                span {
                   background-color: $mainColor;
                   color: #fff;
                   display: block;
@@ -1086,8 +1100,8 @@
                   text-align: center;
                 }
               }
-              td.tr_second{
-                span{
+              td.tr_second {
+                span {
                   background-color: #00b7bc;
                   color: #fff;
                   display: block;
@@ -1095,8 +1109,8 @@
                   text-align: center;
                 }
               }
-              td.tr_third{
-                span{
+              td.tr_third {
+                span {
                   background-color: #3cdb84;
                   color: #fff;
                   display: block;
@@ -1107,25 +1121,25 @@
             }
           }
         }
-        .letf_list_down{
+        .letf_list_down {
           margin-top: 20px;
           background-color: #fff;
-          box-shadow: 0 0 5px 1px rgba(0,0,0,.1);
+          box-shadow: 0 0 5px 1px rgba(0, 0, 0, .1);
           padding: 0 15px 10px 15px;
           position: relative;
-          .listBox_top{
+          .listBox_top {
             padding: 10px 0;
             position: relative;
-            .list_title{
+            .list_title {
               font-size: 20px;
               border-left: 2px solid #333;
               padding-left: 10px;
             }
-            .tabBtn{
+            .tabBtn {
               position: absolute;
               right: 0px;
               top: 15px;
-              .btnStyle{
+              .btnStyle {
                 border: 1px solid #c3c3c3;
                 background-color: transparent;
                 padding: 3px 15px;
@@ -1135,29 +1149,32 @@
                 border-radius: 5px;
                 margin-left: 10px;
                 transition: all .3s;
-                &:hover{
+                &:hover {
                   background-color: #ececec;
                 }
-                &:focus{
+                &:focus {
                   outline: none;
                 }
-                &.active{
+                &.active {
                   background-color: $mainColor;
                   color: #fff;
-                  border-color: $mainColor ;
+                  border-color: $mainColor;
                 }
               }
             }
           }
-          table{
+          table {
             text-align: center;
-            th{
+            th {
               text-align: center;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
-            .tr_default{
+            .tr_default {
               //color: $mainColor;
-              td:first-child{
-                span{
+              td:first-child {
+                span {
                   background-color: #aeaeae;
                   color: #fff;
                   display: block;
@@ -1165,11 +1182,16 @@
                   text-align: center;
                 }
               }
-              td:last-child{
+              td:nth-child(2) {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              }
+              td:last-child {
                 color: #bb2100;
               }
-              td.tr_first{
-                span{
+              td.tr_first {
+                span {
                   background-color: $mainColor;
                   color: #fff;
                   display: block;
@@ -1177,8 +1199,8 @@
                   text-align: center;
                 }
               }
-              td.tr_second{
-                span{
+              td.tr_second {
+                span {
                   background-color: #00b7bc;
                   color: #fff;
                   display: block;
@@ -1186,8 +1208,8 @@
                   text-align: center;
                 }
               }
-              td.tr_third{
-                span{
+              td.tr_third {
+                span {
                   background-color: #3cdb84;
                   color: #fff;
                   display: block;
