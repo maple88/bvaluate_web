@@ -204,6 +204,7 @@
     position: relative;
     margin-bottom: 20px;
     overflow: hidden;
+    height: 500px;
     .bgimg {
       width: 100%;
     }
@@ -587,15 +588,15 @@
                 height: 100%;
                 object-fit: contain;
               }
-              .totalcroeBox{
+              .totalcroeBox {
                 color: #fff;
                 text-align: center;
-                .totalcroe{
+                .totalcroe {
                   font-size: 25px;
                   margin: 0;
                   margin-top: 10px;
                 }
-                .totalcroeText{
+                .totalcroeText {
                   margin: 0;
                 }
               }
