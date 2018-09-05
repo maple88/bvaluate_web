@@ -56,8 +56,8 @@
                       </tbody>
                     </table>
                   </div>
-                  <div class="moreBox">
-                    <button :disabled="showloading" class="relaodMore">
+                  <div class="moreBox" v-if="!(showloading === -1)">
+                    <button :disabled="showloading" class="relaodMore" @click="getDate()">
                       <img v-if="showloading" :src="loading"/>
                       <span v-if="!showloading">加载更多</span>
                     </button>
@@ -284,16 +284,21 @@
         loading: loading,
         type: '周榜',
         upList: [],
-        downList: []
+        downList: [],
+        pageSize: 50
       }
     },
     methods: {
       getDate() {
         let that = this;
         that.showloading = true;
-        that.$axios.get('/api/hotICO/list?type=' + that.type).then(function (res) {
-          that.list = res.data;
+        that.$axios.get('/api/hotICO/list?type=' + that.type + '&pageSize=' + that.pageSize).then(function (res) {
           that.showloading = false;
+          that.list = res.data;
+          if (that.pageSize >= 100) {
+            that.showloading = -1;
+          }
+          that.pageSize += 50;
         });
       },
       getUpList() {

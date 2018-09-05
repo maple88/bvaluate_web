@@ -148,239 +148,242 @@
           <div class="section-head">
             <div class="headtit">推荐项目</div>
           </div>
-          <div class="inlist" v-if="hottestProject.length>0">
-            <ul>
-              <li :class="index == prjAct ? 'on': ''" v-for="(item,index) in hottestProject"
-                  @click="changeProject(item,index)">
-                <img :src="item.logoSrc " class="inlistimg">
-                <div class="mask">
-                  <p>{{item.project}}</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="intabcontent" v-show="hottestProject.length>0">
-            <div class="topban">
-              <div class="info">
-                <div class="toplist-item">
-                  <div class="left">
-                    <p class="tit">
-                      <span class="title" @click.stop="goArticle('/project',{sid: showProject.sid}) ">
-                        {{showProject.project}}
-                      </span>
-                      <i class="fa fa-heart" v-if="!isFollow" @click="setFollow()"></i>
-                      <i class="fa fa-heart on" v-if="isFollow" @click="deleteFollow(showProject.collected)"></i>
-                    </p>
-                    <p class="smtit">{{showProject.introduction }}</p>
-                    <p class="des">{{showProject.irAbstract }}</p>
+          <div class="sb-flex">
+            <div class="inlist" v-if="hottestProject.length>0">
+              <ul>
+                <li :class="index == prjAct ? 'on': ''" v-for="(item,index) in hottestProject"
+                    @click="changeProject(item,index)">
+                  <img :src="item.logoSrc " class="inlistimg">
+                  <div class="mask">
+                    <p>{{item.project}}</p>
                   </div>
-                  <div class="right">
-                    <img :src="showProject.logoSrc">
-                    <div class="totalcroeBox">
-                      <p class="totalcroe">{{showProject.totalScore | showTatolCore}}</p>
-                      <p class="totalcroeText">总分</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="mid">
-                  <p><span>代币</span>{{showProject.token }}</p>
-                  <p><span>价格</span>{{showProject.price }}</p>
-                </div>
-                <div class="bottom">
-                  <ul>
-                    <li>follow us:</li>
-                    <li><a :href="showProject.outerFaceBook "><img src="../assets/home/f1.png"></a></li>
-                    <li><a :href="showProject.outerTwitter "><img src="../assets/home/f2.png"></a></li>
-                    <li><a :href="showProject.outerTelegram "><img src="../assets/home/f3.png"></a></li>
-                    <li><a :href="showProject.outerBitCoinTalk "><img src="../assets/home/f4.png"></a></li>
-                    <li><a :href="showProject.outerInstagram "><img src="../assets/home/f5.png"></a></li>
-                    <li><a :href="showProject.outerGitHub"><img src="../assets/home/f6.png"></a></li>
-                    <li><a :href="showProject.outerMedium  "><img src="../assets/home/f8.png"></a></li>
-                    <li><a :href="showProject.outerQuora "><img src="../assets/home/f9.png"></a></li>
-                    <li><a :href="showProject.outerReddit "><img src="../assets/home/f10.png"></a></li>
-                  </ul>
-                  <div class="tips">评</div>
-                </div>
-              </div>
+                </li>
+              </ul>
             </div>
-            <div class="bottomflex">
-              <div class="section1">
-                <div class="head">团队</div>
-                <div class="swiper-container" id="home-team">
-                  <div class="swiper-wrapper">
-                    <div class="swiper-slide" v-for="item in showProject.partner">
-                      <div class="item" v-for="partner in item">
-                        <img :src="partner.image">
-                        <p class="name">{{partner.h3}}</p>
-                        <p class="posi">{{partner.h4}}</p>
-                        <div class="i" :class="partner.linkin?'on':''">
-                          <a :href="partner.linkin" target="_blank">
-                            <i class="fa fa-linkedin"></i>
-                          </a>
-                        </div>
+            <div class="intabcontent" v-show="hottestProject.length>0">
+              <div class="topban">
+                <div class="info">
+                  <div class="toplist-item">
+                    <div class="left">
+                      <p class="tit">
+                        <span class="title" @click.stop="goArticle('/project',{sid: showProject.sid}) ">
+                          {{showProject.project}}
+                        </span>
+                        <i class="fa fa-heart" v-if="!isFollow" @click="setFollow()"></i>
+                        <i class="fa fa-heart on" v-if="isFollow" @click="deleteFollow(showProject.collected)"></i>
+                      </p>
+                      <p class="smtit">{{showProject.introduction }}</p>
+                      <p class="des">{{showProject.irAbstract }}</p>
+                    </div>
+                    <div class="right">
+                      <img :src="showProject.logoSrc">
+                      <div class="totalcroeBox">
+                        <p class="totalcroe">{{showProject.totalScore | showTatolCore}}</p>
+                        <p class="totalcroeText">总分</p>
                       </div>
                     </div>
                   </div>
-                  <div class="swiper-pagination"></div>
+                  <div class="mid">
+                    <p><span>代币</span>{{showProject.token }}</p>
+                    <p><span>价格</span>{{showProject.price }}</p>
+                  </div>
+                  <div class="bottom">
+                    <ul>
+                      <li>follow us:</li>
+                      <li><a :href="showProject.outerFaceBook "><img src="../assets/home/f1.png"></a></li>
+                      <li><a :href="showProject.outerTwitter "><img src="../assets/home/f2.png"></a></li>
+                      <li><a :href="showProject.outerTelegram "><img src="../assets/home/f3.png"></a></li>
+                      <li><a :href="showProject.outerBitCoinTalk "><img src="../assets/home/f4.png"></a></li>
+                      <li><a :href="showProject.outerInstagram "><img src="../assets/home/f5.png"></a></li>
+                      <li><a :href="showProject.outerGitHub"><img src="../assets/home/f6.png"></a></li>
+                      <li><a :href="showProject.outerMedium  "><img src="../assets/home/f8.png"></a></li>
+                      <li><a :href="showProject.outerQuora "><img src="../assets/home/f9.png"></a></li>
+                      <li><a :href="showProject.outerReddit "><img src="../assets/home/f10.png"></a></li>
+                    </ul>
+                    <div class="tips">评</div>
+                  </div>
                 </div>
               </div>
-              <div class="section2">
-                <div class="head home-newstabs">
-                  <a href="javascript:;" class="active">最新资讯</a>
-                  <a href="javascript:;">推文</a>
-                  <a href="javascript:;">微博</a>
+              <div class="bottomflex">
+                <div class="section1">
+                  <div class="head">团队</div>
+                  <div class="swiper-container" id="home-team">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide" v-for="item in showProject.partner">
+                        <div class="item" v-for="partner in item">
+                          <img :src="partner.image">
+                          <p class="name">{{partner.h3}}</p>
+                          <p class="posi">{{partner.h4}}</p>
+                          <div class="i" :class="partner.linkin?'on':''">
+                            <a :href="partner.linkin" target="_blank">
+                              <i class="fa fa-linkedin"></i>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                  </div>
                 </div>
-                <div class="swiper-container" id="home-news" style="width: 100%;">
-                  <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                      <div class="swiper-container home_newslist_style" id="home-newslist1">
-                        <div class="swiper-wrapper">
-                          <div class="swiper-slide">
-                            <div class="item hasdate" v-for="icoNew in icoNews.content">
-                              <div class="left" :class="(icoNew.titlePicture != ''&& icoNew.titlePicture )?'hasbg':'' ">
-                                <img :src="icoNew.titlePicture ">
-                                <p class="day">{{icoNew.urlTime | showDay }}</p>
-                                <p>{{icoNew.urlTime | showYear}}</p>
-                              </div>
-                              <div class="right">
-                                <p class="tit">
-                                  <a href="javascript:;" @click="goArticle('/article',{sid:icoNew.sid})">
-                                    {{icoNew.title }}
-                                  </a>
-                                </p>
-                                <p class="des">
-                                  {{icoNew.content }}
-                                </p>
-                                <div class="bottom">
-                                  <div class="userinfo">
-                                    <div class="user" v-if="icoNew.siteName && icoNew.siteName !== 'NULL'"
-                                         @click="goArticle('/author',{author: icoNew.siteName,type: 'siteName'})">
-                                      <!--<img src="../assets/logo_brand.png">-->
-                                      <span>{{icoNew.siteName}}</span>
-                                      <span class="usertime">{{icoNew.urlTime}}</span>
+                <div class="section2">
+                  <div class="head home-newstabs">
+                    <a href="javascript:;" class="active">最新资讯</a>
+                    <a href="javascript:;">推文</a>
+                    <a href="javascript:;">微博</a>
+                  </div>
+                  <div class="swiper-container" id="home-news" style="width: 100%;">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide">
+                        <div class="swiper-container home_newslist_style" id="home-newslist1">
+                          <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                              <div class="item hasdate" v-for="icoNew in icoNews.content">
+                                <div class="left"
+                                     :class="(icoNew.titlePicture != ''&& icoNew.titlePicture )?'hasbg':'' ">
+                                  <img :src="icoNew.titlePicture ">
+                                  <p class="day">{{icoNew.urlTime | showDay }}</p>
+                                  <p>{{icoNew.urlTime | showYear}}</p>
+                                </div>
+                                <div class="right">
+                                  <p class="tit">
+                                    <a href="javascript:;" @click="goArticle('/article',{sid:icoNew.sid})">
+                                      {{icoNew.title }}
+                                    </a>
+                                  </p>
+                                  <p class="des">
+                                    {{icoNew.content }}
+                                  </p>
+                                  <div class="bottom">
+                                    <div class="userinfo">
+                                      <div class="user" v-if="icoNew.siteName && icoNew.siteName !== 'NULL'"
+                                           @click="goArticle('/author',{author: icoNew.siteName,type: 'siteName'})">
+                                        <!--<img src="../assets/logo_brand.png">-->
+                                        <span>{{icoNew.siteName}}</span>
+                                        <span class="usertime">{{icoNew.urlTime}}</span>
+                                      </div>
+                                      <div class="user" v-else
+                                           @click="goArticle('/author',{author: icoNew.author,type: 'author'})">
+                                        <img src="../assets/logo_brand.png">
+                                        <span>{{icoNew.author }}{{!(icoNew.siteName)}}</span>
+                                        <span class="usertime">{{icoNew.urlTime}}</span>
+                                      </div>
                                     </div>
-                                    <div class="user" v-else
-                                         @click="goArticle('/author',{author: icoNew.author,type: 'author'})">
-                                      <img src="../assets/logo_brand.png">
-                                      <span>{{icoNew.author }}{{!(icoNew.siteName)}}</span>
-                                      <span class="usertime">{{icoNew.urlTime}}</span>
-                                    </div>
+                                    <span class="tips cursor_style"
+                                          v-if="icoNew.projectCategory !==null && icoNew.projectCategory !== '' && icoNew.projectCategory !==undefined && icoNew.projectCategory !=='NULL'"
+                                          @click="goProjectByName(icoNew.projectCategory)"
+                                    >
+                                      {{icoNew.projectCategory | labelFormat}}
+                                    </span>
+                                    <span class="tips cursor_style"
+                                          v-else-if="icoNew.industryCategory !==null && icoNew.industryCategory !== '' && icoNew.industryCategory !==undefined && icoNew.industryCategory !=='NULL'"
+                                          @click="goIndustryByIndustry(icoNew.industryCategory)"
+                                    >
+                                      {{icoNew.industryCategory | labelFormat}}
+                                    </span>
+                                    <span class="tips cursor_style"
+                                          v-else="icoNew.countryCategory !==null && icoNew.countryCategory !== '' && icoNew.countryCategory !==undefined && icoNew.countryCategory !=='NULL'"
+                                          @click="goIndustryByCountry(icoNew.countryCategory)"
+                                    >
+                                      {{icoNew.countryCategory | labelFormat}}
+                                    </span>
                                   </div>
-                                  <span class="tips cursor_style"
-                                        v-if="icoNew.projectCategory !==null && icoNew.projectCategory !== '' && icoNew.projectCategory !==undefined && icoNew.projectCategory !=='NULL'"
-                                        @click="goProjectByName(icoNew.projectCategory)"
-                                  >
-                                    {{icoNew.projectCategory | labelFormat}}
-                                  </span>
-                                  <span class="tips cursor_style"
-                                        v-else-if="icoNew.industryCategory !==null && icoNew.industryCategory !== '' && icoNew.industryCategory !==undefined && icoNew.industryCategory !=='NULL'"
-                                        @click="goIndustryByIndustry(icoNew.industryCategory)"
-                                  >
-                                    {{icoNew.industryCategory | labelFormat}}
-                                  </span>
-                                  <span class="tips cursor_style"
-                                        v-else="icoNew.countryCategory !==null && icoNew.countryCategory !== '' && icoNew.countryCategory !==undefined && icoNew.countryCategory !=='NULL'"
-                                        @click="goIndustryByCountry(icoNew.countryCategory)"
-                                  >
-                                    {{icoNew.countryCategory | labelFormat}}
-                                  </span>
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="swiper-slide">
-                      <div class="swiper-container home_newslist_style" id="home-newslist2">
-                        <div class="swiper-wrapper">
-                          <div class="swiper-slide">
-                            <div class="item" v-for="icoNew in icoNews.tuiwen">
-                              <div class="left TorW">
-                                <img :src="tuiwen ">
-                                <p>{{icoNew.urlDate}}</p>
-                              </div>
-                              <!--<div class="left"><img src="../assets/home/nicon.png" :src="tuiwen"></div>-->
-                              <div class="right">
-                                <p class="des cursor_style" @click="goArticle('/article',{sid:icoNew.sid})">
-                                  {{icoNew.content}}</p>
-                                <div class="bottom">
-                                  <span class="name" v-if="icoNew.siteName && icoNew.siteName !== 'NULL'"
-                                        @click="goArticle('/author',{author: icoNew.siteName,type: 'siteName'})">
-                                    {{(icoNew.siteName)}}
-                                  </span>
-                                  <span class="name"
-                                        @click="goArticle('/author',{author: icoNew.author,type: 'author'})" v-else>
-                                    {{icoNew.author }}
-                                  </span>
-                                  <span class="time">{{icoNew.urlDate}}</span>
-                                  <span class="tips cursor_style"
-                                        v-if="icoNew.projectCategory !==null && icoNew.projectCategory !== '' && icoNew.projectCategory !==undefined && icoNew.projectCategory !=='NULL'"
-                                        @click="goProjectByName(icoNew.projectCategory)"
-                                  >
-                                    {{icoNew.projectCategory | labelFormat}}
-                                  </span>
-                                  <span class="tips cursor_style"
-                                        v-else-if="icoNew.industryCategory !==null && icoNew.industryCategory !== '' && icoNew.industryCategory !==undefined && icoNew.industryCategory !=='NULL'"
-                                        @click="goIndustryByIndustry(icoNew.industryCategory)"
-                                  >
-                                    {{icoNew.industryCategory | labelFormat}}
-                                  </span>
-                                  <span class="tips cursor_style"
-                                        v-else="icoNew.countryCategory !==null && icoNew.countryCategory !== '' && icoNew.countryCategory !==undefined && icoNew.countryCategory !=='NULL'"
-                                        @click="goIndustryByCountry(icoNew.countryCategory)"
-                                  >
-                                    {{icoNew.countryCategory | labelFormat}}
-                                  </span>
+                      <div class="swiper-slide">
+                        <div class="swiper-container home_newslist_style" id="home-newslist2">
+                          <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                              <div class="item" v-for="icoNew in icoNews.tuiwen">
+                                <div class="left TorW">
+                                  <img :src="tuiwen ">
+                                  <p>{{icoNew.urlDate}}</p>
+                                </div>
+                                <!--<div class="left"><img src="../assets/home/nicon.png" :src="tuiwen"></div>-->
+                                <div class="right">
+                                  <p class="des cursor_style" @click="goArticle('/article',{sid:icoNew.sid})">
+                                    {{icoNew.content}}</p>
+                                  <div class="bottom">
+                                    <span class="name" v-if="icoNew.siteName && icoNew.siteName !== 'NULL'"
+                                          @click="goArticle('/author',{author: icoNew.siteName,type: 'siteName'})">
+                                      {{(icoNew.siteName)}}
+                                    </span>
+                                    <span class="name"
+                                          @click="goArticle('/author',{author: icoNew.author,type: 'author'})" v-else>
+                                      {{icoNew.author }}
+                                    </span>
+                                    <span class="time">{{icoNew.urlDate}}</span>
+                                    <span class="tips cursor_style"
+                                          v-if="icoNew.projectCategory !==null && icoNew.projectCategory !== '' && icoNew.projectCategory !==undefined && icoNew.projectCategory !=='NULL'"
+                                          @click="goProjectByName(icoNew.projectCategory)"
+                                    >
+                                      {{icoNew.projectCategory | labelFormat}}
+                                    </span>
+                                    <span class="tips cursor_style"
+                                          v-else-if="icoNew.industryCategory !==null && icoNew.industryCategory !== '' && icoNew.industryCategory !==undefined && icoNew.industryCategory !=='NULL'"
+                                          @click="goIndustryByIndustry(icoNew.industryCategory)"
+                                    >
+                                      {{icoNew.industryCategory | labelFormat}}
+                                    </span>
+                                    <span class="tips cursor_style"
+                                          v-else="icoNew.countryCategory !==null && icoNew.countryCategory !== '' && icoNew.countryCategory !==undefined && icoNew.countryCategory !=='NULL'"
+                                          @click="goIndustryByCountry(icoNew.countryCategory)"
+                                    >
+                                      {{icoNew.countryCategory | labelFormat}}
+                                    </span>
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="swiper-slide">
-                      <div class="swiper-container home_newslist_style" id="home-newslist3">
-                        <div class="swiper-wrapper">
-                          <div class="swiper-slide">
-                            <div class="item" v-for="icoNew in icoNews.weibo">
-                              <div class="left TorW"
-                                   :class="(icoNew.titlePicture != ''&& icoNew.titlePicture )?'hasbg':'' ">
-                                <img :src="weibo ">
-                                <p>{{icoNew.urlDate}}</p>
-                              </div>
-                              <div class="right">
-                                <p class="des cursor_style" @click="goArticle('/article',{sid:icoNew.sid})">
-                                  {{icoNew.content}}</p>
-                                <div class="bottom">
-                                  <span class="name" v-if="icoNew.siteName && icoNew.siteName !== 'NULL'"
-                                        @click="goArticle('/author',{author: icoNew.siteName,type: 'siteName'})">
-                                    {{(icoNew.siteName)}}
-                                  </span>
-                                  <span class="name"
-                                        @click="goArticle('/author',{author: icoNew.author,type: 'author'})" v-else>
-                                    {{icoNew.author }}
-                                  </span>
-                                  <span class="time">{{icoNew.urlDate}}</span>
-                                  <span class="tips cursor_style"
-                                        v-if="icoNew.projectCategory !==null && icoNew.projectCategory !== '' && icoNew.projectCategory !==undefined && icoNew.projectCategory !=='NULL'"
-                                        @click="goProjectByName(icoNew.projectCategory)"
-                                  >
-                                    {{icoNew.projectCategory | labelFormat}}
-                                  </span>
-                                  <span class="tips cursor_style"
-                                        v-else-if="icoNew.industryCategory !==null && icoNew.industryCategory !== '' && icoNew.industryCategory !==undefined && icoNew.industryCategory !=='NULL'"
-                                        @click="goIndustryByIndustry(icoNew.industryCategory)"
-                                  >
-                                    {{icoNew.industryCategory | labelFormat}}
-                                  </span>
-                                  <span class="tips cursor_style"
-                                        v-else="icoNew.countryCategory !==null && icoNew.countryCategory !== '' && icoNew.countryCategory !==undefined && icoNew.countryCategory !=='NULL'"
-                                        @click="goIndustryByCountry(icoNew.countryCategory)"
-                                  >
-                                    {{icoNew.countryCategory | labelFormat}}
-                                  </span>
+                      <div class="swiper-slide">
+                        <div class="swiper-container home_newslist_style" id="home-newslist3">
+                          <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                              <div class="item" v-for="icoNew in icoNews.weibo">
+                                <div class="left TorW"
+                                     :class="(icoNew.titlePicture != ''&& icoNew.titlePicture )?'hasbg':'' ">
+                                  <img :src="weibo ">
+                                  <p>{{icoNew.urlDate}}</p>
+                                </div>
+                                <div class="right">
+                                  <p class="des cursor_style" @click="goArticle('/article',{sid:icoNew.sid})">
+                                    {{icoNew.content}}</p>
+                                  <div class="bottom">
+                                    <span class="name" v-if="icoNew.siteName && icoNew.siteName !== 'NULL'"
+                                          @click="goArticle('/author',{author: icoNew.siteName,type: 'siteName'})">
+                                      {{(icoNew.siteName)}}
+                                    </span>
+                                    <span class="name"
+                                          @click="goArticle('/author',{author: icoNew.author,type: 'author'})" v-else>
+                                      {{icoNew.author }}
+                                    </span>
+                                    <span class="time">{{icoNew.urlDate}}</span>
+                                    <span class="tips cursor_style"
+                                          v-if="icoNew.projectCategory !==null && icoNew.projectCategory !== '' && icoNew.projectCategory !==undefined && icoNew.projectCategory !=='NULL'"
+                                          @click="goProjectByName(icoNew.projectCategory)"
+                                    >
+                                      {{icoNew.projectCategory | labelFormat}}
+                                    </span>
+                                    <span class="tips cursor_style"
+                                          v-else-if="icoNew.industryCategory !==null && icoNew.industryCategory !== '' && icoNew.industryCategory !==undefined && icoNew.industryCategory !=='NULL'"
+                                          @click="goIndustryByIndustry(icoNew.industryCategory)"
+                                    >
+                                      {{icoNew.industryCategory | labelFormat}}
+                                    </span>
+                                    <span class="tips cursor_style"
+                                          v-else="icoNew.countryCategory !==null && icoNew.countryCategory !== '' && icoNew.countryCategory !==undefined && icoNew.countryCategory !=='NULL'"
+                                          @click="goIndustryByCountry(icoNew.countryCategory)"
+                                    >
+                                      {{icoNew.countryCategory | labelFormat}}
+                                    </span>
 
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -596,7 +599,7 @@
           let boxTop = $this.scrollTop;
           let boxHeight = $this.scrollHeight;
           let offsetHeight = $this.offsetHeight;
-          if ((boxTop / (boxHeight - offsetHeight) >= 0.90) && finished) {
+          if ((boxTop / (boxHeight - offsetHeight) >= 0.95) && finished) {
             finished = false;
             let that = this;
             that.$axios.get('/api/traditional/news?searchBy=' + that.showProject.project + '&categoryId=290001&pageNo=' + that.newsNo).then(function (res) {
@@ -908,6 +911,38 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="scss">
+  .sb-flex {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    .inlist {
+      overflow-y: auto;
+      height: 100%;
+      position: absolute;
+      &::-webkit-scrollbar { /*滚动条整体样式*/
+        width: 5px; /*高宽分别对应横竖滚动条的尺寸*/
+        height: 1px;
+      }
+      &::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+        background: #3991D1;
+      }
+      &::-webkit-scrollbar-track { /*滚动条里面轨道*/
+        -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        background: #EDEDED;
+      }
+    }
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: normal;
+      .inlist {
+        position: static;
+      }
+    }
+  }
+
 </style>
 

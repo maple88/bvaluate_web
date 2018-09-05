@@ -37,10 +37,10 @@
         <div class="container">
           <ul>
             <li @click="toggleTab('contribute'), num = 1" :class="{active: num === 1}">
-              投稿<span>{{myNewsList.length}}</span></li>
+              投稿<span>{{myNewsList}}</span></li>
             <!--<li @click="toggleTab('read'), num = 2" :class="{active: num === 2}">阅读<span>122</span></li>-->
             <li @click="toggleTab('collection'), num = 3" :class="{active: num === 3}">
-              收藏<span>{{newsList.length}}</span></li>
+              收藏<span>{{newsList}}</span></li>
           </ul>
         </div>
       </div>
@@ -81,8 +81,8 @@
         synopsis: '',
         profileUrl: '',
         default_header: default_header,
-        newsList: [],
-        myNewsList: [],
+        newsList: 0,
+        myNewsList: 0,
         userbg: userbg,
       }
     },
@@ -110,7 +110,7 @@
           url: url,
           headers: headers
         }).then(function (res) {
-          that.myNewsList = res.data.content
+          that.myNewsList = res.data.totalElements
         })
       },
       getFollowList() {
@@ -124,7 +124,7 @@
           url: url,
           headers: headers
         }).then(function (res) {
-          that.newsList = res.data.content
+          that.newsList = res.data.totalElements
         })
       },
       initCandy() {
@@ -138,7 +138,6 @@
           this.phoneNumber = phoneNumber;
           this.nickName = nickName;
           this.synopsis = synopsis;
-          // let nickName = localStorage.getItem('apelink_user_token');
         } else {
           this.$router.push('/login')
         }
@@ -147,7 +146,6 @@
     computed: {
       showSynopsis: function () {
         let obj = this.synopsis
-        // let obj = '我是超人~~狠狠的超人'
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'null') {
           return obj
         } else {

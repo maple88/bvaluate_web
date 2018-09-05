@@ -280,6 +280,20 @@
 }
 
 .medialist {
+  .loading_more {
+    button {
+      background-color: #ffffff;
+      width: 100%;
+      border: none;
+      border-radius: 6px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+      img {
+        width: 50px;
+      }
+    }
+  }
   .media {
     display: flex;
     padding: 16px 18px;
@@ -401,6 +415,7 @@
       text-overflow: ellipsis;
       display: -webkit-box;
       -webkit-line-clamp: 2;
+      height: 47px;
       -webkit-box-orient: vertical;
     }
     .media-bottom {
