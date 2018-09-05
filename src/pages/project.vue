@@ -5,7 +5,7 @@
       <!-- content here -->
       <div class="project-banner" :style="'background: url('+banner+')'">
         <div class="container">
-          <div class="left">{{project.totalScore |  showTatolCore}}</div>
+          <div class="left">{{project.totalScore | showTatolCore}}</div>
           <div class="right">
             <div class="top">
               <div class="imgbrand"><img :src="project.logoSrc "></div>
@@ -666,8 +666,13 @@
       this.scrollTWewOrGrade();
     },
     filters: {
-      showTatolCore(obj){
-        return parseFloat(obj).toFixed(2);
+      showTatolCore(obj) {
+        let num = parseFloat(obj).toFixed(2) + '';
+        console.log(num);
+        if (num === '0.00') {
+          num = 0
+        }
+        return num;
       },
       showDay(obj) {
         let myDate = new Date(obj);

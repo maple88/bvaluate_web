@@ -26,6 +26,7 @@
             <ul class="nav navbar-nav">
               <router-link tag="li" to="/index" active-class="active"><a>首页</a></router-link>
               <router-link tag="li" to="/recommend" active-class="active"><a>新闻</a></router-link>
+              <router-link tag="li" to="/list" active-class="active"><a>榜单</a></router-link>
               <router-link tag="li" to="/userCenter" active-class="active"><a>个人中心</a></router-link>
             </ul>
             <ul class="nav navbar-nav navbar-right" v-if="token">

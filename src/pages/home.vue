@@ -30,6 +30,7 @@
               <ul class="nav navbar-nav">
                 <router-link tag="li" to="/index" active-class="active"><a>首页</a></router-link>
                 <router-link tag="li" to="/recommend" active-class="active"><a>新闻</a></router-link>
+                <router-link tag="li" to="/list" active-class="active"><a>榜单</a></router-link>
                 <router-link tag="li" to="/userCenter" active-class="active"><a>个人中心</a></router-link>
               </ul>
               <ul v-if="token" class="nav navbar-nav navbar-right">
@@ -71,11 +72,11 @@
     <div class="maintainer home-maintainer" @scroll.passive="showheader" ref="box">
       <div class="home-banner">
         <img src="../assets/home/home-banner.jpg" class="bgimg">
-        <div class="bannerwds">
-          <img src="../assets/logo_brand.png">
-          <span>+</span>
-          Bvaluate
-        </div>
+        <!--<div class="bannerwds">-->
+        <!--<img src="../assets/logo_brand.png">-->
+        <!--<span>+</span>-->
+        <!--Bvaluate-->
+        <!--</div>-->
       </div>
       <div class="df-container container home-newslist">
         <div class="section-head">
@@ -479,7 +480,11 @@
     },
     filters: {
       showTatolCore(obj) {
-        return parseFloat(obj).toFixed(2);
+        let num = parseFloat(obj).toFixed(2);
+        if (num === 0.00) {
+          num = 0
+        }
+        return num;
       },
       showDay(obj) {
         let myDate = new Date(obj);
@@ -801,17 +806,17 @@
           for (let i = 0; i < data.length; i++) {
             let Industry = {};
             Industry.categoryName = data[i];
-            if(Industry.categoryName === '货币'){
+            if (Industry.categoryName === '货币') {
               Industry.bgImage = img1;
-            }else if(Industry.categoryName === '投资'){
+            } else if (Industry.categoryName === '投资') {
               Industry.bgImage = img2;
-            }else if(Industry.categoryName === '平台'){
+            } else if (Industry.categoryName === '平台') {
               Industry.bgImage = img3;
-            }else if(Industry.categoryName === '加密货币'){
+            } else if (Industry.categoryName === '加密货币') {
               Industry.bgImage = img4;
-            }else if(Industry.categoryName === '网络'){
+            } else if (Industry.categoryName === '网络') {
               Industry.bgImage = img5;
-            }else if(Industry.categoryName === '交易所'){
+            } else if (Industry.categoryName === '交易所') {
               Industry.bgImage = img6;
             }
             that.$axios.get('/api/ICO/relatedICO?categoryName=' + Industry.categoryName + '&pageSize=4').then(function (res) {
