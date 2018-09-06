@@ -782,7 +782,9 @@
             }).then(function (res) {
               that.project = res.data;
               let partner = that.project.partner;
-              partner = JSON.parse(partner);
+              if (partner) {
+                partner = JSON.parse(partner);
+              }
               that.project.partner = partner;
               that.$nextTick(() => {  // 下一个UI帧再初始化swiper
                 new Swiper('#partnerSwiper', {
@@ -822,7 +824,9 @@
             }).then(function (res) {
               that.project = res.data;
               let partner = that.project.partner;
-              partner = JSON.parse(partner);
+              if (partner) {
+                partner = JSON.parse(partner);
+              }
               that.project.partner = partner;
               that.$nextTick(() => {  // 下一个UI帧再初始化swiper
                 new Swiper('#partnerSwiper', {
