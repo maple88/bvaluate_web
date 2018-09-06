@@ -466,9 +466,9 @@
         profileUrl: '',
         token: '',
         default_header: default_header,
-        newsNo: 1,
-        tuiwenNo: 1,
-        weiboNo: 1,
+        newsNo: 0,
+        tuiwenNo: 0,
+        weiboNo: 0,
         img: [
           img1, img2, img3, img4, img5, img6
         ],
@@ -765,7 +765,9 @@
         let that = this
         that.$axios.get('/api/traditional/news?searchBy=' + ico + '&categoryId=290001&pageNo=' + that.newsNo).then(function (res) {
           that.newsNo++;
-          that.icoNews.content = res.data.content;
+          for (let i = 0; i < res.data.content.length; i++) {
+            that.icoNews.content.push(res.data.content[i])
+          }
         })
       },
       initCandy() {
@@ -778,7 +780,9 @@
         let that = this
         that.$axios.get('/api/traditional/news?searchBy=' + ico + '&categoryId=290002&pageNo=' + that.tuiwenNo).then(function (res) {
           that.tuiwenNo++;
-          that.icoNews.tuiwen = res.data.content;
+          for (let i = 0; i < res.data.content.length; i++) {
+            that.icoNews.tuiwen.push(res.data.content[i])
+          }
         })
       },
       initweibo(obj) {
@@ -786,7 +790,9 @@
         let that = this
         that.$axios.get('/api/traditional/news?searchBy=' + ico + '&categoryId=290004&pageNo=' + that.weiboNo).then(function (res) {
           that.weiboNo++;
-          that.icoNews.weibo = res.data.content;
+          for (let i = 0; i < res.data.content.length; i++) {
+            that.icoNews.weibo.push(res.data.content[i])
+          }
         })
       },
       initHotNews() {
@@ -885,7 +891,6 @@
             num = 0
           }
         }
-        console.log(objArr);
         return objArr
       },
       changeProject(obj, index) {
