@@ -4,7 +4,9 @@
       <div class="row">
         <div class="col-md-6 col-xs-12 left">
           <p class="p1">welcome！</p>
-          <p class="p2">BVALUATE</p>
+          <p class="p2">
+            <router-link to="/index">BVALUATE</router-link>
+          </p>
           <p class="p3">搜索全球资讯，掌握最新动态</p>
         </div>
         <div class="col-md-6 col-xs-12">
@@ -185,7 +187,7 @@
         </div>
       </div>
     </div>
-    <p class="login_footer">备案号</p>
+    <!--<p class="login_footer">备案号</p>-->
   </div>
 </template>
 

@@ -11,6 +11,7 @@ import article from '@/pages/article'
 import project from '@/pages/project'
 import author from '@/pages/author'
 import list from '@/pages/list'
+import search from '@/pages/search'
 
 Vue.use(Router)
 
@@ -64,6 +65,9 @@ export default new Router({
     {
       path: '/author',
       component: author
+    }, {
+      path: '/search',
+      component: search
     }
   ],
   scrollBehavior(to, from, savedPosition) {

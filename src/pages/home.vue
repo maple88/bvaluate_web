@@ -437,12 +437,60 @@
   let tuiwen = require('../assets/home/tuite.png');
   let weibo = require('../assets/home/weibo.png');
   let default_header = require('../assets/user/default-header.png');
-  let img1 = require('../assets/home/img1.jpg');
-  let img2 = require('../assets/home/img2.jpg');
-  let img3 = require('../assets/home/img3.jpg');
-  let img4 = require('../assets/home/img4.jpg');
-  let img5 = require('../assets/home/img5.jpg');
-  let img6 = require('../assets/home/img6.jpg');
+  let img1 = require('../assets/home/img/img1.jpg');
+  let img2 = require('../assets/home/img/img2.jpg');
+  let img3 = require('../assets/home/img/img3.jpg');
+  let img4 = require('../assets/home/img/img4.jpg');
+  let img5 = require('../assets/home/img/img5.jpg');
+  let img6 = require('../assets/home/img/img6.jpg');
+  let img7 = require('../assets/home/img/img7.jpg');
+  let img8 = require('../assets/home/img/img8.jpg');
+  let img9 = require('../assets/home/img/img9.jpg');
+  let img10 = require('../assets/home/img/img10.jpg');
+  let img11 = require('../assets/home/img/img11.jpg');
+  let img12 = require('../assets/home/img/img12.jpg');
+  let img13 = require('../assets/home/img/img13.jpg');
+  let img14 = require('../assets/home/img/img14.jpg');
+  let img15 = require('../assets/home/img/img15.jpg');
+  let img16 = require('../assets/home/img/img16.jpg');
+  let img17 = require('../assets/home/img/img17.jpg');
+  let img18 = require('../assets/home/img/img18.jpg');
+  let img19 = require('../assets/home/img/img19.jpg');
+  let img20 = require('../assets/home/img/img20.jpg');
+  let img21 = require('../assets/home/img/img21.jpg');
+  let img22 = require('../assets/home/img/img22.jpg');
+  let img23 = require('../assets/home/img/img23.jpg');
+  let img24 = require('../assets/home/img/img24.jpg');
+  let img25 = require('../assets/home/img/img25.jpg');
+  let img26 = require('../assets/home/img/img26.jpg');
+  let img27 = require('../assets/home/img/img27.jpg');
+  let img28 = require('../assets/home/img/img28.jpg');
+  let img29 = require('../assets/home/img/img29.jpg');
+  let img30 = require('../assets/home/img/img30.jpg');
+  let img31 = require('../assets/home/img/img31.jpg');
+  let img32 = require('../assets/home/img/img32.jpg');
+  let img33 = require('../assets/home/img/img33.jpg');
+  let img34 = require('../assets/home/img/img34.jpg');
+  let img35 = require('../assets/home/img/img35.jpg');
+  let img36 = require('../assets/home/img/img36.jpg');
+  let img37 = require('../assets/home/img/img37.jpg');
+  let img38 = require('../assets/home/img/img38.jpg');
+  let img39 = require('../assets/home/img/img39.jpg');
+  let img40 = require('../assets/home/img/img40.jpg');
+  let img41 = require('../assets/home/img/img41.jpg');
+  let img42 = require('../assets/home/img/img42.jpg');
+  let img43 = require('../assets/home/img/img43.jpg');
+  let img44 = require('../assets/home/img/img44.jpg');
+  let img45 = require('../assets/home/img/img45.jpg');
+  let img46 = require('../assets/home/img/img46.jpg');
+  let img47 = require('../assets/home/img/img47.jpg');
+  let img48 = require('../assets/home/img/img48.jpg');
+  let img49 = require('../assets/home/img/img49.jpg');
+  let img50 = require('../assets/home/img/img50.jpg');
+  let img51 = require('../assets/home/img/img51.jpg');
+  let img52 = require('../assets/home/img/img52.jpg');
+  let img53 = require('../assets/home/img/img53.jpg');
+  let img54 = require('../assets/home/img/img54.jpg');
 
 
   export default {
@@ -469,16 +517,6 @@
         newsNo: 0,
         tuiwenNo: 0,
         weiboNo: 0,
-        img: [
-          img1, img2, img3, img4, img5, img6
-        ],
-        img1: img1,
-        img2: img2,
-        img3: img3,
-        img4: img4,
-        img5: img5,
-        img6: img6,
-
       }
     },
     filters: {
@@ -815,18 +853,127 @@
           for (let i = 0; i < data.length; i++) {
             let Industry = {};
             Industry.categoryName = data[i];
-            if (Industry.categoryName === '货币') {
+            // if (Industry.categoryName === '货币') {
+            //   Industry.bgImage = img1;
+            // } else if (Industry.categoryName === '投资') {
+            //   Industry.bgImage = img2;
+            // } else if (Industry.categoryName === '平台') {
+            //   Industry.bgImage = img3;
+            // } else if (Industry.categoryName === '加密货币') {
+            //   Industry.bgImage = img4;
+            // } else if (Industry.categoryName === '网络') {
+            //   Industry.bgImage = img5;
+            // } else if (Industry.categoryName === '交易所') {
+            //   Industry.bgImage = img6;
+            // } else
+            if (Industry.categoryName === '博彩') {
               Industry.bgImage = img1;
-            } else if (Industry.categoryName === '投资') {
+            } else if (Industry.categoryName === '成人') {
               Industry.bgImage = img2;
-            } else if (Industry.categoryName === '平台') {
+            } else if (Industry.categoryName === '慈善') {
               Industry.bgImage = img3;
-            } else if (Industry.categoryName === '加密货币') {
+            } else if (Industry.categoryName === '存储') {
               Industry.bgImage = img4;
-            } else if (Industry.categoryName === '网络') {
+            } else if (Industry.categoryName === '大麻') {
               Industry.bgImage = img5;
-            } else if (Industry.categoryName === '交易所') {
+            } else if (Industry.categoryName === '大数据') {
               Industry.bgImage = img6;
+            } else if (Industry.categoryName === '代币') {
+              Industry.bgImage = img7;
+            } else if (Industry.categoryName === '电力') {
+              Industry.bgImage = img8;
+            } else if (Industry.categoryName === '电子商务') {
+              Industry.bgImage = img9;
+            } else if (Industry.categoryName === '法律') {
+              Industry.bgImage = img10;
+            } else if (Industry.categoryName === '房地产') {
+              Industry.bgImage = img11;
+            } else if (Industry.categoryName === '工作证明') {
+              Industry.bgImage = img12;
+            } else if (Industry.categoryName === '股权证明') {
+              Industry.bgImage = img13;
+            } else if (Industry.categoryName === '广告') {
+              Industry.bgImage = img14;
+            } else if (Industry.categoryName === '货币') {
+              Industry.bgImage = img15;
+            } else if (Industry.categoryName === '基础设施') {
+              Industry.bgImage = img16;
+            } else if (Industry.categoryName === '计算') {
+              Industry.bgImage = img17;
+            } else if (Industry.categoryName === '加密货币') {
+              Industry.bgImage = img18;
+            } else if (Industry.categoryName === '健康') {
+              Industry.bgImage = img19;
+            } else if (Industry.categoryName === '交易所') {
+              Industry.bgImage = img20;
+            } else if (Industry.categoryName === '教育') {
+              Industry.bgImage = img21;
+            } else if (Industry.categoryName === '借记卡') {
+              Industry.bgImage = img22;
+            } else if (Industry.categoryName === '金融服务') {
+              Industry.bgImage = img23;
+            } else if (Industry.categoryName === '零售') {
+              Industry.bgImage = img24;
+            } else if (Industry.categoryName === '旅游') {
+              Industry.bgImage = img25;
+            } else if (Industry.categoryName === '媒体') {
+              Industry.bgImage = img26;
+            } else if (Industry.categoryName === '能源') {
+              Industry.bgImage = img27;
+            } else if (Industry.categoryName === '平台') {
+              Industry.bgImage = img28;
+            } else if (Industry.categoryName === '其他') {
+              Industry.bgImage = img29;
+            } else if (Industry.categoryName === '区块服务') {
+              Industry.bgImage = img30;
+            } else if (Industry.categoryName === '人工智能') {
+              Industry.bgImage = img31;
+            } else if (Industry.categoryName === '软件') {
+              Industry.bgImage = img32;
+            } else if (Industry.categoryName === '商业服务') {
+              Industry.bgImage = img33;
+            } else if (Industry.categoryName === '社会') {
+              Industry.bgImage = img34;
+            } else if (Industry.categoryName === '身份验证') {
+              Industry.bgImage = img35;
+            } else if (Industry.categoryName === '市场') {
+              Industry.bgImage = img36;
+            } else if (Industry.categoryName === '体育') {
+              Industry.bgImage = img37;
+            } else if (Industry.categoryName === '通讯') {
+              Industry.bgImage = img38;
+            } else if (Industry.categoryName === '投资') {
+              Industry.bgImage = img39;
+            } else if (Industry.categoryName === '挖矿设施') {
+              Industry.bgImage = img40;
+            } else if (Industry.categoryName === '网络') {
+              Industry.bgImage = img41;
+            } else if (Industry.categoryName === '稳定数字货币') {
+              Industry.bgImage = img42;
+            } else if (Industry.categoryName === '互联网') {
+              Industry.bgImage = img43;
+            } else if (Industry.categoryName === '虚拟现实') {
+              Industry.bgImage = img44;
+            } else if (Industry.categoryName === '艺术') {
+              Industry.bgImage = img45;
+            } else if (Industry.categoryName === '银行') {
+              Industry.bgImage = img46;
+            } else if (Industry.categoryName === '隐私') {
+              Industry.bgImage = img47;
+            } else if (Industry.categoryName === '游戏') {
+              Industry.bgImage = img48;
+            } else if (Industry.categoryName === '娱乐') {
+              Industry.bgImage = img49;
+            } else if (Industry.categoryName === '预测') {
+              Industry.bgImage = img50;
+            } else if (Industry.categoryName === '运输') {
+              Industry.bgImage = img51;
+            } else if (Industry.categoryName === '制造业') {
+              Industry.bgImage = img52;
+            } else if (Industry.categoryName === '智能合约') {
+              Industry.bgImage = img53;
+            } else if (Industry.categoryName === '众筹') {
+              Industry.bgImage = img54;
             }
             that.$axios.get('/api/ICO/relatedICO?categoryName=' + Industry.categoryName + '&pageSize=4').then(function (res) {
               Industry.project = res.data;
