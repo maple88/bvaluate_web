@@ -28,7 +28,7 @@
                         <th>行业热度</th>
                         <th>媒体关注度</th>
                         <th>宣传力度</th>
-                        <th>负面影响</th>
+                        <th>市场情绪</th>
                         <th>钱包监控</th>
                         <th>代码活跃度</th>
                         <th>总分</th>
@@ -104,7 +104,7 @@
                       <td v-else-if="index === 1" class="tr_second"><span>{{index + 1 }}</span></td>
                       <td v-else-if="index === 2" class="tr_third"><span>{{index + 1 }}</span></td>
                       <td v-else><span>{{index + 1 }}</span></td>
-                      <td class="tr_first cursor_style" @click.stop="goArticle('/project',{sid: item.sid}) ">
+                      <td class="tr_first cursor_style">
                         <h4 :title="item.name">{{item.name}}</h4>
                       </td>
                       <td>{{item.turnover1day}}</td>
@@ -139,7 +139,7 @@
                       <td v-else-if="index === 1" class="tr_second"><span>{{index + 1 }}</span></td>
                       <td v-else-if="index === 2" class="tr_third"><span>{{index + 1 }}</span></td>
                       <td v-else><span>{{index + 1 }}</span></td>
-                      <td class="tr_first cursor_style" @click.stop="goArticle('/project',{sid: item.sid}) ">
+                      <td class="tr_first cursor_style">
                         <h4 :title="item.name">{{item.name}}</h4>
                       </td>
                       <td>{{item.turnover1day}}</td>
@@ -314,7 +314,7 @@
       reMore() {
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
-          getDate()
+          this.getDate()
         } else {
           if (confirm('登陆后查看后续榜单...')) {
             this.$router.push('/login');

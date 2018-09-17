@@ -81,6 +81,13 @@
     }
     .p2 {
       font-size: 56px;
+      a {
+        color: #FFFFFF;
+        transition: color .3s;
+        &:hover {
+          color: $mainColor;
+        }
+      }
     }
     .p3 {
       font-size: 38px;
