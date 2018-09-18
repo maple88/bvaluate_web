@@ -19,6 +19,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
+              <button class="button open_search navbar-toggle"><img src="../assets/search/search_b.png"></button>
               <router-link to="/index" class="navbar-brand">
                 <img src="../assets/logo-white.png" class="white">
                 <img src="../assets/logo-white.png" class="blue">
@@ -64,8 +65,38 @@
                   </p>
                 </li>
               </ul>
+              <div class="nav navbar-nav navbar-right nav-search">
+                <button class="button open_search"><img src="../assets/search/search.png"></button>
+              </div>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
+          <div class="bottom_search">
+            <div class="container">
+              <div class="search_box">
+                <div class="left">
+                  <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="searchType" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="true">
+                      {{searchType}}
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="searchType">
+                      <li><a href="javascript:void(0);" @click="searchType = '文章'">文章</a></li>
+                      <li><a href="javascript:void(0);" @click="searchType = '项目'">项目</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="center">
+                  <input type="text" v-model="search" class="search_input" @keyup.enter="goSearch">
+                </div>
+                <div class="right">
+                  <button class="search_submit" @click="goSearch">
+                    <img src="../assets/search/search.png" alt="search"/>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </nav>
       </div>
     </div>
@@ -517,6 +548,8 @@
         newsNo: 0,
         tuiwenNo: 0,
         weiboNo: 0,
+        searchType: '文章',
+        search: ''
       }
     },
     filters: {
@@ -590,6 +623,25 @@
       }
     },
     mounted() {
+      let search_btn = $('.open_search');
+      search_btn.click(function (e) {
+        if ($('.bottom_search').hasClass('open')) {
+          $('.bottom_search').removeClass('open')
+        } else {
+          $('.bottom_search').addClass('open')
+        }
+        $(document).click(function (e) {
+          $('.bottom_search').removeClass('open');
+        });
+        $('.search_input').click(function (e) {
+          e.stopPropagation()
+        });
+        $('.dropdown-menu').click(function (e) {
+          $('.dropdown').removeClass('open');
+          e.stopPropagation()
+        });
+        e.stopPropagation()
+      });
       new Swiper('#home-team', {
         observer: true,
         observeParents: true,
@@ -630,6 +682,15 @@
       })
     },
     methods: {
+      goSearch() {
+        this.$router.push({
+          path: '/search',
+          query: {
+            keyword: this.search,
+            searchType: this.searchType
+          }
+        })
+      },
       scrollNews() {
         let $this = document.getElementById('home-newslist1');
         let finished = true;
