@@ -19,7 +19,7 @@
               </div>
             </div>
             <div class="center">
-              <input type="text" v-model="search.keyword" class="search_input">
+              <input type="text" v-model="search.keyword" class="search_input" @keyup.enter="searchKeyWord">
             </div>
             <div class="right">
               <button class="search_submit" @click="searchKeyWord()">
@@ -120,7 +120,8 @@
                 </ul>
               </div>
               <div class="loading_more">
-                <button :disabled="showloading" @click.stop="loadMoreNews">
+                <p class="loading_more_tip" v-if="showloading===-1">{{loadingTip}}~</p>
+                <button :disabled="showloading" @click.stop="loadMoreNews" v-if="!(showloading===-1)">
                   <img v-if="showloading" :src="loading"/>
                   <span v-if="!showloading">加载更多</span>
                 </button>
@@ -128,84 +129,44 @@
             </div>
             <div class="center" v-if="!search.show">
               <div class="follow_list serach_follow_list">
-                <div class="project_list_box">
+                <div class="project_list_box" v-for="project in projectList">
                   <div class="project_info">
                     <div class="left">
                       <div class="logo_box">
-                        <img src="../assets/project/recommend.jpg"/>
+                        <img :src="project.logoSrc"/>
                       </div>
                     </div>
                     <div class="right">
                       <div class="base_info">
                         <div class="left">
                           <h4>
-                            Datablockchain (PreICO)
+                            <span v-html="project.project"></span>
                             <i class="fa fa-heart-o"></i>
                             <!--<i class="fa fa-heart on"></i>-->
                           </h4>
-                          <p>Merging Big Data, AI And Blockchain</p>
+                          <p>{{project.introduction }} </p>
                         </div>
                         <div class="right">
-                          <h4>4.8</h4>
+                          <h4>{{project.totalScore }}</h4>
                           <p>总分</p>
                         </div>
                       </div>
                       <div class="detail_info">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.
-                          Proin
-                          gravida dolor sit amet lacus accumsan
-                          et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et
-                          magnis
-                          dis parturient montes, nascetur ridicul
-                          us mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus
-                          sapien nunc eget.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="project_list_box">
-                  <div class="project_info">
-                    <div class="left">
-                      <div class="logo_box">
-                        <img src="../assets/project/recommend.jpg"/>
-                      </div>
-                    </div>
-                    <div class="right">
-                      <div class="base_info">
-                        <div class="left">
-                          <h4>
-                            Datablockchain (PreICO)
-                            <i class="fa fa-heart-o"></i>
-                            <!--<i class="fa fa-heart on"></i>-->
-                          </h4>
-                          <p>Merging Big Data, AI And Blockchain</p>
-                        </div>
-                        <div class="right">
-                          <h4>4.8</h4>
-                          <p>总分</p>
-                        </div>
-                      </div>
-                      <div class="detail_info">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.
-                          Proin
-                          gravida dolor sit amet lacus accumsan
-                          et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et
-                          magnis
-                          dis parturient montes, nascetur ridicul
-                          us mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus
-                          sapien nunc eget.</p>
+                        <p>{{project.irAbstract }}</p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="loading_more">
-                <button :disabled="showloading" @click.stop="loadMoreNews">
+                <p class="loading_more_tip" v-if="showloading===-1">{{loadingTip}}~</p>
+                <button :disabled="showloading" @click.stop="loadMoreICO" v-if="!(showloading===-1)">
                   <img v-if="showloading" :src="loading"/>
                   <span v-if="!showloading">加载更多</span>
                 </button>
               </div>
             </div>
+            <a href="#" v-if="!newRender"></a>
             <div class="right">
               <div class="right_item">
                 <div class="hot_title">
@@ -298,13 +259,15 @@
         img3: img3,
         labelMore: false,
         search: {
-          class: '项目',
+          class: '文章',
           type: 'NEWS',
           keyword: '',
           pageNo: 0,
           show: true
         },
+        loadingTip: '',
         newsList: [],
+        projectList: [],
         flashPageSize: 20,
         flashList: [],
         affairList: [],
@@ -386,23 +349,7 @@
       }
     },
     mounted() {
-      new Swiper('#top_banner', {
-        loop: true,
-        // 如果需要分页器
-        pagination: {
-          el: '.swiper-pagination'
-        },
-        autoplay: {
-          disableOnInteraction: false,
-        },
-      })
-      new Swiper('#adv_banner', {
-        loop: false,
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        }
-      });
+      this.initSearch();
       this.searchKeyWord();
       this.initRightNews('快讯', this.flashPageSize, res => {
         this.flashPageSize += 20;
@@ -413,7 +360,43 @@
       });
       this.scrollFlash();
     },
+    activated() {
+      this.initSearch();
+      this.searchKeyWord();
+      this.initRightNews('快讯', this.flashPageSize, res => {
+        this.flashPageSize += 20;
+        this.flashList = res;
+      });
+      this.initRightNews('国家时事', 10, res => {
+        this.affairList = res;
+      });
+      this.scrollFlash();
+    },
+    // computed: {
+    //   newRender: function () {
+    //     this.search.class = this.$route.query.searchType;
+    //     this.search.keyword = this.$route.query.keyword;
+    //     this.searchKeyWord();
+    //     return true
+    //   }
+    // },
+    beforeRouteUpdate(to, from, next) {
+      let keyword = to.query.keyword;
+      let searchType = to.query.searchType;
+      this.search.class = searchType;
+      this.search.keyword = keyword;
+      this.searchKeyWord();
+      next();
+    },
     methods: {
+      init() {
+        this.initSearch();
+        this.searchKeyWord();
+      },
+      initSearch() {
+        this.search.class = this.$route.query.searchType;
+        this.search.keyword = this.$route.query.keyword;
+      },
       goProjectByName(obj) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
@@ -486,28 +469,53 @@
         });
       },
       searchKeyWord() {
-        let that = this;
-        that.showloading = true;
-        that.newsList = [];
-        that.search.pageNo = 0;
+        this.showloading = true;
+        this.newsList = [];
+        this.search.pageNo = 0;
         if (this.search.class === '文章') {
-          that.search.show = true;
-          that.$axios.get('/api/traditional/search?newsType=' + that.search.type + '&search=' + that.search.keyword + '&pageNo=' + that.search.pageNo + '&pageSize=20').then(res => {
-            that.showloading = false;
-            that.newsList = res.data.content;
+          this.search.show = true;
+          this.$axios.get('/api/traditional/search?newsType=' + this.search.type + '&search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
+            this.showloading = false;
+            this.newsList = res.data.content;
+            if (res.data.content.length <= 0) {
+              this.showloading = -1;
+              this.loadingTip = '无搜索结果~';
+            }
           });
         } else if (this.search.class === '项目') {
-          that.search.show = false;
-          that.showloading = false;
+          this.search.show = false;
+          this.$axios.get('/api/ICO/search?search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
+            this.showloading = false;
+            this.projectList = res.data.content;
+            if (res.data.content.length <= 0) {
+              this.showloading = -1;
+              this.loadingTip = '无搜索结果~';
+            }
+          });
         }
       },
       loadMoreNews() {
-        let that = this;
-        that.showloading = true;
-        that.search.pageNo++;
-        that.$axios.get('/api/traditional/search?newsType=' + that.search.type + '&search=' + that.search.keyword + '&pageNo=' + that.search.pageNo + '&pageSize=20').then(res => {
-          that.showloading = false;
-          that.newsList = that.newsList.concat(res.data.content);
+        this.showloading = true;
+        this.search.pageNo++;
+        this.$axios.get('/api/traditional/search?newsType=' + this.search.type + '&search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
+          this.showloading = false;
+          this.newsList = this.newsList.concat(res.data.content);
+          if (res.data.content.length < 20) {
+            this.showloading = -1;
+            this.loadingTip = '无更多数据~';
+          }
+        });
+      },
+      loadMoreICO() {
+        this.showloading = true;
+        this.search.pageNo++;
+        this.$axios.get('/api/ICO/search?search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
+          this.showloading = false;
+          this.projectList = this.projectList.concat(res.data.content);
+          if (res.data.content.length < 20) {
+            this.showloading = -1;
+            this.loadingTip = '无更多数据~';
+          }
         });
       }
     },

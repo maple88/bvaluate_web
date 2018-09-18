@@ -1,5 +1,12 @@
 .header {
-  transition: top .1s;
+  transition: top .3s;
+  .navbar-toggle {
+    margin-top: 15px;
+    &.open_search {
+      margin-top: 11px;
+      border-radius: 50%;
+    }
+  }
   &.scroll {
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, .2);
     top: -50px;
@@ -21,6 +28,11 @@
     .mainhead .navbar-nav.navbar-right .user {
       width: 60px;
       height: 60px;
+    }
+    .mainhead .navbar-nav.nav-search {
+      margin-top: 0;
+      margin-right: 0;
+      padding: 12px 0;
     }
   }
   .tophead {
@@ -52,6 +64,81 @@
       border: 0;
       border-radius: 0;
       background: #fff;
+      position: relative;
+      .bottom_search {
+        position: absolute;
+        width: 100%;
+        padding: 20px 0;
+        box-shadow: 0 15px 27px -14px rgba(0, 0, 0, .2);
+        z-index: -1;
+        top: -20%;
+        opacity: 0;
+        background-color: #FFFFFF;
+        transition: all .5s;
+        &.open {
+          top: 100%;
+          opacity: 1;
+        }
+        .search_box {
+          margin: auto;
+          display: flex;
+          width: 800px;
+          .left {
+            flex: 0 0 90px;
+            min-width: 90px;
+            .dropdown {
+              width: 100%;
+              .btn-default {
+                height: 40px;
+                width: 100%;
+                border-radius: 0;
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+              }
+              .dropdown-backdrop{
+                z-index: -1;
+              }
+            }
+            .dropdown-menu {
+              width: 100%;
+              min-width: 100%;
+            }
+          }
+          .center {
+            width: 100%;
+            input {
+              width: 100%;
+              outline: none;
+              height: 40px;
+              border-right: none;
+              border-left: none;
+              padding: 0 10px;
+              border-top: 1px solid #ccc;
+              border-bottom: 1px solid #ccc;
+            }
+          }
+          .right {
+            flex: 0 0 80px;
+            .search_submit {
+              height: 40px;
+              border: 1px solid $mainColor;
+              background-color: $mainColor;
+              transition: all .3s;
+              width: 100%;
+              border-top-right-radius: 5px;
+              border-bottom-right-radius: 5px;
+              outline: none;
+              img {
+                width: 25px;
+              }
+              &:hover {
+                border: 1px solid #2f76ac;
+                background-color: #2f76ac;
+              }
+            }
+          }
+        }
+      }
     }
     .navbar-brand {
       margin: 15px 0 0;
@@ -60,6 +147,27 @@
     }
     .navbar-nav {
       border: 0;
+      &.nav-search {
+        padding: 27px 0;
+        margin-right: 10px;
+        transition: all .3s;
+        button {
+          background-color: $mainColor;
+          border: 1px solid $mainColor;
+          height: 44px;
+          width: 44px;
+          border-radius: 50%;
+          outline: none;
+          transition: all .3s;
+          &:hover {
+            background-color: #2d7aaf;
+            border: 1px solid #2d7aaf;
+          }
+          img {
+            width: 20px;
+          }
+        }
+      }
     }
     .navbar-nav > li {
       margin: 0 30px;
@@ -99,7 +207,7 @@
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
-        transition: width, height .3s;
+        transition: all .3s;
         img {
           width: 100%;
         }
@@ -132,6 +240,11 @@
       margin: 0 16px;
     }
   }
+  @media (max-width: 992px) {
+    .mainhead .navbar .bottom_search .search_box {
+      width: 100%;
+    }
+  }
   @media (min-width: 768px) and (max-width: 992px) {
     .navbar-header {
       width: 100%;
@@ -149,6 +262,9 @@
     }
   }
   @media (max-width: 767px) {
+    .mainhead .navbar-nav.nav-search {
+      display: none;
+    }
     .mainhead .navbar-brand {
       margin: 0;
       width: 200px;
@@ -184,6 +300,16 @@
       a {
         color: $black;
       }
+    }
+  }
+  @media (max-width: 500px) {
+    .mainhead .navbar .bottom_search .search_box .left {
+      flex: 0 0 75px;
+      min-width: 75px;
+    }
+    .mainhead .navbar .bottom_search .search_box .right {
+      flex: 0 0 50px;
+      min-width: 50px;
     }
   }
 }

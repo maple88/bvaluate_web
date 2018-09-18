@@ -126,7 +126,7 @@
                 <div class="input-group submit-group">
                   <button type="button" class="btn ok-btn" @click.stop="registerSubmit()">注册</button>
                 </div>
-                <p class="register-tips">点击“注册”即表示您同意并愿意接收<br>APELINE<span>用户此协议</span>和<span>隐私政策</span></p>
+                <p class="register-tips">点击“注册”即表示您同意并愿意接收<br>BVALUATE<span>用户此协议</span>和<span>隐私政策</span></p>
               </div>
               <div class="inputInner" v-if="resetpwdForm">
                 <div class="input-group">
