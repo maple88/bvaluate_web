@@ -132,6 +132,9 @@
         padding: 27px 0;
         margin-right: 10px;
         transition: all .3s;
+        &.home_search {
+          padding: 38px 0;
+        }
         button {
           background-color: $mainColor;
           border: 1px solid $mainColor;
@@ -176,6 +179,17 @@
       border-bottom: 5px solid transparent;
     }
     .navbar-nav.navbar-right {
+      &.home_navbar {
+        padding: 40px 0;
+        .dropdown {
+          p {
+            margin-bottom: 0;
+            .xie_link {
+              color: #333333;
+            }
+          }
+        }
+      }
       li {
         margin: 10px 0;
       }

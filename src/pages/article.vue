@@ -296,9 +296,9 @@
 <script>
   import Swiper from 'swiper';
 
-  let img1 = require('../assets/follow/banner01.png')
-  let img2 = require('../assets/follow/adv01.png')
-  let img3 = require('../assets/media.jpg')
+  let img1 = require('../assets/follow/banner01.png');
+  let img2 = require('../assets/follow/adv01.png');
+  let img3 = require('../assets/media.jpg');
 
 
   export default {
