@@ -89,7 +89,7 @@
       </div>
     </div>
     <div class="bottom">
-      <p>ALL right reserved by Bvaluate @2018</p>
+      <p>ALL rights reserved by Bvaluate @2018</p>
     </div>
   </div>
 </template>

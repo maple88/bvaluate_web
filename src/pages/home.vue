@@ -52,20 +52,20 @@
                   </ul>
                 </li>
               </ul>
-              <ul v-if="!token" class="nav navbar-nav navbar-right">
+              <ul v-if="!token" class="nav navbar-nav navbar-right home_navbar">
                 <li class="dropdown">
                   <p>
                     <router-link to="/login" class="label_a">
                       登录
                     </router-link>
-                    <span>/</span>
+                    <span class="xie_link">/</span>
                     <router-link to="/login?page=register" class="label_a">
                       注册
                     </router-link>
                   </p>
                 </li>
               </ul>
-              <div class="nav navbar-nav navbar-right nav-search">
+              <div class="nav navbar-nav navbar-right nav-search home_search">
                 <button class="button open_search"><img src="../assets/search/search.png"></button>
               </div>
             </div><!-- /.navbar-collapse -->
@@ -1108,6 +1108,12 @@
           obj.partner = this.initPartner(partner);
         } catch (e) {
         } finally {
+          this.icoNews.content = [];
+          this.icoNews.tuiwen = [];
+          this.icoNews.weibo = [];
+          this.newsNo = 0;
+          this.tuiwenNo = 0;
+          this.weiboNo = 0;
           this.showProject = obj;
           this.initIcoNews(this.showProject);
           this.inittuiwen(this.showProject);

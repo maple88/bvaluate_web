@@ -187,7 +187,7 @@
         </div>
       </div>
     </div>
-    <!--<p class="login_footer">备案号</p>-->
+    <p class="login_footer">ALL right reserved by Bvaluate @2018</p>
   </div>
 </template>
 

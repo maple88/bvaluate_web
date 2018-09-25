@@ -192,6 +192,7 @@
         </div>
       </div>
     </div><!-- /.modal -->
+    <vfooter></vfooter>
   </div>
 </template>
 

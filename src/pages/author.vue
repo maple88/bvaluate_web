@@ -119,6 +119,7 @@
         </div>
       </div>
     </div>
+    <vfooter></vfooter>
   </div>
 </template>
 

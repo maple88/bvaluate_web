@@ -48,7 +48,7 @@
                 </ul>
               </li>
             </ul>
-            <ul v-if="!token" class="nav navbar-nav navbar-right">
+            <ul v-if="!token" class="nav navbar-nav navbar-right header_navbar">
               <li class="dropdown">
                 <p>
                   <router-link to="/login" class="label_a">
