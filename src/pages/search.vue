@@ -132,7 +132,7 @@
                 <div class="project_list_box" v-for="project in projectList">
                   <div class="project_info">
                     <div class="left">
-                      <div class="logo_box">
+                      <div class="logo_box" @click="goProjectById(project.sid)">
                         <img :src="project.logoSrc"/>
                       </div>
                     </div>
@@ -140,9 +140,9 @@
                       <div class="base_info">
                         <div class="left">
                           <h4>
-                            <span v-html="project.project"></span>
-                            <i class="fa fa-heart-o"></i>
-                            <!--<i class="fa fa-heart on"></i>-->
+                            <span v-html="project.project" @click="goProjectById(project.sid)"></span>
+                            <i class="fa fa-heart-o" v-if="!project.collected" @click="setFollow(even,project)"></i>
+                            <i class="fa fa-heart" v-else></i>
                           </h4>
                           <p>{{project.introduction }} </p>
                         </div>
@@ -372,14 +372,6 @@
       });
       this.scrollFlash();
     },
-    // computed: {
-    //   newRender: function () {
-    //     this.search.class = this.$route.query.searchType;
-    //     this.search.keyword = this.$route.query.keyword;
-    //     this.searchKeyWord();
-    //     return true
-    //   }
-    // },
     beforeRouteUpdate(to, from, next) {
       let keyword = to.query.keyword;
       let searchType = to.query.searchType;
@@ -393,9 +385,34 @@
         this.initSearch();
         this.searchKeyWord();
       },
+      goProjectById(sid) {
+        let routeData = this.$router.resolve({path: '/project', query: {sid: sid}});
+        window.open(routeData.href, '_blank');
+      },
       initSearch() {
         this.search.class = this.$route.query.searchType;
         this.search.keyword = this.$route.query.keyword;
+      },
+      setFollow(project) {
+        let that = this
+        let token = localStorage.getItem('apelink_user_token');
+        if (token) {
+          let uid = localStorage.getItem('apelink_user_uid');
+          let url = '/api/individual/add?type=ICO&sid=' + project.sid;
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'post',
+            url: url,
+            headers: headers
+          }).then(function (res) {
+            if (res.data) {
+              alert('关注成功');
+              project.collected = true;
+            }
+          })
+        } else {
+          alert('请先登录');
+        }
       },
       goProjectByName(obj) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
@@ -459,7 +476,6 @@
           let offsetHeight = $this.offsetHeight;
           if ((boxTop / (boxHeight - offsetHeight) >= 0.80) && finished) {
             finished = false;
-            let that = this;
             this.initRightNews('快讯', this.flashPageSize, res => {
               this.flashPageSize += 20;
               this.flashList = res;
@@ -484,7 +500,10 @@
           });
         } else if (this.search.class === '项目') {
           this.search.show = false;
-          this.$axios.get('/api/ICO/search?search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
+          let uid = localStorage.getItem('apelink_user_uid');
+          this.$axios.get('/api/ICO/search?search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20', {
+            headers: {uid: uid}
+          }).then(res => {
             this.showloading = false;
             this.projectList = res.data.content;
             if (res.data.content.length <= 0) {

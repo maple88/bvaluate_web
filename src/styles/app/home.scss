@@ -181,6 +181,10 @@
     .navbar-nav.navbar-right {
       &.home_navbar {
         padding: 40px 0;
+        @media (max-width: 767px) {
+          padding: 5px 0;
+          text-align: center;
+        }
         .dropdown {
           p {
             margin-bottom: 0;
@@ -342,6 +346,8 @@
     height: 500px;
     .bgimg {
       width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     .bannerwds {
       position: absolute;
@@ -388,7 +394,7 @@
       }
     }
     @media (max-width: 630px) {
-      height: 260px;
+      height: 350px;
       display: flex;
       justify-content: center;
       .bgimg {

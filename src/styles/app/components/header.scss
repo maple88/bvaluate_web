@@ -192,6 +192,11 @@
       margin-top: 15px;
       &.header_navbar {
         padding: 37px 0;
+        transition: padding .3s;
+        @media (max-width: 767px) {
+          padding: 5px 0;
+          text-align: center;
+        }
       }
       a {
         background: transparent;

@@ -473,6 +473,9 @@
                     overflow: hidden;
                     h4 {
                       font-size: 20px;
+                      span {
+                        cursor: pointer;
+                      }
                       i {
                         color: rgba(255, 0, 0, 0.67);
                         cursor: pointer;
