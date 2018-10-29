@@ -407,8 +407,8 @@
   let img2 = require('../assets/follow/adv01.png');
   let img3 = require('../assets/media.jpg');
   let loading = require('../assets/login/loading.gif');
-  let tuiwen = require('../assets/home/tuite.png')
-  let weibo = require('../assets/home/weibo.png')
+  let tuiwen = require('../assets/home/tuite.png');
+  let weibo = require('../assets/home/weibo.png');
 
   export default {
     data() {
