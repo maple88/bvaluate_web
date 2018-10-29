@@ -32,7 +32,8 @@
                 <router-link tag="li" to="/index" active-class="active"><a>首页</a></router-link>
                 <router-link tag="li" to="/recommend" active-class="active"><a>新闻</a></router-link>
                 <router-link tag="li" to="/list" active-class="active"><a>榜单</a></router-link>
-                <router-link tag="li" to="/userCenter" active-class="active"><a>个人中心</a></router-link>
+                <router-link tag="li" to="/userCenter" active-class="active" v-show="token"><a>个人中心</a></router-link>
+                <li v-show="!token" @click="isLogin('/userCenter')"><a>个人中心</a></li>
               </ul>
               <ul v-if="token" class="nav navbar-nav navbar-right">
                 <li class="dropdown">
@@ -66,7 +67,9 @@
                 </li>
               </ul>
               <div class="nav navbar-nav navbar-right nav-search home_search">
-                <button class="button open_search"><img src="../assets/search/search.png"></button>
+                <button class="button open_search" @click="isShow = true">
+                  <img src="../assets/search/search.png">
+                </button>
               </div>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
@@ -457,13 +460,15 @@
           </div>
         </div>
       </div>
+      <v-login v-model="isShow" :goUrl="successGo"></v-login>
       <vfooter/>
     </div>
   </div>
 </template>
 
 <script>
-  import Swiper from 'swiper'
+  import Swiper from 'swiper';
+  import login from '../components/login';
 
   let tuiwen = require('../assets/home/tuite.png');
   let weibo = require('../assets/home/weibo.png');
@@ -525,8 +530,12 @@
 
 
   export default {
+    components: {
+      'v-login': login
+    },
     data() {
       return {
+        isShow: false,
         hottestProject: [],
         showProject: {},
         icoNews: {
@@ -549,7 +558,8 @@
         tuiwenNo: 0,
         weiboNo: 0,
         searchType: '文章',
-        search: ''
+        search: '',
+        successGo: ''
       }
     },
     filters: {
@@ -682,6 +692,10 @@
       })
     },
     methods: {
+      isLogin(url) {
+        this.successGo = url;
+        this.isShow = true;
+      },
       goSearch() {
         this.$router.push({
           path: '/search',

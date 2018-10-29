@@ -173,6 +173,7 @@
       }
     }
     .navbar-nav > li {
+      cursor: pointer;
       margin: 0 30px;
       &.active {
         a {
@@ -183,6 +184,7 @@
       }
     }
     .navbar-nav > li > a {
+      cursor: pointer;
       color: $black;
       font-size: 18px;
       padding: 50px 8px 45px;
