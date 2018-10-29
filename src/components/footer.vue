@@ -11,7 +11,7 @@
             <li><a href="#">Media</a></li>
             <li><a href="#">API</a></li>
             <li><a href="#">Mobile app (Android)</a></li>
-            <li><a href="#">Chrome Eidget</a></li>
+            <li><a href="#">Chrome Widget</a></li>
             <li><a href="#">Firefox Widget</a></li>
           </ul>
           <ul class="logo_box">
@@ -81,7 +81,7 @@
           <ul>
             <li>For ALL</li>
             <li><a href="#">ICO Listing</a></li>
-            <li><a href="#">People of Blockchsin</a></li>
+            <li><a href="#">People of Blockchain</a></li>
             <li><a href="#">Agencies</a></li>
             <li><a href="#">Exchanges</a></li>
           </ul>

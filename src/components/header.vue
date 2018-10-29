@@ -28,7 +28,8 @@
               <router-link tag="li" to="/index" active-class="active"><a>首页</a></router-link>
               <router-link tag="li" to="/recommend" active-class="active"><a>新闻</a></router-link>
               <router-link tag="li" to="/list" active-class="active"><a>榜单</a></router-link>
-              <router-link tag="li" to="/userCenter" active-class="active"><a>个人中心</a></router-link>
+              <router-link tag="li" to="/userCenter" active-class="active" v-show="token"><a>个人中心</a></router-link>
+              <li v-show="!token" @click="isLogin('/userCenter')"><a>个人中心</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right" v-if="token">
               <li class="dropdown">
@@ -95,12 +96,18 @@
         </div>
       </nav>
     </div>
+    <v-login v-model="isShow" :goUrl="successGo"></v-login>
   </div>
 </template>
 
 <script>
+  import login from '../components/login';
+
   let default_header = require('../assets/user/default-header.png');
   export default {
+    components: {
+      'v-login': login
+    },
     props: {
       parantProfileUrl: String
     },
@@ -112,7 +119,9 @@
         default_header: default_header,
         scroll: '',
         searchType: '文章',
-        search: ''
+        search: '',
+        isShow: false,
+        successGo: ''
       }
     },
     mounted() {
@@ -151,6 +160,10 @@
             searchType: this.searchType
           }
         })
+      },
+      isLogin(url) {
+        this.successGo = url;
+        this.isShow = true;
       },
       logout() {
         localStorage.removeItem('apelink_user_candies');
