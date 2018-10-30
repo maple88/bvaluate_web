@@ -67,7 +67,7 @@
                 </li>
               </ul>
               <div class="nav navbar-nav navbar-right nav-search home_search">
-                <button class="button open_search" @click="isShow = true">
+                <button class="button open_search">
                   <img src="../assets/search/search.png">
                 </button>
               </div>
@@ -460,7 +460,7 @@
           </div>
         </div>
       </div>
-      <v-login v-model="isShow" :goUrl="successGo"></v-login>
+      <v-login v-model="isShow" :goUrl="successGo" @closeBox="closeBox"></v-login>
       <vfooter/>
     </div>
   </div>
@@ -696,6 +696,10 @@
         this.successGo = url;
         this.isShow = true;
       },
+      closeBox(res) {
+        console.log(res);
+        this.isShow = false;
+      },
       goSearch() {
         this.$router.push({
           path: '/search',
@@ -782,7 +786,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/recommend', query: {industry: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
         window.open(routeData.href, '_blank');
       },
       goIndustryByCountry(obj) {

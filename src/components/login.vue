@@ -185,7 +185,7 @@
 
 <script>
   let loading = require('../assets/login/loading.gif');
-  let bg = require('../assets/login/login_bg.jpg')
+  let bg = require('../assets/login/login_bg.jpg');
   export default {
     props: {
       value: {
@@ -200,6 +200,7 @@
     data() {
       return {
         bg: bg,
+        visiable: this.value,
         login_register_head: true,
         resetpwd_head: false,
         isLogin: true,

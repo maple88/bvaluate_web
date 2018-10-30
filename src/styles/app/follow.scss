@@ -407,6 +407,28 @@
   .label_div {
     margin-top: 47px;
     .label_box {
+      &.newsList_page {
+        a {
+          cursor: text;
+        }
+        .follow {
+          background-color: #FFFFFF;
+          border: 1px solid $mainColor;
+          color: $mainColor;
+          font-size: 18px;
+          padding: 8px 25px;
+          border-radius: 5px;
+        }
+        .followed {
+          background-color: $mainColor;
+          border: 1px solid $mainColor;
+          color: #FFFFFF;
+          font-size: 18px;
+          padding: 8px 25px;
+          border-radius: 5px;
+        }
+
+      }
       a {
         font-size: 18px;
         color: #333333;
@@ -422,6 +444,150 @@
         &.active {
           background-color: $mainColor;
           color: #FFFFFF;
+        }
+      }
+    }
+  }
+}
+
+.follow_page {
+  .follow_content {
+    .fish_container {
+      .clearfix {
+        .left {
+          width: 20%;
+          .menu_bar {
+            text-align: center;
+            > li {
+              font-size: 16px;
+              padding-top: 8px;
+              padding-bottom: 8px;
+              cursor: pointer;
+              transition: .3s;
+              &:hover {
+                color: $mainColor;
+                background-color: #f7f7f7;
+              }
+              &.active {
+                background-color: $mainColor;
+                color: #FFFFFF;
+              }
+            }
+          }
+        }
+        .center {
+          width: 80%;
+          .tab_item {
+            .item_list_bottom {
+              background-color: #FFFFFF;
+              .item_list_title {
+                border-bottom: 1px solid #cccccc;
+                padding: 10px;
+                h4 {
+                  font-size: 22px;
+                  margin: 0;
+                }
+              }
+              .loading_more {
+                padding: 0;
+                button {
+                  border: 1px solid #cccccc;
+                }
+              }
+            }
+            .item_list_top {
+              background-color: #FFFFFF;
+              .item_list_title {
+                border-bottom: 1px solid #cccccc;
+                padding: 10px;
+                h4 {
+                  font-size: 22px;
+                  margin: 0;
+                }
+              }
+            }
+          }
+          .serach_follow_list {
+            margin-top: 0;
+            .project_list_box {
+              background-color: #FFFFFF;
+              padding: 10px;
+              border-radius: 10px;
+              margin-bottom: 20px;
+              .project_info {
+                display: flex;
+                > .left {
+                  flex: 0 0 150px;
+                  min-width: 150px;
+                  .logo_box {
+                    width: 150px;
+                    height: 150px;
+                    img {
+                      height: 100%;
+                      width: 100%;
+                      object-fit: cover;
+                    }
+                  }
+                }
+                > .right {
+                  overflow: hidden;
+                  .base_info {
+                    display: flex;
+                    justify-content: space-between;
+                    padding-left: 20px;
+                    padding-right: 20px;
+                    > .left {
+                      flex: 1;
+                      overflow: hidden;
+                      h4 {
+                        font-size: 20px;
+                        span {
+                          cursor: pointer;
+                        }
+                        i {
+                          color: rgba(255, 0, 0, 0.67);
+                          cursor: pointer;
+                          margin-left: 10px;
+                        }
+                      }
+                      p {
+                        color: #999999;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                      }
+                    }
+                    > .right {
+                      flex: 0 0 72px;
+                      min-width: 72px;
+                      text-align: center;
+                      h4 {
+                        font-size: 36px;
+                        margin-top: 0;
+                      }
+                    }
+                  }
+                  .detail_info {
+                    padding-left: 20px;
+                    padding-right: 20px;
+                    p {
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                      display: -webkit-box;
+                      -webkit-line-clamp: 3;
+                      -webkit-box-orient: vertical;
+                      margin-bottom: 0;
+                      line-height: 1.7;
+                      height: 67px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          .follow_list {
+            margin-top: 0;
+          }
         }
       }
     }

@@ -2,43 +2,12 @@
   <div class="page search_page">
     <vheader/>
     <div class="maintainer">
-      <div class="search_div">
-        <div class="fish_container">
-          <div class="search_box">
-            <div class="left">
-              <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="searchType" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="true">
-                  {{search.class}}
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                  <li><a href="javascript:void(0);" @click="changSearchClass('文章')">文章</a></li>
-                  <li><a href="javascript:void(0);" @click="changSearchClass('项目')">项目</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="center">
-              <input type="text" v-model="search.keyword" class="search_input" @keyup.enter="searchKeyWord">
-            </div>
-            <div class="right">
-              <button class="search_submit" @click="searchKeyWord()">
-                <img src="../assets/search/search.png" alt="search"/>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div class="label_div" v-if="search.show">
         <div class="fish_container">
-          <div class="label_box">
-            <a href="javascript:void(0);" :class="search.type === 'NEWS'?'active':''" @click="changeType('NEWS')">新闻</a>
-            <a href="javascript:void(0);" :class="search.type === 'WEIXIN'?'active':''"
-               @click="changeType('WEIXIN')">微信</a>
-            <a href="javascript:void(0);" :class="search.type === 'WEIBO'?'active':''"
-               @click="changeType('WEIBO')">微博</a>
-            <a href="javascript:void(0);" :class="search.type === 'TWITTER'?'active':''" @click="changeType('TWITTER')">Twitter</a>
+          <div class="label_box newsList_page">
+            <a href="javascript:void(0);" :class="'active'">{{industry}}</a>
+            <button class="follow" v-show="!projectFollow" @click="setFollow">+ 关注</button>
+            <button class="followed" v-show="projectFollow" @click="deleteFollow(industry)">已关注</button>
           </div>
         </div>
       </div>
@@ -121,7 +90,7 @@
               </div>
               <div class="loading_more">
                 <p class="loading_more_tip" v-if="showloading===-1">{{loadingTip}}~</p>
-                <button :disabled="showloading" @click.stop="loadMoreNews" v-if="!(showloading===-1)">
+                <button :disabled="showloading" @click.stop="reloadMore(industry,newsType)" v-if="!(showloading===-1)">
                   <img v-if="showloading" :src="loading"/>
                   <span v-if="!showloading">加载更多</span>
                 </button>
@@ -166,64 +135,28 @@
                 </button>
               </div>
             </div>
-            <a href="#" v-if="!newRender"></a>
             <div class="right">
               <div class="right_item">
                 <div class="hot_title">
                   <div class="title_icon">
-                    <img src="../assets/follow/news_flash.png"/>
+                    <img src="../assets/follow/hot_text.png"/>
                   </div>
-                  <h4>快讯</h4>
+                  <h4>24小时热文</h4>
                 </div>
                 <div class="hot_content">
-                  <ul class="scoll_style" id="scoll_scoll_style">
-                    <li class="news_flash" v-for="(flash,index) in flashList">
-                      <div class="news_item">
-                        <div class="radio_box">
-                          <div class="radio_circle" :class="index===0?'first':''"></div>
+                  <ul class="long_ul">
+                    <li v-for="(item, index) in hotNews" :key="item.sid">
+                      <div class="list_item">
+                        <div class="item_left" v-if="item.titlePicture">
+                          <img :src="item.titlePicture"/>
                         </div>
-                        <div class="item_time">
-                          <span>{{flash.urlTime | dataFormat}}</span>
-                        </div>
-                        <div class="item_body">
-                          <h4 @click="goArticle('/article',{sid:flash.sid})">{{flash.title}}</h4>
-                          <p>{{flash.content}}</p>
+                        <div class="item_body" :class="item.titlePicture?'':'noPicture'">
+                          <h4 @click="goArticle('/article',{sid:item.sid})">{{item.title}}</h4>
+                          <p>{{item.content}}</p>
                         </div>
                       </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="right_item margin_top">
-                <div class="hot_title">
-                  <div class="title_icon">
-                    <img src="../assets/follow/real_time.png"/>
-                  </div>
-                  <h4>国家时事</h4>
-                </div>
-                <div class="hot_content current">
-                  <ul class="long_ul">
-                    <li class="news_flash" v-for="(affair,index) in affairList">
-                      <div class="news_item nolink">
-                        <div class="radio_box">
-                          <div class="radio_circle" :class="index === 0 ? 'first':''"></div>
-                        </div>
-                        <div class="item_time">
-                          <span>{{affair.urlTime | dataFormat}}</span>
-                        </div>
-                        <div class="item_body" :class="affair.titlePicture ? 'hasImg' : ''">
-                          <div class="content" v-if="affair.titlePicture">
-                            <h4 @click="goArticle('/article',{sid:affair.sid})">{{affair.title}}</h4>
-                            <p>{{affair.content}}</p>
-                          </div>
-                          <div class="content_img" v-if="affair.titlePicture"
-                               @click="goArticle('/article',{sid:affair.sid})">
-                            <img :src="affair.titlePicture"/>
-                          </div>
-                          <h4 v-if="!affair.titlePicture" @click="goArticle('/article',{sid:affair.sid})">
-                            {{affair.title}}</h4>
-                          <p v-if="!affair.titlePicture">{{affair.content}}</p>
-                        </div>
+                      <div class="item_bottom">
+                        <p>{{item.urlDate}}</p>
                       </div>
                     </li>
                   </ul>
@@ -275,6 +208,11 @@
         showloading: true,
         tuiwen: tuiwen,
         weibo: weibo,
+        hotNews: [],
+        pageSize: 20,
+        projectFollow: false,
+        industry: '',
+        newsType: ''
       }
     },
     filters: {
@@ -283,6 +221,7 @@
         return myDate.getDate()
       },
       showYear(obj) {
+
         let myDate = new Date(obj);
         let month = myDate.getMonth()
         if (month < 9) {
@@ -299,8 +238,8 @@
         let nowdata = nowDate.getDate();
         let myhour = myDate.getHours();
         let nowhour = nowDate.getHours();
-        let myMin = myDate.getMinutes()
-        let nowMin = nowDate.getMinutes()
+        let myMin = myDate.getMinutes();
+        let nowMin = nowDate.getMinutes();
         //
         if (nowdata - mydata < 7 && nowdata - mydata >= 1) {
           return nowdata - mydata + '天前'
@@ -311,7 +250,7 @@
         } else if (Math.abs(myDate.getMinutes() - nowDate.getMinutes()) < 1) {
           return Math.abs(myDate.getSeconds() - nowDate.getSeconds()) + '秒前'
         } else {
-          let month = myDate.getMonth()
+          let month = myDate.getMonth();
           if (month < 9) {
             month = '0' + month
           }
@@ -321,7 +260,7 @@
       labelFormat(obj) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
-            let arr = obj.split(';')
+            let arr = obj.split(';');
             return arr[0];
           } else {
             return obj;
@@ -330,16 +269,16 @@
         return obj;
       },
       showLable(label1, label2, lable3) {
-        if (label1 != null && label1 !== undefined && label1 !== '' && label1 != 'NULL') {
-          let arr = label1.split(';')
+        if (label1 != null && label1 !== undefined && label1 !== '' && label1 !== 'NULL') {
+          let arr = label1.split(';');
           return arr[0]
         } else {
-          if (label2 != null && label2 !== undefined && label2 !== '' && label2 != 'NULL') {
-            let arr = label1.split(';')
+          if (label2 != null && label2 !== undefined && label2 !== '' && label2 !== 'NULL') {
+            let arr = label1.split(';');
             return arr[0]
           } else {
-            if (lable3 != null && lable3 !== undefined && lable3 !== '' && lable3 != 'NULL') {
-              let arr = label1.split(';')
+            if (lable3 != null && lable3 !== undefined && lable3 !== '' && lable3 !== 'NULL') {
+              let arr = label1.split(';');
               return arr[0]
             } else {
               return '标签'
@@ -349,69 +288,48 @@
       }
     },
     mounted() {
-      this.initSearch();
-      this.searchKeyWord();
-      this.initRightNews('快讯', this.flashPageSize, res => {
-        this.flashPageSize += 20;
-        this.flashList = res;
-      });
-      this.initRightNews('国家时事', 10, res => {
-        this.affairList = res;
-      });
-      this.scrollFlash();
+      this.init();
     },
     activated() {
-      this.initSearch();
-      this.searchKeyWord();
-      this.initRightNews('快讯', this.flashPageSize, res => {
-        this.flashPageSize += 20;
-        this.flashList = res;
-      });
-      this.initRightNews('国家时事', 10, res => {
-        this.affairList = res;
-      });
-      this.scrollFlash();
-    },
-    beforeRouteUpdate(to, from, next) {
-      let keyword = to.query.keyword;
-      let searchType = to.query.searchType;
-      this.search.class = searchType;
-      this.search.keyword = keyword;
-      this.searchKeyWord();
-      next();
     },
     methods: {
       init() {
-        this.initSearch();
-        this.searchKeyWord();
+        let industry = this.$route.query.industry;
+        let country = this.$route.query.country;
+        if (industry) {
+          this.industry = industry;
+          this.initNewsList(this.industry);
+          this.getfollowboolean(this.industry);
+        } else if (country) {
+          this.industry = country;
+          this.newsType = 'country';
+          this.initNewsList(null, this.industry);
+          this.getfollowboolean(this.industry, this.newsType);
+        } else {
+          this.industry = '平台';
+          this.initNewsList(this.industry);
+          this.getfollowboolean(this.industry);
+        }
+        this.getHotnews(this.industry);
       },
-      goProjectById(sid) {
-        let routeData = this.$router.resolve({path: '/project', query: {sid: sid}});
-        window.open(routeData.href, '_blank');
-      },
-      initSearch() {
-        this.search.class = this.$route.query.searchType;
-        this.search.keyword = this.$route.query.keyword;
-      },
-      setFollow(project) {
-        let that = this
+      getfollowboolean() {
+        let that = this;
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid');
-          let url = '/api/individual/add?type=ICO&sid=' + project.sid;
+          let checkurl = '/api/individual/check?type=INDUSTRY&sidOrName=' + that.industryName;
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'post',
-            url: url,
+            url: checkurl,
             headers: headers
           }).then(function (res) {
             if (res.data) {
-              alert('关注成功');
-              project.collected = true;
+              that.projectFollow = true
+            } else {
+              that.projectFollow = false
             }
           })
-        } else {
-          alert('请先登录');
         }
       },
       goProjectByName(obj) {
@@ -448,95 +366,131 @@
         let routeData = this.$router.resolve({path: url, query: query});
         window.open(routeData.href, '_blank');
       },
-      goUrl(url, query) {
-        this.$router.push({path: url, query: query});
-      },
-      changeType(type) {
-        this.search.type = type;
-        this.searchKeyWord();
-      },
-      changSearchClass(name) {
-        this.search.class = name;
-      },
-      initRightNews(categoryName, pageSize, callback) {
+      setFollow() {
         let that = this;
-        that.categoryName = categoryName;
-        let thisCallback = callback;
-        let url = '/api/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + pageSize
-        that.$axios.get(url).then(function (res) {
-          thisCallback(res.data.content);
-        })
-      },
-      scrollFlash() {
-        let $this = document.getElementById('scoll_scoll_style');
-        let finished = true;
-        $this.addEventListener('scroll', () => {
-          let boxTop = $this.scrollTop;
-          let boxHeight = $this.scrollHeight;
-          let offsetHeight = $this.offsetHeight;
-          if ((boxTop / (boxHeight - offsetHeight) >= 0.80) && finished) {
-            finished = false;
-            this.initRightNews('快讯', this.flashPageSize, res => {
-              this.flashPageSize += 20;
-              this.flashList = res;
-              finished = true;
-            });
-          }
-        });
-      },
-      searchKeyWord() {
-        this.showloading = true;
-        this.newsList = [];
-        this.search.pageNo = 0;
-        if (this.search.class === '文章') {
-          this.search.show = true;
-          this.$axios.get('/api/traditional/search?newsType=' + this.search.type + '&search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
-            this.showloading = false;
-            this.newsList = res.data.content;
-            if (res.data.content.length <= 0) {
-              this.showloading = -1;
-              this.loadingTip = '无搜索结果~';
-            }
-          });
-        } else if (this.search.class === '项目') {
-          this.search.show = false;
+        let token = localStorage.getItem('apelink_user_token');
+        if (token) {
           let uid = localStorage.getItem('apelink_user_uid');
-          this.$axios.get('/api/ICO/search?search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20', {
-            headers: {uid: uid}
-          }).then(res => {
-            this.showloading = false;
-            this.projectList = res.data.content;
-            if (res.data.content.length <= 0) {
-              this.showloading = -1;
-              this.loadingTip = '无搜索结果~';
+          let url = '/api/individual/add?type=INDUSTRY&name=' + that.industry;
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'post',
+            url: url,
+            headers: headers
+          }).then(function (res) {
+            if (res.data) {
+              that.projectFollow = true;
+              alert('关注成功');
             }
           });
+        } else {
+          alert('请先登录。');
         }
       },
-      loadMoreNews() {
-        this.showloading = true;
-        this.search.pageNo++;
-        this.$axios.get('/api/traditional/search?newsType=' + this.search.type + '&search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
-          this.showloading = false;
-          this.newsList = this.newsList.concat(res.data.content);
-          if (res.data.content.length < 20) {
-            this.showloading = -1;
-            this.loadingTip = '无更多数据~';
-          }
-        });
+      deleteFollow(industry) {
+        // this.projectFollow = false;
+        let token = localStorage.getItem('apelink_user_token')
+        if (token) {
+          let uid = localStorage.getItem('apelink_user_uid')
+          let that = this;
+          let url = '/api/individual/list?type=INDUSTRY';
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'get',
+            url: url,
+            headers: headers
+          }).then(res => {
+            let list = res.data.content;
+            let cid = '';
+            for (let i = 0; i < list.length; i++) {
+              let industryName = list[i].result;
+              if (industry === industryName) {
+                cid = list[i].cid;
+                break
+              }
+            }
+            if (cid !== '') {
+              console.log(cid);
+              let deteleUrl = '/api/individual/delete?cid=' + cid;
+              that.$axios({
+                method: 'DELETE',
+                url: deteleUrl,
+                headers: headers
+              }).then(function (res) {
+                if (res.data) {
+                  that.projectFollow = false;
+                  alert('已取消关注');
+                }
+              })
+            }
+          })
+        } else {
+          alert('请先登录。')
+        }
       },
-      loadMoreICO() {
-        this.showloading = true;
-        this.search.pageNo++;
-        this.$axios.get('/api/ICO/search?search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
-          this.showloading = false;
-          this.projectList = this.projectList.concat(res.data.content);
-          if (res.data.content.length < 20) {
-            this.showloading = -1;
-            this.loadingTip = '无更多数据~';
+      getfollowboolean(industryName, type) {
+        let that = this;
+        let token = localStorage.getItem('apelink_user_token');
+        if (token) {
+          let uid = localStorage.getItem('apelink_user_uid');
+          let checkurl = '/api/individual/check?type=INDUSTRY&sidOrName=' + industryName;
+          if (type === 'country') {
+            checkurl = '/api/individual/check?type=COUNTRY&sidOrName=' + industryName;
           }
-        });
-      }
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'post',
+            url: checkurl,
+            headers: headers
+          }).then(function (res) {
+            if (res.data) {
+              that.projectFollow = true;
+            } else {
+              that.projectFollow = false;
+            }
+          })
+        }
+      },
+      getHotnews(industryName) {
+        let that = this;
+        that.$axios.get('/api/traditional/hotNews?industryName=' + industryName + '&pageSize=10').then(function (res) {
+          that.hotNews = res.data.content
+        })
+      },
+      initNewsList(categoryName, search) {
+        let that = this;
+        that.categoryName = categoryName;
+        let url = '/api/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + this.pageSize;
+        if (search !== null && search !== '' && search !== undefined) {
+          url += '&search=' + search;
+        }
+        that.$axios.get(url).then(function (res) {
+          that.newsList = res.data.content;
+          if (search !== null && search !== '' && search !== undefined) {
+            let allData = that.newsList;
+            for (let i = 0; i < allData.length; i++) {
+              allData[i].title = that.replaceAll(allData[i].title, search, '<font color="red">' + search + '</font>');
+              allData[i].content = that.replaceAll(allData[i].content, search, '<font color="red">' + search + '</font>');
+            }
+          }
+          that.showloading = false;
+        }).catch(function (res) {
+          that.showloading = false;
+        })
+      },
+      reloadMore(categoryName, type) {
+        if (categoryName === '关注') {
+          this.getAllFollowList()
+        } else {
+          this.showloading = true;
+          this.pageSize += 10;
+          if (type === 'country') {
+            this.initNewsList('', categoryName);
+          } else {
+            this.initNewsList(categoryName);
+          }
+        }
+      },
     },
   }
 </script>

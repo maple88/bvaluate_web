@@ -748,7 +748,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/recommend', query: {industry: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
         window.open(routeData.href, '_blank');
       },
       goIndustryByCountry(obj) {
@@ -758,7 +758,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/recommend', query: {country: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj}});
         window.open(routeData.href, '_blank');
       },
       goArticle(url, query) {
