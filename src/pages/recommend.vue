@@ -485,7 +485,7 @@
         } else if (Math.abs(myDate.getMinutes() - nowDate.getMinutes()) < 1) {
           return Math.abs(myDate.getSeconds() - nowDate.getSeconds()) + '秒前'
         } else {
-          let month = myDate.getMonth()
+          let month = myDate.getMonth();
           if (month < 9) {
             month = '0' + month
           }
@@ -495,7 +495,7 @@
       labelFormat(obj) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
-            let arr = obj.split(';')
+            let arr = obj.split(';');
             return arr[0];
           } else {
             return obj;
@@ -504,16 +504,16 @@
         return obj;
       },
       showLable(label1, label2, lable3) {
-        if (label1 != null && label1 !== undefined && label1 !== '' && label1 != 'NULL') {
-          let arr = label1.split(';')
+        if (label1 != null && label1 !== undefined && label1 !== '' && label1 !== 'NULL') {
+          let arr = label1.split(';');
           return arr[0]
         } else {
-          if (label2 != null && label2 !== undefined && label2 !== '' && label2 != 'NULL') {
-            let arr = label1.split(';')
+          if (label2 != null && label2 !== undefined && label2 !== '' && label2 !== 'NULL') {
+            let arr = label1.split(';');
             return arr[0]
           } else {
-            if (lable3 != null && lable3 !== undefined && lable3 !== '' && lable3 != 'NULL') {
-              let arr = label1.split(';')
+            if (lable3 != null && lable3 !== undefined && lable3 !== '' && lable3 !== 'NULL') {
+              let arr = label1.split(';');
               return arr[0]
             } else {
               return '标签'
@@ -637,7 +637,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/recommend', query: {industry: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
         window.open(routeData.href, '_blank');
       },
       goIndustryByCountry(obj) {
@@ -647,7 +647,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/recommend', query: {country: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj}});
         window.open(routeData.href, '_blank');
       },
       goArticle(url, query) {
