@@ -22,13 +22,13 @@
       <div class="tool_bar">
         <div class="fish_container">
           <div class="clearfix">
-            <div class="search_bar">
-              <input type="text" id="keyword" v-model="searchKey"
-                     @keyup.enter="changeClassfy(searchKey,-2)"/>
-              <div class="search-btn">
-                <i class="fa fa-search" @click="changeClassfy(searchKey,-2)"></i>
-              </div>
-            </div>
+            <!--<div class="search_bar">-->
+            <!--<input type="text" id="keyword" v-model="searchKey"-->
+            <!--@keyup.enter="changeClassfy(searchKey,-2)"/>-->
+            <!--<div class="search-btn">-->
+            <!--<i class="fa fa-search" @click="changeClassfy(searchKey,-2)"></i>-->
+            <!--</div>-->
+            <!--</div>-->
             <div class="label_bar">
               <!-- <keep-alive> -->
               <transition name="fade">
@@ -585,6 +585,7 @@
           alert('请先登录。')
         }
       },
+      //运用回调函数的方式设立一个获取关注的列表。
       getFollowList(type, callback) {
         let that = this
         let token = localStorage.getItem('apelink_user_token')
@@ -600,6 +601,22 @@
           thisCallback(res)
         })
       },
+      //获取对应type的关注列表。
+      getAllFollow() {
+        this.getFollowList('ICO', res => {
+          this.followICO = res.data.content;
+        });
+        this.getFollowList('COUNTRY', res => {
+          this.followCountry = res.data.content;
+        });
+        this.getFollowList('AUTHOR', res => {
+          this.followAuthor = res.data.content;
+        });
+        this.getFollowList('INDUSTRY', res => {
+          this.followIndustry = res.data.content;
+        })
+      },
+      //判断对应的行业是否关注。
       getfollowboolean() {
         let that = this;
         let token = localStorage.getItem('apelink_user_token');
@@ -620,6 +637,7 @@
           })
         }
       },
+      //
       goProjectByName(obj) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
@@ -627,6 +645,7 @@
             obj = arr[0];
           }
         }
+        //这种写法是将路由转为正常的url然后进行跳转
         let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
         window.open(routeData.href, '_blank');
       },
@@ -654,9 +673,11 @@
         let routeData = this.$router.resolve({path: url, query: query});
         window.open(routeData.href, '_blank');
       },
+      //根据路由进行跳转
       goUrl(url, query) {
         this.$router.push({path: url, query: query});
       },
+      //获取最新动态信息
       getRollingNew() {
         let that = this;
         let categoryName = '最新动态';
@@ -668,10 +689,11 @@
           });
         })
       },
+      //获取新闻分类（行业，左侧导航栏）
       getNewsClassfy(show, categoryName, showpage) {
-        let that = this
+        let that = this;
         that.$axios.get('/api/traditional/categories?pageSize=' + this.classfyPageSize).then(function (res) {
-          let arr = ['推荐', '关注'];
+          let arr = ['推荐'];
           that.newsClassfy = arr.concat(res.data);
           let industry = that.$route.query.industry;
           if (industry !== null && industry !== '' && industry !== undefined && industry !== 'NULL') {
@@ -690,6 +712,7 @@
           }
         })
       },
+      //加载更多新闻分类
       loadMoreClassfy() {
         this.classfyPageSize += 20;
         let that = this;
@@ -698,10 +721,11 @@
           if (num < 10) {
             this.classfyPageSizeShow = false;
           }
-          let arr = ['推荐', '关注'];
+          let arr = ['推荐'];
           that.newsClassfy = arr.concat(res.data);
         })
       },
+      //加载对应行业的热门新闻
       getHotnews(industryName) {
         let that = this
         that.$axios.get('/api/traditional/hotNews?industryName=' + industryName + '&pageSize=10').then(function (res) {
@@ -710,28 +734,17 @@
           }
         })
       },
+      //获取相关新闻列表
       getNews(newsnum) {
-        let that = this
+        let that = this;
+        //相关参数看接口文档
         that.$axios.get('/api/traditional/news?searchBy=' + this.industryName + '&categoryId=' + newsnum + '&pageSize=10').then(function (res) {
           if (that.newsClassfy.length > 0) {
             that.news = res.data.content
           }
         })
       },
-      getAllFollow() {
-        this.getFollowList('ICO', res => {
-          this.followICO = res.data.content;
-        });
-        this.getFollowList('COUNTRY', res => {
-          this.followCountry = res.data.content;
-        });
-        this.getFollowList('AUTHOR', res => {
-          this.followAuthor = res.data.content;
-        });
-        this.getFollowList('INDUSTRY', res => {
-          this.followIndustry = res.data.content;
-        })
-      },
+      //快讯滚动条下来加载事件
       scrollFlash() {
         let $this = document.getElementById('scoll_scoll_style');
         let finished = true;
@@ -750,6 +763,7 @@
           }
         });
       },
+      //左边侧边栏切换 根据index来切换不同UI。现已经取消关注的UI，但此方法未作改动(无需改动)
       changeClassfy(categoryName, index) {
         this.categoryName = categoryName;
         if (categoryName === '关注') {
@@ -814,6 +828,7 @@
           this.getNews('280001');
         }
       },
+      //获取所有关注列表
       getAllFollowList() {
         this.showloading = true;
         let that = this;
@@ -835,6 +850,7 @@
           that.showloading = false;
         })
       },
+      //初始化新闻列表
       initNewsList(categoryName, search) {
         let that = this;
         that.categoryName = categoryName;
@@ -856,6 +872,7 @@
           that.showloading = false;
         })
       },
+      //加载更多按钮。
       reloadMore(categoryName) {
         if (categoryName === '关注') {
           this.getAllFollowList()
@@ -873,6 +890,7 @@
           }
         }
       },
+      //初始化右边栏，可根据categoryName去调用此方法，callback方法是回调函数。
       initRightNews(categoryName, pageSize, callback) {
         let that = this;
         that.categoryName = categoryName;
@@ -882,6 +900,7 @@
           thisCallback(res.data.content);
         })
       },
+      //初始化滚动swiper（即最新动态）
       initSwiper() {
         let newsSwiper = new Swiper('#news_swiper', {
           autoplay: {
@@ -901,6 +920,7 @@
           newsSwiper.autoplay.start();
         }
       },
+      //初始化此页面数据
       initPageDate() {
         let path = this.$route.path;
         if (path === '/recommend') {
@@ -919,6 +939,7 @@
           this.getNewsClassfy(showActive, categoryName, showpage);
         }
       },
+      //改变字符串text中，用FindText替换RepText
       replaceAll(text, FindText, RepText) {
         let regExp = new RegExp(FindText, "g");
         return text.replace(regExp, RepText);

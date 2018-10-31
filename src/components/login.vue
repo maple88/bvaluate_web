@@ -194,7 +194,10 @@
       },
       goUrl: {
         type: String,
-        default: '/index'
+        default: ''
+      },
+      success: {
+        type: Function
       }
     },
     data() {
@@ -320,10 +323,12 @@
               localStorage.setItem('apelink_user_email', email);
               localStorage.setItem('apelink_user_sex', sex);
               if (res.data.signedIn) {
-                that.$router.push('/index')
                 that.value = false;
+                that.success();
                 that.$emit('input', that.value);
-                that.$parent.$router.push(that.goUrl)
+                if (that.goUrl) {
+                  that.$router.push(that.goUrl)
+                }
               } else {
                 let url = '/api/user/signIn';
                 that.$axios({
@@ -333,15 +338,18 @@
                 }).then(function (res) {
                   if (res.data) {
                     that.value = false;
+                    that.success();
                     that.$emit('input', this.value);
-                    that.$router.push(this.goUrl)
+                    if (that.goUrl) {
+                      that.$router.push(that.goUrl)
+                    }
                   }
                 })
               }
             }).catch(function (res) {
             })
           }).catch(function (res) {
-            let msgCode = res.response.data.message
+            let msgCode = res.response.data.message;
             switch (msgCode) {
               case '9019':
                 that.errorMsg.loginUser.phoneNumber = '账号不正确';
@@ -687,23 +695,23 @@
         }
       },
       login() {
-        this.login_register_head = true
-        this.isLogin = true
-        this.isRegister = false
-        this.resetpwd_head = false
-        this.loginForm = true
-        this.registerForm = false
-        this.resetpwdForm = false
+        this.login_register_head = true;
+        this.isLogin = true;
+        this.isRegister = false;
+        this.resetpwd_head = false;
+        this.loginForm = true;
+        this.registerForm = false;
+        this.resetpwdForm = false;
       },
       register() {
-        this.login_register_head = true
-        this.resetpwd_head = false
-        this.isLogin = false
-        this.isRegister = true
-        this.resetpwd_head = false
-        this.loginForm = false
-        this.registerForm = true
-        this.resetpwdForm = false
+        this.login_register_head = true;
+        this.resetpwd_head = false;
+        this.isLogin = false;
+        this.isRegister = true;
+        this.resetpwd_head = false;
+        this.loginForm = false;
+        this.registerForm = true;
+        this.resetpwdForm = false;
       },
       resetpwd() {
         this.login_register_head = false

@@ -193,7 +193,7 @@
 
 <script>
   let loading = require('../assets/login/loading.gif');
-  let bg = require('../assets/login/login_bg.jpg')
+  let bg = require('../assets/login/login_bg.jpg');
   export default {
     data() {
       return {

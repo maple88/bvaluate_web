@@ -32,6 +32,8 @@
                 <router-link tag="li" to="/index" active-class="active"><a>首页</a></router-link>
                 <router-link tag="li" to="/recommend" active-class="active"><a>新闻</a></router-link>
                 <router-link tag="li" to="/list" active-class="active"><a>榜单</a></router-link>
+                <router-link tag="li" to="/follow" active-class="active" v-show="token"><a>关注</a></router-link>
+                <li v-show="!token" @click="isLogin('/follow')"><a>关注</a></li>
                 <router-link tag="li" to="/userCenter" active-class="active" v-show="token"><a>个人中心</a></router-link>
                 <li v-show="!token" @click="isLogin('/userCenter')"><a>个人中心</a></li>
               </ul>
@@ -460,7 +462,8 @@
           </div>
         </div>
       </div>
-      <v-login v-model="isShow" :goUrl="successGo" @closeBox="closeBox"></v-login>
+      <!--isShow控制显示 goUrl控制登录成功后跳转（不跳转不给此值） success回调函数（登录成功后执行，默认空方法）在list.vue中使用-->
+      <v-login v-model="isShow" :goUrl="successGo"></v-login>
       <vfooter/>
     </div>
   </div>
@@ -530,9 +533,6 @@
 
 
   export default {
-    components: {
-      'v-login': login
-    },
     data() {
       return {
         isShow: false,
@@ -692,14 +692,12 @@
       })
     },
     methods: {
+      //未登录弹出登录窗口
       isLogin(url) {
         this.successGo = url;
         this.isShow = true;
       },
-      closeBox(res) {
-        console.log(res);
-        this.isShow = false;
-      },
+      //搜索方法
       goSearch() {
         this.$router.push({
           path: '/search',
@@ -709,6 +707,7 @@
           }
         })
       },
+      //新闻滚动条下来加载事件
       scrollNews() {
         let $this = document.getElementById('home-newslist1');
         let finished = true;
@@ -729,6 +728,7 @@
           }
         });
       },
+      //推文滚动条下来加载事件
       scrollTuiwen() {
         let $this = document.getElementById('home-newslist2');
         let finished = true;
@@ -749,6 +749,7 @@
           }
         });
       },
+      //微博滚动条下来加载事件
       scrollWeibo() {
         let $this = document.getElementById('home-newslist3');
         let finished = true;
@@ -769,6 +770,7 @@
           }
         });
       },
+      //根据项目名称进行跳转到项目页面 主要用于新闻列表中标签跳转
       goProjectByName(obj) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
@@ -776,9 +778,11 @@
             obj = arr[0];
           }
         }
+        //这种写法是将路由转为正常的url然后进行跳转
         let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
         window.open(routeData.href, '_blank');
       },
+      //根据行业名称进行跳转新闻列表页面 主要用于新闻列表中标签跳转
       goIndustryByIndustry(obj) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
@@ -789,6 +793,7 @@
         let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
         window.open(routeData.href, '_blank');
       },
+      //根据行业名称进行跳转新闻列表页面 主要用于新闻列表中标签跳转
       goIndustryByCountry(obj) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
@@ -799,6 +804,7 @@
         let routeData = this.$router.resolve({path: '/recommend', query: {country: obj}});
         window.open(routeData.href, '_blank');
       },
+      //退出登录。主要是删除localStorage中的用户信息
       logout() {
         localStorage.removeItem('apelink_user_candies');
         localStorage.removeItem('apelink_user_email');
@@ -813,15 +819,23 @@
         localStorage.removeItem('apelink_user_uid');
         this.$router.push('/login');
       },
+      //判断是否登录，登录后立即跳转，未登录弹出登录窗口
       goArticle(url, query) {
-        let routeData = this.$router.resolve({path: url, query: query});
-        window.open(routeData.href, '_blank');
+        let token = localStorage.getItem('apelink_user_token');
+        if (token) {
+          let routeData = this.$router.resolve({path: url, query: query});
+          window.open(routeData.href, '_blank');
+        } else {
+          this.isLogin(url);
+        }
       },
+      //关注
       setFollow() {
         let that = this
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid');
+          //接口说明再接口文档
           let url = '/api/individual/add?type=ICO&sid=' + that.showProject.sid;
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
@@ -838,7 +852,9 @@
           alert('请先登录');
         }
       },
+      //取消关注
       deleteFollow(cid) {
+        //暂时没有取消关注接口
         // let that = this
         // let token = localStorage.getItem('apelink_user_token');
         // if (token) {
@@ -859,12 +875,14 @@
         //   alert('请先登录。')
         // }
       },
+      //判断是否关注
       getfollowboolean(project) {
         let that = this
         let token = localStorage.getItem('apelink_user_token')
         let uid = localStorage.getItem('apelink_user_uid')
         let checkurl = '/api/individual/check?type=ICO&sidOrName=' + project;
         let headers = {'uid': uid, 'Authorization': token};
+        //接口文档
         that.$axios({
           method: 'post',
           url: checkurl,
@@ -877,6 +895,7 @@
           }
         })
       },
+      //初始化ICO新闻
       initIcoNews(obj) {
         let ico = obj.project;
         let that = this
@@ -887,11 +906,13 @@
           }
         })
       },
+      //初始化糖果数，即个人信息
       initCandy() {
         this.candy = localStorage.getItem('apelink_user_candies');
         this.profileUrl = localStorage.getItem('apelink_user_profileUrl');
         this.token = localStorage.getItem('apelink_user_token');
       },
+      //初始化推特文章
       inittuiwen(obj) {
         let ico = obj.project;
         let that = this
@@ -902,6 +923,7 @@
           }
         })
       },
+      //初始化微博
       initweibo(obj) {
         let ico = obj.project;
         let that = this
@@ -912,6 +934,7 @@
           }
         })
       },
+      //初始热门头条
       initHotNews() {
         let categoryName = '首页-新闻列表';
         let that = this
@@ -924,6 +947,7 @@
           }
         })
       },
+      //初始热门行业
       iniHotIndustries() {
         let that = this
         that.$axios.get('/api/ICO/hotestIndustries').then(function (res) {
@@ -1064,14 +1088,16 @@
           }
         })
       },
+      //
       showheader() {
-        let arr = document.getElementsByClassName('home-header')
+        let arr = document.getElementsByClassName('home-header');
         if (this.$refs.box.scrollTop >= 10) {
           arr[0].classList.add('hasbg')
         } else {
           arr[0].classList.remove('hasbg')
         }
       },
+      //获取热门ICO
       getHottestProject() {
         let that = this;
         let uid = localStorage.getItem('apelink_user_uid')
@@ -1101,10 +1127,12 @@
           }
         });
       },
+      //初始化合作伙伴编排
       initPartner(obj) {
         let objArr = [];
         let arr = [];
         let num = 0;
+        //分组每9个为一组
         for (let i = 0; i < obj.length; i++) {
           num++;
           arr.push(obj[i]);
@@ -1119,6 +1147,7 @@
         }
         return objArr
       },
+      //改变ICO显示的对象。
       changeProject(obj, index) {
         this.prjAct = index
         try {

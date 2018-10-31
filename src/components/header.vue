@@ -28,6 +28,8 @@
               <router-link tag="li" to="/index" active-class="active"><a>首页</a></router-link>
               <router-link tag="li" to="/recommend" active-class="active"><a>新闻</a></router-link>
               <router-link tag="li" to="/list" active-class="active"><a>榜单</a></router-link>
+              <router-link tag="li" to="/follow" active-class="active" v-show="token"><a>关注</a></router-link>
+              <li v-show="!token" @click="isLogin('/follow')"><a>关注</a></li>
               <router-link tag="li" to="/userCenter" active-class="active" v-show="token"><a>个人中心</a></router-link>
               <li v-show="!token" @click="isLogin('/userCenter')"><a>个人中心</a></li>
             </ul>

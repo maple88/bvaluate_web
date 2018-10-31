@@ -141,10 +141,10 @@
                         <div class="left">
                           <h4>
                             <span v-html="project.project" @click="goProjectById(project.sid)"></span>
-                            <i class="fa fa-heart-o" v-if="!project.collected" @click="setFollow(even,project)"></i>
+                            <i class="fa fa-heart-o" v-if="!project.collected" @click="setFollow(project)"></i>
                             <i class="fa fa-heart" v-else></i>
                           </h4>
-                          <p>{{project.introduction }} </p>
+                          <p v-html="project.introduction"></p>
                         </div>
                         <div class="right">
                           <h4>{{project.totalScore }}</h4>
@@ -152,7 +152,7 @@
                         </div>
                       </div>
                       <div class="detail_info">
-                        <p>{{project.irAbstract }}</p>
+                        <p v-html="project.irAbstract"></p>
                       </div>
                     </div>
                   </div>
@@ -166,7 +166,6 @@
                 </button>
               </div>
             </div>
-            <a href="#" v-if="!newRender"></a>
             <div class="right">
               <div class="right_item">
                 <div class="hot_title">
@@ -385,16 +384,19 @@
         this.initSearch();
         this.searchKeyWord();
       },
+      //根据项目id跳转到对应的项目页
       goProjectById(sid) {
         let routeData = this.$router.resolve({path: '/project', query: {sid: sid}});
         window.open(routeData.href, '_blank');
       },
+      //初始化搜索页
       initSearch() {
         this.search.class = this.$route.query.searchType;
         this.search.keyword = this.$route.query.keyword;
       },
+      //关注
       setFollow(project) {
-        let that = this
+        let that = this;
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid');
@@ -413,6 +415,11 @@
         } else {
           alert('请先登录');
         }
+      },
+
+      replaceAll(text, FindText, RepText) {
+        let regExp = new RegExp(FindText, "g");
+        return text.replace(regExp, RepText);
       },
       goProjectByName(obj) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
@@ -492,7 +499,12 @@
           this.search.show = true;
           this.$axios.get('/api/traditional/search?newsType=' + this.search.type + '&search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
             this.showloading = false;
-            this.newsList = res.data.content;
+            let allData = res.data.content;
+            for (let i = 0; i < allData.length; i++) {
+              allData[i].title = this.replaceAll(allData[i].title, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
+              allData[i].content = this.replaceAll(allData[i].content, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
+            }
+            this.newsList = allData;
             if (res.data.content.length <= 0) {
               this.showloading = -1;
               this.loadingTip = '无搜索结果~';
@@ -505,6 +517,12 @@
             headers: {uid: uid}
           }).then(res => {
             this.showloading = false;
+            let allData = res.data.content;
+            for (let i = 0; i < allData.length; i++) {
+              allData[i].introduction = this.replaceAll(allData[i].introduction, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
+              allData[i].project = this.replaceAll(allData[i].project, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
+              allData[i].irAbstract = this.replaceAll(allData[i].irAbstract, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
+            }
             this.projectList = res.data.content;
             if (res.data.content.length <= 0) {
               this.showloading = -1;
@@ -518,7 +536,12 @@
         this.search.pageNo++;
         this.$axios.get('/api/traditional/search?newsType=' + this.search.type + '&search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
           this.showloading = false;
-          this.newsList = this.newsList.concat(res.data.content);
+          let allData = res.data.content;
+          for (let i = 0; i < allData.length; i++) {
+            allData[i].title = this.replaceAll(allData[i].title, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
+            allData[i].content = this.replaceAll(allData[i].content, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
+          }
+          this.newsList = this.newsList.concat(allData);
           if (res.data.content.length < 20) {
             this.showloading = -1;
             this.loadingTip = '无更多数据~';
@@ -530,7 +553,13 @@
         this.search.pageNo++;
         this.$axios.get('/api/ICO/search?search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
           this.showloading = false;
-          this.projectList = this.projectList.concat(res.data.content);
+          let allData = res.data.content;
+          for (let i = 0; i < allData.length; i++) {
+            allData[i].introduction = this.replaceAll(allData[i].introduction, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
+            allData[i].project = this.replaceAll(allData[i].project, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
+            allData[i].irAbstract = this.replaceAll(allData[i].irAbstract, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
+          }
+          this.projectList = this.projectList.concat(allData);
           if (res.data.content.length < 20) {
             this.showloading = -1;
             this.loadingTip = '无更多数据~';
