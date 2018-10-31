@@ -21,17 +21,66 @@
                       <tr>
                         <th>#</th>
                         <th>项目名称</th>
-                        <th>团队真实性</th>
-                        <th>团队社交活跃度</th>
-                        <th>团队关联度</th>
-                        <th>白书皮</th>
-                        <th>行业热度</th>
-                        <th>媒体关注度</th>
-                        <th>宣传力度</th>
-                        <th>市场情绪</th>
-                        <th>钱包监控</th>
-                        <th>代码活跃度</th>
-                        <th>总分</th>
+                        <th>
+                          团队真实性
+                          <img src="../assets/help.png" alt="帮助"
+                               title="Bvaluate自建知识库通过LinkedIn等各国职场社交应用及项目方提供的团队信息等，以文本挖掘及图像识别技术提取并关联相关信息，以构建知识图谱并进行多维比对交叉验真工作。本项最高0.9625分。">
+                        </th>
+                        <th>
+                          团队社交活跃度
+                          <img src="../assets/help.png" alt="帮助"
+                               title="Bvaluate全面采集全球垂直新闻媒体及自媒体数据，分析项目及团队核心成员的热度。本项最高0.2625分。"/>
+                        </th>
+                        <th>
+                          团队关联度
+                          <img src="../assets/help.png" alt="帮助"
+                               title="基于Bvaluate人物库及行业相关信息，通过已构建的知识图谱，分析各项目团队间关联关系。本项最高0.175分。"/>
+                        </th>
+                        <th>
+                          团队完整性
+                          <img src="../assets/help.png" alt="帮助"
+                               title="基于团队成员架构并应用命名实体识别技术，提取其团队的组织架构，判断其完整性。本项最高0.35分。"/>
+                        </th>
+                        <th>
+                          白书皮
+                          <img src="../assets/help.png" alt="帮助"
+                               title="在Bvaluate全球最大的项目白皮书数据库中，所有项目白皮书均应用NLP技术进行全库文本比对，并对其重复率、完整性、版本迭代等进行综合分析。本项最高1.05分。"/>
+                        </th>
+                        <th>
+                          行业热度
+                          <img src="../assets/help.png" alt="帮助"
+                               title="Bvaluate基于全球行业相关新闻及自媒体数据采集，通过文本内容实时分析并匹配行业热度。本项最高0.45分。"/>
+                        </th>
+                        <th>
+                          媒体关注度
+                          <img src="../assets/help.png" alt="帮助"
+                               title="Bvaluate基于全球行业相关新闻及自媒体数据采集，通过文本内容实时分析并匹配行业热度。本项最高0.45分。"/>
+                        </th>
+                        <th>
+                          宣传力度
+                          <img src="../assets/help.png" alt="帮助"
+                               title="通过Bvaluate对全球多语种信息采集内容的归纳，分析每个项目实时的媒体/自媒体覆盖度。本项最高0.15分。"/>
+                        </th>
+                        <th>
+                          市场情绪
+                          <img src="../assets/help.png" alt="帮助"
+                               title="通过市场反馈对项目团队、产品、推广、通证价格，以及所属行业、地域等进行调性综合分析。本项最高0.45分。"/>
+                        </th>
+                        <th>
+                          钱包监控
+                          <img src="../assets/help.png" alt="帮助"
+                               title="通过对项目通证场外流转情况进行活跃度、大额交易动态占比、交易所流向占比等进行综合分析。本项最高0.5分。"/>
+                        </th>
+                        <th>
+                          代码活跃度
+                          <img src="../assets/help.png" alt="帮助"
+                               title="实时追踪所有开源项目的代码更新情况，如频率、贡献度等。Bvaluate专家团队在不断研究代码内容分析方法。本项最高0.5分。"/>
+                        </th>
+                        <th>
+                          总分
+                          <img src="../assets/help.png" alt="帮助"
+                               title="总分最高为5分。"/>
+                        </th>
                       </tr>
                       </thead>
                       <tbody>
@@ -44,6 +93,7 @@
                           <h4 :title="item.project">{{item.project}}</h4>
                         </td>
                         <td>{{item.teamAuthenticity }}</td>
+                        <td>{{item.teamIntegrity }}</td>
                         <td>{{item.teamSocialActivity }}</td>
                         <td>{{item.projectTeamRelation }}</td>
                         <td>{{item.whitpaperAnalysis }}</td>
@@ -154,6 +204,7 @@
           </div>
         </div>
       </div>
+      <v-login v-model="isShow" :goUrl="successGo" :success="reMore"></v-login>
       <vfooter/>
     </div>
     <!--<div class="popover fade bottom in" role="tooltip" id="popover91482">-->
@@ -191,10 +242,19 @@
         type: '周榜',
         upList: [],
         downList: [],
-        pageSize: 50
+        pageSize: 50,
+        isShow: false,
+        successGo: ''
       }
     },
     methods: {
+      success() {
+        console.log(123456)
+      },
+      isLogin(url) {
+        this.successGo = url;
+        this.isShow = true;
+      },
       goArticle(url, query) {
         let routeData = this.$router.resolve({path: url, query: query});
         window.open(routeData.href, '_blank');
@@ -216,9 +276,7 @@
         if (token) {
           this.getDate()
         } else {
-          if (confirm('登陆后查看后续榜单...')) {
-            this.$router.push('/login');
-          }
+          this.isLogin(null);
         }
       },
       getUpList() {
@@ -234,6 +292,7 @@
         });
       },
       changeList(type) {
+        this.pageSize = 50;
         this.type = type;
         this.list = [];
         this.getDate();
@@ -248,7 +307,7 @@
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
         }
-      })
+      });
       this.getUpList();
       this.getDate();
       this.getDownList()

@@ -44,7 +44,7 @@
         width: 60%;
         padding-left: 10%;
         .news_box {
-          position: absolute;
+          position: relative;
           padding-left: 122px;
           padding-top: 7px;
           #news_swiper {
@@ -489,7 +489,7 @@
                 }
               }
               .loading_more {
-                padding: 0;
+                padding: 10px;
                 button {
                   border: 1px solid #cccccc;
                 }
@@ -1324,6 +1324,10 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+                img {
+                  width: 13px;
+                  cursor: help;
+                }
               }
               .tr_default {
                 td:first-child {
@@ -1344,7 +1348,7 @@
                     cursor: pointer;
                     h4 {
                       margin: 0;
-                      width: 150px;
+                      width: 100px;
                       font-size: 16px;
                       overflow: hidden;
                       text-overflow: ellipsis;
