@@ -9,7 +9,7 @@
               <div class="show_box">
                 <img src="../assets/follow/apelink.png"/>
                 <span class="plus">+</span>
-                <span class="name">APELINK</span>
+                <span class="name">Bvaluate</span>
               </div>
             </div>
           </div>
@@ -245,7 +245,8 @@
                           <img src="../assets/follow/tweet_header.png"/>
                         </div>
                         <div class="item_body tweet">
-                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever is worth doing is worth doing Whatever is worth doing</p>
+                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever is
+                            worth doing is worth doing Whatever is worth doing</p>
                           <div class="body_bottom">
                             <p>博主</p>
                             <p class="time">2018-05-26</p>
@@ -259,7 +260,8 @@
                           <img src="../assets/follow/tweet_header.png"/>
                         </div>
                         <div class="item_body tweet">
-                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever is worth doing is worth doing Whatever is worth doing</p>
+                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever is
+                            worth doing is worth doing Whatever is worth doing</p>
                           <div class="body_bottom">
                             <p>博主</p>
                             <p class="time">2018-05-26</p>
@@ -273,7 +275,8 @@
                           <img src="../assets/follow/tweet_header.png"/>
                         </div>
                         <div class="item_body tweet">
-                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever is worth doing is worth doing Whatever is worth doing</p>
+                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever is
+                            worth doing is worth doing Whatever is worth doing</p>
                           <div class="body_bottom">
                             <p>博主</p>
                             <p class="time">2018-05-26</p>
@@ -287,7 +290,8 @@
                           <img src="../assets/follow/tweet_header.png"/>
                         </div>
                         <div class="item_body tweet">
-                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever is worth doing is worth doing Whatever is worth doing</p>
+                          <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever is
+                            worth doing is worth doing Whatever is worth doing</p>
                           <div class="body_bottom">
                             <p>博主</p>
                             <p class="time">2018-05-26</p>
@@ -302,109 +306,8 @@
           </div>
         </div>
       </div>
-      <div class="footer">
-        <div class="top">
-          <div class="fish_container">
-            <div class="flexbox clearfix">
-              <ul>
-                <li class="apelink_logo">
-                  APELINK
-                  <img src="../assets/follow/bottom_logo.png"/>
-                </li>
-                <li><a href="#">Stats & facts</a></li>
-                <li><a href="#">Media</a></li>
-                <li><a href="#">API</a></li>
-                <li><a href="#">Mobile app (Android)</a></li>
-                <li><a href="#">Chrome Eidget</a></li>
-                <li><a href="#">Firefox Widget</a></li>
-                <li><a href="#">Benchy</a></li>
-              </ul>
-              <ul class="logo_box">
-                <li>APELINK</li>
-                <li>
-                  <ul class="network clearfix">
-                    <li>
-                      <a href="#">
-                        <div class="icon1"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon2"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon3"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon4"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon5"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon6"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon7"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon8"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon9"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon10"></div>
-                      </a>
-                    </li>
-
-                  </ul>
-                </li>
-              </ul>
-              <ul>
-                <li>For ICOs</li>
-                <li><a href="#">Publish new ICO</a></li>
-                <li><a href="#">ICO Analyzre</a></li>
-                <li><a href="#">Premium Listing</a></li>
-                <li><a href="#">Widgets</a></li>
-                <li><a href="#">For al</a></li>
-              </ul>
-              <ul>
-                <li>For ALL</li>
-                <li><a href="#">ICO Listing</a></li>
-                <li><a href="#">People of Blockchsin</a></li>
-                <li><a href="#">ICO Whitelist</a></li>
-                <li><a href="#">Agencies</a></li>
-                <li><a href="#">Exchanges</a></li>
-                <li><a href="#">Experts</a></li>
-                <li><a href="#">ROL calculator</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="bottom">
-          <p>备案号</p>
-          <p>版权信息</p>
-        </div>
-      </div>
+      <vfooter></vfooter>
     </div>
-
   </div>
 </template>
 

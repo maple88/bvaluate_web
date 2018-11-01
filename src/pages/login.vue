@@ -1,10 +1,12 @@
 <template>
-  <div id="login">
+  <div id="login" :style="'background-image: url('+bg+')'">
     <div class="container main">
       <div class="row">
         <div class="col-md-6 col-xs-12 left">
           <p class="p1">welcome！</p>
-          <p class="p2">APELINk</p>
+          <p class="p2">
+            <router-link to="/index">BVALUATE</router-link>
+          </p>
           <p class="p3">搜索全球资讯，掌握最新动态</p>
         </div>
         <div class="col-md-6 col-xs-12">
@@ -23,7 +25,7 @@
               <div class="inputInner" v-if="loginForm">
                 <div class="input-group">
                   <div class="input-group-addon"><img src="../assets/login/icon1.png"></div>
-                  <input type="text" class="form-control" v-model="loginUser.phoneNumber" placeholder="手机号/账号"
+                  <input type="text" class="form-control" v-model="loginUser.phoneNumber" placeholder="手机号"
                          @focus="errorMsg.loginUser.phoneNumber = ''">
                   <span class="help-block" v-if="errorMsg.loginUser.phoneNumber">
 										<img src="../assets/login/iclose.png">
@@ -124,7 +126,7 @@
                 <div class="input-group submit-group">
                   <button type="button" class="btn ok-btn" @click.stop="registerSubmit()">注册</button>
                 </div>
-                <p class="register-tips">点击“注册”即表示您同意并愿意接收<br>APELINE<span>用户此协议</span>和<span>隐私政策</span></p>
+                <p class="register-tips">点击“注册”即表示您同意并愿意接收<br>BVALUATE<span>用户此协议</span>和<span>隐私政策</span></p>
               </div>
               <div class="inputInner" v-if="resetpwdForm">
                 <div class="input-group">
@@ -178,19 +180,24 @@
                 </div>
               </div>
             </div>
+            <transition name="fade">
+              <vtips :tipText="tipText" v-if="showTip"/>
+            </transition>
           </div>
         </div>
       </div>
     </div>
-    <p class="login_footer">备案号</p>
+    <p class="login_footer">ALL right reserved by Bvaluate @2018</p>
   </div>
 </template>
 
 <script>
-  let loading = require('../assets/login/loading.gif')
+  let loading = require('../assets/login/loading.gif');
+  let bg = require('../assets/login/login_bg.jpg');
   export default {
     data() {
       return {
+        bg: bg,
         login_register_head: true,
         resetpwd_head: false,
         isLogin: true,
@@ -242,10 +249,13 @@
         resetPwdSendBtnText: '获取验证码',
         resetPwdSendBtn: true,
         resetPwdShowloading: false,
-        loading: loading
+        loading: loading,
+        tipText: '',
+        showTip: false
       }
     },
     mounted() {
+
     },
     methods: {
       loginSubmit() {
@@ -312,13 +322,17 @@
                   headers: headers
                 }).then(function (res) {
                   if (res.data) {
-                    that.$router.push('/index')
+                    that.showTip = true;
+                    that.tipText = '登录成功';
+                    setTimeout(() => {
+                      that.showTip = false;
+                      that.$router.push('/index')
+                      that.login()
+                    }, 1000);
                   }
-                  console.log(res.data)
                 })
               }
             }).catch(function (res) {
-              console.log(res)
             })
           }).catch(function (res) {
             let msgCode = res.response.data.message
@@ -333,7 +347,7 @@
                 that.errorMsg.loginUser.password = '密码不正确';
                 break;
               default:
-                that.errorMsg.loginUser.phoneNumber = '网络错误，请重新登录';
+                that.errorMsg.loginUser.phoneNumber = msgCode;
             }
           })
         }
@@ -405,12 +419,15 @@
             password: password
           }
           that.$axios.post(url, json).then(function (res) {
-            console.log(res)
-            that.login()
+            that.showTip = true;
+            that.tipText = '注册成功';
+            setTimeout(() => {
+              that.showTip = false;
+              that.login()
+            }, 2000);
           })
         }
         else {
-          console.log('有错')
         }
       },
       resetpwdSubmit() {
@@ -465,11 +482,15 @@
           let that = this
           that.$axios.post(url).then(function (res) {
             if (res.data) {
-              that.login()
+              that.showTip = true;
+              that.tipText = '重置成功';
+              setTimeout(() => {
+                that.showTip = false;
+                that.login()
+              }, 2000);
             }
           })
         } else {
-          console.log('不通过')
         }
       },
       checkPassword(type) {
@@ -508,7 +529,6 @@
                 that.registerSendBtn = false
               }
             }).catch(function (res) {
-              console.log(res)
             })
           } else {
             this.errorMsg.registerUser.phoneNumber = '请输入正确格式的手机号码'
@@ -517,7 +537,6 @@
       },
       checkResetPassword(type) {
         if (type) {
-          console.log(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(this.resetpwdUser.password))
           if (this.resetpwdUser.password != null && this.resetpwdUser.password !== '' && this.resetpwdUser.password !== undefined) {
             if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(this.resetpwdUser.password)) {
               if (this.resetpwdUser.confirmpsd != null && this.resetpwdUser.confirmpsd !== '' && this.resetpwdUser.confirmpsd !== undefined) {
@@ -567,7 +586,6 @@
               that.errorMsg.registerUser.nickName = '该昵称已被注册'
             }
           }).catch(function (res) {
-            console.log(res)
           })
         } else {
           this.errorMsg.registerUser.nickName = '请输入为14个英文字符或7个汉字'
@@ -691,6 +709,16 @@
         this.registerForm = false
         this.resetpwdForm = true
       }
+    },
+    beforeRouteEnter(to, from, next) {
+      next(vm => {
+        let query = vm.$route.query.page
+        if (query === 'register') {
+          vm.register()
+        } else {
+          vm.login()
+        }
+      })
     }
   }
 </script>

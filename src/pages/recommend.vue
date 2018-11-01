@@ -9,7 +9,7 @@
               <div class="show_box">
                 <img src="../assets/follow/apelink.png"/>
                 <span class="plus">+</span>
-                <span class="name">APELINK</span>
+                <span class="name">Bvaluate</span>
               </div>
             </div>
           </div>
@@ -22,24 +22,27 @@
       <div class="tool_bar">
         <div class="fish_container">
           <div class="clearfix">
-            <div class="search_bar">
-              <input type="text" id="keyword"/>
-              <div class="search-btn">
-                <i class="fa fa-search"></i>
-              </div>
-            </div>
+            <!--<div class="search_bar">-->
+            <!--<input type="text" id="keyword" v-model="searchKey"-->
+            <!--@keyup.enter="changeClassfy(searchKey,-2)"/>-->
+            <!--<div class="search-btn">-->
+            <!--<i class="fa fa-search" @click="changeClassfy(searchKey,-2)"></i>-->
+            <!--</div>-->
+            <!--</div>-->
             <div class="label_bar">
               <!-- <keep-alive> -->
               <transition name="fade">
-                <div v-show="newType == 1" class="news_box">
+                <div v-show="newType === 1 || newType === -2" class="news_box">
                   <div class="news_title">
                     <span>最新动态</span>
                   </div>
                   <div class="swiper-container" id="news_swiper">
                     <div class="swiper-wrapper">
-                      <div class="swiper-slide"><p>11111作为新杭州人的你是否也在困扰，买车容易送车难，不可能不送车~</p></div>
-                      <div class="swiper-slide"><p>22222作为新杭州人的你是否也在困扰，买车容易送车难，不可能不送车~</p></div>
-                      <div class="swiper-slide"><p>33333作为新杭州人的你是否也在困扰，买车容易送车难，不可能不送车~</p></div>
+                      <div class="swiper-slide" v-for="news in rollingNew" :title="news.title"
+                           @click="goArticle('/article',{sid:news.sid})"
+                      >
+                        <p>{{news.title}}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -50,59 +53,38 @@
                   <div v-if="newType == 2" class="label_box">
                     <ul class="clearfix" :class="labelMore?'open':''">
                       <li><span class="active">全部</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
-                      <li><span>标签</span></li>
+                      <li v-for="item in followICO">
+                        <span @click="goProjectByName(item.result.project)">{{item.result.project}}</span>
+                      </li>
+                      <li v-for="item in followIndustry">
+                        <span @click="goIndustryByIndustry(item.result)">{{item.result}}</span>
+                      </li>
+                      <li v-for="item in followAuthor">
+                        <span>{{item.result}}</span>
+                      </li>
+                      <li v-for="item in followCountry">
+                        <span @click="goIndustryByCountry(item.result)">{{item.result}}</span>
+                      </li>
                     </ul>
                     <img src="../assets/follow/down.png" class="open_label" :class="labelMore?'open':''"
-                         @click="labelMore = !labelMore"/>
+                         @click="labelMore = !labelMore"
+                         v-if="(followICO.length + followIndustry.length + followAuthor.length + followCountry.length)>5"
+                    />
                   </div>
                 </transition>
               </keep-alive>
               <keep-alive>
                 <transition name="fade">
                   <div v-if="newType == 3" class="follow_box">
-                    <div class="swiper-container" id="follow_swiper">
-                      <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                          <ul class="clearfix">
-                            <li>
-                              <div class="item_box">platform</div>
-                            </li>
-                            <li>
-                              <div class="item_box">标签</div>
-                            </li>
-                            <li>
-                              <div class="item_box">标签</div>
-                            </li>
-                            <li>
-                              <div class="item_box">标签</div>
-                            </li>
-                            <li>
-                              <div class="item_box">标签</div>
-                            </li>
-                            <li>
-                              <div class="item_box">标签</div>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      <!-- 如果需要滚动条 -->
-                      <!--<div class="swiper-scrollbar"></div>-->
-                    </div>
-                    <div class="follow_btn">
-                      <div class="follow"><i class="fa fa-plus"></i>关注</div>
-                    </div>
+                    <span class="item_box">{{industryName}}</span>
+                    <button class="follow" v-if="!projectFollow" @click="setFollow()">
+                      <i class="fa fa-plus"></i>
+                      <span>关注</span>
+                    </button>
+                    <button class="followed" v-if="projectFollow" @click="deleteFollow(industryName)">
+                      <i class="fa fa-check"></i>
+                      <span>已关注</span>
+                    </button>
                   </div>
                 </transition>
               </keep-alive>
@@ -115,9 +97,15 @@
           <div class="clearfix">
             <div class="left">
               <ul class="menu_box">
-                <li :class="index == classShow?'active':''" v-for="(classfy,index) in newsClassfy"
-                    v-if="classfy.showInList" @click="changeClassfy(classfy.categoryName,index)">
-                  {{classfy.categoryName}}
+                <li ref="left_menu" class="left_menu" :class="index === classShow?'active':''"
+                    v-for="(classfy,index) in newsClassfy"
+                    v-if="classfy" @click="changeClassfy(classfy,index)">
+                  {{classfy}}
+                </li>
+                <li v-if="classfyPageSizeShow" class="loadMoreClassfy" @click="loadMoreClassfy()">
+                  <span></span>
+                  <span></span>
+                  <span></span>
                 </li>
               </ul>
             </div>
@@ -125,16 +113,16 @@
               <div class="adv_box">
                 <div class="swiper-container" id="adv_banner">
                   <div class="swiper-wrapper">
-                    <div class="swiper-slide" :style="'background-image: url('+img2+')'"></div>
-                    <div class="swiper-slide" :style="'background-image: url('+img2+')'"></div>
-                    <div class="swiper-slide" :style="'background-image: url('+img2+')'"></div>
+                    <div class="swiper-slide" :style="'background-image: url('+banner1+')'"></div>
+                    <div class="swiper-slide" :style="'background-image: url('+banner1+')'"></div>
+                    <div class="swiper-slide" :style="'background-image: url('+banner1+')'"></div>
                   </div>
                   <!-- 如果需要分页器 -->
                   <div class="swiper-button-prev"></div><!--左箭头-->
                   <div class="swiper-button-next"></div><!--右箭头-->
                 </div>
                 <div class="adv_infor">
-                  <h4>宝马中国</h4>
+                  <h4>广告位</h4>
                   <button>了解更多</button>
                 </div>
               </div>
@@ -143,10 +131,10 @@
                   <li>
                     <div class="list-item">
                       <div class="medialist">
-                        <div class="media" v-for="news in newsList"
-                             @click="$router.push('/article?sid=' + news.sid)">
-                          <div class="media-left media-middle">
-                            <div class="newimg_box">
+                        <div class="media" v-for="news in newsList">
+                          <div class="media-left media-middle"
+                               v-if="news.dataType === 'NEWS'||news.dataType === 'WEIXIN'">
+                            <div class="newimg_box" @click="goArticle('/article',{sid:news.sid})">
                               <img v-if="news.titlePicture" :src="news.titlePicture"/>
                               <div class="date_box">
                                 <span class="day">{{news.urlTime | showDay}}</span>
@@ -154,30 +142,54 @@
                               </div>
                             </div>
                           </div>
+                          <div class="media-left media-middle"
+                               v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'">
+                            <div class="newimg_box TorW" @click="goArticle('/article',{sid:news.sid})">
+                              <img :src="news.dataType === 'WEIBO'?weibo:tuiwen"/>
+                              <span class="day">{{news.urlDate }}</span>
+                            </div>
+                          </div>
                           <div class="media-body">
-                            <h4 class="media-heading" :title="news.title">
-                              {{news.title }}
+                            <h4 class="media-heading" :title="news.title" @click="goArticle('/article',{sid:news.sid})"
+                                v-if="!(news.dataType === 'WEIBO' || news.dataType === 'TWITTER')" v-html="news.title ">
                             </h4>
-                            <p class="media-words">
-                              {{news.content }}
+                            <p class="media-words TorW" v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'"
+                               @click="goArticle('/article',{sid:news.sid})" v-html="news.content ">
+                            </p>
+                            <p class=" media-words" v-else v-html="news.content ">
                             </p>
                             <div class="media-bottom">
                               <ul>
-                                <li>
-                                  <div class="userimg"
-                                       v-if="(news.author !== 'NULL' && news.author !== null && news.author !== '')">
+                                <li
+                                  v-if="!(news.siteName !== 'NULL' && news.siteName !== null && news.siteName !== '')"
+                                  @click="goArticle('/author',{author: news.author,type: 'author'})">
+                                  <div class="userimg">
                                     <img src="../assets/follow/user_head.png">
                                   </div>
-                                  {{
-                                  (news.author !== 'NULL'
-                                  && news.author !== null
-                                  && news.author !== '')?news.author:news.siteName
-                                  }}
+                                  {{news.author}}
+                                </li>
+                                <li v-else @click="goArticle('/author',{author: news.siteName,type: 'siteName'})">
+                                  {{news.siteName}}
                                 </li>
                                 <li>{{news.urlTime}}</li>
                               </ul>
-                              <div class="tips">
-                                {{news.industryCategory | showLable(news.countryCategory,news.projectCategory)}}
+                              <div class="tips"
+                                   v-if="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL'"
+                                   @click="goProjectByName(news.projectCategory)"
+                              >
+                                {{news.projectCategory | labelFormat}}
+                              </div>
+                              <div class="tips"
+                                   v-else-if="news.industryCategory !==null && news.industryCategory !== '' && news.industryCategory !==undefined && news.industryCategory !=='NULL'"
+                                   @click="goIndustryByIndustry(news.industryCategory)"
+                              >
+                                {{news.industryCategory | labelFormat}}
+                              </div>
+                              <div class="tips"
+                                   v-else="news.countryCategory !==null && news.countryCategory !== '' && news.countryCategory !==undefined && news.countryCategory !=='NULL'"
+                                   @click="goIndustryByCountry(news.countryCategory)"
+                              >
+                                {{news.countryCategory | labelFormat}}
                               </div>
                             </div>
                           </div>
@@ -194,402 +206,195 @@
                 </button>
               </div>
             </div>
-            <keep-alive>
-              <transition name="fade">
-                <div v-if="newType == 1" class="right">
-                  <div class="link_box">
-                    <div class="item">
-                      <i class="fa fa-facebook"></i>
-                      <p>Facebook</p>
-                    </div>
-                    <div class="item">
-                      <i class="fa fa-twitter"></i>
-                      <p>Twitter</p>
-                    </div>
-                    <div class="item">
-                      <i class="fa fa-instagram"></i>
-                      <p>Instagram</p>
-                    </div>
-                    <div class="item">
-                      <i class="fa fa-google-plus"></i>
-                      <p>Google</p>
-                    </div>
-                    <div class="item">
-                      <i class="fa fa-pinterest"></i>
-                      <p>Pinterest</p>
-                    </div>
+            <transition name="fade">
+              <div v-if="newType == 1 || newType==-2" class="right">
+                <div class="link_box">
+                  <div class="item">
+                    <i class="fa fa-facebook"></i>
+                    <p>Facebook</p>
                   </div>
-                  <div class="right_item">
-                    <div class="hot_title">
-                      <div class="title_icon">
-                        <img src="../assets/follow/news_flash.png"/>
-                      </div>
-                      <h4>快讯</h4>
-                      <span class="look_more">查看更多</span>
-                    </div>
-                    <div class="hot_content">
-                      <ul>
-                        <li class="news_flash" v-for="(flash,index) in flashList">
-                          <div class="news_item">
-                            <div class="radio_box">
-                              <div class="radio_circle" :class="index==0?'first':''"></div>
-                            </div>
-                            <div class="item_time">
-                              <span>{{flash.urlTime | dataFormat}}</span>
-                            </div>
-                            <div class="item_body">
-                              <h4 @click.stop="$router.push('/article?sid=' + flash.sid)">{{flash.title}}</h4>
-                              <p>{{flash.content}}</p>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
+                  <div class="item">
+                    <i class="fa fa-twitter"></i>
+                    <p>Twitter</p>
                   </div>
-                  <div class="right_item margin_top">
-                    <div class="hot_title">
-                      <div class="title_icon">
-                        <img src="../assets/follow/real_time.png"/>
-                      </div>
-                      <h4>国家时事</h4>
-                      <span class="look_more">查看更多</span>
-                    </div>
-                    <div class="hot_content current">
-                      <ul>
-                        <li class="news_flash" v-for="(affair,index) in affairList">
-                          <div class="news_item nolink">
-                            <div class="radio_box">
-                              <div class="radio_circle" :class="index == 0 ? 'first':''"></div>
-                            </div>
-                            <div class="item_time">
-                              <span>{{affair.urlTime | dataFormat}}</span>
-                            </div>
-                            <div class="item_body" :class="affair.titlePicture ? 'hasImg' : ''">
-                              <div class="content" v-if="affair.titlePicture">
-                                <h4 @click.stop="$router.push('/article?sid=' + affair.sid)">{{affair.title}}</h4>
-                                <p>{{affair.content}}</p>
-                              </div>
-                              <div class="content_img" v-if="affair.titlePicture">
-                                <img :src="affair.titlePicture"/>
-                              </div>
-                              <h4 v-if="!affair.titlePicture">{{affair.title}}</h4>
-                              <p v-if="!affair.titlePicture">{{affair.content}}</p>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
+                  <div class="item">
+                    <i class="fa fa-instagram"></i>
+                    <p>Instagram</p>
+                  </div>
+                  <div class="item">
+                    <i class="fa fa-google-plus"></i>
+                    <p>Google</p>
+                  </div>
+                  <div class="item">
+                    <i class="fa fa-pinterest"></i>
+                    <p>Pinterest</p>
                   </div>
                 </div>
-              </transition>
-            </keep-alive>
-            <keep-alive>
-              <transition name="fade">
-                <div v-if="newType == 2" class="right">
-                  <div class="right_item">
-                    <div class="hot_title">
-                      <div class="title_icon">
-                        <img src="../assets/follow/hot_text.png"/>
-                      </div>
-                      <h4>24小时热文</h4>
+                <div class="right_item">
+                  <div class="hot_title">
+                    <div class="title_icon">
+                      <img src="../assets/follow/news_flash.png"/>
                     </div>
-                    <div class="hot_content">
-                      <ul>
-                        <li v-for="(item, index) in hotNews" :key="item.sid">
-                          <div class="list_item">
-                            <div class="item_left">
-                              <img :src="item.titlePicture"/>
-                            </div>
-                            <div class="item_body">
-                              <h4>{{item.title}}</h4>
-                              <p>{{item.content}}</p>
-                            </div>
+                    <h4>快讯</h4>
+                  </div>
+                  <div class="hot_content">
+                    <ul class="scoll_style" id="scoll_scoll_style">
+                      <li class="news_flash" v-for="(flash,index) in flashList">
+                        <div class="news_item">
+                          <div class="radio_box">
+                            <div class="radio_circle" :class="index==0?'first':''"></div>
                           </div>
-                          <div class="item_bottom">
-                            <p>{{item.urlDate}}</p>
+                          <div class="item_time">
+                            <span>{{flash.urlTime | dataFormat}}</span>
                           </div>
-                        </li>
-                        <!-- <li>
-                          <div class="list_item">
-                            <div class="item_left">
-                              <img :src="img3"/>
-                            </div>
-                            <div class="item_body">
-                              <h4>Whatever is worth doing is worth doing well</h4>
-                              <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
-                            </div>
+                          <div class="item_body">
+                            <h4 @click="goArticle('/article',{sid:flash.sid})">{{flash.title}}</h4>
+                            <p>{{flash.content}}</p>
                           </div>
-                          <div class="item_bottom">
-                            <p>2018-05-26</p>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="list_item">
-                            <div class="item_left">
-                              <img :src="img3"/>
-                            </div>
-                            <div class="item_body">
-                              <h4>Whatever is worth doing is worth doing well</h4>
-                              <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
-                            </div>
-                          </div>
-                          <div class="item_bottom">
-                            <p>2018-05-26</p>
-                          </div>
-                        </li> -->
-                      </ul>
-                    </div>
+                        </div>
+                      </li>
+                    </ul>
                   </div>
                 </div>
-              </transition>
-            </keep-alive>
-            <keep-alive>
-              <transition name="fade">
-                <div v-if="newType == 3" class="right">
-                  <div class="right_item">
-                    <div class="hot_title">
-                      <div class="title_icon">
-                        <img src="../assets/follow/hot_text.png"/>
-                      </div>
-                      <h4>24小时热文</h4>
+                <div class="right_item margin_top">
+                  <div class="hot_title">
+                    <div class="title_icon">
+                      <img src="../assets/follow/real_time.png"/>
                     </div>
-                    <div class="hot_content">
-                      <ul>
-                        <li v-for="(item, index) in hotNews" :key="item.sid">
-                          <div class="list_item">
-                            <div class="item_left">
-                              <img :src="item.titlePicture"/>
-                            </div>
-                            <div class="item_body">
-                              <h4>{{item.title}}</h4>
-                              <p>{{item.content}}</p>
-                            </div>
-                          </div>
-                          <div class="item_bottom">
-                            <p>{{item.urlDate}}</p>
-                          </div>
-                        </li>
-                        <!-- <li>
-                          <div class="list_item">
-                            <div class="item_left">
-                              <img :src="img3"/>
-                            </div>
-                            <div class="item_body">
-                              <h4>Whatever is worth doing is worth doing well</h4>
-                              <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
-                            </div>
-                          </div>
-                          <div class="item_bottom">
-                            <p>2018-05-26</p>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="list_item">
-                            <div class="item_left">
-                              <img :src="img3"/>
-                            </div>
-                            <div class="item_body">
-                              <h4>Whatever is worth doing is worth doing well</h4>
-                              <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
-                            </div>
-                          </div>
-                          <div class="item_bottom">
-                            <p>2018-05-26</p>
-                          </div>
-                        </li> -->
-                      </ul>
-                    </div>
+                    <h4>国家时事</h4>
                   </div>
-                  <div class="right_item margin_top">
-                    <div class="hot_title">
-                      <div class="title_icon">
-                        <img src="../assets/follow/tweet.png"/>
-                      </div>
-                      <h4>
-                    <span class="tab" :class="{active:isActive}" @click="isActive = true, getNews('280001'), show_news_img = tuiwen">
+                  <div class="hot_content current">
+                    <ul class="long_ul">
+                      <li class="news_flash" v-for="(affair,index) in affairList">
+                        <div class="news_item nolink">
+                          <div class="radio_box">
+                            <div class="radio_circle" :class="index == 0 ? 'first':''"></div>
+                          </div>
+                          <div class="item_time">
+                            <span>{{affair.urlTime | dataFormat}}</span>
+                          </div>
+                          <div class="item_body" :class="affair.titlePicture ? 'hasImg' : ''">
+                            <div class="content" v-if="affair.titlePicture">
+                              <h4 @click="goArticle('/article',{sid:affair.sid})">{{affair.title}}</h4>
+                              <p>{{affair.content}}</p>
+                            </div>
+                            <div class="content_img" v-if="affair.titlePicture"
+                                 @click="goArticle('/article',{sid:affair.sid})">
+                              <img :src="affair.titlePicture"/>
+                            </div>
+                            <h4 v-if="!affair.titlePicture" @click="goArticle('/article',{sid:affair.sid})">
+                              {{affair.title}}</h4>
+                            <p v-if="!affair.titlePicture">{{affair.content}}</p>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </transition>
+            <!--<transition name="fade">-->
+            <!--<div v-if="newType == 2" class="right">-->
+            <!--<div class="right_item">-->
+            <!--<div class="hot_title">-->
+            <!--<div class="title_icon">-->
+            <!--<img src="../assets/follow/hot_text.png"/>-->
+            <!--</div>-->
+            <!--<h4>24小时热文</h4>-->
+            <!--</div>-->
+            <!--<div class="hot_content">-->
+            <!--<ul>-->
+            <!--<li v-for="(item, index) in hotNews" :key="item.sid">-->
+            <!--<div class="list_item">-->
+            <!--<div class="item_left" v-if="item.titlePicture"-->
+            <!--@click="goArticle('/article',{sid:item.sid})">-->
+            <!--<img :src="item.titlePicture"/>-->
+            <!--</div>-->
+            <!--<div class="item_body" :class="item.titlePicture?'':'noPicture'">-->
+            <!--<h4 @click="goArticle('/article',{sid:item.sid})">{{item.title}}</h4>-->
+            <!--<p>{{item.content}}</p>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div class="item_bottom">-->
+            <!--<p>{{item.urlDate}}</p>-->
+            <!--</div>-->
+            <!--</li>-->
+            <!--</ul>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</transition>-->
+            <transition name="fade">
+              <div v-if="newType == 3" class="right">
+                <div class="right_item">
+                  <div class="hot_title">
+                    <div class="title_icon">
+                      <img src="../assets/follow/hot_text.png"/>
+                    </div>
+                    <h4>24小时热文</h4>
+                  </div>
+                  <div class="hot_content">
+                    <ul class="long_ul">
+                      <li v-for="(item, index) in hotNews" :key="item.sid">
+                        <div class="list_item">
+                          <div class="item_left" v-if="item.titlePicture">
+                            <img :src="item.titlePicture"/>
+                          </div>
+                          <div class="item_body" :class="item.titlePicture?'':'noPicture'">
+                            <h4 @click="goArticle('/article',{sid:item.sid})">{{item.title}}</h4>
+                            <p>{{item.content}}</p>
+                          </div>
+                        </div>
+                        <div class="item_bottom">
+                          <p>{{item.urlDate}}</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="right_item margin_top">
+                  <div class="hot_title">
+                    <div class="title_icon">
+                      <img src="../assets/follow/tweet.png"/>
+                    </div>
+                    <h4>
+                    <span class="tab" :class="{active:isActive}"
+                          @click="isActive = true, getNews('280001'), show_news_img = tuiwen">
                       推文
                     </span>
-                        <span class="vertical">|</span>
-                        <span class="tab" :class="{active:!isActive}" @click="isActive = false, getNews('280002'), show_news_img = weibo">
+                      <span class="vertical">|</span>
+                      <span class="tab" :class="{active:!isActive}"
+                            @click="isActive = false, getNews('280002'), show_news_img = weibo">
                       微博
                     </span>
-                      </h4>
-                      <span class="look_more">查看更多</span>
-                    </div>
-                    <div class="hot_content">
-                      <ul>
-                        <li v-for="(item, index) in news" :key="item.sid">
-                          <div class="list_item">
-                            <div class="item_left tweet">
-                              <img :src="show_news_img"/>
-                            </div>
-                            <div class="item_body tweet">
-                              <p class="tweet">{{item.content}}</p>
-                              <div class="body_bottom">
-                                <p>{{item.author}}</p>
-                                <p class="time">{{item.urlDate}}</p>
-                              </div>               
+                    </h4>
+                  </div>
+                  <div class="hot_content">
+                    <ul class="long_ul">
+                      <li v-for="(item, index) in news" :key="item.sid">
+                        <div class="list_item">
+                          <div class="item_left tweet">
+                            <img :src="show_news_img"/>
+                            <span class="day">{{item.urlDate }}</span>
+                          </div>
+                          <div class="item_body tweet">
+                            <p class="tweet" @click="goArticle('/article',{sid:item.sid})">{{item.content}}</p>
+                            <div class="body_bottom">
+                              <p>{{item.author}}</p>
+                              <p class="time">{{item.urlDate}}</p>
                             </div>
                           </div>
-                        </li>
-                        <!-- <li>
-                          <div class="list_item">
-                            <div class="item_left tweet">
-                              <img src="../assets/follow/tweet_header.png"/>
-                            </div>
-                            <div class="item_body tweet">
-                              <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever
-                                is
-                                worth doing is worth doing Whatever is worth doing</p>
-                              <div class="body_bottom">
-                                <p>博主</p>
-                                <p class="time">2018-05-26</p>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="list_item">
-                            <div class="item_left tweet">
-                              <img src="../assets/follow/tweet_header.png"/>
-                            </div>
-                            <div class="item_body tweet">
-                              <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever
-                                is
-                                worth doing is worth doing Whatever is worth doing</p>
-                              <div class="body_bottom">
-                                <p>博主</p>
-                                <p class="time">2018-05-26</p>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li>
-                          <div class="list_item">
-                            <div class="item_left tweet">
-                              <img src="../assets/follow/tweet_header.png"/>
-                            </div>
-                            <div class="item_body tweet">
-                              <p class="tweet">Whatever is worth doing is worth doing Whatever is worth doing Whatever
-                                is
-                                worth doing is worth doing Whatever is worth doing</p>
-                              <div class="body_bottom">
-                                <p>博主</p>
-                                <p class="time">2018-05-26</p>
-                              </div>
-                            </div>
-                          </div>
-                        </li> -->
-                      </ul>
-                    </div>
+                        </div>
+                      </li>
+                    </ul>
                   </div>
                 </div>
-              </transition>
-            </keep-alive>
+              </div>
+            </transition>
           </div>
         </div>
       </div>
-      <div class="footer">
-        <div class="top">
-          <div class="fish_container">
-            <div class="flexbox clearfix">
-              <ul>
-                <li class="apelink_logo">
-                  APELINK
-                  <img src="../assets/follow/bottom_logo.png"/>
-                </li>
-                <li><a href="#">Stats & facts</a></li>
-                <li><a href="#">Media</a></li>
-                <li><a href="#">API</a></li>
-                <li><a href="#">Mobile app (Android)</a></li>
-                <li><a href="#">Chrome Eidget</a></li>
-                <li><a href="#">Firefox Widget</a></li>
-                <li><a href="#">Benchy</a></li>
-              </ul>
-              <ul class="logo_box">
-                <li>APELINK</li>
-                <li>
-                  <ul class="network clearfix">
-                    <li>
-                      <a href="#">
-                        <div class="icon1"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon2"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon3"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon4"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon5"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon6"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon7"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon8"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon9"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon10"></div>
-                      </a>
-                    </li>
-
-                  </ul>
-                </li>
-              </ul>
-              <ul>
-                <li>For ICOs</li>
-                <li><a href="#">Publish new ICO</a></li>
-                <li><a href="#">ICO Analyzre</a></li>
-                <li><a href="#">Premium Listing</a></li>
-                <li><a href="#">Widgets</a></li>
-                <li><a href="#">For al</a></li>
-              </ul>
-              <ul>
-                <li>For ALL</li>
-                <li><a href="#">ICO Listing</a></li>
-                <li><a href="#">People of Blockchsin</a></li>
-                <li><a href="#">ICO Whitelist</a></li>
-                <li><a href="#">Agencies</a></li>
-                <li><a href="#">Exchanges</a></li>
-                <li><a href="#">Experts</a></li>
-                <li><a href="#">ROL calculator</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="bottom">
-          <p>备案号</p>
-          <p>版权信息</p>
-        </div>
-      </div>
+      <vfooter/>
     </div>
 
   </div>
@@ -602,7 +407,7 @@
   let img2 = require('../assets/follow/adv01.png');
   let img3 = require('../assets/media.jpg');
   let loading = require('../assets/login/loading.gif');
-  let tuiwen = require('../assets/home/nicon.png');
+  let tuiwen = require('../assets/home/tuite.png');
   let weibo = require('../assets/home/weibo.png');
 
   export default {
@@ -631,6 +436,19 @@
         tuiwen: tuiwen,
         weibo: weibo,
         show_news_img: tuiwen,
+        rollingNew: [],
+        searchKey: '',
+        projectFollow: false,
+        followICO: [],
+        followCountry: [],
+        followAuthor: [],
+        followIndustry: [],
+        classfyPageSize: 30,
+        classfyPageSizeShow: true,
+        flashPageSize: 20,
+        followListNo: 1,
+        followListPageSize: 20,
+        country: ''
       }
     },
     filters: {
@@ -657,33 +475,45 @@
         let nowhour = nowDate.getHours();
         let myMin = myDate.getMinutes()
         let nowMin = nowDate.getMinutes()
-        if (nowdata - mydata < 7 && nowdata - mydata > 1) {
+        //
+        if (nowdata - mydata < 7 && nowdata - mydata >= 1) {
           return nowdata - mydata + '天前'
-        } else if (nowdata - mydata <= 1 && Math.abs(myhour - nowhour) > 1 && Math.abs(myhour - nowhour) < 24) {
+        } else if (nowdata - mydata < 1 && Math.abs(myhour - nowhour) >= 1 && Math.abs(myhour - nowhour) < 24) {
           return Math.abs(myhour - nowhour) + '小时前'
-        } else if (Math.abs(myhour - nowhour) <= 1 && Math.abs(myDate.getMinutes() - nowDate.getMinutes()) > 1 && Math.abs(myDate.getMinutes() - nowDate.getMinutes()) < 60) {
+        } else if (Math.abs(myhour - nowhour) < 1 && Math.abs(myDate.getMinutes() - nowDate.getMinutes()) >= 1 && Math.abs(myDate.getMinutes() - nowDate.getMinutes()) < 60) {
           return Math.abs(myDate.getMinutes() - nowDate.getMinutes()) + '分钟前'
-        } else if (Math.abs(myDate.getMinutes() - nowDate.getMinutes()) <= 1) {
+        } else if (Math.abs(myDate.getMinutes() - nowDate.getMinutes()) < 1) {
           return Math.abs(myDate.getSeconds() - nowDate.getSeconds()) + '秒前'
         } else {
-          let month = myDate.getMonth()
+          let month = myDate.getMonth();
           if (month < 9) {
             month = '0' + month
           }
           return month + '-' + mydata
         }
       },
+      labelFormat(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';');
+            return arr[0];
+          } else {
+            return obj;
+          }
+        }
+        return obj;
+      },
       showLable(label1, label2, lable3) {
-        if (label1 != null && label1 !== undefined && label1 !== '' && label1 != 'NULL') {
-          let arr = label1.split(';')
+        if (label1 != null && label1 !== undefined && label1 !== '' && label1 !== 'NULL') {
+          let arr = label1.split(';');
           return arr[0]
         } else {
-          if (label2 != null && label2 !== undefined && label2 !== '' && label2 != 'NULL') {
-            let arr = label1.split(';')
+          if (label2 != null && label2 !== undefined && label2 !== '' && label2 !== 'NULL') {
+            let arr = label1.split(';');
             return arr[0]
           } else {
-            if (lable3 != null && lable3 !== undefined && lable3 !== '' && lable3 != 'NULL') {
-              let arr = label1.split(';')
+            if (lable3 != null && lable3 !== undefined && lable3 !== '' && lable3 !== 'NULL') {
+              let arr = label1.split(';');
               return arr[0]
             } else {
               return '标签'
@@ -692,72 +522,375 @@
         }
       }
     },
+    watch: {
+      '$route': 'initPageDate'
+    },
     methods: {
-      getNewsClassfy() {
+      setFollow() {
+        let that = this;
+        let token = localStorage.getItem('apelink_user_token');
+        let uid = localStorage.getItem('apelink_user_uid');
+        let url = '/api/individual/add?type=INDUSTRY&name=' + that.industryName;
+        let headers = {'uid': uid, 'Authorization': token};
+        that.$axios({
+          method: 'post',
+          url: url,
+          headers: headers
+        }).then(function (res) {
+          if (res.data) {
+            that.projectFollow = true;
+            alert('关注成功');
+          }
+        });
+      },
+      deleteFollow(industry) {
+        // this.projectFollow = false;
+        let token = localStorage.getItem('apelink_user_token')
+        if (token) {
+          let uid = localStorage.getItem('apelink_user_uid')
+          let that = this;
+          let url = '/api/individual/list?type=INDUSTRY';
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'get',
+            url: url,
+            headers: headers
+          }).then(res => {
+            let list = res.data.content;
+            let cid = '';
+            for (let i = 0; i < list.length; i++) {
+              let industryName = list[i].result;
+              if (industry === industryName) {
+                cid = list[i].cid;
+                break
+              }
+            }
+            if (cid !== '') {
+              console.log(cid);
+              let deteleUrl = '/api/individual/delete?cid=' + cid;
+              that.$axios({
+                method: 'DELETE',
+                url: deteleUrl,
+                headers: headers
+              }).then(function (res) {
+                if (res.data) {
+                  that.projectFollow = false;
+                  alert('已取消关注');
+                }
+
+              })
+            }
+          })
+        } else {
+          alert('请先登录。')
+        }
+      },
+      //运用回调函数的方式设立一个获取关注的列表。
+      getFollowList(type, callback) {
         let that = this
-        that.$axios.get('/api/traditional/categories').then(function (res) {
-          that.newsClassfy = res.data;
-          if (that.newsClassfy.length > 0) {
-            that.initNewsList(that.newsClassfy[0].categoryName)
+        let token = localStorage.getItem('apelink_user_token')
+        let uid = localStorage.getItem('apelink_user_uid')
+        let url = '/api/individual/list?type=' + type;
+        let headers = {'uid': uid, 'Authorization': token};
+        let thisCallback = callback;
+        that.$axios({
+          method: 'get',
+          url: url,
+          headers: headers
+        }).then(function (res) {
+          thisCallback(res)
+        })
+      },
+      //获取对应type的关注列表。
+      getAllFollow() {
+        this.getFollowList('ICO', res => {
+          this.followICO = res.data.content;
+        });
+        this.getFollowList('COUNTRY', res => {
+          this.followCountry = res.data.content;
+        });
+        this.getFollowList('AUTHOR', res => {
+          this.followAuthor = res.data.content;
+        });
+        this.getFollowList('INDUSTRY', res => {
+          this.followIndustry = res.data.content;
+        })
+      },
+      //判断对应的行业是否关注。
+      getfollowboolean() {
+        let that = this;
+        let token = localStorage.getItem('apelink_user_token');
+        if (token) {
+          let uid = localStorage.getItem('apelink_user_uid');
+          let checkurl = '/api/individual/check?type=INDUSTRY&sidOrName=' + that.industryName;
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'post',
+            url: checkurl,
+            headers: headers
+          }).then(function (res) {
+            if (res.data) {
+              that.projectFollow = true
+            } else {
+              that.projectFollow = false
+            }
+          })
+        }
+      },
+      //
+      goProjectByName(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        //这种写法是将路由转为正常的url然后进行跳转
+        let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
+        window.open(routeData.href, '_blank');
+      },
+      goIndustryByIndustry(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
+        window.open(routeData.href, '_blank');
+      },
+      goIndustryByCountry(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj}});
+        window.open(routeData.href, '_blank');
+      },
+      goArticle(url, query) {
+        let routeData = this.$router.resolve({path: url, query: query});
+        window.open(routeData.href, '_blank');
+      },
+      //根据路由进行跳转
+      goUrl(url, query) {
+        this.$router.push({path: url, query: query});
+      },
+      //获取最新动态信息
+      getRollingNew() {
+        let that = this;
+        let categoryName = '最新动态';
+        let url = '/api/traditional/categoryList?categoryName=' + categoryName + '&pageSize=5';
+        that.$axios.get(url).then(function (res) {
+          that.rollingNew = res.data.content;
+          that.$nextTick(() => {  // 下一个UI帧再初始化swiper
+            that.initSwiper();
+          });
+        })
+      },
+      //获取新闻分类（行业，左侧导航栏）
+      getNewsClassfy(show, categoryName, showpage) {
+        let that = this;
+        that.$axios.get('/api/traditional/categories?pageSize=' + this.classfyPageSize).then(function (res) {
+          let arr = ['推荐'];
+          that.newsClassfy = arr.concat(res.data);
+          let industry = that.$route.query.industry;
+          if (industry !== null && industry !== '' && industry !== undefined && industry !== 'NULL') {
+            categoryName = industry;
+            let newsClass = that.newsClassfy;
+            for (let i = 0; i < newsClass.length; i++) {
+              if (newsClass[i] === industry) {
+                showpage = i;
+              }
+            }
+            show = false;
+          }
+          that.changeClassfy(categoryName, showpage);
+          if (that.newsClassfy.length > 0 && show) {
+            that.initNewsList(that.newsClassfy[0])
           }
         })
       },
-      getHotnews () {
+      //加载更多新闻分类
+      loadMoreClassfy() {
+        this.classfyPageSize += 20;
+        let that = this;
+        that.$axios.get('/api/traditional/categories?pageSize=' + this.classfyPageSize).then(res => {
+          let num = res.data.length - (that.newsClassfy.length - 2);
+          if (num < 10) {
+            this.classfyPageSizeShow = false;
+          }
+          let arr = ['推荐'];
+          that.newsClassfy = arr.concat(res.data);
+        })
+      },
+      //加载对应行业的热门新闻
+      getHotnews(industryName) {
         let that = this
-        that.$axios.get('/api/traditional/hotNews?industryName='+ that.industryName +'&pageSize=3').then(function (res) {
+        that.$axios.get('/api/traditional/hotNews?industryName=' + industryName + '&pageSize=10').then(function (res) {
           if (that.newsClassfy.length > 0) {
             that.hotNews = res.data.content
           }
         })
       },
-      getNews (newsnum) {
-        let that = this
-        that.$axios.get('/api/traditional/news?searchBy='+ that.industryName +'&categoryId='+ newsnum +'&pageSize=4').then(function (res) {
+      //获取相关新闻列表
+      getNews(newsnum) {
+        let that = this;
+        //相关参数看接口文档
+        that.$axios.get('/api/traditional/news?searchBy=' + this.industryName + '&categoryId=' + newsnum + '&pageSize=10').then(function (res) {
           if (that.newsClassfy.length > 0) {
             that.news = res.data.content
           }
         })
       },
+      //快讯滚动条下来加载事件
+      scrollFlash() {
+        let $this = document.getElementById('scoll_scoll_style');
+        let finished = true;
+        $this.addEventListener('scroll', () => {
+          let boxTop = $this.scrollTop;
+          let boxHeight = $this.scrollHeight;
+          let offsetHeight = $this.offsetHeight;
+          if ((boxTop / (boxHeight - offsetHeight) >= 0.80) && finished) {
+            finished = false;
+            let that = this;
+            this.initRightNews('快讯', this.flashPageSize, res => {
+              this.flashPageSize += 20;
+              this.flashList = res;
+              finished = true;
+            });
+          }
+        });
+      },
+      //左边侧边栏切换 根据index来切换不同UI。现已经取消关注的UI，但此方法未作改动(无需改动)
       changeClassfy(categoryName, index) {
-        if (categoryName == '关注') {
+        this.categoryName = categoryName;
+        if (categoryName === '关注') {
           this.newType = 2;
-          this.industryName = "关注"
-        } else if (categoryName == '平台') {
-          this.newType = 3;
-          this.industryName = "平台"
-          new Swiper('#follow_swiper', {
-            direction: 'horizontal',
-            slidesPerView: 'auto',
-            freeMode: true,
-            mousewheel: true,
-            observer: true,		            //修改swiper自己或子元素时，自动初始化swiper
-            observeParents: true
+          this.getAllFollow();
+        } else if (categoryName === '推荐') {
+          this.newType = 1;
+          //获取最新动态
+          this.getRollingNew();
+          //获取国家资讯
+          this.initRightNews('国家时事', 10, res => {
+            this.affairList = res;
+          });
+          this.initRightNews('快讯', this.flashPageSize, res => {
+            this.flashPageSize += 20;
+            this.flashList = res;
           });
         } else {
-          this.newType = 1
+          this.newType = 3;
         }
+        if (index === -1) {
+          let that = this;
+          this.initRightNews('国家时事', 10, function (res) {
+            that.affairList = res;
+          });
+          this.initRightNews('快讯', this.flashPageSize, res => {
+            this.flashPageSize += 20;
+            this.flashList = res;
+          });
+          this.initNewsList('', categoryName);
+          this.getRollingNew();
+        } else if (index === -2) {
+          let that = this;
+          this.initRightNews('国家时事', 10, function (res) {
+            that.affairList = res;
+          });
+          this.initRightNews('快讯', this.flashPageSize, res => {
+            this.flashPageSize += 20;
+            this.flashList = res;
+          });
+          this.initNewsList('', categoryName);
+          this.getRollingNew();
+          this.newType = -2;
+        } else {
+          if (categoryName === '关注') {
+            this.newsList = []
+            this.getAllFollowList()
+          } else {
+            this.initNewsList(categoryName);
+          }
+        }
+        this.industryName = categoryName;
         this.showloading = true;
         this.classShow = index;
         this.newsList = [];
         this.pageSize = 20;
-        this.initNewsList(categoryName)
-        this.getHotnews()
-        this.getNews('280001')
+        if (categoryName === '关注') {
+
+        } else {
+          this.getfollowboolean();
+          this.getHotnews(categoryName);
+          this.getNews('280001');
+        }
       },
-      initNewsList(categoryName) {
+      //获取所有关注列表
+      getAllFollowList() {
+        this.showloading = true;
         let that = this;
-        that.categoryName = categoryName;
-        let url = '/api/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + this.pageSize
-        that.$axios.get(url).then(function (res) {
-          that.newsList = res.data.content;
+        let token = localStorage.getItem('apelink_user_token');
+        let uid = localStorage.getItem('apelink_user_uid');
+        let url = '/api/traditional/collectionNews?pageNo=' + this.followListNo + '&pageSize=' + this.followListPageSize;
+        let headers = {'uid': uid};
+        that.$axios({
+          method: 'get',
+          url: url,
+          headers: headers
+        }).then(function (res) {
+          let data = res.data.content;
+          console.log(data);
+          that.newsList = that.newsList.concat(data)
+          that.showloading = false;
+          that.followListNo++;
+        }).catch(function (res) {
           that.showloading = false;
         })
       },
-      reloadMore(categoryName) {
-        this.showloading = true;
-        this.pageSize += 10;
-        this.initNewsList(categoryName);
+      //初始化新闻列表
+      initNewsList(categoryName, search) {
+        let that = this;
+        that.categoryName = categoryName;
+        let url = '/api/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + this.pageSize;
+        if (search !== null && search !== '' && search !== undefined) {
+          url += '&search=' + search;
+        }
+        that.$axios.get(url).then(function (res) {
+          that.newsList = res.data.content;
+          if (search !== null && search !== '' && search !== undefined) {
+            let allData = that.newsList;
+            for (let i = 0; i < allData.length; i++) {
+              allData[i].title = that.replaceAll(allData[i].title, search, '<font color="red">' + search + '</font>');
+              allData[i].content = that.replaceAll(allData[i].content, search, '<font color="red">' + search + '</font>');
+            }
+          }
+          that.showloading = false;
+        }).catch(function (res) {
+          that.showloading = false;
+        })
       },
+      //加载更多按钮。
+      reloadMore(categoryName) {
+        if (categoryName === '关注') {
+          this.getAllFollowList()
+        } else {
+          this.showloading = true;
+          this.pageSize += 10;
+          let search = this.searchKey;
+          let country = this.country;
+          if (search !== null && search !== '' && search !== undefined) {
+            this.initNewsList('', search);
+          } else if (country !== null && country !== '' && country !== undefined) {
+            this.initNewsList('', country);
+          } else {
+            this.initNewsList(categoryName);
+          }
+        }
+      },
+      //初始化右边栏，可根据categoryName去调用此方法，callback方法是回调函数。
       initRightNews(categoryName, pageSize, callback) {
         let that = this;
         that.categoryName = categoryName;
@@ -767,6 +900,50 @@
           thisCallback(res.data.content);
         })
       },
+      //初始化滚动swiper（即最新动态）
+      initSwiper() {
+        let newsSwiper = new Swiper('#news_swiper', {
+          autoplay: {
+            delay: 1500,
+            disableOnInteraction: false
+          },
+          direction: 'vertical',
+          observer: true,
+          observeParents: true,
+          loop: true,
+          slidesPerView: 'auto',
+        });
+        newsSwiper.el.onmouseover = function () {
+          newsSwiper.autoplay.stop();
+        };
+        newsSwiper.el.onmouseout = function () {
+          newsSwiper.autoplay.start();
+        }
+      },
+      //初始化此页面数据
+      initPageDate() {
+        let path = this.$route.path;
+        if (path === '/recommend') {
+          let that = this;
+          let categoryName = '推荐';
+          let showpage = 0;
+          let showActive = false;
+          let country = this.$route.query.country;
+          if (country !== null && country !== '' && country !== undefined && country !== 'NULL') {
+            categoryName = country;
+            this.country = country;
+            showpage = -1;
+          } else {
+            showActive = true;
+          }
+          this.getNewsClassfy(showActive, categoryName, showpage);
+        }
+      },
+      //改变字符串text中，用FindText替换RepText
+      replaceAll(text, FindText, RepText) {
+        let regExp = new RegExp(FindText, "g");
+        return text.replace(regExp, RepText);
+      }
     },
     mounted() {
       new Swiper('#top_banner', {
@@ -786,26 +963,8 @@
           prevEl: '.swiper-button-prev',
         }
       });
-      var newsSwiper = new Swiper('#news_swiper', {
-        autoplay: {
-          delay: 1500,
-          disableOnInteraction: false
-        },
-        direction: 'vertical',
-        observer: true,
-        observeParents: true,
-        loop: true
-      });
-      let that = this;
-      this.getNewsClassfy();
-      //获取最新资讯
-      this.initRightNews('快讯', 3, function (res) {
-        that.flashList = res;
-      })
-      //获取国家资讯
-      this.initRightNews('国家时事', 5, function (res) {
-        that.affairList = res;
-      })
+      this.initPageDate()
+      this.scrollFlash()
     }
   }
 </script>

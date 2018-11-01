@@ -1,5 +1,5 @@
 .project-banner {
-  background: url(../assets/project/probanner.jpg) no-repeat;
+  background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   color: #fff;
@@ -10,7 +10,7 @@
     align-items: center;
   }
   .left {
-    font-size: 120px;
+    font-size: 100px;
     margin-right: 60px;
     position: relative;
     &:after {
@@ -57,7 +57,6 @@
         margin-left: 20px;
         &.on {
           background: #1355b3;
-          cursor: default;
         }
       }
     }
@@ -70,6 +69,7 @@
       -webkit-box-orient: vertical;
       line-height: 1.5;
       font-size: 17px;
+      height: 98px;
     }
   }
   @media (max-width: 992px) {
@@ -135,8 +135,28 @@
 .flexlayout {
   display: flex;
   .section-swiper {
-    height: 640px;
+    max-height: 640px;
+    height: auto;
+    min-height: 150px;
+    //height: 640px;
     position: relative;
+    &#newOrGradeSwiper, &#twitterOrWeiboSwiper {
+      overflow-y: auto;
+      &::-webkit-scrollbar { /*滚动条整体样式*/
+        width: 10px; /*高宽分别对应横竖滚动条的尺寸*/
+        height: 1px;
+      }
+      &::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+        background: $mainColor;
+      }
+      &::-webkit-scrollbar-track { /*滚动条里面轨道*/
+        -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        background: #EDEDED;
+      }
+    }
     .loading_box {
       position: absolute;
       width: 100%;
@@ -251,8 +271,11 @@
           overflow: hidden;
           padding: 0;
           margin-right: 20px;
+          border-radius: 20px;
           img {
             width: 100%;
+            object-fit: cover;
+            height: 100%;
           }
         }
         .media-body {
@@ -282,6 +305,7 @@
           display: -webkit-box;
           -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
+          height: 58px;
         }
         .media-bottom {
           position: absolute;
@@ -435,6 +459,9 @@
             font-size: 14px;
             color: #666;
             margin-bottom: 6px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
           a {
             color: #fff;
@@ -444,7 +471,7 @@
             height: 25px;
             line-height: 25px;
             border-radius: 50%;
-            background: #1d2088;
+            background: #999;
             color: #fff;
             margin: 0 auto;
             text-align: center;
@@ -479,10 +506,10 @@
               font-size: 14px;
               margin-bottom: 0;
               &.num {
-                font-size: 60px;
+                font-size: 40px;
                 line-height: 1;
                 color: #3991d1;
-                margin-bottom: 8px;
+                //margin-bottom: 8px;
               }
             }
           }
@@ -501,7 +528,7 @@
               color: $black;
               margin: 0;
               &.num {
-                font-size: 48px;
+                font-size: 20px;
                 color: $black;
                 line-height: 1;
                 margin-bottom: 6px;
@@ -562,15 +589,32 @@
         padding: 16px 18px;
         margin-bottom: 15px;
         .left {
-          min-width: 93px;
+          flex: 0 0 93px;
           height: 93px;
           border-radius: 50%;
           margin-right: 10px;
+          &.TorW {
+            background-color: #797979;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            img {
+              width: 54px;
+              margin-bottom: -10px;
+            }
+            span {
+              font-size: 13px;
+              color: #ffffff;
+            }
+          }
           img {
             width: 100%;
           }
         }
         .right {
+          width: 100%;
           .des {
             font-size: 12px;
             color: $black;
@@ -581,6 +625,12 @@
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             margin-bottom: 10px;
+            height: 60px;
+            cursor: pointer;
+            transition: color .3s;
+            &:hover {
+              color: $mainColor;
+            }
           }
           .bottom {
             position: relative;
@@ -608,6 +658,7 @@
             -webkit-transition: 0.3s;
             transition: 0.3s;
             transform: translateY(2px);
+            cursor: pointer;
           }
         }
         &.hasdate {
@@ -682,7 +733,8 @@
       margin-bottom: 10px;
       border-top: 4px solid #3e3e3e;
       .section-swiper {
-        height: 640px;
+        max-height: 640px;
+        height: auto;
         .swiper-slide {
           display: flex;
           flex-direction: row;
@@ -821,7 +873,7 @@
               overflow: hidden;
             }
             .num {
-              font-size: 45px;
+              font-size: 40px;
               line-height: 1;
               color: $mainColor;
               font-weight: bold;
@@ -1011,10 +1063,6 @@
       height: 75px;
       align-items: center;
       padding: 0;
-    }
-    .leftlayout .section4 .item .left {
-      min-width: 60px;
-      height: 60px;
     }
     .leftlayout .section4 .item {
       padding: 14px 10px;

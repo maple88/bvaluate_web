@@ -1,211 +1,167 @@
 <template>
-  <div class="page">
+  <div class="page follow_page">
     <vheader/>
     <div class="maintainer">
-      <div class="swiper-container" id="top_banner">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide" :style="'background-image: url('+banner1+')'">
-            <div class="banner_div">
-              <div class="show_box">
-                <img src="../assets/follow/apelink.png"/>
-                <span class="plus">+</span>
-                <span class="name">APELINK</span>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide" :style="'background-image: url('+banner1+')'"></div>
-          <div class="swiper-slide" :style="'background-image: url('+banner1+')'"></div>
-        </div>
-        <!-- 如果需要分页器 -->
-        <div class="swiper-pagination"></div>
-      </div>
-      <div class="tool_bar">
-        <div class="fish_container">
-          <div class="clearfix">
-            <div class="search_bar">
-              <input type="text" id="keyword"/>
-              <div class="search-btn">
-                <i class="fa fa-search"></i>
-              </div>
-            </div>
-            <div class="label_bar">
-              <div class="label_box">
-                <ul class="clearfix" :class="labelMore?'open':''">
-                  <li><span class="active">全部</span></li>
-                  <li><span>标签</span></li>
-                  <li><span>标签</span></li>
-                  <li><span>标签</span></li>
-                  <li><span>标签</span></li>
-                  <li><span>标签</span></li>
-                  <li><span>标签</span></li>
-                  <li><span>标签</span></li>
-                  <li><span>标签</span></li>
-                  <li><span>标签</span></li>
-                  <li><span>标签</span></li>
-                  <li><span>标签</span></li>
-                  <li><span>标签</span></li>
-                  <li><span>标签</span></li>
-                </ul>
-                <img src="../assets/follow/down.png" class="open_label" :class="labelMore?'open':''"
-                     @click="labelMore = !labelMore"/>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="follow_content">
         <div class="fish_container">
           <div class="clearfix">
             <div class="left">
-              <ul class="menu_box">
-                <li class="active">推荐</li>
-                <li>推荐</li>
-                <li>推荐</li>
-                <li>推荐</li>
-                <li>推荐</li>
-                <li>推荐</li>
-                <li>推荐</li>
+              <ul class="menu_bar">
+                <li class="active">项目</li>
+                <li>行业</li>
+                <li>国家</li>
+                <li>作者</li>
+                <li>收藏文章</li>
               </ul>
             </div>
             <div class="center">
-              <div class="adv_box">
-                <div class="swiper-container" id="adv_banner">
-                  <div class="swiper-wrapper">
-                    <div class="swiper-slide" :style="'background-image: url('+img2+')'"></div>
-                    <div class="swiper-slide" :style="'background-image: url('+img2+')'"></div>
-                    <div class="swiper-slide" :style="'background-image: url('+img2+')'"></div>
-                  </div>
-                  <!-- 如果需要分页器 -->
-                  <div class="swiper-button-prev"></div><!--左箭头-->
-                  <div class="swiper-button-next"></div><!--右箭头-->
-                </div>
-                <div class="adv_infor">
-                  <h4>宝马中国</h4>
-                  <button>了解更多</button>
-                </div>
-              </div>
-              <div class="follow_list">
-                <ul>
-                  <li>
-                    <div class="list-item">
-                      <div class="medialist">
-                        <div class="media">
-                          <div class="media-left media-middle">
-                            <div class="newimg_box">
-                              <img :src="img3"/>
-                              <div class="date_box">
-                                <span class="day">22</span>
-                                <span class="years">2018-05</span>
+              <div class="tab_item" v-show="false">
+                <div class="follow_list">
+                  <ul>
+                    <li>
+                      <div class="list-item">
+                        <div class="medialist">
+                          <div class="media">
+                            <div class="media-left media-middle">
+                              <div class="newimg_box">
+                                <img :src="img3"/>
+                                <div class="date_box">
+                                  <span class="day">22</span>
+                                  <span class="years">2018-05</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="media-body">
+                              <h4 class="media-heading">Whatever is worth doing is worth doing well Whatever is worth
+                                doing is worth</h4>
+                              <p class="media-words">Whatever is worth doing is worth doing well, Whatever isworth doing
+                                is worth doingwel,Whatever isworth doing is worth doing wel,Whatever is worth doing is
+                                worth doing well, Whatever isworth doingis worth doing wel,</p>
+                              <div class="media-bottom">
+                                <ul>
+                                  <li>
+                                    <div class="userimg"><img src="../assets/follow/user_head.png"></div>
+                                    刘方平
+                                  </li>
+                                  <li>5月17日 18:17</li>
+                                </ul>
+                                <div class="tips">新闻</div>
                               </div>
                             </div>
                           </div>
-                          <div class="media-body">
-                            <h4 class="media-heading">Whatever is worth doing is worth doing well Whatever is worth
-                              doing is worth</h4>
-                            <p class="media-words">Whatever is worth doing is worth doing well, Whatever isworth doing
-                              is worth doingwel,Whatever isworth doing is worth doing wel,Whatever is worth doing is
-                              worth doing well, Whatever isworth doingis worth doing wel,</p>
-                            <div class="media-bottom">
-                              <ul>
-                                <li>
-                                  <div class="userimg"><img src="../assets/follow/user_head.png"></div>
-                                  刘方平
-                                </li>
-                                <li>5月17日 18:17</li>
-                              </ul>
-                              <div class="tips">新闻</div>
+                          <div class="media">
+                            <div class="media-left media-middle">
+                              <div class="newimg_box">
+                                <div class="date_box">
+                                  <span class="day">22</span>
+                                  <span class="years">2018-05</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="media-body">
+                              <h4 class="media-heading">Whatever is worth doing is worth doing well Whatever is worth
+                                doing is worth</h4>
+                              <p class="media-words">Whatever is worth doing is worth doing well, Whatever isworth doing
+                                is worth doingwel,Whatever isworth doing is worth doing wel,Whatever is worth doing is
+                                worth doing well, Whatever isworth doingis worth doing wel,</p>
+                              <div class="media-bottom">
+                                <ul>
+                                  <li>
+                                    <div class="userimg"><img src="../assets/logo_brand.png"></div>
+                                    刘方平
+                                  </li>
+                                  <li>5月17日 18:17</li>
+                                </ul>
+                                <div class="tips">新闻</div>
+                              </div>
                             </div>
                           </div>
                         </div>
-                        <div class="media">
-                          <div class="media-left media-middle">
-                            <div class="newimg_box">
-                              <div class="date_box">
-                                <span class="day">22</span>
-                                <span class="years">2018-05</span>
-                              </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="loading_more">
+                  <button>加载更多</button>
+                </div>
+              </div>
+              <div class="tab_item">
+                <div class="item_list_top">
+                  <div class="item_list_title">
+                    <h4>推荐</h4>
+                  </div>
+                  <div class="follow_list serach_follow_list">
+                    <div class="project_list_box" v-for="project in projectList">
+                      <div class="project_info">
+                        <div class="left">
+                          <div class="logo_box" @click="goProjectById(project.sid)">
+                            <img :src="project.logoSrc"/>
+                          </div>
+                        </div>
+                        <div class="right">
+                          <div class="base_info">
+                            <div class="left">
+                              <h4>
+                                <span v-html="project.project" @click="goProjectById(project.sid)"></span>
+                                <i class="fa fa-heart-o" v-if="!project.collected" @click="setFollow(even,project)"></i>
+                                <i class="fa fa-heart" v-else></i>
+                              </h4>
+                              <p>{{project.introduction }} </p>
+                            </div>
+                            <div class="right">
+                              <h4>{{project.totalScore }}</h4>
+                              <p>总分</p>
                             </div>
                           </div>
-                          <div class="media-body">
-                            <h4 class="media-heading">Whatever is worth doing is worth doing well Whatever is worth
-                              doing is worth</h4>
-                            <p class="media-words">Whatever is worth doing is worth doing well, Whatever isworth doing
-                              is worth doingwel,Whatever isworth doing is worth doing wel,Whatever is worth doing is
-                              worth doing well, Whatever isworth doingis worth doing wel,</p>
-                            <div class="media-bottom">
-                              <ul>
-                                <li>
-                                  <div class="userimg"><img src="../assets/logo_brand.png"></div>
-                                  刘方平
-                                </li>
-                                <li>5月17日 18:17</li>
-                              </ul>
-                              <div class="tips">新闻</div>
-                            </div>
+                          <div class="detail_info">
+                            <p>{{project.irAbstract }}</p>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </li>
-                </ul>
-              </div>
-              <div class="loading_more">
-                <button>加载更多</button>
-              </div>
-            </div>
-            <div class="right">
-              <div class="right_item">
-                <div class="hot_title">
-                  <div class="title_icon">
-                    <img src="../assets/follow/hot_text.png"/>
                   </div>
-                  <h4>24小时热文</h4>
                 </div>
-                <div class="hot_content">
-                  <ul>
-                    <li>
-                      <div class="list_item">
-                        <div class="item_left">
-                          <img :src="img3"/>
+                <div class="item_list_bottom">
+                  <div class="item_list_title">
+                    <h4>已关注</h4>
+                  </div>
+                  <div class="follow_list serach_follow_list">
+                    <div class="project_list_box" v-for="project in projectList">
+                      <div class="project_info">
+                        <div class="left">
+                          <div class="logo_box" @click="goProjectById(project.sid)">
+                            <img :src="project.logoSrc"/>
+                          </div>
                         </div>
-                        <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing well</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
-                        </div>
-                      </div>
-                      <div class="item_bottom">
-                        <p>2018-05-26</p>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="list_item">
-                        <div class="item_left">
-                          <img :src="img3"/>
-                        </div>
-                        <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing well</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
-                        </div>
-                      </div>
-                      <div class="item_bottom">
-                        <p>2018-05-26</p>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="list_item">
-                        <div class="item_left">
-                          <img :src="img3"/>
-                        </div>
-                        <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing well</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
+                        <div class="right">
+                          <div class="base_info">
+                            <div class="left">
+                              <h4>
+                                <span v-html="project.project" @click="goProjectById(project.sid)"></span>
+                                <i class="fa fa-heart-o" v-if="!project.collected" @click="setFollow(even,project)"></i>
+                                <i class="fa fa-heart" v-else></i>
+                              </h4>
+                              <p>{{project.introduction }} </p>
+                            </div>
+                            <div class="right">
+                              <h4>{{project.totalScore }}</h4>
+                              <p>总分</p>
+                            </div>
+                          </div>
+                          <div class="detail_info">
+                            <p>{{project.irAbstract }}</p>
+                          </div>
                         </div>
                       </div>
-                      <div class="item_bottom">
-                        <p>2018-05-26</p>
-                      </div>
-                    </li>
-                  </ul>
+                    </div>
+                  </div>
+                  <div class="loading_more">
+                    <p class="loading_more_tip" v-if="showloading===-1">{{loadingTip}}~</p>
+                    <button :disabled="showloading" @click.stop="loadMoreICO" v-if="!(showloading===-1)">
+                      <img v-if="showloading" :src="loading"/>
+                      <span v-if="!showloading">加载更多</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -224,7 +180,7 @@
   let img1 = require('../assets/follow/banner01.png')
   let img2 = require('../assets/follow/adv01.png')
   let img3 = require('../assets/media.jpg')
-
+  let loading = require('../assets/login/loading.gif');
 
   export default {
     data() {
@@ -233,7 +189,32 @@
         banner1: img1,
         img2: img2,
         img3: img3,
-        labelMore: false
+        labelMore: false,
+        showloading: false,
+        loading: loading,
+        projectList: [
+          {
+            logoSrc: 'https://apelink-ico.oss-ap-southeast-1.aliyuncs.com/657030de-ffaa-4dde-b707-e753c7c6b854.jpg',
+            project: 'ICO',
+            introduction: 'Interconnecting blockchain network',
+            totalScore: '9.5',
+            irAbstract: 'ICON is an interconnecting blockchain network. ICON can connect independent blockchains without the use of additional third-party intermediaries. Various blockchains can communicate with each other through the ICON platform. By '
+          },
+          {
+            logoSrc: 'https://apelink-ico.oss-ap-southeast-1.aliyuncs.com/657030de-ffaa-4dde-b707-e753c7c6b854.jpg',
+            project: 'ICO',
+            introduction: 'Interconnecting blockchain network',
+            totalScore: '9.5',
+            irAbstract: 'ICON is an interconnecting blockchain network. ICON can connect independent blockchains without the use of additional third-party intermediaries. Various blockchains can communicate with each other through the ICON platform. By '
+          },
+          {
+            logoSrc: 'https://apelink-ico.oss-ap-southeast-1.aliyuncs.com/657030de-ffaa-4dde-b707-e753c7c6b854.jpg',
+            project: 'ICO',
+            introduction: 'Interconnecting blockchain network',
+            totalScore: '9.5',
+            irAbstract: 'ICON is an interconnecting blockchain network. ICON can connect independent blockchains without the use of additional third-party intermediaries. Various blockchains can communicate with each other through the ICON platform. By '
+          }
+        ]
       }
     },
     mounted() {

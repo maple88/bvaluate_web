@@ -8,10 +8,25 @@
             <div class="span6">
               <ul class="breadcrumb">
                 <li>
-                  <a href="#">首页</a> <span class="divider"></span>
+                  <router-link to="/index">首页</router-link>
+                  <span class="divider"></span>
                 </li>
                 <li>
-                  <a href="#">行业</a> <span class="divider"></span>
+                  <router-link to="#">
+                    <span v-if="articleContent.projectCategory !== 'NULL'" class="label_item"
+                          @click="goProjectByName2(articleContent.projectCategory)">
+                      {{articleContent.projectCategory | showLable}}
+                    </span>
+                    <span v-else-if="articleContent.countryCategory !== 'NULL'" class="label_item"
+                          @click="goIndustryByCountry2(articleContent.countryCategory)">
+                      {{articleContent.countryCategory | showLable}}
+                    </span>
+                    <span v-else="articleContent.industryCategory !== 'NULL'" class="label_item"
+                          @click="goIndustryByIndustry2(articleContent.industryCategory)">
+                      {{articleContent.industryCategory | showLable}}
+                    </span>
+                  </router-link>
+                  <span class="divider"></span>
                 </li>
                 <li class="active">正文</li>
               </ul>
@@ -25,28 +40,40 @@
                 </div>
                 <div class="article_tool">
                   <div class="article_left">
-                    <span class="user_name">{{articleContent.author}}</span>
+                    <span class="user_name"
+                          v-if="!(articleContent.siteName !== 'NULL' && articleContent.siteName !== null && articleContent.siteName !== '')"
+                          @click="goArticle('/author',{author: articleContent.author,type: 'author'})">
+                      {{articleContent.author}}
+                    </span>
+                    <span class="user_name" v-else
+                          @click="goArticle('/author',{author: articleContent.siteName,type: 'siteName'})">
+                      {{articleContent.siteName}}
+                    </span>
                     <a :href="articleContent.urlName" class="publish_data">{{articleContent.urlTime}}</a>
                     <!-- <span class="publish_time">13:20</span> -->
                   </div>
                   <div class="article_right">
-                    <a :href="articleContent.urlName" class="look">查看全文</a>
+                    <a href="javascript:;" class="look" @click="showArticle = !showArticle">查看原文</a>
                     <span class="look_count"><i class="fa fa-eye"></i>1000人</span>
                     <span class="share" @click.stop="showAllShare($event)"><i class="fa fa-share-alt"></i></span>
                     <span class="follow">
                       <i class="fa fa-heart" v-show="!isFollow" @click="setFollow()"></i>
-                      <i class="fa fa-heart followed" v-show="isFollow" @click="isFollow = false"></i>
+                      <i class="fa fa-heart followed" v-show="isFollow"
+                         @click="deleteFollow(articleContent.collected)"></i>
                     </span>
                   </div>
                 </div>
                 <div class="label_box">
-                  <div v-if="articleContent.countryCategory !== 'NULL'" class="label_item">
+                  <div v-if="articleContent.countryCategory !== 'NULL'" class="label_item"
+                       @click="goIndustryByCountry(articleContent.countryCategory)">
                     {{articleContent.countryCategory | showLable}}
                   </div>
-                  <div v-if="articleContent.industryCategory !== 'NULL'" class="label_item">
+                  <div v-if="articleContent.industryCategory !== 'NULL'" class="label_item"
+                       @click="goIndustryByIndustry(articleContent.industryCategory)">
                     {{articleContent.industryCategory | showLable}}
                   </div>
-                  <div v-if="articleContent.projectCategory !== 'NULL'" class="label_item">
+                  <div v-if="articleContent.projectCategory !== 'NULL'" class="label_item"
+                       @click="goProjectByName(articleContent.projectCategory)">
                     {{articleContent.projectCategory | showLable}}
                   </div>
                 </div>
@@ -54,16 +81,20 @@
                   <p>{{articleContent.content}}</p>
                 </div>
                 <div class="article_original">
-                  <div class="title">原文</div>
-                  <div class="original">
-                    <h4>{{articleContent.title}}</h4>
-                    <p>{{articleContent.content}}</p>
-                  </div>
+                  <transition name="fade">
+                    <div class="title" v-if="showArticle">原文</div>
+                  </transition>
+                  <transition name="fade">
+                    <div class="original" v-if="showArticle">
+                      <h4>{{articleContent.title}}</h4>
+                      <p>{{articleContent.content}}</p>
+                    </div>
+                  </transition>
                 </div>
-                <div class="article_statement">
-                  <p>声明：本文系<span>{{articleContent.siteName}}</span>原创稿件，版权属<span>{{articleContent.siteName}}</span>所有，未经授权不得转载，已经协议授权的媒体下载使用时须注明"稿件来源：<span>{{articleContent.siteName}}</span>"，违者将依法追究责任。
-                  </p>
-                </div>
+                <!--<div class="article_statement">-->
+                <!--<p>声明：本文系<span>{{articleContent.siteName}}</span>原创稿件，版权属<span>{{articleContent.siteName}}</span>所有，未经授权不得转载，已经协议授权的媒体下载使用时须注明"稿件来源：<span>{{articleContent.siteName}}</span>"，违者将依法追究责任。-->
+                <!--</p>-->
+                <!--</div>-->
               </div>
             </div>
             <div class="right">
@@ -73,12 +104,20 @@
                     <img src="../assets/follow/apelink.png" alt="">
                   </div>
                   <div class="author_right">
-                    <h4>才不可以吃辣椒酱</h4>
-                    <button class="follow_btn" v-if="!follow" @click="follow = true">
+                    <h4 class="user_name"
+                        v-if="!(articleContent.siteName !== 'NULL' && articleContent.siteName !== null && articleContent.siteName !== '')"
+                        @click="goArticle('/author',{author: articleContent.author,type: 'author'})">
+                      {{articleContent.author}}
+                    </h4>
+                    <h4 class="user_name" v-else
+                        @click="goArticle('/author',{author: articleContent.siteName,type: 'siteName'})">
+                      {{articleContent.siteName}}
+                    </h4>
+                    <button class="follow_btn" v-if="!follow" @click="setAuthorFollow()">
                       <img src="../assets/follow/icon-follow.png"/>关注
                       <div class="arrow"></div>
                     </button>
-                    <button class="followed_btn" v-if="follow" @click="follow = false">
+                    <button class="followed_btn" v-if="follow" @click="deleteAuthorFollow(articleContent.author)">
                       <div class="arrow"></div>
                       <img src="../assets/follow/icon-followed.png"/>已关注
                     </button>
@@ -86,29 +125,11 @@
                 </div>
                 <div class="author_news">
                   <ul class="news_ul">
-                    <li class="news_li">
-                      <p>
-                        作为新杭州人的你是否也在困扰，买车容易，车牌摇号+车位伤不起？
+                    <li class="news_li" v-for="news in newsForAuthor">
+                      <p @click="goArticle('/article',{sid:news.sid})">
+                        {{news.title}}
                       </p>
-                      <p class="time">2018-04-09</p>
-                    </li>
-                    <li class="news_li">
-                      <p>
-                        作为新杭州人的你是否也在困扰，买车容易，车牌摇号+车位伤不起？
-                      </p>
-                      <p class="time">2018-04-09</p>
-                    </li>
-                    <li class="news_li">
-                      <p>
-                        作为新杭州人的你是否也在困扰，买车容易，车牌摇号+车位伤不起？
-                      </p>
-                      <p class="time">2018-04-09</p>
-                    </li>
-                    <li class="news_li">
-                      <p>
-                        作为新杭州人的你是否也在困扰，买车容易，车牌摇号+车位伤不起？
-                      </p>
-                      <p class="time">2018-04-09</p>
+                      <p class="time">{{news.urlDate}}</p>
                     </li>
                   </ul>
                   <p></p>
@@ -134,13 +155,13 @@
                   <h4>24小时热文</h4>
                 </div>
                 <div class="hot_content">
-                  <ul>
-                    <li v-for="(item, index) in hotNews" :key="item.sid" @click="goToArticle(item.sid)">
+                  <ul class="long_ul">
+                    <li v-for="(item, index) in hotNews" :key="item.sid" @click="goArticle('/article',{sid:item.sid})">
                       <div class="list_item">
-                        <div class="item_left">
+                        <div class="item_left" v-if="item.titlePicture">
                           <img :src="item.titlePicture"/>
                         </div>
-                        <div class="item_body">
+                        <div class="item_body" :class="item.titlePicture?'':'noPicture'">
                           <h4>{{item.title}}</h4>
                           <p>{{item.content}}</p>
                         </div>
@@ -149,34 +170,6 @@
                         <p>{{item.urlDate}}</p>
                       </div>
                     </li>
-                    <!-- <li>
-                      <div class="list_item">
-                        <div class="item_left">
-                          <img :src="img3"/>
-                        </div>
-                        <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing well</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
-                        </div>
-                      </div>
-                      <div class="item_bottom">
-                        <p>2018-05-26</p>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="list_item">
-                        <div class="item_left">
-                          <img :src="img3"/>
-                        </div>
-                        <div class="item_body">
-                          <h4>Whatever is worth doing is worth doing well</h4>
-                          <p>Whatever is worth doing is worth doing Whatever is worth doing</p>
-                        </div>
-                      </div>
-                      <div class="item_bottom">
-                        <p>2018-05-26</p>
-                      </div>
-                    </li> -->
                   </ul>
                 </div>
               </div>
@@ -190,7 +183,7 @@
             <div class="flexbox clearfix">
               <ul>
                 <li class="apelink_logo">
-                  APELINK
+                  Bvaluate
                   <img src="../assets/follow/bottom_logo.png"/>
                 </li>
                 <li><a href="#">Stats & facts</a></li>
@@ -202,7 +195,7 @@
                 <li><a href="#">Benchy</a></li>
               </ul>
               <ul class="logo_box">
-                <li>APELINK</li>
+                <li>Bvaluate</li>
                 <li>
                   <ul class="network clearfix">
                     <li>
@@ -303,9 +296,9 @@
 <script>
   import Swiper from 'swiper';
 
-  let img1 = require('../assets/follow/banner01.png')
-  let img2 = require('../assets/follow/adv01.png')
-  let img3 = require('../assets/media.jpg')
+  let img1 = require('../assets/follow/banner01.png');
+  let img2 = require('../assets/follow/adv01.png');
+  let img3 = require('../assets/media.jpg');
 
 
   export default {
@@ -319,10 +312,72 @@
         articleContent: {},
         hotNews: [],
         industryName: "",
-        isFollow: false
+        isFollow: false,
+        showArticle: false,
+        newsForAuthor: []
       }
     },
     methods: {
+      goProjectByName(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
+        window.open(routeData.href, '_blank');
+      },
+      goIndustryByIndustry(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
+        window.open(routeData.href, '_blank');
+      },
+      goIndustryByCountry(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj}});
+        window.open(routeData.href, '_blank');
+      },
+      goProjectByName2(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
+        window.open(routeData.href);
+      },
+      goIndustryByIndustry2(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
+        window.open(routeData.href);
+      },
+      goIndustryByCountry2(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj}});
+        window.open(routeData.href);
+      },
       showAllShare(obj) {
         let $this = $(obj.target);
         let Hwith = $this.offset().left - ($('#popover91482').width() / 2);
@@ -367,53 +422,206 @@
           let url = '/api/individual/add?type=NEWS&sid=' + that.articleContent.sid;
           let headers = {'uid': uid, 'Authorization': token};
           if (sid !== null && sid !== '' && sid !== undefined) {
-            that.$axios.get('/api/traditional/detail?sid=' + sid).then(function (res) {
+            let getDetailUrl = '/api/traditional/detail?sid=' + sid
+            that.$axios({
+              method: 'get',
+              url: getDetailUrl,
+              headers: headers
+            }).then(function (res) {
               that.articleContent = res.data
-              that.industryName = res.data.industryCategory
+              that.getNewsForAuthor(that.articleContent);
+              if (that.articleContent.collected) {
+                that.isFollow = true
+              } else {
+                that.isFollow = false
+              }
+              that.industryName = res.data.industryCategory;
               if (token !== null && token !== '' && token !== undefined) {
-                let checkurl = '/api/individual/check?type=NEWS&sidOrName=' + that.articleContent.sid;
+                // let checkurl = '/api/individual/check?type=NEWS&sidOrName=' + that.articleContent.sid;
+                // that.$axios({
+                //   method: 'post',
+                //   url: checkurl,
+                //   headers: headers
+                // }).then(function (res) {
+                //   console.log(res.data);
+                //   if (res.data) {
+                //     that.isFollow = true
+                //   } else {
+                //     that.isFollow = false
+                //   }
+                // });
+                let checkAuthorurl = '/api/individual/check?type=AUTHOR&sidOrName=' + that.articleContent.author;
                 that.$axios({
                   method: 'post',
-                  url: checkurl,
+                  url: checkAuthorurl,
                   headers: headers
                 }).then(function (res) {
-                  console.log(res.data)
                   if (res.data) {
-                    that.isFollow = true
+                    that.follow = true
                   } else {
-                    that.isFollow = false
+                    that.follow = false
                   }
-                })
+                });
               }
-            })
+            });
+            // that.$axios.get('/api/traditional/detail?sid=' + sid).then(function (res) {
+            //   that.articleContent = res.data
+            //   that.getNewsForAuthor(that.articleContent.author);
+            //   that.industryName = res.data.industryCategory;
+            //   if (token !== null && token !== '' && token !== undefined) {
+            //     let checkurl = '/api/individual/check?type=NEWS&sidOrName=' + that.articleContent.sid;
+            //     that.$axios({
+            //       method: 'post',
+            //       url: checkurl,
+            //       headers: headers
+            //     }).then(function (res) {
+            //       console.log(res.data);
+            //       if (res.data) {
+            //         that.isFollow = true
+            //       } else {
+            //         that.isFollow = false
+            //       }
+            //     });
+            //     let checkAuthorurl = '/api/individual/check?type=AUTHOR&sidOrName=' + that.articleContent.author;
+            //     that.$axios({
+            //       method: 'post',
+            //       url: checkAuthorurl,
+            //       headers: headers
+            //     }).then(function (res) {
+            //       console.log(res.data);
+            //       if (res.data) {
+            //         that.follow = true
+            //       } else {
+            //         that.follow = false
+            //       }
+            //     });
+            //   }
+            // })
+          } else {
+            this.$router.push('/index');
           }
         }
 
       },
+      deleteFollow(cid) {
+        let that = this;
+        let token = localStorage.getItem('apelink_user_token');
+        if (token) {
+          let uid = localStorage.getItem('apelink_user_uid');
+          let url = '/api/individual/delete?cid=' + cid;
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'DELETE',
+            url: url,
+            headers: headers
+          }).then(function (res) {
+            if (res.data) {
+              that.isFollow = false;
+            }
+          })
+        } else {
+          alert('请先登录。')
+        }
+      },
+      deleteAuthorFollow(author) {
+        // this.projectFollow = false;
+        let token = localStorage.getItem('apelink_user_token')
+        if (token) {
+          let uid = localStorage.getItem('apelink_user_uid')
+          let that = this;
+          let url = '/api/individual/list?type=AUTHOR';
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'get',
+            url: url,
+            headers: headers
+          }).then(res => {
+            let list = res.data.content;
+            let cid = '';
+            for (let i = 0; i < list.length; i++) {
+              let authorName = list[i].result;
+              if (author === authorName) {
+                cid = list[i].cid;
+                break
+              }
+            }
+            if (cid !== '') {
+              console.log(cid);
+              let deteleUrl = '/api/individual/delete?cid=' + cid;
+              that.$axios({
+                method: 'DELETE',
+                url: deteleUrl,
+                headers: headers
+              }).then(function (res) {
+                if (res.data) {
+                  that.follow = false;
+                  alert('已取消关注');
+                }
+              })
+            } else {
+              alert('你没有关注此作者。')
+            }
+          })
+        } else {
+          alert('请先登录。')
+        }
+      },
       getHotnewsData() {
         let that = this
-        that.$axios.get('/api/traditional/hotNews?ndustryName=' + that.industryName + '&pageSize=3').then(function (res) {
-          console.log(res)
+        that.$axios.get('/api/traditional/hotNews?ndustryName=' + that.industryName + '&pageSize=10').then(function (res) {
           that.hotNews = res.data.content
         })
       },
-      goToArticle(sid) {
-        this.$router.push('/article?sid=' + sid)
+      goArticle(url, query) {
+        let routeData = this.$router.resolve({path: url, query: query});
+        window.open(routeData.href, '_blank');
       },
       setFollow() {
         let that = this
         let token = localStorage.getItem('apelink_user_token')
-        let uid = localStorage.getItem('apelink_user_uid')
-        let url = '/api/individual/add?type=NEWS&sid=' + that.articleContent.sid;
-        let headers = {'uid': uid, 'Authorization': token};
-        that.$axios({
-          method: 'post',
-          url: url,
-          headers: headers
-        }).then(function (res) {
-          that.isFollow = true
+        if (token) {
+          let uid = localStorage.getItem('apelink_user_uid')
+          let url = '/api/individual/add?type=NEWS&sid=' + that.articleContent.sid;
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'post',
+            url: url,
+            headers: headers
+          }).then(function (res) {
+            // that.isFollow = true
+            that.getDetailData();
+          });
+        } else {
+          alert('请先登录。')
+        }
+      },
+      setAuthorFollow() {
+        let that = this
+        let token = localStorage.getItem('apelink_user_token')
+        if (token) {
+          let uid = localStorage.getItem('apelink_user_uid')
+          let url = '/api/individual/add?type=AUTHOR&name=' + that.articleContent.author;
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'post',
+            url: url,
+            headers: headers
+          }).then(function (res) {
+            that.follow = true
+            that.getDetailData();
+          });
+        } else {
+          alert('请先登录。')
+        }
+      },
+      getNewsForAuthor(obj) {
+        let author = '';
+        (obj.siteName && obj.siteName !== 'NULL') ? author = obj.siteName : author = obj.author;
+        let that = this
+        that.$axios.get('/api/traditional/authorRelatedNews?author=' + author + '&pageSize=5').then(function (res) {
+          that.newsForAuthor = res.data.content;
         })
-      }
+      },
     },
     mounted() {
       new Swiper('#top_banner', {
@@ -436,7 +644,7 @@
         }
       })
       this.getDetailData();
-      this.getHotnewsData()
+      this.getHotnewsData();
     },
     beforeRouteEnter(to, from, next) {
       next(vm => {
@@ -445,7 +653,8 @@
     },
     filters: {
       showLable(value) {
-        let has = value.indexOf(';')
+        value = value + '';
+        let has = value.indexOf(';');
         if (has >= 0) {
           let arr = value.split(';');
           return arr[0]

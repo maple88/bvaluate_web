@@ -1,11 +1,12 @@
 <template>
   <div class="page">
-    <vheader/>
+    <vheader :parantProfileUrl="user.profileUrl"/>
     <div class="maintainer">
       <div class="container">
         <div class="myProfile mt20">
           <div class="left">
-            <div class="userbrand" :style="'background-image: url('+ user.profileUrl +')'">
+            <div class="userbrand"
+                 :style="(user.profileUrl !==null && user.profileUrl !== '' && user.profileUrl !== 'NULL' && user.profileUrl !== undefined)?'background-image: url('+ user.profileUrl +')':'background-image: url('+ default_header +')'">
 
               <div class="edit_bg">
                 <span>点击修改头像</span>
@@ -103,7 +104,7 @@
                   <input type="text">
                   <button type="button" class="btn code-btn">获取验证码</button>
                 </div>
-                <p class="help-block">60s后重新获取</p>
+                <p class="help-block" v-if="moblieError_show">60s后重新获取</p>
               </div>
             </form>
           </div>
@@ -126,20 +127,25 @@
             <form class="form-horizontal">
               <div class="form-group">
                 <label class="control-label">邮箱</label>
-                <input type="email" v-model="user.email">
+                <div class="coderow">
+                  <input type="email" v-model="user.newEmail" @focus="emailError_msg=''">
+                  <div type="button" class="btn rightips newStyle text-danger">{{emailError_msg}}</div>
+                </div>
               </div>
               <div class="form-group">
                 <label class="control-label">验证码</label>
                 <div class="coderow">
-                  <input type="text">
-                  <button type="button" class="btn code-btn">获取验证码</button>
+                  <input type="text" v-model="user.emailCode" @focus="emailCodeError_msg=''">
+                  <button type="button" :disabled="sendEmailBtn" class="btn code-btn" @click="sendEmail">发送验证邮件
+                  </button>
+                  <div type="button" class="btn rightips newStyle text-danger">{{emailCodeError_msg}}</div>
                 </div>
-                <p class="help-block">60s后重新获取</p>
+                <p v-if="emailError_show" class="help-block">{{email_time}}s后重新获取</p>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+            <button type="button" class="btn btn-primary" @click="editEmail">确定</button>
           </div>
         </div>
       </div>
@@ -158,22 +164,24 @@
               <div class="form-group">
                 <label class="control-label">旧的密码</label>
                 <div class="coderow">
-                  <input type="password" v-model="user.oldPassword">
-                  <div type="button" class="btn rightips"></div>
+                  <input type="password" v-model="user.oldPassword" @focus="oldPwdError=''">
+                  <div type=" button" class="btn rightips newStyle  text-danger">
+                    {{oldPwdError}}
+                  </div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="control-label">新密码</label>
                 <div class="coderow">
                   <input type="password" v-model="user.newPassword" @focus="newPwdError=''">
-                  <div type="button" class="btn rightips text-danger">{{newPwdError}}</div>
+                  <div type="button" class="btn rightips newStyle  text-danger">{{newPwdError}}</div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="control-label">确认密码</label>
                 <div class="coderow">
                   <input type="password" v-model="user.ensurePwd" @focus="ensurePwdError=''">
-                  <div type="button" class="btn rightips text-danger">{{ensurePwdError}}</div>
+                  <div type="button" class="btn rightips newStyle  text-danger">{{ensurePwdError}}</div>
                 </div>
               </div>
             </form>
@@ -184,11 +192,13 @@
         </div>
       </div>
     </div><!-- /.modal -->
+    <vfooter></vfooter>
   </div>
 </template>
 
 <script>
-  let loading = require('../assets/login/loading.gif')
+  let loading = require('../assets/login/loading.gif');
+  let default_header = require('../assets/user/default-header.png');
   export default {
     data() {
       return {
@@ -203,11 +213,19 @@
           ensurePwd: '',
           profileUrl: '',
           email: '',
+          newEmail: '',
           oldSex: '',
-          sex: ''
+          sex: '',
+          emailCode: ''
         },
+        oldPwdError: '',
         newPwdError: '',
+        sendEmailBtn: false,
+        email_time: 60,
+        emailError_show: false,
+        emailError_msg: '',
         ensurePwdError: '',
+        moblieError_show: false,
         editnicknamebox: {
           show: true
         },
@@ -218,7 +236,9 @@
           show: true
         },
         aplinkUser: {},
-        loading: loading
+        loading: loading,
+        default_header: default_header,
+        emailCodeError_msg: ''
       }
     },
     methods: {
@@ -241,6 +261,7 @@
           }
         })
       },
+      //修改简介
       editSynopsis(obj) {
         let json = {
           synopsis: this.user.synopsis
@@ -254,6 +275,7 @@
           }
         })
       },
+      //修改性别
       editSex(obj) {
         let json = {
           sex: this.user.sex
@@ -272,17 +294,71 @@
       editcancel(obj) {
         obj.show = !obj.show
       },
-      loginInfo(uid, token) {
-
+      //提交修改邮件验证
+      editEmail() {
+        let email = this.user.newEmail;
+        let code = this.user.emailCode;
+        let json = {
+          email: email,
+          code: code
+        }
+        this.editInfor(json, function (res) {
+          if (res.data) {
+            localStorage.setItem('apelink_user_email', res.data.email);
+            $('#emailModal').modal('hide')
+          }
+        }, res => {
+          this.emailCodeError_msg = res.response.data.message;
+        })
       },
+      //发送邮件验证码
+      sendEmail() {
+        let eamil = this.user.newEmail;
+        let myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+        if (!(eamil !== null && eamil !== '' && eamil !== undefined)) {
+          this.emailError_msg = '邮箱不能为空'
+        } else if (!myreg.test(eamil)) {
+          this.emailError_msg = '请输入正确格式的邮箱'
+        } else {
+          let that = this;
+          let token = localStorage.getItem('apelink_user_token');
+          let url = '/api/user/changePasswordCode?receiver=' + eamil;
+          let headers = {'Authorization': token};
+          that.$axios({
+            method: 'post',
+            url: url,
+            headers: headers,
+          }).then(function (res) {
+            that.emailError_show = true;
+            that.sendEmailBtn = true;
+            let clearTime = setInterval(() => {
+              that.email_time--;
+              if (that.email_time <= 0) {
+                that.email_time = 60;
+                that.emailError_show = false;
+                that.sendEmailBtn = false;
+                clearInterval(clearTime);
+              }
+            }, 1000);
+          })
+        }
+      },
+      //修改密码
       resetPwd() {
         let pass = true;
         let newPassword = this.user.newPassword;
         let ensurePwd = this.user.ensurePwd;
-        console.log('newPassword: ' + newPassword)
-        console.log('oldPassword: ' + this.user.oldPassword)
-        console.log('ensurePwd: ' + ensurePwd)
-
+        let oldPassword = this.user.oldPassword;
+        if (oldPassword !== null && oldPassword !== '' && oldPassword !== undefined) {
+          if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(newPassword)) {
+          } else {
+            pass = false;
+            this.oldPwdError = '只允许输入6-14个英文大小写和数字'
+          }
+        } else {
+          pass = false;
+          this.oldPwdError = '密码不能为空'
+        }
         if (newPassword !== null && newPassword !== '' && newPassword !== undefined) {
           if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(newPassword)) {
             if (ensurePwd !== newPassword) {
@@ -298,29 +374,30 @@
           this.newPwdError = '密码不能为空'
         }
         if (ensurePwd !== null && ensurePwd !== '' && ensurePwd !== undefined) {
-          if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(ensurePwd)) {
-            if (ensurePwd !== newPassword) {
-              pass = false;
-              this.ensurePwdError = '两次输入不一致'
-            }
-          } else {
+          if (ensurePwd !== newPassword) {
             pass = false;
-            this.ensurePwdError = '只允许输入6-14个英文大小写和数字'
+            this.ensurePwdError = '两次输入不一致'
           }
         } else {
           pass = false;
           this.ensurePwdError = '密码不能为空'
         }
         if (pass) {
-          let json = {
-            oldPassword: this.user.oldPassword,
-            newPassword: this.user.newPassword
-          }
-          this.editInfor(json, function (res) {
-            console.log(res)
+          let that = this;
+          let uid = localStorage.getItem('apelink_user_uid');
+          let token = localStorage.getItem('apelink_user_token');
+          let url = '/api/user/changePassword?newPassword=' + newPassword + '&oldPassword=' + oldPassword;
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'post',
+            url: url,
+            headers: headers
+          }).then(function (res) {
             if (res.data) {
               $('#pwdModal').modal('hide')
             }
+          }).catch(function (res) {
+            that.oldPwdError = res.response.data.message
           })
         }
       },
@@ -345,13 +422,14 @@
           this.$router.push('/login')
         }
       },
-      editInfor(json, callback) {
+      editInfor(json, callback, error) {
         let that = this;
         let uid = localStorage.getItem('apelink_user_uid');
         let token = localStorage.getItem('apelink_user_token');
         let url = '/api/user/modify';
         let headers = {'uid': uid, 'Authorization': token};
         let thatCallback = callback;
+        let thatError = error;
         that.$axios({
           method: 'put',
           url: url,
@@ -359,6 +437,8 @@
           data: json
         }).then(function (res) {
           thatCallback(res)
+        }).catch(function (res) {
+          thatError(res)
         })
       },
       changeImg(e) {
@@ -403,14 +483,12 @@
                   let json = {
                     profileBase64: base64
                   }
-                  try {
-                    _this.editInfor(json, function (res) {
-                      _this.user.profileUrl = base64
-                      console.log(res)
-                    })
-                  } catch (e) {
+                  _this.editInfor(json, function (res) {
+                    _this.user.profileUrl = res.data.profileUrl
+                    localStorage.setItem('apelink_user_profileUrl', res.data.profileUrl)
+                  }, function (res) {
                     _this.user.profileUrl = oldUrl
-                  }
+                  })
                 }
               }
             }

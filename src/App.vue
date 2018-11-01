@@ -12,4 +12,4 @@
   }
 </script>
 
-<style lang="scss" src="./styles/main.scss"></style>
+<!--<style lang="scss" src="./styles/main.scss"></style>-->

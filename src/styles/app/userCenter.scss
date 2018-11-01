@@ -1,5 +1,5 @@
 .user-center {
-  background: url(../assets/userbg.jpg) no-repeat;
+  background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   padding: 20px 0 45px;
@@ -18,6 +18,17 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 10px;
+      .user_header {
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        position: relative;
+        z-index: 1;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
       img {
         width: 90%;
         position: relative;
@@ -76,7 +87,7 @@
       text-align: center;
       color: #fff;
       position: relative;
-      button{
+      button {
         top: -3.5px;
         margin-left: 30px;
       }
@@ -210,8 +221,12 @@
     .usertainer .datalist li {
       width: 65px;
     }
-    .usertainer .nickname.author{font-size: 18px;}
-    .usertainer .occupation{font-size: 16px;}
+    .usertainer .nickname.author {
+      font-size: 18px;
+    }
+    .usertainer .occupation {
+      font-size: 16px;
+    }
   }
 }
 
@@ -256,7 +271,29 @@
   }
 }
 
+.mt40 {
+  margin-bottom: 50px;
+}
+
+.minh163 {
+  min-height: 163px;
+}
+
 .medialist {
+  .loading_more {
+    button {
+      background-color: #ffffff;
+      width: 100%;
+      border: none;
+      border-radius: 6px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+      img {
+        width: 50px;
+      }
+    }
+  }
   .media {
     display: flex;
     padding: 16px 18px;
@@ -288,8 +325,68 @@
       overflow: hidden;
       padding: 0;
       margin-right: 20px;
+      .newimg_box {
+        height: 100%;
+        width: 100%;
+        background-color: #797979;
+        position: relative;
+        cursor: pointer;
+        &.TorW {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-wrap: wrap;
+          img {
+            width: 65px;
+            height: auto;
+            object-fit: contain;
+            filter: blur(0px);
+            margin-bottom: -25px;
+          }
+          span {
+            font-size: 13px;
+            color: #ffffff;
+          }
+        }
+        img {
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+          filter: blur(1px);
+        }
+        .date_box {
+          position: absolute;
+          left: 0px;
+          top: 0px;
+          z-index: 11;
+          width: 100%;
+          height: 100%;
+          text-align: center;
+          padding-top: 15px;
+          .day {
+            display: block;
+            font-size: 65px;
+            color: #ffffff;
+          }
+          .years {
+            font-size: 20px;
+            display: block;
+            color: #ffffff;
+          }
+          @media (max-width: 768px) {
+            .day {
+              font-size: 21px;
+            }
+            .years {
+              font-size: 12px;
+            }
+          }
+        }
+      }
       img {
         width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
     }
     .media-body {
@@ -318,6 +415,7 @@
       text-overflow: ellipsis;
       display: -webkit-box;
       -webkit-line-clamp: 2;
+      height: 47px;
       -webkit-box-orient: vertical;
     }
     .media-bottom {
@@ -331,6 +429,9 @@
           font-size: 16px;
           color: #999;
           margin-right: 28px;
+          .author {
+            cursor: pointer;
+          }
           i {
             margin-right: 8px;
           }
@@ -371,6 +472,7 @@
         background: $mainColor;
         color: #fff;
         transition: 0.3s;
+        cursor: pointer;
       }
     }
     &:hover {
@@ -623,9 +725,18 @@
                 width: 100%;
                 color: #333333;
                 margin-bottom: 8px;
+                transition: color .3s;
+                &:hover {
+                  color: $mainColor;
+                }
               }
               .media-words {
                 font-size: 14px;
+                transition: color .3s;
+                cursor: pointer;
+                &.TorW:hover {
+                  color: $mainColor;
+                }
               }
               border-radius: 6px;
               .media-left {
@@ -636,8 +747,31 @@
                   width: 100%;
                   background-color: #797979;
                   position: relative;
+                  cursor: pointer;
+                  &.TorW {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    img {
+                      width: 65px;
+                      height: auto;
+                      -o-object-fit: contain;
+                      object-fit: contain;
+                      -webkit-filter: blur(0);
+                      filter: blur(0);
+                      margin-bottom: -25px;
+                    }
+                    span {
+                      font-size: 13px;
+                      color: #fff;
+                    }
+                  }
                   img {
                     filter: blur(1px);
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
                   }
                   .date_box {
                     position: absolute;
@@ -669,6 +803,9 @@
                 ul {
                   > li {
                     font-size: 12px;
+                    .author {
+                      cursor: pointer;
+                    }
                   }
                 }
               }
@@ -687,20 +824,30 @@
       padding-top: 8px;
       padding-bottom: 8px;
       margin-bottom: 20px;
+      img {
+        width: 60px;
+      }
     }
   }
 }
+
 @media (max-width: 500px) {
-  .author_article .follow_list ul > li .list-item .medialist .media .media-left{
+  .author_article .follow_list ul > li .list-item .medialist .media .media-left {
     min-width: 70px;
     height: 70px;
     margin-right: 15px;
   }
-  .author_article .follow_list ul > li .list-item .medialist .media .media-left .newimg_box .date_box .day{font-size: 20px;}
-  .author_article .follow_list ul > li .list-item .medialist .media .media-left .newimg_box .date_box .years{font-size: 12px;}
-  .author_article .follow_list ul > li .list-item .medialist .media .media-heading{
+  .author_article .follow_list ul > li .list-item .medialist .media .media-left .newimg_box .date_box .day {
+    font-size: 20px;
+  }
+  .author_article .follow_list ul > li .list-item .medialist .media .media-left .newimg_box .date_box .years {
+    font-size: 12px;
+  }
+  .author_article .follow_list ul > li .list-item .medialist .media .media-heading {
     font-size: 16px;
     height: 20px;
   }
-  .author_article .follow_list ul > li .list-item .medialist .media .media-words{font-size: 13px;}
+  .author_article .follow_list ul > li .list-item .medialist .media .media-words {
+    font-size: 13px;
+  }
 }

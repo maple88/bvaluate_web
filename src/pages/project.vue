@@ -3,17 +3,17 @@
     <vheader/>
     <div class="maintainer">
       <!-- content here -->
-      <div class="project-banner">
+      <div class="project-banner" :style="'background: url('+banner+')'">
         <div class="container">
-          <div class="left">{{project.totalScore }}</div>
+          <div class="left">{{project.totalScore | showTatolCore}}</div>
           <div class="right">
             <div class="top">
-              <div class="imgbrand"><img :src="'http://' + project.logoSrc "></div>
+              <div class="imgbrand"><img :src="project.logoSrc "></div>
               <div class="info">
                 <div class="tit">
-                  {{project.project}}
-                  <div class="followbtn" v-if="isFollow">+ 关注</div>
-                  <div class="followbtn on" v-if="!isFollow">已关注</div>
+                  <a :href="project.outer" target="_blank"> {{project.project}}</a>
+                  <div class="followbtn" v-if="!isFollow" @click="setFollow()">+ 关注</div>
+                  <div class="followbtn on" v-if="isFollow" @click="deleteFollow(project.collected)">√ 已关注</div>
                 </div>
                 <p class="smtit">{{project.introduction }}</p>
               </div>
@@ -29,11 +29,11 @@
           <div class="section1">
             <div class="sectiontabs">
               <a href="javascript:;" :class="atvNewOrGrade==1?'active':''"
-                 @click.stop="iniNewOrGrade(project.project,'290001') , atvNewOrGrade=1">新闻</a>
+                 @click.stop="iniNewOrGrade(project.project,'290001') , atvNewOrGrade=1,NGewOrGrade = '290001',NewOrGradeNo=2">新闻</a>
               <a href="javascript:;" :class="atvNewOrGrade==2?'active':''"
-                 @click.stop="iniNewOrGrade(project.project,'290000') , atvNewOrGrade=2">评级文章</a>
+                 @click.stop="iniNewOrGrade(project.project,'290000') , atvNewOrGrade=2,NGewOrGrade = '290000',NewOrGradeNo=2">评级文章</a>
             </div>
-            <div class="swiper-container section-swiper">
+            <div class="swiper-container section-swiper" id="newOrGradeSwiper">
               <div class="loading_box" v-if="showLoading1">
                 <img style="width: 50px" :src="loading"/>
               </div>
@@ -50,7 +50,7 @@
                       </div>
                     </div>
                     <div class="media-body">
-                      <h4 class="media-heading" :title="item.title">
+                      <h4 class="media-heading" :title="item.title" @click="goArticle('/article',{sid:item.sid})">
                         {{item.title }}
                       </h4>
                       <p class="media-words">
@@ -71,22 +71,37 @@
                           </li>
                           <li>{{item.urlTime}}</li>
                         </ul>
-                        <div class="tips">
-                          {{item.industryCategory | showLable(item.countryCategory,item.projectCategory)}}
+                        <div class="tips"
+                             v-if="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
+                             @click="goProjectByName(item.projectCategory)"
+                        >
+                          {{item.projectCategory | labelFormat}}
+                        </div>
+                        <div class="tips"
+                             v-else-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
+                             @click="goIndustryByIndustry(item.industryCategory)"
+                        >
+                          {{item.industryCategory | labelFormat}}
+                        </div>
+                        <div class="tips"
+                             v-else="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
+                             @click="goIndustryByCountry(item.countryCategory)"
+                        >
+                          {{item.countryCategory | labelFormat}}
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="swiper-scrollbar"></div>
+              <!--<div class="swiper-scrollbar"></div>-->
             </div>
           </div>
           <div class="section2">
             <div class="sectiontabs">
               <div class="headtit">团队</div>
             </div>
-            <div class="swiper-container section-swiper" style="max-height: 690px;">
+            <div class="swiper-container section-swiper orther_swiper" id="partnerSwiper">
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
                   <div class="col4" v-for="partner in project.partner">
@@ -94,12 +109,17 @@
                       <img :src="partner.image">
                       <p class="name">{{partner.h3}}</p>
                       <p class="posi">{{partner.h4}}</p>
-                      <div class="i"><a :href="partner.u"><i class="fa fa-linkedin"></i></a></div>
+                      <div class="i" :class="partner.linkin?'on':''">
+                        <a :href="partner.linkin" target="_blank">
+                          <i class="fa fa-linkedin"></i>
+                        </a>
+                      </div>
+                      <!--<div class="i"><a :href="partner.u"><i class="fa fa-linkedin"></i></a></div>-->
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="swiper-scrollbar"></div>
+              <!--<div class="swiper-scrollbar"></div>-->
             </div>
           </div>
           <div class="section3">
@@ -110,30 +130,34 @@
               <div class="left">
                 <img src="../assets/project/head.png">
                 <div class="info">
-                  <p class="num">{{project.totalScore }}</p>
-                  <p>{{project.experts}}位专家评级</p>
+                  <p class="num">{{project.totalScore | showTatolCore}}</p>
+                  <!--<p>{{project.experts}}位专家评级</p>-->
                 </div>
               </div>
               <div class="right">
                 <div class="numitem">
-                  <p class="num">{{project.icoprofile?project.icoprofile:'-' }}</p>
-                  <p>首发评分</p>
-                </div>
-                <div class="numitem">
-                  <p class="num">{{project.teamScore }}</p>
+                  <p class="num">{{project.teamScore | showTatolCore}}</p>
                   <p>团队评分</p>
                 </div>
                 <div class="numitem">
-                  <p class="num">{{project.visionScore }}</p>
-                  <p>前景评分</p>
+                  <p class="num">{{project.fundamentalScore | showTatolCore }}</p>
+                  <p>基本面</p>
                 </div>
                 <div class="numitem">
-                  <p class="num">{{project.productScore }}</p>
-                  <p>产品评分</p>
+                  <p class="num">{{project.marketScore | showTatolCore}}</p>
+                  <p>市场</p>
+                </div>
+                <div class="numitem">
+                  <p class="num">{{project.fundSupervisionScore | showTatolCore}}</p>
+                  <p>资金监管</p>
+                </div>
+                <div class="numitem">
+                  <p class="num">{{project.technicalAnalysisScore |showTatolCore }}</p>
+                  <p>技术</p>
                 </div>
               </div>
             </div>
-            <div class="swiper-container section-swiper">
+            <div class="swiper-container section-swiper orther_swiper">
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
                   <div class="col4" v-if="project.preICOStartDate">
@@ -267,7 +291,7 @@
                       <div class="left"><img src="../assets/project/x15.png"></div>
                       <div class="right">
                         <p class="tit">PREICO价格</p>
-                        <p class="time">{{project.pricePreICO }}</p>
+                        <p class="time price">{{project.pricePreICO }}</p>
                       </div>
                     </div>
                   </div>
@@ -276,7 +300,7 @@
                       <div class="left"><img src="../assets/project/x15.png"></div>
                       <div class="right">
                         <p class="tit">ICO价格</p>
-                        <p class="time">{{project.priceICO }}</p>
+                        <p class="time price">{{project.priceICO }}</p>
                       </div>
                     </div>
                   </div>
@@ -327,43 +351,63 @@
                   </div>
                 </div>
               </div>
-              <div class="swiper-scrollbar"></div>
+              <!--<div class="swiper-scrollbar"></div>-->
             </div>
           </div>
           <div class="section4">
             <div class="sectiontabs">
               <a href="javascript:;" :class="atvTwitterOrWeibo==1?'active':''"
-                 @click.stop="iniTwitterOrWeibo(project.project,'290002') , atvTwitterOrWeibo=1 , showIcon = nicon ">推文</a>
+                 @click.stop="iniTwitterOrWeibo(project.project,'290002') , atvTwitterOrWeibo=1 , showIcon = nicon ,TWewOrGrade = '290004',TWewOrGradeNo=2">推文</a>
               <a href="javascript:;" :class="atvTwitterOrWeibo==2?'active':''"
-                 @click.stop="iniTwitterOrWeibo(project.project,'290004') , atvTwitterOrWeibo=2 , showIcon = weibo">微博</a>
+                 @click.stop="iniTwitterOrWeibo(project.project,'290004') , atvTwitterOrWeibo=2 , showIcon = weibo,TWewOrGrade = '290004',TWewOrGradeNo=2">微博</a>
             </div>
-            <div class="swiper-container section-swiper">
+            <div class="swiper-container section-swiper" id="twitterOrWeiboSwiper">
               <div class="loading_box" v-if="showLoading2">
                 <img style="width: 50px" :src="loading"/>
               </div>
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
                   <div class="item" v-for="item in TwitterOrWeibo">
-                    <div class="left"><img :src="showIcon"></div>
+                    <div class="left TorW">
+                      <img :src="showIcon"/>
+                      <span class="day">{{item.urlDate }}</span>
+                    </div>
                     <div class="right">
-                      <p class="des">{{item.content }}</p>
+                      <p class="des" @click="goArticle('/article',{sid:item.sid})">{{item.content }}</p>
                       <div class="bottom">
-                        <span class="name">博主</span>
-                        <span class="time">2018-06-02    18:00</span>
-                        <span class="tips">新闻</span>
+                        <span class="name">{{item.author}}</span>
+                        <span class="time">{{item.urlTime}}</span>
+                        <span class="tips"
+                              v-if="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
+                              @click="goProjectByName(item.projectCategory)"
+                        >
+                          {{item.projectCategory | labelFormat}}
+                        </span>
+                        <span class="tips"
+                              v-else-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
+                              @click="goIndustryByIndustry(item.industryCategory)"
+                        >
+                          {{item.industryCategory | labelFormat}}
+                        </span>
+                        <span class="tips"
+                              v-else="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
+                              @click="goIndustryByCountry(item.countryCategory)"
+                        >
+                          {{item.countryCategory | labelFormat}}
+                        </span>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="swiper-scrollbar"></div>
+              <!--<div class="swiper-scrollbar"></div>-->
             </div>
           </div>
         </div>
         <div class="rightlayout">
           <div class="section5">
             <div class="rightlayouthead">FOLLOW US</div>
-            <div class="swiper-container section-swiper">
+            <div class="swiper-container section-swiper orther_swiper">
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
                   <div class="col4" v-if="project.outerFaceBook">
@@ -438,89 +482,10 @@
                       </div>
                     </a>
                   </div>
-                  <!--<div class="col4" v-if=project>-->
-                  <!--<a :href="project">-->
-                  <!--<div class="item">-->
-                  <!--<img src="../assets/project/f10.png">-->
-                  <!--<p>Blog</p>-->
-                  <!--</div>-->
-                  <!--</a>-->
-                  <!--</div>-->
-                  <!--<div class="col4" v-if=project>-->
-                  <!--<a :href="project">-->
-                  <!--<div class="item">-->
-                  <!--<img src="../assets/project/f11.png">-->
-                  <!--<p>gitter</p>-->
-                  <!--</div>-->
-                  <!--</a>-->
-                  <!--</div>-->
-                  <!--<div class="col4" v-if=project>-->
-                  <!--<a :href="project">-->
-                  <!--<div class="item">-->
-                  <!--<img src="../assets/project/f12.png">-->
-                  <!--<p>Google</p>-->
-                  <!--</div>-->
-                  <!--</a>-->
-                  <!--</div>-->
-                  <!--<div class="col4" v-if=project>-->
-                  <!--<a :href="project">-->
-                  <!--<div class="item">-->
-                  <!--<img src="../assets/project/f13.png">-->
-                  <!--<p>heroku</p>-->
-                  <!--</div>-->
-                  <!--</a>-->
-                  <!--</div>-->
-                  <!--<div class="col4" v-if=project>-->
-                  <!--<a :href="project">-->
-                  <!--<div class="item">-->
-                  <!--<img src="../assets/project/f14.png">-->
-                  <!--<p>linkedin</p>-->
-                  <!--</div>-->
-                  <!--</a>-->
-                  <!--</div>-->
-                  <!--<div class="col4">-->
-                  <!--<a :href="project">-->
-                  <!--<div class="item">-->
-                  <!--<img src="../assets/project/f15.png">-->
-                  <!--<p>Naver</p>-->
-                  <!--</div>-->
-                  <!--</a>-->
-                  <!--</div>-->
-                  <!--<div class="col4">-->
-                  <!--<a :href="project">-->
-                  <!--<div class="item">-->
-                  <!--<img src="../assets/project/f16.png">-->
-                  <!--<p>slack</p>-->
-                  <!--</div>-->
-                  <!--</a>-->
-                  <!--</div>-->
-                  <!--<div class="col4">-->
-                  <!--<a :href="project">-->
-                  <!--<div class="item">-->
-                  <!--<img src="../assets/project/f17.png">-->
-                  <!--<p>stack</p>-->
-                  <!--</div>-->
-                  <!--</a>-->
-                  <!--</div>-->
-                  <!--<div class="col4">-->
-                  <!--<a :href="project">-->
-                  <!--<div class="item">-->
-                  <!--<img src="../assets/project/f18.png">-->
-                  <!--<p>steemit</p>-->
-                  <!--</div>-->
-                  <!--</a>-->
-                  <!--</div>-->
-                  <!--<div class="col4">-->
-                  <!--<a :href="project">-->
-                  <!--<div class="item">-->
-                  <!--<img src="../assets/project/f19.png">-->
-                  <!--<p>youtube</p>-->
-                  <!--</div>-->
-                  <!--</a>-->
-                  <!--</div>-->
+
                 </div>
               </div>
-              <div class="swiper-scrollbar"></div>
+              <!--<div class="swiper-scrollbar"></div>-->
             </div>
             <div class="swiper-container advert-swiper">
               <div class="swiper-wrapper">
@@ -536,19 +501,19 @@
           <div class="section6" v-if="recommendProjects">
             <div class="rightlayouthead">项目推荐</div>
             <div class="item" v-for="project in recommendProjects">
-              <a href="#">
+              <router-link :to="'/project?sid='+project.sid">
                 <div class="ibanner"><img src="../assets/project/recommend-banner.jpg"></div>
                 <div class="info">
-                  <div class="left"><img :src="'http://' + project.logoSrc"></div>
+                  <div class="left"><img :src="project.logoSrc"></div>
                   <div class="right">
                     <div class="head">
                       <p class="tit">{{project.project}}</p>
                       <p class="smtit">{{project.introduction}}</p>
                     </div>
-                    <p class="num">{{project.totalScore}} <i class="fa fa-angle-right"></i></p>
+                    <p class="num">{{project.totalScore | showTatolCore}} <i class="fa fa-angle-right"></i></p>
                   </div>
                 </div>
-              </a>
+              </router-link>
             </div>
           </div>
         </div>
@@ -563,13 +528,14 @@
   import Swiper from 'swiper'
 
   let loading = require('../assets/login/loading.gif');
-  let nicon = require('../assets/home/nicon.png');
+  let nicon = require('../assets/home/tuite.png');
   let weibo = require('../assets/home/weibo.png');
+  let banner = require('../assets/project/probanner.jpg');
 
   export default {
     data() {
       return {
-        isFollow: true,
+        isFollow: false,
         project: {},
         NewOrGrade: [],
         TwitterOrWeibo: [],
@@ -581,21 +547,26 @@
         nicon: nicon,
         weibo: weibo,
         showIcon: nicon,
-        recommendProjects: {}
+        recommendProjects: {},
+        newSwiper: {},
+        tWSwiper: {},
+        NewOrGradeNo: 2,
+        NGewOrGrade: '290001',
+        TWewOrGradeNo: 2,
+        TWewOrGrade: '290002',
+        banner: banner
       }
     },
     mounted() {
-      new Swiper('.section-swiper', {
+      let that = this;
+      new Swiper('.orther_swiper', {
         direction: 'vertical',
         slidesPerView: 'auto',
         freeMode: true,
-        scrollbar: {
-          el: '.swiper-scrollbar'
-        },
         mousewheel: true,
         observer: true,
-        observeParents: true,
-      })
+        observeParents: true
+      });
       new Swiper('.advert-swiper', {
         autoplay: {
           disableOnInteraction: false
@@ -610,10 +581,20 @@
         },
         observer: true,
         observeParents: true,
-      })
+      });
       this.initProject();
+      this.scrollNewOrGrade();
+      this.scrollTWewOrGrade();
     },
     filters: {
+      showTatolCore(obj) {
+        let num = parseFloat(obj).toFixed(2) + '';
+        console.log(num);
+        if (num === '0.00') {
+          num = 0
+        }
+        return num;
+      },
       showDay(obj) {
         let myDate = new Date(obj);
         let day = myDate.getDate()
@@ -631,6 +612,17 @@
           month = month + 1
         }
         return myDate.getFullYear() + '-' + month
+      },
+      labelFormat(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            return arr[0];
+          } else {
+            return obj;
+          }
+        }
+        return obj;
       },
       showLable(label1, label2, lable3) {
         if (label1 != null && label1 !== undefined && label1 !== '' && label1 != 'NULL') {
@@ -655,18 +647,163 @@
       '$route': 'initProject'
     },
     methods: {
+      scrollNewOrGrade() {
+        let $this = document.getElementById('newOrGradeSwiper');
+        let finished = true;
+        $this.addEventListener('scroll', () => {
+          let boxTop = $this.scrollTop;
+          let boxHeight = $this.scrollHeight;
+          let offsetHeight = $this.offsetHeight;
+          if ((boxTop / (boxHeight - offsetHeight) >= 0.90) && finished) {
+            finished = false;
+            let that = this;
+            that.$axios.get('/api/traditional/news?searchBy=' + that.project.project + '&categoryId=' + that.NGewOrGrade + '&pageNo=' + that.NewOrGradeNo).then(function (res) {
+              that.NewOrGradeNo++;
+              if (res.data.content.length < 10) {
+
+              }
+              for (let i = 0; i < res.data.content.length; i++) {
+                that.NewOrGrade.push(res.data.content[i])
+              }
+              finished = true;
+            });
+          }
+        });
+      },
+      scrollTWewOrGrade() {
+        let $this = document.getElementById('twitterOrWeiboSwiper');
+        let finished = true;
+        $this.addEventListener('scroll', () => {
+          let boxTop = $this.scrollTop;
+          let boxHeight = $this.scrollHeight;
+          let offsetHeight = $this.offsetHeight;
+          if ((boxTop / (boxHeight - offsetHeight) >= 0.90) && finished) {
+            finished = false;
+            let that = this;
+            that.$axios.get('/api/traditional/news?searchBy=' + that.project.project + '&categoryId=' + that.TWewOrGrade + '&pageNo=' + that.TWewOrGradeNo).then(function (res) {
+              that.TWewOrGradeNo++;
+              for (let i = 0; i < res.data.content.length; i++) {
+                that.TwitterOrWeibo.push(res.data.content[i])
+              }
+              finished = true;
+            });
+          }
+        });
+      },
+      setFollow() {
+        let that = this
+        let token = localStorage.getItem('apelink_user_token');
+        if (token) {
+          let uid = localStorage.getItem('apelink_user_uid');
+          let url = '/api/individual/add?type=ICO&sid=' + that.project.sid;
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'post',
+            url: url,
+            headers: headers
+          }).then(function (res) {
+            if (res.data) {
+              that.initProject();
+            }
+          })
+        } else {
+          alert('请先登录');
+        }
+      },
+      deleteFollow(cid) {
+        let that = this
+        let token = localStorage.getItem('apelink_user_token');
+        if (token) {
+          let uid = localStorage.getItem('apelink_user_uid');
+          let url = '/api/individual/delete?cid=' + cid;
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'DELETE',
+            url: url,
+            headers: headers
+          }).then(function (res) {
+            if (res.data) {
+              that.isFollow = false
+            }
+
+          })
+        } else {
+          alert('请先登录。')
+        }
+      },
+      goProjectByName(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
+        window.open(routeData.href, '_blank');
+      },
+      goIndustryByIndustry(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
+        window.open(routeData.href, '_blank');
+      },
+      goIndustryByCountry(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj}});
+        window.open(routeData.href, '_blank');
+      },
+      goArticle(url, query) {
+        let routeData = this.$router.resolve({path: url, query: query});
+        window.open(routeData.href, '_blank');
+      },
       initProject() {
         let path = this.$route.path;
         if (path === '/project') {
           let that = this;
-          let sid = this.$route.query.sid
-          if (sid != null && sid != '' && sid != undefined) {
-            that.$axios.get('/api/ICO/id/' + sid).then(function (res) {
+          let sid = this.$route.query.sid;
+          let project = this.$route.query.project;
+          if (sid != null && sid !== '' && sid !== undefined) {
+            let uid = localStorage.getItem('apelink_user_uid')
+            let url = '/api/ICO/id/' + sid;
+            let headers = {'uid': uid};
+            that.$axios({
+              method: 'get',
+              url: url,
+              headers: headers
+            }).then(function (res) {
               that.project = res.data;
               let partner = that.project.partner;
-              partner = JSON.parse('[' + partner + ']');
+              if (partner) {
+                partner = JSON.parse(partner);
+              }
               that.project.partner = partner;
-              //290001
+              that.$nextTick(() => {  // 下一个UI帧再初始化swiper
+                new Swiper('#partnerSwiper', {
+                  direction: 'vertical',
+                  slidesPerView: 'auto',
+                  freeMode: true,
+                  scrollbar: {
+                    el: '.swiper-scrollbar',
+                  },
+                  mousewheel: true,
+                  observer: true,
+                  observeParents: true
+                });
+              });
+              if (that.project.collected) {
+                that.isFollow = true
+              } else {
+                that.isFollow = false
+              }
               that.iniNewOrGrade(that.project.project, '290001');
               that.iniTwitterOrWeibo(that.project.project, '290002');
               let categoryNameList = that.project.industryCategory;
@@ -675,10 +812,51 @@
                 let categoryName = arr[0];
                 that.initRecommendProjects(categoryName);
               }
-
-            })
+            });
+          } else if (project != null && project !== '' && project !== undefined) {
+            let uid = localStorage.getItem('apelink_user_uid')
+            let url = '/api/ICO/name/' + project;
+            let headers = {'uid': uid};
+            that.$axios({
+              method: 'get',
+              url: url,
+              headers: headers
+            }).then(function (res) {
+              that.project = res.data;
+              let partner = that.project.partner;
+              if (partner) {
+                partner = JSON.parse(partner);
+              }
+              that.project.partner = partner;
+              that.$nextTick(() => {  // 下一个UI帧再初始化swiper
+                new Swiper('#partnerSwiper', {
+                  direction: 'vertical',
+                  slidesPerView: 'auto',
+                  freeMode: true,
+                  scrollbar: {
+                    el: '.swiper-scrollbar',
+                  },
+                  mousewheel: true,
+                  observer: true,
+                  observeParents: true
+                });
+              });
+              if (that.project.collected) {
+                that.isFollow = true
+              } else {
+                that.isFollow = false
+              }
+              that.iniNewOrGrade(that.project.project, '290001');
+              that.iniTwitterOrWeibo(that.project.project, '290002');
+              let categoryNameList = that.project.industryCategory;
+              if (categoryNameList != null && categoryNameList !== '' && categoryNameList !== undefined) {
+                let arr = categoryNameList.split(';');
+                let categoryName = arr[0];
+                that.initRecommendProjects(categoryName);
+              }
+            });
           } else {
-            that.$router.push('/index')
+            // that.$router.push('/index')
           }
         }
       },
@@ -703,7 +881,6 @@
       initRecommendProjects(categoryName) {
         let that = this;
         that.$axios.get('/api/ICO/relatedICO?categoryName=' + categoryName).then(function (res) {
-          console.log(res)
           that.recommendProjects = res.data
         })
       }

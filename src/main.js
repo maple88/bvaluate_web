@@ -9,13 +9,18 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min'
 import header from '@/components/header.vue'
 import footer from '@/components/footer.vue'
+import tip from '@/components/tip.vue'
+import login from '@/components/login.vue'
 import 'swiper/dist/css/swiper.min.css'
 import axios from 'axios'
+import '@/styles/main.scss'
 
-Vue.prototype.$axios = axios
-Vue.config.productionTip = false
-Vue.component('vheader', header)
-Vue.component('vfooter', footer)
+Vue.prototype.$axios = axios;
+Vue.config.productionTip = false;
+Vue.component('vheader', header);
+Vue.component('vfooter', footer);
+Vue.component('vtips', tip);
+Vue.component('v-login', login);
 
 /* eslint-disable no-new */
 new Vue({

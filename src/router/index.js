@@ -10,11 +10,15 @@ import recommend from '@/pages/recommend'
 import article from '@/pages/article'
 import project from '@/pages/project'
 import author from '@/pages/author'
+import list from '@/pages/list'
+import search from '@/pages/search'
+import newsList from '@/pages/newsList'
 
 Vue.use(Router)
 
 export default new Router({
   linkExactActiveClass: 'active',
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -23,6 +27,10 @@ export default new Router({
     {
       path: '/login',
       component: login
+    },
+    {
+      path: '/list',
+      component: list
     },
     {
       path: '/userCenter',
@@ -59,6 +67,14 @@ export default new Router({
     {
       path: '/author',
       component: author
+    },
+    {
+      path: '/search',
+      component: search
+    },
+    {
+      path: '/newsList',
+      component: newsList
     }
   ],
   scrollBehavior(to, from, savedPosition) {
