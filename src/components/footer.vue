@@ -85,6 +85,11 @@
             <li><a href="#">Agencies</a></li>
             <li><a href="#">Exchanges</a></li>
           </ul>
+          <div class="eweima">
+            <p>公众号</p>
+            <div class="img-box"><img src="../assets/eweima.jpg"></div>
+            <p>服务邮箱：service.us@bvaluate.com</p>
+          </div>
         </div>
       </div>
     </div>
