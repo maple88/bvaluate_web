@@ -489,9 +489,11 @@
             </div>
             <div class="swiper-container advert-swiper">
               <div class="swiper-wrapper">
+                <!-- <div class="swiper-slide"><img src="../assets/project/advert.jpg"></div>
                 <div class="swiper-slide"><img src="../assets/project/advert.jpg"></div>
-                <div class="swiper-slide"><img src="../assets/project/advert.jpg"></div>
-                <div class="swiper-slide"><img src="../assets/project/advert.jpg"></div>
+                <div class="swiper-slide"><img src="../assets/project/advert.jpg"></div> -->
+                <div class="swiper-slide"><img src="../assets/bangdan1.jpg"></div>
+                <div class="swiper-slide"><img src="../assets/bangdan2.jpg"></div>
               </div>
               <div class="swiper-pagination"></div>
               <div class="swiper-button-prev"><i class="fa fa-angle-left"></i></div>

@@ -1659,9 +1659,10 @@
       flex: 0 0 33.33%;
       min-width: 33.33%;
       display: flex;
-      justify-content: center;
+      // justify-content: center;
     }
     .item{
+      margin: 0 0 0 50px;
       .itit{
         font-size: 20px;
         color: #ccc;
@@ -1692,6 +1693,21 @@
       }
       .item .prod .pname{
         font-size: 18px;
+      }
+    }
+    @media (max-width: 1200px) {
+      .trow{
+        display: flex;
+        justify-content: center;
+      }
+      .item{
+        margin: 0;
+      }
+      .item .itit{
+        text-align: center;
+      }
+      .item .inum{
+        text-align: center;
       }
     }
     @media (max-width: 992px) {
@@ -1746,11 +1762,12 @@
       flex: 0 0 33.33%;
       min-width: 33.33%;
       display: flex;
-      justify-content: center;
+      // justify-content: center;
     }
     .prod{
       display: flex;
       align-items: center;
+      margin: 0 0 0 50px;
       .picon{
         width: 120px;
         height: 120px;
@@ -1771,6 +1788,7 @@
         max-width: 150px;
         overflow: hidden;
         text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
     @media (max-width: 1400px) {
@@ -1784,9 +1802,14 @@
         font-size: 18px;
       }
     }
-    @media (max-width: 992px) {
+    @media (max-width: 1200px) {
+      .pcol{
+        justify-content: center;
+      }
       .prod{
         flex-direction: column;
+        overflow: hidden;
+        margin: 0;
       }
       .prod .picon{
         margin: 0 0 10px;
@@ -2106,7 +2129,7 @@
         }
         .adv_swiper {
           margin-top: 20px;
-          height: 247px;
+          // height: 247px;
           #right_swiper {
             height: 100%;
             .swiper-wrapper {
@@ -2114,6 +2137,9 @@
                 background-repeat: no-repeat;
                 background-position: center;
                 background-size: cover;
+                img{
+                  width: 100%;
+                }
               }
             }
             .swiper-button-prev {
