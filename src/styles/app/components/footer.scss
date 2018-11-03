@@ -216,3 +216,122 @@
     }
   }
 }
+
+.footer .top{
+  padding: 80px 0;
+}
+.footer .bottom{
+  padding: 30px 0;
+  font-size: 22px;
+  font-family: "微软雅黑";
+}
+.footerflex{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .fcol{
+    flex: 0 0 33.33%;
+    min-width: 33.33%;
+  }
+  .flogo{
+    img{
+      width: 100%;
+    }
+  }
+  .eweima{
+    width: 160px;
+    margin: 0 auto;
+    img{
+      width: 100%;
+      margin: 0 0 10px;
+    }
+    p{
+      font-size: 20px;
+      text-align: center;
+      color: #fff;
+      margin: 0;
+    }
+  }
+  .i1{
+    font-size: 30px;
+    color: #fff;
+    font-family: "微软雅黑";
+    text-align: center;
+    margin: 0 0 10px;
+  }
+  .i2{
+    font-size: 20px;
+    color: #fff;
+    font-family: "微软雅黑";
+    text-align: center;
+    margin: 0;
+  }
+}
+@media (max-width: 1200px) {
+  .footerflex .flogo{
+    width: 300px;
+    margin: 0 auto;
+  }
+}
+@media (max-width: 992px) {
+  .footerflex .flogo{
+    width: 250px;
+  }
+  .footerflex .eweima{
+    width: 120px;
+    margin: 0 auto;
+  }
+  .footerflex .i1{
+    font-size: 25px;
+  }
+  .footerflex .i2{
+    font-size: 18px;
+  }
+  .footer .bottom{
+    font-size: 18px;
+  }
+}
+@media (max-width: 768px) {
+  .footerflex{
+    justify-content: center;
+    flex-direction: column;
+  }
+  .footerflex .eweima{
+    margin: 30px auto;
+    width: 100%;
+    max-width: 150px;
+  }
+  .footerflex .flogo{
+    width: 100%;
+    max-width: 150px;
+  }
+  .footerflex .fcol{
+    // max-width: 150px;
+    flex: inherit;
+    min-width: inherit;
+    width: 100%;
+  }
+  .footer .top{
+    padding: 30px 0;
+  }
+}
+@media (max-width: 576px) {
+  .footerflex .eweima p{
+    font-size: 18px;
+  }
+  .footerflex .eweima, .footerflex .flogo{
+    max-width: 130px;
+  }
+  .footerflex .i1{
+    font-size: 16px;
+  }
+  .footer .bottom, .footerflex .i2, .footerflex .eweima p{
+    font-size: 14px;
+  }
+  .footer .top, .footer .bottom{
+    padding: 15px 0;
+  }
+  .footerflex .eweima{
+    margin: 15px auto;
+  }
+}

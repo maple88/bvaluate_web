@@ -28,8 +28,8 @@
               <router-link tag="li" to="/index" active-class="active"><a>首页</a></router-link>
               <router-link tag="li" to="/recommend" active-class="active"><a>新闻</a></router-link>
               <router-link tag="li" to="/list" active-class="active"><a>榜单</a></router-link>
-              <router-link tag="li" to="/follow" active-class="active" v-show="token"><a>关注</a></router-link>
-              <li v-show="!token" @click="isLogin('/follow')"><a>关注</a></li>
+              <!-- <router-link tag="li" to="/follow" active-class="active" v-show="token"><a>关注</a></router-link> -->
+              <!-- <li v-show="!token" @click="isLogin('/follow')"><a>关注</a></li> -->
               <router-link tag="li" to="/userCenter" active-class="active" v-show="token"><a>个人中心</a></router-link>
               <li v-show="!token" @click="isLogin('/userCenter')"><a>个人中心</a></li>
             </ul>
@@ -43,6 +43,9 @@
                   <p>糖果数：{{candy}}</p>
                 </a>
                 <ul class="dropdown-menu">
+                  <!-- <li>
+                    <a href="javascript:;" @click="analysis()">白皮书分析</a>
+                  </li> -->
                   <router-link tag="li" to="/my"><a>设置</a></router-link>
                   <!-- <li><a href="#">设置</a></li> -->
                   <li>
@@ -99,6 +102,7 @@
       </nav>
     </div>
     <v-login v-model="isShow" :goUrl="successGo"></v-login>
+    <v-analysis v-model="isWhitePaper"></v-analysis>
   </div>
 </template>
 
@@ -123,10 +127,14 @@
         searchType: '文章',
         search: '',
         isShow: false,
-        successGo: ''
+        successGo: '',
+        isWhitePaper: false
       }
     },
     mounted() {
+      $(".nav.navbar-nav li a").on('click', function(){
+        $('.collapse').removeClass('in');
+      })
       window.addEventListener('scroll', this.handleScroll)
       this.initUser();
       let search_btn = $('.open_search');
@@ -154,6 +162,9 @@
     },
 
     methods: {
+      analysis() {
+        this.isWhitePaper = true
+      },
       goSearch() {
         this.$router.push({
           path: '/search',
