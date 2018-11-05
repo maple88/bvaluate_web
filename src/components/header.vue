@@ -25,8 +25,8 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <router-link tag="li" to="/index" active-class="active"><a>首页</a></router-link>
-              <router-link tag="li" to="/recommend" active-class="active"><a>新闻</a></router-link>
+              <!-- <router-link tag="li" to="/index" active-class="active"><a>首页</a></router-link> -->
+              <!-- <router-link tag="li" to="/recommend" active-class="active"><a>新闻</a></router-link> -->
               <router-link tag="li" to="/list" active-class="active"><a>榜单</a></router-link>
               <!-- <router-link tag="li" to="/follow" active-class="active" v-show="token"><a>关注</a></router-link> -->
               <!-- <li v-show="!token" @click="isLogin('/follow')"><a>关注</a></li> -->
