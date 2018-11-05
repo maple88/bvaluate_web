@@ -479,6 +479,7 @@
           -webkit-box-orient: vertical;
           position: relative;
           max-height: 108px;
+          height: 108px;
         }
         .bottom {
           border-top: 1px solid #f5f5f5;
@@ -540,9 +541,11 @@
         }
         .item .tit {
           font-size: 16px;
+          height: 42px;
         }
         .item .des {
           -webkit-line-clamp: 3;
+          height: 64px;
         }
       }
     }

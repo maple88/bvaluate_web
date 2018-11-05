@@ -30,7 +30,7 @@
             <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2.png"></div>
               <input type="password" class="form-control" v-model="loginUser.password" placeholder="密码"
-                     @focus="errorMsg.loginUser.password = ''">
+                     @focus="errorMsg.loginUser.password = ''" @keyup.enter="loginSubmit">
               <span class="help-block" v-if="errorMsg.loginUser.password">
 										<img src="../assets/login/iclose.png">
 										{{errorMsg.loginUser.password}}

@@ -138,9 +138,11 @@
               <div class="adv_swiper">
                 <div class="swiper-container" id="right_swiper">
                   <div class="swiper-wrapper">
+                    <!-- <div class="swiper-slide" :style="'background-image: url('+img3+')'"></div>
                     <div class="swiper-slide" :style="'background-image: url('+img3+')'"></div>
-                    <div class="swiper-slide" :style="'background-image: url('+img3+')'"></div>
-                    <div class="swiper-slide" :style="'background-image: url('+img3+')'"></div>
+                    <div class="swiper-slide" :style="'background-image: url('+img3+')'"></div> -->
+                    <div class="swiper-slide"><img src="../assets/bangdan1.jpg"></div>
+                    <div class="swiper-slide"><img src="../assets/bangdan2.jpg"></div>
                   </div>
                   <!-- 如果需要分页器 -->
                   <div class="swiper-button-prev"></div><!--左箭头-->
@@ -177,7 +179,7 @@
           </div>
         </div>
       </div>
-      <div class="footer">
+      <!-- <div class="footer">
         <div class="top">
           <div class="fish_container">
             <div class="flexbox clearfix">
@@ -277,7 +279,8 @@
           <p>备案号</p>
           <p>版权信息</p>
         </div>
-      </div>
+      </div> -->
+      <vfooter/>
     </div>
     <div class="popover fade bottom in" role="tooltip" id="popover91482">
       <div class="arrow" style="left: 50%;"></div>
