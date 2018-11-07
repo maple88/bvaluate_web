@@ -412,7 +412,7 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      margin: 0 0 60px;
+      margin: 0 0 30px;
       .filename{
         flex: 1;
         height: 30px;
@@ -468,6 +468,14 @@
           opacity: .65;
           cursor: not-allowed;
         }
+      }
+    }
+    .uploadstate{
+      .progress{
+        margin: 0 0 10px;
+      }
+      .uploadsuccess{
+        text-align: center;
       }
     }
   }
@@ -674,6 +682,7 @@
   @media (max-width: 1200px) {
     background-size: auto 100%;
     overflow: auto;
+    padding: 0 10px;
   }
 
   @media (max-width: 992px) {
@@ -696,12 +705,25 @@
   @media (max-width: 425px) {
     .inputInner {
       width: 100%;
+      padding-bottom: 15px;
     }
     .loginbox .hd li {
       margin: 0 35px;
     }
+    .inputInner .input-group{
+      margin-bottom: 15px;
+    }
+    .inputInner .other-group{
+      margin-bottom: 15px;
+    }
     .loginbox .hd li:after {
       margin-left: 37px;
+    }
+    .inputInner .input-group .ok-btn{
+      font-size: 14px;
+    }
+    .inputInner input.form-control{
+      font-size: 14px;
     }
     .left p {
       font-size: 25px !important;
@@ -716,6 +738,12 @@
     }
     .loginbox .uploadWhitePaper{
       margin: 0 0 40px;
+    }
+    .loginbox .hd li{
+      font-size: 16px;
+    }
+    .loginbox .hd li:after{
+      height: 14px;
     }
   }
 

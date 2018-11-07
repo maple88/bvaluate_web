@@ -1,5 +1,6 @@
 <template>
   <div class="page" id="list_page">
+    <v-login v-model="isShow" :goUrl="successGo" :success="reMore"></v-login>
     <vheader/>
     <div class="maintainer">
       <div class="follow_content" id="article">
@@ -29,8 +30,8 @@
               <div class="topproduct">
                 <div class="pcol" v-for="(item, index) in topbangdan.topProject" :key="index">
                   <div class="prod">
-                    <div class="picon"><img src="../assets/media.jpg" :src="item.logoSrc"></div>
-                    <span class="pname">{{item.project}}</span>
+                    <div class="picon" @click="goArticle('/project',{sid: item.sid})"><img src="../assets/media.jpg" :src="item.logoSrc"></div>
+                    <span class="pname" @click="goArticle('/project',{sid: item.sid})">{{item.project}}</span>
                   </div>
                 </div>
               </div>
@@ -117,7 +118,7 @@
                           <td v-else-if="index === 1" class="tr_second"><span>{{index + 1 }}</span></td>
                           <td v-else-if="index === 2" class="tr_third"><span>{{index + 1 }}</span></td>
                           <td v-else><span>{{index + 1 }}</span></td>
-                          <td class="tr_first cursor_style" @click.stop="goArticle('/project',{sid: item.sid}) ">
+                          <td class="tr_first cursor_style" @click.stop="goArticle('/project',{sid: item.sid})">
                             <h4 :title="item.project">{{item.project}}</h4>
                           </td>
                           <td>{{item.rankingTotalScore }}</td>
@@ -234,7 +235,6 @@
           </div>
         </div>
       </div>
-      <v-login v-model="isShow" :goUrl="successGo" :success="reMore"></v-login>
       <vfooter/>
     </div>
     <!--<div class="popover fade bottom in" role="tooltip" id="popover91482">-->
@@ -245,116 +245,116 @@
           <!--<li class="weibo"><i class="fa fa-weibo"></i></li>-->
           <!--<li class="qq"><i class="fa fa-qq"></i></li>-->
           <!--<li class="more">更多分享</li>-->
-          <!--</ul>-->
-          <!--</div>-->
-          <!--</div>-->
-        </div>
-      </template>
+        <!--</ul>-->
+      <!--</div>-->
+    <!--</div>-->
+  </div>
+</template>
 
-      <script>
-        import Swiper from 'swiper';
+<script>
+  import Swiper from 'swiper';
 
-        let img1 = require('../assets/follow/banner01.png');
-        let img2 = require('../assets/follow/adv01.png');
-        let img3 = require('../assets/media.jpg');
-        let loading = require('../assets/login/loading.gif');
+  let img1 = require('../assets/follow/banner01.png');
+  let img2 = require('../assets/follow/adv01.png');
+  let img3 = require('../assets/media.jpg');
+  let loading = require('../assets/login/loading.gif');
 
 
-        export default {
-          data() {
-            return {
-              list: [],
-              banner1: img1,
-              img2: img2,
-              img3: img3,
-              showloading: true,
-              loading: loading,
-              type: '周榜',
-              upList: [],
-              downList: [],
-              pageSize: 50,
-              isShow: false,
-              successGo: '',
-              topbangdan: []
-            }
-          },
-          methods: {
-            success() {
-              console.log(123456)
-            },
-            isLogin(url) {
-              this.successGo = url;
-              this.isShow = true;
-            },
-            goArticle(url, query) {
-              let routeData = this.$router.resolve({path: url, query: query});
-              window.open(routeData.href, '_blank');
-            },
-            getDate() {
-              let that = this;
-              that.showloading = true;
-              that.$axios.get('/api/hotICO/list?type=' + that.type + '&pageSize=' + that.pageSize).then(function (res) {
-                that.showloading = false;
-                that.list = res.data;
-                if (that.pageSize >= 100) {
-                  that.showloading = -1;
-                }
-                that.pageSize += 50;
-              });
-            },
-            reMore() {
-              let token = localStorage.getItem('apelink_user_token');
-              if (token) {
-                this.getDate()
-              } else {
-                this.isLogin(null);
-              }
-            },
-            getUpList() {
-              let that = this;
-              that.$axios.get('/api/hotICO/priceList?type=inc&pageSize=15').then(function (res) {
-                that.upList = res.data;
-              });
-            },
-            getDownList() {
-              let that = this;
-              that.$axios.get('/api/hotICO/priceList?type=dec&pageSize=15').then(function (res) {
-                that.downList = res.data;
-              });
-            },
-            changeList(type) {
-              this.pageSize = 50;
-              this.type = type;
-              this.list = [];
-              this.getDate();
-            },
-            getTopBangdan() {
-              let that = this;
-              that.$axios.get('/api/ICO/icoRank?type=周榜&pageNo=0&pageSize=3').then(function (res) {
-                that.topbangdan = res.data
-              });
-            }
-          },
-          mounted() {
-            new Swiper('#right_swiper', {
-              autoplay: {
-                disableOnInteraction: false,
-              },
-              navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-              }
-            });
-            this.getUpList();
-            this.getDate();
-            this.getDownList();
-            this.getTopBangdan();
-          },
-          filters: {}
+  export default {
+    data() {
+      return {
+        list: [],
+        banner1: img1,
+        img2: img2,
+        img3: img3,
+        showloading: true,
+        loading: loading,
+        type: '周榜',
+        upList: [],
+        downList: [],
+        pageSize: 50,
+        isShow: false,
+        successGo: '',
+        topbangdan: []
+      }
+    },
+    methods: {
+      success() {
+        console.log(123456)
+      },
+      isLogin(url) {
+        this.successGo = url;
+        this.isShow = true;
+      },
+      goArticle(url, query) {
+        let routeData = this.$router.resolve({path: url, query: query});
+        window.open(routeData.href, '_blank');
+      },
+      getDate() {
+        let that = this;
+        that.showloading = true;
+        that.$axios.get('/api/hotICO/list?type=' + that.type + '&pageSize=' + that.pageSize).then(function (res) {
+          that.showloading = false;
+          that.list = res.data;
+          if (that.pageSize >= 100) {
+            that.showloading = -1;
+          }
+          that.pageSize += 50;
+        });
+      },
+      reMore() {
+        let token = localStorage.getItem('apelink_user_token');
+        if (token) {
+          this.getDate()
+        } else {
+          this.isLogin(null);
         }
-      </script>
+      },
+      getUpList() {
+        let that = this;
+        that.$axios.get('/api/hotICO/priceList?type=inc&pageSize=15').then(function (res) {
+          that.upList = res.data;
+        });
+      },
+      getDownList() {
+        let that = this;
+        that.$axios.get('/api/hotICO/priceList?type=dec&pageSize=15').then(function (res) {
+          that.downList = res.data;
+        });
+      },
+      changeList(type) {
+        this.pageSize = 50;
+        this.type = type;
+        this.list = [];
+        this.getDate();
+      },
+      getTopBangdan() {
+        let that = this;
+        that.$axios.get('/api/ICO/icoRank?type=周榜&pageNo=0&pageSize=3').then(function (res) {
+          that.topbangdan = res.data
+        });
+      }
+    },
+    mounted() {
+      new Swiper('#right_swiper', {
+        autoplay: {
+          disableOnInteraction: false,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        }
+      });
+      this.getUpList();
+      this.getDate();
+      this.getDownList();
+      this.getTopBangdan();
+    },
+    filters: {}
+  }
+</script>
 
-      <!-- Add "scoped" attribute to limit CSS to this component only -->
-      <style lang="scss" scoped>
-    </style>
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style lang="scss" scoped>
+</style>
 

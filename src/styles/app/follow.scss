@@ -530,6 +530,7 @@
                   }
                 }
                 > .right {
+                  width: 100%;
                   overflow: hidden;
                   .base_info {
                     display: flex;
@@ -604,6 +605,10 @@
         font-weight: 500;
         padding: 15px 50px 15px 10px;
         color: #333;
+        p{
+          cursor: pointer;
+          margin: 0;
+        }
         i{
           font-size: 25px;
           color: rgba(255,0,0,.67);
@@ -1775,6 +1780,7 @@
         border: 10px solid #c1b6d2;
         overflow: hidden;
         margin: 0 15px 0 0;
+        cursor: pointer;
         img{
           width: 100%;
           height: 100%;
@@ -1789,6 +1795,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        cursor: pointer;
       }
     }
     @media (max-width: 1400px) {
@@ -2337,6 +2344,67 @@
   }
   .follow_content.serach_content .clearfix .center {
     width: 100%;
+  }
+  .follow_content{
+    margin: 15px 0 0;
+  }
+  .follow_page .follow_content .fish_container .clearfix .left{
+    float: none;
+    width: 100%;
+    .menu_bar{
+      display: flex;
+      >li{
+        flex: 1;
+        font-size: 14px;
+        &:last-child{flex: 1.5;}
+      }
+    }
+  }
+  .follow_page .follow_content .fish_container .clearfix .center{
+    width: 100%;
+    float: none;
+  }
+  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box .project_info>.left{
+    flex: 0 0 70px;
+    min-width: 70px;
+  }
+  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box .project_info>.left .logo_box{
+    width: 70px;
+    height: 70px;
+  }
+  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box .project_info>.right .base_info>.left h4{
+    margin: 0;
+    font-size: 16px;
+  }
+  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box .project_info>.right .base_info>.right{
+    p{
+      margin: 0;
+    }
+    h4{
+      font-size: 18px;
+      margin: 0;
+    }
+  }
+  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box .project_info>.right .base_info>.left p{
+    font-size: 14px;
+    margin: 0;
+  }
+  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box .project_info>.right .base_info,
+  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box .project_info>.right .detail_info{
+    padding: 0 0 0 10px;
+  }
+  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box{
+    margin: 0 0 10px;
+  }
+  .follow_page .follow-industry-recommend ul li{
+    font-size: 16px;
+    padding: 10px 15px;
+  }
+  .follow_page .follow-industry-recommend ul li i{
+    font-size: 20px;
+  }
+  .follow_page .follow_content .fish_container .clearfix .center .tab_item .item_list_bottom .item_list_title h4{
+    font-size: 18px;
   }
 }
 

@@ -54,7 +54,7 @@
                   </div>
                   <div class="article_right">
                     <a href="javascript:;" class="look" @click="showArticle = !showArticle">查看原文</a>
-                    <span class="look_count"><i class="fa fa-eye"></i>1000人</span>
+                    <span class="look_count"><i class="fa fa-eye"></i>0人</span>
                     <span class="share" @click.stop="showAllShare($event)"><i class="fa fa-share-alt"></i></span>
                     <span class="follow">
                       <i class="fa fa-heart" v-show="!isFollow" @click="setFollow()"></i>
@@ -453,7 +453,9 @@
                 //     that.isFollow = false
                 //   }
                 // });
-                let checkAuthorurl = '/api/individual/check?type=AUTHOR&sidOrName=' + that.articleContent.author;
+                let checkAuthorurl = ''
+                if (that.articleContent.author) {checkAuthorurl = '/api/individual/check?type=AUTHOR&sidOrName=' + that.articleContent.author;}
+                if (that.articleContent.siteName) {checkAuthorurl = '/api/individual/check?type=AUTHOR&sidOrName=' + that.articleContent.siteName;}
                 that.$axios({
                   method: 'post',
                   url: checkAuthorurl,
@@ -504,7 +506,6 @@
             this.$router.push('/index');
           }
         }
-
       },
       deleteFollow(cid) {
         let that = this;
@@ -603,7 +604,9 @@
         let token = localStorage.getItem('apelink_user_token')
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid')
-          let url = '/api/individual/add?type=AUTHOR&name=' + that.articleContent.author;
+          let url = ''
+          if (that.articleContent.author) {url = '/api/individual/add?type=AUTHOR&name=' + that.articleContent.author;}
+          if (that.articleContent.siteName) {url = '/api/individual/add?type=AUTHOR&name=' + that.articleContent.siteName;}
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'post',

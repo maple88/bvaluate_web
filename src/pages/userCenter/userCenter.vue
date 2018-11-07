@@ -23,11 +23,11 @@
               <p>糖果数</p>
             </li>
             <li>
-              <p>120万</p>
+              <p>0</p>
               <p>粉丝</p>
             </li>
             <li>
-              <p>6000人</p>
+              <p>0人</p>
               <p>关注</p>
             </li>
           </ul>
@@ -36,8 +36,8 @@
       <div class="usernav">
         <div class="container">
           <ul>
-            <li @click="toggleTab('contribute'), num = 1" :class="{active: num === 1}">
-              投稿<span>{{myNewsList}}</span></li>
+            <!-- <li @click="toggleTab('contribute'), num = 1" :class="{active: num === 1}">
+              投稿<span>{{myNewsList}}</span></li> -->
             <!--<li @click="toggleTab('read'), num = 2" :class="{active: num === 2}">阅读<span>122</span></li>-->
             <li @click="toggleTab('collection'), num = 3" :class="{active: num === 3}">
               收藏<span>{{newsList}}</span></li>
@@ -73,8 +73,8 @@
         isRead: false,
         isCollection: false,
         tabcontent: 'isContribute',
-        currentTab: 'contribute',
-        num: 1,
+        currentTab: 'collection',
+        num: 3,
         candy: 0,
         phoneNumber: 0,
         nickName: '',
