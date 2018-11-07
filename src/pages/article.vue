@@ -54,7 +54,7 @@
                   </div>
                   <div class="article_right">
                     <a href="javascript:;" class="look" @click="showArticle = !showArticle">查看原文</a>
-                    <span class="look_count"><i class="fa fa-eye"></i>1000人</span>
+                    <span class="look_count"><i class="fa fa-eye"></i>0人</span>
                     <span class="share" @click.stop="showAllShare($event)"><i class="fa fa-share-alt"></i></span>
                     <span class="follow">
                       <i class="fa fa-heart" v-show="!isFollow" @click="setFollow()"></i>

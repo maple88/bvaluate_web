@@ -591,14 +591,15 @@
     filters: {
       showTatolCore(obj) {
         let num = parseFloat(obj).toFixed(2) + '';
-        console.log(num);
+        // console.log(num);
         if (num === '0.00') {
           num = 0
         }
         return num;
       },
       showDay(obj) {
-        let myDate = new Date(obj);
+        let time = obj.replace(/-/g,'/')
+        let myDate = new Date(time);
         let day = myDate.getDate()
         if (day < 9) {
           day = '0' + (day + 1)
@@ -606,7 +607,8 @@
         return day
       },
       showYear(obj) {
-        let myDate = new Date(obj);
+        let time = obj.replace(/-/g,'/')
+        let myDate = new Date(time);
         let month = myDate.getMonth()
         if (month < 9) {
           month = '0' + (month + 1)

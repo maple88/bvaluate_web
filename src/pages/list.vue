@@ -118,7 +118,7 @@
                           <td v-else-if="index === 1" class="tr_second"><span>{{index + 1 }}</span></td>
                           <td v-else-if="index === 2" class="tr_third"><span>{{index + 1 }}</span></td>
                           <td v-else><span>{{index + 1 }}</span></td>
-                          <td class="tr_first cursor_style" @click.stop="goArticle('/project',{sid: item.sid}) ">
+                          <td class="tr_first cursor_style" @click.stop="goArticle('/project',{sid: item.sid})">
                             <h4 :title="item.project">{{item.project}}</h4>
                           </td>
                           <td>{{item.rankingTotalScore }}</td>

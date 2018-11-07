@@ -59,7 +59,7 @@
                     <div class="project_list_box" v-for="item in xiangmuList">
                       <div class="project_info">
                         <div class="left">
-                          <div class="logo_box" @click="goProjectById(item.result.sid)">
+                          <div class="logo_box" @click="goArticle('/project',{sid: item.result.sid})">
                             <img :src="item.result.logoSrc"/>
                           </div>
                         </div>
@@ -67,7 +67,7 @@
                           <div class="base_info">
                             <div class="left">
                               <h4>
-                                <span v-html="item.result.project" @click="goProjectById(item.result.sid)"></span>
+                                <span v-html="item.result.project" @click="goArticle('/project',{sid: item.result.sid})"></span>
                                 <i class="fa fa-heart" @click="deleteFollow(item.cid, 'xiangmu')"></i>
                               </h4>
                               <p>{{item.result.introduction }} </p>
@@ -113,7 +113,7 @@
                   <div class="follow-industry-recommend">
                     <ul>
                       <li v-for="item in hangyeList">
-                        <p>{{item.result}}</p>
+                        <p @click="goIndustryByIndustry(item.result)">{{item.result}}</p>
                         <i class="fa fa-heart" @click="deleteFollow(item.cid, 'hangye')"></i>
                       </li>
                     </ul>
@@ -148,7 +148,7 @@
                   <div class="follow-industry-recommend">
                     <ul>
                       <li v-for="item in guojiaList">
-                        <p>{{item.result}}</p>
+                        <p @click="goIndustryByCountry(item.result)">{{item.result}}</p>
                         <i class="fa fa-heart" @click="deleteFollow(item.cid)"></i>
                       </li>
                     </ul>
@@ -183,7 +183,7 @@
                   <div class="follow-industry-recommend">
                     <ul>
                       <li v-for="item in zuozheList">
-                        <p>{{item.result}}</p>
+                        <p @click="goArticle('/author',{author: item.result,type: 'author'})">{{item.result}}</p>
                         <i class="fa fa-heart" @click="deleteFollow(item.cid, 'zuozhe')"></i>
                       </li>
                     </ul>
@@ -493,6 +493,40 @@
         } else {
           alert('请先登录。')
         }
+      },
+      goArticle(url, query) {
+        let routeData = this.$router.resolve({path: url, query: query});
+        window.open(routeData.href, '_blank');
+      },
+      goProjectByName(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
+        window.open(routeData.href, '_blank');
+      },
+      goIndustryByIndustry(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
+        window.open(routeData.href);
+      },
+      goIndustryByCountry(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj}});
+        window.open(routeData.href);
       }
     },
     filters: {
