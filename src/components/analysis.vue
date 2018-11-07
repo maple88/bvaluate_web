@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div class="login_fixed" v-show="value">
+    <div class="login_fixed" v-if="value">
       <div class="login_bg" @click="fn2"></div>
       <div class="loginbox">
         <div class="close_box" @click="fn2">
@@ -27,10 +27,15 @@
               <button class="uploadBtn" :class="{ disabled: uploadBtn }" :disabled="uploadBtn" @click="uploadPDF">上传</button>
             </div>
           </div>
+          <div class="uploadstate" v-show="uploadstate">
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" :style="'width:'+uploadtime+'%'">
+                {{uploadtime}}%
+              </div>
+            </div>
+            <p class="uploadsuccess">{{uploadword}}</p>
+          </div>
         </div>
-        <transition name="fade">
-          <vtips :tipText="tipText" v-if="showTip"/>
-        </transition>
       </div>
     </div>
   </transition>
@@ -58,11 +63,14 @@
         showTip: false,
         fileTips: '',
         uploadBtn: true,
-        pdf: ''
+        pdf: '',
+        uploadstate: false,
+        uploadword: '',
+        uploadtime: 0
       }
     },
     mounted() {
-
+      
     },
     methods: {
       fn2() {
@@ -101,19 +109,34 @@
         }
       },
       uploadPDF() {
-        // let that = this
+        let that = this
         let token = localStorage.getItem('apelink_user_token');
         let uid = localStorage.getItem('apelink_user_uid');
         let url = '/api/individual/uploadPDF';
-        let headers = {'uid': uid, 'Authorization': token};
-        console.log(this.pdf)
-        this.$axios({
+        let headers = {'uid': uid, 'Authorization': token, 'Content-Type': 'multipart/form-data'};
+        let data = new FormData()
+        let time = setInterval(function(){
+          that.uploadtime = parseInt(that.uploadtime) + 1
+          console.log(that.uploadtime)
+          if (that.uploadtime == 99) {
+            clearInterval(time);
+          }
+        },50)
+        that.uploadstate = true
+        data.append('multipartFile', that.pdf)
+        that.$axios({
           method: 'post',
           url: url,
           headers: headers,
-          data: {'multipartFile': this.pdf}
+          data: data,
         }).then(res => {
-          console.log(res)
+          if (res.data) {
+            that.uploadword = '上传成功，我们会尽快反馈分析结果'
+            clearInterval(time);
+            that.uploadtime = 100
+          }else{
+            that.uploadword = '上传失败，'+res.data
+          }
         })
       }
     }

@@ -22,7 +22,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/index'
+      redirect: '/list'
     },
     {
       path: '/login',

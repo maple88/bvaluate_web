@@ -5,7 +5,7 @@
         <div class="col-md-6 col-xs-12 left">
           <p class="p1">welcome！</p>
           <p class="p2">
-            <router-link to="/index">BVALUATE</router-link>
+            <router-link to="/list">BVALUATE</router-link>
           </p>
           <p class="p3">搜索全球资讯，掌握最新动态</p>
         </div>
@@ -313,7 +313,7 @@
               localStorage.setItem('apelink_user_email', email);
               localStorage.setItem('apelink_user_sex', sex);
               if (res.data.signedIn) {
-                that.$router.push('/index')
+                that.$router.push('/list')
               } else {
                 let url = '/api/user/signIn';
                 that.$axios({
@@ -326,7 +326,7 @@
                     that.tipText = '登录成功';
                     setTimeout(() => {
                       that.showTip = false;
-                      that.$router.push('/index')
+                      that.$router.push('/list')
                       that.login()
                     }, 1000);
                   }

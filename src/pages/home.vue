@@ -20,10 +20,14 @@
                 <span class="icon-bar"></span>
               </button>
               <button class="button open_search navbar-toggle"><img src="../assets/search/search_b.png"></button>
-              <router-link to="/index" class="navbar-brand">
+              <router-link to="/list" class="navbar-brand">
                 <img src="../assets/logo-white.png" class="white">
                 <img src="../assets/logo-white.png" class="blue">
               </router-link>
+              <!-- <a class="navbar-brand">
+                <img src="../assets/logo-white.png" class="white">
+                <img src="../assets/logo-white.png" class="blue">
+              </a> -->
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -32,8 +36,8 @@
                 <!-- <router-link tag="li" to="/index" active-class="active"><a>首页</a></router-link> -->
                 <!-- <router-link tag="li" to="/recommend" active-class="active"><a>新闻</a></router-link> -->
                 <router-link tag="li" to="/list" active-class="active"><a>榜单</a></router-link>
-                <!-- <router-link tag="li" to="/follow" active-class="active" v-show="token"><a>关注</a></router-link> -->
-                <!-- <li v-show="!token" @click="isLogin('/follow')"><a>关注</a></li> -->
+                <router-link tag="li" to="/follow" active-class="active" v-show="token"><a>关注</a></router-link>
+                <li v-show="!token" @click="isLogin('/follow')"><a>关注</a></li>
                 <router-link tag="li" to="/userCenter" active-class="active" v-show="token"><a>个人中心</a></router-link>
                 <li v-show="!token" @click="isLogin('/userCenter')"><a>个人中心</a></li>
               </ul>
@@ -47,9 +51,9 @@
                     <p>糖果数：{{candy}}</p>
                   </a>
                   <ul class="dropdown-menu">
-                    <!-- <li>
+                    <li>
                       <a href="javascript:;" @click="analysis()">白皮书分析</a>
-                    </li> -->
+                    </li>
                     <router-link tag="li" to="/my"><a>设置</a></router-link>
                     <!-- <li><a href="#">设置</a></li> -->
                     <li>

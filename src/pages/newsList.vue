@@ -368,10 +368,14 @@
       },
       setFollow() {
         let that = this;
+        let url = '';
+        let industry = this.$route.query.industry;
+        let country = this.$route.query.country;
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid');
-          let url = '/api/individual/add?type=INDUSTRY&name=' + that.industry;
+          if (country) {url = '/api/individual/add?type=COUNTRY&name=' + that.industry; console.log(1)}
+          if (industry) {url = '/api/individual/add?type=INDUSTRY&name=' + that.industry; console.log(2)}
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'post',
