@@ -16,7 +16,7 @@
               </div>
             </div>
           </div>
-          <div class="media-body minh163">
+          <div class="media-body">
             <h4 class="media-heading" @click="goArticle('/article',{sid:item.result.sid})">{{item.result.title}}</h4>
             <p class="media-words">{{item.result.content}}</p>
             <div class="media-bottom">
@@ -178,11 +178,13 @@
     },
     filters: {
       showDay(obj) {
-        let myDate = new Date(obj);
+        let time = obj.replace(/-/g,'/')
+        let myDate = new Date(time);
         return myDate.getDate()
       },
       showYear(obj) {
-        let myDate = new Date(obj);
+        let time = obj.replace(/-/g,'/')
+        let myDate = new Date(time);
         let month = myDate.getMonth()
         if (month < 9) {
           month = '0' + (month + 1)

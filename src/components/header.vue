@@ -102,7 +102,7 @@
         </div>
       </nav>
     </div>
-    <v-login v-model="isShow" :goUrl="successGo"></v-login>
+    <v-login v-model="isShow" :success="refreshPage"></v-login>
     <v-analysis v-model="isWhitePaper" v-if="isWhitePaper"></v-analysis>
   </div>
 </template>
@@ -163,6 +163,9 @@
     },
 
     methods: {
+      refreshPage(){
+        window.location.reload();
+      },
       analysis() {
         this.isWhitePaper = true
       },

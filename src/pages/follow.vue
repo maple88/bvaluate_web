@@ -16,41 +16,40 @@
             </div>
             <div class="center">
               <div class="tab_item" v-if="xiangmu">
-                <!-- <div class="item_list_top">
+                <div class="item_list_top">
                   <div class="item_list_title">
                     <h4>推荐</h4>
                   </div>
                   <div class="follow_list serach_follow_list">
-                    <div class="project_list_box" v-for="project in tuijian_xiangmuList">
+                    <div class="project_list_box" v-for="item in tuijian_xiangmuList">
                       <div class="project_info">
                         <div class="left">
-                          <div class="logo_box" @click="goProjectById(project.sid)">
-                            <img :src="project.logoSrc"/>
+                          <div class="logo_box" @click="goArticle('/project',{sid: item.sid})">
+                            <img :src="item.logoSrc"/>
                           </div>
                         </div>
                         <div class="right">
                           <div class="base_info">
                             <div class="left">
                               <h4>
-                                <span v-html="project.project" @click="goProjectById(project.sid)"></span>
-                                <i class="fa fa-heart-o" v-if="!project.collected" @click="setFollow(even,project)"></i>
-                                <i class="fa fa-heart" v-else></i>
+                                <span v-html="item.project" @click="goArticle('/project',{sid: item.sid})"></span>
+                                <i class="fa fa-heart-o" @click="setFollow(item.sid, 'xiangmu')"></i>
                               </h4>
-                              <p>{{project.introduction }} </p>
+                              <p>{{item.introduction }} </p>
                             </div>
                             <div class="right">
-                              <h4>{{project.totalScore }}</h4>
+                              <h4>{{item.totalScore }}</h4>
                               <p>总分</p>
                             </div>
                           </div>
                           <div class="detail_info">
-                            <p>{{project.irAbstract }}</p>
+                            <p>{{item.irAbstract }}</p>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div> -->
+                </div>
                 <div class="item_list_bottom">
                   <div class="item_list_title">
                     <h4>已关注</h4>
@@ -93,19 +92,19 @@
                 </div>
               </div>
               <div class="tab_item" v-if="hangye">
-                <!-- <div class="item_list_top">
+                <div class="item_list_top">
                   <div class="item_list_title">
                     <h4>推荐</h4>
                   </div>
                   <div class="follow-industry-recommend">
                     <ul>
                       <li v-for="item in tuijian_hangyeList">
-                        <p>{{item.project}}</p>
-                        <i class="fa fa-heart-o" @click="setFollow(item.sid, 'hangye')"></i>
+                        <p>{{item}}</p>
+                        <i class="fa fa-heart-o" @click="setFollow('', 'hangye', item)"></i>
                       </li>
                     </ul>
                   </div>
-                </div> -->
+                </div>
                 <div class="item_list_bottom">
                   <div class="item_list_title">
                     <h4>已关注</h4>
@@ -127,20 +126,19 @@
                 </div>
               </div>
               <div class="tab_item" v-if="guojia">
-                <!-- <div class="item_list_top">
+                <div class="item_list_top">
                   <div class="item_list_title">
                     <h4>推荐</h4>
                   </div>
                   <div class="follow-industry-recommend">
                     <ul>
-                      <li>
-                        <p>代币</p>
-                        <i class="fa fa-heart-o" v-if="true" @click="setFollow(even,project)"></i>
-                        <i class="fa fa-heart" v-else></i>
+                      <li v-for="item in tuijian_guojiaList">
+                        <p>{{item}}</p>
+                        <i class="fa fa-heart-o" @click="setFollow('', 'guojia', item)"></i>
                       </li>
                     </ul>
                   </div>
-                </div> -->
+                </div>
                 <div class="item_list_bottom">
                   <div class="item_list_title">
                     <h4>已关注</h4>
@@ -149,7 +147,7 @@
                     <ul>
                       <li v-for="item in guojiaList">
                         <p @click="goIndustryByCountry(item.result)">{{item.result}}</p>
-                        <i class="fa fa-heart" @click="deleteFollow(item.cid)"></i>
+                        <i class="fa fa-heart" @click="deleteFollow(item.cid, 'guojia')"></i>
                       </li>
                     </ul>
                   </div>
@@ -162,20 +160,19 @@
                 </div>
               </div>
               <div class="tab_item" v-if="zuozhe">
-                <!-- <div class="item_list_top">
+                <div class="item_list_top">
                   <div class="item_list_title">
                     <h4>推荐</h4>
                   </div>
                   <div class="follow-industry-recommend">
                     <ul>
-                      <li>
-                        <p>代币</p>
-                        <i class="fa fa-heart-o" v-if="true" @click="setFollow(even,project)"></i>
-                        <i class="fa fa-heart" v-else></i>
+                      <li v-for="item in tuijian_zuozheList">
+                        <p>{{item}}</p>
+                        <i class="fa fa-heart-o" @click="setFollow('', 'zuozhe', item)"></i>
                       </li>
                     </ul>
                   </div>
-                </div> -->
+                </div>
                 <div class="item_list_bottom">
                   <div class="item_list_title">
                     <h4>已关注</h4>
@@ -271,6 +268,9 @@
           </div>
         </div>
       </div>
+      <transition name="fade">
+        <vtips :tipText="tipText" v-if="showTip"/>
+      </transition>
       <vfooter/>
     </div>
 
@@ -298,22 +298,25 @@
         img2: img2,
         img3: img3,
         labelMore: false,
-        showloading: false,
         loading: loading,
         xiangmuList: [],
         hangyeList: [],
         guojiaList: [],
         zuozheList: [],
         wenzhangList: [],
-        pageSize: 10,
+        pageSize: 5,
         tuijian_xiangmuList: [],
         tuijian_hangyeList: [],
         tuijian_guojiaList: [],
         tuijian_zuozheList: [],
         tuijian_wenzhangList: [],
-        tuijian_pageSize: 10,
+        tuijian_pageSize: 5,
+        showloading: false,
+        tuijian_showloading: false,
         token: '',
-        uid: ''
+        uid: '',
+        tipText: '',
+        showTip: false
       }
     },
     mounted() {
@@ -346,13 +349,14 @@
         this.guojia = false
         this.zuozhe = false
         this.wenzhang = false
-        this.pageSize = 10
-        this.tuijian_pageSize = 10
+        this.pageSize = 5
+        this.tuijian_pageSize = 5
       },
       getxiangmu() {
         this.xiangmu = true
         let that = this;
         that.showloading = true;
+        // 已关注
         let url = '/api/individual/list?type=ICO&pageSize=' + that.pageSize;
         let headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
@@ -365,13 +369,29 @@
           if (that.pageSize >= res.data.totalElements) {
             that.showloading = -1
           }
-          that.pageSize += 10;
+          that.pageSize += 5;
+        })
+        // 推荐
+        let tuijian_url = '/api/individual/recommend?type=ICO&pageSize=' + that.tuijian_pageSize;
+        let tuijian_headers = {'Authorization': that.token};
+        that.$axios({
+          method: 'get',
+          url: tuijian_url,
+          headers: tuijian_headers
+        }).then(function (res) {
+          that.tuijian_xiangmuList = res.data.slice(0,3);
+          that.tuijian_showloading = false;
+          if (that.pageSize >= res.data.totalElements) {
+            that.tuijian_showloading = -1
+          }
+          that.tuijian_pageSize += 5;
         })
       },
       gethangye() {
         this.hangye = true
         let that = this;
         that.showloading = true;
+        // 已关注
         let url = '/api/individual/list?type=INDUSTRY&pageSize=' + that.pageSize;
         let headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
@@ -384,13 +404,29 @@
           if (that.pageSize >= res.data.totalElements) {
             that.showloading = -1
           }
-          that.pageSize += 10;
+          that.pageSize += 5;
+        })
+        // 推荐
+        let tuijian_url = '/api/individual/recommend?type=INDUSTRY&pageSize=' + that.tuijian_pageSize;
+        let tuijian_headers = {'Authorization': that.token};
+        that.$axios({
+          method: 'get',
+          url: tuijian_url,
+          headers: tuijian_headers
+        }).then(function (res) {
+          that.tuijian_hangyeList = res.data.slice(0,5);
+          that.tuijian_showloading = false;
+          if (that.pageSize >= res.data.totalElements) {
+            that.tuijian_showloading = -1
+          }
+          that.tuijian_pageSize += 5;
         })
       },
       getguojia() {
         this.guojia = true
         let that = this;
         that.showloading = true;
+        // 已关注
         let url = '/api/individual/list?type=COUNTRY&pageSize=' + that.pageSize;
         let headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
@@ -403,13 +439,29 @@
           if (that.pageSize >= res.data.totalElements) {
             that.showloading = -1
           }
-          that.pageSize += 10;
+          that.pageSize += 5;
+        })
+        // 推荐
+        let tuijian_url = '/api/individual/recommend?type=COUNTRY&pageSize=' + that.tuijian_pageSize;
+        let tuijian_headers = {'Authorization': that.token};
+        that.$axios({
+          method: 'get',
+          url: tuijian_url,
+          headers: tuijian_headers
+        }).then(function (res) {
+          that.tuijian_guojiaList = res.data.slice(0,5);
+          that.tuijian_showloading = false;
+          if (that.pageSize >= res.data.totalElements) {
+            that.tuijian_showloading = -1
+          }
+          that.tuijian_pageSize += 5;
         })
       },
       getzuozhe() {
         this.zuozhe = true
         let that = this;
         that.showloading = true;
+        // 已关注
         let url = '/api/individual/list?type=AUTHOR&pageSize=' + that.pageSize;
         let headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
@@ -422,7 +474,22 @@
           if (that.pageSize >= res.data.totalElements) {
             that.showloading = -1
           }
-          that.pageSize += 10;
+          that.pageSize += 5;
+        })
+        // 推荐
+        let tuijian_url = '/api/individual/recommend?type=AUTHOR&pageSize=' + that.tuijian_pageSize;
+        let tuijian_headers = {'Authorization': that.token};
+        that.$axios({
+          method: 'get',
+          url: tuijian_url,
+          headers: tuijian_headers
+        }).then(function (res) {
+          that.tuijian_zuozheList = res.data.slice(0,5);
+          that.tuijian_showloading = false;
+          if (that.pageSize >= res.data.totalElements) {
+            that.tuijian_showloading = -1
+          }
+          that.tuijian_pageSize += 5;
         })
       },
       getwenzhang() {
@@ -441,32 +508,56 @@
           if (that.pageSize >= res.data.totalElements) {
             that.showloading = -1
           }
-          that.pageSize += 10;
+          that.pageSize += 5;
         })
       },
-      setFollow() {
-        let that = this;
-        let url = '';
-        let industry = this.$route.query.industry;
-        let country = this.$route.query.country;
+      setFollow(sid, val, name) {
+        let that = this
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
+          let url = ''
           let uid = localStorage.getItem('apelink_user_uid');
-          if (country) {url = '/api/individual/add?type=COUNTRY&name=' + that.industry; console.log(1)}
-          if (industry) {url = '/api/individual/add?type=INDUSTRY&name=' + that.industry; console.log(2)}
-          let headers = {'uid': uid, 'Authorization': token};
-          that.$axios({
-            method: 'post',
-            url: url,
-            headers: headers
-          }).then(function (res) {
-            if (res.data) {
-              that.projectFollow = true;
-              alert('关注成功');
+          let arr = [
+            {name: 'xiangmu', url: '/api/individual/add?type=ICO&sid=', type: 1},
+            {name: 'hangye', url: '/api/individual/add?type=INDUSTRY&name=', type: 0},
+            {name: 'guojia', url: '/api/individual/add?type=COUNTRY&name=', type: 0},
+            {name: 'zuozhe', url: '/api/individual/add?type=AUTHOR&name=', type: 0},
+          ]
+          arr.forEach(function(item, index) {
+            if(val == item.name ) {
+              url = item.url + ((item.type) ? sid : name);
+              let headers = {'uid': uid, 'Authorization': token};
+              that.$axios({
+                method: 'post',
+                url: url,
+                headers: headers
+              }).then(function (res) {
+                if (res.data) {
+                  that.showTip = true;
+                  that.tipText = '收藏成功';
+                  setTimeout(() => {
+                    that.showTip = false;
+                    that.tipText = '';
+                  }, 1300);
+                  if (item.name == 'xiangmu') {that.getxiangmu();}
+                  if (item.name == 'hangye') {that.gethangye();}
+                  if (item.name == 'guojia') {that.getguojia();}
+                  if (item.name == 'zuozhe') {that.getzuozhe();}
+                }else{
+                  that.showTip = true;
+                  that.tipText = res.data;
+                  setTimeout(() => {
+                    that.showTip = false;
+                    that.tipText = '';
+                  }, 1300);
+                }
+              }).catch(function (error) {
+                console.log(error.code)
+              })
             }
-          });
+          })
         } else {
-          alert('请先登录。');
+          alert('请先登录');
         }
       },
       deleteFollow(cid, val) {
@@ -531,11 +622,13 @@
     },
     filters: {
       showDay(obj) {
-        let myDate = new Date(obj);
+        let time = obj.replace(/-/g,'/')
+        let myDate = new Date(time);
         return myDate.getDate()
       },
       showYear(obj) {
-        let myDate = new Date(obj);
+        let time = obj.replace(/-/g,'/')
+        let myDate = new Date(time);
         let month = myDate.getMonth()
         if (month < 9) {
           month = '0' + (month + 1)
