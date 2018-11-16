@@ -192,6 +192,7 @@
 </template>
 
 <script>
+  import sensors from '../../static/sa-init.js'
   let loading = require('../assets/login/loading.gif');
   let bg = require('../assets/login/login_bg.jpg');
   export default {
@@ -255,7 +256,26 @@
       }
     },
     mounted() {
+      var end_time = "";
+      window.onload = function(){
+        end_time = new Date();
+        sensors.quick('autoTrack',{
+          load_time: end_time.getTime() - start_time.getTime()
+        })
 
+        // 在页面加载完毕或者也不用加载完毕,定义一个初始时间
+        var start = new Date();
+        // 在页面关闭前,调用sa的track方法
+        window.onunload = function() {
+          var end = new Date();
+          // 如果用户一直不关闭页面，可能出现超大值，可以根据业务需要处理，例如设置一个上限
+          var duration = (end.getTime() - start_time.getTime()) / 1000;
+          // 定义一个记录页面停留时间的事件pageView,并且保存需要的属性(停留时间和当前页面的地址)
+          sensors.track('WebStay', {
+            event_duration: duration
+          });
+        };
+      }
     },
     methods: {
       loginSubmit() {
@@ -263,8 +283,16 @@
         let password = this.loginUser.password;
         if (phoneNumber == null || phoneNumber === undefined || phoneNumber === '') {
           this.errorMsg.loginUser.phoneNumber = '请输入手机号码/账号'
+          sensors.track("Loginresult",{
+            is_true: false,
+            false_reason: this.errorMsg.loginUser.phoneNumber
+          });
         } else if (password == null || password === undefined || password === '') {
           this.errorMsg.loginUser.password = '请输入密码'
+          sensors.track("Loginresult",{
+            is_true: false,
+            false_reason: this.errorMsg.loginUser.password
+          });
         } else {
           let that = this;
           let json = {
@@ -312,6 +340,16 @@
               localStorage.setItem('apelink_user_profileUrl', profileUrl);
               localStorage.setItem('apelink_user_email', email);
               localStorage.setItem('apelink_user_sex', sex);
+              sensors.registerPage({
+                platform_type: 'web',
+                is_login: true,
+                is_register: true
+              });
+              sensors.login(uid);
+              sensors.track("Loginresult",{
+                is_true: true,
+                false_reason: '登录成功'
+              });
               if (res.data.signedIn) {
                 that.$router.push('/list')
               } else {
@@ -339,15 +377,31 @@
             switch (msgCode) {
               case '9019':
                 that.errorMsg.loginUser.phoneNumber = '账号不正确';
+                sensors.track("Loginresult",{
+                  is_true: false,
+                  false_reason: that.errorMsg.loginUser.phoneNumber
+                });
                 break;
               case '9002':
                 that.errorMsg.loginUser.password = '密码格式不正确';
+                sensors.track("Loginresult",{
+                  is_true: false,
+                  false_reason: that.errorMsg.loginUser.password
+                });
                 break;
               case '9008':
                 that.errorMsg.loginUser.password = '密码不正确';
+                sensors.track("Loginresult",{
+                  is_true: false,
+                  false_reason: that.errorMsg.loginUser.password
+                });
                 break;
               default:
                 that.errorMsg.loginUser.phoneNumber = msgCode;
+                sensors.track("Loginresult",{
+                  is_true: false,
+                  false_reason: that.errorMsg.loginUser.phoneNumber
+                });
             }
           })
         }
@@ -363,51 +417,95 @@
           if (this.strLength(nickName) > 14) {
             pass = false;
             this.errorMsg.registerUser.nickName = '请输入为14个英文字符或7个汉字'
+            sensors.track("Registerresult",{
+              is_true: false,
+              false_reason: this.errorMsg.registerUser.nickName
+            });
           }
         } else {
           pass = false;
           this.errorMsg.registerUser.nickName = '昵称不能为空'
+          sensors.track("Registerresult",{
+            is_true: false,
+            false_reason: this.errorMsg.registerUser.nickName
+          });
         }
         if (phoneNumber !== null && phoneNumber !== '' && phoneNumber !== undefined) {
           if (!(/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phoneNumber))) {
             pass = false;
             this.errorMsg.registerUser.phoneNumber = '请输入正确格式的手机号码'
+            sensors.track("Registerresult",{
+              is_true: false,
+              false_reason: this.errorMsg.registerUser.phoneNumber
+            });
           }
         } else {
           pass = false;
           this.errorMsg.registerUser.phoneNumber = '手机号码不能为空'
+          sensors.track("Registerresult",{
+            is_true: false,
+            false_reason: this.errorMsg.registerUser.phoneNumber
+          });
         }
         if (password !== null && password !== '' && password !== undefined) {
           if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(this.registerUser.password)) {
             if (this.registerUser.confirmpsd !== this.registerUser.password) {
               pass = false;
               this.errorMsg.registerUser.password = '两次输入不一致'
+              sensors.track("Registerresult",{
+                is_true: false,
+                false_reason: this.errorMsg.registerUser.password
+              });
             }
           } else {
             pass = false;
             this.errorMsg.registerUser.password = '只允许输入6-14个英文大小写和数字'
+            sensors.track("Registerresult",{
+              is_true: false,
+              false_reason: this.errorMsg.registerUser.password
+              });
           }
         } else {
           pass = false;
           this.errorMsg.registerUser.password = '密码不能为空'
+          sensors.track("Registerresult",{
+            is_true: false,
+            false_reason: this.errorMsg.registerUser.password
+          });
         }
         if (confirmpsd !== null && confirmpsd !== '' && confirmpsd !== undefined) {
           if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(this.registerUser.password)) {
             if (this.registerUser.confirmpsd !== this.registerUser.password) {
               pass = false;
               this.errorMsg.registerUser.confirmpsd = '两次输入不一致'
+              sensors.track("Registerresult",{
+                is_true: false,
+                false_reason: this.errorMsg.registerUser.confirmpsd
+              });
             }
           } else {
             pass = false;
             this.errorMsg.registerUser.confirmpsd = '只允许输入6-14个英文大小写和数字'
+            sensors.track("Registerresult",{
+              is_true: false,
+              false_reason: this.errorMsg.registerUser.confirmpsd
+            });
           }
         } else {
           pass = false;
           this.errorMsg.registerUser.confirmpsd = '密码不能为空'
+          sensors.track("Registerresult",{
+            is_true: false,
+            false_reason: this.errorMsg.registerUser.confirmpsd
+          });
         }
         if (!(code !== null && code !== '' && code !== undefined)) {
           pass = false;
           this.errorMsg.registerUser.code = '手机验证码不能为空'
+          sensors.track("Registerresult",{
+            is_true: false,
+            false_reason: this.errorMsg.registerUser.code
+          });
         }
         if (pass) {
           let that = this;
@@ -421,6 +519,16 @@
           that.$axios.post(url, json).then(function (res) {
             that.showTip = true;
             that.tipText = '注册成功';
+            localStorage.setItem('apelink_user_is_register', true);
+            sensors.registerPage({
+              platform_type: 'web',
+              is_login: false,
+              is_register: true
+            });
+            sensors.track("Registerresult",{
+              is_true: true,
+              false_reason: '注册成功'
+            });
             setTimeout(() => {
               that.showTip = false;
               that.login()

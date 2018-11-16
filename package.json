@@ -17,6 +17,7 @@
     "axios": "^0.18.0",
     "bootstrap": "^3.3.7",
     "jquery": "^2.2.3",
+    "sa-sdk-javascript": "^1.12.2",
     "swiper": "^4.3.3",
     "tinymce": "^4.8.0",
     "vue": "^2.5.2",

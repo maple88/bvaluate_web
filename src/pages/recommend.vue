@@ -402,6 +402,7 @@
 </template>
 
 <script>
+  // import sensors from '../../static/sa-init.js'
   import Swiper from 'swiper';
 
   let img1 = require('../assets/follow/banner01.png');
@@ -980,6 +981,14 @@
       });
       this.initPageDate()
       this.scrollFlash()
+
+      // var end_time = "";
+      // window.onload = function(){
+      //   end_time = new Date();
+      //   sensors.quick('autoTrack',{
+      //     load_time: end_time.getTime() - start_time.getTime()
+      //   })
+      // }
     }
   }
 </script>

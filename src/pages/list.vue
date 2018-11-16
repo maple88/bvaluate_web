@@ -30,8 +30,8 @@
               <div class="topproduct">
                 <div class="pcol" v-for="(item, index) in topbangdan.topProject" :key="index">
                   <div class="prod">
-                    <div class="picon" @click="goArticle('/project',{sid: item.sid})"><img src="../assets/media.jpg" :src="item.logoSrc"></div>
-                    <span class="pname" @click="goArticle('/project',{sid: item.sid})">{{item.project}}</span>
+                    <div class="picon" :data="item.project" @click="goArticle('/project',{sid: item.sid}, $event)"><img src="../assets/media.jpg" :src="item.logoSrc"></div>
+                    <span class="pname" :data="item.project" @click="goArticle('/project',{sid: item.sid}, $event)">{{item.project}}</span>
                   </div>
                 </div>
               </div>
@@ -118,7 +118,7 @@
                           <td v-else-if="index === 1" class="tr_second"><span>{{index + 1 }}</span></td>
                           <td v-else-if="index === 2" class="tr_third"><span>{{index + 1 }}</span></td>
                           <td v-else><span>{{index + 1 }}</span></td>
-                          <td class="tr_first cursor_style" @click.stop="goArticle('/project',{sid: item.sid})">
+                          <td class="tr_first cursor_style" :data="item.project" @click.stop="goArticle('/project',{sid: item.sid}, $event)">
                             <h4 :title="item.project">{{item.project}}</h4>
                           </td>
                           <td>{{item.rankingTotalScore }}</td>
@@ -252,6 +252,7 @@
 </template>
 
 <script>
+  import sensors from '../../static/sa-init.js'
   import Swiper from 'swiper';
 
   let img1 = require('../assets/follow/banner01.png');
@@ -278,6 +279,42 @@
         topbangdan: []
       }
     },
+    mounted() {
+      new Swiper('#right_swiper', {
+        autoplay: {
+          disableOnInteraction: false,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        }
+      });
+      this.getUpList();
+      this.getDate();
+      this.getDownList();
+      this.getTopBangdan();
+
+      var end_time = "";
+      window.onload = function(){
+        end_time = new Date();
+        sensors.quick('autoTrack',{
+          load_time: end_time.getTime() - start_time.getTime()
+        })
+
+        // 在页面加载完毕或者也不用加载完毕,定义一个初始时间
+        var start = new Date();
+        // 在页面关闭前,调用sa的track方法
+        window.onunload = function() {
+          var end = new Date();
+          // 如果用户一直不关闭页面，可能出现超大值，可以根据业务需要处理，例如设置一个上限
+          var duration = (end.getTime() - start_time.getTime()) / 1000;
+          // 定义一个记录页面停留时间的事件pageView,并且保存需要的属性(停留时间和当前页面的地址)
+          sensors.track('WebStay', {
+            event_duration: duration
+          });
+        };
+      }
+    },
     methods: {
       success() {
         console.log(123456)
@@ -286,9 +323,11 @@
         this.successGo = url;
         this.isShow = true;
       },
-      goArticle(url, query) {
+      goArticle(url, query, event) {
         let routeData = this.$router.resolve({path: url, query: query});
         window.open(routeData.href, '_blank');
+
+        sensors.quick('trackHeatMap', event.currentTarget);
       },
       getDate() {
         let that = this;
@@ -334,23 +373,7 @@
           that.topbangdan = res.data
         });
       }
-    },
-    mounted() {
-      new Swiper('#right_swiper', {
-        autoplay: {
-          disableOnInteraction: false,
-        },
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        }
-      });
-      this.getUpList();
-      this.getDate();
-      this.getDownList();
-      this.getTopBangdan();
-    },
-    filters: {}
+    }
   }
 </script>
 
