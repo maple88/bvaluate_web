@@ -1,6 +1,6 @@
 <template>
   <div class="page" id="list_page">
-    <v-login v-model="isShow" :goUrl="successGo" :success="reMore"></v-login>
+    <v-login v-model="isShow" :success="refreshPage"></v-login>
     <vheader/>
     <div class="maintainer">
       <div class="follow_content" id="article">
@@ -39,8 +39,8 @@
                 <div class="listBox_top">
                   <h4 class="list_title">全球项目榜单</h4>
                   <div class="tabBtn">
-                    <button class="btnStyle" :class="type==='周榜'?'active':''" @click="changeList('周榜')">周榜</button>
-                    <button class="btnStyle" :class="type==='月榜'?'active':''" @click="changeList('月榜')">月榜</button>
+                    <button class="btnStyle" data="查看周榜" :class="type==='周榜'?'active':''" @click="changeList('周榜')">周榜</button>
+                    <button class="btnStyle" data="查看月榜" :class="type==='月榜'?'active':''" @click="changeList('月榜')">月榜</button>
                   </div>
                 </div>
                 <div class="listBox_content">
@@ -138,7 +138,7 @@
                     </table>
                   </div>
                   <div class="moreBox" v-if="!(showloading === -1)">
-                    <button :disabled="showloading" class="relaodMore" @click="reMore()">
+                    <button :disabled="showloading" class="relaodMore" @click="reMore()" data="加载更多">
                       <img v-if="showloading" :src="loading"/>
                       <span v-if="!showloading">加载更多</span>
                     </button>
@@ -300,19 +300,6 @@
         sensors.quick('autoTrack',{
           load_time: end_time.getTime() - start_time.getTime()
         })
-
-        // 在页面加载完毕或者也不用加载完毕,定义一个初始时间
-        var start = new Date();
-        // 在页面关闭前,调用sa的track方法
-        window.onunload = function() {
-          var end = new Date();
-          // 如果用户一直不关闭页面，可能出现超大值，可以根据业务需要处理，例如设置一个上限
-          var duration = (end.getTime() - start_time.getTime()) / 1000;
-          // 定义一个记录页面停留时间的事件pageView,并且保存需要的属性(停留时间和当前页面的地址)
-          sensors.track('WebStay', {
-            event_duration: duration
-          });
-        };
       }
     },
     methods: {
@@ -372,6 +359,9 @@
         that.$axios.get('/api/ICO/icoRank?type=周榜&pageNo=0&pageSize=3').then(function (res) {
           that.topbangdan = res.data
         });
+      },
+      refreshPage(){
+        window.location.reload();
       }
     }
   }

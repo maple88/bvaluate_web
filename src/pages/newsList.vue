@@ -6,8 +6,8 @@
         <div class="fish_container">
           <div class="label_box newsList_page">
             <a href="javascript:void(0);" :class="'active'">{{industry}}</a>
-            <button class="follow" v-show="!projectFollow" @click="setFollow">+ 关注</button>
-            <button class="followed" v-show="projectFollow" @click="deleteFollow(industry)">已关注</button>
+            <button class="follow" v-show="!projectFollow" data="关注" @click="setFollow">+ 关注</button>
+            <button class="followed" v-show="projectFollow" data="取消关注" @click="deleteFollow(industry)">已关注</button>
           </div>
         </div>
       </div>
@@ -93,7 +93,7 @@
               </div>
               <div class="loading_more">
                 <p class="loading_more_tip" v-if="showloading===-1">{{loadingTip}}~</p>
-                <button :disabled="showloading" @click.stop="reloadMore(industry,newsType)" v-if="!(showloading===-1)">
+                <button :disabled="showloading" data="加载更多" @click.stop="reloadMore(industry,newsType)" v-if="!(showloading===-1)">
                   <img v-if="showloading" :src="loading"/>
                   <span v-if="!showloading">加载更多</span>
                 </button>
@@ -132,7 +132,7 @@
               </div>
               <div class="loading_more">
                 <p class="loading_more_tip" v-if="showloading===-1">{{loadingTip}}~</p>
-                <button :disabled="showloading" @click.stop="loadMoreICO" v-if="!(showloading===-1)">
+                <button :disabled="showloading" data="加载更多" @click.stop="loadMoreICO" v-if="!(showloading===-1)">
                   <img v-if="showloading" :src="loading"/>
                   <span v-if="!showloading">加载更多</span>
                 </button>
@@ -300,22 +300,7 @@
         sensors.quick('autoTrack',{
           load_time: end_time.getTime() - start_time.getTime()
         })
-
-        // 在页面加载完毕或者也不用加载完毕,定义一个初始时间
-        var start = new Date();
-        // 在页面关闭前,调用sa的track方法
-        window.onunload = function() {
-          var end = new Date();
-          // 如果用户一直不关闭页面，可能出现超大值，可以根据业务需要处理，例如设置一个上限
-          var duration = (end.getTime() - start_time.getTime()) / 1000;
-          // 定义一个记录页面停留时间的事件pageView,并且保存需要的属性(停留时间和当前页面的地址)
-          sensors.track('WebStay', {
-            event_duration: duration
-          });
-        };
       }
-    },
-    activated() {
     },
     methods: {
       init() {

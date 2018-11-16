@@ -13,7 +13,7 @@
           <p class="uploadtips">注：暂只支持pdf格式文件，文件名称格式为项目名称-版本号-语言.pdf<br>(例如300cubits TEU-2.0.00-cn.pdf)</p>
           <div class="uploadWhitePaper">
             <div class="filename">
-              <input type="text" readonly="readonly" v-model="filename">
+              <input type="text" data="点击了只读状态的输入框" readonly="readonly" v-model="filename">
               <span class="help-block" v-if="fileTips">
                 <img src="../assets/login/iclose.png">
                 {{fileTips}}
@@ -21,10 +21,10 @@
             </div>
             <div class="rightBtn">
               <div class="chooseFile">
-                <input type="file" @change="selectPDF($event)">
-                <button>选择文件</button>
+                <input type="file" data="选择文件" @change="selectPDF($event)">
+                <button data="选择文件">选择文件</button>
               </div>
-              <button class="uploadBtn" :class="{ disabled: uploadBtn }" :disabled="uploadBtn" @click="uploadPDF">上传</button>
+              <button class="uploadBtn" data="上传白皮书" :class="{ disabled: uploadBtn }" :disabled="uploadBtn" @click="uploadPDF">上传</button>
             </div>
           </div>
           <div class="uploadstate" v-show="uploadstate">
@@ -42,6 +42,7 @@
 </template>
 
 <script>
+  import sensors from '../../static/sa-init.js'
   export default {
     props: {
       value: {

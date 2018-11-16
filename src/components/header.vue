@@ -12,13 +12,13 @@
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false" data="导航按钮">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <button class="button open_search navbar-toggle"><img src="../assets/search/search_b.png"></button>
+            <button class="button open_search navbar-toggle" data="搜索按钮"><img src="../assets/search/search_b.png"></button>
             <router-link to="/list" class="navbar-brand" data="logo"><img src="../assets/logo.png"></router-link>
             <!-- <a class="navbar-brand"><img src="../assets/logo.png"></a> -->
           </div>
@@ -28,11 +28,11 @@
             <ul class="nav navbar-nav">
               <!-- <router-link tag="li" to="/index" active-class="active"><a>首页</a></router-link> -->
               <!-- <router-link tag="li" to="/recommend" active-class="active"><a>新闻</a></router-link> -->
-              <router-link data="榜单" tag="li" to="/list" active-class="active"><a>榜单</a></router-link>
-              <router-link data="关注" tag="li" to="/follow" active-class="active" v-show="token"><a>关注</a></router-link>
-              <li v-show="!token" data="关注" @click="isLogin('/follow', '关注', $event)"><a>关注</a></li>
-              <router-link tag="li" data="关注" to="/userCenter" active-class="active" v-show="token"><a>个人中心</a></router-link>
-              <li v-show="!token" data="个人中心" @click="isLogin('/userCenter', '个人中心', $event)"><a>个人中心</a></li>
+              <router-link tag="li" to="/list" active-class="active"><a data="榜单">榜单</a></router-link>
+              <router-link tag="li" to="/follow" active-class="active" v-show="token"><a data="关注">关注</a></router-link>
+              <li v-show="!token" @click="isLogin('/follow', '关注')"><a data="关注">关注</a></li>
+              <router-link tag="li" to="/userCenter" active-class="active" v-show="token"><a data="个人中心">个人中心</a></router-link>
+              <li v-show="!token" @click="isLogin('/userCenter', '个人中心')"><a data="个人中心">个人中心</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right" v-if="token">
               <li class="dropdown">
@@ -69,7 +69,7 @@
               </li>
             </ul>
             <div class="nav navbar-nav navbar-right nav-search">
-              <button class="button open_search"><img src="../assets/search/search.png"></button>
+              <button class="button open_search" data="搜索按钮"><img src="../assets/search/search.png"></button>
             </div>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -79,7 +79,7 @@
               <div class="left">
                 <div class="dropdown">
                   <button class="btn btn-default dropdown-toggle" type="button" id="searchType" data-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="true">
+                          aria-haspopup="true" aria-expanded="true" data="选择搜索的分类">
                     {{searchType}}
                     <span class="caret"></span>
                   </button>
@@ -90,7 +90,7 @@
                 </div>
               </div>
               <div class="center">
-                <input type="text" v-model="search" class="search_input" data="搜索" @keyup.enter="goSearch($event)">
+                <input type="text" v-model="search" class="search_input" data="输入搜素内容" @keyup.enter="goSearch($event)">
               </div>
               <div class="right">
                 <button class="search_submit" @click="goSearch($event)" data="搜索按钮">
@@ -194,11 +194,10 @@
           operate: '注册button'
         });
       },
-      isLogin(url, name, event) {
+      isLogin(url, name) {
         this.successGo = url;
         this.isShow = true;
 
-        sensors.quick('trackHeatMap', event.currentTarget);
         if (name == '关注') {
           sensors.track("Loginstart",{
             entrance: '列表页',

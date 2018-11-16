@@ -11,10 +11,13 @@ sensors.init({
   heatmap: {
     //是否开启点击图，默认 default 表示开启，自动采集 $WebClick 事件，可以设置 'not_collect' 表示关闭
     //需要 JSSDK 版本号大于 1.7
-    clickmap:'default',
+    clickmap: 'default',
     //是否开启触达注意力图，默认 default 表示开启，自动采集 $WebStay 事件，可以设置 'not_collect' 表示关闭
     //需要 JSSDK 版本号大于 1.9.1
-    scroll_notice_map:'not_collect',
+    scroll_notice_map: 'default',
+    //考虑到用户隐私，这里可以设置input里的内容是否采集
+    //如果返回真，表示采集input内容，返回假表示不采集input内容,默认不采集
+    // collect_input: false,
     //假如要在 $WebClick 事件增加自定义属性，可以通过（a，button，input）这三类标签的特征来判断是否要增加
     custom_property:function( element_target ){
         //比如您需要给有 data=test 属性的标签的点击事件增加自定义属性 name:'aa' ，则代码如下

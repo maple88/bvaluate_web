@@ -112,7 +112,7 @@
                       <p class="name">{{partner.h3}}</p>
                       <p class="posi">{{partner.h4}}</p>
                       <div class="i" :class="partner.linkin?'on':''">
-                        <a :href="partner.linkin" target="_blank">
+                        <a :href="partner.linkin" target="_blank" :data="partner.h3">
                           <i class="fa fa-linkedin"></i>
                         </a>
                       </div>
@@ -154,7 +154,7 @@
                   <p>资金监管</p>
                 </div>
                 <div class="numitem">
-                  <p class="num">{{project.technicalAnalysisScore |showTatolCore }}</p>
+                  <p class="num">{{project.technicalAnalysisScore | showTatolCore }}</p>
                   <p>技术</p>
                 </div>
               </div>
@@ -358,9 +358,9 @@
           </div>
           <div class="section4">
             <div class="sectiontabs">
-              <a href="javascript:;" :class="atvTwitterOrWeibo==1?'active':''"
+              <a data="推文" href="javascript:;" :class="atvTwitterOrWeibo==1?'active':''"
                  @click.stop="iniTwitterOrWeibo(project.project,'290002') , atvTwitterOrWeibo=1 , showIcon = nicon ,TWewOrGrade = '290004',TWewOrGradeNo=2">推文</a>
-              <a href="javascript:;" :class="atvTwitterOrWeibo==2?'active':''"
+              <a data="微博" href="javascript:;" :class="atvTwitterOrWeibo==2?'active':''"
                  @click.stop="iniTwitterOrWeibo(project.project,'290004') , atvTwitterOrWeibo=2 , showIcon = weibo,TWewOrGrade = '290004',TWewOrGradeNo=2">微博</a>
             </div>
             <div class="swiper-container section-swiper" id="twitterOrWeiboSwiper">
@@ -597,19 +597,6 @@
         sensors.quick('autoTrack',{
           load_time: end_time.getTime() - start_time.getTime()
         })
-
-        // 在页面加载完毕或者也不用加载完毕,定义一个初始时间
-        var start = new Date();
-        // 在页面关闭前,调用sa的track方法
-        window.onunload = function() {
-          var end = new Date();
-          // 如果用户一直不关闭页面，可能出现超大值，可以根据业务需要处理，例如设置一个上限
-          var duration = (end.getTime() - start_time.getTime()) / 1000;
-          // 定义一个记录页面停留时间的事件pageView,并且保存需要的属性(停留时间和当前页面的地址)
-          sensors.track('WebStay', {
-            event_duration: duration
-          });
-        };
       }
     },
     filters: {

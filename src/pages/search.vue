@@ -7,22 +7,22 @@
           <div class="search_box">
             <div class="left">
               <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="searchType" data-toggle="dropdown"
+                <button data="选择搜索分类" class="btn btn-default dropdown-toggle" type="button" id="searchType" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="true">
                   {{search.class}}
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                  <li><a href="javascript:void(0);" @click="changSearchClass('文章')">文章</a></li>
-                  <li><a href="javascript:void(0);" @click="changSearchClass('项目')">项目</a></li>
+                  <li><a href="javascript:void(0);" data="文章" @click="changSearchClass('文章')">文章</a></li>
+                  <li><a href="javascript:void(0);" data="项目" @click="changSearchClass('项目')">项目</a></li>
                 </ul>
               </div>
             </div>
             <div class="center">
-              <input type="text" v-model="search.keyword" class="search_input" @keyup.enter="searchKeyWord">
+              <input type="text" data="输入搜素关键字" v-model="search.keyword" class="search_input" @keyup.enter="searchKeyWord">
             </div>
             <div class="right">
-              <button class="search_submit" @click="searchKeyWord()">
+              <button class="search_submit" data="确认搜索" @click="searchKeyWord()">
                 <img src="../assets/search/search.png" alt="search"/>
               </button>
             </div>
@@ -33,12 +33,12 @@
       <div class="label_div" v-if="search.show">
         <div class="fish_container">
           <div class="label_box">
-            <a href="javascript:void(0);" :class="search.type === 'NEWS'?'active':''" @click="changeType('NEWS')">新闻</a>
-            <a href="javascript:void(0);" :class="search.type === 'WEIXIN'?'active':''"
+            <a data="新闻" href="javascript:void(0);" :class="search.type === 'NEWS'?'active':''" @click="changeType('NEWS')">新闻</a>
+            <a data="微信" href="javascript:void(0);" :class="search.type === 'WEIXIN'?'active':''"
                @click="changeType('WEIXIN')">微信</a>
-            <a href="javascript:void(0);" :class="search.type === 'WEIBO'?'active':''"
+            <a data="微博" href="javascript:void(0);" :class="search.type === 'WEIBO'?'active':''"
                @click="changeType('WEIBO')">微博</a>
-            <a href="javascript:void(0);" :class="search.type === 'TWITTER'?'active':''" @click="changeType('TWITTER')">Twitter</a>
+            <a data="Twitter" href="javascript:void(0);" :class="search.type === 'TWITTER'?'active':''" @click="changeType('TWITTER')">Twitter</a>
           </div>
         </div>
       </div>
@@ -54,7 +54,7 @@
                         <div class="media" v-for="news in newsList">
                           <div class="media-left media-middle"
                                v-if="news.dataType === 'NEWS'||news.dataType === 'WEIXIN'">
-                            <div class="newimg_box" @click="goArticle('/article',{sid:news.sid})">
+                            <div class="newimg_box" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event)">
                               <img v-if="news.titlePicture" :src="news.titlePicture"/>
                               <div class="date_box">
                                 <span class="day">{{news.urlTime | showDay}}</span>
@@ -64,17 +64,17 @@
                           </div>
                           <div class="media-left media-middle"
                                v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'">
-                            <div class="newimg_box TorW" @click="goArticle('/article',{sid:news.sid})">
+                            <div class="newimg_box TorW" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event)">
                               <img :src="news.dataType === 'WEIBO'?weibo:tuiwen"/>
                               <span class="day">{{news.urlDate }}</span>
                             </div>
                           </div>
                           <div class="media-body">
-                            <h4 class="media-heading" :title="news.title" @click="goArticle('/article',{sid:news.sid})"
+                            <h4 class="media-heading" :data="news.title" :title="news.title" @click="goArticle('/article',{sid:news.sid}, $event)"
                                 v-if="!(news.dataType === 'WEIBO' || news.dataType === 'TWITTER')" v-html="news.title ">
                             </h4>
-                            <p class="media-words TorW" v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'"
-                               @click="goArticle('/article',{sid:news.sid})" v-html="news.content ">
+                            <p class="media-words TorW" :data="news.content" v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'"
+                               @click="goArticle('/article',{sid:news.sid}, $event)" v-html="news.content">
                             </p>
                             <p class=" media-words" v-else v-html="news.content ">
                             </p>
@@ -82,32 +82,35 @@
                               <ul>
                                 <li
                                   v-if="!(news.siteName !== 'NULL' && news.siteName !== null && news.siteName !== '')"
-                                  @click="goArticle('/author',{author: news.author,type: 'author'})">
+                                  @click="goArticle('/author',{author: news.author,type: 'author'}, $event)" :data="news.author">
                                   <div class="userimg">
                                     <img src="../assets/follow/user_head.png">
                                   </div>
                                   {{news.author}}
                                 </li>
-                                <li v-else @click="goArticle('/author',{author: news.siteName,type: 'siteName'})">
+                                <li v-else :data="news.siteName" @click="goArticle('/author',{author: news.siteName,type: 'siteName'}, $event)">
                                   {{news.siteName}}
                                 </li>
                                 <li>{{news.urlTime}}</li>
                               </ul>
                               <div class="tips"
                                    v-if="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL'"
-                                   @click="goProjectByName(news.projectCategory)"
+                                   @click="goProjectByName(news.projectCategory, $event)"
+                                   :data="news.projectCategory"
                               >
                                 {{news.projectCategory | labelFormat}}
                               </div>
                               <div class="tips"
                                    v-else-if="news.industryCategory !==null && news.industryCategory !== '' && news.industryCategory !==undefined && news.industryCategory !=='NULL'"
-                                   @click="goIndustryByIndustry(news.industryCategory)"
+                                   @click="goIndustryByIndustry(news.industryCategory, $event)"
+                                   :data="news.industryCategory"
                               >
                                 {{news.industryCategory | labelFormat}}
                               </div>
                               <div class="tips"
                                    v-else="news.countryCategory !==null && news.countryCategory !== '' && news.countryCategory !==undefined && news.countryCategory !=='NULL'"
-                                   @click="goIndustryByCountry(news.countryCategory)"
+                                   @click="goIndustryByCountry(news.countryCategory, $event)"
+                                   :data="news.countryCategory"
                               >
                                 {{news.countryCategory | labelFormat}}
                               </div>
@@ -121,7 +124,7 @@
               </div>
               <div class="loading_more">
                 <p class="loading_more_tip" v-if="showloading===-1">{{loadingTip}}~</p>
-                <button :disabled="showloading" @click.stop="loadMoreNews" v-if="!(showloading===-1)">
+                <button :disabled="showloading" data="加载更多" @click.stop="loadMoreNews" v-if="!(showloading===-1)">
                   <img v-if="showloading" :src="loading"/>
                   <span v-if="!showloading">加载更多</span>
                 </button>
@@ -132,7 +135,7 @@
                 <div class="project_list_box" v-for="project in projectList">
                   <div class="project_info">
                     <div class="left">
-                      <div class="logo_box" @click="goProjectById(project.sid)">
+                      <div class="logo_box" :data="project.project" @click="goProjectById(project.sid, $event)">
                         <img :src="project.logoSrc"/>
                       </div>
                     </div>
@@ -140,7 +143,7 @@
                       <div class="base_info">
                         <div class="left">
                           <h4>
-                            <span v-html="project.project" @click="goProjectById(project.sid)"></span>
+                            <span v-html="project.project" :data="project.project" @click="goProjectById(project.sid, $event)"></span>
                             <i class="fa fa-heart-o" v-if="!project.collected" @click="setFollow(project)"></i>
                             <i class="fa fa-heart" v-else></i>
                           </h4>
@@ -160,7 +163,7 @@
               </div>
               <div class="loading_more">
                 <p class="loading_more_tip" v-if="showloading===-1">{{loadingTip}}~</p>
-                <button :disabled="showloading" @click.stop="loadMoreICO" v-if="!(showloading===-1)">
+                <button :disabled="showloading" data="加载更多" @click.stop="loadMoreICO" v-if="!(showloading===-1)">
                   <img v-if="showloading" :src="loading"/>
                   <span v-if="!showloading">加载更多</span>
                 </button>
@@ -185,7 +188,7 @@
                           <span>{{flash.urlTime | dataFormat}}</span>
                         </div>
                         <div class="item_body">
-                          <h4 @click="goArticle('/article',{sid:flash.sid})">{{flash.title}}</h4>
+                          <h4 :data="flash.title" @click="goArticle('/article',{sid:flash.sid}, $event)">{{flash.title}}</h4>
                           <p>{{flash.content}}</p>
                         </div>
                       </div>
@@ -212,14 +215,14 @@
                         </div>
                         <div class="item_body" :class="affair.titlePicture ? 'hasImg' : ''">
                           <div class="content" v-if="affair.titlePicture">
-                            <h4 @click="goArticle('/article',{sid:affair.sid})">{{affair.title}}</h4>
+                            <h4 :data="affair.title" @click="goArticle('/article',{sid:affair.sid}, $event)">{{affair.title}}</h4>
                             <p>{{affair.content}}</p>
                           </div>
                           <div class="content_img" v-if="affair.titlePicture"
-                               @click="goArticle('/article',{sid:affair.sid})">
+                               @click="goArticle('/article',{sid:affair.sid}, $event)" :data="affair.title">
                             <img :src="affair.titlePicture"/>
                           </div>
-                          <h4 v-if="!affair.titlePicture" @click="goArticle('/article',{sid:affair.sid})">
+                          <h4 v-if="!affair.titlePicture" :data="affair.title" @click="goArticle('/article',{sid:affair.sid}, $event)">
                             {{affair.title}}</h4>
                           <p v-if="!affair.titlePicture">{{affair.content}}</p>
                         </div>
@@ -366,19 +369,6 @@
         sensors.quick('autoTrack',{
           load_time: end_time.getTime() - start_time.getTime()
         })
-
-        // 在页面加载完毕或者也不用加载完毕,定义一个初始时间
-        var start = new Date();
-        // 在页面关闭前,调用sa的track方法
-        window.onunload = function() {
-          var end = new Date();
-          // 如果用户一直不关闭页面，可能出现超大值，可以根据业务需要处理，例如设置一个上限
-          var duration = (end.getTime() - start_time.getTime()) / 1000;
-          // 定义一个记录页面停留时间的事件pageView,并且保存需要的属性(停留时间和当前页面的地址)
-          sensors.track('WebStay', {
-            event_duration: duration
-          });
-        };
       }
     },
     activated() {
@@ -443,7 +433,7 @@
         let regExp = new RegExp(FindText, "g");
         return text.replace(regExp, RepText);
       },
-      goProjectByName(obj) {
+      goProjectByName(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
             let arr = obj.split(';')
@@ -451,9 +441,10 @@
           }
         }
         let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
+        sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
-      goIndustryByIndustry(obj) {
+      goIndustryByIndustry(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
             let arr = obj.split(';')
@@ -461,9 +452,10 @@
           }
         }
         let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
+        sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
-      goIndustryByCountry(obj) {
+      goIndustryByCountry(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
             let arr = obj.split(';')
@@ -471,10 +463,12 @@
           }
         }
         let routeData = this.$router.resolve({path: '/newsList', query: {country: obj}});
+        sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
-      goArticle(url, query) {
+      goArticle(url, query, event) {
         let routeData = this.$router.resolve({path: url, query: query});
+        sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
       goUrl(url, query) {

@@ -331,6 +331,37 @@
         newsForAuthor: []
       }
     },
+    mounted() {
+      new Swiper('#top_banner', {
+        loop: true,
+        // 如果需要分页器
+        pagination: {
+          el: '.swiper-pagination'
+        },
+        autoplay: {
+          disableOnInteraction: false,
+        },
+      })
+      new Swiper('#right_swiper', {
+        autoplay: {
+          disableOnInteraction: false,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        }
+      })
+      this.getDetailData();
+      this.getHotnewsData();
+
+      var end_time = "";
+      window.onload = function(){
+        end_time = new Date();
+        sensors.quick('autoTrack',{
+          load_time: end_time.getTime() - start_time.getTime()
+        })
+      }
+    },
     methods: {
       goProjectByName(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
@@ -646,50 +677,6 @@
           that.newsForAuthor = res.data.content;
         })
       },
-    },
-    mounted() {
-      new Swiper('#top_banner', {
-        loop: true,
-        // 如果需要分页器
-        pagination: {
-          el: '.swiper-pagination'
-        },
-        autoplay: {
-          disableOnInteraction: false,
-        },
-      })
-      new Swiper('#right_swiper', {
-        autoplay: {
-          disableOnInteraction: false,
-        },
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        }
-      })
-      this.getDetailData();
-      this.getHotnewsData();
-
-      var end_time = "";
-      window.onload = function(){
-        end_time = new Date();
-        sensors.quick('autoTrack',{
-          load_time: end_time.getTime() - start_time.getTime()
-        })
-
-        // 在页面加载完毕或者也不用加载完毕,定义一个初始时间
-        var start = new Date();
-        // 在页面关闭前,调用sa的track方法
-        window.onunload = function() {
-          var end = new Date();
-          // 如果用户一直不关闭页面，可能出现超大值，可以根据业务需要处理，例如设置一个上限
-          var duration = (end.getTime() - start_time.getTime()) / 1000;
-          // 定义一个记录页面停留时间的事件pageView,并且保存需要的属性(停留时间和当前页面的地址)
-          sensors.track('WebStay', {
-            event_duration: duration
-          });
-        };
-      }
     },
     beforeRouteEnter(to, from, next) {
       next(vm => {

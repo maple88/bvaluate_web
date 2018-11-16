@@ -13,7 +13,7 @@
               <img src="../assets/follow/icon-follow.png"/>关注
               <div class="arrow"></div>
             </button>
-            <button class="followed_btn" v-show="follow" data="取消作者" @click="deleteFollow($event)">
+            <button class="followed_btn" v-show="follow" data="取消关注作者" @click="deleteFollow($event)">
               <div class="arrow"></div>
               <img src="../assets/follow/icon-followed.png"/>已关注
             </button>
@@ -61,7 +61,7 @@
                         </div>
                       </div>
                       <div class="media-body">
-                        <h4 class="media-heading" :title="news.title" @click="goArticle('/article',{sid:news.sid}, $event)"
+                        <h4 class="media-heading" :title="news.title" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event)"
                             v-if="!(news.dataType === 'WEIBO' || news.dataType === 'TWITTER')" v-html="news.title ">
                         </h4>
                         <p class="media-words TorW" v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'"
@@ -114,7 +114,7 @@
             </ul>
           </div>
           <div class="loading_more">
-            <button :disabled="showloading" @click.stop="getNewsForAuthor()">
+            <button :disabled="showloading" :data="加载更多" @click.stop="getNewsForAuthor()">
               <img v-if="showloading" :src="loading"/>
               <span v-if="!showloading">加载更多</span>
             </button>
@@ -157,19 +157,6 @@
         sensors.quick('autoTrack',{
           load_time: end_time.getTime() - start_time.getTime()
         })
-
-        // 在页面加载完毕或者也不用加载完毕,定义一个初始时间
-        var start = new Date();
-        // 在页面关闭前,调用sa的track方法
-        window.onunload = function() {
-          var end = new Date();
-          // 如果用户一直不关闭页面，可能出现超大值，可以根据业务需要处理，例如设置一个上限
-          var duration = (end.getTime() - start_time.getTime()) / 1000;
-          // 定义一个记录页面停留时间的事件pageView,并且保存需要的属性(停留时间和当前页面的地址)
-          sensors.track('WebStay', {
-            event_duration: duration
-          });
-        };
       }
     },
     filters: {
