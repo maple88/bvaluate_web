@@ -282,11 +282,13 @@
     },
     filters: {
       showDay(obj) {
-        let myDate = new Date(obj);
+        let time = obj.replace(/-/g,'/')
+        let myDate = new Date(time);
         return myDate.getDate()
       },
       showYear(obj) {
-        let myDate = new Date(obj);
+        let time = obj.replace(/-/g,'/')
+        let myDate = new Date(time);
         let month = myDate.getMonth()
         if (month < 9) {
           month = '0' + (month + 1)
