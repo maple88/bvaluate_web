@@ -1657,6 +1657,12 @@
       }
     }
   }
+  @font-face {
+    font-family: 'Titillium';
+    src: url('../fonts/TitilliumWeb-BoldItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
   .topbangdan{
     display: flex;
     flex-direction: row;
@@ -1664,10 +1670,10 @@
       flex: 0 0 33.33%;
       min-width: 33.33%;
       display: flex;
-      // justify-content: center;
+      justify-content: center;
     }
     .item{
-      margin: 0 0 0 50px;
+      // margin: 0 0 0 50px;
       .itit{
         font-size: 20px;
         color: #ccc;
@@ -1677,8 +1683,11 @@
       .inum{
         font-size: 36px;
         color: #333;
-        font-family: "微软雅黑";
-        margin: 0 0 40px;
+        font-family: 'Titillium';
+        margin: 0 0 20px;
+        text-align: center;
+        font-style: italic;
+        font-weight: bold;
       }
     }
     @media (max-width: 1400px) {
@@ -1688,13 +1697,7 @@
       }
       .item .inum{
         font-size: 30px;
-        margin: 0 0 30px;
-      }
-      .item .prod .picon{
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        border: 5px solid #c1b6d2;
+        margin: 0 0 15px;
       }
       .item .prod .pname{
         font-size: 18px;
@@ -1767,19 +1770,20 @@
       flex: 0 0 33.33%;
       min-width: 33.33%;
       display: flex;
-      // justify-content: center;
+      justify-content: center;
     }
     .prod{
       display: flex;
       align-items: center;
-      margin: 0 0 0 50px;
+      // margin: 0 0 0 50px;
+      flex-direction: column;
       .picon{
-        width: 120px;
-        height: 120px;
+        width: 80px;
+        height: 80px;
         border-radius: 50%;
-        border: 10px solid #c1b6d2;
+        // border: 10px solid #c1b6d2;
         overflow: hidden;
-        margin: 0 15px 0 0;
+        margin: 0 0 10px 0;
         cursor: pointer;
         img{
           width: 100%;
@@ -1791,7 +1795,7 @@
         color: #333;
         font-size: 24px;
         font-family: "微软雅黑";
-        max-width: 150px;
+        max-width: 250px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -1799,12 +1803,6 @@
       }
     }
     @media (max-width: 1400px) {
-      .prod .picon{
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        border: 5px solid #c1b6d2;
-      }
       .prod .pname{
         font-size: 18px;
       }
@@ -1823,17 +1821,11 @@
       }
       .prod .pname{
         max-width: inherit;
-        width: 100%;
+        width: 95%;
         text-align: center;
       }
     }
     @media (max-width: 768px) {
-      .prod .picon{
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        border: 3px solid #c1b6d2;
-      }
       .prod .pname{
         font-size: 14px;
       }

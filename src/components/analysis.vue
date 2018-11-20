@@ -2,7 +2,8 @@
   <transition name="fade">
     <div class="login_fixed" v-if="value">
       <div class="login_bg" @click="fn2"></div>
-      <div class="loginbox">
+      <div class="loginbox whitePaper">
+        <div class="whitehead"><img src="../assets/white-head.png"></div>
         <div class="close_box" @click="fn2">
           <i class="icon_close"></i>
         </div>

@@ -746,5 +746,30 @@
       height: 14px;
     }
   }
+}
 
+.loginbox.whitePaper{
+  max-width: 1200px;
+  .whitehead{
+    margin: -74px auto 0;
+    text-align: center;
+  }
+  .whitePaperTitle{
+    margin: -74px 0 0;
+    position: relative;
+    &:after{
+      content: "";
+      position: absolute;
+      background: url(../assets/white-headbg.png) center / 100% no-repeat;
+      width: 158px;
+      height: 12px;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+    p{
+      font-size: 30px;
+      font-weight: bold;
+    }
+  }
 }

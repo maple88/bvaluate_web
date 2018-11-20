@@ -24,7 +24,9 @@
                     <div class="project_list_box" v-for="item in tuijian_xiangmuList">
                       <div class="project_info">
                         <div class="left">
-                          <div class="logo_box" :data="item.project" @click="goArticle('/project',{sid: item.sid}, $event)">
+                          <div class="logo_box" :data="item.project" 
+                          @click="goArticle('/project',{sid: item.sid}, $event), 
+                                  trackProject('关注页推荐项目', item.project, item.sid, '推荐项目没有排行榜位置', item.totalScore)">
                             <img :src="item.logoSrc"/>
                           </div>
                         </div>
@@ -32,8 +34,10 @@
                           <div class="base_info">
                             <div class="left">
                               <h4>
-                                <span v-html="item.project" :data="item.project" @click="goArticle('/project',{sid: item.sid}, $event)"></span>
-                                <i class="fa fa-heart-o" @click="setFollow(item.sid, 'xiangmu')"></i>
+                                <span v-html="item.project" :data="item.project" 
+                                @click="goArticle('/project',{sid: item.sid}, $event), 
+                                        trackProject('关注页推荐项目', item.project, item.sid, '推荐项目没有排行榜位置', item.totalScore)"></span>
+                                <i class="fa fa-heart-o" @click="setFollow(item.sid, 'xiangmu'), trackAttention('项目', item.project)"></i>
                               </h4>
                               <p>{{item.introduction }} </p>
                             </div>
@@ -58,7 +62,9 @@
                     <div class="project_list_box" v-for="item in xiangmuList">
                       <div class="project_info">
                         <div class="left">
-                          <div class="logo_box" :data="item.result.project" @click="goArticle('/project',{sid: item.result.sid}, $event)">
+                          <div class="logo_box" :data="item.result.project" 
+                          @click="goArticle('/project',{sid: item.result.sid}, $event), 
+                          trackProject('关注页已关注项目', item.result.project, item.result.sid, '已关注项目没有排行榜位置', item.result.totalScore)">
                             <img :src="item.result.logoSrc"/>
                           </div>
                         </div>
@@ -66,7 +72,9 @@
                           <div class="base_info">
                             <div class="left">
                               <h4>
-                                <span v-html="item.result.project" :data="item.result.project" @click="goArticle('/project',{sid: item.result.sid}, $event)"></span>
+                                <span v-html="item.result.project" :data="item.result.project" 
+                                @click="goArticle('/project',{sid: item.result.sid}, $event), 
+                                        trackProject('关注页已关注项目', item.result.project, item.result.sid, '已关注项目没有排行榜位置', item.result.totalScore)"></span>
                                 <i class="fa fa-heart" @click="deleteFollow(item.cid, 'xiangmu')"></i>
                               </h4>
                               <p>{{item.result.introduction }} </p>
@@ -100,7 +108,7 @@
                     <ul>
                       <li v-for="item in tuijian_hangyeList">
                         <p :data="item" @click="goIndustryByIndustry(item, $event)">{{item}}</p>
-                        <i class="fa fa-heart-o" @click="setFollow('', 'hangye', item)"></i>
+                        <i class="fa fa-heart-o" @click="setFollow('', 'hangye', item), trackAttention('行业', item)"></i>
                       </li>
                     </ul>
                   </div>
@@ -134,7 +142,7 @@
                     <ul>
                       <li v-for="item in tuijian_guojiaList">
                         <p :data="item" @click="goIndustryByCountry(item, $event)">{{item}}</p>
-                        <i class="fa fa-heart-o" @click="setFollow('', 'guojia', item)"></i>
+                        <i class="fa fa-heart-o" @click="setFollow('', 'guojia', item), trackAttention('国家', item)"></i>
                       </li>
                     </ul>
                   </div>
@@ -168,7 +176,7 @@
                     <ul>
                       <li v-for="item in tuijian_zuozheList">
                         <p :data="item" @click="goArticle('/author',{author: item,type: 'author'}, $event)">{{item}}</p>
-                        <i class="fa fa-heart-o" @click="setFollow('', 'zuozhe', item)"></i>
+                        <i class="fa fa-heart-o" @click="setFollow('', 'zuozhe', item), trackAttention('作者', item)"></i>
                       </li>
                     </ul>
                   </div>
@@ -202,7 +210,7 @@
                           <div class="media" v-for="(item, index) in wenzhangList" :key="item.sid">
                             <div class="media-left media-middle"
                                  v-if="item.result.dataType === 'NEWS'||item.result.dataType === 'WEIXIN'">
-                              <div class="newimg_box" :data="item.result.title" @click="goArticle('/article',{sid:item.result.sid}, $event)">
+                              <div class="newimg_box" :data="item.result.title" @click="goArticle('/article',{sid:item.result.sid}, $event), trackArticle('关注页收藏文章', item.result.title, '关注页内收藏文章没有项目ID', '收藏文章', item.result.sid)">
                                 <img v-if="item.result.titlePicture" :src="item.result.titlePicture"/>
                                 <div class="date_box">
                                   <span class="day">{{item.result.urlTime | showDay}}</span>
@@ -211,7 +219,7 @@
                               </div>
                             </div>
                             <div class="media-body">
-                              <h4 class="media-heading" :data="item.result.title" @click="goArticle('/article',{sid:item.result.sid}, $event)">{{item.result.title}}</h4>
+                              <h4 class="media-heading" :data="item.result.title" @click="goArticle('/article',{sid:item.result.sid}, $event), trackArticle('关注页收藏文章', item.result.title, '关注页内收藏文章没有项目ID', '收藏文章', item.result.sid)">{{item.result.title}}</h4>
                               <p class="media-words">{{item.result.content}}</p>
                               <div class="media-bottom">
                                 <ul>
@@ -234,7 +242,7 @@
                                 </ul>
                                 <div class="tips"
                                      v-if="item.result.projectCategory !==null && item.result.projectCategory !== '' && item.result.projectCategory !==undefined && item.result.projectCategory !=='NULL'"
-                                     @click="goProjectByName(item.result.projectCategory, $event)"
+                                     @click="goProjectByName(item.result.projectCategory, $event), trackProject('关注页收藏文章的项目标签', item.result.projectCategory, '关注页收藏文章的项目标签没有项目ID', '关注页收藏文章的项目标签没有排行榜位置', '关注页收藏文章的项目标签没有项目总分')"
                                      :data="item.result.projectCategory"
                                 >
                                   {{item.result.projectCategory | labelFormat}}
@@ -356,6 +364,32 @@
       }
     },
     methods: {
+      trackAttention(category, name) {
+        sensors.track('Attention', {
+          category: category,
+          name: name
+        });
+      },
+      trackProject(entrance, name, project_id, index, score) {
+        sensors.track('Project', {
+          entrance: entrance,
+          name: name,
+          project_id: project_id,
+          rank: index,
+          score: score,
+          attention_count: '接口没有关注量'
+        });
+      },
+      trackArticle(entrance, name, project_id, category, article_id) {
+        sensors.track('Article', {
+          entrance: entrance,
+          name: name,
+          project_id: project_id,
+          category: category,
+          article_id: article_id,
+          collect_count: '接口没有返回文章收藏量'
+        });
+      },
       tabhide() {
         this.xiangmu = false
         this.hangye = false

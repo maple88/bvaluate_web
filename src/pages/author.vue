@@ -9,7 +9,7 @@
           <p class="occupation">
             <!--自媒体作者-->
             <span class="nickname author">{{author}}</span>
-            <button class="follow_btn" v-show="!follow" data="关注作者" @click="setAuthorFollow($event)">
+            <button class="follow_btn" v-show="!follow" data="关注作者" @click="setAuthorFollow($event), trackAttention('作者', author)">
               <img src="../assets/follow/icon-follow.png"/>关注
               <div class="arrow"></div>
             </button>
@@ -45,7 +45,7 @@
                     <div class="media" v-for="news in newsForAuthor">
                       <div class="media-left media-middle"
                            v-if="news.dataType === 'NEWS'||news.dataType === 'WEIXIN'">
-                        <div class="newimg_box" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event)">
+                        <div class="newimg_box" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event), trackArticle('个人中心页收藏文章', news.title, '个人中心页内收藏文章没有项目ID', '收藏文章', news.sid)">
                           <img v-if="news.titlePicture" :src="news.titlePicture"/>
                           <div class="date_box">
                             <span class="day">{{news.urlTime | showDay}}</span>
@@ -55,7 +55,7 @@
                       </div>
                       <div class="media-left media-middle"
                            v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'">
-                        <div class="newimg_box TorW" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event)">
+                        <div class="newimg_box TorW" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event), trackArticle('个人中心页收藏文章', news.title, '个人中心页内收藏文章没有项目ID', '收藏文章', news.sid)">
                           <img :src="news.dataType === 'WEIBO'?weibo:tuiwen"/>
                           <span class="day">{{news.urlDate }}</span>
                         </div>
@@ -86,7 +86,7 @@
                           </ul>
                           <div class="tips"
                                v-if="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL'"
-                               @click="goProjectByName(news.projectCategory, $event)"
+                               @click="goProjectByName(news.projectCategory, $event), trackProject('个人中心页收藏文章的项目标签', news.projectCategory, '个人中心页收藏文章的项目标签没有项目ID', '个人中心页收藏文章的项目标签没有排行榜位置', '个人中心页收藏文章的项目标签没有项目总分')"
                                :data="news.projectCategory"
                           >
                             {{news.projectCategory | labelFormat}}
@@ -114,7 +114,7 @@
             </ul>
           </div>
           <div class="loading_more">
-            <button :disabled="showloading" :data="加载更多" @click.stop="getNewsForAuthor()">
+            <button :disabled="showloading" data="加载更多" @click.stop="getNewsForAuthor()">
               <img v-if="showloading" :src="loading"/>
               <span v-if="!showloading">加载更多</span>
             </button>
@@ -187,6 +187,32 @@
       },
     },
     methods: {
+      trackAttention(category, name) {
+        sensors.track('Attention', {
+          category: category,
+          name: name
+        });
+      },
+      trackProject(entrance, name, project_id, index, score) {
+        sensors.track('Project', {
+          entrance: entrance,
+          name: name,
+          project_id: project_id,
+          rank: index,
+          score: score,
+          attention_count: '接口没有关注量'
+        });
+      },
+      trackArticle(entrance, name, project_id, category, article_id) {
+        sensors.track('Article', {
+          entrance: entrance,
+          name: name,
+          project_id: project_id,
+          category: category,
+          article_id: article_id,
+          collect_count: '接口没有返回文章收藏量'
+        });
+      },
       getfollowboolean() {
         let that = this;
         let token = localStorage.getItem('apelink_user_token');

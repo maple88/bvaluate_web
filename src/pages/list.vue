@@ -30,8 +30,13 @@
               <div class="topproduct">
                 <div class="pcol" v-for="(item, index) in topbangdan.topProject" :key="index">
                   <div class="prod">
-                    <div class="picon" :data="item.project" @click="goArticle('/project',{sid: item.sid}, $event)"><img src="../assets/media.jpg" :src="item.logoSrc"></div>
-                    <span class="pname" :data="item.project" @click="goArticle('/project',{sid: item.sid}, $event)">{{item.project}}</span>
+                    <div class="picon" :data="item.project" 
+                    @click="goArticle('/project',{sid: item.sid}, $event), 
+                            trackProject('榜单页广告位', item.project, item.sid, '广告位没有排行榜位置', '接口没有项目总分'),
+                            trackUtmproject('榜单页', item.project, item.sid, parseInt(index+1))">
+                      <img src="../assets/media.jpg" :src="item.logoSrc">
+                    </div>
+                    <span class="pname" :data="item.project" @click="goArticle('/project',{sid: item.sid}, $event), trackProject('榜单页广告位', item.project, item.sid, '广告位没有排行榜位置', '接口没有项目总分')">{{item.project}}</span>
                   </div>
                 </div>
               </div>
@@ -118,7 +123,7 @@
                           <td v-else-if="index === 1" class="tr_second"><span>{{index + 1 }}</span></td>
                           <td v-else-if="index === 2" class="tr_third"><span>{{index + 1 }}</span></td>
                           <td v-else><span>{{index + 1 }}</span></td>
-                          <td class="tr_first cursor_style" :data="item.project" @click.stop="goArticle('/project',{sid: item.sid}, $event)">
+                          <td class="tr_first cursor_style" :data="item.project" @click.stop="goArticle('/project',{sid: item.sid}, $event), trackProject('排行榜', item.project, item.sid, parseInt(index+1), item.rankingTotalScore)">
                             <h4 :title="item.project">{{item.project}}</h4>
                           </td>
                           <td>{{item.rankingTotalScore }}</td>
@@ -315,6 +320,24 @@
         window.open(routeData.href, '_blank');
 
         sensors.quick('trackHeatMap', event.currentTarget);
+      },
+      trackProject(entrance, name, project_id, index, score) {
+        sensors.track('Project', {
+          entrance: entrance,
+          name: name,
+          project_id: project_id,
+          rank: index,
+          score: score,
+          attention_count: '接口没有关注量'
+        });
+      },
+      trackUtmproject(title, name, project_id, order) {
+        sensors.track('Utmproject', {
+          title: title,
+          name: name,
+          project_id: project_id,
+          order: order
+        });
       },
       getDate() {
         let that = this;

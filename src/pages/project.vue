@@ -11,8 +11,8 @@
               <div class="imgbrand"><img :src="project.logoSrc "></div>
               <div class="info">
                 <div class="tit">
-                  <a :href="project.outer" target="_blank" :data="project.project"> {{project.project}}</a>
-                  <div class="followbtn" v-if="!isFollow" data="关注项目" @click="setFollow($event)">+ 关注</div>
+                  <a :href="project.outerOfficial" target="_blank" :data="project.project"> {{project.project}}</a>
+                  <div class="followbtn" v-if="!isFollow" data="关注项目" @click="setFollow($event), trackAttention('项目', project.project)">+ 关注</div>
                   <div class="followbtn on" v-if="isFollow" data="取消关注项目" @click="deleteFollow(project.collected, $event)"><i class="fa fa-check"></i> 已关注</div>
                 </div>
                 <p class="smtit">{{project.introduction }}</p>
@@ -52,11 +52,13 @@
                       </div>
                     </div>
                     <div class="media-body">
-                      <h4 class="media-heading" :title="item.title" :data="item.title" @click="goArticle('/article',{sid:item.sid}, $event)">
-                        {{item.title }}
+                      <h4 class="media-heading" :title="item.title" :data="item.title" 
+                      @click="goArticle('/article',{sid:item.sid}, $event), 
+                              trackArticle('项目页', item.title, project.sid, atvNewOrGrade==1?'新闻':'评级文章', item.sid)">
+                        {{item.title}}
                       </h4>
                       <p class="media-words">
-                        {{item.content }}
+                        {{item.content}}
                       </p>
                       <div class="media-bottom">
                         <ul>
@@ -375,7 +377,9 @@
                       <span class="day">{{item.urlDate }}</span>
                     </div>
                     <div class="right">
-                      <p class="des" :data="item.content" @click="goArticle('/article',{sid:item.sid}, $event)">{{item.content}}</p>
+                      <p class="des" :data="item.content" 
+                      @click="goArticle('/article',{sid:item.sid}, $event), 
+                              trackArticle('项目页', item.title, project.sid, atvTwitterOrWeibo==1?'推文':'微博', item.sid)">{{item.content}}</p>
                       <div class="bottom">
                         <span class="name">{{item.author}}</span>
                         <span class="time">{{item.urlTime}}</span>
@@ -504,7 +508,8 @@
           </div>
           <div class="section6" v-if="recommendProjects">
             <div class="rightlayouthead">项目推荐</div>
-            <div class="item" v-for="project in recommendProjects">
+            <div class="item" v-for="project in recommendProjects" 
+            @click="trackProject('项目页广告位', project.project, project.sid, '广告位没有排行榜位置', project.totalScore)">
               <router-link :to="'/project?sid='+project.sid" :data="project.project">
                 <div class="ibanner"><img src="../assets/project/recommend-banner.jpg"></div>
                 <div class="info">
@@ -662,6 +667,32 @@
       '$route': 'initProject'
     },
     methods: {
+      trackAttention(category, name) {
+        sensors.track('Attention', {
+          category: category,
+          name: name
+        });
+      },
+      trackArticle(entrance, name, project_id, category, article_id) {
+        sensors.track('Article', {
+          entrance: entrance,
+          name: name,
+          project_id: project_id,
+          category: category,
+          article_id: article_id,
+          collect_count: '接口没有返回文章收藏量'
+        });
+      },
+      trackProject(entrance, name, project_id, index, score) {
+        sensors.track('Project', {
+          entrance: entrance,
+          name: name,
+          project_id: project_id,
+          rank: index,
+          score: score,
+          attention_count: '接口没有关注量'
+        });
+      },
       scrollNewOrGrade() {
         let $this = document.getElementById('newOrGradeSwiper');
         let finished = true;

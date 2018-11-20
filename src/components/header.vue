@@ -33,6 +33,7 @@
               <li v-show="!token" @click="isLogin('/follow', '关注')"><a data="关注">关注</a></li>
               <router-link tag="li" to="/userCenter" active-class="active" v-show="token"><a data="个人中心">个人中心</a></router-link>
               <li v-show="!token" @click="isLogin('/userCenter', '个人中心')"><a data="个人中心">个人中心</a></li>
+              <li><a href="javascript:;" data="白皮书分析" @click="analysis()">白皮书分析</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right" v-if="token">
               <li class="dropdown">
@@ -45,7 +46,7 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li>
-                    <a href="javascript:;" data="白皮书分析" @click="analysis()">白皮书分析</a>
+                    <a href="javascript:;" data="消息">消息</a>
                   </li>
                   <router-link tag="li" to="/my" data="设置"><a>设置</a></router-link>
                   <!-- <li><a href="#">设置</a></li> -->
@@ -93,7 +94,7 @@
                 <input type="text" v-model="search" class="search_input" data="输入搜素内容" @keyup.enter="goSearch($event)">
               </div>
               <div class="right">
-                <button class="search_submit" @click="goSearch($event)" data="搜索按钮">
+                <button class="search_submit" @click="goSearch($event), trackSearch(searchType, search)" data="搜索按钮">
                   <img src="../assets/search/search.png" alt="search"/>
                 </button>
               </div>
@@ -130,10 +131,12 @@
         search: '',
         isShow: false,
         successGo: '',
-        isWhitePaper: false
+        isWhitePaper: false,
+        path: ''
       }
     },
     mounted() {
+      this.path = this.$router.history.current.path
       $(".nav.navbar-nav li a").on('click', function(){
         $('.collapse').removeClass('in');
       })
@@ -162,8 +165,34 @@
     watch: {
       '$route': 'initUser'
     },
-
     methods: {
+      trackSearch(category, content) {
+        // 榜单，项目详情页，关注，个人中心，白皮书分析，行业国家资讯，文章详情，作者, 搜索页面
+        let that = this
+        let path = [
+          {name: '/list', val: '榜单'},
+          {name: '/project', val: '项目详情页'},
+          {name: '/userCenter', val: '个人中心'},
+          {name: '/newsList', val: '行业国家资讯'},
+          {name: '/article', val: '文章详情'},
+          {name: '/author', val: '作者'},
+          {name: '/search', val: '搜索页面'}
+        ]
+        let index = path.findIndex(function(x){
+          return x.name === that.path;
+        })
+        let entrance;
+        if (index !== -1) {
+          entrance = path[index].val
+        }else {
+          entrance = '找不到入口位置'
+        }
+        sensors.track('Search', {
+          entrance: path[index].val,
+          category: category,
+          content: content
+        });
+      },
       refreshPage(){
         window.location.reload();
       },

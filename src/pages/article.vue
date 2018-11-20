@@ -123,7 +123,7 @@
                         :data="articleContent.siteName">
                       {{articleContent.siteName}}
                     </h4>
-                    <button class="follow_btn" v-if="!follow" data="关注作者" @click="setAuthorFollow()">
+                    <button class="follow_btn" v-if="!follow" data="关注作者" @click="setAuthorFollow(), trackAttention('作者', articleContent.siteName)">
                       <img src="../assets/follow/icon-follow.png"/>关注
                       <div class="arrow"></div>
                     </button>
@@ -136,7 +136,7 @@
                 <div class="author_news">
                   <ul class="news_ul">
                     <li class="news_li" v-for="news in newsForAuthor">
-                      <p :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event)">
+                      <p :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event), trackArticle('文章详情页内作者文章推荐', news.title, '文章详情页内文章没有项目ID', '作者文章推荐', news.sid)">
                         {{news.title}}
                       </p>
                       <p class="time">{{news.urlDate}}</p>
@@ -168,7 +168,7 @@
                 </div>
                 <div class="hot_content">
                   <ul class="long_ul">
-                    <li v-for="(item, index) in hotNews" :key="item.sid" :data="item.title" @click="goArticle('/article',{sid:item.sid}, $event)">
+                    <li v-for="(item, index) in hotNews" :key="item.sid" :data="item.title" @click="goArticle('/article',{sid:item.sid}, $event), trackArticle('文章详情页内24小时热文', item.title, '文章详情页内文章没有项目ID', '24小时热文', item.sid)">
                       <div class="list_item">
                         <div class="item_left" v-if="item.titlePicture">
                           <img :src="item.titlePicture"/>
@@ -363,6 +363,22 @@
       }
     },
     methods: {
+      trackAttention(category, name) {
+        sensors.track('Attention', {
+          category: category,
+          name: name
+        });
+      },
+      trackArticle(entrance, name, project_id, category, article_id) {
+        sensors.track('Article', {
+          entrance: entrance,
+          name: name,
+          project_id: project_id,
+          category: category,
+          article_id: article_id,
+          collect_count: '接口没有返回文章收藏量'
+        });
+      },
       goProjectByName(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {

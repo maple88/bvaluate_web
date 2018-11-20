@@ -6,7 +6,7 @@
         <div class="fish_container">
           <div class="label_box newsList_page">
             <a href="javascript:void(0);" :class="'active'">{{industry}}</a>
-            <button class="follow" v-show="!projectFollow" data="关注" @click="setFollow">+ 关注</button>
+            <button class="follow" v-show="!projectFollow" data="关注" @click="setFollow(), trackAttention('', industry)">+ 关注</button>
             <button class="followed" v-show="projectFollow" data="取消关注" @click="deleteFollow(industry)">已关注</button>
           </div>
         </div>
@@ -23,7 +23,7 @@
                         <div class="media" v-for="news in newsList">
                           <div class="media-left media-middle"
                                v-if="news.dataType === 'NEWS'||news.dataType === 'WEIXIN'">
-                            <div class="newimg_box" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event)">
+                            <div class="newimg_box" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event), trackArticle('资讯列表页的文章', news.title, '资讯列表页的文章没有项目ID', '资讯列表文章', news.sid)">
                               <img v-if="news.titlePicture" :src="news.titlePicture"/>
                               <div class="date_box">
                                 <span class="day">{{news.urlTime | showDay}}</span>
@@ -33,17 +33,17 @@
                           </div>
                           <div class="media-left media-middle"
                                v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'">
-                            <div class="newimg_box TorW" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event)">
+                            <div class="newimg_box TorW" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event), trackArticle('资讯列表页的文章', news.title, '资讯列表页的文章没有项目ID', '资讯列表文章', news.sid)">
                               <img :src="news.dataType === 'WEIBO'?weibo:tuiwen"/>
                               <span class="day">{{news.urlDate }}</span>
                             </div>
                           </div>
                           <div class="media-body">
-                            <h4 class="media-heading" :title="news.title" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event)"
+                            <h4 class="media-heading" :title="news.title" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event), trackArticle('资讯列表页的文章', news.title, '资讯列表页的文章没有项目ID', '资讯列表文章', news.sid)"
                                 v-if="!(news.dataType === 'WEIBO' || news.dataType === 'TWITTER')" v-html="news.title ">
                             </h4>
                             <p class="media-words TorW" v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'"
-                               @click="goArticle('/article',{sid:news.sid}, $event)" v-html="news.content" :data="news.title">
+                               @click="goArticle('/article',{sid:news.sid}, $event), trackArticle('资讯列表页的文章', news.title, '资讯列表页的文章没有项目ID', '资讯列表文章', news.sid)" v-html="news.content" :data="news.title">
                             </p>
                             <p class=" media-words" v-else v-html="news.content ">
                             </p>
@@ -64,7 +64,7 @@
                               </ul>
                               <div class="tips"
                                    v-if="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL'"
-                                   @click="goProjectByName(news.projectCategory, $event)"
+                                   @click="goProjectByName(news.projectCategory, $event), trackProject('资讯列表页文章的项目标签', news.projectCategory, '资讯列表页文章的项目标签没有项目ID', '资讯列表页文章的项目标签没有排行榜位置', '资讯列表页文章的项目标签没有项目总分')"
                                    :data="news.projectCategory"
                               >
                                 {{news.projectCategory | labelFormat}}
@@ -154,7 +154,7 @@
                           <img :src="item.titlePicture"/>
                         </div>
                         <div class="item_body" :class="item.titlePicture?'':'noPicture'">
-                          <h4 :data="item.title" @click="goArticle('/article',{sid:item.sid}, $event)">{{item.title}}</h4>
+                          <h4 :data="item.title" @click="goArticle('/article',{sid:item.sid}, $event), trackArticle('资讯列表页的24小时热文', item.title, '资讯列表页的24小时热文没有项目ID', '24小时热文', item.sid)">{{item.title}}</h4>
                           <p>{{item.content}}</p>
                         </div>
                       </div>
@@ -322,6 +322,35 @@
         }
         this.getHotnews(this.industry);
       },
+      trackAttention(category, name) {
+        let urlArr = this.$route.query;
+        if(urlArr.hasOwnProperty('country')) {category = '国家';}
+        if(urlArr.hasOwnProperty('industry')) {category = '行业';}
+        sensors.track('Attention', {
+          category: category,
+          name: name
+        });
+      },
+      trackProject(entrance, name, project_id, index, score) {
+        sensors.track('Project', {
+          entrance: entrance,
+          name: name,
+          project_id: project_id,
+          rank: index,
+          score: score,
+          attention_count: '接口没有关注量'
+        });
+      },
+      trackArticle(entrance, name, project_id, category, article_id) {
+        sensors.track('Article', {
+          entrance: entrance,
+          name: name,
+          project_id: project_id,
+          category: category,
+          article_id: article_id,
+          collect_count: '接口没有返回文章收藏量'
+        });
+      },
       getfollowboolean() {
         let that = this;
         let token = localStorage.getItem('apelink_user_token');
@@ -388,8 +417,8 @@
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid');
-          if (country) {url = '/api/individual/add?type=COUNTRY&name=' + that.industry; console.log(1)}
-          if (industry) {url = '/api/individual/add?type=INDUSTRY&name=' + that.industry; console.log(2)}
+          if (country) {url = '/api/individual/add?type=COUNTRY&name=' + that.industry;}
+          if (industry) {url = '/api/individual/add?type=INDUSTRY&name=' + that.industry;}
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'post',
@@ -408,10 +437,14 @@
       deleteFollow(industry) {
         // this.projectFollow = false;
         let token = localStorage.getItem('apelink_user_token')
+        let i = this.$route.query.industry;
+        let c = this.$route.query.country;
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid')
           let that = this;
-          let url = '/api/individual/list?type=INDUSTRY';
+          let url = '/api/individual/list?type=INDUSTRY'; 
+          if (c) {url = '/api/individual/list?type=COUNTRY';}
+          if (i) {url = '/api/individual/list?type=INDUSTRY';}
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'get',

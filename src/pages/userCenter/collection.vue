@@ -8,7 +8,7 @@
           <!--</div>-->
           <div class="media-left media-middle"
                v-if="item.result.dataType === 'NEWS'||item.result.dataType === 'WEIXIN'">
-            <div class="newimg_box" :data="item.result.title" @click="goArticle('/article',{sid:item.result.sid})">
+            <div class="newimg_box" :data="item.result.title" @click="goArticle('/article',{sid:item.result.sid}), trackArticle('个人中心页收藏文章', item.result.title, '个人中心页内收藏文章没有项目ID', '收藏文章', item.result.sid)">
               <img v-if="item.result.titlePicture" :src="item.result.titlePicture"/>
               <div class="date_box">
                 <span class="day">{{item.result.urlTime | showDay}}</span>
@@ -17,7 +17,7 @@
             </div>
           </div>
           <div class="media-body">
-            <h4 class="media-heading" :data="item.result.title" @click="goArticle('/article',{sid:item.result.sid}, $event)">{{item.result.title}}</h4>
+            <h4 class="media-heading" :data="item.result.title" @click="goArticle('/article',{sid:item.result.sid}, $event), trackArticle('个人中心页收藏文章', item.result.title, '个人中心页内收藏文章没有项目ID', '收藏文章', item.result.sid)">{{item.result.title}}</h4>
             <p class="media-words">{{item.result.content}}</p>
             <div class="media-bottom">
               <ul>
@@ -40,7 +40,7 @@
               </ul>
               <div class="tips"
                    v-if="item.result.projectCategory !==null && item.result.projectCategory !== '' && item.result.projectCategory !==undefined && item.result.projectCategory !=='NULL'"
-                   @click="goProjectByName(item.result.projectCategory, $event)"
+                   @click="goProjectByName(item.result.projectCategory, $event), trackProject('个人中心页收藏文章的项目标签', item.result.projectCategory, '个人中心页收藏文章的项目标签没有项目ID', '个人中心页收藏文章的项目标签没有排行榜位置', '个人中心页收藏文章的项目标签没有项目总分')"
                    :data="item.result.projectCategory"
               >
                 {{item.result.projectCategory | labelFormat}}
@@ -109,6 +109,26 @@
       this.getFollowList()
     },
     methods: {
+      trackProject(entrance, name, project_id, index, score) {
+        sensors.track('Project', {
+          entrance: entrance,
+          name: name,
+          project_id: project_id,
+          rank: index,
+          score: score,
+          attention_count: '接口没有关注量'
+        });
+      },
+      trackArticle(entrance, name, project_id, category, article_id) {
+        sensors.track('Article', {
+          entrance: entrance,
+          name: name,
+          project_id: project_id,
+          category: category,
+          article_id: article_id,
+          collect_count: '接口没有返回文章收藏量'
+        });
+      },
       goProjectByName(obj, $event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
