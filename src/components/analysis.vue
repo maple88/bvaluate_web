@@ -11,6 +11,51 @@
           <p>白皮书上传</p>
         </div>
         <div class="bd">
+          <div class="from_box">
+            <div class="left_box">
+              <div class="project_information_from">
+                <div class="input_box">
+                  <div class="input_left">
+                    <h4>项目名称：</h4>
+                  </div>
+                  <div class="input_right">
+                    <input type="text"/>
+                  </div>
+                  <div class="input_tip">
+                    <h4>请填写项目名称</h4>
+                  </div>
+                </div>
+                <div class="input_box">
+                  <div class="input_left">
+                    <h4>官网地址：</h4>
+                  </div>
+                  <div class="input_right">
+                    <input type="text"/>
+                  </div>
+                  <div class="input_tip">
+                    <h4>请填写官网地址</h4>
+                  </div>
+                </div>
+                <div class="input_box">
+                  <div class="input_left">
+                    <h4>通证名称：</h4>
+                  </div>
+                  <div class="input_right">
+                    <input type="text"/>
+                  </div>
+                  <div class="input_tip">
+                    <h4>请填写通证名称</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="right_box">
+              <div class="reward_box">
+                <p>系统会将验证通过的项目添加至数据库</p>
+                <h4>并赠送上传用户 <span>166</span> 糖果！</h4>
+              </div>
+            </div>
+          </div>
           <p class="uploadtips">注：暂只支持pdf格式文件，文件名称格式为项目名称-版本号-语言.pdf<br>(例如300cubits TEU-2.0.00-cn.pdf)</p>
           <div class="uploadWhitePaper">
             <div class="filename">
@@ -25,12 +70,15 @@
                 <input type="file" data="选择文件" @change="selectPDF($event)">
                 <button data="选择文件">选择文件</button>
               </div>
-              <button class="uploadBtn" data="上传白皮书" :class="{ disabled: uploadBtn }" :disabled="uploadBtn" @click="uploadPDF">上传</button>
+              <button class="uploadBtn" data="上传白皮书" :class="{ disabled: uploadBtn }" :disabled="uploadBtn"
+                      @click="uploadPDF">上传
+              </button>
             </div>
           </div>
           <div class="uploadstate" v-show="uploadstate">
             <div class="progress">
-              <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" :style="'width:'+uploadtime+'%'">
+              <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0"
+                   aria-valuemax="100" :style="'width:'+uploadtime+'%'">
                 {{uploadtime}}%
               </div>
             </div>
@@ -44,6 +92,7 @@
 
 <script>
   import sensors from '../../static/sa-init.js'
+
   export default {
     props: {
       value: {
@@ -72,7 +121,7 @@
       }
     },
     mounted() {
-      
+
     },
     methods: {
       fn2() {
@@ -86,7 +135,7 @@
         let uid = localStorage.getItem('apelink_user_uid');
         let file = e.target.files[0]
         this.pdf = file
-        let f = file.name.replace(/\.pdf/g,'')
+        let f = file.name.replace(/\.pdf/g, '')
         let filename = f.split('-')
         let j = 0
         for (let i = 0; i < filename.length; i++) {
@@ -98,14 +147,14 @@
         if (file.type != 'application/pdf') {
           this.fileTips = '文件类型错误'
           this.uploadBtn = true
-        }else if (file.size >= 10485760) {
+        } else if (file.size >= 10485760) {
           this.fileTips = '文件过大，请修改后重新选择'
           this.uploadBtn = true
-        }else if (filename.length != 3 || j>0) {
+        } else if (filename.length != 3 || j > 0) {
           this.fileTips = '文件名格式不符合要求，请修改文件名并以 “-” 分隔'
           this.uploadBtn = true
         }
-        else{
+        else {
           this.filename = e.target.files[0].name
           this.uploadBtn = false
         }
@@ -117,13 +166,13 @@
         let url = '/api/individual/uploadPDF';
         let headers = {'uid': uid, 'Authorization': token, 'Content-Type': 'multipart/form-data'};
         let data = new FormData()
-        let time = setInterval(function(){
+        let time = setInterval(function () {
           that.uploadtime = parseInt(that.uploadtime) + 1
           console.log(that.uploadtime)
           if (that.uploadtime == 99) {
             clearInterval(time);
           }
-        },50)
+        }, 50)
         that.uploadstate = true
         data.append('multipartFile', that.pdf)
         that.$axios({
@@ -136,8 +185,8 @@
             that.uploadword = '上传成功，我们会尽快反馈分析结果'
             clearInterval(time);
             that.uploadtime = 100
-          }else{
-            that.uploadword = '上传失败，'+res.data
+          } else {
+            that.uploadword = '上传失败，' + res.data
           }
         })
       }

@@ -50,19 +50,19 @@
                   </label>
                   <span @click="resetpwd()">忘记密码</span>
                 </div>
-                <div class="other-login">
-                  <div class="head">第三方登录</div>
-                  <ul>
-                    <li>
-                      <img src="../assets/login/wechat.png">
-                      <p>微信</p>
-                    </li>
-                    <li>
-                      <img src="../assets/login/qq.png">
-                      <p>QQ</p>
-                    </li>
-                  </ul>
-                </div>
+                <!--<div class="other-login">-->
+                <!--<div class="head">第三方登录</div>-->
+                <!--<ul>-->
+                <!--<li @click="weChatLogin">-->
+                <!--<img src="../assets/login/wechat.png">-->
+                <!--<p>微信</p>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<img src="../assets/login/qq.png">-->
+                <!--<p>QQ</p>-->
+                <!--</li>-->
+                <!--</ul>-->
+                <!--</div>-->
               </div>
               <div class="inputInner" v-if="registerForm">
                 <div class="input-group">
@@ -201,6 +201,7 @@
 
 <script>
   import sensors from '../../static/sa-init.js'
+
   let loading = require('../assets/login/loading.gif');
   let bg = require('../assets/login/login_bg.jpg');
   export default {
@@ -265,26 +266,30 @@
     },
     mounted() {
       var end_time = "";
-      window.onload = function(){
+      window.onload = function () {
         end_time = new Date();
-        sensors.quick('autoTrack',{
+        sensors.quick('autoTrack', {
           load_time: end_time.getTime() - start_time.getTime()
         })
       }
     },
     methods: {
+      weChatLogin() {
+        let random = parseInt(Math.random() * 100000000);
+        window.location.href = 'https://open.weixin.qq.com/connect/qrconnect?appid=wxf629707128b807cf&redirect_uri=http://job.wehire.ren/web/passAuth&response_type=code&scope=snsapi_login&state=' + random + '#wechat_redirect';
+      },
       loginSubmit() {
         let phoneNumber = this.loginUser.phoneNumber;
         let password = this.loginUser.password;
         if (phoneNumber == null || phoneNumber === undefined || phoneNumber === '') {
           this.errorMsg.loginUser.phoneNumber = '请输入手机号码/账号'
-          sensors.track("Loginresult",{
+          sensors.track("Loginresult", {
             is_true: false,
             false_reason: this.errorMsg.loginUser.phoneNumber
           });
         } else if (password == null || password === undefined || password === '') {
           this.errorMsg.loginUser.password = '请输入密码'
-          sensors.track("Loginresult",{
+          sensors.track("Loginresult", {
             is_true: false,
             false_reason: this.errorMsg.loginUser.password
           });
@@ -341,7 +346,7 @@
                 is_register: true
               });
               sensors.login(uid);
-              sensors.track("Loginresult",{
+              sensors.track("Loginresult", {
                 is_true: true,
                 false_reason: '登录成功'
               });
@@ -372,28 +377,28 @@
             switch (msgCode) {
               case '9019':
                 that.errorMsg.loginUser.phoneNumber = '账号不正确';
-                sensors.track("Loginresult",{
+                sensors.track("Loginresult", {
                   is_true: false,
                   false_reason: that.errorMsg.loginUser.phoneNumber
                 });
                 break;
               case '9002':
                 that.errorMsg.loginUser.password = '密码格式不正确';
-                sensors.track("Loginresult",{
+                sensors.track("Loginresult", {
                   is_true: false,
                   false_reason: that.errorMsg.loginUser.password
                 });
                 break;
               case '9008':
                 that.errorMsg.loginUser.password = '密码不正确';
-                sensors.track("Loginresult",{
+                sensors.track("Loginresult", {
                   is_true: false,
                   false_reason: that.errorMsg.loginUser.password
                 });
                 break;
               default:
                 that.errorMsg.loginUser.phoneNumber = msgCode;
-                sensors.track("Loginresult",{
+                sensors.track("Loginresult", {
                   is_true: false,
                   false_reason: that.errorMsg.loginUser.phoneNumber
                 });
@@ -412,7 +417,7 @@
           if (this.strLength(nickName) > 14) {
             pass = false;
             this.errorMsg.registerUser.nickName = '请输入为14个英文字符或7个汉字'
-            sensors.track("Registerresult",{
+            sensors.track("Registerresult", {
               is_true: false,
               false_reason: this.errorMsg.registerUser.nickName
             });
@@ -420,7 +425,7 @@
         } else {
           pass = false;
           this.errorMsg.registerUser.nickName = '昵称不能为空'
-          sensors.track("Registerresult",{
+          sensors.track("Registerresult", {
             is_true: false,
             false_reason: this.errorMsg.registerUser.nickName
           });
@@ -429,7 +434,7 @@
           if (!(/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phoneNumber))) {
             pass = false;
             this.errorMsg.registerUser.phoneNumber = '请输入正确格式的手机号码'
-            sensors.track("Registerresult",{
+            sensors.track("Registerresult", {
               is_true: false,
               false_reason: this.errorMsg.registerUser.phoneNumber
             });
@@ -437,7 +442,7 @@
         } else {
           pass = false;
           this.errorMsg.registerUser.phoneNumber = '手机号码不能为空'
-          sensors.track("Registerresult",{
+          sensors.track("Registerresult", {
             is_true: false,
             false_reason: this.errorMsg.registerUser.phoneNumber
           });
@@ -447,7 +452,7 @@
             if (this.registerUser.confirmpsd !== this.registerUser.password) {
               pass = false;
               this.errorMsg.registerUser.password = '两次输入不一致'
-              sensors.track("Registerresult",{
+              sensors.track("Registerresult", {
                 is_true: false,
                 false_reason: this.errorMsg.registerUser.password
               });
@@ -455,15 +460,15 @@
           } else {
             pass = false;
             this.errorMsg.registerUser.password = '只允许输入6-14个英文大小写和数字'
-            sensors.track("Registerresult",{
+            sensors.track("Registerresult", {
               is_true: false,
               false_reason: this.errorMsg.registerUser.password
-              });
+            });
           }
         } else {
           pass = false;
           this.errorMsg.registerUser.password = '密码不能为空'
-          sensors.track("Registerresult",{
+          sensors.track("Registerresult", {
             is_true: false,
             false_reason: this.errorMsg.registerUser.password
           });
@@ -473,7 +478,7 @@
             if (this.registerUser.confirmpsd !== this.registerUser.password) {
               pass = false;
               this.errorMsg.registerUser.confirmpsd = '两次输入不一致'
-              sensors.track("Registerresult",{
+              sensors.track("Registerresult", {
                 is_true: false,
                 false_reason: this.errorMsg.registerUser.confirmpsd
               });
@@ -481,7 +486,7 @@
           } else {
             pass = false;
             this.errorMsg.registerUser.confirmpsd = '只允许输入6-14个英文大小写和数字'
-            sensors.track("Registerresult",{
+            sensors.track("Registerresult", {
               is_true: false,
               false_reason: this.errorMsg.registerUser.confirmpsd
             });
@@ -489,7 +494,7 @@
         } else {
           pass = false;
           this.errorMsg.registerUser.confirmpsd = '密码不能为空'
-          sensors.track("Registerresult",{
+          sensors.track("Registerresult", {
             is_true: false,
             false_reason: this.errorMsg.registerUser.confirmpsd
           });
@@ -497,7 +502,7 @@
         if (!(code !== null && code !== '' && code !== undefined)) {
           pass = false;
           this.errorMsg.registerUser.code = '手机验证码不能为空'
-          sensors.track("Registerresult",{
+          sensors.track("Registerresult", {
             is_true: false,
             false_reason: this.errorMsg.registerUser.code
           });
@@ -520,7 +525,7 @@
               is_login: false,
               is_register: true
             });
-            sensors.track("Registerresult",{
+            sensors.track("Registerresult", {
               is_true: true,
               false_reason: '注册成功'
             });
