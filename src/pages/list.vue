@@ -1,6 +1,6 @@
 <template>
   <div class="page" id="list_page">
-    <v-login v-model="isShow" :goUrl="successGo" :success="reMore"></v-login>
+    <v-login v-model="isShow" :success="refreshPage"></v-login>
     <vheader/>
     <div class="maintainer">
       <div class="follow_content" id="article">
@@ -30,8 +30,13 @@
               <div class="topproduct">
                 <div class="pcol" v-for="(item, index) in topbangdan.topProject" :key="index">
                   <div class="prod">
-                    <div class="picon" @click="goArticle('/project',{sid: item.sid})"><img src="../assets/media.jpg" :src="item.logoSrc"></div>
-                    <span class="pname" @click="goArticle('/project',{sid: item.sid})">{{item.project}}</span>
+                    <div class="picon" :data="item.project" 
+                    @click="goArticle('/project',{sid: item.sid}, $event), 
+                            trackProject('榜单页广告位', item.project, item.sid, '广告位没有排行榜位置', '接口没有项目总分'),
+                            trackUtmproject('榜单页', item.project, item.sid, parseInt(index+1))">
+                      <img src="../assets/media.jpg" :src="item.logoSrc">
+                    </div>
+                    <span class="pname" :data="item.project" @click="goArticle('/project',{sid: item.sid}, $event), trackProject('榜单页广告位', item.project, item.sid, '广告位没有排行榜位置', '接口没有项目总分')">{{item.project}}</span>
                   </div>
                 </div>
               </div>
@@ -39,8 +44,8 @@
                 <div class="listBox_top">
                   <h4 class="list_title">全球项目榜单</h4>
                   <div class="tabBtn">
-                    <button class="btnStyle" :class="type==='周榜'?'active':''" @click="changeList('周榜')">周榜</button>
-                    <button class="btnStyle" :class="type==='月榜'?'active':''" @click="changeList('月榜')">月榜</button>
+                    <button class="btnStyle" data="查看周榜" :class="type==='周榜'?'active':''" @click="changeList('周榜')">周榜</button>
+                    <button class="btnStyle" data="查看月榜" :class="type==='月榜'?'active':''" @click="changeList('月榜')">月榜</button>
                   </div>
                 </div>
                 <div class="listBox_content">
@@ -118,7 +123,7 @@
                           <td v-else-if="index === 1" class="tr_second"><span>{{index + 1 }}</span></td>
                           <td v-else-if="index === 2" class="tr_third"><span>{{index + 1 }}</span></td>
                           <td v-else><span>{{index + 1 }}</span></td>
-                          <td class="tr_first cursor_style" @click.stop="goArticle('/project',{sid: item.sid})">
+                          <td class="tr_first cursor_style" :data="item.project" @click.stop="goArticle('/project',{sid: item.sid}, $event), trackProject('排行榜', item.project, item.sid, parseInt(index+1), item.rankingTotalScore)">
                             <h4 :title="item.project">{{item.project}}</h4>
                           </td>
                           <td>{{item.rankingTotalScore }}</td>
@@ -138,7 +143,7 @@
                     </table>
                   </div>
                   <div class="moreBox" v-if="!(showloading === -1)">
-                    <button :disabled="showloading" class="relaodMore" @click="reMore()">
+                    <button :disabled="showloading" class="relaodMore" @click="reMore()" data="加载更多">
                       <img v-if="showloading" :src="loading"/>
                       <span v-if="!showloading">加载更多</span>
                     </button>
@@ -252,6 +257,7 @@
 </template>
 
 <script>
+  import sensors from '../../static/sa-init.js'
   import Swiper from 'swiper';
 
   let img1 = require('../assets/follow/banner01.png');
@@ -278,6 +284,29 @@
         topbangdan: []
       }
     },
+    mounted() {
+      new Swiper('#right_swiper', {
+        autoplay: {
+          disableOnInteraction: false,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        }
+      });
+      this.getUpList();
+      this.getDate();
+      this.getDownList();
+      this.getTopBangdan();
+
+      var end_time = "";
+      window.onload = function(){
+        end_time = new Date();
+        sensors.quick('autoTrack',{
+          load_time: end_time.getTime() - start_time.getTime()
+        })
+      }
+    },
     methods: {
       success() {
         console.log(123456)
@@ -286,9 +315,29 @@
         this.successGo = url;
         this.isShow = true;
       },
-      goArticle(url, query) {
+      goArticle(url, query, event) {
         let routeData = this.$router.resolve({path: url, query: query});
         window.open(routeData.href, '_blank');
+
+        sensors.quick('trackHeatMap', event.currentTarget);
+      },
+      trackProject(entrance, name, project_id, index, score) {
+        sensors.track('Project', {
+          entrance: entrance,
+          name: name,
+          project_id: project_id,
+          rank: index,
+          score: score,
+          attention_count: '接口没有关注量'
+        });
+      },
+      trackUtmproject(title, name, project_id, order) {
+        sensors.track('Utmproject', {
+          title: title,
+          name: name,
+          project_id: project_id,
+          order: order
+        });
       },
       getDate() {
         let that = this;
@@ -333,24 +382,11 @@
         that.$axios.get('/api/ICO/icoRank?type=周榜&pageNo=0&pageSize=3').then(function (res) {
           that.topbangdan = res.data
         });
+      },
+      refreshPage(){
+        window.location.reload();
       }
-    },
-    mounted() {
-      new Swiper('#right_swiper', {
-        autoplay: {
-          disableOnInteraction: false,
-        },
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        }
-      });
-      this.getUpList();
-      this.getDate();
-      this.getDownList();
-      this.getTopBangdan();
-    },
-    filters: {}
+    }
   }
 </script>
 

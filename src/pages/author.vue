@@ -9,11 +9,11 @@
           <p class="occupation">
             <!--自媒体作者-->
             <span class="nickname author">{{author}}</span>
-            <button class="follow_btn" v-show="!follow" @click="setAuthorFollow()">
+            <button class="follow_btn" v-show="!follow" data="关注作者" @click="setAuthorFollow($event), trackAttention('作者', author)">
               <img src="../assets/follow/icon-follow.png"/>关注
               <div class="arrow"></div>
             </button>
-            <button class="followed_btn" v-show="follow" @click="deleteFollow()">
+            <button class="followed_btn" v-show="follow" data="取消关注作者" @click="deleteFollow($event)">
               <div class="arrow"></div>
               <img src="../assets/follow/icon-followed.png"/>已关注
             </button>
@@ -45,7 +45,7 @@
                     <div class="media" v-for="news in newsForAuthor">
                       <div class="media-left media-middle"
                            v-if="news.dataType === 'NEWS'||news.dataType === 'WEIXIN'">
-                        <div class="newimg_box" @click="goArticle('/article',{sid:news.sid})">
+                        <div class="newimg_box" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event), trackArticle('个人中心页收藏文章', news.title, '个人中心页内收藏文章没有项目ID', '收藏文章', news.sid)">
                           <img v-if="news.titlePicture" :src="news.titlePicture"/>
                           <div class="date_box">
                             <span class="day">{{news.urlTime | showDay}}</span>
@@ -55,17 +55,17 @@
                       </div>
                       <div class="media-left media-middle"
                            v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'">
-                        <div class="newimg_box TorW" @click="goArticle('/article',{sid:news.sid})">
+                        <div class="newimg_box TorW" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event), trackArticle('个人中心页收藏文章', news.title, '个人中心页内收藏文章没有项目ID', '收藏文章', news.sid)">
                           <img :src="news.dataType === 'WEIBO'?weibo:tuiwen"/>
                           <span class="day">{{news.urlDate }}</span>
                         </div>
                       </div>
                       <div class="media-body">
-                        <h4 class="media-heading" :title="news.title" @click="goArticle('/article',{sid:news.sid})"
+                        <h4 class="media-heading" :title="news.title" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event)"
                             v-if="!(news.dataType === 'WEIBO' || news.dataType === 'TWITTER')" v-html="news.title ">
                         </h4>
                         <p class="media-words TorW" v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'"
-                           @click="goArticle('/article',{sid:news.sid})" v-html="news.content ">
+                           @click="goArticle('/article',{sid:news.sid}, $event)" v-html="news.content " :data="news.content">
                         </p>
                         <p class=" media-words" v-else v-html="news.content ">
                         </p>
@@ -73,32 +73,35 @@
                           <ul>
                             <li
                               v-if="!(news.siteName !== 'NULL' && news.siteName !== null && news.siteName !== '')"
-                              @click="goArticle('/author',{author: news.author,type: 'author'})">
+                              @click="goArticle('/author',{author: news.author,type: 'author'}, $event)" :data="news.author">
                               <div class="userimg">
                                 <img src="../assets/follow/user_head.png">
                               </div>
                               <span class="author">{{news.author}}</span>
                             </li>
-                            <li v-else @click="goArticle('/author',{author: news.siteName,type: 'siteName'})">
+                            <li v-else @click="goArticle('/author',{author: news.siteName,type: 'siteName'}, $event)" :data="news.siteName">
                               <span class="author">{{news.siteName}}</span>
                             </li>
                             <li>{{news.urlTime}}</li>
                           </ul>
                           <div class="tips"
                                v-if="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL'"
-                               @click="goProjectByName(news.projectCategory)"
+                               @click="goProjectByName(news.projectCategory, $event), trackProject('个人中心页收藏文章的项目标签', news.projectCategory, '个人中心页收藏文章的项目标签没有项目ID', '个人中心页收藏文章的项目标签没有排行榜位置', '个人中心页收藏文章的项目标签没有项目总分')"
+                               :data="news.projectCategory"
                           >
                             {{news.projectCategory | labelFormat}}
                           </div>
                           <div class="tips"
                                v-else-if="news.industryCategory !==null && news.industryCategory !== '' && news.industryCategory !==undefined && news.industryCategory !=='NULL'"
-                               @click="goIndustryByIndustry(news.industryCategory)"
+                               @click="goIndustryByIndustry(news.industryCategory, $event)"
+                               :data="news.industryCategory"
                           >
                             {{news.industryCategory | labelFormat}}
                           </div>
                           <div class="tips"
                                v-else="news.countryCategory !==null && news.countryCategory !== '' && news.countryCategory !==undefined && news.countryCategory !=='NULL'"
-                               @click="goIndustryByCountry(news.countryCategory)"
+                               @click="goIndustryByCountry(news.countryCategory, $event)"
+                               :data="news.countryCategory"
                           >
                             {{news.countryCategory | labelFormat}}
                           </div>
@@ -111,7 +114,7 @@
             </ul>
           </div>
           <div class="loading_more">
-            <button :disabled="showloading" @click.stop="getNewsForAuthor()">
+            <button :disabled="showloading" data="加载更多" @click.stop="getNewsForAuthor()">
               <img v-if="showloading" :src="loading"/>
               <span v-if="!showloading">加载更多</span>
             </button>
@@ -124,6 +127,7 @@
 </template>
 
 <script>
+  import sensors from '../../static/sa-init.js'
   let loading = require('../assets/login/loading.gif');
   let tuiwen = require('../assets/home/tuite.png');
   let weibo = require('../assets/home/weibo.png');
@@ -146,6 +150,14 @@
     },
     mounted() {
       this.initAuthor()
+
+      var end_time = "";
+      window.onload = function(){
+        end_time = new Date();
+        sensors.quick('autoTrack',{
+          load_time: end_time.getTime() - start_time.getTime()
+        })
+      }
     },
     filters: {
       showDay(obj) {
@@ -175,6 +187,32 @@
       },
     },
     methods: {
+      trackAttention(category, name) {
+        sensors.track('Attention', {
+          category: category,
+          name: name
+        });
+      },
+      trackProject(entrance, name, project_id, index, score) {
+        sensors.track('Project', {
+          entrance: entrance,
+          name: name,
+          project_id: project_id,
+          rank: index,
+          score: score,
+          attention_count: '接口没有关注量'
+        });
+      },
+      trackArticle(entrance, name, project_id, category, article_id) {
+        sensors.track('Article', {
+          entrance: entrance,
+          name: name,
+          project_id: project_id,
+          category: category,
+          article_id: article_id,
+          collect_count: '接口没有返回文章收藏量'
+        });
+      },
       getfollowboolean() {
         let that = this;
         let token = localStorage.getItem('apelink_user_token');
@@ -203,6 +241,7 @@
           let that = this;
           let url = '/api/individual/list?type=AUTHOR';
           let headers = {'uid': uid, 'Authorization': token};
+          sensors.quick('trackHeatMap', event.currentTarget);
           that.$axios({
             method: 'get',
             url: url,
@@ -243,6 +282,7 @@
           let uid = localStorage.getItem('apelink_user_uid')
           let url = '/api/individual/add?type=AUTHOR&name=' + that.author;
           let headers = {'uid': uid, 'Authorization': token};
+          sensors.quick('trackHeatMap', event.currentTarget);
           that.$axios({
             method: 'post',
             url: url,
@@ -269,7 +309,7 @@
           that.newsForAuthor = res.data.content;
         })
       },
-      goProjectByName(obj) {
+      goProjectByName(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
             let arr = obj.split(';')
@@ -277,9 +317,10 @@
           }
         }
         let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
+        sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
-      goIndustryByIndustry(obj) {
+      goIndustryByIndustry(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
             let arr = obj.split(';')
@@ -287,9 +328,10 @@
           }
         }
         let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
+        sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
-      goIndustryByCountry(obj) {
+      goIndustryByCountry(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
             let arr = obj.split(';')
@@ -297,10 +339,12 @@
           }
         }
         let routeData = this.$router.resolve({path: '/newsList', query: {country: obj}});
+        sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
       goArticle(url, query) {
         let routeData = this.$router.resolve({path: url, query: query});
+        sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
     },

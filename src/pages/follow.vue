@@ -24,7 +24,9 @@
                     <div class="project_list_box" v-for="item in tuijian_xiangmuList">
                       <div class="project_info">
                         <div class="left">
-                          <div class="logo_box" @click="goArticle('/project',{sid: item.sid})">
+                          <div class="logo_box" :data="item.project" 
+                          @click="goArticle('/project',{sid: item.sid}, $event), 
+                                  trackProject('关注页推荐项目', item.project, item.sid, '推荐项目没有排行榜位置', item.totalScore)">
                             <img :src="item.logoSrc"/>
                           </div>
                         </div>
@@ -32,8 +34,10 @@
                           <div class="base_info">
                             <div class="left">
                               <h4>
-                                <span v-html="item.project" @click="goArticle('/project',{sid: item.sid})"></span>
-                                <i class="fa fa-heart-o" @click="setFollow(item.sid, 'xiangmu')"></i>
+                                <span v-html="item.project" :data="item.project" 
+                                @click="goArticle('/project',{sid: item.sid}, $event), 
+                                        trackProject('关注页推荐项目', item.project, item.sid, '推荐项目没有排行榜位置', item.totalScore)"></span>
+                                <i class="fa fa-heart-o" @click="setFollow(item.sid, 'xiangmu'), trackAttention('项目', item.project)"></i>
                               </h4>
                               <p>{{item.introduction }} </p>
                             </div>
@@ -58,7 +62,9 @@
                     <div class="project_list_box" v-for="item in xiangmuList">
                       <div class="project_info">
                         <div class="left">
-                          <div class="logo_box" @click="goArticle('/project',{sid: item.result.sid})">
+                          <div class="logo_box" :data="item.result.project" 
+                          @click="goArticle('/project',{sid: item.result.sid}, $event), 
+                          trackProject('关注页已关注项目', item.result.project, item.result.sid, '已关注项目没有排行榜位置', item.result.totalScore)">
                             <img :src="item.result.logoSrc"/>
                           </div>
                         </div>
@@ -66,7 +72,9 @@
                           <div class="base_info">
                             <div class="left">
                               <h4>
-                                <span v-html="item.result.project" @click="goArticle('/project',{sid: item.result.sid})"></span>
+                                <span v-html="item.result.project" :data="item.result.project" 
+                                @click="goArticle('/project',{sid: item.result.sid}, $event), 
+                                        trackProject('关注页已关注项目', item.result.project, item.result.sid, '已关注项目没有排行榜位置', item.result.totalScore)"></span>
                                 <i class="fa fa-heart" @click="deleteFollow(item.cid, 'xiangmu')"></i>
                               </h4>
                               <p>{{item.result.introduction }} </p>
@@ -84,7 +92,7 @@
                     </div>
                   </div>
                   <div class="loading_more">
-                    <button :disabled="showloading" @click.stop="getxiangmu()" v-if="!(showloading===-1)">
+                    <button :disabled="showloading" data="加载更多" @click.stop="getxiangmu()" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
                       <span v-if="!showloading">加载更多</span>
                     </button>
@@ -99,8 +107,8 @@
                   <div class="follow-industry-recommend">
                     <ul>
                       <li v-for="item in tuijian_hangyeList">
-                        <p>{{item}}</p>
-                        <i class="fa fa-heart-o" @click="setFollow('', 'hangye', item)"></i>
+                        <p :data="item" @click="goIndustryByIndustry(item, $event)">{{item}}</p>
+                        <i class="fa fa-heart-o" @click="setFollow('', 'hangye', item), trackAttention('行业', item)"></i>
                       </li>
                     </ul>
                   </div>
@@ -112,13 +120,13 @@
                   <div class="follow-industry-recommend">
                     <ul>
                       <li v-for="item in hangyeList">
-                        <p @click="goIndustryByIndustry(item.result)">{{item.result}}</p>
+                        <p :data="item.result" @click="goIndustryByIndustry(item.result, $event)">{{item.result}}</p>
                         <i class="fa fa-heart" @click="deleteFollow(item.cid, 'hangye')"></i>
                       </li>
                     </ul>
                   </div>
                   <div class="loading_more">
-                    <button :disabled="showloading" @click.stop="gethangye()" v-if="!(showloading===-1)">
+                    <button :disabled="showloading" data="加载更多" @click.stop="gethangye()" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
                       <span v-if="!showloading">加载更多</span>
                     </button>
@@ -133,8 +141,8 @@
                   <div class="follow-industry-recommend">
                     <ul>
                       <li v-for="item in tuijian_guojiaList">
-                        <p>{{item}}</p>
-                        <i class="fa fa-heart-o" @click="setFollow('', 'guojia', item)"></i>
+                        <p :data="item" @click="goIndustryByCountry(item, $event)">{{item}}</p>
+                        <i class="fa fa-heart-o" @click="setFollow('', 'guojia', item), trackAttention('国家', item)"></i>
                       </li>
                     </ul>
                   </div>
@@ -146,13 +154,13 @@
                   <div class="follow-industry-recommend">
                     <ul>
                       <li v-for="item in guojiaList">
-                        <p @click="goIndustryByCountry(item.result)">{{item.result}}</p>
+                        <p :data="item.result" @click="goIndustryByCountry(item.result, $event)">{{item.result}}</p>
                         <i class="fa fa-heart" @click="deleteFollow(item.cid, 'guojia')"></i>
                       </li>
                     </ul>
                   </div>
                   <div class="loading_more">
-                    <button :disabled="showloading" @click.stop="getguojia()" v-if="!(showloading===-1)">
+                    <button :disabled="showloading" data="加载更多" @click.stop="getguojia()" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
                       <span v-if="!showloading">加载更多</span>
                     </button>
@@ -167,8 +175,8 @@
                   <div class="follow-industry-recommend">
                     <ul>
                       <li v-for="item in tuijian_zuozheList">
-                        <p>{{item}}</p>
-                        <i class="fa fa-heart-o" @click="setFollow('', 'zuozhe', item)"></i>
+                        <p :data="item" @click="goArticle('/author',{author: item,type: 'author'}, $event)">{{item}}</p>
+                        <i class="fa fa-heart-o" @click="setFollow('', 'zuozhe', item), trackAttention('作者', item)"></i>
                       </li>
                     </ul>
                   </div>
@@ -180,13 +188,13 @@
                   <div class="follow-industry-recommend">
                     <ul>
                       <li v-for="item in zuozheList">
-                        <p @click="goArticle('/author',{author: item.result,type: 'author'})">{{item.result}}</p>
+                        <p :data="item.result" @click="goArticle('/author',{author: item.result,type: 'author'}, $event)">{{item.result}}</p>
                         <i class="fa fa-heart" @click="deleteFollow(item.cid, 'zuozhe')"></i>
                       </li>
                     </ul>
                   </div>
                   <div class="loading_more">
-                    <button :disabled="showloading" @click.stop="getzuozhe()" v-if="!(showloading===-1)">
+                    <button :disabled="showloading" data="加载更多" @click.stop="getzuozhe()" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
                       <span v-if="!showloading">加载更多</span>
                     </button>
@@ -202,7 +210,7 @@
                           <div class="media" v-for="(item, index) in wenzhangList" :key="item.sid">
                             <div class="media-left media-middle"
                                  v-if="item.result.dataType === 'NEWS'||item.result.dataType === 'WEIXIN'">
-                              <div class="newimg_box" @click="goArticle('/article',{sid:item.result.sid})">
+                              <div class="newimg_box" :data="item.result.title" @click="goArticle('/article',{sid:item.result.sid}, $event), trackArticle('关注页收藏文章', item.result.title, '关注页内收藏文章没有项目ID', '收藏文章', item.result.sid)">
                                 <img v-if="item.result.titlePicture" :src="item.result.titlePicture"/>
                                 <div class="date_box">
                                   <span class="day">{{item.result.urlTime | showDay}}</span>
@@ -211,19 +219,20 @@
                               </div>
                             </div>
                             <div class="media-body">
-                              <h4 class="media-heading" @click="goArticle('/article',{sid:item.result.sid})">{{item.result.title}}</h4>
+                              <h4 class="media-heading" :data="item.result.title" @click="goArticle('/article',{sid:item.result.sid}, $event), trackArticle('关注页收藏文章', item.result.title, '关注页内收藏文章没有项目ID', '收藏文章', item.result.sid)">{{item.result.title}}</h4>
                               <p class="media-words">{{item.result.content}}</p>
                               <div class="media-bottom">
                                 <ul>
                                   <li
                                     v-if="!(item.result.siteName !== 'NULL' && item.result.siteName !== null && item.result.siteName !== '')"
-                                    @click="goArticle('/author',{author: item.result.author,type: 'author'})">
+                                    @click="goArticle('/author',{author: item.result.author,type: 'author'}, $event)"
+                                    :data="item.result.author">
                                     <div class="userimg">
                                       <img src="../assets/follow/user_head.png">
                                     </div>
                                     <span class="author">{{item.result.author}}</span>
                                   </li>
-                                  <li v-else @click="goArticle('/author',{author: item.result.siteName,type: 'siteName'})">
+                                  <li v-else :data="item.result.siteName" @click="goArticle('/author',{author: item.result.siteName,type: 'siteName'}, $event)">
                                     <span class="author">{{item.result.siteName}}</span>
                                   </li>
                                   <li>{{item.result.urlDate | dataFormat}}</li>
@@ -233,19 +242,22 @@
                                 </ul>
                                 <div class="tips"
                                      v-if="item.result.projectCategory !==null && item.result.projectCategory !== '' && item.result.projectCategory !==undefined && item.result.projectCategory !=='NULL'"
-                                     @click="goProjectByName(item.result.projectCategory)"
+                                     @click="goProjectByName(item.result.projectCategory, $event), trackProject('关注页收藏文章的项目标签', item.result.projectCategory, '关注页收藏文章的项目标签没有项目ID', '关注页收藏文章的项目标签没有排行榜位置', '关注页收藏文章的项目标签没有项目总分')"
+                                     :data="item.result.projectCategory"
                                 >
                                   {{item.result.projectCategory | labelFormat}}
                                 </div>
                                 <div class="tips"
                                      v-else-if="item.result.industryCategory !==null && item.result.industryCategory !== '' && item.result.industryCategory !==undefined && item.result.industryCategory !=='NULL'"
-                                     @click="goIndustryByIndustry(item.result.industryCategory)"
+                                     @click="goIndustryByIndustry(item.result.industryCategory, $event)"
+                                     :data="item.result.industryCategory"
                                 >
                                   {{item.result.industryCategory | labelFormat}}
                                 </div>
                                 <div class="tips"
                                      v-else="item.result.countryCategory !==null && item.result.countryCategory !== '' && item.result.countryCategory !==undefined && item.result.countryCategory !=='NULL'"
-                                     @click="goIndustryByCountry(item.result.countryCategory)"
+                                     @click="goIndustryByCountry(item.result.countryCategory, $event)"
+                                     :data="item.result.countryCategory"
                                 >
                                   {{item.result.countryCategory | labelFormat}}
                                 </div>
@@ -253,7 +265,7 @@
                             </div>
                           </div>
                           <div class="loading_more" v-if="!(showloading === -1)">
-                            <button :disabled="showloading" @click.stop="getwenzhang()">
+                            <button :disabled="showloading" data="加载更多" @click.stop="getwenzhang()">
                               <img v-if="showloading" :src="loading"/>
                               <span v-if="!showloading">加载更多</span>
                             </button>
@@ -278,6 +290,7 @@
 </template>
 
 <script>
+  import sensors from '../../static/sa-init.js'
   import Swiper from 'swiper';
 
   let img1 = require('../assets/follow/banner01.png')
@@ -341,8 +354,42 @@
       })
 
       this.getxiangmu()
+
+      var end_time = "";
+      window.onload = function(){
+        end_time = new Date();
+        sensors.quick('autoTrack',{
+          load_time: end_time.getTime() - start_time.getTime()
+        })
+      }
     },
     methods: {
+      trackAttention(category, name) {
+        sensors.track('Attention', {
+          category: category,
+          name: name
+        });
+      },
+      trackProject(entrance, name, project_id, index, score) {
+        sensors.track('Project', {
+          entrance: entrance,
+          name: name,
+          project_id: project_id,
+          rank: index,
+          score: score,
+          attention_count: '接口没有关注量'
+        });
+      },
+      trackArticle(entrance, name, project_id, category, article_id) {
+        sensors.track('Article', {
+          entrance: entrance,
+          name: name,
+          project_id: project_id,
+          category: category,
+          article_id: article_id,
+          collect_count: '接口没有返回文章收藏量'
+        });
+      },
       tabhide() {
         this.xiangmu = false
         this.hangye = false
@@ -585,11 +632,12 @@
           alert('请先登录。')
         }
       },
-      goArticle(url, query) {
+      goArticle(url, query, event) {
         let routeData = this.$router.resolve({path: url, query: query});
+        sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
-      goProjectByName(obj) {
+      goProjectByName(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
             let arr = obj.split(';')
@@ -597,9 +645,10 @@
           }
         }
         let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
+        sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
-      goIndustryByIndustry(obj) {
+      goIndustryByIndustry(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
             let arr = obj.split(';')
@@ -607,9 +656,10 @@
           }
         }
         let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
+        sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href);
       },
-      goIndustryByCountry(obj) {
+      goIndustryByCountry(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
             let arr = obj.split(';')
@@ -617,6 +667,7 @@
           }
         }
         let routeData = this.$router.resolve({path: '/newsList', query: {country: obj}});
+        sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href);
       }
     },

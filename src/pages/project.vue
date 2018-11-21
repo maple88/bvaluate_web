@@ -11,9 +11,9 @@
               <div class="imgbrand"><img :src="project.logoSrc "></div>
               <div class="info">
                 <div class="tit">
-                  <a :href="project.outer" target="_blank"> {{project.project}}</a>
-                  <div class="followbtn" v-if="!isFollow" @click="setFollow()">+ 关注</div>
-                  <div class="followbtn on" v-if="isFollow" @click="deleteFollow(project.collected)">√ 已关注</div>
+                  <a :href="project.outerOfficial" target="_blank" :data="project.project"> {{project.project}}</a>
+                  <div class="followbtn" v-if="!isFollow" data="关注项目" @click="setFollow($event), trackAttention('项目', project.project)">+ 关注</div>
+                  <div class="followbtn on" v-if="isFollow" data="取消关注项目" @click="deleteFollow(project.collected, $event)"><i class="fa fa-check"></i> 已关注</div>
                 </div>
                 <p class="smtit">{{project.introduction }}</p>
               </div>
@@ -29,9 +29,11 @@
           <div class="section1">
             <div class="sectiontabs">
               <a href="javascript:;" :class="atvNewOrGrade==1?'active':''"
-                 @click.stop="iniNewOrGrade(project.project,'290001') , atvNewOrGrade=1,NGewOrGrade = '290001',NewOrGradeNo=2">新闻</a>
+                 @click.stop="iniNewOrGrade(project.project,'290001') , atvNewOrGrade=1,NGewOrGrade = '290001',NewOrGradeNo=2"
+                 data="新闻">新闻</a>
               <a href="javascript:;" :class="atvNewOrGrade==2?'active':''"
-                 @click.stop="iniNewOrGrade(project.project,'290000') , atvNewOrGrade=2,NGewOrGrade = '290000',NewOrGradeNo=2">评级文章</a>
+                 @click.stop="iniNewOrGrade(project.project,'290000') , atvNewOrGrade=2,NGewOrGrade = '290000',NewOrGradeNo=2"
+                 data="评级文章">评级文章</a>
             </div>
             <div class="swiper-container section-swiper" id="newOrGradeSwiper">
               <div class="loading_box" v-if="showLoading1">
@@ -50,11 +52,13 @@
                       </div>
                     </div>
                     <div class="media-body">
-                      <h4 class="media-heading" :title="item.title" @click="goArticle('/article',{sid:item.sid})">
-                        {{item.title }}
+                      <h4 class="media-heading" :title="item.title" :data="item.title" 
+                      @click="goArticle('/article',{sid:item.sid}, $event), 
+                              trackArticle('项目页', item.title, project.sid, atvNewOrGrade==1?'新闻':'评级文章', item.sid)">
+                        {{item.title}}
                       </h4>
                       <p class="media-words">
-                        {{item.content }}
+                        {{item.content}}
                       </p>
                       <div class="media-bottom">
                         <ul>
@@ -73,20 +77,20 @@
                         </ul>
                         <div class="tips"
                              v-if="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
-                             @click="goProjectByName(item.projectCategory)"
-                        >
+                             @click="goProjectByName(item.projectCategory, $event)"
+                             :data="item.projectCategory">
                           {{item.projectCategory | labelFormat}}
                         </div>
                         <div class="tips"
                              v-else-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
-                             @click="goIndustryByIndustry(item.industryCategory)"
-                        >
+                             @click="goIndustryByIndustry(item.industryCategory, $event)"
+                             :data="item.industryCategory">
                           {{item.industryCategory | labelFormat}}
                         </div>
                         <div class="tips"
                              v-else="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
-                             @click="goIndustryByCountry(item.countryCategory)"
-                        >
+                             @click="goIndustryByCountry(item.countryCategory, $event)"
+                             :data="item.countryCategory">
                           {{item.countryCategory | labelFormat}}
                         </div>
                       </div>
@@ -110,7 +114,7 @@
                       <p class="name">{{partner.h3}}</p>
                       <p class="posi">{{partner.h4}}</p>
                       <div class="i" :class="partner.linkin?'on':''">
-                        <a :href="partner.linkin" target="_blank">
+                        <a :href="partner.linkin" target="_blank" :data="partner.h3">
                           <i class="fa fa-linkedin"></i>
                         </a>
                       </div>
@@ -152,7 +156,7 @@
                   <p>资金监管</p>
                 </div>
                 <div class="numitem">
-                  <p class="num">{{project.technicalAnalysisScore |showTatolCore }}</p>
+                  <p class="num">{{project.technicalAnalysisScore | showTatolCore }}</p>
                   <p>技术</p>
                 </div>
               </div>
@@ -356,9 +360,9 @@
           </div>
           <div class="section4">
             <div class="sectiontabs">
-              <a href="javascript:;" :class="atvTwitterOrWeibo==1?'active':''"
+              <a data="推文" href="javascript:;" :class="atvTwitterOrWeibo==1?'active':''"
                  @click.stop="iniTwitterOrWeibo(project.project,'290002') , atvTwitterOrWeibo=1 , showIcon = nicon ,TWewOrGrade = '290004',TWewOrGradeNo=2">推文</a>
-              <a href="javascript:;" :class="atvTwitterOrWeibo==2?'active':''"
+              <a data="微博" href="javascript:;" :class="atvTwitterOrWeibo==2?'active':''"
                  @click.stop="iniTwitterOrWeibo(project.project,'290004') , atvTwitterOrWeibo=2 , showIcon = weibo,TWewOrGrade = '290004',TWewOrGradeNo=2">微博</a>
             </div>
             <div class="swiper-container section-swiper" id="twitterOrWeiboSwiper">
@@ -373,26 +377,28 @@
                       <span class="day">{{item.urlDate }}</span>
                     </div>
                     <div class="right">
-                      <p class="des" @click="goArticle('/article',{sid:item.sid})">{{item.content }}</p>
+                      <p class="des" :data="item.content" 
+                      @click="goArticle('/article',{sid:item.sid}, $event), 
+                              trackArticle('项目页', item.title, project.sid, atvTwitterOrWeibo==1?'推文':'微博', item.sid)">{{item.content}}</p>
                       <div class="bottom">
                         <span class="name">{{item.author}}</span>
                         <span class="time">{{item.urlTime}}</span>
                         <span class="tips"
                               v-if="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
-                              @click="goProjectByName(item.projectCategory)"
-                        >
+                              @click="goProjectByName(item.projectCategory, $event)"
+                              :data="item.projectCategory">
                           {{item.projectCategory | labelFormat}}
                         </span>
                         <span class="tips"
                               v-else-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
-                              @click="goIndustryByIndustry(item.industryCategory)"
-                        >
+                              @click="goIndustryByIndustry(item.industryCategory, $event)"
+                              :data="item.industryCategory">
                           {{item.industryCategory | labelFormat}}
                         </span>
                         <span class="tips"
                               v-else="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
-                              @click="goIndustryByCountry(item.countryCategory)"
-                        >
+                              @click="goIndustryByCountry(item.countryCategory, $event)"
+                              :data="item.countryCategory">
                           {{item.countryCategory | labelFormat}}
                         </span>
                       </div>
@@ -411,7 +417,7 @@
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
                   <div class="col4" v-if="project.outerFaceBook">
-                    <a :href="project.outerFaceBook  ">
+                    <a :href="project.outerFaceBook" data="Facebook">
                       <div class="item">
                         <img src="../assets/project/f1.png">
                         <p>Facebook</p>
@@ -419,7 +425,7 @@
                     </a>
                   </div>
                   <div class="col4" v-if="project.outerTwitter">
-                    <a :href="project.outerTwitter ">
+                    <a :href="project.outerTwitter" data="Twitter">
                       <div class="item">
                         <img src="../assets/project/f2.png">
                         <p>Twitter</p>
@@ -427,7 +433,7 @@
                     </a>
                   </div>
                   <div class="col4" v-if="project.outerTelegram">
-                    <a :href="project.outerTelegram ">
+                    <a :href="project.outerTelegram" data="telegram">
                       <div class="item">
                         <img src="../assets/project/f3.png">
                         <p>telegram</p>
@@ -435,7 +441,7 @@
                     </a>
                   </div>
                   <div class="col4" v-if="project.outerBitCoinTalk">
-                    <a :href="project.outerBitCoinTalk ">
+                    <a :href="project.outerBitCoinTalk" data="bitcointalk">
                       <div class="item">
                         <img src="../assets/project/f4.png">
                         <p>bitcointalk</p>
@@ -443,7 +449,7 @@
                     </a>
                   </div>
                   <div class="col4" v-if="project.outerDiscord">
-                    <a :href="project.outerDiscord ">
+                    <a :href="project.outerDiscord" data="Discord">
                       <div class="item">
                         <img src="../assets/project/f5.png">
                         <p>Discord</p>
@@ -451,7 +457,7 @@
                     </a>
                   </div>
                   <div class="col4" v-if="project.outerGitHub">
-                    <a :href="project.outerGitHub ">
+                    <a :href="project.outerGitHub" data="Github">
                       <div class="item">
                         <img src="../assets/project/f6.png">
                         <p>Github</p>
@@ -459,7 +465,7 @@
                     </a>
                   </div>
                   <div class="col4" v-if="project.outerInstagram">
-                    <a :href="project.outerInstagram ">
+                    <a :href="project.outerInstagram" data="Instagram">
                       <div class="item">
                         <img src="../assets/project/f7.png">
                         <p>Instagram</p>
@@ -467,7 +473,7 @@
                     </a>
                   </div>
                   <div class="col4" v-if="project.outerMedium">
-                    <a :href="project.outerMedium ">
+                    <a :href="project.outerMedium" data="Medium">
                       <div class="item">
                         <img src="../assets/project/f8.png">
                         <p>Medium</p>
@@ -475,7 +481,7 @@
                     </a>
                   </div>
                   <div class="col4" v-if="project.outerReddit">
-                    <a :href="project.outerReddit ">
+                    <a :href="project.outerReddit" data="reddit">
                       <div class="item">
                         <img src="../assets/project/f9.png">
                         <p>reddit</p>
@@ -502,8 +508,9 @@
           </div>
           <div class="section6" v-if="recommendProjects">
             <div class="rightlayouthead">项目推荐</div>
-            <div class="item" v-for="project in recommendProjects">
-              <router-link :to="'/project?sid='+project.sid">
+            <div class="item" v-for="project in recommendProjects" 
+            @click="trackProject('项目页广告位', project.project, project.sid, '广告位没有排行榜位置', project.totalScore)">
+              <router-link :to="'/project?sid='+project.sid" :data="project.project">
                 <div class="ibanner"><img src="../assets/project/recommend-banner.jpg"></div>
                 <div class="info">
                   <div class="left"><img :src="project.logoSrc"></div>
@@ -527,6 +534,7 @@
 </template>
 
 <script>
+  import sensors from '../../static/sa-init.js'
   import Swiper from 'swiper'
 
   let loading = require('../assets/login/loading.gif');
@@ -587,6 +595,14 @@
       this.initProject();
       this.scrollNewOrGrade();
       this.scrollTWewOrGrade();
+
+      var end_time = "";
+      window.onload = function(){
+        end_time = new Date();
+        sensors.quick('autoTrack',{
+          load_time: end_time.getTime() - start_time.getTime()
+        })
+      }
     },
     filters: {
       showTatolCore(obj) {
@@ -651,6 +667,32 @@
       '$route': 'initProject'
     },
     methods: {
+      trackAttention(category, name) {
+        sensors.track('Attention', {
+          category: category,
+          name: name
+        });
+      },
+      trackArticle(entrance, name, project_id, category, article_id) {
+        sensors.track('Article', {
+          entrance: entrance,
+          name: name,
+          project_id: project_id,
+          category: category,
+          article_id: article_id,
+          collect_count: '接口没有返回文章收藏量'
+        });
+      },
+      trackProject(entrance, name, project_id, index, score) {
+        sensors.track('Project', {
+          entrance: entrance,
+          name: name,
+          project_id: project_id,
+          rank: index,
+          score: score,
+          attention_count: '接口没有关注量'
+        });
+      },
       scrollNewOrGrade() {
         let $this = document.getElementById('newOrGradeSwiper');
         let finished = true;
@@ -694,7 +736,8 @@
           }
         });
       },
-      setFollow() {
+      setFollow(event) {
+        sensors.quick('trackHeatMap', event.currentTarget);
         let that = this
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
@@ -714,7 +757,8 @@
           alert('请先登录');
         }
       },
-      deleteFollow(cid) {
+      deleteFollow(cid, $event) {
+        sensors.quick('trackHeatMap', event.currentTarget);
         let that = this
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
@@ -735,7 +779,7 @@
           alert('请先登录。')
         }
       },
-      goProjectByName(obj) {
+      goProjectByName(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
             let arr = obj.split(';')
@@ -743,9 +787,10 @@
           }
         }
         let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
+        sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
-      goIndustryByIndustry(obj) {
+      goIndustryByIndustry(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
             let arr = obj.split(';')
@@ -753,9 +798,10 @@
           }
         }
         let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
+        sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
-      goIndustryByCountry(obj) {
+      goIndustryByCountry(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
             let arr = obj.split(';')
@@ -763,11 +809,14 @@
           }
         }
         let routeData = this.$router.resolve({path: '/newsList', query: {country: obj}});
+        sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
-      goArticle(url, query) {
+      goArticle(url, query, event) {
         let routeData = this.$router.resolve({path: url, query: query});
         window.open(routeData.href, '_blank');
+
+        sensors.quick('trackHeatMap', event.currentTarget);
       },
       initProject() {
         let path = this.$route.path;
