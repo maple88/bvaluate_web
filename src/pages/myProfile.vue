@@ -11,7 +11,7 @@
               <div class="edit_bg">
                 <span>点击修改头像</span>
               </div>
-              <input type="file" accept="image/*" multiple="multiple" @change="changeImg($event)"/>
+              <input type="file" accept="image/*" multiple="multiple" data="修改头像" @change="changeImg($event)"/>
               <!--<img src="../assets/user/default.png">-->
               <!--<img :src="user.profileUrl">-->
             </div>
@@ -24,7 +24,7 @@
                 <div class="tb-cell edit" @click="edit(editnicknamebox)"><i class="fa fa-pencil"></i>修改</div>
               </div>
               <div class="tb-cell nicknamedit editbox" v-show="!editnicknamebox.show">
-                <input type="text" maxlength="8" v-model="user.nickName" @keyup.enter="editnicknameok(editnicknamebox)">
+                <input type="text" maxlength="8" v-model="user.nickName" data="输入新昵称" @keyup.enter="editnicknameok(editnicknamebox)">
               </div>
             </div>
             <div class="list-item">
@@ -36,15 +36,15 @@
               <div class="tb-cell editbox" v-show="!editsexbox.show">
                 <div class="radiobox">
                   <label class="radio-inline">
-                    <input type="radio" name="sex" value="2" :checked="user.sex == 2" v-model="user.sex"> 男
+                    <input data="男" type="radio" name="sex" value="2" :checked="user.sex == 2" v-model="user.sex"> 男
                   </label>
                   <label class="radio-inline">
-                    <input type="radio" name="sex" value="3" :checked="user.sex == 3" v-model="user.sex"> 女
+                    <input data="女" type="radio" name="sex" value="3" :checked="user.sex == 3" v-model="user.sex"> 女
                   </label>
                 </div>
                 <div class="botoperate">
-                  <button type="button" class="btn ok" @click="editSex(editsexbox)">保存</button>
-                  <button type="button" class="btn" @click="editcancel(editsexbox)">取消</button>
+                  <button type="button" class="btn ok" data="确认修改性别" @click="editSex(editsexbox)">保存</button>
+                  <button type="button" class="btn" data="取消修改性别" @click="editcancel(editsexbox)">取消</button>
                 </div>
               </div>
             </div>
@@ -55,10 +55,10 @@
                 <div class="tb-cell edit" @click="edit(editsignbox)"><i class="fa fa-pencil"></i>修改</div>
               </div>
               <div class="tb-cell editbox" v-show="!editsignbox.show">
-                <textarea v-model="user.synopsis" rows="8"></textarea>
+                <textarea v-model="user.synopsis" rows="8" data="输入个人说明"></textarea>
                 <div class="botoperate">
-                  <button type="button" class="btn ok" @click="editSynopsis(editsignbox)">保存</button>
-                  <button type="button" class="btn" @click="editcancel(editsignbox)">取消</button>
+                  <button type="button" data="确认修改个人说明" class="btn ok" @click="editSynopsis(editsignbox)">保存</button>
+                  <button type="button" data="取消修改个人说明" class="btn" @click="editcancel(editsignbox)">取消</button>
                 </div>
               </div>
             </div>
@@ -89,27 +89,27 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            <button type="button" class="close" data-dismiss="modal" data="关闭模态框"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">绑定手机</h4>
           </div>
           <div class="modal-body phoneModal-body">
             <form class="form-horizontal">
               <div class="form-group">
                 <label class="control-label">手机号码</label>
-                <input type="tel">
+                <input type="tel" data="输入手机号码">
               </div>
               <div class="form-group">
                 <label class="control-label">验证码</label>
                 <div class="coderow">
-                  <input type="text">
-                  <button type="button" class="btn code-btn">获取验证码</button>
+                  <input type="text" data="输入验证码">
+                  <button type="button" class="btn code-btn" data="获取验证码">获取验证码</button>
                 </div>
                 <p class="help-block" v-if="moblieError_show">60s后重新获取</p>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+            <button type="button" class="btn btn-primary" data="确认修改手机号码" data-dismiss="modal">确定</button>
           </div>
         </div>
       </div>
@@ -120,7 +120,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            <button type="button" class="close" data-dismiss="modal" data="关闭模态框"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">绑定邮箱</h4>
           </div>
           <div class="modal-body phoneModal-body">
@@ -128,15 +128,15 @@
               <div class="form-group">
                 <label class="control-label">邮箱</label>
                 <div class="coderow">
-                  <input type="email" v-model="user.newEmail" @focus="emailError_msg=''">
+                  <input type="email" data="输入邮箱" v-model="user.newEmail" @focus="emailError_msg=''">
                   <div type="button" class="btn rightips newStyle text-danger">{{emailError_msg}}</div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="control-label">验证码</label>
                 <div class="coderow">
-                  <input type="text" v-model="user.emailCode" @focus="emailCodeError_msg=''">
-                  <button type="button" :disabled="sendEmailBtn" class="btn code-btn" @click="sendEmail">发送验证邮件
+                  <input type="text" data="输入验证码" v-model="user.emailCode" @focus="emailCodeError_msg=''">
+                  <button type="button" :disabled="sendEmailBtn" class="btn code-btn" data="发送验证邮件" @click="sendEmail">发送验证邮件
                   </button>
                   <div type="button" class="btn rightips newStyle text-danger">{{emailCodeError_msg}}</div>
                 </div>
@@ -145,7 +145,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" @click="editEmail">确定</button>
+            <button type="button" class="btn btn-primary" data="确认修改邮箱" @click="editEmail">确定</button>
           </div>
         </div>
       </div>
@@ -156,7 +156,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            <button type="button" class="close" data-dismiss="modal" data="关闭模态框"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">修改密码</h4>
           </div>
           <div class="modal-body phoneModal-body">
@@ -164,7 +164,7 @@
               <div class="form-group">
                 <label class="control-label">旧的密码</label>
                 <div class="coderow">
-                  <input type="password" v-model="user.oldPassword" @focus="oldPwdError=''">
+                  <input type="password" data="输入旧密码" v-model="user.oldPassword" @focus="oldPwdError=''">
                   <div type=" button" class="btn rightips newStyle  text-danger">
                     {{oldPwdError}}
                   </div>
@@ -173,21 +173,21 @@
               <div class="form-group">
                 <label class="control-label">新密码</label>
                 <div class="coderow">
-                  <input type="password" v-model="user.newPassword" @focus="newPwdError=''">
+                  <input type="password" data="输入新密码" v-model="user.newPassword" @focus="newPwdError=''">
                   <div type="button" class="btn rightips newStyle  text-danger">{{newPwdError}}</div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="control-label">确认密码</label>
                 <div class="coderow">
-                  <input type="password" v-model="user.ensurePwd" @focus="ensurePwdError=''">
+                  <input type="password" data="输入确认的新密码" v-model="user.ensurePwd" @focus="ensurePwdError=''">
                   <div type="button" class="btn rightips newStyle  text-danger">{{ensurePwdError}}</div>
                 </div>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" @click="resetPwd()">确定</button>
+            <button type="button" class="btn btn-primary" data="确认修改密码" @click="resetPwd()">确定</button>
           </div>
         </div>
       </div>
@@ -197,6 +197,7 @@
 </template>
 
 <script>
+  import sensors from '../../static/sa-init.js'
   let loading = require('../assets/login/loading.gif');
   let default_header = require('../assets/user/default-header.png');
   export default {
@@ -241,13 +242,25 @@
         emailCodeError_msg: ''
       }
     },
+    mounted() {
+      this.getMyProfile()
+
+      var end_time = "";
+      window.onload = function(){
+        end_time = new Date();
+        sensors.quick('autoTrack',{
+          load_time: end_time.getTime() - start_time.getTime()
+        })
+      }
+    },
     methods: {
       // 通用修改按钮
       edit(obj) {
         obj.show = !obj.show
       },
       // 回车确定昵称
-      editnicknameok(obj) {
+      editnicknameok(obj, event) {
+        sensors.quick('trackHeatMap', event.currentTarget);
         let json = {
           nickName: this.user.nickName
         };
@@ -500,9 +513,6 @@
           }, 1000)
         }
       }
-    },
-    mounted() {
-      this.getMyProfile()
     },
     watch: {
       '$route': 'getMyProfile'

@@ -8,21 +8,24 @@
             <div class="span6">
               <ul class="breadcrumb">
                 <li>
-                  <router-link to="/index">首页</router-link>
+                  <router-link to="/index" data="首页">首页</router-link>
                   <span class="divider"></span>
                 </li>
                 <li>
                   <router-link to="#">
                     <span v-if="articleContent.projectCategory !== 'NULL'" class="label_item"
-                          @click="goProjectByName2(articleContent.projectCategory)">
+                          @click="goProjectByName2(articleContent.projectCategory, $event)" 
+                          :data="articleContent.projectCategory">
                       {{articleContent.projectCategory | showLable}}
                     </span>
                     <span v-else-if="articleContent.countryCategory !== 'NULL'" class="label_item"
-                          @click="goIndustryByCountry2(articleContent.countryCategory)">
+                          @click="goIndustryByCountry2(articleContent.countryCategory, $event)" 
+                          :data="articleContent.countryCategory">
                       {{articleContent.countryCategory | showLable}}
                     </span>
                     <span v-else="articleContent.industryCategory !== 'NULL'" class="label_item"
-                          @click="goIndustryByIndustry2(articleContent.industryCategory)">
+                          @click="goIndustryByIndustry2(articleContent.industryCategory, $event)" 
+                          :data="articleContent.industryCategory">
                       {{articleContent.industryCategory | showLable}}
                     </span>
                   </router-link>
@@ -42,19 +45,21 @@
                   <div class="article_left">
                     <span class="user_name"
                           v-if="!(articleContent.siteName !== 'NULL' && articleContent.siteName !== null && articleContent.siteName !== '')"
-                          @click="goArticle('/author',{author: articleContent.author,type: 'author'})">
+                          @click="goArticle('/author',{author: articleContent.author,type: 'author'}, $event)" 
+                          :data="articleContent.author">
                       {{articleContent.author}}
                     </span>
                     <span class="user_name" v-else
-                          @click="goArticle('/author',{author: articleContent.siteName,type: 'siteName'})">
+                          @click="goArticle('/author',{author: articleContent.siteName,type: 'siteName'}, $event)"
+                          :data="articleContent.siteName">
                       {{articleContent.siteName}}
                     </span>
-                    <a :href="articleContent.urlName" class="publish_data">{{articleContent.urlTime}}</a>
+                    <a :href="articleContent.urlName" class="publish_data" :data="articleContent.urlTime">{{articleContent.urlTime}}</a>
                     <!-- <span class="publish_time">13:20</span> -->
                   </div>
                   <div class="article_right">
-                    <a href="javascript:;" class="look" @click="showArticle = !showArticle">查看原文</a>
-                    <span class="look_count"><i class="fa fa-eye"></i>1000人</span>
+                    <a href="javascript:;" class="look" data="查看全文" @click="showArticle = !showArticle">查看原文</a>
+                    <span class="look_count"><i class="fa fa-eye"></i>0人</span>
                     <span class="share" @click.stop="showAllShare($event)"><i class="fa fa-share-alt"></i></span>
                     <span class="follow">
                       <i class="fa fa-heart" v-show="!isFollow" @click="setFollow()"></i>
@@ -65,15 +70,18 @@
                 </div>
                 <div class="label_box">
                   <div v-if="articleContent.countryCategory !== 'NULL'" class="label_item"
-                       @click="goIndustryByCountry(articleContent.countryCategory)">
+                       @click="goIndustryByCountry(articleContent.countryCategory, $event)"
+                       :data="articleContent.countryCategory">
                     {{articleContent.countryCategory | showLable}}
                   </div>
                   <div v-if="articleContent.industryCategory !== 'NULL'" class="label_item"
-                       @click="goIndustryByIndustry(articleContent.industryCategory)">
+                       @click="goIndustryByIndustry(articleContent.industryCategory, $event)" 
+                       :data="articleContent.industryCategory">
                     {{articleContent.industryCategory | showLable}}
                   </div>
                   <div v-if="articleContent.projectCategory !== 'NULL'" class="label_item"
-                       @click="goProjectByName(articleContent.projectCategory)">
+                       @click="goProjectByName(articleContent.projectCategory, $event)" 
+                       :data="articleContent.projectCategory">
                     {{articleContent.projectCategory | showLable}}
                   </div>
                 </div>
@@ -106,18 +114,20 @@
                   <div class="author_right">
                     <h4 class="user_name"
                         v-if="!(articleContent.siteName !== 'NULL' && articleContent.siteName !== null && articleContent.siteName !== '')"
-                        @click="goArticle('/author',{author: articleContent.author,type: 'author'})">
+                        @click="goArticle('/author',{author: articleContent.author,type: 'author'}, $event)" 
+                        :data="articleContent.author">
                       {{articleContent.author}}
                     </h4>
                     <h4 class="user_name" v-else
-                        @click="goArticle('/author',{author: articleContent.siteName,type: 'siteName'})">
+                        @click="goArticle('/author',{author: articleContent.siteName,type: 'siteName'}, $event)" 
+                        :data="articleContent.siteName">
                       {{articleContent.siteName}}
                     </h4>
-                    <button class="follow_btn" v-if="!follow" @click="setAuthorFollow()">
+                    <button class="follow_btn" v-if="!follow" data="关注作者" @click="setAuthorFollow(), trackAttention('作者', articleContent.siteName)">
                       <img src="../assets/follow/icon-follow.png"/>关注
                       <div class="arrow"></div>
                     </button>
-                    <button class="followed_btn" v-if="follow" @click="deleteAuthorFollow(articleContent.author)">
+                    <button class="followed_btn" v-if="follow" data="取消关注作者" @click="deleteAuthorFollow(articleContent.siteName)">
                       <div class="arrow"></div>
                       <img src="../assets/follow/icon-followed.png"/>已关注
                     </button>
@@ -126,7 +136,7 @@
                 <div class="author_news">
                   <ul class="news_ul">
                     <li class="news_li" v-for="news in newsForAuthor">
-                      <p @click="goArticle('/article',{sid:news.sid})">
+                      <p :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event), trackArticle('文章详情页内作者文章推荐', news.title, '文章详情页内文章没有项目ID', '作者文章推荐', news.sid)">
                         {{news.title}}
                       </p>
                       <p class="time">{{news.urlDate}}</p>
@@ -138,9 +148,11 @@
               <div class="adv_swiper">
                 <div class="swiper-container" id="right_swiper">
                   <div class="swiper-wrapper">
+                    <!-- <div class="swiper-slide" :style="'background-image: url('+img3+')'"></div>
                     <div class="swiper-slide" :style="'background-image: url('+img3+')'"></div>
-                    <div class="swiper-slide" :style="'background-image: url('+img3+')'"></div>
-                    <div class="swiper-slide" :style="'background-image: url('+img3+')'"></div>
+                    <div class="swiper-slide" :style="'background-image: url('+img3+')'"></div> -->
+                    <div class="swiper-slide"><img src="../assets/bangdan1.jpg"></div>
+                    <div class="swiper-slide"><img src="../assets/bangdan2.jpg"></div>
                   </div>
                   <!-- 如果需要分页器 -->
                   <div class="swiper-button-prev"></div><!--左箭头-->
@@ -156,7 +168,7 @@
                 </div>
                 <div class="hot_content">
                   <ul class="long_ul">
-                    <li v-for="(item, index) in hotNews" :key="item.sid" @click="goArticle('/article',{sid:item.sid})">
+                    <li v-for="(item, index) in hotNews" :key="item.sid" :data="item.title" @click="goArticle('/article',{sid:item.sid}, $event), trackArticle('文章详情页内24小时热文', item.title, '文章详情页内文章没有项目ID', '24小时热文', item.sid)">
                       <div class="list_item">
                         <div class="item_left" v-if="item.titlePicture">
                           <img :src="item.titlePicture"/>
@@ -177,7 +189,7 @@
           </div>
         </div>
       </div>
-      <div class="footer">
+      <!-- <div class="footer">
         <div class="top">
           <div class="fish_container">
             <div class="flexbox clearfix">
@@ -277,7 +289,8 @@
           <p>备案号</p>
           <p>版权信息</p>
         </div>
-      </div>
+      </div> -->
+      <vfooter/>
     </div>
     <div class="popover fade bottom in" role="tooltip" id="popover91482">
       <div class="arrow" style="left: 50%;"></div>
@@ -294,6 +307,7 @@
 </template>
 
 <script>
+  import sensors from '../../static/sa-init.js'
   import Swiper from 'swiper';
 
   let img1 = require('../assets/follow/banner01.png');
@@ -317,8 +331,55 @@
         newsForAuthor: []
       }
     },
+    mounted() {
+      new Swiper('#top_banner', {
+        loop: true,
+        // 如果需要分页器
+        pagination: {
+          el: '.swiper-pagination'
+        },
+        autoplay: {
+          disableOnInteraction: false,
+        },
+      })
+      new Swiper('#right_swiper', {
+        autoplay: {
+          disableOnInteraction: false,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        }
+      })
+      this.getDetailData();
+      this.getHotnewsData();
+
+      var end_time = "";
+      window.onload = function(){
+        end_time = new Date();
+        sensors.quick('autoTrack',{
+          load_time: end_time.getTime() - start_time.getTime()
+        })
+      }
+    },
     methods: {
-      goProjectByName(obj) {
+      trackAttention(category, name) {
+        sensors.track('Attention', {
+          category: category,
+          name: name
+        });
+      },
+      trackArticle(entrance, name, project_id, category, article_id) {
+        sensors.track('Article', {
+          entrance: entrance,
+          name: name,
+          project_id: project_id,
+          category: category,
+          article_id: article_id,
+          collect_count: '接口没有返回文章收藏量'
+        });
+      },
+      goProjectByName(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
             let arr = obj.split(';')
@@ -326,9 +387,10 @@
           }
         }
         let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
+        sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
-      goIndustryByIndustry(obj) {
+      goIndustryByIndustry(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
             let arr = obj.split(';')
@@ -336,9 +398,10 @@
           }
         }
         let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
+        sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
-      goIndustryByCountry(obj) {
+      goIndustryByCountry(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
             let arr = obj.split(';')
@@ -346,9 +409,10 @@
           }
         }
         let routeData = this.$router.resolve({path: '/newsList', query: {country: obj}});
+        sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
-      goProjectByName2(obj) {
+      goProjectByName2(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
             let arr = obj.split(';')
@@ -356,9 +420,10 @@
           }
         }
         let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
+        sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href);
       },
-      goIndustryByIndustry2(obj) {
+      goIndustryByIndustry2(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
             let arr = obj.split(';')
@@ -366,9 +431,10 @@
           }
         }
         let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
+        sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href);
       },
-      goIndustryByCountry2(obj) {
+      goIndustryByCountry2(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
             let arr = obj.split(';')
@@ -376,6 +442,7 @@
           }
         }
         let routeData = this.$router.resolve({path: '/newsList', query: {country: obj}});
+        sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href);
       },
       showAllShare(obj) {
@@ -450,7 +517,9 @@
                 //     that.isFollow = false
                 //   }
                 // });
-                let checkAuthorurl = '/api/individual/check?type=AUTHOR&sidOrName=' + that.articleContent.author;
+                let checkAuthorurl = ''
+                if (that.articleContent.author) {checkAuthorurl = '/api/individual/check?type=AUTHOR&sidOrName=' + that.articleContent.author;}
+                if (that.articleContent.siteName) {checkAuthorurl = '/api/individual/check?type=AUTHOR&sidOrName=' + that.articleContent.siteName;}
                 that.$axios({
                   method: 'post',
                   url: checkAuthorurl,
@@ -501,7 +570,6 @@
             this.$router.push('/index');
           }
         }
-
       },
       deleteFollow(cid) {
         let that = this;
@@ -572,8 +640,9 @@
           that.hotNews = res.data.content
         })
       },
-      goArticle(url, query) {
+      goArticle(url, query, event) {
         let routeData = this.$router.resolve({path: url, query: query});
+        sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
       setFollow() {
@@ -600,7 +669,9 @@
         let token = localStorage.getItem('apelink_user_token')
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid')
-          let url = '/api/individual/add?type=AUTHOR&name=' + that.articleContent.author;
+          let url = ''
+          if (that.articleContent.author) {url = '/api/individual/add?type=AUTHOR&name=' + that.articleContent.author;}
+          if (that.articleContent.siteName) {url = '/api/individual/add?type=AUTHOR&name=' + that.articleContent.siteName;}
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'post',
@@ -622,29 +693,6 @@
           that.newsForAuthor = res.data.content;
         })
       },
-    },
-    mounted() {
-      new Swiper('#top_banner', {
-        loop: true,
-        // 如果需要分页器
-        pagination: {
-          el: '.swiper-pagination'
-        },
-        autoplay: {
-          disableOnInteraction: false,
-        },
-      })
-      new Swiper('#right_swiper', {
-        autoplay: {
-          disableOnInteraction: false,
-        },
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        }
-      })
-      this.getDetailData();
-      this.getHotnewsData();
     },
     beforeRouteEnter(to, from, next) {
       next(vm => {

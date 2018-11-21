@@ -398,6 +398,86 @@
         }
       }
     }
+    .whitePaperTitle{
+      margin: 0;
+      p{
+        font-size: 20px;
+        color: #333;
+      }
+    }
+    .uploadtips{
+      margin: 0;
+    }
+    .uploadWhitePaper{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin: 0 0 30px;
+      .filename{
+        flex: 1;
+        height: 30px;
+        margin: 0 10px 0 0;
+        input{
+          width: 100%;
+          height: 100%;
+          border: 1px solid #ddd;
+          background: #fafafa;
+        }
+      }
+      .rightBtn{
+        flex: 0 0 180px;
+        min-width: 180px;
+        display: flex;
+        justify-content: space-around;
+      }
+      .chooseFile{
+        flex: 0 0 80px;
+        min-width: 80px;
+        border: 0;
+        height: 30px;
+        position: relative;
+        cursor: pointer;
+        input{
+          opacity: 0;
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          cursor: pointer;
+        }
+        button{
+          border-radius: 5px;
+          background: $mainColor;
+          font-family: "微软雅黑";
+          color: #fff;
+          width: 100%;
+          height: 100%;
+          border: 0;
+          cursor: pointer;
+        }
+      }
+      .uploadBtn{
+        flex: 0 0 80px;
+        min-width: 80px;
+        border: 0;
+        height: 30px;
+        border-radius: 5px;
+        background: $mainColor;
+        font-family: "微软雅黑";
+        color: #fff;
+        &.disabled{
+          opacity: .65;
+          cursor: not-allowed;
+        }
+      }
+    }
+    .uploadstate{
+      .progress{
+        margin: 0 0 10px;
+      }
+      .uploadsuccess{
+        text-align: center;
+      }
+    }
   }
 
   .left {
@@ -602,6 +682,7 @@
   @media (max-width: 1200px) {
     background-size: auto 100%;
     overflow: auto;
+    padding: 0 10px;
   }
 
   @media (max-width: 992px) {
@@ -624,12 +705,25 @@
   @media (max-width: 425px) {
     .inputInner {
       width: 100%;
+      padding-bottom: 15px;
     }
     .loginbox .hd li {
       margin: 0 35px;
     }
+    .inputInner .input-group{
+      margin-bottom: 15px;
+    }
+    .inputInner .other-group{
+      margin-bottom: 15px;
+    }
     .loginbox .hd li:after {
       margin-left: 37px;
+    }
+    .inputInner .input-group .ok-btn{
+      font-size: 14px;
+    }
+    .inputInner input.form-control{
+      font-size: 14px;
     }
     .left p {
       font-size: 25px !important;
@@ -637,6 +731,45 @@
     .loginbox .hd {
       padding: 25px 0 10px;
     }
+    .loginbox .uploadWhitePaper .rightBtn{
+      flex: 0 0 100%;
+      min-width: 100%;
+      margin: 30px 0 0;
+    }
+    .loginbox .uploadWhitePaper{
+      margin: 0 0 40px;
+    }
+    .loginbox .hd li{
+      font-size: 16px;
+    }
+    .loginbox .hd li:after{
+      height: 14px;
+    }
   }
+}
 
+.loginbox.whitePaper{
+  max-width: 1200px;
+  .whitehead{
+    margin: -74px auto 0;
+    text-align: center;
+  }
+  .whitePaperTitle{
+    margin: -74px 0 0;
+    position: relative;
+    &:after{
+      content: "";
+      position: absolute;
+      background: url(../assets/white-headbg.png) center / 100% no-repeat;
+      width: 158px;
+      height: 12px;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+    p{
+      font-size: 30px;
+      font-weight: bold;
+    }
+  }
 }

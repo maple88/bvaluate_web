@@ -20,17 +20,21 @@
                 <span class="icon-bar"></span>
               </button>
               <button class="button open_search navbar-toggle"><img src="../assets/search/search_b.png"></button>
-              <router-link to="/index" class="navbar-brand">
+              <router-link to="/list" class="navbar-brand">
                 <img src="../assets/logo-white.png" class="white">
                 <img src="../assets/logo-white.png" class="blue">
               </router-link>
+              <!-- <a class="navbar-brand">
+                <img src="../assets/logo-white.png" class="white">
+                <img src="../assets/logo-white.png" class="blue">
+              </a> -->
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
-                <router-link tag="li" to="/index" active-class="active"><a>首页</a></router-link>
-                <router-link tag="li" to="/recommend" active-class="active"><a>新闻</a></router-link>
+                <!-- <router-link tag="li" to="/index" active-class="active"><a>首页</a></router-link> -->
+                <!-- <router-link tag="li" to="/recommend" active-class="active"><a>新闻</a></router-link> -->
                 <router-link tag="li" to="/list" active-class="active"><a>榜单</a></router-link>
                 <router-link tag="li" to="/follow" active-class="active" v-show="token"><a>关注</a></router-link>
                 <li v-show="!token" @click="isLogin('/follow')"><a>关注</a></li>
@@ -47,6 +51,9 @@
                     <p>糖果数：{{candy}}</p>
                   </a>
                   <ul class="dropdown-menu">
+                    <li>
+                      <a href="javascript:;" @click="analysis()">白皮书分析</a>
+                    </li>
                     <router-link tag="li" to="/my"><a>设置</a></router-link>
                     <!-- <li><a href="#">设置</a></li> -->
                     <li>
@@ -463,7 +470,8 @@
         </div>
       </div>
       <!--isShow控制显示 goUrl控制登录成功后跳转（不跳转不给此值） success回调函数（登录成功后执行，默认空方法）在list.vue中使用-->
-      <v-login v-model="isShow" :goUrl="successGo"></v-login>
+      <v-login v-model="isShow" :success="refreshHome"></v-login>
+      <v-analysis v-model="isWhitePaper"></v-analysis>
       <vfooter/>
     </div>
   </div>
@@ -559,7 +567,8 @@
         weiboNo: 0,
         searchType: '文章',
         search: '',
-        successGo: ''
+        successGo: '',
+        isWhitePaper: false
       }
     },
     filters: {
@@ -633,6 +642,9 @@
       }
     },
     mounted() {
+      $(".nav.navbar-nav li a").on('click', function(){
+        $('.collapse').removeClass('in');
+      })
       let search_btn = $('.open_search');
       search_btn.click(function (e) {
         if ($('.bottom_search').hasClass('open')) {
@@ -692,6 +704,9 @@
       })
     },
     methods: {
+      analysis() {
+        this.isWhitePaper = true
+      },
       //未登录弹出登录窗口
       isLogin(url) {
         this.successGo = url;
@@ -1171,6 +1186,9 @@
             this.isFollow = false
           }
         }
+      },
+      refreshHome(){
+        window.location.reload();
       }
     }
   }

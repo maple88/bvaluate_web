@@ -395,12 +395,14 @@
         </div>
       </div>
       <vfooter/>
+      <v-login v-model="isShow" :success="refreshRecommend"></v-login>
     </div>
 
   </div>
 </template>
 
 <script>
+  // import sensors from '../../static/sa-init.js'
   import Swiper from 'swiper';
 
   let img1 = require('../assets/follow/banner01.png');
@@ -448,7 +450,9 @@
         flashPageSize: 20,
         followListNo: 1,
         followListPageSize: 20,
-        country: ''
+        country: '',
+        isShow: false,
+        successGo: ''
       }
     },
     filters: {
@@ -669,9 +673,18 @@
         let routeData = this.$router.resolve({path: '/newsList', query: {country: obj}});
         window.open(routeData.href, '_blank');
       },
+      isLogin(url) {
+        this.successGo = url;
+        this.isShow = true;
+      },
       goArticle(url, query) {
-        let routeData = this.$router.resolve({path: url, query: query});
-        window.open(routeData.href, '_blank');
+        let token = localStorage.getItem('apelink_user_token');
+        if (token) {
+          let routeData = this.$router.resolve({path: url, query: query});
+          window.open(routeData.href, '_blank');
+        } else {
+          this.isLogin(url);
+        }
       },
       //根据路由进行跳转
       goUrl(url, query) {
@@ -943,6 +956,9 @@
       replaceAll(text, FindText, RepText) {
         let regExp = new RegExp(FindText, "g");
         return text.replace(regExp, RepText);
+      },
+      refreshRecommend(){
+        window.location.reload();
       }
     },
     mounted() {
@@ -965,6 +981,14 @@
       });
       this.initPageDate()
       this.scrollFlash()
+
+      // var end_time = "";
+      // window.onload = function(){
+      //   end_time = new Date();
+      //   sensors.quick('autoTrack',{
+      //     load_time: end_time.getTime() - start_time.getTime()
+      //   })
+      // }
     }
   }
 </script>
