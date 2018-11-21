@@ -398,53 +398,53 @@
         }
       }
     }
-    .whitePaperTitle{
+    .whitePaperTitle {
       margin: 0;
-      p{
+      p {
         font-size: 20px;
         color: #333;
       }
     }
-    .uploadtips{
+    .uploadtips {
       margin: 0;
     }
-    .uploadWhitePaper{
+    .uploadWhitePaper {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       margin: 0 0 30px;
-      .filename{
+      .filename {
         flex: 1;
         height: 30px;
         margin: 0 10px 0 0;
-        input{
+        input {
           width: 100%;
           height: 100%;
           border: 1px solid #ddd;
           background: #fafafa;
         }
       }
-      .rightBtn{
+      .rightBtn {
         flex: 0 0 180px;
         min-width: 180px;
         display: flex;
         justify-content: space-around;
       }
-      .chooseFile{
+      .chooseFile {
         flex: 0 0 80px;
         min-width: 80px;
         border: 0;
         height: 30px;
         position: relative;
         cursor: pointer;
-        input{
+        input {
           opacity: 0;
           width: 100%;
           height: 100%;
           position: absolute;
           cursor: pointer;
         }
-        button{
+        button {
           border-radius: 5px;
           background: $mainColor;
           font-family: "微软雅黑";
@@ -455,7 +455,7 @@
           cursor: pointer;
         }
       }
-      .uploadBtn{
+      .uploadBtn {
         flex: 0 0 80px;
         min-width: 80px;
         border: 0;
@@ -464,17 +464,17 @@
         background: $mainColor;
         font-family: "微软雅黑";
         color: #fff;
-        &.disabled{
+        &.disabled {
           opacity: .65;
           cursor: not-allowed;
         }
       }
     }
-    .uploadstate{
-      .progress{
+    .uploadstate {
+      .progress {
         margin: 0 0 10px;
       }
-      .uploadsuccess{
+      .uploadsuccess {
         text-align: center;
       }
     }
@@ -710,19 +710,19 @@
     .loginbox .hd li {
       margin: 0 35px;
     }
-    .inputInner .input-group{
+    .inputInner .input-group {
       margin-bottom: 15px;
     }
-    .inputInner .other-group{
+    .inputInner .other-group {
       margin-bottom: 15px;
     }
     .loginbox .hd li:after {
       margin-left: 37px;
     }
-    .inputInner .input-group .ok-btn{
+    .inputInner .input-group .ok-btn {
       font-size: 14px;
     }
-    .inputInner input.form-control{
+    .inputInner input.form-control {
       font-size: 14px;
     }
     .left p {
@@ -731,33 +731,34 @@
     .loginbox .hd {
       padding: 25px 0 10px;
     }
-    .loginbox .uploadWhitePaper .rightBtn{
+    .loginbox .uploadWhitePaper .rightBtn {
       flex: 0 0 100%;
       min-width: 100%;
       margin: 30px 0 0;
     }
-    .loginbox .uploadWhitePaper{
+    .loginbox .uploadWhitePaper {
       margin: 0 0 40px;
     }
-    .loginbox .hd li{
+    .loginbox .hd li {
       font-size: 16px;
     }
-    .loginbox .hd li:after{
+    .loginbox .hd li:after {
       height: 14px;
     }
   }
 }
 
-.loginbox.whitePaper{
+.loginbox.whitePaper {
   max-width: 1200px;
-  .whitehead{
+  border: 2px solid #5c62c4;
+  .whitehead {
     margin: -74px auto 0;
     text-align: center;
   }
-  .whitePaperTitle{
+  .whitePaperTitle {
     margin: -74px 0 0;
     position: relative;
-    &:after{
+    &:after {
       content: "";
       position: absolute;
       background: url(../assets/white-headbg.png) center / 100% no-repeat;
@@ -767,7 +768,7 @@
       right: 0;
       margin: auto;
     }
-    p{
+    p {
       font-size: 30px;
       font-weight: bold;
     }
