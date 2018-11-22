@@ -134,6 +134,7 @@
           headers: headers
         }).then(function (res) {
           that.newsList = res.data.totalElements
+          sensors.setProfile({collect_count: that.newsList});
         })
       },
       initCandy() {
