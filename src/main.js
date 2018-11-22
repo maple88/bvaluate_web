@@ -15,6 +15,8 @@ import analysis from '@/components/analysis.vue'
 import 'swiper/dist/css/swiper.min.css'
 import axios from 'axios'
 import '@/styles/main.scss'
+import 'es6-promise/auto'
+import Vuex from 'vuex'
 
 Vue.prototype.$axios = axios;
 Vue.config.productionTip = false;
@@ -23,11 +25,21 @@ Vue.component('vfooter', footer);
 Vue.component('vtips', tip);
 Vue.component('v-login', login);
 Vue.component('v-analysis', analysis);
+Vue.use(Vuex);
+
+let initStatus = false;
+
+const store = new Vuex.Store({
+  state: {
+    registerTip: initStatus
+  }
+});
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   components: {App},
   template: '<App/>'
 })
