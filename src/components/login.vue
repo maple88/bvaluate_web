@@ -329,6 +329,7 @@
               that.aplinkUser = res.data;
               localStorage.setItem('apelink_user_candies', res.data.candies);
               localStorage.setItem('apelink_user_nickName', res.data.nickName);
+              sensors.setProfile({nickname: res.data.nickName});
               localStorage.setItem('apelink_user_signedIn', res.data.signedIn);
               let synopsis = res.data.synopsis;
               let profileUrl = res.data.profileUrl;
@@ -349,7 +350,13 @@
               localStorage.setItem('apelink_user_synopsis', synopsis);
               localStorage.setItem('apelink_user_profileUrl', profileUrl);
               localStorage.setItem('apelink_user_email', email);
+              sensors.setProfile({Email: email});
               localStorage.setItem('apelink_user_sex', sex);
+              if (sex == '2') {
+                sensors.setProfile({gender: '男'});
+              }else if (sex == '3') {
+                sensors.setProfile({gender: '女'});
+              }
               sensors.registerPage({
                 platform_type: 'web',
                 is_login: true,

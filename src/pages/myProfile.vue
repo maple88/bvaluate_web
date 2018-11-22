@@ -24,7 +24,7 @@
                 <div class="tb-cell edit" @click="edit(editnicknamebox)"><i class="fa fa-pencil"></i>修改</div>
               </div>
               <div class="tb-cell nicknamedit editbox" v-show="!editnicknamebox.show">
-                <input type="text" maxlength="8" v-model="user.nickName" data="输入新昵称" @keyup.enter="editnicknameok(editnicknamebox)">
+                <input type="text" maxlength="8" v-model="user.nickName" data="输入新昵称" @keyup.enter="editnicknameok(editnicknamebox, $event)">
               </div>
             </div>
             <div class="list-item">
@@ -268,6 +268,7 @@
         that.editInfor(json, function (res) {
           if (res.data) {
             localStorage.setItem('apelink_user_nickName', that.user.nickName);
+            sensors.setProfile({nickname: that.user.nickName});
             obj.show = !obj.show
           } else {
             obj.show = !obj.show
@@ -298,6 +299,11 @@
           if (res.data) {
             localStorage.setItem('apelink_user_sex', that.user.sex);
             that.user.oldSex = that.user.sex;
+            if (that.user.sex == '2') {
+              sensors.setProfile({gender: '男'});
+            }else if (that.user.sex == '3') {
+              sensors.setProfile({gender: '女'});
+            }
             obj.show = !obj.show
           } else {
           }
@@ -318,6 +324,7 @@
         this.editInfor(json, function (res) {
           if (res.data) {
             localStorage.setItem('apelink_user_email', res.data.email);
+            sensors.setProfile({Email: res.data.email});
             $('#emailModal').modal('hide')
           }
         }, res => {
@@ -344,6 +351,7 @@
           }).then(function (res) {
             that.emailError_show = true;
             that.sendEmailBtn = true;
+            alert('验证码已发送到邮箱，请注意查收');
             let clearTime = setInterval(() => {
               that.email_time--;
               if (that.email_time <= 0) {

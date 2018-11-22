@@ -264,7 +264,7 @@
           is_login: false,
           is_register: true
         });
-        sensors.logout();
+        // sensors.logout();
         this.$router.push('/login');
       },
       initUser() {
