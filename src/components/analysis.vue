@@ -20,9 +20,9 @@
                   </div>
                   <div class="input_right">
                     <input type="text"/>
-                  </div>
-                  <div class="input_tip">
-                    <h4>请填写项目名称</h4>
+                    <div class="input_tip">
+                      <h4>请填写项目名称</h4>
+                    </div>
                   </div>
                 </div>
                 <div class="input_box">
@@ -31,9 +31,9 @@
                   </div>
                   <div class="input_right">
                     <input type="text"/>
-                  </div>
-                  <div class="input_tip">
-                    <h4>请填写官网地址</h4>
+                    <div class="input_tip">
+                      <h4>请填写官网地址</h4>
+                    </div>
                   </div>
                 </div>
                 <div class="input_box">
@@ -42,10 +42,40 @@
                   </div>
                   <div class="input_right">
                     <input type="text"/>
+                    <div class="input_tip">
+                      <h4>请填写通证名称</h4>
+                    </div>
                   </div>
-                  <div class="input_tip">
-                    <h4>请填写通证名称</h4>
+                </div>
+              </div>
+              <div class="loadUp_box">
+                <p class="uploadtips">注：暂只支持pdf格式文件，文件名称格式为项目名称-版本号-语言.pdf<br>(例如300cubits TEU-2.0.00-cn.pdf)</p>
+                <div class="uploadWhitePaper">
+                  <div class="filename">
+                    <input type="text" data="点击了只读状态的输入框" readonly="readonly" v-model="filename">
+                    <span class="help-block" v-if="fileTips">
+                <img src="../assets/login/iclose.png">
+                {{fileTips}}
+              </span>
                   </div>
+                  <div class="rightBtn">
+                    <div class="chooseFile">
+                      <input type="file" data="选择文件" @change="selectPDF($event)">
+                      <button data="选择文件">选择文件</button>
+                    </div>
+                    <button class="uploadBtn" data="上传白皮书" :class="{ disabled: uploadBtn }" :disabled="uploadBtn"
+                            @click="uploadPDF">上传
+                    </button>
+                  </div>
+                </div>
+                <div class="uploadstate" v-show="uploadstate">
+                  <div class="progress">
+                    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0"
+                         aria-valuemax="100" :style="'width:'+uploadtime+'%'">
+                      {{uploadtime}}%
+                    </div>
+                  </div>
+                  <p class="uploadsuccess">{{uploadword}}</p>
                 </div>
               </div>
             </div>
@@ -55,34 +85,6 @@
                 <h4>并赠送上传用户 <span>166</span> 糖果！</h4>
               </div>
             </div>
-          </div>
-          <p class="uploadtips">注：暂只支持pdf格式文件，文件名称格式为项目名称-版本号-语言.pdf<br>(例如300cubits TEU-2.0.00-cn.pdf)</p>
-          <div class="uploadWhitePaper">
-            <div class="filename">
-              <input type="text" data="点击了只读状态的输入框" readonly="readonly" v-model="filename">
-              <span class="help-block" v-if="fileTips">
-                <img src="../assets/login/iclose.png">
-                {{fileTips}}
-              </span>
-            </div>
-            <div class="rightBtn">
-              <div class="chooseFile">
-                <input type="file" data="选择文件" @change="selectPDF($event)">
-                <button data="选择文件">选择文件</button>
-              </div>
-              <button class="uploadBtn" data="上传白皮书" :class="{ disabled: uploadBtn }" :disabled="uploadBtn"
-                      @click="uploadPDF">上传
-              </button>
-            </div>
-          </div>
-          <div class="uploadstate" v-show="uploadstate">
-            <div class="progress">
-              <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0"
-                   aria-valuemax="100" :style="'width:'+uploadtime+'%'">
-                {{uploadtime}}%
-              </div>
-            </div>
-            <p class="uploadsuccess">{{uploadword}}</p>
           </div>
         </div>
       </div>

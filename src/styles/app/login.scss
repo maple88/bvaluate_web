@@ -406,7 +406,8 @@
       }
     }
     .uploadtips {
-      margin: 0;
+      margin-top: 0;
+      margin-bottom: 10px;
     }
     .uploadWhitePaper {
       display: flex;
@@ -751,13 +752,27 @@
 .loginbox.whitePaper {
   max-width: 1200px;
   border: 2px solid #5c62c4;
+  position: relative;
+  .close_box .icon_close {
+    background-image: url("../assets/login/close_black.png");
+    background-color: white;
+    border-color: white;
+    box-shadow: 0 0 15px 1px #5c62c4;
+  }
   .whitehead {
-    margin: -74px auto 0;
+    position: absolute;
+    bottom: 100%;
+    left: 2%;
+    width: 96%;
     text-align: center;
   }
   .whitePaperTitle {
-    margin: -74px 0 0;
-    position: relative;
+    position: absolute;
+    bottom: 100%;
+    left: 2%;
+    width: 96%;
+    padding: 0;
+    border: none;
     &:after {
       content: "";
       position: absolute;
@@ -771,6 +786,201 @@
     p {
       font-size: 30px;
       font-weight: bold;
+    }
+  }
+  .bd {
+    .from_box {
+      display: flex;
+      justify-content: space-between;
+      .left_box {
+        flex: 0 0 50%;
+        .project_information_from {
+          padding-top: 70px;
+          padding-bottom: 10px;
+          .input_box {
+            display: flex;
+            margin-bottom: 20px;
+            .input_left {
+              flex: 0 0 90px;
+              h4 {
+                font-size: 18px;
+                margin-top: 5px;
+                margin-bottom: 0;
+              }
+            }
+            .input_right {
+              flex: 0 0 200px;
+              position: relative;
+              input {
+                height: 30px;
+                width: 200px;
+                border: 1px solid #ddd;
+                background: #fafafa;
+                padding-left: 5px;
+              }
+              .input_tip {
+                position: absolute;
+                top: 6px;
+                left: calc(100% + 10px);
+                min-width: 100%;
+                h4 {
+                  font-size: 15px;
+                  margin: 0;
+                  color: red;
+                }
+              }
+            }
+          }
+        }
+      }
+      .right_box {
+        flex: 0 0 50%;
+        min-width: 50%;
+        justify-content: center;
+        padding-top: 30px;
+        padding-bottom: 50px;
+        .reward_box {
+          background-image: url("../assets/white-border.png");
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: contain;
+          padding: 140px 0 70px;
+          text-align: center;
+          p {
+            text-indent: 60px;
+            font-weight: 600;
+          }
+          h4 {
+            font-size: 20px;
+            text-indent: 38px;
+            font-weight: bold;
+            span {
+              font-weight: 400;
+              font-size: 40px;
+              color: #9007e5;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 992px) {
+    .bd .from_box .left_box .project_information_from .input_box {
+      margin-bottom: 30px;
+      .input_right .input_tip {
+        left: 0;
+        top: calc(100% + 5px);
+      }
+    }
+  }
+  @media (max-width: 800px) {
+    .whitehead {
+      img {
+        width: 100%;
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    padding: 0;
+    .whitehead {
+      left: 10%;
+      width: 80%;
+    }
+    .whitePaperTitle p {
+      font-size: 19px;
+      margin-bottom: 5px;
+    }
+    .bd {
+      height: 460px;
+      padding: 0 15px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      overflow-y: scroll;
+      .from_box {
+        flex-direction: column-reverse;
+        .left_box .project_information_from {
+          padding-top: 0;
+          padding-bottom: 10px;
+        }
+        .right_box {
+          padding-bottom: 5px;
+          .reward_box {
+            padding: 120px 0 50px;
+            p {
+              font-size: 12px;
+              text-indent: 38px;
+            }
+            h4 {
+              font-size: 17px;
+              span {
+                font-size: 25px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 600px) {
+    .whitehead {
+      left: 2%;
+      width: 96%;
+    }
+    .whitePaperTitle p {
+      font-size: 19px;
+      margin-bottom: 5px;
+    }
+    .bd .from_box {
+      flex-direction: column-reverse;
+      .left_box .project_information_from {
+        padding-top: 0;
+        padding-bottom: 10px;
+      }
+    }
+    .whitePaperTitle:after {
+      width: 90px;
+    }
+  }
+  @media (max-width: 425px) {
+    .whitehead {
+      left: 2%;
+      width: 96%;
+    }
+    .whitePaperTitle p {
+      font-size: 16px;
+      margin-bottom: 0px;
+    }
+    .bd .from_box {
+      flex-direction: column-reverse;
+      .left_box .project_information_from {
+        padding-top: 0;
+        padding-bottom: 10px;
+      }
+    }
+    .whitePaperTitle:after {
+      width: 90px;
+    }
+  }
+  @media (max-width: 375px) {
+    .bd .from_box .right_box .reward_box {
+      margin: 0 -12px;
+    }
+    .bd .from_box .left_box .project_information_from .input_box {
+      flex-direction: column;
+      margin-bottom: 20px;
+      .input_left {
+        flex: 0 0 auto;
+        padding-bottom: 3px;
+        h4 {
+          font-size: 16px;
+        }
+      }
+      .input_right {
+        flex: 0 0 auto;
+        .input_tip h4 {
+          font-size: 12px;
+        }
+      }
     }
   }
 }
