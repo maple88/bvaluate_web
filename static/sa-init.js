@@ -19,13 +19,13 @@ sensors.init({
     //如果返回真，表示采集input内容，返回假表示不采集input内容,默认不采集
     // collect_input: false,
     //假如要在 $WebClick 事件增加自定义属性，可以通过（a，button，input）这三类标签的特征来判断是否要增加
-    custom_property:function( element_target ){
-        //比如您需要给有 data=test 属性的标签的点击事件增加自定义属性 name:'aa' ，则代码如下
-        if(element_target.getAttribute('data')){
-            return {
-                column_name: element_target.getAttribute('data')
-            }
+    custom_property: function (element_target) {
+      //比如您需要给有 data=test 属性的标签的点击事件增加自定义属性 name:'aa' ，则代码如下
+      if (element_target.getAttribute('data')) {
+        return {
+          column_name: element_target.getAttribute('data')
         }
+      }
     },
   }
 });
@@ -37,13 +37,13 @@ if (localStorage.getItem('apelink_user_uid')) {
     is_register: true
   });
   sensors.login(localStorage.getItem('apelink_user_uid'));
-}else if (localStorage.getItem('apelink_user_is_register')) {
+} else if (localStorage.getItem('apelink_user_is_register')) {
   sensors.registerPage({
     platform_type: 'web',
     is_login: false,
     is_register: true
   });
-}else{
+} else {
   sensors.registerPage({
     platform_type: 'web',
     is_login: false,

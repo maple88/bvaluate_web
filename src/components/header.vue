@@ -18,7 +18,8 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <button class="button open_search navbar-toggle" data="搜索按钮"><img src="../assets/search/search_b.png"></button>
+            <button class="button open_search navbar-toggle" data="搜索按钮"><img src="../assets/search/search_b.png">
+            </button>
             <router-link to="/list" class="navbar-brand" data="logo"><img src="../assets/logo.png"></router-link>
             <!-- <a class="navbar-brand"><img src="../assets/logo.png"></a> -->
           </div>
@@ -31,9 +32,12 @@
               <router-link tag="li" to="/list" active-class="active"><a data="榜单">榜单</a></router-link>
               <router-link tag="li" to="/follow" active-class="active" v-show="token"><a data="关注">关注</a></router-link>
               <li v-show="!token" @click="isLogin('/follow', '关注')"><a data="关注">关注</a></li>
-              <router-link tag="li" to="/userCenter" active-class="active" v-show="token"><a data="个人中心">个人中心</a></router-link>
+              <router-link tag="li" to="/userCenter" active-class="active" v-show="token"><a data="个人中心">个人中心</a>
+              </router-link>
               <li v-show="!token" @click="isLogin('/userCenter', '个人中心')"><a data="个人中心">个人中心</a></li>
-              <li><a href="javascript:;" data="白皮书分析" @click="analysis()">白皮书分析</a></li>
+              <li v-show="token"><a href="javascript:;" data="白皮书分析" @click="analysis()">白皮书分析</a></li>
+              <li v-show="!token" @click="isLogin('', '白书皮分析')"><a href="javascript:;" data="白皮书分析">白皮书分析</a>
+              </li>
             </ul>
             <ul class="nav navbar-nav navbar-right" v-if="token">
               <li class="dropdown">
@@ -137,7 +141,7 @@
     },
     mounted() {
       this.path = this.$router.history.current.path
-      $(".nav.navbar-nav li a").on('click', function(){
+      $(".nav.navbar-nav li a").on('click', function () {
         $('.collapse').removeClass('in');
       })
       window.addEventListener('scroll', this.handleScroll)
@@ -178,13 +182,13 @@
           {name: '/author', val: '作者'},
           {name: '/search', val: '搜索页面'}
         ]
-        let index = path.findIndex(function(x){
+        let index = path.findIndex(function (x) {
           return x.name === that.path;
         })
         let entrance;
         if (index !== -1) {
           entrance = path[index].val
-        }else {
+        } else {
           entrance = '找不到入口位置'
         }
         sensors.track('Search', {
@@ -193,7 +197,7 @@
           content: content
         });
       },
-      refreshPage(){
+      refreshPage() {
         window.location.reload();
       },
       analysis() {
@@ -211,14 +215,14 @@
       },
       salogin(event) {
         sensors.quick('trackHeatMap', event.currentTarget);
-        sensors.track("Registerstart",{
+        sensors.track("Registerstart", {
           entrance: '列表页',
           operate: '登录button'
         });
       },
       saregister(event) {
         sensors.quick('trackHeatMap', event.currentTarget);
-        sensors.track("Registerstart",{
+        sensors.track("Registerstart", {
           entrance: '列表页',
           operate: '注册button'
         });
@@ -226,16 +230,20 @@
       isLogin(url, name) {
         this.successGo = url;
         this.isShow = true;
-
         if (name == '关注') {
-          sensors.track("Loginstart",{
+          sensors.track("Loginstart", {
             entrance: '列表页',
             operate: '关注'
           });
-        }else if (name == '个人中心') {
-          sensors.track("Loginstart",{
+        } else if (name == '个人中心') {
+          sensors.track("Loginstart", {
             entrance: '列表页',
             operate: '个人中心'
+          });
+        } else if (name == '白书皮分析') {
+          sensors.track("Loginstart", {
+            entrance: '列表页',
+            operate: '白书皮分析'
           });
         }
       },
