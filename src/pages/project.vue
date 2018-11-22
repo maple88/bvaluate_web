@@ -508,8 +508,8 @@
           </div>
           <div class="section6" v-if="recommendProjects">
             <div class="rightlayouthead">项目推荐</div>
-            <div class="item" v-for="project in recommendProjects" 
-            @click="trackProject('项目页广告位', project.project, project.sid, '广告位没有排行榜位置', project.totalScore)">
+            <div class="item" v-for="(project, index) in recommendProjects" 
+            @click="trackUtmproject('项目详情页', project.project, project.sid, parseInt(index+1))">
               <router-link :to="'/project?sid='+project.sid" :data="project.project">
                 <div class="ibanner"><img src="../assets/project/recommend-banner.jpg"></div>
                 <div class="info">
@@ -691,6 +691,14 @@
           rank: index,
           score: score,
           attention_count: '接口没有关注量'
+        });
+      },
+      trackUtmproject(title, name, project_id, order) {
+        sensors.track('Utmproject', {
+          title: title,
+          name: name,
+          project_id: project_id,
+          order: order
         });
       },
       scrollNewOrGrade() {
