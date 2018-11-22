@@ -801,11 +801,16 @@
             display: flex;
             margin-bottom: 20px;
             .input_left {
-              flex: 0 0 90px;
+              flex: 0 0 110px;
               h4 {
                 font-size: 18px;
                 margin-top: 5px;
                 margin-bottom: 0;
+                span {
+                  position: relative;
+                  top: 3px;
+                  color: red;
+                }
               }
             }
             .input_right {
@@ -984,3 +989,150 @@
     }
   }
 }
+
+.login_fixed.register_tips {
+  .loginbox.register_tips {
+    padding: 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    .close_box {
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      .icon_close {
+        background-image: url("../assets/login/close_black.png");
+        background-color: #d8dbdd;
+        border-color: #d8dbdd;
+      }
+    }
+    .bd {
+      background-image: url("../assets/register/bg.png");
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      .tips_title {
+        margin-left: -10px;
+        margin-right: -10px;
+        position: relative;
+        &:before {
+          position: absolute;
+          right: calc(100% - 10px);
+          top: 20px;
+          content: '';
+          height: 100%;
+          width: 35px;
+          background-image: url("../assets/register/left.png");
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+        &:after {
+          position: absolute;
+          left: calc(100% - 10px);
+          top: 20px;
+          content: '';
+          height: 100%;
+          width: 35px;
+          background-image: url("../assets/register/right.png");
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+        h4 {
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+          padding-top: 20px;
+          padding-bottom: 20px;
+          background-color: #037bf1;
+          box-shadow: 0 0 10px 0 rgba(0, 0, 0, .2) inset;
+          margin: 0;
+          text-align: center;
+          font-size: 30px;
+          font-weight: bold;
+          letter-spacing: 5px;
+          color: white;
+          position: relative;
+          z-index: 2;
+        }
+      }
+      .tips_content {
+        .content_default {
+          padding-top: 20px;
+          padding-bottom: 10px;
+          h4 {
+            font-size: 25px;
+            font-weight: bold;
+            text-align: center;
+            span {
+              font-size: 45px;
+              color: #eb3254;
+              padding: 0 5px;
+            }
+          }
+        }
+        .tips_button {
+          text-align: center;
+          padding-bottom: 20px;
+          button {
+            outline: none;
+            background-image: url("../assets/register/button.png");
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            border: none;
+            border-radius: 100px;
+            padding: 10px 50px;
+            font-size: 18px;
+            color: #FFFFFF;
+          }
+        }
+        .erCode_box {
+          text-align: center;
+          padding-bottom: 5px;
+        }
+        .content_tips {
+          text-align: center;
+          padding-bottom: 10px;
+          p {
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 650px) {
+    padding: 0 45px;
+    .loginbox.register_tips .bd .tips_title {
+      h4 {
+        font-size: 20px;
+      }
+      &:before {
+        width: 25px;
+      }
+      &:after {
+        width: 25px;
+      }
+    }
+    .loginbox.register_tips .bd .tips_content .content_default h4 {
+      font-size: 18px;
+      span {
+        font-size: 30px;
+      }
+    }
+    .loginbox.register_tips .bd .tips_content .tips_button button {
+      font-size: 16px;
+      padding: 8px 30px;
+    }
+  }
+  @media (max-width: 350px) {
+    .loginbox.register_tips .bd .tips_content .content_default h4 {
+      font-size: 16px;
+      span {
+        font-size: 25px;
+      }
+    }
+  }
+}
+
