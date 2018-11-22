@@ -827,6 +827,10 @@
         this.loginForm = false;
         this.registerForm = true;
         this.resetpwdForm = false;
+        sensors.track("Registerstart", {
+          entrance: '列表页',
+          operate: '注册button'
+        });
       },
       resetpwd() {
         this.login_register_head = false
