@@ -31,8 +31,7 @@
                 <div class="pcol" v-for="(item, index) in topbangdan.topProject" :key="index">
                   <div class="prod">
                     <div class="picon" :data="item.project" 
-                    @click="goArticle('/project',{sid: item.sid}, $event), 
-                            trackProject('榜单页广告位', item.project, item.sid, '广告位没有排行榜位置', '接口没有项目总分'),
+                    @click="goArticle('/project',{sid: item.sid}, $event),
                             trackUtmproject('榜单页', item.project, item.sid, parseInt(index+1))">
                       <img src="../assets/media.jpg" :src="item.logoSrc">
                     </div>
