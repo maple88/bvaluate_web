@@ -4,16 +4,19 @@
       <router-view/>
     </keep-alive>
     <v-register-tip></v-register-tip>
+    <v-invitation-tip></v-invitation-tip>
   </div>
 </template>
 
 <script>
   import registerTip from '@/components/registerTip';
+  import invitationTip from '@/components/invitationTip';
 
   export default {
     name: 'App',
     components: {
-      'v-register-tip': registerTip
+      'v-register-tip': registerTip,
+      'v-invitation-tip': invitationTip,
     },
     mounted() {
       let clearTime = setTimeout(() => {

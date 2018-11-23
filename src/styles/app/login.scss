@@ -1136,3 +1136,160 @@
   }
 }
 
+.login_fixed.invitation_tips {
+  .invitation_tips {
+    background-image: url("../assets/invitation/bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    max-width: 666px;
+    border-radius: 15px;
+    .close_box {
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      .icon_close {
+        background-image: url("../assets/login/close_black.png");
+        background-color: #d8dbdd;
+        border-color: #d8dbdd;
+      }
+    }
+    .bd {
+      position: relative;
+      .tips_title {
+        position: absolute;
+        top: -45px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+      }
+      .tips_content {
+        padding-top: 80px;
+        position: relative;
+        .content_default {
+          h4 {
+            font-size: 25px;
+            text-align: center;
+            span {
+              font-size: 45px;
+              color: #eb3254;
+              padding: 0 5px;
+            }
+          }
+        }
+        .decorate_box {
+          position: absolute;
+          bottom: -55px;
+          left: -85px;
+        }
+        .erCode_box {
+          position: absolute;
+          bottom: 20px;
+          right: 0;
+          .content_tips {
+            text-align: center;
+            p {
+              margin: 0;
+            }
+          }
+        }
+        .invitation_info {
+          padding: 65px 0 65px;
+          h4 {
+            font-size: 22px;
+            text-align: center;
+            span {
+              font-size: 28px;
+              color: #f47208;
+              padding: 0 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    padding: 0 55px;
+    .invitation_tips .bd {
+      .tips_title {
+        top: -35px;
+        img {
+          width: 360px;
+        }
+      }
+      .tips_content {
+        padding-top: 25px;
+        .content_default h4 {
+          font-size: 18px;
+          span {
+            font-size: 35px;
+          }
+        }
+        .decorate_box {
+          bottom: -23px;
+          left: -50px;
+          img {
+            width: 120px;
+          }
+        }
+        .erCode_box {
+          position: relative;
+          text-align: center;
+        }
+        .invitation_info {
+          padding: 2px 0 20px;
+          h4 {
+            font-size: 16px;
+            span {
+              font-size: 21px;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 550px) {
+    padding: 0 15px;
+    .invitation_tips .close_box {
+      top: -20px;
+      right: -15px;
+    }
+    .invitation_tips .bd {
+      .tips_title {
+        top: -20px;
+        img {
+          width: 230px;
+        }
+      }
+      .tips_content {
+        padding-top: 25px;
+        .content_default h4 {
+          font-size: 16px;
+          span {
+            font-size: 28px;
+          }
+        }
+        .decorate_box {
+          bottom: -23px;
+          left: -50px;
+          img {
+            width: 120px;
+          }
+        }
+        .erCode_box {
+          position: relative;
+          text-align: center;
+        }
+        .invitation_info {
+          padding: 2px 0 20px;
+          h4 {
+            font-size: 16px;
+            span {
+              font-size: 21px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
