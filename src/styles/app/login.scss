@@ -1298,3 +1298,89 @@
     }
   }
 }
+
+.login_fixed.signIn_tips {
+  .signIn_tips {
+    background-image: url("../assets/signIn/bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    max-width: 945px;
+    border-radius: 15px;
+    .bd {
+      padding: 60px 65px 30px;
+      position: relative;
+      .tips_title {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        left: 0;
+        top: -30px;
+      }
+      .tips_content {
+        .content_default {
+          .sugar_list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            .sugar_item {
+              flex: 0 0 25%;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              &.this_day {
+                .sugar_box {
+                  border: 2px solid #037bf1;
+                  h4 {
+                    padding-top: 5px;
+                    margin: 0;
+                  }
+                }
+                .day_box {
+                  padding-top: 15px;
+                  h4 {
+                    margin: auto;
+                    background-color: #037bf1;
+                    padding: 10px 20px;
+                    color: #fff;
+                    border-radius: 5px;
+                    position: relative;
+                    &:after {
+                      content: '';
+                      position: absolute;
+                      left: calc(50% - 15px);
+                      top: -24px;
+                      border-style: solid;
+                      border-width: 15px;
+                      border-color: transparent transparent #037bf1 transparent;
+                      transform: scaleY(0.7);
+                    }
+                  }
+                }
+              }
+              .sugar_box {
+                width: 95px;
+                height: 95px;
+                border-radius: 50%;
+                border: 2px solid #999;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                h4 {
+                  padding-top: 5px;
+                  margin: 0;
+                }
+              }
+              .day_box {
+
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

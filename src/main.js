@@ -30,7 +30,8 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     registerTip: false,
-    invitationTip: false
+    invitationTip: false,
+    signInTips: false
   }
 });
 
