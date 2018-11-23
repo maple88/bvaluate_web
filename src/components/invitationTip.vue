@@ -59,6 +59,9 @@
         let url = `/api/user/getInvitationCode`;
         let uid = localStorage.getItem('apelink_user_uid');
         let token = localStorage.getItem('apelink_user_token');
+        if (!token) {
+          return false
+        }
         let headers = {'uid': uid, 'Authorization': token};
         this.$axios({
           method: 'post',
