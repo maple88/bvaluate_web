@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div class="login_fixed invitation_tips" v-if="invitationTip">
+    <div class="login_fixed invitation_tips" v-show="invitationTip">
       <div class="login_bg"></div>
       <div class="loginbox invitation_tips">
         <div class="close_box" @click="fn2">
@@ -21,7 +21,8 @@
             </div>
             <div class="erCode_box">
               <div class="img_box">
-                <img src="../assets/invitation/test.png" alt="">
+                <div id="qrCodeUrl"></div>
+                <!--<img src="../assets/invitation/test.png" alt="">-->
               </div>
               <div class="content_tips">
                 <p>微信扫描此二维码</p>
@@ -39,16 +40,16 @@
 </template>
 
 <script>
-  import sensors from '../../static/sa-init.js'
+  import QRCode from 'qrcodejs2'
 
   export default {
     data() {
       return {
-        erCode: ''
+        erCode: '',
+        hasQRCode: false
       }
     },
     mounted() {
-      this.initInvitationInfo();
     },
     methods: {
       fn2() {
@@ -64,12 +65,21 @@
           url: url,
           headers: headers,
         }).then(res => {
-          console.log(res)
+          console.log(res);
+          this.hasQRCode = true
+          let qrcode = new QRCode(document.getElementById('qrCodeUrl'), {
+            width: 125,
+            height: 125, // 高度
+            text: `http://www.bvaluate.com/#/login?page=register&invite=${res.data}` // 二维码内容
+          });
         })
       }
     },
     computed: {
       invitationTip() {
+        if (!this.hasQRCode) {
+          this.initInvitationInfo();
+        }
         return this.$store.state.invitationTip
       }
     }
