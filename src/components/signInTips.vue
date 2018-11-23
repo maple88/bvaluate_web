@@ -79,7 +79,8 @@
               </div>
             </div>
             <div class="tips_button">
-              <button>点击领取</button>
+              <button :class="clicked?'click_style':''" @click="receive"><span v-show="!clicked">点击领取</span><span
+                v-show="clicked">已领取</span></button>
             </div>
           </div>
         </div>
@@ -93,7 +94,9 @@
 
   export default {
     data() {
-      return {}
+      return {
+        clicked: false
+      }
     },
     mounted() {
     },
@@ -101,6 +104,9 @@
       fn2() {
         this.$store.state.signInTips = false;
       },
+      receive() {
+        this.clicked = !this.clicked;
+      }
     },
     computed: {
       signInTips() {
