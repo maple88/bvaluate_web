@@ -1136,3 +1136,251 @@
   }
 }
 
+.login_fixed.invitation_tips {
+  .invitation_tips {
+    background-image: url("../assets/invitation/bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    max-width: 666px;
+    border-radius: 15px;
+    .close_box {
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      .icon_close {
+        background-image: url("../assets/login/close_black.png");
+        background-color: #d8dbdd;
+        border-color: #d8dbdd;
+      }
+    }
+    .bd {
+      position: relative;
+      .tips_title {
+        position: absolute;
+        top: -45px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+      }
+      .tips_content {
+        padding-top: 80px;
+        position: relative;
+        .content_default {
+          h4 {
+            font-size: 25px;
+            text-align: center;
+            span {
+              font-size: 45px;
+              color: #eb3254;
+              padding: 0 5px;
+            }
+          }
+        }
+        .decorate_box {
+          position: absolute;
+          bottom: -55px;
+          left: -85px;
+        }
+        .erCode_box {
+          position: absolute;
+          bottom: 20px;
+          right: 0;
+          .img_box {
+            img {
+              width: 100%;
+            }
+          }
+          .content_tips {
+            text-align: center;
+            p {
+              margin: 0;
+            }
+          }
+        }
+        .invitation_info {
+          padding: 65px 0 65px;
+          h4 {
+            font-size: 22px;
+            text-align: center;
+            span {
+              font-size: 28px;
+              color: #f47208;
+              padding: 0 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    padding: 0 55px;
+    .invitation_tips .bd {
+      .tips_title {
+        top: -35px;
+        img {
+          width: 360px;
+        }
+      }
+      .tips_content {
+        padding-top: 25px;
+        .content_default h4 {
+          font-size: 18px;
+          span {
+            font-size: 35px;
+          }
+        }
+        .decorate_box {
+          bottom: -23px;
+          left: -50px;
+          img {
+            width: 120px;
+          }
+        }
+        .erCode_box {
+          position: relative;
+          text-align: center;
+        }
+        .invitation_info {
+          padding: 2px 0 20px;
+          h4 {
+            font-size: 16px;
+            span {
+              font-size: 21px;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 550px) {
+    padding: 0 15px;
+    .invitation_tips .close_box {
+      top: -20px;
+      right: -15px;
+    }
+    .invitation_tips .bd {
+      .tips_title {
+        top: -20px;
+        img {
+          width: 230px;
+        }
+      }
+      .tips_content {
+        padding-top: 25px;
+        .content_default h4 {
+          font-size: 16px;
+          span {
+            font-size: 28px;
+          }
+        }
+        .decorate_box {
+          bottom: -23px;
+          left: -50px;
+          img {
+            width: 120px;
+          }
+        }
+        .erCode_box {
+          position: relative;
+          text-align: center;
+        }
+        .invitation_info {
+          padding: 2px 0 20px;
+          h4 {
+            font-size: 16px;
+            span {
+              font-size: 21px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.login_fixed.signIn_tips {
+  .signIn_tips {
+    background-image: url("../assets/signIn/bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    max-width: 945px;
+    border-radius: 15px;
+    .bd {
+      padding: 60px 65px 30px;
+      position: relative;
+      .tips_title {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        left: 0;
+        top: -30px;
+      }
+      .tips_content {
+        .content_default {
+          .sugar_list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            .sugar_item {
+              flex: 0 0 25%;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              &.this_day {
+                .sugar_box {
+                  border: 2px solid #037bf1;
+                  h4 {
+                    padding-top: 5px;
+                    margin: 0;
+                  }
+                }
+                .day_box {
+                  padding-top: 15px;
+                  h4 {
+                    margin: auto;
+                    background-color: #037bf1;
+                    padding: 10px 20px;
+                    color: #fff;
+                    border-radius: 5px;
+                    position: relative;
+                    &:after {
+                      content: '';
+                      position: absolute;
+                      left: calc(50% - 15px);
+                      top: -24px;
+                      border-style: solid;
+                      border-width: 15px;
+                      border-color: transparent transparent #037bf1 transparent;
+                      transform: scaleY(0.7);
+                    }
+                  }
+                }
+              }
+              .sugar_box {
+                width: 95px;
+                height: 95px;
+                border-radius: 50%;
+                border: 2px solid #999;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                h4 {
+                  padding-top: 5px;
+                  margin: 0;
+                }
+              }
+              .day_box {
+
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -73,6 +73,10 @@
                 </p>
               </li>
             </ul>
+            <div class="nav navbar-nav navbar-right nav-search gift_box">
+              <button class="button" data="邀请有礼" @click="invitation"><img src="../assets/gift.png"></button>
+              <h4>邀请有礼</h4>
+            </div>
             <div class="nav navbar-nav navbar-right nav-search">
               <button class="button open_search" data="搜索按钮"><img src="../assets/search/search.png"></button>
             </div>
@@ -106,6 +110,12 @@
           </div>
         </div>
       </nav>
+    </div>
+    <div class="fixed_gift_box">
+      <div class="gift_box_content">
+        <button class="button" data="邀请有礼" @click="invitation"><img src="../assets/gift.png"></button>
+        <h4>邀请有礼</h4>
+      </div>
     </div>
     <v-login v-model="isShow" :success="refreshPage"></v-login>
     <v-analysis v-model="isWhitePaper" v-if="isWhitePaper"></v-analysis>
@@ -170,6 +180,15 @@
       '$route': 'initUser'
     },
     methods: {
+      invitation() {
+        let token = this.token;
+        if (token) {
+          this.$store.state.invitationTip = true;
+        } else {
+          this.isShow = true;
+        }
+
+      },
       trackSearch(category, content) {
         // 榜单，项目详情页，关注，个人中心，白皮书分析，行业国家资讯，文章详情，作者, 搜索页面
         let that = this

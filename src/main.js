@@ -27,11 +27,11 @@ Vue.component('v-login', login);
 Vue.component('v-analysis', analysis);
 Vue.use(Vuex);
 
-let initStatus = false;
-
 const store = new Vuex.Store({
   state: {
-    registerTip: initStatus
+    registerTip: false,
+    invitationTip: false,
+    signInTips: false
   }
 });
 
