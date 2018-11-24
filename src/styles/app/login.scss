@@ -1189,6 +1189,8 @@
           .img_box {
             img {
               width: 100%;
+              max-width: 150px;
+              margin: auto;
             }
           }
           .content_tips {
@@ -1307,8 +1309,17 @@
     background-size: cover;
     max-width: 945px;
     border-radius: 15px;
+    .close_box {
+      position: absolute;
+      .icon_close {
+        background-image: url("../assets/login/close_black.png");
+        background-color: #fff;
+        border-color: #fff;
+        box-shadow: 0 0 10px 2px rgba(0, 0, 0, .2);
+      }
+    }
     .bd {
-      padding: 60px 65px 30px;
+      padding: 40px 65px 30px;
       position: relative;
       .tips_title {
         position: absolute;
@@ -1329,6 +1340,7 @@
               flex-direction: column;
               align-items: center;
               justify-content: center;
+              padding-top: 20px;
               &.this_day {
                 .sugar_box {
                   border: 2px solid #037bf1;
@@ -1338,14 +1350,9 @@
                   }
                 }
                 .day_box {
-                  padding-top: 15px;
                   h4 {
-                    margin: auto;
                     background-color: #037bf1;
-                    padding: 10px 20px;
                     color: #fff;
-                    border-radius: 5px;
-                    position: relative;
                     &:after {
                       content: '';
                       position: absolute;
@@ -1356,6 +1363,43 @@
                       border-color: transparent transparent #037bf1 transparent;
                       transform: scaleY(0.7);
                     }
+                  }
+                }
+              }
+              &.checked {
+                &.this_day {
+                  .day_box {
+                    padding-top: 15px;
+                    h4 {
+                      background-color: #21b106;
+                      color: #FFFFFF;
+                      &:after {
+                        border-color: transparent transparent #21b106
+                      }
+                    }
+                  }
+                }
+                .sugar_box {
+                  border: 5px solid #21b106;
+                  background-image: url("../assets/signIn/sugar.png");
+                  background-repeat: no-repeat;
+                  background-position: center;
+                  background-size: 70%;
+                  img {
+                    display: none;
+                  }
+                  h4 {
+                    display: none;
+                  }
+                  .check_on {
+                    display: block;
+                    width: 70%;
+                  }
+                }
+                .day_box {
+                  padding-top: 15px;
+                  h4 {
+                    color: #21b106;
                   }
                 }
               }
@@ -1375,11 +1419,93 @@
                 }
               }
               .day_box {
-
+                padding-top: 15px;
+                h4 {
+                  margin: auto;
+                  background-color: transparent;
+                  padding: 10px 20px;
+                  border-radius: 5px;
+                  position: relative;
+                }
               }
             }
           }
         }
+        .tips_button {
+          padding-top: 30px;
+          text-align: center;
+          button {
+            font-size: 16px;
+            background-color: transparent;
+            background-image: url("../assets/signIn/click.png");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            padding: 10px 40px;
+            border-radius: 100px;
+            border: none;
+            color: #FFFFFF;
+            &.click_style {
+              pointer-events: none;
+              background-image: url("../assets/signIn/clicked.png");
+            }
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    .signIn_tips .bd {
+      padding: 40px 0 30px;
+      .tips_content .content_default .sugar_list .sugar_item .sugar_box {
+        width: 75px;
+        height: 75px;
+        img {
+          width: 30px;
+        }
+      }
+      .tips_content .content_default .sugar_list .sugar_item .day_box h4 {
+        font-size: 14px;
+      }
+    }
+  }
+  @media (max-width: 545px) {
+    .signIn_tips {
+      padding: 0 10px;
+    }
+    .signIn_tips .bd .tips_title {
+      left: -5px;
+      top: -19px;
+      img {
+        width: calc(100% + 10px);
+      }
+    }
+    .signIn_tips .bd .tips_content .content_default .sugar_list .sugar_item {
+      flex: 0 0 33.33%;
+      padding-top: 13px;
+    }
+    .signIn_tips .bd .tips_content .content_default .sugar_list .sugar_item .day_box h4 {
+      padding: 5px 10px;
+    }
+    .signIn_tips .bd .tips_content .tips_button {
+      padding-top: 15px;
+    }
+  }
+  @media (max-width: 375px) {
+    .signIn_tips .bd {
+      padding: 40px 0 30px;
+      .tips_content .content_default .sugar_list .sugar_item .sugar_box {
+        width: 60px;
+        height: 60px;
+        img {
+          width: 25px;
+        }
+        h4 {
+          font-size: 14px;
+        }
+      }
+      .tips_content .content_default .sugar_list .sugar_item .day_box h4 {
+        font-size: 14px;
       }
     }
   }
