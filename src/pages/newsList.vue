@@ -23,7 +23,9 @@
                         <div class="media" v-for="news in newsList">
                           <div class="media-left media-middle"
                                v-if="news.dataType === 'NEWS'||news.dataType === 'WEIXIN'">
-                            <div class="newimg_box" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event), trackArticle('资讯列表页的文章', news.title, '资讯列表页的文章没有项目ID', '资讯列表文章', news.sid)">
+                            <div class="newimg_box" :data="news.title" 
+                            @click="goArticle('/article',{sid:news.sid}, $event), 
+                            trackArticle('资讯列表页的文章', news.title, '资讯列表页的文章没有项目名称', '资讯列表页的文章没有项目ID', '资讯列表文章', news.sid)">
                               <img v-if="news.titlePicture" :src="news.titlePicture"/>
                               <div class="date_box">
                                 <span class="day">{{news.urlTime | showDay}}</span>
@@ -33,17 +35,22 @@
                           </div>
                           <div class="media-left media-middle"
                                v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'">
-                            <div class="newimg_box TorW" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event), trackArticle('资讯列表页的文章', news.title, '资讯列表页的文章没有项目ID', '资讯列表文章', news.sid)">
+                            <div class="newimg_box TorW" :data="news.title" 
+                            @click="goArticle('/article',{sid:news.sid}, $event), 
+                            trackArticle('资讯列表页的文章', news.title, '资讯列表页的文章没有项目名称', '资讯列表页的文章没有项目ID', '资讯列表文章', news.sid)">
                               <img :src="news.dataType === 'WEIBO'?weibo:tuiwen"/>
                               <span class="day">{{news.urlDate }}</span>
                             </div>
                           </div>
                           <div class="media-body">
-                            <h4 class="media-heading" :title="news.title" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event), trackArticle('资讯列表页的文章', news.title, '资讯列表页的文章没有项目ID', '资讯列表文章', news.sid)"
+                            <h4 class="media-heading" :title="news.title" :data="news.title" 
+                            @click="goArticle('/article',{sid:news.sid}, $event), 
+                            trackArticle('资讯列表页的文章', news.title, '资讯列表页的文章没有项目名称', '资讯列表页的文章没有项目ID', '资讯列表文章', news.sid)"
                                 v-if="!(news.dataType === 'WEIBO' || news.dataType === 'TWITTER')" v-html="news.title ">
                             </h4>
                             <p class="media-words TorW" v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'"
-                               @click="goArticle('/article',{sid:news.sid}, $event), trackArticle('资讯列表页的文章', news.title, '资讯列表页的文章没有项目ID', '资讯列表文章', news.sid)" v-html="news.content" :data="news.title">
+                               @click="goArticle('/article',{sid:news.sid}, $event), 
+                               trackArticle('资讯列表页的文章', news.title, '资讯列表页的文章没有项目名称', '资讯列表页的文章没有项目ID', '资讯列表文章', news.sid)" v-html="news.content" :data="news.title">
                             </p>
                             <p class=" media-words" v-else v-html="news.content ">
                             </p>
@@ -154,7 +161,9 @@
                           <img :src="item.titlePicture"/>
                         </div>
                         <div class="item_body" :class="item.titlePicture?'':'noPicture'">
-                          <h4 :data="item.title" @click="goArticle('/article',{sid:item.sid}, $event), trackArticle('资讯列表页的24小时热文', item.title, '资讯列表页的24小时热文没有项目ID', '24小时热文', item.sid)">{{item.title}}</h4>
+                          <h4 :data="item.title" 
+                          @click="goArticle('/article',{sid:item.sid}, $event), 
+                          trackArticle('资讯列表页的24小时热文', item.title, '资讯列表页的文章没有项目名称', '资讯列表页的24小时热文没有项目ID', '24小时热文', item.sid)">{{item.title}}</h4>
                           <p>{{item.content}}</p>
                         </div>
                       </div>
@@ -327,8 +336,8 @@
         if(urlArr.hasOwnProperty('country')) {category = '国家';}
         if(urlArr.hasOwnProperty('industry')) {category = '行业';}
         sensors.track('Attention', {
-          category: category,
-          name: name
+          attention_category: category,
+          attention_name: name
         });
       },
       trackProject(entrance, name, project_id, index, score) {
@@ -341,9 +350,10 @@
           attention_count: '接口没有关注量'
         });
       },
-      trackArticle(entrance, name, project_id, category, article_id) {
+      trackArticle(entrance, article_title, name, project_id, category, article_id) {
         sensors.track('Article', {
           entrance: entrance,
+          article_title: article_title,
           name: name,
           project_id: project_id,
           category: category,
