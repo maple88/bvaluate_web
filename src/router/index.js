@@ -9,6 +9,7 @@ import industry from '@/pages/industry'
 import recommend from '@/pages/recommend'
 import article from '@/pages/article'
 import project from '@/pages/project'
+import projectTest from '@/pages/projectTest'
 import author from '@/pages/author'
 import list from '@/pages/list'
 import search from '@/pages/search'
@@ -63,6 +64,10 @@ export default new Router({
     {
       path: '/project',
       component: project
+    },
+    {
+      path: '/projectTest',
+      component: projectTest
     },
     {
       path: '/author',
