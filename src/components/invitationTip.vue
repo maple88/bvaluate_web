@@ -16,8 +16,8 @@
               <h4>好友邀请其他人还可以获得<span>188</span>糖果</h4>
             </div>
             <div class="invitation_info">
-              <h4>已成功邀请<span>10</span>名</h4>
-              <h4>累计获得糖果<span>2880</span></h4>
+              <h4>已成功邀请<span>{{people}}</span>名</h4>
+              <h4>累计获得糖果<span>{{sugar}}</span></h4>
             </div>
             <div class="erCode_box">
               <div class="img_box">
@@ -49,7 +49,8 @@
         hasQRCode: false,
         token: '',
         qrcode: null,
-
+        people: 0,
+        sugar: 0
       }
     },
     mounted() {
@@ -71,15 +72,17 @@
           url: url,
           headers: headers,
         }).then(res => {
-          console.log(res.data);
+          let data = res.data;
+          this.people = res.data.InvitationPeople;
+          this.sugar = res.data.InvitationCandies;
           this.hasQRCode = true;
           if (this.qrcode) {
-            this.qrcode.makeCode(`http://www.bvaluate.com/#/login?page=register&invite=${res.data}`); // 生成另外一个二维码
+            this.qrcode.makeCode(`http://www.bvaluate.com/#/login?page=register&invite=${data.InvitationCode}`); // 生成另外一个二维码
           } else {
             this.qrcode = new QRCode(document.getElementById('qrCodeUrl'), {
               width: 125,
               height: 125, // 高度
-              text: `http://www.bvaluate.com/#/login?page=register&invite=${res.data}` // 二维码内容
+              text: `http://www.bvaluate.com/#/login?page=register&invite=${data.InvitationCode}` // 二维码内容
             });
           }
         })

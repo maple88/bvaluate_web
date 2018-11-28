@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div class="login_fixed" v-if="value">
+    <div class="login_fixed" v-if="analysisPop">
       <div class="login_bg" @click="fn2"></div>
       <div class="loginbox whitePaper">
         <div class="whitehead"><img src="../assets/white-head.png"></div>
@@ -93,19 +93,6 @@
   import sensors from '../../static/sa-init.js'
 
   export default {
-    props: {
-      value: {
-        type: Boolean,
-        default: false
-      },
-      goUrl: {
-        type: String,
-        default: ''
-      },
-      success: {
-        type: Function
-      }
-    },
     data() {
       return {
         filename: '',
@@ -130,10 +117,14 @@
     mounted() {
 
     },
+    computed: {
+      analysisPop() {
+        return this.$store.state.analysisPop;
+      }
+    },
     methods: {
       fn2() {
-        this.value = false;
-        this.$emit('input', this.value);
+        this.$store.state.analysisPop = false;
       },
       selectPDF(e) {
         this.fileTips = '';

@@ -54,7 +54,7 @@
           sessionStorage.setItem('apelink_user_close_register_tip', true);
         }
         this.$store.state.registerTip = false;
-        this.$router.push('/login?page=register');
+        this.$store.commit('register');
       }
     },
     computed: {
