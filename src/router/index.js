@@ -15,7 +15,7 @@ import list from '@/pages/list'
 import search from '@/pages/search'
 import newsList from '@/pages/newsList'
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   linkExactActiveClass: 'active',

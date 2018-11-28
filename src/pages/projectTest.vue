@@ -1,19 +1,51 @@
 <template>
   <div class="page">
     <vheader/>
-    <div class="maintainer">
+    <div class="maintainer" @click.stop="shareButton = false">
       <!-- content here -->
       <div class="project-banner" :style="'background: url('+banner+')'">
         <div class="container">
-          <div class="left">{{project.totalScore | showTatolCore}}</div>
+          <div class="left">
+            <h4 class="totalScore">{{project.totalScore | showTatolCore}}</h4>
+            <p class="his_totalScore">历史评分：{{project.totalScore | showTatolCore}}</p>
+          </div>
           <div class="right">
             <div class="top">
               <div class="imgbrand"><img :src="project.logoSrc "></div>
               <div class="info">
                 <div class="tit">
                   <a :href="project.outerOfficial" target="_blank" :data="project.project"> {{project.project}}</a>
-                  <div class="followbtn" v-if="!isFollow" data="关注项目" @click="setFollow($event), trackAttention('项目', project.project)">+ 关注</div>
-                  <div class="followbtn on" v-if="isFollow" data="取消关注项目" @click="deleteFollow(project.collected, $event)"><i class="fa fa-check"></i> 已关注</div>
+                  <div class="followbtn" v-if="!isFollow" data="关注项目"
+                       @click="setFollow($event), trackAttention('项目', project.project)">+ 关注
+                  </div>
+                  <div class="followbtn on" v-if="isFollow" data="取消关注项目"
+                       @click="deleteFollow(project.collected, $event)"><i class="fa fa-check"></i> 已关注
+                  </div>
+                  <div class="followbtn on share_button" @click.stop="shareButton = !shareButton">
+                    分享
+                    <transition name="fade">
+                      <div class="share_box" v-show="shareButton">
+                        <div class="share_item" @click.stop="weChatQrCodeShow">
+                          <img src="../assets/project/wechat.png" alt="">
+                          <transition name="fade">
+                            <div class="qrCode_box" ref="wechat_qrCode" v-show="wechatQrCode"></div>
+                          </transition>
+                        </div>
+                        <div class="share_item" @click.stop="qqQrCodeShow">
+                          <img src="../assets/project/QQ.png" alt="">
+                          <transition name="fade">
+                            <div class="qrCode_box" ref="qq_qrCode" v-show="qqQrCode"></div>
+                          </transition>
+                        </div>
+                        <div class="share_item" @click.stop="weiboQrCodeShow">
+                          <img src="../assets/project/weibo.png" alt="">
+                          <transition name="fade">
+                            <div class="qrCode_box" ref="weibo_qrCode" v-show="weiboQrCode"></div>
+                          </transition>
+                        </div>
+                      </div>
+                    </transition>
+                  </div>
                 </div>
                 <p class="smtit">{{project.introduction }}</p>
               </div>
@@ -52,8 +84,8 @@
                       </div>
                     </div>
                     <div class="media-body">
-                      <h4 class="media-heading" :title="item.title" :data="item.title" 
-                      @click="goArticle('/article',{sid:item.sid}, $event), 
+                      <h4 class="media-heading" :title="item.title" :data="item.title"
+                          @click="goArticle('/article',{sid:item.sid}, $event),
                               trackArticle('项目页', item.title, project.sid, atvNewOrGrade==1?'新闻':'评级文章', item.sid)">
                         {{item.title}}
                       </h4>
@@ -377,9 +409,10 @@
                       <span class="day">{{item.urlDate }}</span>
                     </div>
                     <div class="right">
-                      <p class="des" :data="item.content" 
-                      @click="goArticle('/article',{sid:item.sid}, $event), 
-                              trackArticle('项目页', item.title, project.sid, atvTwitterOrWeibo==1?'推文':'微博', item.sid)">{{item.content}}</p>
+                      <p class="des" :data="item.content"
+                         @click="goArticle('/article',{sid:item.sid}, $event),
+                              trackArticle('项目页', item.title, project.sid, atvTwitterOrWeibo==1?'推文':'微博', item.sid)">
+                        {{item.content}}</p>
                       <div class="bottom">
                         <span class="name">{{item.author}}</span>
                         <span class="time">{{item.urlTime}}</span>
@@ -508,8 +541,8 @@
           </div>
           <div class="section6" v-if="recommendProjects">
             <div class="rightlayouthead">项目推荐</div>
-            <div class="item" v-for="(project, index) in recommendProjects" 
-            @click="trackUtmproject('项目详情页', project.project, project.sid, parseInt(index+1))">
+            <div class="item" v-for="(project, index) in recommendProjects"
+                 @click="trackUtmproject('项目详情页', project.project, project.sid, parseInt(index+1))">
               <router-link :to="'/project?sid='+project.sid" :data="project.project">
                 <div class="ibanner"><img src="../assets/project/recommend-banner.jpg"></div>
                 <div class="info">
@@ -536,6 +569,7 @@
 <script>
   import sensors from '../../static/sa-init.js'
   import Swiper from 'swiper'
+  import QRCode from 'qrcodejs2'
 
   let loading = require('../assets/login/loading.gif');
   let nicon = require('../assets/home/tuite.png');
@@ -545,6 +579,9 @@
   export default {
     data() {
       return {
+        weiboQrCode: false,
+        qqQrCode: false,
+        wechatQrCode: false,
         isFollow: false,
         project: {},
         NewOrGrade: [],
@@ -564,7 +601,9 @@
         NGewOrGrade: '290001',
         TWewOrGradeNo: 2,
         TWewOrGrade: '290002',
-        banner: banner
+        banner: banner,
+        shareButton: false,
+        qrCodeBox: false
       }
     },
     mounted() {
@@ -595,11 +634,10 @@
       this.initProject();
       this.scrollNewOrGrade();
       this.scrollTWewOrGrade();
-
-      var end_time = "";
-      window.onload = function(){
+      let end_time = "";
+      window.onload = function () {
         end_time = new Date();
-        sensors.quick('autoTrack',{
+        sensors.quick('autoTrack', {
           load_time: end_time.getTime() - start_time.getTime()
         })
       }
@@ -614,7 +652,7 @@
         return num;
       },
       showDay(obj) {
-        let time = obj.replace(/-/g,'/')
+        let time = obj.replace(/-/g, '/')
         let myDate = new Date(time);
         let day = myDate.getDate()
         if (day < 9) {
@@ -623,7 +661,7 @@
         return day
       },
       showYear(obj) {
-        let time = obj.replace(/-/g,'/')
+        let time = obj.replace(/-/g, '/')
         let myDate = new Date(time);
         let month = myDate.getMonth()
         if (month < 9) {
@@ -667,6 +705,33 @@
       '$route': 'initProject'
     },
     methods: {
+      weiboQrCodeShow() {
+        if (this.weiboQrCode) {
+          this.weiboQrCode = false;
+        } else {
+          this.weiboQrCode = true;
+          this.qqQrCode = false;
+          this.wechatQrCode = false;
+        }
+      },
+      qqQrCodeShow() {
+        if (this.qqQrCode) {
+          this.qqQrCode = false;
+        } else {
+          this.weiboQrCode = false;
+          this.qqQrCode = true;
+          this.wechatQrCode = false;
+        }
+      },
+      weChatQrCodeShow() {
+        if (this.wechatQrCode) {
+          this.wechatQrCode = false;
+        } else {
+          this.weiboQrCode = false;
+          this.qqQrCode = false;
+          this.wechatQrCode = true;
+        }
+      },
       trackAttention(category, name) {
         sensors.track('Attention', {
           category: category,
@@ -828,10 +893,26 @@
       },
       initProject() {
         let path = this.$route.path;
-        if (path === '/project') {
+        if (path === '/projectTest') {
           let that = this;
           let sid = this.$route.query.sid;
           let project = this.$route.query.project;
+          let hrefUrl = window.location.href;
+          let qrcode1 = new QRCode(this.$refs.wechat_qrCode, {
+            width: 125,
+            height: 125, // 高度
+            text: hrefUrl
+          });
+          let qrcode2 = new QRCode(this.$refs.qq_qrCode, {
+            width: 125,
+            height: 125, // 高度
+            text: hrefUrl
+          });
+          let qrcode3 = new QRCode(this.$refs.weibo_qrCode, {
+            width: 125,
+            height: 125, // 高度
+            text: hrefUrl
+          });
           if (sid != null && sid !== '' && sid !== undefined) {
             let uid = localStorage.getItem('apelink_user_uid')
             let url = '/api/ICO/id/' + sid;
