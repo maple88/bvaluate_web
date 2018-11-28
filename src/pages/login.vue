@@ -309,6 +309,7 @@
             localStorage.setItem('apelink_user_uid', uid);
             localStorage.setItem('apelink_user_token', token);
             localStorage.setItem('apelink_user_phoneNumber', phoneNumber);
+            sensors.setProfile({phone: phoneNumber});
             let url = '/api/user/info';
             let headers = {'uid': uid, 'Authorization': token};
             that.$axios({

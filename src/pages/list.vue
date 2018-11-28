@@ -30,7 +30,7 @@
               <div class="topproduct">
                 <div class="pcol" v-for="(item, index) in topbangdan.topProject" :key="index">
                   <div class="prod">
-                    <div class="picon" :data="item.project" 
+                    <div class="picon" :data="item.project" :name="'Utmproject_'+index" :id="'Utmproject_'+index"
                     @click="goArticle('/project',{sid: item.sid}, $event),
                             trackUtmproject('榜单页', item.project, item.sid, parseInt(index+1))">
                       <img src="../assets/media.jpg" :src="item.logoSrc">
@@ -125,7 +125,7 @@
                         <td v-else-if="index === 1" class="tr_second"><span>{{index + 1 }}</span></td>
                         <td v-else-if="index === 2" class="tr_third"><span>{{index + 1 }}</span></td>
                         <td v-else><span>{{index + 1 }}</span></td>
-                        <td class="tr_first cursor_style" :data="item.project"
+                        <td class="tr_first cursor_style" :data="item.project" :name="'project_'+index" :id="'project_'+index"
                             @click.stop="goArticle('/project',{sid: item.sid}, $event), trackProject('排行榜', item.project, item.sid, parseInt(index+1), item.rankingTotalScore)">
                           <h4 :title="item.project">{{item.project}}</h4>
                         </td>

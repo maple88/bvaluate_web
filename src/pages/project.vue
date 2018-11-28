@@ -54,7 +54,7 @@
                     <div class="media-body">
                       <h4 class="media-heading" :title="item.title" :data="item.title" 
                       @click="goArticle('/article',{sid:item.sid}, $event), 
-                              trackArticle('项目页', item.title, project.sid, atvNewOrGrade==1?'新闻':'评级文章', item.sid)">
+                              trackArticle('项目页', item.title, project.project, project.sid, atvNewOrGrade==1?'新闻':'评级文章', item.sid)">
                         {{item.title}}
                       </h4>
                       <p class="media-words">
@@ -379,7 +379,7 @@
                     <div class="right">
                       <p class="des" :data="item.content" 
                       @click="goArticle('/article',{sid:item.sid}, $event), 
-                              trackArticle('项目页', item.title, project.sid, atvTwitterOrWeibo==1?'推文':'微博', item.sid)">{{item.content}}</p>
+                              trackArticle('项目页', item.title, project.project, project.sid, atvTwitterOrWeibo==1?'推文':'微博', item.sid)">{{item.content}}</p>
                       <div class="bottom">
                         <span class="name">{{item.author}}</span>
                         <span class="time">{{item.urlTime}}</span>
@@ -669,13 +669,14 @@
     methods: {
       trackAttention(category, name) {
         sensors.track('Attention', {
-          category: category,
-          name: name
+          attention_category: category,
+          attention_name: name
         });
       },
-      trackArticle(entrance, name, project_id, category, article_id) {
+      trackArticle(entrance, article_title, name, project_id, category, article_id) {
         sensors.track('Article', {
           entrance: entrance,
+          article_title: article_title,
           name: name,
           project_id: project_id,
           category: category,

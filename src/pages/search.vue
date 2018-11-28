@@ -54,7 +54,9 @@
                         <div class="media" v-for="news in newsList">
                           <div class="media-left media-middle"
                                v-if="news.dataType === 'NEWS'||news.dataType === 'WEIXIN'">
-                            <div class="newimg_box" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event), trackArticle('搜索页', news.title, '搜索页的文章没有项目ID', search.type, news.sid)">
+                            <div class="newimg_box" :data="news.title" 
+                            @click="goArticle('/article',{sid:news.sid}, $event), 
+                            trackArticle('搜索页', news.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', search.type, news.sid)">
                               <img v-if="news.titlePicture" :src="news.titlePicture"/>
                               <div class="date_box">
                                 <span class="day">{{news.urlTime | showDay}}</span>
@@ -64,17 +66,22 @@
                           </div>
                           <div class="media-left media-middle"
                                v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'">
-                            <div class="newimg_box TorW" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event), trackArticle('搜索页', news.title, '搜索页的文章没有项目ID', search.type, news.sid)">
+                            <div class="newimg_box TorW" :data="news.title" 
+                            @click="goArticle('/article',{sid:news.sid}, $event), 
+                            trackArticle('搜索页', news.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', search.type, news.sid)">
                               <img :src="news.dataType === 'WEIBO'?weibo:tuiwen"/>
                               <span class="day">{{news.urlDate }}</span>
                             </div>
                           </div>
                           <div class="media-body">
-                            <h4 class="media-heading" :data="news.title" :title="news.title" @click="goArticle('/article',{sid:news.sid}, $event), trackArticle('搜索页', news.title, '搜索页的文章没有项目ID', search.type, news.sid)"
+                            <h4 class="media-heading" :data="news.title" :title="news.title" 
+                            @click="goArticle('/article',{sid:news.sid}, $event), 
+                            trackArticle('搜索页', news.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', search.type, news.sid)"
                                 v-if="!(news.dataType === 'WEIBO' || news.dataType === 'TWITTER')" v-html="news.title ">
                             </h4>
-                            <p class="media-words TorW" :data="news.content" v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'"
-                               @click="goArticle('/article',{sid:news.sid}, $event), trackArticle('搜索页', news.content, '搜索页的文章没有项目ID', search.type, news.sid)" v-html="news.content">
+                            <p class="media-words TorW" :data="news.content" v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'" 
+                            @click="goArticle('/article',{sid:news.sid}, $event), 
+                            trackArticle('搜索页', news.content, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', search.type, news.sid)" v-html="news.content">
                             </p>
                             <p class=" media-words" v-else v-html="news.content ">
                             </p>
@@ -188,7 +195,9 @@
                           <span>{{flash.urlTime | dataFormat}}</span>
                         </div>
                         <div class="item_body">
-                          <h4 :data="flash.title" @click="goArticle('/article',{sid:flash.sid}, $event), trackArticle('搜索页', flash.title, '搜索页的文章没有项目ID', '快讯', flash.sid)">{{flash.title}}</h4>
+                          <h4 :data="flash.title" 
+                          @click="goArticle('/article',{sid:flash.sid}, $event), 
+                          trackArticle('搜索页', flash.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', '快讯', flash.sid)">{{flash.title}}</h4>
                           <p>{{flash.content}}</p>
                         </div>
                       </div>
@@ -215,14 +224,19 @@
                         </div>
                         <div class="item_body" :class="affair.titlePicture ? 'hasImg' : ''">
                           <div class="content" v-if="affair.titlePicture">
-                            <h4 :data="affair.title" @click="goArticle('/article',{sid:affair.sid}, $event), trackArticle('搜索页', affair.title, '搜索页的文章没有项目ID', '国家时事', affair.sid)">{{affair.title}}</h4>
+                            <h4 :data="affair.title" 
+                            @click="goArticle('/article',{sid:affair.sid}, $event), 
+                            trackArticle('搜索页', affair.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', '国家时事', affair.sid)">{{affair.title}}</h4>
                             <p>{{affair.content}}</p>
                           </div>
-                          <div class="content_img" v-if="affair.titlePicture"
-                               @click="goArticle('/article',{sid:affair.sid}, $event), trackArticle('搜索页', affair.title, '搜索页的文章没有项目ID', '国家时事', affair.sid)" :data="affair.title">
+                          <div class="content_img" v-if="affair.titlePicture" 
+                          @click="goArticle('/article',{sid:affair.sid}, $event), 
+                          trackArticle('搜索页', affair.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', '国家时事', affair.sid)" :data="affair.title">
                             <img :src="affair.titlePicture"/>
                           </div>
-                          <h4 v-if="!affair.titlePicture" :data="affair.title" @click="goArticle('/article',{sid:affair.sid}, $event), trackArticle('搜索页', affair.title, '搜索页的文章没有项目ID', '国家时事', affair.sid)">
+                          <h4 v-if="!affair.titlePicture" :data="affair.title" 
+                          @click="goArticle('/article',{sid:affair.sid}, $event), 
+                          trackArticle('搜索页', affair.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', '国家时事', affair.sid)">
                             {{affair.title}}</h4>
                           <p v-if="!affair.titlePicture">{{affair.content}}</p>
                         </div>
@@ -408,13 +422,14 @@
           attention_count: '接口没有关注量'
         });
       },
-      trackArticle(entrance, name, project_id, category, article_id) {
+      trackArticle(entrance, article_title, name, project_id, category, article_id) {
         if (category == 'NEWS') {category = '新闻'}
         if (category == 'WEIXIN') {category = '微信'}
         if (category == 'WEIBO') {category = '微博'}
         if (category == 'TWITTER') {category = '推特'}
         sensors.track('Article', {
           entrance: entrance,
+          article_title: article_title,
           name: name,
           project_id: project_id,
           category: category,

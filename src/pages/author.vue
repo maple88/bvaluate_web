@@ -45,7 +45,9 @@
                     <div class="media" v-for="news in newsForAuthor">
                       <div class="media-left media-middle"
                            v-if="news.dataType === 'NEWS'||news.dataType === 'WEIXIN'">
-                        <div class="newimg_box" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event), trackArticle('个人中心页收藏文章', news.title, '个人中心页内收藏文章没有项目ID', '收藏文章', news.sid)">
+                        <div class="newimg_box" :data="news.title" 
+                        @click="goArticle('/article',{sid:news.sid}, $event), 
+                        trackArticle('个人中心页收藏文章', news.title, '个人中心页内收藏文章没有项目名称', '个人中心页内收藏文章没有项目ID', '收藏文章', news.sid)">
                           <img v-if="news.titlePicture" :src="news.titlePicture"/>
                           <div class="date_box">
                             <span class="day">{{news.urlTime | showDay}}</span>
@@ -55,7 +57,9 @@
                       </div>
                       <div class="media-left media-middle"
                            v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'">
-                        <div class="newimg_box TorW" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event), trackArticle('个人中心页收藏文章', news.title, '个人中心页内收藏文章没有项目ID', '收藏文章', news.sid)">
+                        <div class="newimg_box TorW" :data="news.title" 
+                        @click="goArticle('/article',{sid:news.sid}, $event), 
+                        trackArticle('个人中心页收藏文章', news.title, '个人中心页内收藏文章没有项目名称', '个人中心页内收藏文章没有项目ID', '收藏文章', news.sid)">
                           <img :src="news.dataType === 'WEIBO'?weibo:tuiwen"/>
                           <span class="day">{{news.urlDate }}</span>
                         </div>
@@ -189,8 +193,8 @@
     methods: {
       trackAttention(category, name) {
         sensors.track('Attention', {
-          category: category,
-          name: name
+          attention_category: category,
+          attention_name: name
         });
       },
       trackProject(entrance, name, project_id, index, score) {
@@ -203,9 +207,10 @@
           attention_count: '接口没有关注量'
         });
       },
-      trackArticle(entrance, name, project_id, category, article_id) {
+      trackArticle(entrance, article_title, name, project_id, category, article_id) {
         sensors.track('Article', {
           entrance: entrance,
+          article_title: article_title,
           name: name,
           project_id: project_id,
           category: category,
