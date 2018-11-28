@@ -821,14 +821,28 @@
     },
     beforeRouteEnter(to, from, next) {
       next(vm => {
-        let query = vm.$route.query.page
+        let query = vm.$route.query.page;
         if (query === 'register') {
           vm.register()
         } else {
           vm.login()
         }
       })
-    }
+    },
+    // beforeRouteLeave(to, from, next) {
+    //   next(vm => {
+    //     let clearTime = setTimeout(() => {
+    //       let token = localStorage.getItem('apelink_user_token');
+    //       if (!token) {
+    //         let isCloseRegisterTip = sessionStorage.getItem('apelink_user_close_register_tip');
+    //         if (!isCloseRegisterTip) {
+    //           vm.$store.state.registerTip = true;
+    //         }
+    //       }
+    //       clearTimeout(clearTime);
+    //     }, 800);
+    //   })
+    // }
   }
 </script>
 
