@@ -25,8 +25,8 @@
                 <!--<img src="../assets/invitation/test.png" alt="">-->
               </div>
               <div class="content_tips">
-                <p>微信扫描此二维码</p>
-                <p>选择好友邀请注册</p>
+                <p>截图将此二维码</p>
+                <p>发送给好友注册</p>
               </div>
             </div>
             <div class="decorate_box">
@@ -49,6 +49,7 @@
         hasQRCode: false,
         token: '',
         qrcode: null,
+
       }
     },
     mounted() {

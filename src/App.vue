@@ -25,10 +25,13 @@
       let clearTime = setTimeout(() => {
         let token = localStorage.getItem('apelink_user_token');
         if (!token) {
+          // let path = this.$route.path;
+          // if (path !== '/login') {
           let isCloseRegisterTip = sessionStorage.getItem('apelink_user_close_register_tip');
           if (!isCloseRegisterTip) {
             this.$store.state.registerTip = true;
           }
+          // }
         } else {
           let uid = localStorage.getItem('apelink_user_uid');
           let token = localStorage.getItem('apelink_user_token');
