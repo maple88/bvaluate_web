@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div class="login_fixed" v-show="value">
+    <div class="login_fixed" v-if="loginPop">
       <div class="login_bg" @click="fn2"></div>
       <div class="loginbox">
         <div class="close_box" @click="fn2">
@@ -197,19 +197,6 @@
   let loading = require('../assets/login/loading.gif');
   let bg = require('../assets/login/login_bg.jpg');
   export default {
-    props: {
-      value: {
-        type: Boolean,
-        default: false
-      },
-      goUrl: {
-        type: String,
-        default: ''
-      },
-      success: {
-        type: Function
-      }
-    },
     data() {
       return {
         bg: bg,
@@ -271,7 +258,7 @@
       }
     },
     mounted() {
-      var end_time = "";
+      let end_time = "";
       window.onload = function () {
         end_time = new Date();
         sensors.quick('autoTrack', {
@@ -279,10 +266,21 @@
         })
       }
     },
+    computed: {
+      loginPop() {
+        let isRegister = this.$store.state.registerPop;
+        console.log(isRegister);
+        if (isRegister) {
+          this.register();
+        }
+        return this.$store.state.loginPop;
+      }
+    },
     methods: {
       fn2() {
-        this.value = false;
-        this.$emit('input', this.value);
+        this.$store.state.loginPop = false;
+        this.$store.state.registerPop = false;
+        this.login();
       },
       weChatLogin() {
         let random = parseInt(Math.random() * 100000000);
@@ -353,9 +351,9 @@
               localStorage.setItem('apelink_user_email', email);
               sensors.setProfile({Email: email});
               localStorage.setItem('apelink_user_sex', sex);
-              if (sex == '2') {
+              if (sex === '2') {
                 sensors.setProfile({gender: '男'});
-              } else if (sex == '3') {
+              } else if (sex === '3') {
                 sensors.setProfile({gender: '女'});
               }
               sensors.registerPage({
@@ -368,16 +366,7 @@
                 is_true: true,
                 false_reason: '登录成功'
               });
-              if (res.data.signedIn) {
-                that.value = false;
-                that.success();
-                that.$emit('input', that.value);
-              } else {
-                that.$store.state.signInTips = true;
-              }
-              if (that.goUrl) {
-                that.$router.push(that.goUrl)
-              }
+              window.location.reload();
             }).catch(function (res) {
             })
           }).catch(function (res) {
@@ -523,7 +512,7 @@
             code: code,
             phoneNumber: phoneNumber,
             password: password
-          }
+          };
           that.$axios.post(url, json).then(function (res) {
             that.showTip = true;
             that.tipText = '注册成功';
@@ -537,13 +526,72 @@
               is_true: true,
               false_reason: '注册成功'
             });
-            setTimeout(() => {
-              that.showTip = false;
-              that.login()
-            }, 2000);
+            let json2 = {
+              phoneNumber: phoneNumber,
+              password: password
+            };
+            that.$axios.post('/api/login', json2).then(function (res) {
+              let data = res.data;
+              let uid = data.uid;
+              let token = data.token;
+              let phoneNumber = data.phoneNumber;
+              let expirationDate = data.expirationDate;
+              localStorage.setItem('apelink_user_expirationDate', expirationDate);
+              localStorage.setItem('apelink_user_uid', uid);
+              localStorage.setItem('apelink_user_token', token);
+              localStorage.setItem('apelink_user_phoneNumber', phoneNumber);
+              let url = '/api/user/info';
+              let headers = {'uid': uid, 'Authorization': token};
+              that.$axios({
+                method: 'get',
+                url: url,
+                headers: headers
+              }).then(function (res) {
+                that.aplinkUser = res.data;
+                localStorage.setItem('apelink_user_candies', res.data.candies);
+                localStorage.setItem('apelink_user_nickName', res.data.nickName);
+                sensors.setProfile({nickname: res.data.nickName});
+                localStorage.setItem('apelink_user_signedIn', res.data.signedIn);
+                let synopsis = res.data.synopsis;
+                let profileUrl = res.data.profileUrl;
+                let email = res.data.email;
+                let sex = res.data.sex;
+                if (!(synopsis != null && synopsis !== undefined && synopsis !== '' && synopsis !== 'null')) {
+                  synopsis = ''
+                }
+                if (!(profileUrl != null && profileUrl !== undefined && profileUrl !== '' && profileUrl !== 'null')) {
+                  profileUrl = ''
+                }
+                if (!(email != null && email !== undefined && email !== '' && email !== 'null')) {
+                  email = ''
+                }
+                if (sex < 1) {
+                  sex = 1
+                }
+                localStorage.setItem('apelink_user_synopsis', synopsis);
+                localStorage.setItem('apelink_user_profileUrl', profileUrl);
+                localStorage.setItem('apelink_user_email', email);
+                sensors.setProfile({Email: email});
+                localStorage.setItem('apelink_user_sex', sex);
+                if (sex === '2') {
+                  sensors.setProfile({gender: '男'});
+                } else if (sex === '3') {
+                  sensors.setProfile({gender: '女'});
+                }
+                sensors.registerPage({
+                  platform_type: 'web',
+                  is_login: true,
+                  is_register: true
+                });
+                sensors.login(uid);
+                sensors.track("Loginresult", {
+                  is_true: true,
+                  false_reason: '登录成功'
+                });
+                window.location.reload();
+              })
+            });
           })
-        }
-        else {
         }
       },
       resetpwdSubmit() {

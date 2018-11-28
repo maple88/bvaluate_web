@@ -298,7 +298,7 @@
           let json = {
             phoneNumber: phoneNumber,
             password: password
-          }
+          };
           that.$axios.post('/api/login', json).then(function (res) {
             let data = res.data;
             let uid = data.uid;
@@ -318,6 +318,7 @@
               headers: headers
             }).then(function (res) {
               that.aplinkUser = res.data;
+              that.$store.state.sugar = res.data.candies;
               localStorage.setItem('apelink_user_candies', res.data.candies);
               localStorage.setItem('apelink_user_nickName', res.data.nickName);
               sensors.setProfile({nickname: res.data.nickName});
@@ -358,12 +359,18 @@
                 is_true: true,
                 false_reason: '登录成功'
               });
-              if (res.data.signedIn) {
-                that.$router.push('/list')
-              } else {
-                that.$store.state.signInTips = true;
-                that.$router.push('/list')
-              }
+              that.tipText = '登录成功';
+              that.showTip = true;
+              setTimeout(() => {
+                that.showTip = false;
+                that.login();
+                if (res.data.signedIn) {
+                  that.$router.push('/list')
+                } else {
+                  that.$store.state.signInTips = true;
+                  that.$router.push('/list')
+                }
+              }, 1000);
             }).catch(function (res) {
             })
           }).catch(function (res) {
@@ -527,10 +534,82 @@
               is_true: true,
               false_reason: '注册成功'
             });
-            setTimeout(() => {
-              that.showTip = false;
-              that.login()
-            }, 2000);
+            let json2 = {
+              phoneNumber: phoneNumber,
+              password: password
+            };
+            that.$axios.post('/api/login', json2).then(function (res) {
+              let data = res.data;
+              let uid = data.uid;
+              let token = data.token;
+              let phoneNumber = data.phoneNumber;
+              let expirationDate = data.expirationDate;
+              localStorage.setItem('apelink_user_expirationDate', expirationDate);
+              localStorage.setItem('apelink_user_uid', uid);
+              localStorage.setItem('apelink_user_token', token);
+              localStorage.setItem('apelink_user_phoneNumber', phoneNumber);
+              let url = '/api/user/info';
+              let headers = {'uid': uid, 'Authorization': token};
+              that.$axios({
+                method: 'get',
+                url: url,
+                headers: headers
+              }).then(function (res) {
+                that.aplinkUser = res.data;
+                that.$store.state.sugar = res.data.candies;
+                localStorage.setItem('apelink_user_candies', res.data.candies);
+                localStorage.setItem('apelink_user_nickName', res.data.nickName);
+                sensors.setProfile({nickname: res.data.nickName});
+                localStorage.setItem('apelink_user_signedIn', res.data.signedIn);
+                let synopsis = res.data.synopsis;
+                let profileUrl = res.data.profileUrl;
+                let email = res.data.email;
+                let sex = res.data.sex;
+                if (!(synopsis != null && synopsis !== undefined && synopsis !== '' && synopsis !== 'null')) {
+                  synopsis = ''
+                }
+                if (!(profileUrl != null && profileUrl !== undefined && profileUrl !== '' && profileUrl !== 'null')) {
+                  profileUrl = ''
+                }
+                if (!(email != null && email !== undefined && email !== '' && email !== 'null')) {
+                  email = ''
+                }
+                if (sex < 1) {
+                  sex = 1
+                }
+                localStorage.setItem('apelink_user_synopsis', synopsis);
+                localStorage.setItem('apelink_user_profileUrl', profileUrl);
+                localStorage.setItem('apelink_user_email', email);
+                sensors.setProfile({Email: email});
+                localStorage.setItem('apelink_user_sex', sex);
+                if (sex === '2') {
+                  sensors.setProfile({gender: '男'});
+                } else if (sex === '3') {
+                  sensors.setProfile({gender: '女'});
+                }
+                sensors.registerPage({
+                  platform_type: 'web',
+                  is_login: true,
+                  is_register: true
+                });
+                sensors.login(uid);
+                sensors.track("Loginresult", {
+                  is_true: true,
+                  false_reason: '登录成功'
+                });
+                setTimeout(() => {
+                  that.showTip = false;
+                  that.login();
+                  if (res.data.signedIn) {
+                    that.$router.push('/list')
+                  } else {
+                    that.$store.state.signInTips = true;
+                    that.$router.push('/list')
+                  }
+                }, 2000);
+              }).catch(function (res) {
+              })
+            });
           })
         }
         else {
@@ -810,14 +889,14 @@
         });
       },
       resetpwd() {
-        this.login_register_head = false
-        this.resetpwd_head = true
-        this.isLogin = false
-        this.isRegister = false
-        this.resetpwd_head = true
-        this.loginForm = false
-        this.registerForm = false
-        this.resetpwdForm = true
+        this.login_register_head = false;
+        this.resetpwd_head = true;
+        this.isLogin = false;
+        this.isRegister = false;
+        this.resetpwd_head = true;
+        this.loginForm = false;
+        this.registerForm = false;
+        this.resetpwdForm = true;
       }
     },
     beforeRouteEnter(to, from, next) {
@@ -830,20 +909,19 @@
         }
       })
     },
-    // beforeRouteLeave(to, from, next) {
-    //   next(vm => {
-    //     let clearTime = setTimeout(() => {
-    //       let token = localStorage.getItem('apelink_user_token');
-    //       if (!token) {
-    //         let isCloseRegisterTip = sessionStorage.getItem('apelink_user_close_register_tip');
-    //         if (!isCloseRegisterTip) {
-    //           vm.$store.state.registerTip = true;
-    //         }
-    //       }
-    //       clearTimeout(clearTime);
-    //     }, 800);
-    //   })
-    // }
+    beforeRouteLeave(to, from, next) {
+      let clearTime = setTimeout(() => {
+        let token = localStorage.getItem('apelink_user_token');
+        if (!token) {
+          let isCloseRegisterTip = sessionStorage.getItem('apelink_user_close_register_tip');
+          if (!isCloseRegisterTip) {
+            this.$store.state.registerTip = true;
+          }
+        }
+        clearTimeout(clearTime);
+      }, 800);
+      next();
+    }
   }
 </script>
 

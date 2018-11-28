@@ -1,6 +1,5 @@
 <template>
   <div class="page" id="list_page">
-    <v-login v-model="isShow" :success="refreshPage"></v-login>
     <vheader/>
     <div class="maintainer">
       <div class="follow_content" id="article">
@@ -315,8 +314,7 @@
         console.log(123456)
       },
       isLogin(url) {
-        this.successGo = url;
-        this.isShow = true;
+        this.$store.state.loginPop = true;
       },
       goArticle(url, query, event) {
         let routeData = this.$router.resolve({path: url, query: query});

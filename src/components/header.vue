@@ -31,13 +31,13 @@
               <!-- <router-link tag="li" to="/recommend" active-class="active"><a>新闻</a></router-link> -->
               <router-link tag="li" to="/list" active-class="active"><a data="榜单">榜单</a></router-link>
               <router-link tag="li" to="/follow" active-class="active" v-show="token"><a data="关注">关注</a></router-link>
-              <li v-show="!token" @click="isLogin('/follow', '关注')"><a data="关注">关注</a></li>
+              <li v-show="!token" @click="isLogin('关注')"><a data="关注">关注</a></li>
+              <li v-show="token"><a href="javascript:;" data="白皮书分析" @click="analysis()">白皮书分析</a></li>
+              <li v-show="!token" @click="isLogin('白书皮分析')"><a href="javascript:;" data="白皮书分析">白皮书分析</a>
+              </li>
               <router-link tag="li" to="/userCenter" active-class="active" v-show="token"><a data="个人中心">个人中心</a>
               </router-link>
-              <li v-show="!token" @click="isLogin('/userCenter', '个人中心')"><a data="个人中心">个人中心</a></li>
-              <li v-show="token"><a href="javascript:;" data="白皮书分析" @click="analysis()">白皮书分析</a></li>
-              <li v-show="!token" @click="isLogin('', '白书皮分析')"><a href="javascript:;" data="白皮书分析">白皮书分析</a>
-              </li>
+              <li v-show="!token" @click="isLogin('个人中心')"><a data="个人中心">个人中心</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right" v-if="token">
               <li class="dropdown">
@@ -46,7 +46,7 @@
                        :style="(profileUrl !==null && profileUrl !== '' && profileUrl !== 'NULL' && profileUrl !== undefined)
                        ?'background-image: url('+ profileUrl +')':'background-image: url('+ default_header +')'"
                   ></div>
-                  <p>糖果数：{{candy}}</p>
+                  <p>糖果数：{{sugarNum}}</p>
                 </a>
                 <ul class="dropdown-menu">
                   <li>
@@ -117,19 +117,21 @@
         <h4>邀请有礼</h4>
       </div>
     </div>
-    <v-login v-model="isShow" :success="refreshPage"></v-login>
-    <v-analysis v-model="isWhitePaper" v-if="isWhitePaper"></v-analysis>
+    <v-login></v-login>
+    <v-analysis></v-analysis>
   </div>
 </template>
 
 <script>
   import sensors from '../../static/sa-init.js'
-  import login from '../components/login';
+  import login from '@/components/login';
+  import analysis from '@/components/analysis';
 
   let default_header = require('../assets/user/default-header.png');
   export default {
     components: {
-      'v-login': login
+      'v-login': login,
+      'v-analysis': analysis
     },
     props: {
       parantProfileUrl: String
@@ -153,8 +155,8 @@
       this.path = this.$router.history.current.path
       $(".nav.navbar-nav li a").on('click', function () {
         $('.collapse').removeClass('in');
-      })
-      window.addEventListener('scroll', this.handleScroll)
+      });
+      window.addEventListener('scroll', this.handleScroll);
       this.initUser();
       let search_btn = $('.open_search');
       search_btn.click(function (e) {
@@ -179,15 +181,19 @@
     watch: {
       '$route': 'initUser'
     },
+    computed: {
+      sugarNum() {
+        return this.$store.state.sugar;
+      }
+    },
     methods: {
       invitation() {
         let token = this.token;
         if (token) {
           this.$store.state.invitationTip = true;
         } else {
-          this.isShow = true;
+          this.$store.state.loginPop = true;
         }
-
       },
       trackSearch(category, content) {
         // 榜单，项目详情页，关注，个人中心，白皮书分析，行业国家资讯，文章详情，作者, 搜索页面
@@ -220,7 +226,7 @@
         window.location.reload();
       },
       analysis() {
-        this.isWhitePaper = true
+        this.$store.state.analysisPop = true
       },
       goSearch(event) {
         sensors.quick('trackHeatMap', event.currentTarget);
@@ -246,20 +252,19 @@
           operate: '注册button'
         });
       },
-      isLogin(url, name) {
-        this.successGo = url;
-        this.isShow = true;
-        if (name == '关注') {
+      isLogin(name) {
+        this.$store.state.loginPop = true;
+        if (name === '关注') {
           sensors.track("Loginstart", {
             entrance: '列表页',
             operate: '关注'
           });
-        } else if (name == '个人中心') {
+        } else if (name === '个人中心') {
           sensors.track("Loginstart", {
             entrance: '列表页',
             operate: '个人中心'
           });
-        } else if (name == '白书皮分析') {
+        } else if (name === '白书皮分析') {
           sensors.track("Loginstart", {
             entrance: '列表页',
             operate: '白书皮分析'
@@ -287,7 +292,6 @@
         this.$router.push('/login');
       },
       initUser() {
-        this.candy = localStorage.getItem('apelink_user_candies');
         this.profileUrl = localStorage.getItem('apelink_user_profileUrl');
         this.token = localStorage.getItem('apelink_user_token');
         if (this.parantProfileUrl) {

@@ -19,20 +19,21 @@
     components: {
       'v-register-tip': registerTip,
       'v-invitation-tip': invitationTip,
-      'v-signIn-tips': signInTips
+      'v-signIn-tips': signInTips,
     },
     mounted() {
       let clearTime = setTimeout(() => {
         let token = localStorage.getItem('apelink_user_token');
         if (!token) {
-          // let path = this.$route.path;
-          // if (path !== '/login') {
-          let isCloseRegisterTip = sessionStorage.getItem('apelink_user_close_register_tip');
-          if (!isCloseRegisterTip) {
-            this.$store.state.registerTip = true;
+          let path = this.$route.path;
+          if (path !== '/login') {
+            let isCloseRegisterTip = sessionStorage.getItem('apelink_user_close_register_tip');
+            if (!isCloseRegisterTip) {
+              this.$store.state.registerTip = true;
+            }
           }
-          // }
         } else {
+
           let uid = localStorage.getItem('apelink_user_uid');
           let token = localStorage.getItem('apelink_user_token');
           if (!token) {
@@ -46,8 +47,8 @@
             url: url,
             headers: headers
           }).then(res => {
-            let {signedIn} = res.data;
-            console.log(signedIn);
+            let {signedIn, candies} = res.data;
+            this.$store.state.sugar = candies;
             localStorage.setItem('apelink_user_signedIn', signedIn);
             if (!signedIn) {
               this.$store.state.signInTips = true;
