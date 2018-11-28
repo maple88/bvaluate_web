@@ -16,7 +16,7 @@
                 <div class="sugar_item" :class="checkState(item.state)" v-for="item in initSignInData">
                   <div class="sugar_box">
                     <img v-show="!(item.state===2 || item.state === 3)" src="../assets/signIn/sugar.png" alt="">
-                    <h4 v-show="!(item.state===2 || item.state === 3)">+5</h4>
+                    <h4 v-show="!(item.state===2 || item.state === 3)">+{{item.sugar}}</h4>
                     <img v-show="item.state===2 || item.state === 3" class="check_on" src="../assets/signIn/check.png"
                          alt="">
                   </div>
@@ -67,7 +67,7 @@
           {
             sugar: 5,
             state: 0,
-            name: '第丝天'
+            name: '第四天'
           },
           {
             sugar: 5,
@@ -101,14 +101,17 @@
         }
       },
       initData(signedIn, signedInNum) {
+        let this_day = 0;
         if (signedInNum >= 1) {
           signedInNum = signedInNum - 1;
-        }
-        let this_day = 0;
-        if (signedIn) {
-          this_day = signedInNum
+          if (signedIn) {
+            this_day = signedInNum
+          } else {
+            this_day = signedInNum + 1
+          }
         } else {
-          this_day = signedInNum + 1
+          signedInNum = 0;
+          this_day = 0;
         }
         this.this_day = this_day;
         for (let i = 0; i < this.initSignInData.length; i++) {
@@ -161,8 +164,10 @@
         }).then(res => {
           if (res.data) {
             this.initSignInData[this.this_day].state = 3;
+            this.$store.state.sugar += this.initSignInData[this.this_day].sugar;
             this.clicked = true;
             localStorage.setItem('apelink_user_signedIn', true);
+            localStorage.setItem('apelink_user_candies', this.$store.state.sugar);
           }
         })
       }

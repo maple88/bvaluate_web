@@ -1,6 +1,5 @@
 <template>
   <div class="page" id="list_page">
-    <v-login v-model="isShow" :success="refreshPage"></v-login>
     <vheader/>
     <div class="maintainer">
       <div class="follow_content" id="article">
@@ -30,8 +29,8 @@
               <div class="topproduct">
                 <div class="pcol" v-for="(item, index) in topbangdan.topProject" :key="index">
                   <div class="prod">
-                    <div class="picon" :data="item.project" 
-                    @click="goArticle('/project',{sid: item.sid}, $event),
+                    <div class="picon" :data="item.project"
+                         @click="goArticle('/project',{sid: item.sid}, $event),
                             trackUtmproject('榜单页', item.project, item.sid, parseInt(index+1))">
                       <img src="../assets/media.jpg" :src="item.logoSrc">
                     </div>
@@ -315,8 +314,7 @@
         console.log(123456)
       },
       isLogin(url) {
-        this.successGo = url;
-        this.isShow = true;
+        this.$store.state.loginPop = true;
       },
       goArticle(url, query, event) {
         let routeData = this.$router.resolve({path: url, query: query});
