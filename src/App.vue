@@ -25,13 +25,37 @@
       let clearTime = setTimeout(() => {
         let token = localStorage.getItem('apelink_user_token');
         if (!token) {
+          // let path = this.$route.path;
+          // if (path !== '/login') {
           let isCloseRegisterTip = sessionStorage.getItem('apelink_user_close_register_tip');
           if (!isCloseRegisterTip) {
             this.$store.state.registerTip = true;
           }
+          // }
+        } else {
+          let uid = localStorage.getItem('apelink_user_uid');
+          let token = localStorage.getItem('apelink_user_token');
+          if (!token) {
+            return false;
+          }
+          let url = '/api/user/info';
+          let headers = {'uid': uid, 'Authorization': token};
+          console.log(headers);
+          this.$axios({
+            method: 'get',
+            url: url,
+            headers: headers
+          }).then(res => {
+            let {signedIn} = res.data;
+            console.log(signedIn);
+            localStorage.setItem('apelink_user_signedIn', signedIn);
+            if (!signedIn) {
+              this.$store.state.signInTips = true;
+            }
+          });
         }
         clearTimeout(clearTime);
-      }, 1000);
+      }, 800);
     }
   }
 </script>

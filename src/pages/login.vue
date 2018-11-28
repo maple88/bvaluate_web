@@ -265,13 +265,13 @@
       }
     },
     mounted() {
-      var end_time = "";
+      let end_time = "";
       window.onload = function () {
         end_time = new Date();
         sensors.quick('autoTrack', {
           load_time: end_time.getTime() - start_time.getTime()
         })
-      }
+      };
     },
     methods: {
       weChatLogin() {
@@ -344,7 +344,7 @@
               localStorage.setItem('apelink_user_sex', sex);
               if (sex == '2') {
                 sensors.setProfile({gender: '男'});
-              }else if (sex == '3') {
+              } else if (sex == '3') {
                 sensors.setProfile({gender: '女'});
               }
               sensors.registerPage({
@@ -360,22 +360,8 @@
               if (res.data.signedIn) {
                 that.$router.push('/list')
               } else {
-                let url = '/api/user/signIn';
-                that.$axios({
-                  method: 'post',
-                  url: url,
-                  headers: headers
-                }).then(function (res) {
-                  if (res.data) {
-                    that.showTip = true;
-                    that.tipText = '登录成功';
-                    setTimeout(() => {
-                      that.showTip = false;
-                      that.$router.push('/list')
-                      that.login()
-                    }, 1000);
-                  }
-                })
+                that.$store.state.signInTips = true;
+                that.$router.push('/list')
               }
             }).catch(function (res) {
             })
@@ -517,12 +503,16 @@
         if (pass) {
           let that = this;
           let url = '/api/user/register';
+          let invite = this.$route.query.invite;
+          if (invite) {
+            url = `${url}?invite=${invite}`
+          }
           let json = {
             nickName: nickName,
             code: code,
             phoneNumber: phoneNumber,
             password: password
-          }
+          };
           that.$axios.post(url, json).then(function (res) {
             that.showTip = true;
             that.tipText = '注册成功';
@@ -831,14 +821,28 @@
     },
     beforeRouteEnter(to, from, next) {
       next(vm => {
-        let query = vm.$route.query.page
+        let query = vm.$route.query.page;
         if (query === 'register') {
           vm.register()
         } else {
           vm.login()
         }
       })
-    }
+    },
+    // beforeRouteLeave(to, from, next) {
+    //   next(vm => {
+    //     let clearTime = setTimeout(() => {
+    //       let token = localStorage.getItem('apelink_user_token');
+    //       if (!token) {
+    //         let isCloseRegisterTip = sessionStorage.getItem('apelink_user_close_register_tip');
+    //         if (!isCloseRegisterTip) {
+    //           vm.$store.state.registerTip = true;
+    //         }
+    //       }
+    //       clearTimeout(clearTime);
+    //     }, 800);
+    //   })
+    // }
   }
 </script>
 

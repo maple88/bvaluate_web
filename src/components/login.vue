@@ -354,7 +354,7 @@
               localStorage.setItem('apelink_user_sex', sex);
               if (sex == '2') {
                 sensors.setProfile({gender: '男'});
-              }else if (sex == '3') {
+              } else if (sex == '3') {
                 sensors.setProfile({gender: '女'});
               }
               sensors.registerPage({
@@ -371,25 +371,11 @@
                 that.value = false;
                 that.success();
                 that.$emit('input', that.value);
-                if (that.goUrl) {
-                  that.$router.push(that.goUrl)
-                }
               } else {
-                let url = '/api/user/signIn';
-                that.$axios({
-                  method: 'post',
-                  url: url,
-                  headers: headers
-                }).then(function (res) {
-                  if (res.data) {
-                    that.value = false;
-                    that.success();
-                    that.$emit('input', this.value);
-                    if (that.goUrl) {
-                      that.$router.push(that.goUrl)
-                    }
-                  }
-                })
+                that.$store.state.signInTips = true;
+              }
+              if (that.goUrl) {
+                that.$router.push(that.goUrl)
               }
             }).catch(function (res) {
             })

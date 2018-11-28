@@ -161,6 +161,7 @@
         transition: all .3s;
         &.gift_box {
           padding: 13px 15px;
+          text-align: center;
           button {
             background-color: transparent;
             border: none;
@@ -169,12 +170,13 @@
             border-radius: 0;
             outline: none;
             transition: all .3s;
+            padding: 0;
             &:hover {
               background-color: transparent;
               border: none;
             }
             img {
-              width: 36px;
+              width: 40px;
               animation: Tada 3s both infinite;
             }
           }
@@ -220,6 +222,9 @@
     }
     .navbar-nav.navbar-right {
       margin-top: 15px;
+      > li {
+        margin: 0 10px;
+      }
       &.header_navbar {
         padding: 37px 0;
         transition: padding .3s;

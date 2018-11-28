@@ -25,8 +25,8 @@
                 <!--<img src="../assets/invitation/test.png" alt="">-->
               </div>
               <div class="content_tips">
-                <p>微信扫描此二维码</p>
-                <p>选择好友邀请注册</p>
+                <p>截图将此二维码</p>
+                <p>发送给好友注册</p>
               </div>
             </div>
             <div class="decorate_box">
@@ -46,7 +46,10 @@
     data() {
       return {
         erCode: '',
-        hasQRCode: false
+        hasQRCode: false,
+        token: '',
+        qrcode: null,
+
       }
     },
     mounted() {
@@ -58,29 +61,37 @@
       initInvitationInfo() {
         let url = `/api/user/getInvitationCode`;
         let uid = localStorage.getItem('apelink_user_uid');
-        let token = localStorage.getItem('apelink_user_token');
-        if (!token) {
+        this.token = localStorage.getItem('apelink_user_token');
+        if (!this.token) {
           return false
         }
-        let headers = {'uid': uid, 'Authorization': token};
+        let headers = {'uid': uid, 'Authorization': this.token};
         this.$axios({
           method: 'post',
           url: url,
           headers: headers,
         }).then(res => {
-          console.log(res);
-          this.hasQRCode = true
-          let qrcode = new QRCode(document.getElementById('qrCodeUrl'), {
-            width: 125,
-            height: 125, // 高度
-            text: `http://www.bvaluate.com/#/login?page=register&invite=${res.data}` // 二维码内容
-          });
+          console.log(res.data);
+          this.hasQRCode = true;
+          if (this.qrcode) {
+            this.qrcode.makeCode(`http://www.bvaluate.com/#/login?page=register&invite=${res.data}`); // 生成另外一个二维码
+          } else {
+            this.qrcode = new QRCode(document.getElementById('qrCodeUrl'), {
+              width: 125,
+              height: 125, // 高度
+              text: `http://www.bvaluate.com/#/login?page=register&invite=${res.data}` // 二维码内容
+            });
+          }
         })
       }
     },
     computed: {
       invitationTip() {
         if (!this.hasQRCode) {
+          this.initInvitationInfo();
+        }
+        let token = localStorage.getItem('apelink_user_token');
+        if (token !== this.token) {
           this.initInvitationInfo();
         }
         return this.$store.state.invitationTip
