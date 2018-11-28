@@ -136,7 +136,9 @@
                 <div class="author_news">
                   <ul class="news_ul">
                     <li class="news_li" v-for="news in newsForAuthor">
-                      <p :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event), trackArticle('文章详情页内作者文章推荐', news.title, '文章详情页内文章没有项目ID', '作者文章推荐', news.sid)">
+                      <p :data="news.title" 
+                      @click="goArticle('/article',{sid:news.sid}, $event), 
+                      trackArticle('文章详情页内作者文章推荐', news.title, '文章详情页内文章没有项目名称', '文章详情页内文章没有项目ID', '作者文章推荐', news.sid)">
                         {{news.title}}
                       </p>
                       <p class="time">{{news.urlDate}}</p>
@@ -168,7 +170,9 @@
                 </div>
                 <div class="hot_content">
                   <ul class="long_ul">
-                    <li v-for="(item, index) in hotNews" :key="item.sid" :data="item.title" @click="goArticle('/article',{sid:item.sid}, $event), trackArticle('文章详情页内24小时热文', item.title, '文章详情页内文章没有项目ID', '24小时热文', item.sid)">
+                    <li v-for="(item, index) in hotNews" :key="item.sid" :data="item.title" 
+                    @click="goArticle('/article',{sid:item.sid}, $event), 
+                    trackArticle('文章详情页内24小时热文', item.title, '文章详情页内文章没有项目名称', '文章详情页内文章没有项目ID', '24小时热文', item.sid)">
                       <div class="list_item">
                         <div class="item_left" v-if="item.titlePicture">
                           <img :src="item.titlePicture"/>
@@ -365,13 +369,14 @@
     methods: {
       trackAttention(category, name) {
         sensors.track('Attention', {
-          category: category,
-          name: name
+          attention_category: category,
+          attention_name: name
         });
       },
-      trackArticle(entrance, name, project_id, category, article_id) {
+      trackArticle(entrance, article_title, name, project_id, category, article_id) {
         sensors.track('Article', {
           entrance: entrance,
+          article_title: article_title,
           name: name,
           project_id: project_id,
           category: category,
