@@ -13,14 +13,21 @@
     font-size: 100px;
     margin-right: 60px;
     position: relative;
+    .totalScore {
+      font-size: 100px;
+    }
+    .his_totalScore {
+      text-align: right;
+      font-size: 16px;
+    }
     &:after {
       content: "";
       position: absolute;
       width: 7px;
-      height: 170px;
+      height: 120%;
       background: #fff;
       right: -30px;
-      top: 0;
+      top: -10%;
     }
   }
   .right {
@@ -48,15 +55,58 @@
       }
       .followbtn {
         font-size: 16px;
-        padding: 4px 12px;
+        padding: 7px 20px;
         border-radius: 15px;
         background: #909090;
         display: inline-block;
         vertical-align: middle;
         cursor: pointer;
-        margin-left: 20px;
+        margin-left: 13px;
         &.on {
           background: #1355b3;
+        }
+        &.share_button {
+          position: relative;
+          .share_box {
+            position: absolute;
+            top: calc(100% + 13px);
+            left: -50%;
+            display: flex;
+            background-color: #FFFFFF;
+            border-radius: 100px;
+            width: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &:after {
+              content: "";
+              left: calc(50% - 10px);
+              bottom: 100%;
+              position: absolute;
+              border-width: 10px;
+              border-style: solid;
+              border-color: transparent transparent #fff transparent;
+            }
+            .share_item {
+              padding: 5px 6.5px;
+              border-radius: 50%;
+              .qrCode_box {
+                position: absolute;
+                width: 100%;
+                left: 0;
+                top: 100%;
+                background-color: #FFFFFF;
+                border-radius: 10px;
+                padding: 10px;
+                img {
+                  width: 100%;
+                }
+              }
+              > img {
+                width: 33px;
+              }
+            }
+          }
         }
       }
     }
@@ -112,12 +162,25 @@
       text-align: center;
       margin: 0;
       font-weight: bold;
+      .his_totalScore {
+        text-align: center;
+      }
     }
-    .right .top {
-      align-items: center;
+    .right {
+      .des {
+        height: 72px;
+      }
+      .top {
+        align-items: center;
+      }
     }
     .right .top .tit {
       font-size: 18px;
+      a {
+        width: 100%;
+        display: block;
+        margin-bottom: 10px;
+      }
     }
     .right .top .smtit {
       font-size: 15px;
@@ -127,7 +190,8 @@
     }
     .right .top .followbtn {
       font-size: 12px;
-      margin-left: 15px;
+      margin-left: 0;
+      margin-right: 15px;
     }
   }
 }
