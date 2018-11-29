@@ -22,27 +22,45 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/list'
+      redirect: '/list',
+      meta: {
+        pageTitle: '榜单'
+      },
     },
     {
       path: '/login',
-      component: login
+      component: login,
+      meta: {
+        pageTitle: '登录'
+      },
     },
     {
       path: '/list',
-      component: list
+      component: list,
+      meta: {
+        pageTitle: '榜单'
+      },
     },
     {
       path: '/userCenter',
-      component: userCenter
+      component: userCenter,
+      meta: {
+        pageTitle: '个人中心'
+      },
     },
     {
       path: '/my',
-      component: my
+      component: my,
+      meta: {
+        pageTitle: '个人设置'
+      },
     },
     {
       path: '/follow',
-      component: follow
+      component: follow,
+      meta: {
+        pageTitle: '关注'
+      },
     },
     {
       path: '/index',

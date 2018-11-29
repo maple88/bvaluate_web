@@ -29,13 +29,13 @@
               <div class="topproduct">
                 <div class="pcol" v-for="(item, index) in topbangdan.topProject" :key="index">
                   <div class="prod">
-                    <div class="picon" :data="item.project" :name="'Utmproject_'+index" :id="'Utmproject_'+index"
-                    @click="goArticle('/project',{sid: item.sid}, $event),
+                    <div class="picon" :data="item.project" :name="'list_prod_logo_'+index" :id="'list_prod_logo_'+index"
+                    @click="goArticle('/project',{sid: item.sid, pageTitle:item.project}, $event),
                             trackUtmproject('榜单页', item.project, item.sid, parseInt(index+1))">
                       <img src="../assets/media.jpg" :src="item.logoSrc">
                     </div>
-                    <span class="pname" :data="item.project"
-                          @click="goArticle('/project',{sid: item.sid}, $event), trackProject('榜单页广告位', item.project, item.sid, '广告位没有排行榜位置', '接口没有项目总分')">{{item.project}}</span>
+                    <span class="pname" :data="item.project" :name="'list_prod_spanTitle_'+index" :id="'list_prod_spanTitle_'+index"
+                          @click="goArticle('/project',{sid: item.sid, pageTitle:item.project}, $event), trackProject('榜单页广告位', item.project, item.sid, '广告位没有排行榜位置', '接口没有项目总分')">{{item.project}}</span>
                   </div>
                 </div>
               </div>
@@ -124,8 +124,8 @@
                         <td v-else-if="index === 1" class="tr_second"><span>{{index + 1 }}</span></td>
                         <td v-else-if="index === 2" class="tr_third"><span>{{index + 1 }}</span></td>
                         <td v-else><span>{{index + 1 }}</span></td>
-                        <td class="tr_first cursor_style" :data="item.project" :name="'project_'+index" :id="'project_'+index"
-                            @click.stop="goArticle('/project',{sid: item.sid}, $event), trackProject('排行榜', item.project, item.sid, parseInt(index+1), item.rankingTotalScore)">
+                        <td class="tr_first cursor_style" :data="item.project" :name="'list_tr_default_td_'+index" :id="'list_tr_default_td_'+index"
+                            @click.stop="goArticle('/project',{sid: item.sid, pageTitle:item.project}, $event), trackProject('排行榜', item.project, item.sid, parseInt(index+1), item.rankingTotalScore)">
                           <h4 :title="item.project">{{item.project}}</h4>
                         </td>
                         <td>{{item.rankingTotalScore }}</td>
@@ -311,7 +311,7 @@
     },
     methods: {
       success() {
-        console.log(123456)
+        // console.log(123456)
       },
       isLogin(url) {
         this.$store.state.loginPop = true;

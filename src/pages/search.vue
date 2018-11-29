@@ -7,22 +7,22 @@
           <div class="search_box">
             <div class="left">
               <div class="dropdown">
-                <button data="选择搜索分类" class="btn btn-default dropdown-toggle" type="button" id="searchType" data-toggle="dropdown"
+                <button data="选择搜索分类" class="btn btn-default dropdown-toggle" type="button" name="searchType" id="searchType" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="true">
                   {{search.class}}
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                  <li><a href="javascript:void(0);" data="文章" @click="changSearchClass('文章')">文章</a></li>
-                  <li><a href="javascript:void(0);" data="项目" @click="changSearchClass('项目')">项目</a></li>
+                  <li><a href="javascript:void(0);" data="文章" name="search_wenzhang" id="search_wenzhang" @click="changSearchClass('文章')">文章</a></li>
+                  <li><a href="javascript:void(0);" data="项目" name="search_xiangmu" id="search_xiangmu" @click="changSearchClass('项目')">项目</a></li>
                 </ul>
               </div>
             </div>
             <div class="center">
-              <input type="text" data="输入搜素关键字" v-model="search.keyword" class="search_input" @keyup.enter="searchKeyWord">
+              <input type="text" data="输入搜素关键字" v-model="search.keyword" name="search_input" id="search_input" class="search_input" @keyup.enter="searchKeyWord">
             </div>
             <div class="right">
-              <button class="search_submit" data="确认搜索" @click="searchKeyWord(), trackSearch(search.class, search.keyword)">
+              <button class="search_submit" data="确认搜索" name="search_submit" id="search_submit" @click="searchKeyWord(), trackSearch(search.class, search.keyword)">
                 <img src="../assets/search/search.png" alt="search"/>
               </button>
             </div>
@@ -33,12 +33,12 @@
       <div class="label_div" v-if="search.show">
         <div class="fish_container">
           <div class="label_box">
-            <a data="新闻" href="javascript:void(0);" :class="search.type === 'NEWS'?'active':''" @click="changeType('NEWS')">新闻</a>
-            <a data="微信" href="javascript:void(0);" :class="search.type === 'WEIXIN'?'active':''"
+            <a name="search_label_box_xinwen" id="search_label_box_xinwen" data="新闻" href="javascript:void(0);" :class="search.type === 'NEWS'?'active':''" @click="changeType('NEWS')">新闻</a>
+            <a name="search_label_box_weixin" id="search_label_box_weixin" data="微信" href="javascript:void(0);" :class="search.type === 'WEIXIN'?'active':''"
                @click="changeType('WEIXIN')">微信</a>
-            <a data="微博" href="javascript:void(0);" :class="search.type === 'WEIBO'?'active':''"
+            <a name="search_label_box_weibo" id="search_label_box_weibo" data="微博" href="javascript:void(0);" :class="search.type === 'WEIBO'?'active':''"
                @click="changeType('WEIBO')">微博</a>
-            <a data="Twitter" href="javascript:void(0);" :class="search.type === 'TWITTER'?'active':''" @click="changeType('TWITTER')">Twitter</a>
+            <a name="search_label_box_Twitter" id="search_label_box_Twitter" data="Twitter" href="javascript:void(0);" :class="search.type === 'TWITTER'?'active':''" @click="changeType('TWITTER')">Twitter</a>
           </div>
         </div>
       </div>
@@ -51,10 +51,11 @@
                   <li>
                     <div class="list-item">
                       <div class="medialist">
-                        <div class="media" v-for="news in newsList">
+                        <div class="media" v-for="(news, index) in newsList" :key="index">
                           <div class="media-left media-middle"
                                v-if="news.dataType === 'NEWS'||news.dataType === 'WEIXIN'">
                             <div class="newimg_box" :data="news.title" 
+                            :name="'search_newimg_box_title_'+index" :id="'search_newimg_box_title_'+index" 
                             @click="goArticle('/article',{sid:news.sid}, $event), 
                             trackArticle('搜索页', news.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', search.type, news.sid)">
                               <img v-if="news.titlePicture" :src="news.titlePicture"/>
@@ -67,6 +68,7 @@
                           <div class="media-left media-middle"
                                v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'">
                             <div class="newimg_box TorW" :data="news.title" 
+                            :name="'search_newimg_boxTorW_title_'+index" :id="'search_newimg_boxTorW_title_'+index" 
                             @click="goArticle('/article',{sid:news.sid}, $event), 
                             trackArticle('搜索页', news.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', search.type, news.sid)">
                               <img :src="news.dataType === 'WEIBO'?weibo:tuiwen"/>
@@ -75,32 +77,36 @@
                           </div>
                           <div class="media-body">
                             <h4 class="media-heading" :data="news.title" :title="news.title" 
+                            :name="'search_media-heading_title_'+index" :id="'search_media-heading_title_'+index" 
                             @click="goArticle('/article',{sid:news.sid}, $event), 
                             trackArticle('搜索页', news.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', search.type, news.sid)"
                                 v-if="!(news.dataType === 'WEIBO' || news.dataType === 'TWITTER')" v-html="news.title ">
                             </h4>
                             <p class="media-words TorW" :data="news.content" v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'" 
+                            :name="'search_media-wordsTorW_content_'+index" :id="'search_media-wordsTorW_content_'+index" 
                             @click="goArticle('/article',{sid:news.sid}, $event), 
                             trackArticle('搜索页', news.content, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', search.type, news.sid)" v-html="news.content">
                             </p>
-                            <p class=" media-words" v-else v-html="news.content ">
+                            <p class="media-words" v-else v-html="news.content ">
                             </p>
                             <div class="media-bottom">
                               <ul>
                                 <li
                                   v-if="!(news.siteName !== 'NULL' && news.siteName !== null && news.siteName !== '')"
+                                  :name="'search_media-bottom_author_'+index" :id="'search_media-bottom_author_'+index" 
                                   @click="goArticle('/author',{author: news.author,type: 'author'}, $event)" :data="news.author">
                                   <div class="userimg">
                                     <img src="../assets/follow/user_head.png">
                                   </div>
                                   {{news.author}}
                                 </li>
-                                <li v-else :data="news.siteName" @click="goArticle('/author',{author: news.siteName,type: 'siteName'}, $event)">
+                                <li v-else :name="'search_media-bottom_siteName_'+index" :id="'search_media-bottom_siteName_'+index"  :data="news.siteName" @click="goArticle('/author',{author: news.siteName,type: 'siteName'}, $event)">
                                   {{news.siteName}}
                                 </li>
                                 <li>{{news.urlTime}}</li>
                               </ul>
                               <div class="tips"
+                                   :name="'search_tips_projectCategory_'+index" :id="'search_tips_projectCategory_'+index" 
                                    v-if="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL'"
                                    @click="goProjectByName(news.projectCategory, $event), trackProject('搜索页文章的项目标签', news.projectCategory, '搜索页文章的项目标签没有项目ID', '搜索页文章的项目标签没有排行榜位置', '搜索页文章的项目标签没有项目总分')"
                                    :data="news.projectCategory"
@@ -108,6 +114,7 @@
                                 {{news.projectCategory | labelFormat}}
                               </div>
                               <div class="tips"
+                                   :name="'search_tips_industryCategory_'+index" :id="'search_tips_industryCategory_'+index" 
                                    v-else-if="news.industryCategory !==null && news.industryCategory !== '' && news.industryCategory !==undefined && news.industryCategory !=='NULL'"
                                    @click="goIndustryByIndustry(news.industryCategory, $event)"
                                    :data="news.industryCategory"
@@ -115,6 +122,7 @@
                                 {{news.industryCategory | labelFormat}}
                               </div>
                               <div class="tips"
+                                   :name="'search_tips_countryCategory_'+index" :id="'search_tips_countryCategory_'+index" 
                                    v-else="news.countryCategory !==null && news.countryCategory !== '' && news.countryCategory !==undefined && news.countryCategory !=='NULL'"
                                    @click="goIndustryByCountry(news.countryCategory, $event)"
                                    :data="news.countryCategory"
@@ -139,10 +147,10 @@
             </div>
             <div class="center" v-if="!search.show">
               <div class="follow_list serach_follow_list">
-                <div class="project_list_box" v-for="project in projectList">
+                <div class="project_list_box" v-for="(project, index) in projectList" :key="index">
                   <div class="project_info">
                     <div class="left">
-                      <div class="logo_box" :data="project.project" @click="goProjectById(project.sid, $event)">
+                      <div class="logo_box" :data="project.project" :name="'search_logo_box_project_'+index" :id="'search_logo_box_project_'+index" @click="goProjectById(project.sid, $event)">
                         <img :src="project.logoSrc"/>
                       </div>
                     </div>
@@ -150,7 +158,7 @@
                       <div class="base_info">
                         <div class="left">
                           <h4>
-                            <span v-html="project.project" :data="project.project" @click="goProjectById(project.sid, $event)"></span>
+                            <span v-html="project.project" :name="'search_h4span_project_'+index" :id="'search_h4span_project_'+index" :data="project.project" @click="goProjectById(project.sid, $event)"></span>
                             <i class="fa fa-heart-o" v-if="!project.collected" @click="setFollow(project)"></i>
                             <i class="fa fa-heart" v-else></i>
                           </h4>
@@ -186,7 +194,7 @@
                 </div>
                 <div class="hot_content">
                   <ul class="scoll_style" id="scoll_scoll_style">
-                    <li class="news_flash" v-for="(flash,index) in flashList">
+                    <li class="news_flash" v-for="(flash, index) in flashList" :key="index">
                       <div class="news_item">
                         <div class="radio_box">
                           <div class="radio_circle" :class="index===0?'first':''"></div>
@@ -195,7 +203,7 @@
                           <span>{{flash.urlTime | dataFormat}}</span>
                         </div>
                         <div class="item_body">
-                          <h4 :data="flash.title" 
+                          <h4 :data="flash.title" :name="'search_item_body_h4_'+index" :id="'search_item_body_h4_'+index" 
                           @click="goArticle('/article',{sid:flash.sid}, $event), 
                           trackArticle('搜索页', flash.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', '快讯', flash.sid)">{{flash.title}}</h4>
                           <p>{{flash.content}}</p>
@@ -214,7 +222,7 @@
                 </div>
                 <div class="hot_content current">
                   <ul class="long_ul">
-                    <li class="news_flash" v-for="(affair,index) in affairList">
+                    <li class="news_flash" v-for="(affair, index) in affairList" :key="index">
                       <div class="news_item nolink">
                         <div class="radio_box">
                           <div class="radio_circle" :class="index === 0 ? 'first':''"></div>
@@ -225,17 +233,20 @@
                         <div class="item_body" :class="affair.titlePicture ? 'hasImg' : ''">
                           <div class="content" v-if="affair.titlePicture">
                             <h4 :data="affair.title" 
-                            @click="goArticle('/article',{sid:affair.sid}, $event), 
+                            :name="'search_content_h4title_'+index" :id="'search_content_h4title_'+index"
+                            @click="goArticle('/article',{sid:affair.sid, pageTitle:affair.title}, $event), 
                             trackArticle('搜索页', affair.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', '国家时事', affair.sid)">{{affair.title}}</h4>
                             <p>{{affair.content}}</p>
                           </div>
                           <div class="content_img" v-if="affair.titlePicture" 
-                          @click="goArticle('/article',{sid:affair.sid}, $event), 
+                          :name="'search_content_img_titlePicture_'+index" :id="'search_content_img_titlePicture_'+index"
+                          @click="goArticle('/article',{sid:affair.sid, pageTitle:affair.title}, $event), 
                           trackArticle('搜索页', affair.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', '国家时事', affair.sid)" :data="affair.title">
                             <img :src="affair.titlePicture"/>
                           </div>
                           <h4 v-if="!affair.titlePicture" :data="affair.title" 
-                          @click="goArticle('/article',{sid:affair.sid}, $event), 
+                          :name="'search_h4_titlePicture_'+index" :id="'search_h4_titlePicture_'+index"
+                          @click="goArticle('/article',{sid:affair.sid, pageTitle:affair.title}, $event), 
                           trackArticle('搜索页', affair.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', '国家时事', affair.sid)">
                             {{affair.title}}</h4>
                           <p v-if="!affair.titlePicture">{{affair.content}}</p>

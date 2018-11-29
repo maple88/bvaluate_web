@@ -6,8 +6,10 @@
         <div class="fish_container">
           <div class="label_box newsList_page">
             <a href="javascript:void(0);" :class="'active'">{{industry}}</a>
-            <button class="follow" v-show="!projectFollow" data="关注" @click="setFollow(), trackAttention('', industry)">+ 关注</button>
-            <button class="followed" v-show="projectFollow" data="取消关注" @click="deleteFollow(industry)">已关注</button>
+            <button name="newsList_follow_button" id="newsList_follow_button" 
+            class="follow" v-show="!projectFollow" data="关注" @click="setFollow(), trackAttention('', industry)">+ 关注</button>
+            <button name="newsList_followed_button" id="newsList_followed_button" 
+            class="followed" v-show="projectFollow" data="取消关注" @click="deleteFollow(industry)">已关注</button>
           </div>
         </div>
       </div>
@@ -20,11 +22,11 @@
                   <li>
                     <div class="list-item">
                       <div class="medialist">
-                        <div class="media" v-for="news in newsList">
-                          <div class="media-left media-middle"
-                               v-if="news.dataType === 'NEWS'||news.dataType === 'WEIXIN'">
+                        <div class="media" v-for="(news, index) in newsList" :key="index">
+                          <div class="media-left media-middle" v-if="news.dataType === 'NEWS'||news.dataType === 'WEIXIN'">
                             <div class="newimg_box" :data="news.title" 
-                            @click="goArticle('/article',{sid:news.sid}, $event), 
+                            :name="'newsList_newimg_box_img_'+index" :id="'newsList_newimg_box_img_'+index" 
+                            @click="goArticle('/article',{sid:news.sid, pageTitle:news.title}, $event), 
                             trackArticle('资讯列表页的文章', news.title, '资讯列表页的文章没有项目名称', '资讯列表页的文章没有项目ID', '资讯列表文章', news.sid)">
                               <img v-if="news.titlePicture" :src="news.titlePicture"/>
                               <div class="date_box">
@@ -33,10 +35,10 @@
                               </div>
                             </div>
                           </div>
-                          <div class="media-left media-middle"
-                               v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'">
+                          <div class="media-left media-middle" v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'">
                             <div class="newimg_box TorW" :data="news.title" 
-                            @click="goArticle('/article',{sid:news.sid}, $event), 
+                            :name="'newsList_newimg_boxTorW_img_'+index" :id="'newsList_newimg_boxTorW_img_'+index" 
+                            @click="goArticle('/article',{sid:news.sid, pageTitle:news.title}, $event), 
                             trackArticle('资讯列表页的文章', news.title, '资讯列表页的文章没有项目名称', '资讯列表页的文章没有项目ID', '资讯列表文章', news.sid)">
                               <img :src="news.dataType === 'WEIBO'?weibo:tuiwen"/>
                               <span class="day">{{news.urlDate }}</span>
@@ -44,50 +46,55 @@
                           </div>
                           <div class="media-body">
                             <h4 class="media-heading" :title="news.title" :data="news.title" 
-                            @click="goArticle('/article',{sid:news.sid}, $event), 
-                            trackArticle('资讯列表页的文章', news.title, '资讯列表页的文章没有项目名称', '资讯列表页的文章没有项目ID', '资讯列表文章', news.sid)"
-                                v-if="!(news.dataType === 'WEIBO' || news.dataType === 'TWITTER')" v-html="news.title ">
+                            :name="'newsList_media-heading_title_'+index" :id="'newsList_media-heading_title_'+index" 
+                            @click="goArticle('/article',{sid:news.sid, pageTitle:news.title}, $event), 
+                            trackArticle('资讯列表页的文章', news.title, '资讯列表页的文章没有项目名称', '资讯列表页的文章没有项目ID', '资讯列表文章', news.sid)" v-if="!(news.dataType === 'WEIBO' || news.dataType === 'TWITTER')" v-html="news.title">
                             </h4>
-                            <p class="media-words TorW" v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'"
-                               @click="goArticle('/article',{sid:news.sid}, $event), 
-                               trackArticle('资讯列表页的文章', news.title, '资讯列表页的文章没有项目名称', '资讯列表页的文章没有项目ID', '资讯列表文章', news.sid)" v-html="news.content" :data="news.title">
+                            <p class="media-words TorW" v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'" 
+                            :name="'newsList_media-wordsTorW_content_'+index" :id="'newsList_media-wordsTorW_content_'+index" 
+                            @click="goArticle('/article',{sid:news.sid, pageTitle:news.title}, $event), 
+                            trackArticle('资讯列表页的文章', news.title, '资讯列表页的文章没有项目名称', '资讯列表页的文章没有项目ID', '资讯列表文章', news.sid)" v-html="news.content" :data="news.title">
                             </p>
-                            <p class=" media-words" v-else v-html="news.content ">
+                            <p class=" media-words" v-else v-html="news.content">
                             </p>
                             <div class="media-bottom">
                               <ul>
                                 <li
+                                  :name="'newsList_media-bottom_userimg_'+index" :id="'newsList_media-bottom_userimg_'+index" 
                                   v-if="!(news.siteName !== 'NULL' && news.siteName !== null && news.siteName !== '')"
-                                  @click="goArticle('/author',{author: news.author,type: 'author'}, $event)" :data="news.author">
+                                  @click="goArticle('/author',{author: news.author,type: 'author', pageTitle:news.author}, $event)" :data="news.author">
                                   <div class="userimg">
                                     <img src="../assets/follow/user_head.png">
                                   </div>
                                   {{news.author}}
                                 </li>
-                                <li v-else @click="goArticle('/author',{author: news.siteName,type: 'siteName'}, $event)" :data="news.siteName">
+                                <li v-else 
+                                  :name="'newsList_media-bottom_siteName_'+index" :id="'newsList_media-bottom_siteName_'+index" 
+                                  @click="goArticle('/author',{author: news.siteName,type: 'siteName', pageTitle:news.siteName}, $event)" 
+                                  :data="news.siteName">
                                   {{news.siteName}}
                                 </li>
                                 <li>{{news.urlTime}}</li>
                               </ul>
                               <div class="tips"
+                                   :name="'newsList_tips_projectCategory_'+index" :id="'newsList_tips_projectCategory_'+index" 
                                    v-if="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL'"
                                    @click="goProjectByName(news.projectCategory, $event), trackProject('资讯列表页文章的项目标签', news.projectCategory, '资讯列表页文章的项目标签没有项目ID', '资讯列表页文章的项目标签没有排行榜位置', '资讯列表页文章的项目标签没有项目总分')"
-                                   :data="news.projectCategory"
-                              >
+                                   :data="news.projectCategory">
                                 {{news.projectCategory | labelFormat}}
                               </div>
                               <div class="tips"
+                                   :name="'newsList_tips_industryCategory_'+index" :id="'newsList_tips_industryCategory_'+index" 
                                    v-else-if="news.industryCategory !==null && news.industryCategory !== '' && news.industryCategory !==undefined && news.industryCategory !=='NULL'"
                                    @click="goIndustryByIndustry(news.industryCategory, $event)"
-                                   :data="news.industryCategory"
-                              >
+                                   :data="news.industryCategory">
                                 {{news.industryCategory | labelFormat}}
                               </div>
                               <div class="tips"
+                                   :name="'newsList_tips_countryCategory_'+index" :id="'newsList_tips_countryCategory_'+index" 
                                    v-else="news.countryCategory !==null && news.countryCategory !== '' && news.countryCategory !==undefined && news.countryCategory !=='NULL'"
                                    @click="goIndustryByCountry(news.countryCategory, $event)"
-                                   :data="news.countryCategory"
-                              >
+                                   :data="news.countryCategory">
                                 {{news.countryCategory | labelFormat}}
                               </div>
                             </div>
@@ -162,7 +169,8 @@
                         </div>
                         <div class="item_body" :class="item.titlePicture?'':'noPicture'">
                           <h4 :data="item.title" 
-                          @click="goArticle('/article',{sid:item.sid}, $event), 
+                          :name="'newsList_item_body_h4_'+index" :id="'newsList_item_body_h4_'+index"
+                          @click="goArticle('/article',{sid:item.sid, pageTitle:item.title}, $event), 
                           trackArticle('资讯列表页的24小时热文', item.title, '资讯列表页的文章没有项目名称', '资讯列表页的24小时热文没有项目ID', '24小时热文', item.sid)">{{item.title}}</h4>
                           <p>{{item.content}}</p>
                         </div>

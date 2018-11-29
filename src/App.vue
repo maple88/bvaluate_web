@@ -41,7 +41,7 @@
           }
           let url = '/api/user/info';
           let headers = {'uid': uid, 'Authorization': token};
-          console.log(headers);
+          // console.log(headers);
           this.$axios({
             method: 'get',
             url: url,

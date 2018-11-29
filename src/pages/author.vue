@@ -9,11 +9,13 @@
           <p class="occupation">
             <!--自媒体作者-->
             <span class="nickname author">{{author}}</span>
-            <button class="follow_btn" v-show="!follow" data="关注作者" @click="setAuthorFollow($event), trackAttention('作者', author)">
+            <button name="author_follow_btn_author" id="author_follow_btn_author" 
+            class="follow_btn" v-show="!follow" data="关注作者" @click="setAuthorFollow($event), trackAttention('作者', author)">
               <img src="../assets/follow/icon-follow.png"/>关注
               <div class="arrow"></div>
             </button>
-            <button class="followed_btn" v-show="follow" data="取消关注作者" @click="deleteFollow($event)">
+            <button name="author_followed_btn_author" id="author_followed_btn_author" 
+            class="followed_btn" v-show="follow" data="取消关注作者" @click="deleteFollow($event)">
               <div class="arrow"></div>
               <img src="../assets/follow/icon-followed.png"/>已关注
             </button>
@@ -42,11 +44,12 @@
               <li>
                 <div class="list-item">
                   <div class="medialist">
-                    <div class="media" v-for="news in newsForAuthor">
+                    <div class="media" v-for="(news, index) in newsForAuthor" :key="index">
                       <div class="media-left media-middle"
                            v-if="news.dataType === 'NEWS'||news.dataType === 'WEIXIN'">
                         <div class="newimg_box" :data="news.title" 
-                        @click="goArticle('/article',{sid:news.sid}, $event), 
+                        :name="'author_newimg_box_img_'+index" :id="'author_newimg_box_img_'+index" 
+                        @click="goArticle('/article',{sid:news.sid, pageTitle:news.title}, $event), 
                         trackArticle('个人中心页收藏文章', news.title, '个人中心页内收藏文章没有项目名称', '个人中心页内收藏文章没有项目ID', '收藏文章', news.sid)">
                           <img v-if="news.titlePicture" :src="news.titlePicture"/>
                           <div class="date_box">
@@ -58,37 +61,41 @@
                       <div class="media-left media-middle"
                            v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'">
                         <div class="newimg_box TorW" :data="news.title" 
-                        @click="goArticle('/article',{sid:news.sid}, $event), 
+                        :name="'author_newimg_boxTorW_img_'+index" :id="'author_newimg_boxTorW_img_'+index" 
+                        @click="goArticle('/article',{sid:news.sid, pageTitle:news.title}, $event), 
                         trackArticle('个人中心页收藏文章', news.title, '个人中心页内收藏文章没有项目名称', '个人中心页内收藏文章没有项目ID', '收藏文章', news.sid)">
                           <img :src="news.dataType === 'WEIBO'?weibo:tuiwen"/>
                           <span class="day">{{news.urlDate }}</span>
                         </div>
                       </div>
                       <div class="media-body">
-                        <h4 class="media-heading" :title="news.title" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event)"
+                        <h4 class="media-heading" :name="'author_media-heading_title_'+index" :id="'author_media-heading_title_'+index" :title="news.title" :data="news.title" @click="goArticle('/article',{sid:news.sid, pageTitle:news.title}, $event)"
                             v-if="!(news.dataType === 'WEIBO' || news.dataType === 'TWITTER')" v-html="news.title ">
                         </h4>
                         <p class="media-words TorW" v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'"
-                           @click="goArticle('/article',{sid:news.sid}, $event)" v-html="news.content " :data="news.content">
+                           :name="'author_media-wordsTorW_content_'+index" :id="'author_media-wordsTorW_content_'+index"
+                           @click="goArticle('/article',{sid:news.sid, pageTitle:news.content}, $event)" v-html="news.content " :data="news.content">
                         </p>
                         <p class=" media-words" v-else v-html="news.content ">
                         </p>
                         <div class="media-bottom">
                           <ul>
                             <li
+                              :name="'author_media-bottom_author_'+index" :id="'author_media-bottom_author_'+index"
                               v-if="!(news.siteName !== 'NULL' && news.siteName !== null && news.siteName !== '')"
-                              @click="goArticle('/author',{author: news.author,type: 'author'}, $event)" :data="news.author">
+                              @click="goArticle('/author',{author: news.author,type: 'author', pageTitle:news.author}, $event)" :data="news.author">
                               <div class="userimg">
                                 <img src="../assets/follow/user_head.png">
                               </div>
                               <span class="author">{{news.author}}</span>
                             </li>
-                            <li v-else @click="goArticle('/author',{author: news.siteName,type: 'siteName'}, $event)" :data="news.siteName">
+                            <li v-else :name="'author_media-bottom_siteName_'+index" :id="'author_media-bottom_siteName_'+index" @click="goArticle('/author',{author: news.siteName,type: 'siteName', pageTitle:news.siteName}, $event)" :data="news.siteName">
                               <span class="author">{{news.siteName}}</span>
                             </li>
                             <li>{{news.urlTime}}</li>
                           </ul>
                           <div class="tips"
+                               :name="'author_tips_projectCategory_'+index" :id="'author_tips_projectCategory_'+index"
                                v-if="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL'"
                                @click="goProjectByName(news.projectCategory, $event), trackProject('个人中心页收藏文章的项目标签', news.projectCategory, '个人中心页收藏文章的项目标签没有项目ID', '个人中心页收藏文章的项目标签没有排行榜位置', '个人中心页收藏文章的项目标签没有项目总分')"
                                :data="news.projectCategory"
@@ -96,6 +103,7 @@
                             {{news.projectCategory | labelFormat}}
                           </div>
                           <div class="tips"
+                               :name="'author_tips_industryCategory_'+index" :id="'author_tips_industryCategory_'+index"
                                v-else-if="news.industryCategory !==null && news.industryCategory !== '' && news.industryCategory !==undefined && news.industryCategory !=='NULL'"
                                @click="goIndustryByIndustry(news.industryCategory, $event)"
                                :data="news.industryCategory"
@@ -103,6 +111,7 @@
                             {{news.industryCategory | labelFormat}}
                           </div>
                           <div class="tips"
+                               :name="'author_tips_countryCategory_'+index" :id="'author_tips_countryCategory_'+index"
                                v-else="news.countryCategory !==null && news.countryCategory !== '' && news.countryCategory !==undefined && news.countryCategory !=='NULL'"
                                @click="goIndustryByCountry(news.countryCategory, $event)"
                                :data="news.countryCategory"

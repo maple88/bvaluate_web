@@ -11,15 +11,15 @@
               <div class="imgbrand"><img :src="project.logoSrc "></div>
               <div class="info">
                 <div class="tit">
-                  <a :href="project.outerOfficial" target="_blank" :data="project.project"> {{project.project}}</a>
-                  <div class="followbtn" v-if="!isFollow" data="关注项目" @click="setFollow($event), trackAttention('项目', project.project)">+ 关注</div>
-                  <div class="followbtn on" v-if="isFollow" data="取消关注项目" @click="deleteFollow(project.collected, $event)"><i class="fa fa-check"></i> 已关注</div>
+                  <a :href="project.outerOfficial" target="_blank" :data="project.project" :name="'project_tit_topTitle_'+project.project" :id="'project_tit_toptitle_'+project.project"> {{project.project}}</a>
+                  <div :name="'project_followbtn_setFollow_'+project.project" :id="'project_followbtn_setFollow_'+project.project" class="followbtn" v-if="!isFollow" data="关注项目" @click="setFollow($event), trackAttention('项目', project.project)">+ 关注</div>
+                  <div :name="'project_followbtn_deleteFollow_'+project.project" :id="'project_followbtn_deleteFollow_'+project.project" class="followbtn on" v-if="isFollow" data="取消关注项目" @click="deleteFollow(project.collected, $event)"><i class="fa fa-check"></i> 已关注</div>
                 </div>
                 <p class="smtit">{{project.introduction }}</p>
               </div>
             </div>
             <p class="des">
-              {{project.irAbstract }}
+              {{project.irAbstract}}
             </p>
           </div>
         </div>
@@ -28,10 +28,12 @@
         <div class="leftlayout">
           <div class="section1">
             <div class="sectiontabs">
-              <a href="javascript:;" :class="atvNewOrGrade==1?'active':''"
+              <a :name="'project_sectiontabs_xinwen_'+project.project" :id="'project_sectiontabs_xinwen_'+project.project" 
+                 href="javascript:;" :class="atvNewOrGrade==1?'active':''"
                  @click.stop="iniNewOrGrade(project.project,'290001') , atvNewOrGrade=1,NGewOrGrade = '290001',NewOrGradeNo=2"
                  data="新闻">新闻</a>
-              <a href="javascript:;" :class="atvNewOrGrade==2?'active':''"
+              <a :name="'project_sectiontabs_wenzhang_'+project.project" :id="'project_sectiontabs_wenzhang_'+project.project" 
+                 href="javascript:;" :class="atvNewOrGrade==2?'active':''"
                  @click.stop="iniNewOrGrade(project.project,'290000') , atvNewOrGrade=2,NGewOrGrade = '290000',NewOrGradeNo=2"
                  data="评级文章">评级文章</a>
             </div>
@@ -41,7 +43,7 @@
               </div>
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                  <div class="media" v-for="item in NewOrGrade">
+                  <div class="media" v-for="(item, index) in NewOrGrade" :key="index">
                     <div class="media-left media-middle">
                       <div class="newimg_box">
                         <img v-if="item.titlePicture" :src="item.titlePicture"/>
@@ -52,8 +54,9 @@
                       </div>
                     </div>
                     <div class="media-body">
-                      <h4 class="media-heading" :title="item.title" :data="item.title" 
-                      @click="goArticle('/article',{sid:item.sid}, $event), 
+                      <h4 :name="'project_media-heading_h4_'+index" :id="'project_media-heading_h4_'+index"
+                      class="media-heading" :title="item.title" :data="item.title" 
+                      @click="goArticle('/article',{sid:item.sid, pageTitle:item.title}, $event), 
                               trackArticle('项目页', item.title, project.project, project.sid, atvNewOrGrade==1?'新闻':'评级文章', item.sid)">
                         {{item.title}}
                       </h4>
@@ -75,19 +78,19 @@
                           </li>
                           <li>{{item.urlTime}}</li>
                         </ul>
-                        <div class="tips"
+                        <div class="tips" :name="'project_tips_projectCategory_'+index" :id="'project_tips_projectCategory_'+index"
                              v-if="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
                              @click="goProjectByName(item.projectCategory, $event)"
                              :data="item.projectCategory">
                           {{item.projectCategory | labelFormat}}
                         </div>
-                        <div class="tips"
+                        <div class="tips" :name="'project_tips_industryCategory_'+index" :id="'project_tips_industryCategory_'+index"
                              v-else-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
                              @click="goIndustryByIndustry(item.industryCategory, $event)"
                              :data="item.industryCategory">
                           {{item.industryCategory | labelFormat}}
                         </div>
-                        <div class="tips"
+                        <div class="tips" :name="'project_tips_countryCategory_'+index" :id="'project_tips_countryCategory_'+index"
                              v-else="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
                              @click="goIndustryByCountry(item.countryCategory, $event)"
                              :data="item.countryCategory">
@@ -371,31 +374,31 @@
               </div>
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                  <div class="item" v-for="item in TwitterOrWeibo">
+                  <div class="item" v-for="(item, index) in TwitterOrWeibo" :key="index">
                     <div class="left TorW">
                       <img :src="showIcon"/>
                       <span class="day">{{item.urlDate }}</span>
                     </div>
                     <div class="right">
-                      <p class="des" :data="item.content" 
-                      @click="goArticle('/article',{sid:item.sid}, $event), 
+                      <p class="des" :data="item.content" :name="'project_des_content_'+index" :id="'project_des_content_'+index" 
+                      @click="goArticle('/article',{sid:item.sid, pageTitle:item.content}, $event), 
                               trackArticle('项目页', item.title, project.project, project.sid, atvTwitterOrWeibo==1?'推文':'微博', item.sid)">{{item.content}}</p>
                       <div class="bottom">
                         <span class="name">{{item.author}}</span>
                         <span class="time">{{item.urlTime}}</span>
-                        <span class="tips"
+                        <span class="tips" :name="'project_tips_projectCategory2_'+index" :id="'project_tips_projectCategory2_'+index" 
                               v-if="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
                               @click="goProjectByName(item.projectCategory, $event)"
                               :data="item.projectCategory">
                           {{item.projectCategory | labelFormat}}
                         </span>
-                        <span class="tips"
+                        <span class="tips" :name="'project_tips_industryCategory2_'+index" :id="'project_tips_industryCategory2_'+index" 
                               v-else-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
                               @click="goIndustryByIndustry(item.industryCategory, $event)"
                               :data="item.industryCategory">
                           {{item.industryCategory | labelFormat}}
                         </span>
-                        <span class="tips"
+                        <span class="tips" :name="'project_tips_countryCategory2_'+index" :id="'project_tips_countryCategory2_'+index" 
                               v-else="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
                               @click="goIndustryByCountry(item.countryCategory, $event)"
                               :data="item.countryCategory">
@@ -510,7 +513,7 @@
             <div class="rightlayouthead">项目推荐</div>
             <div class="item" v-for="(project, index) in recommendProjects" 
             @click="trackUtmproject('项目详情页', project.project, project.sid, parseInt(index+1))">
-              <router-link :to="'/project?sid='+project.sid" :data="project.project">
+              <router-link :to="'/project?sid='+project.sid+'&pageTitle='+project.project" :data="project.project" :name="'project_item_Utmproject_'+index" :id="'project_item_Utmproject_'+index">
                 <div class="ibanner"><img src="../assets/project/recommend-banner.jpg"></div>
                 <div class="info">
                   <div class="left"><img :src="project.logoSrc"></div>
@@ -795,7 +798,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
+        let routeData = this.$router.resolve({path: '/project', query: {project: obj, pageTitle: obj}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
@@ -806,7 +809,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj, pageTitle: obj}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
@@ -817,7 +820,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj, pageTitle: obj}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },

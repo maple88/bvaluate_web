@@ -24,6 +24,18 @@ Vue.component('vfooter', footer);
 Vue.component('vtips', tip);
 Vue.use(Vuex);
 
+// 页面标题
+router.beforeEach((to, from, next) => {
+  if (to.meta.pageTitle) {
+    window.document.title = "Bvaluate - "+to.meta.pageTitle;
+  }else if (to.query.pageTitle) {
+    window.document.title = "Bvaluate - "+to.query.pageTitle;
+  }else{
+    window.document.title = "Bvaluate";
+  }
+  next()
+})
+
 const store = new Vuex.Store({
   state: {
     registerTip: false,
