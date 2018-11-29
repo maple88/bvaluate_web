@@ -344,9 +344,9 @@
               localStorage.setItem('apelink_user_email', email);
               sensors.setProfile({Email: email});
               localStorage.setItem('apelink_user_sex', sex);
-              if (sex == '2') {
+              if (sex === '2') {
                 sensors.setProfile({gender: '男'});
-              } else if (sex == '3') {
+              } else if (sex === '3') {
                 sensors.setProfile({gender: '女'});
               }
               sensors.registerPage({
@@ -374,7 +374,7 @@
             }).catch(function (res) {
             })
           }).catch(function (res) {
-            let msgCode = res.response.data.message
+            let msgCode = res.response.data.message;
             switch (msgCode) {
               case '9019':
                 that.errorMsg.loginUser.phoneNumber = '账号不正确';

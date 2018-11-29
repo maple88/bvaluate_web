@@ -174,7 +174,7 @@
     },
     computed: {
       signInTips() {
-        if (!this.click) {
+        if (this.$store.state.signInTips) {
           this.initSignInTips();
         }
         return this.$store.state.signInTips
