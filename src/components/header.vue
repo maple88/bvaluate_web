@@ -50,8 +50,7 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li>
-                    <a href="javascript:;" data="消息">消息</a>
-                    <!--@click="$store.state.messagePop = true"-->
+                    <a href="javascript:;" data="消息" @click="$store.state.messagePop = true">消息</a>
                   </li>
                   <router-link tag="li" to="/my" data="设置"><a>设置</a></router-link>
                   <!-- <li><a href="#">设置</a></li> -->
