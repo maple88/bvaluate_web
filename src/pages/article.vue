@@ -14,20 +14,20 @@
                 <li>
                   <router-link to="#">
                     <span v-if="articleContent.projectCategory !== 'NULL'" class="label_item"
-                          @click="goProjectByName2(articleContent.projectCategory, $event)" 
-                          name="article_label_item_projectCategory" id="article_label_item_projectCategory" 
+                          @click="goProjectByName2(articleContent.projectCategory, $event)"
+                          name="article_label_item_projectCategory" id="article_label_item_projectCategory"
                           :data="articleContent.projectCategory">
                       {{articleContent.projectCategory | showLable}}
                     </span>
                     <span v-else-if="articleContent.countryCategory !== 'NULL'" class="label_item"
-                          @click="goIndustryByCountry2(articleContent.countryCategory, $event)" 
-                          name="article_label_item_countryCategory" id="article_label_item_countryCategory" 
+                          @click="goIndustryByCountry2(articleContent.countryCategory, $event)"
+                          name="article_label_item_countryCategory" id="article_label_item_countryCategory"
                           :data="articleContent.countryCategory">
                       {{articleContent.countryCategory | showLable}}
                     </span>
                     <span v-else="articleContent.industryCategory !== 'NULL'" class="label_item"
-                          @click="goIndustryByIndustry2(articleContent.industryCategory, $event)" 
-                          name="article_label_item_industryCategory" id="article_label_item_industryCategory" 
+                          @click="goIndustryByIndustry2(articleContent.industryCategory, $event)"
+                          name="article_label_item_industryCategory" id="article_label_item_industryCategory"
                           :data="articleContent.industryCategory">
                       {{articleContent.industryCategory | showLable}}
                     </span>
@@ -49,7 +49,7 @@
                     <span class="user_name"
                           name="article_user_name_author" id="article_user_name_author"
                           v-if="!(articleContent.siteName !== 'NULL' && articleContent.siteName !== null && articleContent.siteName !== '')"
-                          @click="goArticle('/author',{author: articleContent.author,type: 'author', pageTitle:articleContent.author}, $event)" 
+                          @click="goArticle('/author',{author: articleContent.author,type: 'author', pageTitle:articleContent.author}, $event)"
                           :data="articleContent.author">
                       {{articleContent.author}}
                     </span>
@@ -59,13 +59,40 @@
                           :data="articleContent.siteName">
                       {{articleContent.siteName}}
                     </span>
-                    <a :href="articleContent.urlName" name="article_publish_data_urlTime" id="article_publish_data_urlTime" class="publish_data" :data="articleContent.urlTime">{{articleContent.urlTime}}</a>
+                    <a :href="articleContent.urlName" name="article_publish_data_urlTime"
+                       id="article_publish_data_urlTime" class="publish_data" :data="articleContent.urlTime">{{articleContent.urlTime}}</a>
                     <!-- <span class="publish_time">13:20</span> -->
                   </div>
                   <div class="article_right">
                     <a href="javascript:;" class="look" data="查看全文" @click="showArticle = !showArticle">查看原文</a>
                     <span class="look_count"><i class="fa fa-eye"></i>0人</span>
-                    <span class="share" @click.stop="showAllShare($event)"><i class="fa fa-share-alt"></i></span>
+                    <!--<span class="share" @click.stop="showAllShare($event)"><i class="fa fa-share-alt"></i></span>-->
+                    <div class="followbtn on share_button" @click.stop="shareButton = !shareButton">
+                      <i class="fa fa-share-alt"></i>
+                      <transition name="fade">
+                        <div class="share_box" v-show="shareButton">
+                          <div class="arrow"></div>
+                          <div class="share_item" @click.stop="weChatQrCodeShow">
+                            <img src="../assets/project/wechat.png" alt="">
+                            <transition name="fade">
+                              <div class="qrCode_box" ref="wechat_qrCode" v-show="wechatQrCode"></div>
+                            </transition>
+                          </div>
+                          <div class="share_item" @click.stop="qqQrCodeShow">
+                            <img src="../assets/project/QQ.png" alt="">
+                            <transition name="fade">
+                              <div class="qrCode_box" ref="qq_qrCode" v-show="qqQrCode"></div>
+                            </transition>
+                          </div>
+                          <div class="share_item" @click.stop="weiboQrCodeShow">
+                            <img src="../assets/project/weibo.png" alt="">
+                            <transition name="fade">
+                              <div class="qrCode_box" ref="weibo_qrCode" v-show="weiboQrCode"></div>
+                            </transition>
+                          </div>
+                        </div>
+                      </transition>
+                    </div>
                     <span class="follow">
                       <i class="fa fa-heart" v-show="!isFollow" @click="setFollow()"></i>
                       <i class="fa fa-heart followed" v-show="isFollow"
@@ -75,20 +102,20 @@
                 </div>
                 <div class="label_box">
                   <div v-if="articleContent.countryCategory !== 'NULL'" class="label_item"
-                       name="article_label_box_countryCategory" id="article_label_box_countryCategory" 
+                       name="article_label_box_countryCategory" id="article_label_box_countryCategory"
                        @click="goIndustryByCountry(articleContent.countryCategory, $event)"
                        :data="articleContent.countryCategory">
                     {{articleContent.countryCategory | showLable}}
                   </div>
                   <div v-if="articleContent.industryCategory !== 'NULL'" class="label_item"
-                       name="article_label_box_industryCategory" id="article_label_box_industryCategory" 
-                       @click="goIndustryByIndustry(articleContent.industryCategory, $event)" 
+                       name="article_label_box_industryCategory" id="article_label_box_industryCategory"
+                       @click="goIndustryByIndustry(articleContent.industryCategory, $event)"
                        :data="articleContent.industryCategory">
                     {{articleContent.industryCategory | showLable}}
                   </div>
                   <div v-if="articleContent.projectCategory !== 'NULL'" class="label_item"
-                       name="article_label_box_projectCategory" id="article_label_box_projectCategory" 
-                       @click="goProjectByName(articleContent.projectCategory, $event)" 
+                       name="article_label_box_projectCategory" id="article_label_box_projectCategory"
+                       @click="goProjectByName(articleContent.projectCategory, $event)"
                        :data="articleContent.projectCategory">
                     {{articleContent.projectCategory | showLable}}
                   </div>
@@ -123,25 +150,27 @@
                     <h4 class="user_name"
                         name="article_user_name2_author" id="article_user_name2_author"
                         v-if="!(articleContent.siteName !== 'NULL' && articleContent.siteName !== null && articleContent.siteName !== '')"
-                        @click="goArticle('/author',{author: articleContent.author,type: 'author', pageTitle:articleContent.author}, $event)" 
+                        @click="goArticle('/author',{author: articleContent.author,type: 'author', pageTitle:articleContent.author}, $event)"
                         :data="articleContent.author">
                       {{articleContent.author}}
                     </h4>
                     <h4 class="user_name" v-else
                         name="article_user_name2_siteName" id="article_user_name2_siteName"
-                        @click="goArticle('/author',{author: articleContent.siteName,type: 'siteName', pageTitle:articleContent.siteName}, $event)" 
+                        @click="goArticle('/author',{author: articleContent.siteName,type: 'siteName', pageTitle:articleContent.siteName}, $event)"
                         :data="articleContent.siteName">
                       {{articleContent.siteName}}
                     </h4>
-                    <button 
-                    name="article_follow_btn_siteName" id="article_follow_btn_siteName"
-                    class="follow_btn" v-if="!follow" data="关注作者" @click="setAuthorFollow(), trackAttention('作者', articleContent.siteName)">
+                    <button
+                      name="article_follow_btn_siteName" id="article_follow_btn_siteName"
+                      class="follow_btn" v-if="!follow" data="关注作者"
+                      @click="setAuthorFollow(), trackAttention('作者', articleContent.siteName)">
                       <img src="../assets/follow/icon-follow.png"/>关注
                       <div class="arrow"></div>
                     </button>
-                    <button 
-                    name="article_followed_btn_siteName" id="article_followed_btn_siteName"
-                    class="followed_btn" v-if="follow" data="取消关注作者" @click="deleteAuthorFollow(articleContent.siteName)">
+                    <button
+                      name="article_followed_btn_siteName" id="article_followed_btn_siteName"
+                      class="followed_btn" v-if="follow" data="取消关注作者"
+                      @click="deleteAuthorFollow(articleContent.siteName)">
                       <div class="arrow"></div>
                       <img src="../assets/follow/icon-followed.png"/>已关注
                     </button>
@@ -150,8 +179,8 @@
                 <div class="author_news">
                   <ul class="news_ul">
                     <li class="news_li" v-for="(news, index) in newsForAuthor" :key="index">
-                      <p :data="news.title" :name="'article_news_li_title_'+index" :id="'article_news_li_title_'+index" 
-                      @click="goArticle('/article',{sid:news.sid, pageTitle:news.title}, $event), 
+                      <p :data="news.title" :name="'article_news_li_title_'+index" :id="'article_news_li_title_'+index"
+                         @click="goArticle('/article',{sid:news.sid, pageTitle:news.title}, $event),
                       trackArticle('文章详情页内作者文章推荐', news.title, '文章详情页内文章没有项目名称', '文章详情页内文章没有项目ID', '作者文章推荐', news.sid)">
                         {{news.title}}
                       </p>
@@ -184,9 +213,9 @@
                 </div>
                 <div class="hot_content">
                   <ul class="long_ul">
-                    <li v-for="(item, index) in hotNews" :key="item.sid" :data="item.title" 
-                    :name="'article_long_ul_li_'+index" :id="'article_long_ul_li_'+index" 
-                    @click="goArticle('/article',{sid:item.sid, pageTitle:item.title}, $event), 
+                    <li v-for="(item, index) in hotNews" :key="item.sid" :data="item.title"
+                        :name="'article_long_ul_li_'+index" :id="'article_long_ul_li_'+index"
+                        @click="goArticle('/article',{sid:item.sid, pageTitle:item.title}, $event),
                     trackArticle('文章详情页内24小时热文', item.title, '文章详情页内文章没有项目名称', '文章详情页内文章没有项目ID', '24小时热文', item.sid)">
                       <div class="list_item">
                         <div class="item_left" v-if="item.titlePicture">
@@ -208,126 +237,25 @@
           </div>
         </div>
       </div>
-      <!-- <div class="footer">
-        <div class="top">
-          <div class="fish_container">
-            <div class="flexbox clearfix">
-              <ul>
-                <li class="apelink_logo">
-                  Bvaluate
-                  <img src="../assets/follow/bottom_logo.png"/>
-                </li>
-                <li><a href="#">Stats & facts</a></li>
-                <li><a href="#">Media</a></li>
-                <li><a href="#">API</a></li>
-                <li><a href="#">Mobile app (Android)</a></li>
-                <li><a href="#">Chrome Eidget</a></li>
-                <li><a href="#">Firefox Widget</a></li>
-                <li><a href="#">Benchy</a></li>
-              </ul>
-              <ul class="logo_box">
-                <li>Bvaluate</li>
-                <li>
-                  <ul class="network clearfix">
-                    <li>
-                      <a href="#">
-                        <div class="icon1"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon2"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon3"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon4"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon5"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon6"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon7"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon8"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon9"></div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <div class="icon10"></div>
-                      </a>
-                    </li>
-
-                  </ul>
-                </li>
-              </ul>
-              <ul>
-                <li>For ICOs</li>
-                <li><a href="#">Publish new ICO</a></li>
-                <li><a href="#">ICO Analyzre</a></li>
-                <li><a href="#">Premium Listing</a></li>
-                <li><a href="#">Widgets</a></li>
-                <li><a href="#">For al</a></li>
-              </ul>
-              <ul>
-                <li>For ALL</li>
-                <li><a href="#">ICO Listing</a></li>
-                <li><a href="#">People of Blockchsin</a></li>
-                <li><a href="#">ICO Whitelist</a></li>
-                <li><a href="#">Agencies</a></li>
-                <li><a href="#">Exchanges</a></li>
-                <li><a href="#">Experts</a></li>
-                <li><a href="#">ROL calculator</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="bottom">
-          <p>备案号</p>
-          <p>版权信息</p>
-        </div>
-      </div> -->
       <vfooter/>
     </div>
-    <div class="popover fade bottom in" role="tooltip" id="popover91482">
-      <div class="arrow" style="left: 50%;"></div>
-      <div class="popover-content">
-        <ul>
-          <li class="wechat"><i class="fa fa-wechat"></i></li>
-          <li class="weibo"><i class="fa fa-weibo"></i></li>
-          <li class="qq"><i class="fa fa-qq"></i></li>
-          <li class="more">更多分享</li>
-        </ul>
-      </div>
-    </div>
+    <!--<div class="popover fade bottom in" role="tooltip" id="popover91482">-->
+    <!--<div class="arrow" style="left: 50%;"></div>-->
+    <!--<div class="popover-content">-->
+    <!--<ul>-->
+    <!--<li class="wechat"><i class="fa fa-wechat"></i></li>-->
+    <!--<li class="weibo"><i class="fa fa-weibo"></i></li>-->
+    <!--<li class="qq"><i class="fa fa-qq"></i></li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--</div>-->
   </div>
 </template>
 
 <script>
   import sensors from '../../static/sa-init.js'
   import Swiper from 'swiper';
+  import QRCode from 'qrcodejs2'
 
   let img1 = require('../assets/follow/banner01.png');
   let img2 = require('../assets/follow/adv01.png');
@@ -337,6 +265,11 @@
   export default {
     data() {
       return {
+        weiboQrCode: false,
+        qqQrCode: false,
+        wechatQrCode: false,
+        shareButton: false,
+        qrCodeBox: false,
         colorList: ['red', 'yellow', 'gray', 'pink'],
         banner1: img1,
         img2: img2,
@@ -372,16 +305,60 @@
       })
       this.getDetailData();
       this.getHotnewsData();
-
+      let hrefUrl = window.location.href;
+      hrefUrl = hrefUrl.split('?')[0];
+      hrefUrl = `${hrefUrl}?sid=${this.$route.query.sid}`;
+      let qrcode1 = new QRCode(this.$refs.wechat_qrCode, {
+        width: 125,
+        height: 125, // 高度
+        text: hrefUrl
+      });
+      let qrcode2 = new QRCode(this.$refs.qq_qrCode, {
+        width: 125,
+        height: 125, // 高度
+        text: hrefUrl
+      });
+      let qrcode3 = new QRCode(this.$refs.weibo_qrCode, {
+        width: 125,
+        height: 125, // 高度
+        text: hrefUrl
+      });
       var end_time = "";
-      window.onload = function(){
+      window.onload = function () {
         end_time = new Date();
-        sensors.quick('autoTrack',{
+        sensors.quick('autoTrack', {
           load_time: end_time.getTime() - start_time.getTime()
         })
       }
     },
     methods: {
+      weiboQrCodeShow() {
+        if (this.weiboQrCode) {
+          this.weiboQrCode = false;
+        } else {
+          this.weiboQrCode = true;
+          this.qqQrCode = false;
+          this.wechatQrCode = false;
+        }
+      },
+      qqQrCodeShow() {
+        if (this.qqQrCode) {
+          this.qqQrCode = false;
+        } else {
+          this.weiboQrCode = false;
+          this.qqQrCode = true;
+          this.wechatQrCode = false;
+        }
+      },
+      weChatQrCodeShow() {
+        if (this.wechatQrCode) {
+          this.wechatQrCode = false;
+        } else {
+          this.weiboQrCode = false;
+          this.qqQrCode = false;
+          this.wechatQrCode = true;
+        }
+      },
       trackAttention(category, name) {
         sensors.track('Attention', {
           attention_category: category,
@@ -538,8 +515,12 @@
                 //   }
                 // });
                 let checkAuthorurl = ''
-                if (that.articleContent.author) {checkAuthorurl = '/api/individual/check?type=AUTHOR&sidOrName=' + that.articleContent.author;}
-                if (that.articleContent.siteName) {checkAuthorurl = '/api/individual/check?type=AUTHOR&sidOrName=' + that.articleContent.siteName;}
+                if (that.articleContent.author) {
+                  checkAuthorurl = '/api/individual/check?type=AUTHOR&sidOrName=' + that.articleContent.author;
+                }
+                if (that.articleContent.siteName) {
+                  checkAuthorurl = '/api/individual/check?type=AUTHOR&sidOrName=' + that.articleContent.siteName;
+                }
                 that.$axios({
                   method: 'post',
                   url: checkAuthorurl,
@@ -690,8 +671,12 @@
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid')
           let url = ''
-          if (that.articleContent.author) {url = '/api/individual/add?type=AUTHOR&name=' + that.articleContent.author;}
-          if (that.articleContent.siteName) {url = '/api/individual/add?type=AUTHOR&name=' + that.articleContent.siteName;}
+          if (that.articleContent.author) {
+            url = '/api/individual/add?type=AUTHOR&name=' + that.articleContent.author;
+          }
+          if (that.articleContent.siteName) {
+            url = '/api/individual/add?type=AUTHOR&name=' + that.articleContent.siteName;
+          }
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'post',
