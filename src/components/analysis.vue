@@ -19,7 +19,7 @@
                     <h4><span>*</span>项目名称：</h4>
                   </div>
                   <div class="input_right">
-                    <input type="text" v-model="project.projectName" @focus="project.projectNameErr = ''"/>
+                    <input type="text" v-model="project.projectName" @focus="project.projectNameErr = ''" name="analysis_projectName" id="analysis_projectName" />
                     <div class="input_tip">
                       <h4>{{ project.projectNameErr }}</h4>
                     </div>
@@ -30,7 +30,7 @@
                     <h4><span>*</span>官网地址：</h4>
                   </div>
                   <div class="input_right">
-                    <input type="text" v-model="project.officialAddress" @focus="project.officialAddressErr = ''"/>
+                    <input type="text" v-model="project.officialAddress" @focus="project.officialAddressErr = ''" name="analysis_officialAddress" id="analysis_officialAddress"/>
                     <div class="input_tip">
                       <h4>{{ project.officialAddressErr }}</h4>
                     </div>
@@ -41,7 +41,7 @@
                     <h4>通证名称：</h4>
                   </div>
                   <div class="input_right">
-                    <input type="text" v-model="project.tokenName"/>
+                    <input type="text" v-model="project.tokenName" name="analysis_tokenName" id="analysis_tokenName"/>
                   </div>
                 </div>
               </div>
@@ -49,7 +49,7 @@
                 <p class="uploadtips">注：暂只支持pdf格式文件，文件名称格式为项目名称-版本号-语言.pdf<br>(例如300cubits TEU-2.0.00-cn.pdf)</p>
                 <div class="uploadWhitePaper">
                   <div class="filename">
-                    <input type="text" data="点击了只读状态的输入框" readonly="readonly" v-model="filename">
+                    <input type="text" data="点击了只读状态的输入框" name="analysis_filename" id="analysis_filename" readonly="readonly" v-model="filename">
                     <span class="help-block" v-if="fileTips">
                 <img src="../assets/login/iclose.png">
                 {{fileTips}}
@@ -57,11 +57,11 @@
                   </div>
                   <div class="rightBtn">
                     <div class="chooseFile">
-                      <input type="file" data="选择文件" @change="selectPDF($event)">
+                      <input type="file" data="选择文件" name="analysis_chooseFile" id="analysis_chooseFile" @change="selectPDF($event)">
                       <button data="选择文件">选择文件</button>
                     </div>
-                    <button class="uploadBtn" data="上传白皮书" :class="{ disabled: uploadBtn }" :disabled="uploadBtn"
-                            @click="uploadPDF">上传
+                    <button class="uploadBtn" data="上传白皮书" name="analysis_uploadBtn" id="analysis_uploadBtn" :class="{ disabled: uploadBtn }" :disabled="uploadBtn" @click="uploadPDF">
+                      上传
                     </button>
                   </div>
                 </div>

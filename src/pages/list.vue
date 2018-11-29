@@ -29,13 +29,13 @@
               <div class="topproduct">
                 <div class="pcol" v-for="(item, index) in topbangdan.topProject" :key="index">
                   <div class="prod">
-                    <div class="picon" :data="item.project" :name="'list_prod_logo_'+index" :id="'list_prod_logo_'+index"
-                    @click="goArticle('/project',{sid: item.sid, pageTitle:item.project}, $event),
+                    <div class="picon" :data="item.project" :name="'list_prod_logo_'+index" :id="'list_prod_logo_'+index" :value="item.project"
+                    @click="goArticle('/project',{sid: item.sid}, $event),
                             trackUtmproject('榜单页', item.project, item.sid, parseInt(index+1))">
                       <img src="../assets/media.jpg" :src="item.logoSrc">
                     </div>
                     <span class="pname" :data="item.project" :name="'list_prod_spanTitle_'+index" :id="'list_prod_spanTitle_'+index"
-                          @click="goArticle('/project',{sid: item.sid, pageTitle:item.project}, $event), trackProject('榜单页广告位', item.project, item.sid, '广告位没有排行榜位置', '接口没有项目总分')">{{item.project}}</span>
+                          @click="goArticle('/project',{sid: item.sid}, $event), trackProject('榜单页广告位', item.project, item.sid, '广告位没有排行榜位置', '接口没有项目总分')">{{item.project}}</span>
                   </div>
                 </div>
               </div>
@@ -43,9 +43,9 @@
                 <div class="listBox_top">
                   <h4 class="list_title">全球项目榜单</h4>
                   <div class="tabBtn">
-                    <button class="btnStyle" data="查看周榜" :class="type==='周榜'?'active':''" @click="changeList('周榜')">周榜
+                    <button class="btnStyle" data="查看周榜" name="zhoubang" id="zhoubang" :class="type==='周榜'?'active':''" @click="changeList('周榜')">周榜
                     </button>
-                    <button class="btnStyle" data="查看月榜" :class="type==='月榜'?'active':''" @click="changeList('月榜')">月榜
+                    <button class="btnStyle" data="查看月榜" name="yuebang" id="yuebang" :class="type==='月榜'?'active':''" @click="changeList('月榜')">月榜
                     </button>
                   </div>
                 </div>
@@ -125,7 +125,7 @@
                         <td v-else-if="index === 2" class="tr_third"><span>{{index + 1 }}</span></td>
                         <td v-else><span>{{index + 1 }}</span></td>
                         <td class="tr_first cursor_style" :data="item.project" :name="'list_tr_default_td_'+index" :id="'list_tr_default_td_'+index"
-                            @click.stop="goArticle('/project',{sid: item.sid, pageTitle:item.project}, $event), trackProject('排行榜', item.project, item.sid, parseInt(index+1), item.rankingTotalScore)">
+                            @click.stop="goArticle('/project',{sid: item.sid}, $event), trackProject('排行榜', item.project, item.sid, parseInt(index+1), item.rankingTotalScore)">
                           <h4 :title="item.project">{{item.project}}</h4>
                         </td>
                         <td>{{item.rankingTotalScore }}</td>
@@ -145,7 +145,7 @@
                     </table>
                   </div>
                   <div class="moreBox" v-if="!(showloading === -1)">
-                    <button :disabled="showloading" class="relaodMore" @click="reMore()" data="加载更多">
+                    <button :disabled="showloading" class="relaodMore" @click="reMore()" name="moreBox" id="moreBox" value="加载更多" data="加载更多">
                       <img v-if="showloading" :src="loading"/>
                       <span v-if="!showloading">加载更多</span>
                     </button>

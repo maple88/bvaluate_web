@@ -8,7 +8,7 @@
             <div class="span6">
               <ul class="breadcrumb">
                 <li>
-                  <router-link to="/index" data="首页">首页</router-link>
+                  <router-link to="/index" data="首页" name="breadcrumb_home" id="breadcrumb_home">首页</router-link>
                   <span class="divider"></span>
                 </li>
                 <li>
@@ -49,13 +49,13 @@
                     <span class="user_name"
                           name="article_user_name_author" id="article_user_name_author"
                           v-if="!(articleContent.siteName !== 'NULL' && articleContent.siteName !== null && articleContent.siteName !== '')"
-                          @click="goArticle('/author',{author: articleContent.author,type: 'author', pageTitle:articleContent.author}, $event)"
+                          @click="goArticle('/author',{author: articleContent.author,type: 'author'}, $event)"
                           :data="articleContent.author">
                       {{articleContent.author}}
                     </span>
                     <span class="user_name" v-else
                           name="article_user_name_siteName" id="article_user_name_siteName"
-                          @click="goArticle('/author',{author: articleContent.siteName,type: 'siteName', pageTitle:articleContent.siteName}, $event)"
+                          @click="goArticle('/author',{author: articleContent.siteName,type: 'siteName'}, $event)"
                           :data="articleContent.siteName">
                       {{articleContent.siteName}}
                     </span>
@@ -64,7 +64,7 @@
                     <!-- <span class="publish_time">13:20</span> -->
                   </div>
                   <div class="article_right">
-                    <a href="javascript:;" class="look" data="查看全文" @click="showArticle = !showArticle">查看原文</a>
+                    <a href="javascript:;" class="look" name="article_right_more" id="article_right_more" data="查看全文" @click="showArticle = !showArticle">查看原文</a>
                     <span class="look_count"><i class="fa fa-eye"></i>0人</span>
                     <!--<span class="share" @click.stop="showAllShare($event)"><i class="fa fa-share-alt"></i></span>-->
                     <div class="followbtn on share_button" @click.stop="shareButton = !shareButton">
@@ -150,13 +150,13 @@
                     <h4 class="user_name"
                         name="article_user_name2_author" id="article_user_name2_author"
                         v-if="!(articleContent.siteName !== 'NULL' && articleContent.siteName !== null && articleContent.siteName !== '')"
-                        @click="goArticle('/author',{author: articleContent.author,type: 'author', pageTitle:articleContent.author}, $event)"
+                        @click="goArticle('/author',{author: articleContent.author,type: 'author'}, $event)"
                         :data="articleContent.author">
                       {{articleContent.author}}
                     </h4>
                     <h4 class="user_name" v-else
                         name="article_user_name2_siteName" id="article_user_name2_siteName"
-                        @click="goArticle('/author',{author: articleContent.siteName,type: 'siteName', pageTitle:articleContent.siteName}, $event)"
+                        @click="goArticle('/author',{author: articleContent.siteName,type: 'siteName'}, $event)"
                         :data="articleContent.siteName">
                       {{articleContent.siteName}}
                     </h4>
@@ -180,7 +180,7 @@
                   <ul class="news_ul">
                     <li class="news_li" v-for="(news, index) in newsForAuthor" :key="index">
                       <p :data="news.title" :name="'article_news_li_title_'+index" :id="'article_news_li_title_'+index"
-                         @click="goArticle('/article',{sid:news.sid, pageTitle:news.title}, $event),
+                         @click="goArticle('/article',{sid:news.sid}, $event),
                       trackArticle('文章详情页内作者文章推荐', news.title, '文章详情页内文章没有项目名称', '文章详情页内文章没有项目ID', '作者文章推荐', news.sid)">
                         {{news.title}}
                       </p>
@@ -215,7 +215,7 @@
                   <ul class="long_ul">
                     <li v-for="(item, index) in hotNews" :key="item.sid" :data="item.title"
                         :name="'article_long_ul_li_'+index" :id="'article_long_ul_li_'+index"
-                        @click="goArticle('/article',{sid:item.sid, pageTitle:item.title}, $event),
+                        @click="goArticle('/article',{sid:item.sid}, $event),
                     trackArticle('文章详情页内24小时热文', item.title, '文章详情页内文章没有项目名称', '文章详情页内文章没有项目ID', '24小时热文', item.sid)">
                       <div class="list_item">
                         <div class="item_left" v-if="item.titlePicture">
@@ -383,7 +383,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/project', query: {project: obj, pageTitle: obj}});
+        let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
@@ -394,7 +394,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj, pageTitle: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj, pageTitle: '行业文章列表'}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
@@ -405,7 +405,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj, pageTitle: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj, pageTitle: '国家文章列表'}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
@@ -416,7 +416,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/project', query: {project: obj, pageTitle: obj}});
+        let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href);
       },
@@ -427,7 +427,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj, pageTitle: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj, pageTitle: '行业文章列表'}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href);
       },
@@ -438,7 +438,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj, pageTitle: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj, pageTitle: '国家文章列表'}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href);
       },
