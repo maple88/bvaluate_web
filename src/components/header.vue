@@ -50,7 +50,7 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li>
-                    <a href="javascript:;" data="消息">消息</a>
+                    <a href="javascript:;" data="消息" @click="$store.state.messagePop = true">消息</a>
                   </li>
                   <router-link tag="li" to="/my" data="设置"><a>设置</a></router-link>
                   <!-- <li><a href="#">设置</a></li> -->
@@ -119,19 +119,22 @@
     </div>
     <v-login></v-login>
     <v-analysis></v-analysis>
+    <v-message></v-message>
   </div>
 </template>
 
 <script>
   import sensors from '../../static/sa-init.js'
   import login from '@/components/login';
+  import message from '@/components/message';
   import analysis from '@/components/analysis';
 
   let default_header = require('../assets/user/default-header.png');
   export default {
     components: {
       'v-login': login,
-      'v-analysis': analysis
+      'v-analysis': analysis,
+      'v-message': message
     },
     props: {
       parantProfileUrl: String

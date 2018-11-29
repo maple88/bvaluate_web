@@ -9,12 +9,13 @@ import industry from '@/pages/industry'
 import recommend from '@/pages/recommend'
 import article from '@/pages/article'
 import project from '@/pages/project'
+import projectTest from '@/pages/projectTest'
 import author from '@/pages/author'
 import list from '@/pages/list'
 import search from '@/pages/search'
 import newsList from '@/pages/newsList'
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   linkExactActiveClass: 'active',
@@ -81,6 +82,10 @@ export default new Router({
     {
       path: '/project',
       component: project
+    },
+    {
+      path: '/projectTest',
+      component: projectTest
     },
     {
       path: '/author',
