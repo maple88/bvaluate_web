@@ -96,50 +96,56 @@
       readMessage(notifyId, index) {
         let uid = localStorage.getItem('apelink_user_uid');
         let token = localStorage.getItem('apelink_user_token');
-        let headers = {'uid': uid, 'Authorization': token};
-        let url = `/api/notify/readUserNotify?notifyId=${notifyId}`;
-        this.$axios({
-          method: 'put',
-          url: url,
-          headers: headers
-        }).then(res => {
-          if (res.data) {
-            this.messageList[index].readFlag = true;
-          }
-        });
+        if (token) {
+          let headers = {'uid': uid, 'Authorization': token};
+          let url = `/api/notify/readUserNotify?notifyId=${notifyId}`;
+          this.$axios({
+            method: 'put',
+            url: url,
+            headers: headers
+          }).then(res => {
+            if (res.data) {
+              this.messageList[index].readFlag = true;
+            }
+          });
+        }
       },
       initMessage() {
         let uid = localStorage.getItem('apelink_user_uid');
         let token = localStorage.getItem('apelink_user_token');
-        let headers = {'uid': uid, 'Authorization': token};
-        let url = '/api/notify/getUserNotify';
-        this.$axios({
-          method: 'get',
-          url: url,
-          headers: headers
-        }).then(res => {
-          this.messageList = res.data;
-          this.allList = res.data;
-        });
-      },
-      showList() {
-        if (this.showBox === 0) {
-          let uid = localStorage.getItem('apelink_user_uid');
-          let token = localStorage.getItem('apelink_user_token');
+        if (token) {
           let headers = {'uid': uid, 'Authorization': token};
-          let url = '/api/notify/getUserNotify?readFlag=unread';
+          let url = '/api/notify/getUserNotify';
           this.$axios({
             method: 'get',
             url: url,
             headers: headers
           }).then(res => {
-            this.unReadList = res.data;
-            this.messageList = this.unReadList;
-            this.showBox = 1;
-          }).catch(res => {
-            this.messageList = []
-            this.showBox = 1;
+            this.messageList = res.data;
+            this.allList = res.data;
           });
+        }
+      },
+      showList() {
+        if (this.showBox === 0) {
+          let uid = localStorage.getItem('apelink_user_uid');
+          let token = localStorage.getItem('apelink_user_token');
+          if (token) {
+            let headers = {'uid': uid, 'Authorization': token};
+            let url = '/api/notify/getUserNotify?readFlag=unread';
+            this.$axios({
+              method: 'get',
+              url: url,
+              headers: headers
+            }).then(res => {
+              this.unReadList = res.data;
+              this.messageList = this.unReadList;
+              this.showBox = 1;
+            }).catch(res => {
+              this.messageList = []
+              this.showBox = 1;
+            });
+          }
         } else {
           this.showBox = 0;
           this.messageList = this.allList;

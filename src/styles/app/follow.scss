@@ -594,10 +594,10 @@
     }
   }
 
-  .follow-industry-recommend{
+  .follow-industry-recommend {
     margin: 0 0 30px;
-    ul{
-      li{
+    ul {
+      li {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -605,13 +605,13 @@
         font-weight: 500;
         padding: 15px 50px 15px 10px;
         color: #333;
-        p{
+        p {
           cursor: pointer;
           margin: 0;
         }
-        i{
+        i {
           font-size: 25px;
-          color: rgba(255,0,0,.67);
+          color: rgba(255, 0, 0, .67);
           cursor: pointer;
         }
       }
@@ -1428,9 +1428,9 @@
           margin-top: 0px;
           height: auto;
         }
-        #right_swiper{
-          .swiper-slide{
-            img{
+        #right_swiper {
+          .swiper-slide {
+            img {
               width: 100%;
             }
           }
@@ -1663,24 +1663,24 @@
     font-weight: normal;
     font-style: normal;
   }
-  .topbangdan{
+  .topbangdan {
     display: flex;
     flex-direction: row;
-    .trow{
+    .trow {
       flex: 0 0 33.33%;
       min-width: 33.33%;
       display: flex;
       justify-content: center;
     }
-    .item{
+    .item {
       // margin: 0 0 0 50px;
-      .itit{
+      .itit {
         font-size: 20px;
         color: #ccc;
         font-family: "微软雅黑";
         margin: 0 0 15px;
       }
-      .inum{
+      .inum {
         font-size: 36px;
         color: #333;
         font-family: 'Titillium';
@@ -1691,93 +1691,93 @@
       }
     }
     @media (max-width: 1400px) {
-      .item .itit{
+      .item .itit {
         font-size: 18px;
         margin: 0 0 10px;
       }
-      .item .inum{
+      .item .inum {
         font-size: 30px;
         margin: 0 0 15px;
       }
-      .item .prod .pname{
+      .item .prod .pname {
         font-size: 18px;
       }
     }
     @media (max-width: 1200px) {
-      .trow{
+      .trow {
         display: flex;
         justify-content: center;
       }
-      .item{
+      .item {
         margin: 0;
       }
-      .item .itit{
+      .item .itit {
         text-align: center;
       }
-      .item .inum{
+      .item .inum {
         text-align: center;
       }
     }
     @media (max-width: 992px) {
-      .item .itit{
+      .item .itit {
         font-size: 16px;
         text-align: center;
       }
-      .item .inum{
+      .item .inum {
         text-align: center;
         font-size: 25px;
         margin: 0 0 20px;
       }
-      .item .prod{
+      .item .prod {
         flex-direction: column;
       }
-      .item .prod .picon{
+      .item .prod .picon {
         margin: 0 0 10px;
       }
-      .item{
+      .item {
         overflow: hidden;
       }
-      .item .prod .pname{
+      .item .prod .pname {
         max-width: inherit;
         width: 100%;
         text-align: center;
       }
     }
     @media (max-width: 768px) {
-      .item .itit{
+      .item .itit {
         font-size: 14px;
         margin: 0 0 5px;
       }
-      .item .inum{
+      .item .inum {
         font-size: 20px;
         margin: 0 0 15px;
       }
-      .item .prod .picon{
+      .item .prod .picon {
         width: 80px;
         height: 80px;
         border-radius: 50%;
         border: 3px solid #c1b6d2;
       }
-      .item .prod .pname{
+      .item .prod .pname {
         font-size: 14px;
       }
     }
   }
-  .topproduct{
+  .topproduct {
     display: flex;
     margin: 0 0 40px;
-    .pcol{
+    .pcol {
       flex: 0 0 33.33%;
       min-width: 33.33%;
       display: flex;
       justify-content: center;
     }
-    .prod{
+    .prod {
       display: flex;
       align-items: center;
       // margin: 0 0 0 50px;
       flex-direction: column;
-      .picon{
+      .picon {
         width: 80px;
         height: 80px;
         border-radius: 50%;
@@ -1785,13 +1785,13 @@
         overflow: hidden;
         margin: 0 0 10px 0;
         cursor: pointer;
-        img{
+        img {
           width: 100%;
           height: 100%;
           object-fit: cover;
         }
       }
-      .pname{
+      .pname {
         color: #333;
         font-size: 24px;
         font-family: "微软雅黑";
@@ -1803,30 +1803,30 @@
       }
     }
     @media (max-width: 1400px) {
-      .prod .pname{
+      .prod .pname {
         font-size: 18px;
       }
     }
     @media (max-width: 1200px) {
-      .pcol{
+      .pcol {
         justify-content: center;
       }
-      .prod{
+      .prod {
         flex-direction: column;
         overflow: hidden;
         margin: 0;
       }
-      .prod .picon{
+      .prod .picon {
         margin: 0 0 10px;
       }
-      .prod .pname{
+      .prod .pname {
         max-width: inherit;
         width: 95%;
         text-align: center;
       }
     }
     @media (max-width: 768px) {
-      .prod .pname{
+      .prod .pname {
         font-size: 14px;
       }
     }
@@ -1903,6 +1903,91 @@
               text-align: right;
               color: #999999;
               font-size: 16px;
+              .followbtn {
+                font-size: 16px;
+                padding: 2px 20px 5px;
+                border-radius: 15px;
+                color: #14d214;
+                display: inline-block;
+                vertical-align: middle;
+                cursor: pointer;
+                &.on {
+                  background: transparent;
+                }
+                &.share_button {
+                  position: relative;
+                  .share_box {
+                    position: absolute;
+                    top: calc(100% + 7px);
+                    left: calc(-50% + -13px);
+                    display: flex;
+                    background-color: #FFFFFF;
+                    border-radius: 100px;
+                    border: 1px solid #cccccc;
+                    width: 140px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    .arrow {
+                      top: auto;
+                      left: 50%;
+                      bottom: 100%;
+                      margin-left: -11px;
+                      border-width: 11px;
+                      border-color: transparent;
+                      border-bottom-color: rgba(0, 0, 0, .25);
+                      position: absolute;
+                      display: block;
+                      width: 0;
+                      height: 0;
+                      border-style: solid;
+                      &:after {
+                        top: auto;
+                        bottom: calc(100% - 11px);
+                        margin-left: -10px;
+                        content: " ";
+                        border-width: 10px;
+                        border-color: transparent;
+                        border-bottom-color: #fff;
+                        position: absolute;
+                        display: block;
+                        width: 0;
+                        height: 0;;
+                        border-style: solid;
+                      }
+                    }
+                    //&:after {
+                    //  content: "";
+                    //  left: calc(50% - 10px);
+                    //  bottom: 100%;
+                    //  position: absolute;
+                    //  border-width: 10px;
+                    //  border-style: solid;
+                    //  border-color: transparent transparent #fff transparent;
+                    //}
+                    .share_item {
+                      padding: 5px 6.5px;
+                      border-radius: 50%;
+                      .qrCode_box {
+                        position: absolute;
+                        width: 100%;
+                        left: 0;
+                        top: 100%;
+                        background-color: #FFFFFF;
+                        border-radius: 10px;
+                        padding: 10px;
+                        border: 1px solid #cccccc;
+                        img {
+                          width: 100%;
+                        }
+                      }
+                      > img {
+                        width: 33px;
+                      }
+                    }
+                  }
+                }
+              }
               span {
                 display: inline-block;
               }
@@ -2136,7 +2221,7 @@
                 background-repeat: no-repeat;
                 background-position: center;
                 background-size: cover;
-                img{
+                img {
                   width: 100%;
                 }
               }
@@ -2337,65 +2422,67 @@
   .follow_content.serach_content .clearfix .center {
     width: 100%;
   }
-  .follow_content{
+  .follow_content {
     margin: 15px 0 0;
   }
-  .follow_page .follow_content .fish_container .clearfix .left{
+  .follow_page .follow_content .fish_container .clearfix .left {
     float: none;
     width: 100%;
-    .menu_bar{
+    .menu_bar {
       display: flex;
-      >li{
+      > li {
         flex: 1;
         font-size: 14px;
-        &:last-child{flex: 1.5;}
+        &:last-child {
+          flex: 1.5;
+        }
       }
     }
   }
-  .follow_page .follow_content .fish_container .clearfix .center{
+  .follow_page .follow_content .fish_container .clearfix .center {
     width: 100%;
     float: none;
   }
-  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box .project_info>.left{
+  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box .project_info > .left {
     flex: 0 0 70px;
     min-width: 70px;
   }
-  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box .project_info>.left .logo_box{
+  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box .project_info > .left .logo_box {
     width: 70px;
     height: 70px;
   }
-  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box .project_info>.right .base_info>.left h4{
+  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box .project_info > .right .base_info > .left h4 {
     margin: 0;
     font-size: 16px;
   }
-  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box .project_info>.right .base_info>.right{
-    p{
+  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box .project_info > .right .base_info > .right {
+    p {
       margin: 0;
     }
-    h4{
+    h4 {
       font-size: 18px;
       margin: 0;
     }
   }
-  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box .project_info>.right .base_info>.left p{
+  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box .project_info > .right .base_info > .left p {
     font-size: 14px;
     margin: 0;
   }
-  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box .project_info>.right .base_info,
-  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box .project_info>.right .detail_info{
+  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box .project_info > .right .base_info,
+  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box .project_info > .right .detail_info {
     padding: 0 0 0 10px;
   }
-  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box{
+  .follow_page .follow_content .fish_container .clearfix .center .serach_follow_list .project_list_box {
     margin: 0 0 10px;
   }
-  .follow_page .follow-industry-recommend ul li{
+  .follow_page .follow-industry-recommend ul li {
     font-size: 16px;
     padding: 10px 15px;
   }
-  .follow_page .follow-industry-recommend ul li i{
+  .follow_page .follow-industry-recommend ul li i {
     font-size: 20px;
   }
-  .follow_page .follow_content .fish_container .clearfix .center .tab_item .item_list_bottom .item_list_title h4{
+  .follow_page .follow_content .fish_container .clearfix .center .tab_item .item_list_bottom .item_list_title h4 {
     font-size: 18px;
   }
 }
