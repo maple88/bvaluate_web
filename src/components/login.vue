@@ -21,7 +21,8 @@
             <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon1.png"></div>
               <input type="text" class="form-control" v-model="loginUser.phoneNumber" placeholder="手机号" data="输入手机号"
-                     @focus="errorMsg.loginUser.phoneNumber = ''">
+                     @focus="errorMsg.loginUser.phoneNumber = ''"
+                     name="login_phoneNumber" id="login_phoneNumber">
               <span class="help-block" v-if="errorMsg.loginUser.phoneNumber">
 										<img src="../assets/login/iclose.png">
 										{{errorMsg.loginUser.phoneNumber}}
@@ -30,14 +31,15 @@
             <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2.png"></div>
               <input type="password" class="form-control" v-model="loginUser.password" placeholder="密码" data="输入密码"
-                     @focus="errorMsg.loginUser.password = ''" @keyup.enter="loginSubmit">
+                     @focus="errorMsg.loginUser.password = ''" @keyup.enter="loginSubmit"
+                     name="login_password" id="login_password">
               <span class="help-block" v-if="errorMsg.loginUser.password">
 										<img src="../assets/login/iclose.png">
 										{{errorMsg.loginUser.password}}
 									</span>
             </div>
             <div class="input-group submit-group">
-              <button type="button" class="btn ok-btn" data="登录" @click="loginSubmit">登录</button>
+              <button type="button" class="btn ok-btn" data="登录" name="login_ok" id="login_ok" @click="loginSubmit">登录</button>
             </div>
             <div class="other-group">
               <label class="remember">
@@ -68,6 +70,7 @@
                      @focus="errorMsg.registerUser.nickName = ''"
                      @blur="checkNickName()"
                      data="输入昵称"
+                     name="login_nickName" id="login_nickName"
               >
               <span class="help-block" v-if="errorMsg.registerUser.nickName">
 										<img src="../assets/login/iclose.png">
@@ -80,6 +83,7 @@
                      @focus="errorMsg.registerUser.phoneNumber = ''"
                      @blur="checkPhoneNumber()"
                      data="输入手机号"
+                     name="login_phoneNumber2" id="login_phoneNumber2"
               >
               <span class="help-block" v-if="errorMsg.registerUser.phoneNumber">
 										<img src="../assets/login/iclose.png">
@@ -92,6 +96,7 @@
                      @focus="errorMsg.registerUser.password = ''"
                      @blur="checkPassword(true)"
                      data="输入密码"
+                     name="login_password2" id="login_password2"
               >
               <span class="help-block" v-if="errorMsg.registerUser.password">
 										<img src="../assets/login/iclose.png">
@@ -104,6 +109,7 @@
                      @focus="errorMsg.registerUser.confirmpsd = ''"
                      @blur="checkPassword(false)"
                      data="输入确认的密码"
+                     name="login_confirmpsd" id="login_confirmpsd"
               >
               <span class="help-block" v-if="errorMsg.registerUser.confirmpsd">
 										<img src="../assets/login/iclose.png">
@@ -112,18 +118,19 @@
             </div>
             <div class="input-group code">
               <input type="text" v-model="registerUser.code" placeholder="输入验证码" data="输入验证码"
-                     @focus="errorMsg.registerUser.code = ''">
+                     @focus="errorMsg.registerUser.code = ''"
+                     name="login_code" id="login_code">
               <span class="help-block" v-if="errorMsg.registerUser.code">
 										<img src="../assets/login/iclose.png">
 										{{errorMsg.registerUser.code}}
 									</span>
-              <button class="code-btn" :disabled="registerSendBtn" data="获取验证码" @click.stop="sendCode">
+              <button class="code-btn" :disabled="registerSendBtn" name="login_code-btn" id="login_code-btn" data="获取验证码" @click.stop="sendCode">
                 <img :src="loading" v-show="registerShowloading"/>
                 {{registerSendBtnText}}
               </button>
             </div>
             <div class="input-group submit-group">
-              <button type="button" class="btn ok-btn" data="注册" @click.stop="registerSubmit()">注册</button>
+              <button type="button" class="btn ok-btn" data="注册" name="login_register" id="login_register" @click.stop="registerSubmit()">注册</button>
             </div>
             <p class="register-tips">点击“注册”即表示您同意并愿意接收<br>BVALUATE<span>用户此协议</span>和<span>隐私政策</span></p>
           </div>
@@ -134,6 +141,7 @@
                      @focus="errorMsg.resetpwdUser.phoneNumber = ''"
                      @blur="checkResetPhoneNumber"
                      data="输入手机号"
+                     name="login_phoneNumber3" id="login_phoneNumber3"
               >
               <span class="help-block" v-if="errorMsg.resetpwdUser.phoneNumber">
 										<img src="../assets/login/iclose.png">
@@ -146,6 +154,7 @@
                      @focus="errorMsg.resetpwdUser.password = ''"
                      @blur="checkResetPassword(true)"
                      data="输入重置的密码"
+                     name="login_password3" id="login_password3"
               >
               <span class="help-block" v-if="errorMsg.resetpwdUser.password">
 										<img src="../assets/login/iclose.png">
@@ -158,6 +167,7 @@
                      @focus="errorMsg.resetpwdUser.confirmpsd = ''"
                      @blur="checkResetPassword(false)"
                      data="输入确认的密码"
+                     name="login_confirmpsd2" id="login_confirmpsd2"
               >
               <span class="help-block" v-if="errorMsg.resetpwdUser.confirmpsd">
 										<img src="../assets/login/iclose.png">
@@ -168,18 +178,19 @@
               <input type="text" placeholder="输入验证码" v-model="resetpwdUser.code"
                      @focus="errorMsg.resetpwdUser.code = ''"
                      data="输入验证码"
+                     name="login_code2" id="login_code2"
               >
               <span class="help-block" v-if="errorMsg.resetpwdUser.code">
 										<img src="../assets/login/iclose.png">
 										{{errorMsg.resetpwdUser.code}}
 									</span>
-              <button class="code-btn" :disabled="resetPwdSendBtn" @click.stop="sendresetPwdCode" data="获取验证码">
+              <button class="code-btn" :disabled="resetPwdSendBtn" name="login_code-btn2" id="login_code-btn2" @click.stop="sendresetPwdCode" data="获取验证码">
                 <img :src="loading" v-show="resetPwdShowloading"/>
                 {{resetPwdSendBtnText}}
               </button>
             </div>
             <div class="input-group submit-group">
-              <button type="button" class="btn ok-btn" data="重置密码" @click="resetpwdSubmit">重置密码</button>
+              <button type="button" class="btn ok-btn" name="login_ok2" id="login_ok2" data="重置密码" @click="resetpwdSubmit">重置密码</button>
             </div>
           </div>
         </div>
@@ -269,7 +280,7 @@
     computed: {
       loginPop() {
         let isRegister = this.$store.state.registerPop;
-        console.log(isRegister);
+        // console.log(isRegister);
         if (isRegister) {
           this.register();
         }
