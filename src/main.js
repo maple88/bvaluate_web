@@ -33,6 +33,7 @@ const store = new Vuex.Store({
     loginPop: false,
     analysisPop: false,
     registerPop: false,
+    messagePop: false,
   },
   mutations: {
     register(state) {
