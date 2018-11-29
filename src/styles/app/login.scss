@@ -1510,3 +1510,197 @@
     }
   }
 }
+
+.login_fixed.message_page {
+  .loginbox {
+    padding: 0 15px 15px;
+    .close_box {
+      top: 9px;
+      .icon_close {
+        background-image: url("../assets/login/close_black.png");
+        background-color: white;
+        border-color: white;
+        box-shadow: 0 0 15px -3px #5c62c4;
+        width: 35px;
+        height: 35px;
+      }
+    }
+    .bd {
+      .message_title {
+        border-bottom: 1px solid #cccccc;
+        h4 {
+          font-weight: bold;
+          padding: 5px 0;
+          font-size: 20px;
+        }
+      }
+      .message_content {
+        .message_tab {
+          display: flex;
+          justify-content: flex-end;
+          .tab_item {
+            &.active {
+              h4 {
+                color: $mainColor;
+                font-weight: bold;
+              }
+            }
+            h4 {
+              cursor: pointer;
+              padding: 0 5px;
+              transition: all .3s;
+              &:hover {
+                color: $mainColor;
+              }
+            }
+          }
+        }
+        .message_tab_content {
+          padding-bottom: 15px;
+          height: 386px;
+          overflow: auto;
+          &::-webkit-scrollbar { /*滚动条整体样式*/
+            width: 10px; /*高宽分别对应横竖滚动条的尺寸*/
+            height: 1px;
+          }
+          &::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+            background: $mainColor;
+          }
+          &::-webkit-scrollbar-track { /*滚动条里面轨道*/
+            -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            background: #EDEDED;
+          }
+          .message_item {
+            padding: 15px;
+            border-bottom: 1px solid #cccccc;
+            &:last-child {
+              border-bottom: none;
+            }
+            .message_top {
+              display: flex;
+              align-items: center;
+              margin-bottom: 5px;
+              .message_left {
+                flex: 0 0 50px;
+                padding: 0 12px 0 0;
+                img {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: contain;
+                }
+              }
+              .message_center {
+                flex: 0 0 calc(100% - 100px);
+                overflow: hidden;
+                h4 {
+                  margin: 0;
+                  font-weight: bold;
+                  font-size: 16px;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                }
+                p {
+                  margin: 0;
+                  margin-top: 3px;
+                  color: #666666;
+                  font-size: 12px;
+                }
+              }
+              .message_right {
+                flex: 0 0 50px;
+                .copy_a {
+                  text-align: right;
+                  color: $mainColor;
+                  cursor: pointer;
+                  transition: color .3s;
+                  &:hover {
+                    color: #2858A0;
+                  }
+                }
+              }
+            }
+            .message_bottom {
+              position: relative;
+              padding-right: 45px;
+              &.open {
+                p {
+                  overflow: inherit;
+                  text-overflow: inherit;
+                  white-space: normal;
+                  height: auto;
+                }
+                .copy_a {
+                  .icon_down {
+                    transform: rotate(180deg);
+                  }
+                }
+              }
+              p {
+                overflow: hidden;
+                color: #666666;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                margin-bottom: 0;
+                height: 20px;
+                transition: all .3s;
+              }
+              .copy_a {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                text-align: center;
+                color: $mainColor;
+                cursor: pointer;
+                transition: color .3s;
+                &:hover {
+                  color: #2858A0;
+                }
+                .icon_down {
+                  width: 13px;
+                  height: 10px;
+                  display: inline-block;
+                  background-image: url("../assets/message/down.png");
+                  background-size: 100%;
+                  background-repeat: no-repeat;
+                  background-position: center;
+                  margin-left: 5px;
+                  transition: all .3s;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 500px) {
+    .loginbox .close_box {
+      top: 6px;
+    }
+    .loginbox .bd .message_content .message_tab .tab_item h4 {
+      font-size: 16px;
+    }
+    .loginbox .bd .message_title h4 {
+      font-size: 16px;
+    }
+    .loginbox .bd .message_content .message_tab_content .message_item .message_top {
+      .message_left {
+        flex: 0 0 40px;
+      }
+      .message_center {
+        flex: 0 0 calc(100% - 70px);
+        h4 {
+          font-size: 15px;
+        }
+      }
+      .message_right {
+        flex: 0 0 30px;
+        font-size: 12px;
+      }
+    }
+  }
+}
