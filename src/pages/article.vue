@@ -15,16 +15,19 @@
                   <router-link to="#">
                     <span v-if="articleContent.projectCategory !== 'NULL'" class="label_item"
                           @click="goProjectByName2(articleContent.projectCategory, $event)" 
+                          name="article_label_item_projectCategory" id="article_label_item_projectCategory" 
                           :data="articleContent.projectCategory">
                       {{articleContent.projectCategory | showLable}}
                     </span>
                     <span v-else-if="articleContent.countryCategory !== 'NULL'" class="label_item"
                           @click="goIndustryByCountry2(articleContent.countryCategory, $event)" 
+                          name="article_label_item_countryCategory" id="article_label_item_countryCategory" 
                           :data="articleContent.countryCategory">
                       {{articleContent.countryCategory | showLable}}
                     </span>
                     <span v-else="articleContent.industryCategory !== 'NULL'" class="label_item"
                           @click="goIndustryByIndustry2(articleContent.industryCategory, $event)" 
+                          name="article_label_item_industryCategory" id="article_label_item_industryCategory" 
                           :data="articleContent.industryCategory">
                       {{articleContent.industryCategory | showLable}}
                     </span>
@@ -44,17 +47,19 @@
                 <div class="article_tool">
                   <div class="article_left">
                     <span class="user_name"
+                          name="article_user_name_author" id="article_user_name_author"
                           v-if="!(articleContent.siteName !== 'NULL' && articleContent.siteName !== null && articleContent.siteName !== '')"
-                          @click="goArticle('/author',{author: articleContent.author,type: 'author'}, $event)" 
+                          @click="goArticle('/author',{author: articleContent.author,type: 'author', pageTitle:articleContent.author}, $event)" 
                           :data="articleContent.author">
                       {{articleContent.author}}
                     </span>
                     <span class="user_name" v-else
-                          @click="goArticle('/author',{author: articleContent.siteName,type: 'siteName'}, $event)"
+                          name="article_user_name_siteName" id="article_user_name_siteName"
+                          @click="goArticle('/author',{author: articleContent.siteName,type: 'siteName', pageTitle:articleContent.siteName}, $event)"
                           :data="articleContent.siteName">
                       {{articleContent.siteName}}
                     </span>
-                    <a :href="articleContent.urlName" class="publish_data" :data="articleContent.urlTime">{{articleContent.urlTime}}</a>
+                    <a :href="articleContent.urlName" name="article_publish_data_urlTime" id="article_publish_data_urlTime" class="publish_data" :data="articleContent.urlTime">{{articleContent.urlTime}}</a>
                     <!-- <span class="publish_time">13:20</span> -->
                   </div>
                   <div class="article_right">
@@ -70,16 +75,19 @@
                 </div>
                 <div class="label_box">
                   <div v-if="articleContent.countryCategory !== 'NULL'" class="label_item"
+                       name="article_label_box_countryCategory" id="article_label_box_countryCategory" 
                        @click="goIndustryByCountry(articleContent.countryCategory, $event)"
                        :data="articleContent.countryCategory">
                     {{articleContent.countryCategory | showLable}}
                   </div>
                   <div v-if="articleContent.industryCategory !== 'NULL'" class="label_item"
+                       name="article_label_box_industryCategory" id="article_label_box_industryCategory" 
                        @click="goIndustryByIndustry(articleContent.industryCategory, $event)" 
                        :data="articleContent.industryCategory">
                     {{articleContent.industryCategory | showLable}}
                   </div>
                   <div v-if="articleContent.projectCategory !== 'NULL'" class="label_item"
+                       name="article_label_box_projectCategory" id="article_label_box_projectCategory" 
                        @click="goProjectByName(articleContent.projectCategory, $event)" 
                        :data="articleContent.projectCategory">
                     {{articleContent.projectCategory | showLable}}
@@ -113,21 +121,27 @@
                   </div>
                   <div class="author_right">
                     <h4 class="user_name"
+                        name="article_user_name2_author" id="article_user_name2_author"
                         v-if="!(articleContent.siteName !== 'NULL' && articleContent.siteName !== null && articleContent.siteName !== '')"
-                        @click="goArticle('/author',{author: articleContent.author,type: 'author'}, $event)" 
+                        @click="goArticle('/author',{author: articleContent.author,type: 'author', pageTitle:articleContent.author}, $event)" 
                         :data="articleContent.author">
                       {{articleContent.author}}
                     </h4>
                     <h4 class="user_name" v-else
-                        @click="goArticle('/author',{author: articleContent.siteName,type: 'siteName'}, $event)" 
+                        name="article_user_name2_siteName" id="article_user_name2_siteName"
+                        @click="goArticle('/author',{author: articleContent.siteName,type: 'siteName', pageTitle:articleContent.siteName}, $event)" 
                         :data="articleContent.siteName">
                       {{articleContent.siteName}}
                     </h4>
-                    <button class="follow_btn" v-if="!follow" data="关注作者" @click="setAuthorFollow(), trackAttention('作者', articleContent.siteName)">
+                    <button 
+                    name="article_follow_btn_siteName" id="article_follow_btn_siteName"
+                    class="follow_btn" v-if="!follow" data="关注作者" @click="setAuthorFollow(), trackAttention('作者', articleContent.siteName)">
                       <img src="../assets/follow/icon-follow.png"/>关注
                       <div class="arrow"></div>
                     </button>
-                    <button class="followed_btn" v-if="follow" data="取消关注作者" @click="deleteAuthorFollow(articleContent.siteName)">
+                    <button 
+                    name="article_followed_btn_siteName" id="article_followed_btn_siteName"
+                    class="followed_btn" v-if="follow" data="取消关注作者" @click="deleteAuthorFollow(articleContent.siteName)">
                       <div class="arrow"></div>
                       <img src="../assets/follow/icon-followed.png"/>已关注
                     </button>
@@ -135,9 +149,9 @@
                 </div>
                 <div class="author_news">
                   <ul class="news_ul">
-                    <li class="news_li" v-for="news in newsForAuthor">
-                      <p :data="news.title" 
-                      @click="goArticle('/article',{sid:news.sid}, $event), 
+                    <li class="news_li" v-for="(news, index) in newsForAuthor" :key="index">
+                      <p :data="news.title" :name="'article_news_li_title_'+index" :id="'article_news_li_title_'+index" 
+                      @click="goArticle('/article',{sid:news.sid, pageTitle:news.title}, $event), 
                       trackArticle('文章详情页内作者文章推荐', news.title, '文章详情页内文章没有项目名称', '文章详情页内文章没有项目ID', '作者文章推荐', news.sid)">
                         {{news.title}}
                       </p>
@@ -171,7 +185,8 @@
                 <div class="hot_content">
                   <ul class="long_ul">
                     <li v-for="(item, index) in hotNews" :key="item.sid" :data="item.title" 
-                    @click="goArticle('/article',{sid:item.sid}, $event), 
+                    :name="'article_long_ul_li_'+index" :id="'article_long_ul_li_'+index" 
+                    @click="goArticle('/article',{sid:item.sid, pageTitle:item.title}, $event), 
                     trackArticle('文章详情页内24小时热文', item.title, '文章详情页内文章没有项目名称', '文章详情页内文章没有项目ID', '24小时热文', item.sid)">
                       <div class="list_item">
                         <div class="item_left" v-if="item.titlePicture">
@@ -391,7 +406,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
+        let routeData = this.$router.resolve({path: '/project', query: {project: obj, pageTitle: obj}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
@@ -402,7 +417,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj, pageTitle: obj}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
@@ -413,7 +428,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj, pageTitle: obj}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
@@ -424,7 +439,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
+        let routeData = this.$router.resolve({path: '/project', query: {project: obj, pageTitle: obj}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href);
       },
@@ -435,7 +450,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj, pageTitle: obj}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href);
       },
@@ -446,7 +461,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj, pageTitle: obj}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href);
       },

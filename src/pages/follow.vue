@@ -21,11 +21,12 @@
                     <h4>推荐</h4>
                   </div>
                   <div class="follow_list serach_follow_list">
-                    <div class="project_list_box" v-for="item in tuijian_xiangmuList">
+                    <div class="project_list_box" v-for="(item, index) in tuijian_xiangmuList" :key="index">
                       <div class="project_info">
                         <div class="left">
                           <div class="logo_box" :data="item.project" 
-                          @click="goArticle('/project',{sid: item.sid}, $event), 
+                          :name="'follow_xiangmu_logo_box_'+index" :id="'follow_xiangmu_logo_box_'+index" 
+                          @click="goArticle('/project',{sid: item.sid, pageTitle:item.project}, $event), 
                                   trackProject('关注页推荐项目', item.project, item.sid, '推荐项目没有排行榜位置', item.totalScore)">
                             <img :src="item.logoSrc"/>
                           </div>
@@ -35,7 +36,8 @@
                             <div class="left">
                               <h4>
                                 <span v-html="item.project" :data="item.project" 
-                                @click="goArticle('/project',{sid: item.sid}, $event), 
+                                :name="'follow_xiangmu_h4span_'+index" :id="'follow_xiangmu_h4span_'+index" 
+                                @click="goArticle('/project',{sid: item.sid, pageTitle:item.project}, $event), 
                                         trackProject('关注页推荐项目', item.project, item.sid, '推荐项目没有排行榜位置', item.totalScore)"></span>
                                 <i class="fa fa-heart-o" @click="setFollow(item.sid, 'xiangmu'), trackAttention('项目', item.project)"></i>
                               </h4>
@@ -59,11 +61,12 @@
                     <h4>已关注</h4>
                   </div>
                   <div class="follow_list serach_follow_list">
-                    <div class="project_list_box" v-for="item in xiangmuList">
+                    <div class="project_list_box" v-for="(item, index) in xiangmuList" :key="index">
                       <div class="project_info">
                         <div class="left">
                           <div class="logo_box" :data="item.result.project" 
-                          @click="goArticle('/project',{sid: item.result.sid}, $event), 
+                          :name="'follow_xiangmu2_logo_box_'+index" :id="'follow_xiangmu2_logo_box_'+index" 
+                          @click="goArticle('/project',{sid: item.result.sid, pageTitle:item.result.project}, $event), 
                           trackProject('关注页已关注项目', item.result.project, item.result.sid, '已关注项目没有排行榜位置', item.result.totalScore)">
                             <img :src="item.result.logoSrc"/>
                           </div>
@@ -73,7 +76,8 @@
                             <div class="left">
                               <h4>
                                 <span v-html="item.result.project" :data="item.result.project" 
-                                @click="goArticle('/project',{sid: item.result.sid}, $event), 
+                                :name="'follow_xiangmu2_h4span_'+index" :id="'follow_xiangmu2_h4span_'+index" 
+                                @click="goArticle('/project',{sid: item.result.sid, pageTitle:item.result.project}, $event), 
                                         trackProject('关注页已关注项目', item.result.project, item.result.sid, '已关注项目没有排行榜位置', item.result.totalScore)"></span>
                                 <i class="fa fa-heart" @click="deleteFollow(item.cid, 'xiangmu')"></i>
                               </h4>
@@ -106,8 +110,8 @@
                   </div>
                   <div class="follow-industry-recommend">
                     <ul>
-                      <li v-for="item in tuijian_hangyeList">
-                        <p :data="item" @click="goIndustryByIndustry(item, $event)">{{item}}</p>
+                      <li v-for="(item, index) in tuijian_hangyeList" :key="index">
+                        <p :name="'follow_hangye_item_'+index" :id="'follow_hangye_item_'+index" :data="item" @click="goIndustryByIndustry(item, $event)">{{item}}</p>
                         <i class="fa fa-heart-o" @click="setFollow('', 'hangye', item), trackAttention('行业', item)"></i>
                       </li>
                     </ul>
@@ -119,8 +123,8 @@
                   </div>
                   <div class="follow-industry-recommend">
                     <ul>
-                      <li v-for="item in hangyeList">
-                        <p :data="item.result" @click="goIndustryByIndustry(item.result, $event)">{{item.result}}</p>
+                      <li v-for="(item, index) in hangyeList" :key="index">
+                        <p :name="'follow_hangye2_item_'+index" :id="'follow_hangye2_item_'+index" :data="item.result" @click="goIndustryByIndustry(item.result, $event)">{{item.result}}</p>
                         <i class="fa fa-heart" @click="deleteFollow(item.cid, 'hangye')"></i>
                       </li>
                     </ul>
@@ -140,8 +144,8 @@
                   </div>
                   <div class="follow-industry-recommend">
                     <ul>
-                      <li v-for="item in tuijian_guojiaList">
-                        <p :data="item" @click="goIndustryByCountry(item, $event)">{{item}}</p>
+                      <li v-for="(item, index) in tuijian_guojiaList" :key="index">
+                        <p :name="'follow_guojia_item_'+index" :id="'follow_guojia_item_'+index" :data="item" @click="goIndustryByCountry(item, $event)">{{item}}</p>
                         <i class="fa fa-heart-o" @click="setFollow('', 'guojia', item), trackAttention('国家', item)"></i>
                       </li>
                     </ul>
@@ -153,8 +157,8 @@
                   </div>
                   <div class="follow-industry-recommend">
                     <ul>
-                      <li v-for="item in guojiaList">
-                        <p :data="item.result" @click="goIndustryByCountry(item.result, $event)">{{item.result}}</p>
+                      <li v-for="(item, index) in guojiaList" :key="index">
+                        <p :name="'follow_guojia2_item_'+index" :id="'follow_guojia2_item_'+index" :data="item.result" @click="goIndustryByCountry(item.result, $event)">{{item.result}}</p>
                         <i class="fa fa-heart" @click="deleteFollow(item.cid, 'guojia')"></i>
                       </li>
                     </ul>
@@ -174,8 +178,8 @@
                   </div>
                   <div class="follow-industry-recommend">
                     <ul>
-                      <li v-for="item in tuijian_zuozheList">
-                        <p :data="item" @click="goArticle('/author',{author: item,type: 'author'}, $event)">{{item}}</p>
+                      <li v-for="(item, index) in tuijian_zuozheList" :key="index">
+                        <p :name="'follow_zuozhe_item_'+index" :id="'follow_zuozhe_item_'+index" :data="item" @click="goArticle('/author',{author: item,type: 'author', pageTitle:item}, $event)">{{item}}</p>
                         <i class="fa fa-heart-o" @click="setFollow('', 'zuozhe', item), trackAttention('作者', item)"></i>
                       </li>
                     </ul>
@@ -187,8 +191,8 @@
                   </div>
                   <div class="follow-industry-recommend">
                     <ul>
-                      <li v-for="item in zuozheList">
-                        <p :data="item.result" @click="goArticle('/author',{author: item.result,type: 'author'}, $event)">{{item.result}}</p>
+                      <li v-for="(item, index) in zuozheList" :key="index">
+                        <p :name="'follow_zuozhe2_item_'+index" :id="'follow_zuozhe2_item_'+index" :data="item.result" @click="goArticle('/author',{author: item.result,type: 'author', pageTitle:item.result}, $event)">{{item.result}}</p>
                         <i class="fa fa-heart" @click="deleteFollow(item.cid, 'zuozhe')"></i>
                       </li>
                     </ul>
@@ -211,7 +215,8 @@
                             <div class="media-left media-middle"
                                  v-if="item.result.dataType === 'NEWS'||item.result.dataType === 'WEIXIN'">
                               <div class="newimg_box" :data="item.result.title" 
-                              @click="goArticle('/article',{sid:item.result.sid}, $event), 
+                              :name="'follow_wenzhang_newimg_box_'+index" :id="'follow_wenzhang_newimg_box_'+index" 
+                              @click="goArticle('/article',{sid:item.result.sid, pageTitle:item.result.title}, $event), 
                               trackArticle('关注页收藏文章', item.result.title, '关注页内收藏文章没有项目名称', '关注页内收藏文章没有项目ID', '收藏文章', item.result.sid)">
                                 <img v-if="item.result.titlePicture" :src="item.result.titlePicture"/>
                                 <div class="date_box">
@@ -222,21 +227,23 @@
                             </div>
                             <div class="media-body">
                               <h4 class="media-heading" :data="item.result.title" 
-                              @click="goArticle('/article',{sid:item.result.sid}, $event), 
+                              :name="'follow_wenzhang_media-heading_'+index" :id="'follow_wenzhang_media-heading_'+index" 
+                              @click="goArticle('/article',{sid:item.result.sid, pageTitle:item.result.title}, $event), 
                               trackArticle('关注页收藏文章', item.result.title, '关注页内收藏文章没有项目名称', '关注页内收藏文章没有项目ID', '收藏文章', item.result.sid)">{{item.result.title}}</h4>
                               <p class="media-words">{{item.result.content}}</p>
                               <div class="media-bottom">
                                 <ul>
                                   <li
+                                    :name="'follow_wenzhang_author_'+index" :id="'follow_wenzhang_author_'+index" 
                                     v-if="!(item.result.siteName !== 'NULL' && item.result.siteName !== null && item.result.siteName !== '')"
-                                    @click="goArticle('/author',{author: item.result.author,type: 'author'}, $event)"
+                                    @click="goArticle('/author',{author: item.result.author,type: 'author', pageTitle:item.result.author}, $event)"
                                     :data="item.result.author">
                                     <div class="userimg">
                                       <img src="../assets/follow/user_head.png">
                                     </div>
                                     <span class="author">{{item.result.author}}</span>
                                   </li>
-                                  <li v-else :data="item.result.siteName" @click="goArticle('/author',{author: item.result.siteName,type: 'siteName'}, $event)">
+                                  <li v-else :data="item.result.siteName" :name="'follow_wenzhang_siteName_'+index" :id="'follow_wenzhang_siteName_'+index" @click="goArticle('/author',{author: item.result.siteName,type: 'siteName', pageTitle:item.result.siteName}, $event)">
                                     <span class="author">{{item.result.siteName}}</span>
                                   </li>
                                   <li>{{item.result.urlDate | dataFormat}}</li>
@@ -245,6 +252,7 @@
                                   </li>
                                 </ul>
                                 <div class="tips"
+                                     :name="'follow_wenzhang_projectCategory_'+index" :id="'follow_wenzhang_projectCategory_'+index" 
                                      v-if="item.result.projectCategory !==null && item.result.projectCategory !== '' && item.result.projectCategory !==undefined && item.result.projectCategory !=='NULL'"
                                      @click="goProjectByName(item.result.projectCategory, $event), trackProject('关注页收藏文章的项目标签', item.result.projectCategory, '关注页收藏文章的项目标签没有项目ID', '关注页收藏文章的项目标签没有排行榜位置', '关注页收藏文章的项目标签没有项目总分')"
                                      :data="item.result.projectCategory"
@@ -252,6 +260,7 @@
                                   {{item.result.projectCategory | labelFormat}}
                                 </div>
                                 <div class="tips"
+                                     :name="'follow_wenzhang_industryCategory_'+index" :id="'follow_wenzhang_industryCategory_'+index" 
                                      v-else-if="item.result.industryCategory !==null && item.result.industryCategory !== '' && item.result.industryCategory !==undefined && item.result.industryCategory !=='NULL'"
                                      @click="goIndustryByIndustry(item.result.industryCategory, $event)"
                                      :data="item.result.industryCategory"
@@ -259,6 +268,7 @@
                                   {{item.result.industryCategory | labelFormat}}
                                 </div>
                                 <div class="tips"
+                                     :name="'follow_wenzhang_countryCategory_'+index" :id="'follow_wenzhang_countryCategory_'+index" 
                                      v-else="item.result.countryCategory !==null && item.result.countryCategory !== '' && item.result.countryCategory !==undefined && item.result.countryCategory !=='NULL'"
                                      @click="goIndustryByCountry(item.result.countryCategory, $event)"
                                      :data="item.result.countryCategory"
@@ -649,7 +659,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
+        let routeData = this.$router.resolve({path: '/project', query: {project: obj, pageTitle: obj}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
@@ -660,7 +670,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj, pageTitle: obj}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href);
       },
@@ -671,7 +681,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj, pageTitle: obj}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href);
       }
