@@ -233,11 +233,19 @@
       },
       goSearch(event) {
         sensors.quick('trackHeatMap', event.currentTarget);
+        let pageTitle
+        if (this.searchType === '文章') {
+          pageTitle = '文章搜索结果'
+        }
+        if (this.searchType === '项目') {
+          pageTitle = '项目搜索结果'
+        }
         this.$router.push({
           path: '/search',
           query: {
             keyword: this.search,
-            searchType: this.searchType
+            searchType: this.searchType,
+            pageTitle: pageTitle
           }
         })
       },

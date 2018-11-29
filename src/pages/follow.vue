@@ -26,7 +26,7 @@
                         <div class="left">
                           <div class="logo_box" :data="item.project" 
                           :name="'follow_xiangmu_logo_box_'+index" :id="'follow_xiangmu_logo_box_'+index" 
-                          @click="goArticle('/project',{sid: item.sid, pageTitle:item.project}, $event), 
+                          @click="goArticle('/project',{sid: item.sid}, $event), 
                                   trackProject('关注页推荐项目', item.project, item.sid, '推荐项目没有排行榜位置', item.totalScore)">
                             <img :src="item.logoSrc"/>
                           </div>
@@ -37,7 +37,7 @@
                               <h4>
                                 <span v-html="item.project" :data="item.project" 
                                 :name="'follow_xiangmu_h4span_'+index" :id="'follow_xiangmu_h4span_'+index" 
-                                @click="goArticle('/project',{sid: item.sid, pageTitle:item.project}, $event), 
+                                @click="goArticle('/project',{sid: item.sid}, $event), 
                                         trackProject('关注页推荐项目', item.project, item.sid, '推荐项目没有排行榜位置', item.totalScore)"></span>
                                 <i class="fa fa-heart-o" @click="setFollow(item.sid, 'xiangmu'), trackAttention('项目', item.project)"></i>
                               </h4>
@@ -66,7 +66,7 @@
                         <div class="left">
                           <div class="logo_box" :data="item.result.project" 
                           :name="'follow_xiangmu2_logo_box_'+index" :id="'follow_xiangmu2_logo_box_'+index" 
-                          @click="goArticle('/project',{sid: item.result.sid, pageTitle:item.result.project}, $event), 
+                          @click="goArticle('/project',{sid: item.result.sid}, $event), 
                           trackProject('关注页已关注项目', item.result.project, item.result.sid, '已关注项目没有排行榜位置', item.result.totalScore)">
                             <img :src="item.result.logoSrc"/>
                           </div>
@@ -77,7 +77,7 @@
                               <h4>
                                 <span v-html="item.result.project" :data="item.result.project" 
                                 :name="'follow_xiangmu2_h4span_'+index" :id="'follow_xiangmu2_h4span_'+index" 
-                                @click="goArticle('/project',{sid: item.result.sid, pageTitle:item.result.project}, $event), 
+                                @click="goArticle('/project',{sid: item.result.sid}, $event), 
                                         trackProject('关注页已关注项目', item.result.project, item.result.sid, '已关注项目没有排行榜位置', item.result.totalScore)"></span>
                                 <i class="fa fa-heart" @click="deleteFollow(item.cid, 'xiangmu')"></i>
                               </h4>
@@ -96,7 +96,7 @@
                     </div>
                   </div>
                   <div class="loading_more">
-                    <button :disabled="showloading" data="加载更多" @click.stop="getxiangmu()" v-if="!(showloading===-1)">
+                    <button :disabled="showloading" data="加载更多" value="加载更多" name="xiangmu_loading_more" id="xiangmu_loading_more" @click.stop="getxiangmu()" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
                       <span v-if="!showloading">加载更多</span>
                     </button>
@@ -130,7 +130,7 @@
                     </ul>
                   </div>
                   <div class="loading_more">
-                    <button :disabled="showloading" data="加载更多" @click.stop="gethangye()" v-if="!(showloading===-1)">
+                    <button :disabled="showloading" data="加载更多" value="加载更多" name="hangye_loading_more" id="hangye_loading_more" @click.stop="gethangye()" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
                       <span v-if="!showloading">加载更多</span>
                     </button>
@@ -164,7 +164,7 @@
                     </ul>
                   </div>
                   <div class="loading_more">
-                    <button :disabled="showloading" data="加载更多" @click.stop="getguojia()" v-if="!(showloading===-1)">
+                    <button :disabled="showloading" data="加载更多" value="加载更多" name="guojia_loading_more" id="guojia_loading_more" @click.stop="getguojia()" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
                       <span v-if="!showloading">加载更多</span>
                     </button>
@@ -179,7 +179,7 @@
                   <div class="follow-industry-recommend">
                     <ul>
                       <li v-for="(item, index) in tuijian_zuozheList" :key="index">
-                        <p :name="'follow_zuozhe_item_'+index" :id="'follow_zuozhe_item_'+index" :data="item" @click="goArticle('/author',{author: item,type: 'author', pageTitle:item}, $event)">{{item}}</p>
+                        <p :name="'follow_zuozhe_item_'+index" :id="'follow_zuozhe_item_'+index" :data="item" @click="goArticle('/author',{author: item,type: 'author'}, $event)">{{item}}</p>
                         <i class="fa fa-heart-o" @click="setFollow('', 'zuozhe', item), trackAttention('作者', item)"></i>
                       </li>
                     </ul>
@@ -192,13 +192,13 @@
                   <div class="follow-industry-recommend">
                     <ul>
                       <li v-for="(item, index) in zuozheList" :key="index">
-                        <p :name="'follow_zuozhe2_item_'+index" :id="'follow_zuozhe2_item_'+index" :data="item.result" @click="goArticle('/author',{author: item.result,type: 'author', pageTitle:item.result}, $event)">{{item.result}}</p>
+                        <p :name="'follow_zuozhe2_item_'+index" :id="'follow_zuozhe2_item_'+index" :data="item.result" @click="goArticle('/author',{author: item.result,type: 'author'}, $event)">{{item.result}}</p>
                         <i class="fa fa-heart" @click="deleteFollow(item.cid, 'zuozhe')"></i>
                       </li>
                     </ul>
                   </div>
                   <div class="loading_more">
-                    <button :disabled="showloading" data="加载更多" @click.stop="getzuozhe()" v-if="!(showloading===-1)">
+                    <button :disabled="showloading" data="加载更多" value="加载更多" name="zuozhe_loading_more" id="zuozhe_loading_more" @click.stop="getzuozhe()" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
                       <span v-if="!showloading">加载更多</span>
                     </button>
@@ -216,7 +216,7 @@
                                  v-if="item.result.dataType === 'NEWS'||item.result.dataType === 'WEIXIN'">
                               <div class="newimg_box" :data="item.result.title" 
                               :name="'follow_wenzhang_newimg_box_'+index" :id="'follow_wenzhang_newimg_box_'+index" 
-                              @click="goArticle('/article',{sid:item.result.sid, pageTitle:item.result.title}, $event), 
+                              @click="goArticle('/article',{sid:item.result.sid}, $event), 
                               trackArticle('关注页收藏文章', item.result.title, '关注页内收藏文章没有项目名称', '关注页内收藏文章没有项目ID', '收藏文章', item.result.sid)">
                                 <img v-if="item.result.titlePicture" :src="item.result.titlePicture"/>
                                 <div class="date_box">
@@ -228,7 +228,7 @@
                             <div class="media-body">
                               <h4 class="media-heading" :data="item.result.title" 
                               :name="'follow_wenzhang_media-heading_'+index" :id="'follow_wenzhang_media-heading_'+index" 
-                              @click="goArticle('/article',{sid:item.result.sid, pageTitle:item.result.title}, $event), 
+                              @click="goArticle('/article',{sid:item.result.sid}, $event), 
                               trackArticle('关注页收藏文章', item.result.title, '关注页内收藏文章没有项目名称', '关注页内收藏文章没有项目ID', '收藏文章', item.result.sid)">{{item.result.title}}</h4>
                               <p class="media-words">{{item.result.content}}</p>
                               <div class="media-bottom">
@@ -236,14 +236,14 @@
                                   <li
                                     :name="'follow_wenzhang_author_'+index" :id="'follow_wenzhang_author_'+index" 
                                     v-if="!(item.result.siteName !== 'NULL' && item.result.siteName !== null && item.result.siteName !== '')"
-                                    @click="goArticle('/author',{author: item.result.author,type: 'author', pageTitle:item.result.author}, $event)"
+                                    @click="goArticle('/author',{author: item.result.author,type: 'author'}, $event)"
                                     :data="item.result.author">
                                     <div class="userimg">
                                       <img src="../assets/follow/user_head.png">
                                     </div>
                                     <span class="author">{{item.result.author}}</span>
                                   </li>
-                                  <li v-else :data="item.result.siteName" :name="'follow_wenzhang_siteName_'+index" :id="'follow_wenzhang_siteName_'+index" @click="goArticle('/author',{author: item.result.siteName,type: 'siteName', pageTitle:item.result.siteName}, $event)">
+                                  <li v-else :data="item.result.siteName" :name="'follow_wenzhang_siteName_'+index" :id="'follow_wenzhang_siteName_'+index" @click="goArticle('/author',{author: item.result.siteName,type: 'siteName'}, $event)">
                                     <span class="author">{{item.result.siteName}}</span>
                                   </li>
                                   <li>{{item.result.urlDate | dataFormat}}</li>
@@ -279,7 +279,7 @@
                             </div>
                           </div>
                           <div class="loading_more" v-if="!(showloading === -1)">
-                            <button :disabled="showloading" data="加载更多" @click.stop="getwenzhang()">
+                            <button :disabled="showloading" data="加载更多" value="加载更多" name="wenzhang_loading_more" id="wenzhang_loading_more" @click.stop="getwenzhang()">
                               <img v-if="showloading" :src="loading"/>
                               <span v-if="!showloading">加载更多</span>
                             </button>
@@ -659,7 +659,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/project', query: {project: obj, pageTitle: obj}});
+        let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
@@ -670,7 +670,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj, pageTitle: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj, pageTitle: '行业文章列表'}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href);
       },
@@ -681,7 +681,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj, pageTitle: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj, pageTitle: '国家文章列表'}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href);
       }

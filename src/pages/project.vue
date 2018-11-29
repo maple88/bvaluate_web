@@ -56,7 +56,7 @@
                     <div class="media-body">
                       <h4 :name="'project_media-heading_h4_'+index" :id="'project_media-heading_h4_'+index"
                       class="media-heading" :title="item.title" :data="item.title" 
-                      @click="goArticle('/article',{sid:item.sid, pageTitle:item.title}, $event), 
+                      @click="goArticle('/article',{sid:item.sid}, $event), 
                               trackArticle('项目页', item.title, project.project, project.sid, atvNewOrGrade==1?'新闻':'评级文章', item.sid)">
                         {{item.title}}
                       </h4>
@@ -111,13 +111,13 @@
             <div class="swiper-container section-swiper orther_swiper" id="partnerSwiper">
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                  <div class="col4" v-for="partner in project.partner">
+                  <div class="col4" v-for="(partner, index) in project.partner" :key="index">
                     <div class="item">
                       <img :src="partner.image">
                       <p class="name">{{partner.h3}}</p>
                       <p class="posi">{{partner.h4}}</p>
                       <div class="i" :class="partner.linkin?'on':''">
-                        <a :href="partner.linkin" target="_blank" :data="partner.h3">
+                        <a :href="partner.linkin" target="_blank" :data="partner.h3" :name="'project_i_a_'+index" :id="'project_i_a_'+index">
                           <i class="fa fa-linkedin"></i>
                         </a>
                       </div>
@@ -363,9 +363,9 @@
           </div>
           <div class="section4">
             <div class="sectiontabs">
-              <a data="推文" href="javascript:;" :class="atvTwitterOrWeibo==1?'active':''"
+              <a data="推文" name="sectiontabs_tuiwen" id="sectiontabs_tuiwen" href="javascript:;" :class="atvTwitterOrWeibo==1?'active':''"
                  @click.stop="iniTwitterOrWeibo(project.project,'290002') , atvTwitterOrWeibo=1 , showIcon = nicon ,TWewOrGrade = '290004',TWewOrGradeNo=2">推文</a>
-              <a data="微博" href="javascript:;" :class="atvTwitterOrWeibo==2?'active':''"
+              <a data="微博" name="sectiontabs_weibo" id="sectiontabs_weibo" href="javascript:;" :class="atvTwitterOrWeibo==2?'active':''"
                  @click.stop="iniTwitterOrWeibo(project.project,'290004') , atvTwitterOrWeibo=2 , showIcon = weibo,TWewOrGrade = '290004',TWewOrGradeNo=2">微博</a>
             </div>
             <div class="swiper-container section-swiper" id="twitterOrWeiboSwiper">
@@ -381,7 +381,7 @@
                     </div>
                     <div class="right">
                       <p class="des" :data="item.content" :name="'project_des_content_'+index" :id="'project_des_content_'+index" 
-                      @click="goArticle('/article',{sid:item.sid, pageTitle:item.content}, $event), 
+                      @click="goArticle('/article',{sid:item.sid}, $event), 
                               trackArticle('项目页', item.title, project.project, project.sid, atvTwitterOrWeibo==1?'推文':'微博', item.sid)">{{item.content}}</p>
                       <div class="bottom">
                         <span class="name">{{item.author}}</span>
@@ -420,7 +420,7 @@
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
                   <div class="col4" v-if="project.outerFaceBook">
-                    <a :href="project.outerFaceBook" data="Facebook">
+                    <a :href="project.outerFaceBook" data="Facebook" name="Facebook" id="Facebook">
                       <div class="item">
                         <img src="../assets/project/f1.png">
                         <p>Facebook</p>
@@ -428,7 +428,7 @@
                     </a>
                   </div>
                   <div class="col4" v-if="project.outerTwitter">
-                    <a :href="project.outerTwitter" data="Twitter">
+                    <a :href="project.outerTwitter" data="Twitter" name="Twitter" id="Twitter">
                       <div class="item">
                         <img src="../assets/project/f2.png">
                         <p>Twitter</p>
@@ -436,7 +436,7 @@
                     </a>
                   </div>
                   <div class="col4" v-if="project.outerTelegram">
-                    <a :href="project.outerTelegram" data="telegram">
+                    <a :href="project.outerTelegram" data="telegram" name="telegram" id="telegram">
                       <div class="item">
                         <img src="../assets/project/f3.png">
                         <p>telegram</p>
@@ -444,7 +444,7 @@
                     </a>
                   </div>
                   <div class="col4" v-if="project.outerBitCoinTalk">
-                    <a :href="project.outerBitCoinTalk" data="bitcointalk">
+                    <a :href="project.outerBitCoinTalk" data="bitcointalk" name="bitcointalk" id="bitcointalk">
                       <div class="item">
                         <img src="../assets/project/f4.png">
                         <p>bitcointalk</p>
@@ -452,7 +452,7 @@
                     </a>
                   </div>
                   <div class="col4" v-if="project.outerDiscord">
-                    <a :href="project.outerDiscord" data="Discord">
+                    <a :href="project.outerDiscord" data="Discord" name="Discord" id="Discord">
                       <div class="item">
                         <img src="../assets/project/f5.png">
                         <p>Discord</p>
@@ -460,7 +460,7 @@
                     </a>
                   </div>
                   <div class="col4" v-if="project.outerGitHub">
-                    <a :href="project.outerGitHub" data="Github">
+                    <a :href="project.outerGitHub" data="Github" name="Github" id="Github">
                       <div class="item">
                         <img src="../assets/project/f6.png">
                         <p>Github</p>
@@ -468,7 +468,7 @@
                     </a>
                   </div>
                   <div class="col4" v-if="project.outerInstagram">
-                    <a :href="project.outerInstagram" data="Instagram">
+                    <a :href="project.outerInstagram" data="Instagram" name="Instagram" id="Instagram">
                       <div class="item">
                         <img src="../assets/project/f7.png">
                         <p>Instagram</p>
@@ -476,7 +476,7 @@
                     </a>
                   </div>
                   <div class="col4" v-if="project.outerMedium">
-                    <a :href="project.outerMedium" data="Medium">
+                    <a :href="project.outerMedium" data="Medium" name="Medium" id="Medium">
                       <div class="item">
                         <img src="../assets/project/f8.png">
                         <p>Medium</p>
@@ -484,7 +484,7 @@
                     </a>
                   </div>
                   <div class="col4" v-if="project.outerReddit">
-                    <a :href="project.outerReddit" data="reddit">
+                    <a :href="project.outerReddit" data="reddit" name="reddit" id="reddit">
                       <div class="item">
                         <img src="../assets/project/f9.png">
                         <p>reddit</p>
@@ -513,7 +513,7 @@
             <div class="rightlayouthead">项目推荐</div>
             <div class="item" v-for="(project, index) in recommendProjects" 
             @click="trackUtmproject('项目详情页', project.project, project.sid, parseInt(index+1))">
-              <router-link :to="'/project?sid='+project.sid+'&pageTitle='+project.project" :data="project.project" :name="'project_item_Utmproject_'+index" :id="'project_item_Utmproject_'+index">
+              <router-link :to="'/project?sid='+project.sid" :data="project.project" :name="'project_item_Utmproject_'+index" :id="'project_item_Utmproject_'+index">
                 <div class="ibanner"><img src="../assets/project/recommend-banner.jpg"></div>
                 <div class="info">
                   <div class="left"><img :src="project.logoSrc"></div>
@@ -798,7 +798,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/project', query: {project: obj, pageTitle: obj}});
+        let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
@@ -809,7 +809,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj, pageTitle: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj, pageTitle: '行业文章列表'}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
@@ -820,7 +820,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj, pageTitle: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj, pageTitle: '国家文章列表'}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },

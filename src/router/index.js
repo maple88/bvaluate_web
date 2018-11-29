@@ -53,7 +53,7 @@ export default new Router({
       path: '/my',
       component: my,
       meta: {
-        pageTitle: '个人设置'
+        pageTitle: '设置'
       },
     },
     {
@@ -77,11 +77,17 @@ export default new Router({
     },
     {
       path: '/article',
-      component: article
+      component: article,
+      meta: {
+        pageTitle: '文章详情页'
+      }
     },
     {
       path: '/project',
-      component: project
+      component: project,
+      meta: {
+        pageTitle: '项目详情页'
+      }
     },
     {
       path: '/projectTest',
@@ -89,7 +95,10 @@ export default new Router({
     },
     {
       path: '/author',
-      component: author
+      component: author,
+      meta: {
+        pageTitle: '作者详情页'
+      }
     },
     {
       path: '/search',
