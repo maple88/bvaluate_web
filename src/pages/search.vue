@@ -139,7 +139,7 @@
               </div>
               <div class="loading_more">
                 <p class="loading_more_tip" v-if="showloading===-1">{{loadingTip}}~</p>
-                <button :disabled="showloading" data="加载更多" @click.stop="loadMoreNews" v-if="!(showloading===-1)">
+                <button :disabled="showloading" data="加载更多" value="加载更多" name="loading_more" id="loading_more" @click.stop="loadMoreNews" v-if="!(showloading===-1)">
                   <img v-if="showloading" :src="loading"/>
                   <span v-if="!showloading">加载更多</span>
                 </button>
@@ -178,7 +178,7 @@
               </div>
               <div class="loading_more">
                 <p class="loading_more_tip" v-if="showloading===-1">{{loadingTip}}~</p>
-                <button :disabled="showloading" data="加载更多" @click.stop="loadMoreICO" v-if="!(showloading===-1)">
+                <button :disabled="showloading" data="加载更多" value="加载更多" name="loading_more" id="loading_more" @click.stop="loadMoreICO" v-if="!(showloading===-1)">
                   <img v-if="showloading" :src="loading"/>
                   <span v-if="!showloading">加载更多</span>
                 </button>
@@ -234,19 +234,19 @@
                           <div class="content" v-if="affair.titlePicture">
                             <h4 :data="affair.title" 
                             :name="'search_content_h4title_'+index" :id="'search_content_h4title_'+index"
-                            @click="goArticle('/article',{sid:affair.sid, pageTitle:affair.title}, $event), 
+                            @click="goArticle('/article',{sid:affair.sid}, $event), 
                             trackArticle('搜索页', affair.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', '国家时事', affair.sid)">{{affair.title}}</h4>
                             <p>{{affair.content}}</p>
                           </div>
                           <div class="content_img" v-if="affair.titlePicture" 
                           :name="'search_content_img_titlePicture_'+index" :id="'search_content_img_titlePicture_'+index"
-                          @click="goArticle('/article',{sid:affair.sid, pageTitle:affair.title}, $event), 
+                          @click="goArticle('/article',{sid:affair.sid}, $event), 
                           trackArticle('搜索页', affair.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', '国家时事', affair.sid)" :data="affair.title">
                             <img :src="affair.titlePicture"/>
                           </div>
                           <h4 v-if="!affair.titlePicture" :data="affair.title" 
                           :name="'search_h4_titlePicture_'+index" :id="'search_h4_titlePicture_'+index"
-                          @click="goArticle('/article',{sid:affair.sid, pageTitle:affair.title}, $event), 
+                          @click="goArticle('/article',{sid:affair.sid}, $event), 
                           trackArticle('搜索页', affair.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', '国家时事', affair.sid)">
                             {{affair.title}}</h4>
                           <p v-if="!affair.titlePicture">{{affair.content}}</p>
@@ -511,7 +511,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj, pageTitle: '行业文章列表'}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
@@ -522,7 +522,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj, pageTitle: '国家文章列表'}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },

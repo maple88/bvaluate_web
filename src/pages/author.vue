@@ -49,7 +49,7 @@
                            v-if="news.dataType === 'NEWS'||news.dataType === 'WEIXIN'">
                         <div class="newimg_box" :data="news.title" 
                         :name="'author_newimg_box_img_'+index" :id="'author_newimg_box_img_'+index" 
-                        @click="goArticle('/article',{sid:news.sid, pageTitle:news.title}, $event), 
+                        @click="goArticle('/article',{sid:news.sid}, $event), 
                         trackArticle('个人中心页收藏文章', news.title, '个人中心页内收藏文章没有项目名称', '个人中心页内收藏文章没有项目ID', '收藏文章', news.sid)">
                           <img v-if="news.titlePicture" :src="news.titlePicture"/>
                           <div class="date_box">
@@ -62,19 +62,19 @@
                            v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'">
                         <div class="newimg_box TorW" :data="news.title" 
                         :name="'author_newimg_boxTorW_img_'+index" :id="'author_newimg_boxTorW_img_'+index" 
-                        @click="goArticle('/article',{sid:news.sid, pageTitle:news.title}, $event), 
+                        @click="goArticle('/article',{sid:news.sid}, $event), 
                         trackArticle('个人中心页收藏文章', news.title, '个人中心页内收藏文章没有项目名称', '个人中心页内收藏文章没有项目ID', '收藏文章', news.sid)">
                           <img :src="news.dataType === 'WEIBO'?weibo:tuiwen"/>
                           <span class="day">{{news.urlDate }}</span>
                         </div>
                       </div>
                       <div class="media-body">
-                        <h4 class="media-heading" :name="'author_media-heading_title_'+index" :id="'author_media-heading_title_'+index" :title="news.title" :data="news.title" @click="goArticle('/article',{sid:news.sid, pageTitle:news.title}, $event)"
+                        <h4 class="media-heading" :name="'author_media-heading_title_'+index" :id="'author_media-heading_title_'+index" :title="news.title" :data="news.title" @click="goArticle('/article',{sid:news.sid}, $event)"
                             v-if="!(news.dataType === 'WEIBO' || news.dataType === 'TWITTER')" v-html="news.title ">
                         </h4>
                         <p class="media-words TorW" v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'"
                            :name="'author_media-wordsTorW_content_'+index" :id="'author_media-wordsTorW_content_'+index"
-                           @click="goArticle('/article',{sid:news.sid, pageTitle:news.content}, $event)" v-html="news.content " :data="news.content">
+                           @click="goArticle('/article',{sid:news.sid}, $event)" v-html="news.content " :data="news.content">
                         </p>
                         <p class=" media-words" v-else v-html="news.content ">
                         </p>
@@ -83,13 +83,13 @@
                             <li
                               :name="'author_media-bottom_author_'+index" :id="'author_media-bottom_author_'+index"
                               v-if="!(news.siteName !== 'NULL' && news.siteName !== null && news.siteName !== '')"
-                              @click="goArticle('/author',{author: news.author,type: 'author', pageTitle:news.author}, $event)" :data="news.author">
+                              @click="goArticle('/author',{author: news.author,type: 'author'}, $event)" :data="news.author">
                               <div class="userimg">
                                 <img src="../assets/follow/user_head.png">
                               </div>
                               <span class="author">{{news.author}}</span>
                             </li>
-                            <li v-else :name="'author_media-bottom_siteName_'+index" :id="'author_media-bottom_siteName_'+index" @click="goArticle('/author',{author: news.siteName,type: 'siteName', pageTitle:news.siteName}, $event)" :data="news.siteName">
+                            <li v-else :name="'author_media-bottom_siteName_'+index" :id="'author_media-bottom_siteName_'+index" @click="goArticle('/author',{author: news.siteName,type: 'siteName'}, $event)" :data="news.siteName">
                               <span class="author">{{news.siteName}}</span>
                             </li>
                             <li>{{news.urlTime}}</li>
@@ -127,7 +127,7 @@
             </ul>
           </div>
           <div class="loading_more">
-            <button :disabled="showloading" data="加载更多" @click.stop="getNewsForAuthor()">
+            <button :disabled="showloading" name="loading_more" id="loading_more" data="加载更多" value="加载更多" @click.stop="getNewsForAuthor()">
               <img v-if="showloading" :src="loading"/>
               <span v-if="!showloading">加载更多</span>
             </button>
@@ -341,7 +341,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj, pageTitle: '行业文章列表'}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
@@ -352,7 +352,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj, pageTitle: '国家文章列表'}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },

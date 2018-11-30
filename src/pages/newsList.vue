@@ -26,7 +26,7 @@
                           <div class="media-left media-middle" v-if="news.dataType === 'NEWS'||news.dataType === 'WEIXIN'">
                             <div class="newimg_box" :data="news.title" 
                             :name="'newsList_newimg_box_img_'+index" :id="'newsList_newimg_box_img_'+index" 
-                            @click="goArticle('/article',{sid:news.sid, pageTitle:news.title}, $event), 
+                            @click="goArticle('/article',{sid:news.sid}, $event), 
                             trackArticle('资讯列表页的文章', news.title, '资讯列表页的文章没有项目名称', '资讯列表页的文章没有项目ID', '资讯列表文章', news.sid)">
                               <img v-if="news.titlePicture" :src="news.titlePicture"/>
                               <div class="date_box">
@@ -38,7 +38,7 @@
                           <div class="media-left media-middle" v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'">
                             <div class="newimg_box TorW" :data="news.title" 
                             :name="'newsList_newimg_boxTorW_img_'+index" :id="'newsList_newimg_boxTorW_img_'+index" 
-                            @click="goArticle('/article',{sid:news.sid, pageTitle:news.title}, $event), 
+                            @click="goArticle('/article',{sid:news.sid}, $event), 
                             trackArticle('资讯列表页的文章', news.title, '资讯列表页的文章没有项目名称', '资讯列表页的文章没有项目ID', '资讯列表文章', news.sid)">
                               <img :src="news.dataType === 'WEIBO'?weibo:tuiwen"/>
                               <span class="day">{{news.urlDate }}</span>
@@ -47,12 +47,12 @@
                           <div class="media-body">
                             <h4 class="media-heading" :title="news.title" :data="news.title" 
                             :name="'newsList_media-heading_title_'+index" :id="'newsList_media-heading_title_'+index" 
-                            @click="goArticle('/article',{sid:news.sid, pageTitle:news.title}, $event), 
+                            @click="goArticle('/article',{sid:news.sid}, $event), 
                             trackArticle('资讯列表页的文章', news.title, '资讯列表页的文章没有项目名称', '资讯列表页的文章没有项目ID', '资讯列表文章', news.sid)" v-if="!(news.dataType === 'WEIBO' || news.dataType === 'TWITTER')" v-html="news.title">
                             </h4>
                             <p class="media-words TorW" v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'" 
                             :name="'newsList_media-wordsTorW_content_'+index" :id="'newsList_media-wordsTorW_content_'+index" 
-                            @click="goArticle('/article',{sid:news.sid, pageTitle:news.title}, $event), 
+                            @click="goArticle('/article',{sid:news.sid}, $event), 
                             trackArticle('资讯列表页的文章', news.title, '资讯列表页的文章没有项目名称', '资讯列表页的文章没有项目ID', '资讯列表文章', news.sid)" v-html="news.content" :data="news.title">
                             </p>
                             <p class=" media-words" v-else v-html="news.content">
@@ -62,7 +62,7 @@
                                 <li
                                   :name="'newsList_media-bottom_userimg_'+index" :id="'newsList_media-bottom_userimg_'+index" 
                                   v-if="!(news.siteName !== 'NULL' && news.siteName !== null && news.siteName !== '')"
-                                  @click="goArticle('/author',{author: news.author,type: 'author', pageTitle:news.author}, $event)" :data="news.author">
+                                  @click="goArticle('/author',{author: news.author,type: 'author'}, $event)" :data="news.author">
                                   <div class="userimg">
                                     <img src="../assets/follow/user_head.png">
                                   </div>
@@ -70,7 +70,7 @@
                                 </li>
                                 <li v-else 
                                   :name="'newsList_media-bottom_siteName_'+index" :id="'newsList_media-bottom_siteName_'+index" 
-                                  @click="goArticle('/author',{author: news.siteName,type: 'siteName', pageTitle:news.siteName}, $event)" 
+                                  @click="goArticle('/author',{author: news.siteName,type: 'siteName'}, $event)" 
                                   :data="news.siteName">
                                   {{news.siteName}}
                                 </li>
@@ -107,7 +107,7 @@
               </div>
               <div class="loading_more">
                 <p class="loading_more_tip" v-if="showloading===-1">{{loadingTip}}~</p>
-                <button :disabled="showloading" data="加载更多" @click.stop="reloadMore(industry,newsType)" v-if="!(showloading===-1)">
+                <button :disabled="showloading" data="加载更多" value="加载更多" name="loading_more" id="loading_more" @click.stop="reloadMore(industry,newsType)" v-if="!(showloading===-1)">
                   <img v-if="showloading" :src="loading"/>
                   <span v-if="!showloading">加载更多</span>
                 </button>
@@ -115,10 +115,10 @@
             </div>
             <div class="center" v-if="!search.show">
               <div class="follow_list serach_follow_list">
-                <div class="project_list_box" v-for="project in projectList">
+                <div class="project_list_box" v-for="(project, index) in projectList" :key="index">
                   <div class="project_info">
                     <div class="left">
-                      <div class="logo_box" :data="project.project" @click="goProjectById(project.sid, $event)">
+                      <div class="logo_box" :data="project.project" :name="'newsList_logo_box_'+index" :id="'newsList_logo_box_'+index" @click="goProjectById(project.sid, $event)">
                         <img :src="project.logoSrc"/>
                       </div>
                     </div>
@@ -126,7 +126,7 @@
                       <div class="base_info">
                         <div class="left">
                           <h4>
-                            <span v-html="project.project" :data="project.project" @click="goProjectById(project.sid, $event)"></span>
+                            <span v-html="project.project" :data="project.project" :name="'newsList_h4span_project_'+index" :id="'newsList_h4span_project_'+index" @click="goProjectById(project.sid, $event)"></span>
                             <i class="fa fa-heart-o" v-if="!project.collected" @click="setFollow(even,project)"></i>
                             <i class="fa fa-heart" v-else></i>
                           </h4>
@@ -146,7 +146,7 @@
               </div>
               <div class="loading_more">
                 <p class="loading_more_tip" v-if="showloading===-1">{{loadingTip}}~</p>
-                <button :disabled="showloading" data="加载更多" @click.stop="loadMoreICO" v-if="!(showloading===-1)">
+                <button :disabled="showloading" data="加载更多" value="加载更多" name="loading_more2" id="loading_more2" @click.stop="loadMoreICO" v-if="!(showloading===-1)">
                   <img v-if="showloading" :src="loading"/>
                   <span v-if="!showloading">加载更多</span>
                 </button>
@@ -170,7 +170,7 @@
                         <div class="item_body" :class="item.titlePicture?'':'noPicture'">
                           <h4 :data="item.title" 
                           :name="'newsList_item_body_h4_'+index" :id="'newsList_item_body_h4_'+index"
-                          @click="goArticle('/article',{sid:item.sid, pageTitle:item.title}, $event), 
+                          @click="goArticle('/article',{sid:item.sid}, $event), 
                           trackArticle('资讯列表页的24小时热文', item.title, '资讯列表页的文章没有项目名称', '资讯列表页的24小时热文没有项目ID', '24小时热文', item.sid)">{{item.title}}</h4>
                           <p>{{item.content}}</p>
                         </div>
@@ -407,7 +407,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj, pageTitle: '行业文章列表'}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },
@@ -418,7 +418,7 @@
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj, pageTitle: '国家文章列表'}});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
       },

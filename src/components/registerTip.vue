@@ -15,7 +15,7 @@
               <h4>新用户注册即送<span>888</span>糖果</h4>
             </div>
             <div class="tips_button">
-              <button @click="goRegister">立即注册</button>
+              <button @click="goRegister" name="tips_button" id="tips_button">立即注册</button>
             </div>
             <div class="erCode_box">
               <img src="../assets/register/erCode.png" alt="">
