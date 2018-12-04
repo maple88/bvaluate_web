@@ -11,7 +11,7 @@
               <div class="edit_bg">
                 <span>点击修改头像</span>
               </div>
-              <input type="file" accept="image/*" multiple="multiple" data="修改头像" @change="changeImg($event)"/>
+              <input name="no_content" id="input_change_headimg" type="file" accept="image/*" multiple="multiple" data="修改头像" @change="changeImg($event)"/>
               <!--<img src="../assets/user/default.png">-->
               <!--<img :src="user.profileUrl">-->
             </div>
@@ -24,7 +24,7 @@
                 <div class="tb-cell edit" @click="edit(editnicknamebox)"><i class="fa fa-pencil"></i>修改</div>
               </div>
               <div class="tb-cell nicknamedit editbox" v-show="!editnicknamebox.show">
-                <input type="text" maxlength="8" v-model="user.nickName" data="输入新昵称" @keyup.enter="editnicknameok(editnicknamebox, $event)">
+                <input type="text" maxlength="8" name="no_content" id="input_nickName" v-model="user.nickName" data="输入新昵称" @keyup.enter="editnicknameok(editnicknamebox, $event)">
               </div>
             </div>
             <div class="list-item">
@@ -36,10 +36,10 @@
               <div class="tb-cell editbox" v-show="!editsexbox.show">
                 <div class="radiobox">
                   <label class="radio-inline">
-                    <input data="男" type="radio" name="sex" value="2" :checked="user.sex == 2" v-model="user.sex"> 男
+                    <input data="男" type="radio" value="2" name="no_content" id="input_sex2" :checked="user.sex == 2" v-model="user.sex"> 男
                   </label>
                   <label class="radio-inline">
-                    <input data="女" type="radio" name="sex" value="3" :checked="user.sex == 3" v-model="user.sex"> 女
+                    <input data="女" type="radio" value="3" name="no_content" id="input_sex3" :checked="user.sex == 3" v-model="user.sex"> 女
                   </label>
                 </div>
                 <div class="botoperate">
@@ -96,12 +96,12 @@
             <form class="form-horizontal">
               <div class="form-group">
                 <label class="control-label">手机号码</label>
-                <input type="tel" data="输入手机号码">
+                <input type="tel" data="输入手机号码" name="no_content" id="input_phone">
               </div>
               <div class="form-group">
                 <label class="control-label">验证码</label>
                 <div class="coderow">
-                  <input type="text" data="输入验证码">
+                  <input type="text" data="输入验证码" name="no_content" id="input_code_btn">
                   <button type="button" class="btn code-btn" data="获取验证码">获取验证码</button>
                 </div>
                 <p class="help-block" v-if="moblieError_show">60s后重新获取</p>
@@ -128,14 +128,14 @@
               <div class="form-group">
                 <label class="control-label">邮箱</label>
                 <div class="coderow">
-                  <input type="email" data="输入邮箱" v-model="user.newEmail" @focus="emailError_msg=''">
+                  <input type="email" data="输入邮箱" v-model="user.newEmail" @focus="emailError_msg=''" name="no_content" id="input_email">
                   <div type="button" class="btn rightips newStyle text-danger">{{emailError_msg}}</div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="control-label">验证码</label>
                 <div class="coderow">
-                  <input type="text" data="输入验证码" v-model="user.emailCode" @focus="emailCodeError_msg=''">
+                  <input type="text" data="输入验证码" v-model="user.emailCode" @focus="emailCodeError_msg=''" name="no_content" id="input_emailCode">
                   <button type="button" :disabled="sendEmailBtn" class="btn code-btn" data="发送验证邮件" @click="sendEmail">发送验证邮件
                   </button>
                   <div type="button" class="btn rightips newStyle text-danger">{{emailCodeError_msg}}</div>
@@ -164,7 +164,7 @@
               <div class="form-group">
                 <label class="control-label">旧的密码</label>
                 <div class="coderow">
-                  <input type="password" data="输入旧密码" v-model="user.oldPassword" @focus="oldPwdError=''">
+                  <input type="password" data="输入旧密码" v-model="user.oldPassword" @focus="oldPwdError=''" name="no_content" id="input_oldPassword">
                   <div type=" button" class="btn rightips newStyle  text-danger">
                     {{oldPwdError}}
                   </div>
@@ -173,14 +173,14 @@
               <div class="form-group">
                 <label class="control-label">新密码</label>
                 <div class="coderow">
-                  <input type="password" data="输入新密码" v-model="user.newPassword" @focus="newPwdError=''">
+                  <input type="password" data="输入新密码" v-model="user.newPassword" @focus="newPwdError=''" name="no_content" id="input_newPassword">
                   <div type="button" class="btn rightips newStyle  text-danger">{{newPwdError}}</div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="control-label">确认密码</label>
                 <div class="coderow">
-                  <input type="password" data="输入确认的新密码" v-model="user.ensurePwd" @focus="ensurePwdError=''">
+                  <input type="password" data="输入确认的新密码" v-model="user.ensurePwd" @focus="ensurePwdError=''" name="no_content" id="input_ensurePwd">
                   <div type="button" class="btn rightips newStyle  text-danger">{{ensurePwdError}}</div>
                 </div>
               </div>
@@ -243,15 +243,7 @@
       }
     },
     mounted() {
-      this.getMyProfile()
-
-      var end_time = "";
-      window.onload = function(){
-        end_time = new Date();
-        sensors.quick('autoTrack',{
-          load_time: end_time.getTime() - start_time.getTime()
-        })
-      }
+      this.getMyProfile();
     },
     methods: {
       // 通用修改按钮

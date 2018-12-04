@@ -27,7 +27,7 @@
                   <div class="input-group-addon"><img src="../assets/login/icon1.png"></div>
                   <input type="text" class="form-control" v-model="loginUser.phoneNumber" data="输入手机号" placeholder="手机号"
                          @focus="errorMsg.loginUser.phoneNumber = ''"
-                         name="login_phoneNumber" id="login_phoneNumber">
+                         name="no_content" id="input_login_phoneNumber">
                   <span class="help-block" v-if="errorMsg.loginUser.phoneNumber">
 										<img src="../assets/login/iclose.png">
 										{{errorMsg.loginUser.phoneNumber}}
@@ -37,7 +37,7 @@
                   <div class="input-group-addon"><img src="../assets/login/icon2.png"></div>
                   <input type="password" class="form-control" v-model="loginUser.password" data="输入密码" placeholder="密码"
                          @focus="errorMsg.loginUser.password = ''" @keyup.enter="loginSubmit"
-                         name="login_password" id="login_password">
+                         name="no_content" id="input_login_password">
                   <span class="help-block" v-if="errorMsg.loginUser.password">
 										<img src="../assets/login/iclose.png">
 										{{errorMsg.loginUser.password}}
@@ -48,7 +48,7 @@
                 </div>
                 <div class="other-group">
                   <label class="remember">
-                    <input type="checkbox" checked> 记住我
+                    <input type="checkbox" name="no_content" id="input_checkbox" checked> 记住我
                   </label>
                   <span @click="resetpwd()">忘记密码</span>
                 </div>
@@ -75,7 +75,7 @@
                          @focus="errorMsg.registerUser.nickName = ''"
                          @blur="checkNickName()"
                          data="输入昵称"
-                         name="login_nickName" id="login_nickName"
+                         name="no_content" id="input_login_nickName"
                   >
                   <span class="help-block" v-if="errorMsg.registerUser.nickName">
 										<img src="../assets/login/iclose.png">
@@ -88,7 +88,7 @@
                          @focus="errorMsg.registerUser.phoneNumber = ''"
                          @blur="checkPhoneNumber()"
                          data="输入手机号"
-                         name="login_phoneNumber2" id="login_phoneNumber2"
+                         name="no_content" id="input_login_phoneNumber2"
                   >
                   <span class="help-block" v-if="errorMsg.registerUser.phoneNumber">
 										<img src="../assets/login/iclose.png">
@@ -101,7 +101,7 @@
                          @focus="errorMsg.registerUser.password = ''"
                          @blur="checkPassword(true)"
                          data="输入密码"
-                         name="login_password2" id="login_password2"
+                         name="no_content" id="input_login_password2"
                   >
                   <span class="help-block" v-if="errorMsg.registerUser.password">
 										<img src="../assets/login/iclose.png">
@@ -114,7 +114,7 @@
                          @focus="errorMsg.registerUser.confirmpsd = ''"
                          @blur="checkPassword(false)"
                          data="输入确认的密码"
-                         name="login_confirmpsd" id="login_confirmpsd"
+                         name="no_content" id="input_login_confirmpsd"
                   >
                   <span class="help-block" v-if="errorMsg.registerUser.confirmpsd">
 										<img src="../assets/login/iclose.png">
@@ -124,7 +124,7 @@
                 <div class="input-group code">
                   <input type="text" v-model="registerUser.code" placeholder="输入验证码" data="输入验证码"
                          @focus="errorMsg.registerUser.code = ''"
-                         name="login_code" id="login_code">
+                         name="no_content" id="input_login_code">
                   <span class="help-block" v-if="errorMsg.registerUser.code">
 										<img src="../assets/login/iclose.png">
 										{{errorMsg.registerUser.code}}
@@ -146,7 +146,7 @@
                          @focus="errorMsg.resetpwdUser.phoneNumber = ''"
                          @blur="checkResetPhoneNumber"
                          data="输入手机号"
-                         name="login_phoneNumber3" id="login_phoneNumber3"
+                         name="no_content" id="input_login_phoneNumber3"
                   >
                   <span class="help-block" v-if="errorMsg.resetpwdUser.phoneNumber">
 										<img src="../assets/login/iclose.png">
@@ -159,7 +159,7 @@
                          @focus="errorMsg.resetpwdUser.password = ''"
                          @blur="checkResetPassword(true)"
                          data="输入重置的密码"
-                         name="login_password3" id="login_password3"
+                         name="no_content" id="input_login_password3"
                   >
                   <span class="help-block" v-if="errorMsg.resetpwdUser.password">
 										<img src="../assets/login/iclose.png">
@@ -172,7 +172,7 @@
                          @focus="errorMsg.resetpwdUser.confirmpsd = ''"
                          @blur="checkResetPassword(false)"
                          data="输入确认的密码"
-                         name="login_confirmpsd2" id="login_confirmpsd2"
+                         name="no_content" id="input_login_confirmpsd2"
                   >
                   <span class="help-block" v-if="errorMsg.resetpwdUser.confirmpsd">
 										<img src="../assets/login/iclose.png">
@@ -183,7 +183,7 @@
                   <input type="text" placeholder="输入验证码" v-model="resetpwdUser.code"
                          @focus="errorMsg.resetpwdUser.code = ''"
                          data="输入验证码"
-                         name="login_code2" id="login_code2"
+                         name="no_content" id="input_login_code2"
                   >
                   <span class="help-block" v-if="errorMsg.resetpwdUser.code">
 										<img src="../assets/login/iclose.png">
@@ -274,15 +274,6 @@
         tipText: '',
         showTip: false
       }
-    },
-    mounted() {
-      let end_time = "";
-      window.onload = function () {
-        end_time = new Date();
-        sensors.quick('autoTrack', {
-          load_time: end_time.getTime() - start_time.getTime()
-        })
-      };
     },
     methods: {
       weChatLogin() {

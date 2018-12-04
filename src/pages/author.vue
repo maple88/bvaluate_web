@@ -163,14 +163,6 @@
     },
     mounted() {
       this.initAuthor()
-
-      var end_time = "";
-      window.onload = function(){
-        end_time = new Date();
-        sensors.quick('autoTrack',{
-          load_time: end_time.getTime() - start_time.getTime()
-        })
-      }
     },
     filters: {
       showDay(obj) {

@@ -19,7 +19,7 @@
               </div>
             </div>
             <div class="center">
-              <input type="text" data="输入搜素关键字" v-model="search.keyword" name="search_input" id="search_input" class="search_input" @keyup.enter="searchKeyWord">
+              <input type="text" data="输入搜素关键字" v-model="search.keyword" name="no_content" id="input_search_input" class="search_input" @keyup.enter="searchKeyWord">
             </div>
             <div class="right">
               <button class="search_submit" data="确认搜索" name="search_submit" id="search_submit" @click="searchKeyWord(), trackSearch(search.class, search.keyword)">
@@ -389,14 +389,6 @@
         this.affairList = res;
       });
       this.scrollFlash();
-
-      var end_time = "";
-      window.onload = function(){
-        end_time = new Date();
-        sensors.quick('autoTrack',{
-          load_time: end_time.getTime() - start_time.getTime()
-        })
-      }
     },
     activated() {
       this.initSearch();
