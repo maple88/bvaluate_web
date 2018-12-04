@@ -268,15 +268,6 @@
         showTip: false
       }
     },
-    mounted() {
-      let end_time = "";
-      window.onload = function () {
-        end_time = new Date();
-        sensors.quick('autoTrack', {
-          load_time: end_time.getTime() - start_time.getTime()
-        })
-      }
-    },
     computed: {
       loginPop() {
         let isRegister = this.$store.state.registerPop;

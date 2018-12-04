@@ -15,6 +15,7 @@ import axios from 'axios'
 import '@/styles/main.scss'
 import 'es6-promise/auto'
 import Vuex from 'vuex'
+import sensors from 'sa-sdk-javascript/sensorsdata.min.js'
 
 Vue.prototype.$axios = axios;
 Vue.prototype.$sugar = 12;
@@ -26,6 +27,9 @@ Vue.use(Vuex);
 
 // 页面标题
 router.beforeEach((to, from, next) => {
+  if (lock) {
+    start_time = new Date();
+  }
   if (to.meta.pageTitle) {
     window.document.title = "Bvaluate - "+to.meta.pageTitle;
   }else if (to.query.pageTitle) {
@@ -35,6 +39,33 @@ router.beforeEach((to, from, next) => {
   }
   next()
 })
+
+router.afterEach((to,from) => {
+  var end_time = "";
+  if (lock) {
+    Vue.nextTick(() => {
+      end_time = new Date();
+      sensors.quick("autoTrackSinglePage", {
+        load_time: end_time.getTime() - start_time.getTime()
+      });
+    });
+  }
+  window.onload = function () {
+    end_time = new Date();
+    Vue.nextTick(() => {
+      sensors.quick("autoTrackSinglePage", {
+        load_time: end_time.getTime() - start_time.getTime()
+      });
+      lock = true;
+    });
+  };
+});
+
+// router.afterEach((to,from) => {
+//   Vue.nextTick(() => {
+//     sensors.quick("autoTrackSinglePage");
+//   });
+// });
 
 const store = new Vuex.Store({
   state: {

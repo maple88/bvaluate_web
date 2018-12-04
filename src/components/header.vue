@@ -53,8 +53,9 @@
                   <li>
                     <a href="javascript:;" data="消息" @click="$store.state.messagePop = true">消息</a>
                   </li>
-                  <router-link tag="li" to="/my" data="设置"><a>设置</a></router-link>
-                  <!-- <li><a href="#">设置</a></li> -->
+                  <li>
+                    <a href="javascript:;" data="设置" @click="goMy()">设置</a>
+                  </li>
                   <li>
                     <a href="javascript:;" data="退出" @click="logout()">退出</a>
                   </li>
@@ -191,6 +192,9 @@
       }
     },
     methods: {
+      goMy() {
+        this.$router.push('/my');
+      },
       invitation() {
         let token = this.token;
         if (token) {

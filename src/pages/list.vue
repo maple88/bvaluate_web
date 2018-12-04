@@ -145,7 +145,7 @@
                     </table>
                   </div>
                   <div class="moreBox" v-if="!(showloading === -1)">
-                    <button :disabled="showloading" class="relaodMore" @click="reMore()" name="moreBox" id="moreBox" value="加载更多" data="加载更多">
+                    <button :disabled="showloading" class="relaodMore" @click="reMore()" name="search_submit" id="moreBox" value="加载更多" data="加载更多">
                       <img v-if="showloading" :src="loading"/>
                       <span v-if="!showloading">加载更多</span>
                     </button>
@@ -300,14 +300,6 @@
       this.getDate();
       this.getDownList();
       this.getTopBangdan();
-
-      var end_time = "";
-      window.onload = function () {
-        end_time = new Date();
-        sensors.quick('autoTrack', {
-          load_time: end_time.getTime() - start_time.getTime()
-        })
-      }
     },
     methods: {
       success() {

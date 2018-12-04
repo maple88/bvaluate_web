@@ -89,15 +89,7 @@
     },
     mounted() {
       this.initCandy();
-      this.getFollowList()
-
-      var end_time = "";
-      window.onload = function(){
-        end_time = new Date();
-        sensors.quick('autoTrack',{
-          load_time: end_time.getTime() - start_time.getTime()
-        })
-      }
+      this.getFollowList();
     },
     beforeRouteEnter(to, from, next) {
       next(vm => {
