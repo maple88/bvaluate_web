@@ -20,7 +20,7 @@
               </div>
             </div>
             <div class="message_tab_content">
-              <div class="message_item" v-for="(item,index) in messageList">
+              <div class="message_item" v-for="(item,index) in messageList" :class="open === index?'open':''">
                 <div class="message_top">
                   <div class="message_left">
                     <img :src="item.readFlag?read:unRead" alt="未读">
@@ -29,17 +29,17 @@
                     <h4>通知 | {{item.title}}</h4>
                     <p>{{item.createdTime}}</p>
                   </div>
-                  <!--<div class="message_right">-->
-                  <!--<div class="copy_a">删除</div>-->
-                  <!--</div>-->
+                  <div class="message_right">
+                    <!--<div class="copy_a">删除</div>-->
+                    <div class="copy_a" @click="openMessage(item.id,index,item.readFlag)">{{open === index?'收起':'展开'}}<i
+                      class="icon_down"></i>
+                    </div>
+                  </div>
                 </div>
-                <div class="message_bottom" :class="open === index?'open':''">
+                <div class="message_bottom">
                   <p>
                     {{item.content}}
                   </p>
-                  <div class="copy_a" @click="openMessage(item.id,index,item.readFlag)">{{open === index?'收起':'展开'}}<i
-                    class="icon_down"></i>
-                  </div>
                 </div>
               </div>
             </div>
