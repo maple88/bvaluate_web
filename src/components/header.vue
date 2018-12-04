@@ -12,13 +12,13 @@
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false" data="导航按钮">
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false" data="导航按钮" name="search_submit" id="navbar-toggle">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <button class="button open_search navbar-toggle" data="搜索按钮"><img src="../assets/search/search_b.png">
+            <button class="button open_search navbar-toggle" name="search_submit" id="open_search" data="搜索按钮"><img src="../assets/search/search_b.png">
             </button>
             <router-link to="/list" class="navbar-brand" data="logo"><img src="../assets/logo.png"></router-link>
             <!-- <a class="navbar-brand"><img src="../assets/logo.png"></a> -->
@@ -40,14 +40,15 @@
               <li v-show="!token" @click="isLogin('个人中心')"><a data="个人中心">个人中心</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right" v-if="token">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle header_name" data-toggle="dropdown" role="button" data="用户头像">
+              <li class="dropdown text-center">
+                <button class="dropdown-toggle header_name" name="header_userimg" id="header_userimg" data-toggle="dropdown" role="button" data="用户头像">
                   <div class="user"
                        :style="(profileUrl !==null && profileUrl !== '' && profileUrl !== 'NULL' && profileUrl !== undefined)
                        ?'background-image: url('+ profileUrl +')':'background-image: url('+ default_header +')'"
                   ></div>
-                  <p>糖果数：{{sugarNum}}</p>
-                </a>
+                  <p>糖果数</p>
+                </button>
+                <p class="candyNum">糖果数：{{sugarNum}}</p>
                 <ul class="dropdown-menu">
                   <li>
                     <a href="javascript:;" data="消息" @click="$store.state.messagePop = true">消息</a>
@@ -74,11 +75,11 @@
               </li>
             </ul>
             <div class="nav navbar-nav navbar-right nav-search gift_box">
-              <button class="button" data="邀请有礼" @click="invitation"><img src="../assets/gift.png"></button>
+              <button class="button" data="邀请有礼" @click="invitation" name="no_content" id="sm_gift_box"><img src="../assets/gift.png"></button>
               <h4>邀请有礼</h4>
             </div>
             <div class="nav navbar-nav navbar-right nav-search">
-              <button class="button open_search" data="搜索按钮"><img src="../assets/search/search.png"></button>
+              <button class="button open_search" data="搜索按钮" name="no_content" id="sm_nav_search"><img src="../assets/search/search.png"></button>
             </div>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -87,7 +88,7 @@
             <div class="search_box">
               <div class="left">
                 <div class="dropdown">
-                  <button class="btn btn-default dropdown-toggle" type="button" id="searchType" data-toggle="dropdown"
+                  <button class="btn btn-default dropdown-toggle" type="button" name="no_content" id="searchType" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="true" data="选择搜索的分类">
                     {{searchType}}
                     <span class="caret"></span>
@@ -99,10 +100,10 @@
                 </div>
               </div>
               <div class="center">
-                <input type="text" v-model="search" class="search_input" data="输入搜素内容" @keyup.enter="goSearch($event)">
+                <input type="text" v-model="search" class="search_input" data="输入搜素内容" name="no_content" id="input_search_input" @keyup.enter="goSearch($event)">
               </div>
               <div class="right">
-                <button class="search_submit" @click="goSearch($event), trackSearch(searchType, search)" data="搜索按钮">
+                <button class="search_submit" @click="goSearch($event), trackSearch(searchType, search)" name="no_content" id="search_submit" data="搜索按钮">
                   <img src="../assets/search/search.png" alt="search"/>
                 </button>
               </div>
@@ -113,7 +114,7 @@
     </div>
     <div class="fixed_gift_box">
       <div class="gift_box_content">
-        <button class="button" data="邀请有礼" @click="invitation"><img src="../assets/gift.png"></button>
+        <button class="button" data="邀请有礼" @click="invitation" name="no_content" id="gift_button"><img src="../assets/gift.png"></button>
         <h4>邀请有礼</h4>
       </div>
     </div>

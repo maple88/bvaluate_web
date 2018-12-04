@@ -29,7 +29,7 @@
               <div class="topproduct">
                 <div class="pcol" v-for="(item, index) in topbangdan.topProject" :key="index">
                   <div class="prod">
-                    <div class="picon" :data="item.project" :name="'list_prod_logo_'+index" :id="'list_prod_logo_'+index" :value="item.project"
+                    <div class="picon" :data="item.project" :name="'no_content_'+index" :id="'list_prod_logo_'+index" :value="item.project"
                     @click="goArticle('/project',{sid: item.sid}, $event),
                             trackUtmproject('榜单页', item.project, item.sid, parseInt(index+1))">
                       <img src="../assets/media.jpg" :src="item.logoSrc">

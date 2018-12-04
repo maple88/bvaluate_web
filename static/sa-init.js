@@ -2,10 +2,10 @@ var sensors = require('sa-sdk-javascript/sensorsdata.min.js');
 var heatmap = require('sa-sdk-javascript/heatmap.min.js');
 
 sensors.init({
-  server_url: "http://bvaluate.datasink.sensorsdata.cn/sa?project=default&token=0195a6fbd8b2f627",
-  //http://bvaluate.datasink.sensorsdata.cn/sa?project=production&token=0195a6fbd8b2f627
+  server_url: "https://bvaluate.datasink.sensorsdata.cn/sa?project=production&token=0195a6fbd8b2f627",
+             //https://bvaluate.datasink.sensorsdata.cn/sa?project=default&token=0195a6fbd8b2f627
   //heatmap_url神策分析中点击分析及触达分析功能代码，代码生成工具会自动生成。如果神策代码中 `sensorsdata.min.js` 版本是 1.9.1 及以上版本，这个参数必须配置，低于此版本不需要配置。
-  heatmap_url: "heatmap",   //https://static.sensorsdata.cn/sdk/1.12.3/heatmap.min.js
+  heatmap_url: "https://static.sensorsdata.cn/sdk/1.12.3/heatmap.min.js",
   //web_url 神策分析中点击分析及触达分析功能会用到此地址，代码生成工具会自动生成。如果神策后台版本及 `sensorsdata.min.js` 均是 1.10 及以上版本，这个参数不需要配置。
   // web_url:"神策分析后台地址",
   is_single_page: true,
