@@ -1579,6 +1579,19 @@
             &:last-child {
               border-bottom: none;
             }
+            &.open {
+              .message_bottom {
+                p {
+                  overflow: inherit;
+                  height: auto;
+                }
+              }
+              .copy_a {
+                .icon_down {
+                  transform: rotate(180deg);
+                }
+              }
+            }
             .message_top {
               display: flex;
               align-items: center;
@@ -1620,32 +1633,28 @@
                   &:hover {
                     color: #2858A0;
                   }
+                  .icon_down {
+                    width: 13px;
+                    height: 10px;
+                    display: inline-block;
+                    background-image: url("../assets/message/down.png");
+                    background-size: 100%;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    margin-left: 5px;
+                    transition: all .3s;
+                  }
                 }
               }
             }
             .message_bottom {
               position: relative;
               padding-right: 45px;
-              &.open {
-                p {
-                  overflow: inherit;
-                  text-overflow: inherit;
-                  white-space: normal;
-                  height: auto;
-                }
-                .copy_a {
-                  .icon_down {
-                    transform: rotate(180deg);
-                  }
-                }
-              }
               p {
-                overflow: hidden;
                 color: #666666;
-                text-overflow: ellipsis;
-                white-space: nowrap;
                 margin-bottom: 0;
-                height: 20px;
+                height: 0;
+                overflow: hidden;
                 transition: all .3s;
               }
               .copy_a {
@@ -1687,19 +1696,22 @@
     .loginbox .bd .message_title h4 {
       font-size: 16px;
     }
-    .loginbox .bd .message_content .message_tab_content .message_item .message_top {
-      .message_left {
-        flex: 0 0 40px;
-      }
-      .message_center {
-        flex: 0 0 calc(100% - 70px);
-        h4 {
-          font-size: 15px;
+    .loginbox .bd .message_content .message_tab_content .message_item {
+      padding: 15px 0;
+      .message_top {
+        .message_left {
+          flex: 0 0 40px;
         }
-      }
-      .message_right {
-        flex: 0 0 30px;
-        font-size: 12px;
+        .message_center {
+          flex: 0 0 calc(100% - 85px);
+          h4 {
+            font-size: 15px;
+          }
+        }
+        .message_right {
+          flex: 0 0 45px;
+          font-size: 12px;
+        }
       }
     }
   }
