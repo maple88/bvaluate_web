@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://23.101.9.18:8090/apelink',
+        target: 'http://23.100.88.104:8090/apelink',
         secure: false,
         changeOrigin: true,
         pathRewrite: {
@@ -22,7 +22,7 @@ module.exports = {
     },
 
     // Various Dev Server settings
-    host: 'www.apl.com', // can be overwritten by process.env.HOST  
+    host: 'www.apl.com', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
@@ -55,7 +55,7 @@ module.exports = {
     assetsPublicPath: './',
     proxyTable: {
       '/api': {
-        target: 'http://23.101.9.18:8090/apelink',
+        target: 'http://23.100.88.104:8090/apelink',
         secure: false,
         changeOrigin: true,
         pathRewrite: {
