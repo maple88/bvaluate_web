@@ -62,31 +62,6 @@
                                title="总分最高为5分。"/>
                         </th>
                         <th>
-                          团队真实性
-                          <img src="../assets/help.png" alt="帮助"
-                               title="Bvaluate自建知识库通过LinkedIn等各国职场社交应用及项目方提供的团队信息等，以文本挖掘及图像识别技术提取并关联相关信息，以构建知识图谱并进行多维比对交叉验真工作。本项最高0.9625分。">
-                        </th>
-                        <th>
-                          团队社交活跃度
-                          <img src="../assets/help.png" alt="帮助"
-                               title="Bvaluate全面采集全球垂直新闻媒体及自媒体数据，分析项目及团队核心成员的热度。本项最高0.2625分。"/>
-                        </th>
-                        <th>
-                          团队关联度
-                          <img src="../assets/help.png" alt="帮助"
-                               title="基于Bvaluate人物库及行业相关信息，通过已构建的知识图谱，分析各项目团队间关联关系。本项最高0.175分。"/>
-                        </th>
-                        <th>
-                          团队完整性
-                          <img src="../assets/help.png" alt="帮助"
-                               title="基于团队成员架构并应用命名实体识别技术，提取其团队的组织架构，判断其完整性。本项最高0.35分。"/>
-                        </th>
-                        <th>
-                          白书皮
-                          <img src="../assets/help.png" alt="帮助"
-                               title="在Bvaluate全球最大的项目白皮书数据库中，所有项目白皮书均应用NLP技术进行全库文本比对，并对其重复率、完整性、版本迭代等进行综合分析。本项最高1.05分。"/>
-                        </th>
-                        <th>
                           行业热度
                           <img src="../assets/help.png" alt="帮助"
                                title="Bvaluate基于全球行业相关新闻及自媒体数据采集，通过文本内容实时分析并匹配行业热度。本项最高0.45分。"/>
@@ -116,6 +91,31 @@
                           <img src="../assets/help.png" alt="帮助"
                                title="实时追踪所有开源项目的代码更新情况，如频率、贡献度等。Bvaluate专家团队在不断研究代码内容分析方法。本项最高0.5分。"/>
                         </th>
+                        <th>
+                          团队真实性
+                          <img src="../assets/help.png" alt="帮助"
+                               title="Bvaluate自建知识库通过LinkedIn等各国职场社交应用及项目方提供的团队信息等，以文本挖掘及图像识别技术提取并关联相关信息，以构建知识图谱并进行多维比对交叉验真工作。本项最高0.9625分。">
+                        </th>
+                        <th>
+                          团队社交活跃度
+                          <img src="../assets/help.png" alt="帮助"
+                               title="Bvaluate全面采集全球垂直新闻媒体及自媒体数据，分析项目及团队核心成员的热度。本项最高0.2625分。"/>
+                        </th>
+                        <th>
+                          团队关联度
+                          <img src="../assets/help.png" alt="帮助"
+                               title="基于Bvaluate人物库及行业相关信息，通过已构建的知识图谱，分析各项目团队间关联关系。本项最高0.175分。"/>
+                        </th>
+                        <th>
+                          团队完整性
+                          <img src="../assets/help.png" alt="帮助"
+                               title="基于团队成员架构并应用命名实体识别技术，提取其团队的组织架构，判断其完整性。本项最高0.35分。"/>
+                        </th>
+                        <th>
+                          白书皮
+                          <img src="../assets/help.png" alt="帮助"
+                               title="在Bvaluate全球最大的项目白皮书数据库中，所有项目白皮书均应用NLP技术进行全库文本比对，并对其重复率、完整性、版本迭代等进行综合分析。本项最高1.05分。"/>
+                        </th>
                       </tr>
                       </thead>
                       <tbody>
@@ -129,17 +129,17 @@
                           <h4 :title="item.project">{{item.project}}</h4>
                         </td>
                         <td>{{item.rankingTotalScore }}</td>
-                        <td>{{item.teamAuthenticity }}</td>
-                        <td>{{item.teamIntegrity }}</td>
-                        <td>{{item.teamSocialActivity }}</td>
-                        <td>{{item.projectTeamRelation }}</td>
-                        <td>{{item.whitpaperAnalysis }}</td>
                         <td>{{item.industryAnalysis }}</td>
                         <td>{{item.mediaAttention }}</td>
                         <td>{{item.advertisingDegree }}</td>
                         <td>{{item.negativeImpact }}</td>
                         <td>{{item.walletSupervision }}</td>
                         <td>{{item.githubActivity }}</td>
+                        <td>{{item.teamAuthenticity }}</td>
+                        <td>{{item.teamIntegrity }}</td>
+                        <td>{{item.teamSocialActivity }}</td>
+                        <td>{{item.projectTeamRelation }}</td>
+                        <td>{{item.whitpaperAnalysis }}</td>
                       </tr>
                       </tbody>
                     </table>
