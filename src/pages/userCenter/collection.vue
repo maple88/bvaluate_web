@@ -110,7 +110,7 @@
       return {
         deleteCid: '',
         newsList: [],
-        pageSize: 15,
+        pageSize: 5,
         loading: loading,
         showloading: true,
       }
@@ -195,7 +195,7 @@
           if (that.pageSize >= res.data.totalElements) {
             that.showloading = -1
           }
-          that.pageSize += 15;
+          that.pageSize += 5;
         })
       },
       setUnfollow(cid) {
