@@ -30,6 +30,7 @@
               <!-- <router-link tag="li" to="/index" active-class="active"><a>首页</a></router-link> -->
               <!-- <router-link tag="li" to="/recommend" active-class="active"><a>新闻</a></router-link> -->
               <router-link tag="li" to="/list" active-class="active"><a data="榜单">榜单</a></router-link>
+              <router-link tag="li" to="/index" active-class="active"><a>综合</a></router-link>
               <router-link tag="li" to="/follow" active-class="active" v-show="token"><a data="关注">关注</a></router-link>
               <li v-show="!token" @click="isLogin('关注')"><a data="关注">关注</a></li>
               <li v-show="token"><a href="javascript:;" data="白皮书分析" @click="analysis()">白皮书分析</a></li>
@@ -37,7 +38,6 @@
               </li>
               <!-- <router-link tag="li" to="/userCenter" active-class="active" v-show="token"><a data="个人中心">个人中心</a></router-link>
               <li v-show="!token" @click="isLogin('个人中心')"><a data="个人中心">个人中心</a></li> -->
-              <router-link tag="li" to="/index" active-class="active"><a>综合</a></router-link>
             </ul>
             <ul class="nav navbar-nav navbar-right" v-if="token">
               <li class="dropdown text-center">
