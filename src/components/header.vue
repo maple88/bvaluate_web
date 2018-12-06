@@ -35,9 +35,9 @@
               <li v-show="token"><a href="javascript:;" data="白皮书分析" @click="analysis()">白皮书分析</a></li>
               <li v-show="!token" @click="isLogin('白书皮分析')"><a href="javascript:;" data="白皮书分析">白皮书分析</a>
               </li>
-              <router-link tag="li" to="/userCenter" active-class="active" v-show="token"><a data="个人中心">个人中心</a>
-              </router-link>
-              <li v-show="!token" @click="isLogin('个人中心')"><a data="个人中心">个人中心</a></li>
+              <!-- <router-link tag="li" to="/userCenter" active-class="active" v-show="token"><a data="个人中心">个人中心</a></router-link>
+              <li v-show="!token" @click="isLogin('个人中心')"><a data="个人中心">个人中心</a></li> -->
+              <router-link tag="li" to="/index" active-class="active"><a>综合</a></router-link>
             </ul>
             <ul class="nav navbar-nav navbar-right" v-if="token">
               <li class="dropdown text-center">
@@ -50,12 +50,11 @@
                 </button>
                 <p class="candyNum">糖果数：{{sugarNum}}</p>
                 <ul class="dropdown-menu">
+                  <router-link tag="li" to="/userCenter" active-class="active"><a data="个人中心">个人中心</a></router-link>
                   <li>
                     <a href="javascript:;" data="消息" @click="$store.state.messagePop = true">消息</a>
                   </li>
-                  <li>
-                    <a href="javascript:;" data="设置" @click="goMy()">设置</a>
-                  </li>
+                  <router-link tag="li" to="/my" active-class="active"><a data="设置">设置</a></router-link>
                   <li>
                     <a href="javascript:;" data="退出" @click="logout()">退出</a>
                   </li>
@@ -192,9 +191,6 @@
       }
     },
     methods: {
-      goMy() {
-        this.$router.push('/my');
-      },
       invitation() {
         let token = this.token;
         if (token) {

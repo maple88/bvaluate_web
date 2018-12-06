@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://23.100.88.104:8090/apelink',
+        target: 'https://api.bvaluate.com.cn',
         secure: false,
         changeOrigin: true,
         pathRewrite: {
@@ -55,7 +55,7 @@ module.exports = {
     assetsPublicPath: './',
     proxyTable: {
       '/api': {
-        target: 'http://23.100.88.104:8090/apelink',
+        target: 'https://api.bvaluate.com.cn',
         secure: false,
         changeOrigin: true,
         pathRewrite: {
