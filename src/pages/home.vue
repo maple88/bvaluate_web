@@ -359,8 +359,8 @@
         </div>
       </div>
       <!--isShow控制显示 goUrl控制登录成功后跳转（不跳转不给此值） success回调函数（登录成功后执行，默认空方法）在list.vue中使用-->
-      <v-login v-model="isShow" :success="refreshHome"></v-login>
-      <v-analysis v-model="isWhitePaper"></v-analysis>
+      <!-- <v-login v-model="isShow" :success="refreshHome"></v-login> -->
+      <!-- <v-analysis v-model="isWhitePaper"></v-analysis> -->
       <vfooter/>
     </div>
   </div>
@@ -368,7 +368,7 @@
 
 <script>
   import Swiper from 'swiper';
-  import login from '../components/login';
+  // import login from '../components/login';
 
   let tuiwen = require('../assets/home/tuite.png');
   let weibo = require('../assets/home/weibo.png');
@@ -725,13 +725,8 @@
       },
       //判断是否登录，登录后立即跳转，未登录弹出登录窗口
       goArticle(url, query) {
-        let token = localStorage.getItem('apelink_user_token');
-        if (token) {
-          let routeData = this.$router.resolve({path: url, query: query});
-          window.open(routeData.href, '_blank');
-        } else {
-          this.isLogin(url);
-        }
+        let routeData = this.$router.resolve({path: url, query: query});
+        window.open(routeData.href, '_blank');
       },
       //关注
       setFollow() {

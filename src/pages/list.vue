@@ -6,6 +6,10 @@
         <div class="fish_container list_container">
           <div class="clearfix">
             <div class="center">
+              <div class="tabletab">
+                <div :class="name==='GLOBAL' ? 'on' : ''" @click="changeBangdan('GLOBAL')">全球项目榜单</div>
+                <div :class="name==='STO' ? 'on' : ''" @click="changeBangdan('STO')">STO榜单</div>
+              </div>
               <div class="topbangdan">
                 <div class="trow">
                   <div class="item">
@@ -278,6 +282,7 @@
         showloading: true,
         loading: loading,
         type: '周榜',
+        name: 'GLOBAL',
         upList: [],
         downList: [],
         pageSize: 50,
@@ -335,14 +340,25 @@
       getDate() {
         let that = this;
         that.showloading = true;
-        that.$axios.get('/api/hotICO/list?type=' + that.type + '&pageSize=' + that.pageSize).then(function (res) {
-          that.showloading = false;
-          that.list = res.data;
-          if (that.pageSize >= 100) {
-            that.showloading = -1;
-          }
-          that.pageSize += 50;
-        });
+        if (that.name === 'GLOBAL') {
+          that.$axios.get('/api/hotICO/list?type=' + that.type + '&pageSize=' + that.pageSize + '&rankType=GLOBAL').then(function (res) {
+            that.showloading = false;
+            that.list = res.data;
+            if (that.pageSize >= 100) {
+              that.showloading = -1;
+            }
+            that.pageSize += 50;
+          });
+        }else{
+          that.$axios.get('/api/hotICO/list?type=' + that.type + '&pageSize=' + that.pageSize + '&rankType=STO').then(function (res) {
+            that.showloading = false;
+            that.list = res.data;
+            if (that.pageSize >= 100) {
+              that.showloading = -1;
+            }
+            that.pageSize += 50;
+          });
+        }
       },
       reMore() {
         let token = localStorage.getItem('apelink_user_token');
@@ -367,6 +383,12 @@
       changeList(type) {
         this.pageSize = 50;
         this.type = type;
+        this.list = [];
+        this.getDate();
+      },
+      changeBangdan(name) {
+        this.pageSize = 50;
+        this.name = name;
         this.list = [];
         this.getDate();
       },
