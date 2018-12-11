@@ -10,7 +10,7 @@
                 <div :class="name==='GLOBAL' ? 'on' : ''" @click="changeBangdan('GLOBAL')">全球项目榜单</div>
                 <div :class="name==='STO' ? 'on' : ''" @click="changeBangdan('STO')">STO榜单</div>
               </div>
-              <div class="topbangdan">
+              <div class="topbangdan" v-show="name==='GLOBAL' ? true : false">
                 <div class="trow">
                   <div class="item">
                     <p class="itit">项目总量</p>
@@ -30,7 +30,7 @@
                   </div>
                 </div>
               </div>
-              <div class="topproduct">
+              <div class="topproduct" v-show="name==='GLOBAL' ? true : false">
                 <div class="pcol" v-for="(item, index) in topbangdan.topProject" :key="index">
                   <div class="prod">
                     <div class="picon" :data="item.project" :name="'no_content_'+index" :id="'list_prod_logo_'+index" :value="item.project"
@@ -45,7 +45,8 @@
               </div>
               <div class="listBox">
                 <div class="listBox_top">
-                  <h4 class="list_title">全球项目榜单</h4>
+                  <h4 class="list_title" v-show="name==='GLOBAL' ? true : false">全球项目榜单</h4>
+                  <h4 class="list_title" v-show="name==='STO' ? true : false">STO榜单</h4>
                   <div class="tabBtn">
                     <button class="btnStyle" data="查看周榜" name="zhoubang" id="zhoubang" :class="type==='周榜'?'active':''" @click="changeList('周榜')">周榜
                     </button>

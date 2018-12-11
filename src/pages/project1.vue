@@ -50,7 +50,7 @@
       <div class="project1-main">
         <div class="leftmain">
           <div class="tophead">
-            <div class="item">价格<img src="../assets/project/up.png"><span>3.23%</span></div>
+            <div class="item price up">价格<img src="../assets/project/up.png"><span>3.23%</span></div>
             <div class="item">
               <p class="t">市值</p>
               <p class="b">$21,452,131,642</p>
@@ -62,6 +62,15 @@
             <div class="item">
               <p class="t">大单交易笔数</p>
               <p class="b">$21,452,131,642</p>
+            </div>
+          </div>
+          <div class="bluesection">
+            <div class="echarts"></div>
+            <div class="details">
+              <p class="total">总分：2.35</p>
+              <div class="item">
+                <p></p>
+              </div>
             </div>
           </div>
         </div>
