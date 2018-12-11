@@ -4,43 +4,77 @@
     <div class="maintainer">
       <!-- content here -->
       <div class="project1-topmain">
-        <div class="projectTop">
-          <div class="img-box"><img src="../assets/project/recommend.jpg"></div>
-          <div class="textRight">
-            <div class="title">
-              <a href="#" target="_blank">Zilliqa</a>
-              <div class="followbtn" v-if="!isFollow" data="关注项目">+ 关注</div>
-              <div class="followbtn on" v-if="isFollow" data="取消关注项目"><i class="fa fa-check"></i> 已关注</div>
-              <div class="followbtn on share_button" @click.stop="shareButton = !shareButton">
-                <i class="fa fa-share-alt"></i>
-                <transition name="fade">
-                  <div class="share_box" v-show="shareButton">
-                    <div class="arrow"></div>
-                    <div class="share_item" @click.stop="weChatQrCodeShow">
-                      <img src="../assets/project/wechat.png" alt="">
-                      <transition name="fade">
-                        <div class="qrCode_box" ref="wechat_qrCode" v-show="wechatQrCode"></div>
-                      </transition>
-                    </div>
-                    <div class="share_item" @click.stop="qqQrCodeShow">
-                      <img src="../assets/project/QQ.png" alt="">
-                      <transition name="fade">
-                        <div class="qrCode_box" ref="qq_qrCode" v-show="qqQrCode"></div>
-                      </transition>
-                    </div>
-                    <div class="share_item" @click.stop="weiboQrCodeShow">
-                      <img src="../assets/project/weibo.png" alt="">
-                      <transition name="fade">
-                        <div class="qrCode_box" ref="weibo_qrCode" v-show="weiboQrCode"></div>
-                      </transition>
-                    </div>
-                  </div>
-                </transition>
+        <button class="whitepaper">白皮书</button>
+        <div class="topmaintainer">
+          <div class="projectTop">
+            <div class="img-box"><img src="../assets/project/recommend.jpg"></div>
+            <div class="textRight">
+              <div class="title">
+                <a href="#" target="_blank" class="atitle">Zilliqa</a>
+                <div class="followbtn" v-if="!isFollow"><i class="fa fa-plus wicon"></i> 关注</div>
+                <div class="followbtn on" v-if="isFollow"><i class="fa fa-check wicon"></i> 已关注</div>
+                <div class="followbtn on share_button">
+                  <i class="fa fa-share-alt wicon"></i> 分享
+                </div>
+              </div>
+              <p class="des">Scalable blockchain platform with througput of thousands of TX/s</p>
+            </div>
+          </div>
+          <p class="describe">Zilliqa is a new blockchain platform that is designed to scale in an open, permission-less distributed network securely. The core feature that makes Zilliqa scalable is sharding — dividing the network into several smaller component networks (called shards) capable of processing transactions in parallel.</p>
+          <div class="hangyeTips">
+            <p class="title">行业标签</p>
+            <ul>
+              <li>
+                <p class="top">众筹</p>
+                <p class="bottom">平均评分<span>3.6</span></p>
+              </li>
+              <li>
+                <p class="top">众筹</p>
+                <p class="bottom">平均评分<span>3.6</span></p>
+              </li>
+              <li>
+                <p class="top">众筹</p>
+                <p class="bottom">平均评分<span>3.6</span></p>
+              </li>
+            </ul>
+          </div>
+          <ul class="projectBottom">
+            <li><a href="#"><img src="../assets/project/f1.png"></a></li>
+            <li><a href="#"><img src="../assets/project/f2.png"></a></li>
+            <li><a href="#"><img src="../assets/project/f3.png"></a></li>
+            <li><a href="#"><img src="../assets/project/f4.png"></a></li>
+            <li><a href="#"><img src="../assets/project/f5.png"></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="project1-main">
+        <div class="leftmain">
+          <div class="tophead">
+            <div class="item price up">价格<img src="../assets/project/up.png"><span>3.23%</span></div>
+            <div class="item">
+              <p class="t">市值</p>
+              <p class="b">$21,452,131,642</p>
+            </div>
+            <div class="item">
+              <p class="t">流通市值</p>
+              <p class="b">$21,452,131,642</p>
+            </div>
+            <div class="item">
+              <p class="t">大单交易笔数</p>
+              <p class="b">$21,452,131,642</p>
+            </div>
+          </div>
+          <div class="bluesection">
+            <div class="echarts"></div>
+            <div class="details">
+              <p class="total">总分：2.35</p>
+              <div class="item">
+                <p></p>
               </div>
             </div>
-            <p class="des">Scalable blockchain platform with througput of thousands of TX/s</p>
           </div>
         </div>
+        <div class="rightmain"></div>
       </div>
       <vfooter/>
     </div>

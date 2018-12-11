@@ -1,7 +1,208 @@
 .project1{
-  &-topmain{
-    padding: 60px 100px 50px 100px;
-    height: 548px;
-    background: url(../assets/project/probanner1.jpg) center / cover no-repeat;
-  }
+	&-topmain{
+		position: relative;
+		padding: 60px 100px 50px 100px;
+		height: 548px;
+		background: url(../assets/project/probanner1.jpg) center / cover no-repeat;
+		.whitepaper{
+			font-size: 20px;
+			color: #fff;
+			background: $mainColor;
+			border-radius: 5px;
+			position: absolute;
+			top: 60px;
+			right: 100px;
+			padding: 14px 48px;
+			border: 0;
+		}
+		.topmaintainer{
+			max-width: 1086px;
+		}
+		.projectTop{
+			display: flex;
+			margin: 0 0 15px;
+			.img-box{
+				flex: 0 0 100px;
+				min-width: 100px;
+				height: 100px;
+				border-radius: 10px;
+				overflow: hidden;
+				margin: 0 25px 0 0;
+				img{
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+				}
+			}
+			.textRight{
+				overflow: hidden;
+				.title{
+					display: flex;
+					align-items: center;
+					margin: 0 0 25px;
+					.atitle{
+						font-size: 28px;
+						color: #fff;
+						margin: 0 25px 0 0;
+					}
+					.followbtn{
+						color: $mainColor;
+						background: #fff;
+						padding: 6px 12px;
+						border-radius: 20px;
+						margin: 0 15px 0 0;
+						cursor: pointer;
+						&.on{}
+						&.share_button{}
+					}
+				}
+				.des{
+					font-size: 20px;
+					color: #fff;
+					margin: 0;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+				}
+			}
+		}
+		.describe{
+			font-size: 14px;
+			color: #fff;
+			line-height: 2.5;
+			margin: 0 0 40px;
+		}
+		.hangyeTips{
+			margin: 0 0 35px;
+			.title{
+				font-size: 20px;
+				margin: 0 0 15px;
+				color: #fff;
+			}
+			ul{
+				display: flex;
+				li{
+					background: rgba(57, 145, 209, 0.5);
+					display: flex;
+					align-items: center;
+					text-align: center;
+					color: #fff;
+					margin: 0 30px 0 0;
+					flex-direction: column;
+					padding: 12px 18px;
+					border-radius: 5px;
+					&:last-child{
+						margin: 0;
+					}
+					p{
+						margin: 0;
+					}
+					.top{
+						font-size: 16px;
+					}
+					.bottom{
+						font-size: 20px;
+						span{
+							font-size: 24px;
+							margin: 0 0 0 12px;
+						}
+					}
+				}
+			}
+		}
+		.projectBottom{
+			display: flex;
+			li{
+				width: 50px;
+				height: 50px;
+				border-radius: 50%;
+				overflow: hidden;
+				margin: 0 35px 0 0;
+				&:last-child{
+					margin: 0;
+				}
+				a{
+					width: 100%;
+					height: 100%;
+					img{
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+					}
+				}
+			}
+		}
+	}
+	&-main{
+		padding: 60px 100px;
+		display: flex;
+		.leftmain{
+			width: 72.5%;
+			margin: 0 16px 0 0;
+			.tophead{
+				border-radius: 3px;
+				background: #fff;
+				display: flex;
+				padding: 30px 0;
+				margin: 0 0 30px;
+				.item{
+					display: flex;
+					flex: 1;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					position: relative;
+					padding: 12px 0;
+					&.price{
+						flex-direction: row;
+						color: #444;
+						font-size: 24px;
+						img{
+							margin: 0 15px;
+						}
+						span{
+							font-size: 30px;
+						}
+						&.up{
+							span{
+								color: #08ba07;
+							}
+						}
+					}
+					&:after{
+						content: "";
+						position: absolute;
+						right: 0;
+						top: 0;
+						width: 1px;
+						height: 100%;
+						background: #e2e2e2;
+					}
+					&:last-child:after{
+						background: transparent;
+					}
+					p{
+						margin: 0;
+					}
+					.t{
+						font-size: 20px;
+						color: #606060;
+						margin: 0 0 15px;
+					}
+					.b{
+						font-size: 24px;
+						color: #000;
+					}
+				}
+			}
+			.bluesection{
+				border-radius: 3px;
+				background: #202470;
+			}
+		}
+		.rightmain{
+			flex: 1;
+			background: gray;
+		}
+	}
 }
