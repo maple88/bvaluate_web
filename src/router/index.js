@@ -9,7 +9,6 @@ import industry from '@/pages/industry'
 import recommend from '@/pages/recommend'
 import article from '@/pages/article'
 import project from '@/pages/project'
-import project1 from '@/pages/project1'
 import projectTest from '@/pages/projectTest'
 import author from '@/pages/author'
 import list from '@/pages/list'
@@ -92,10 +91,6 @@ export default new Router({
       meta: {
         pageTitle: '项目详情页'
       }
-    },
-    {
-      path: '/project1',
-      component: project1
     },
     {
       path: '/projectTest',
