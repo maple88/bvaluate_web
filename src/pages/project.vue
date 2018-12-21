@@ -41,7 +41,7 @@
                     </div>
                   </transition>
                 </div>
-                <button class="whitepaper">白皮书</button>
+                <button class="whitepaper" @click="goArticle('/pdfShow', {id:1})">白皮书</button>
               </div>
               <p class="des">{{project.introduction}}</p>
             </div>
@@ -50,17 +50,10 @@
           <div class="hangyeTips">
             <p class="title">行业标签</p>
             <ul>
-              <li>
-                <p class="top">众筹</p>
-                <p class="bottom">平均评分<span>3.6</span></p>
-              </li>
-              <li>
-                <p class="top">众筹</p>
-                <p class="bottom">平均评分<span>3.6</span></p>
-              </li>
-              <li>
-                <p class="top">众筹</p>
-                <p class="bottom">平均评分<span>3.6</span></p>
+              <li v-for="(item,index) in projectTabs" :key="index">
+                {{item}}
+                <!-- <p class="top">众筹</p>
+                <p class="bottom">平均评分<span>3.6</span></p> -->
               </li>
             </ul>
           </div>
@@ -105,24 +98,51 @@
               </div>
               <div class="item">
                 <p><img src="../assets/project/pb2.png"> 基本面：{{hotInfo.fundamentalsanalysis}}</p>
-                <p>近期交易流动性大，大单交易较多</p>
+                <p>项目白皮书结构完整，行业热度高</p>
               </div>
               <div class="item">
                 <p><img src="../assets/project/pb3.png"> 团队：{{hotInfo.teamanalysis}}</p>
-                <p>近期交易流动性大，大单交易较多</p>
+                <p>团队有人员较多，职位结构完整</p>
               </div>
               <div class="item">
                 <p><img src="../assets/project/pb4.png"> 技术：{{hotInfo.technicalanalysis}}</p>
-                <p>近期交易流动性大，大单交易较多</p>
+                <p>近期github代码提交量高</p>
               </div>
               <div class="item">
                 <p><img src="../assets/project/pb5.png"> 市场：{{hotInfo.marketanalysis}}</p>
-                <p>近期交易流动性大，大单交易较多</p>
+                <p>项目近期宣传力度高，媒体关注度高</p>
               </div>
             </div>
           </div>
           <div class="echartsbox2">
-            
+            <div ref="scoreChart" class="chartbox" :style="{width: '100%', height: '600px'}"></div>
+            <div class="btn-list">
+              <label for="item2" ref="scoreButton2">
+                <input type="checkbox" id="item2">
+                <div class="checkbox"></div>
+                资金监管
+              </label>
+              <label for="item3" ref="scoreButton3">
+                <input type="checkbox" id="item3">
+                <div class="checkbox"></div>
+                基本面
+              </label>
+              <label for="item4" ref="scoreButton4">
+                <input type="checkbox" id="item4">
+                <div class="checkbox"></div>
+                团队
+              </label>
+              <label for="item5" ref="scoreButton5">
+                <input type="checkbox" id="item5">
+                <div class="checkbox"></div>
+                技术
+              </label>
+              <label for="item6" ref="scoreButton6">
+                <input type="checkbox" id="item6">
+                <div class="checkbox"></div>
+                市场
+              </label>
+            </div>
           </div>
           <div class="project-projectMainTab" ref="bigBox">
             <div class="tabheader">
@@ -611,8 +631,67 @@
               </div>
             </div>
             <!-- 微信 -->
-            <div class="tabcontent" v-show="tabactive === 8">
-              8
+            <div class="tabcontent project-tab-NewsList" v-show="tabactive === 8">
+              <div class="list">
+                <div class="media" v-for="(item, index) in weixinList" :key="index">
+                  <div class="media-left media-middle">
+                    <div class="newimg_box">
+                      <img v-if="item.titlePicture" :src="item.titlePicture"/>
+                      <div class="date_box">
+                        <span class="day">{{item.urlTime | showDay}}</span>
+                        <span class="years">{{item.urlTime | showYear}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="media-body">
+                    <h4 :name="'project_media-heading_h4_'+index" :id="'project_media-heading_h4_'+index"
+                    class="media-heading" :title="item.title" :data="item.title"
+                    @click="goArticle('/article',{sid:item.sid}, $event),
+                    trackArticle('项目页', item.title, project.project, project.sid, atvNewOrGrade==1?'新闻':'评级文章', item.sid)">
+                      {{item.title}}
+                    </h4>
+                    <p class="media-words">
+                      {{item.content}}
+                    </p>
+                    <div class="media-bottom">
+                      <ul>
+                        <li>
+                          <div class="userimg" v-if="!(item.siteName !== 'NULL' && item.siteName !== null && item.siteName !== '')">
+                            <img src="../assets/follow/user_head.png">
+                          </div>
+                          {{(item.siteName !== 'NULL' && item.siteName !== null && item.siteName !== '')?item.siteName:item.author}}
+                        </li>
+                        <li>{{item.urlTime}}</li>
+                      </ul>
+                      <div class="tips" :name="'project_tips_projectCategory_'+index" :id="'project_tips_projectCategory_'+index"
+                      v-if="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
+                      @click="goProjectByName(item.projectCategory, $event)"
+                      :data="item.projectCategory">
+                        {{item.projectCategory | labelFormat}}
+                      </div>
+                      <div class="tips" :name="'project_tips_industryCategory_'+index" :id="'project_tips_industryCategory_'+index"
+                      v-else-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
+                      @click="goIndustryByIndustry(item.industryCategory, $event)"
+                      :data="item.industryCategory">
+                        {{item.industryCategory | labelFormat}}
+                      </div>
+                      <div class="tips" :name="'project_tips_countryCategory_'+index" :id="'project_tips_countryCategory_'+index"
+                      v-else="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
+                      @click="goIndustryByCountry(item.countryCategory, $event)"
+                      :data="item.countryCategory">
+                        {{item.countryCategory | labelFormat}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="loading_box" v-if="ListLoading">
+                  <img :src="loading"/>
+                </div>
+                <div class="loading_box loadmore" v-if="!ListLoading">
+                  <div class="btn btn-primary" v-if="ListHasData" @click="initNews(project.project, '290001')">加载更多</div>
+                  <span v-if="!ListHasData">没有数据了</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -677,13 +756,16 @@
         xinwenpage: 0,
         tuiwenpage: 0,
         weibopage: 0,
+        weixinpage: 0,
         ListHasData: true,
         shareButton: false,
         weiboQrCode: false,
         qqQrCode: false,
         wechatQrCode: false,
         hotInfo: '',
-        marketInfo: ''
+        marketInfo: '',
+        weixinList: [],
+        projectTabs: []
       }
     },
     mounted () {
@@ -753,6 +835,8 @@
                 partner = JSON.parse(partner);
               }
               that.project.partner = partner;
+              that.getScoreChart(res.data.project)
+              that.getTabs(res.data.project)
               that.$nextTick(() => {  // 下一个UI帧再初始化swiper
                 new Swiper('#partnerSwiper', {
                   direction: 'vertical',
@@ -791,13 +875,14 @@
               that.initProjectMarket(res.data.project,res=>{
                 that.initMarketChart(res)
               });
-              that.getHotInfo(res.data.project);
               let partner = that.project.partner;
               if (partner) {
                 partner = JSON.parse(partner);
               }
               that.project.partner = partner;
               that.getHotInfo(res.data.project);
+              that.getScoreChart(res.data.project)
+              that.getTabs(res.data.project)
               that.$nextTick(() => {  // 下一个UI帧再初始化swiper
                 new Swiper('#partnerSwiper', {
                   direction: 'vertical',
@@ -866,6 +951,20 @@
           if (res.data.content.length === 0) {
             that.ListHasData = false;
             that.weibopage = false;
+          }
+          that.ListLoading = false;
+        })
+      },
+      // 微信
+      initWeixin(projectName, categoryId) {
+        let that = this;
+        this.ListLoading = true;
+        that.$axios.get('/api/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId + '&pageNo=' + that.weixinpage).then(function (res) {
+          that.weixinpage++;
+          that.weixinList = that.weixinList.concat(res.data.content);
+          if (res.data.content.length === 0) {
+            that.ListHasData = false;
+            that.weixinpage = false;
           }
           that.ListLoading = false;
         })
@@ -980,6 +1079,16 @@
           });
         })    
       },
+      getTabs(icoName) {
+        this.$axios.get(`/api/tradition/catalog1Avg/${icoName}`).then(res => {
+          this.projectTabs = res.data.split(';');
+        })
+      },
+      getScoreChart(icoName) {
+        this.$axios.get(`/api/tradition/HotESICOHisScore/${icoName}`).then(res => {
+          this.initScoreChart(res.data)
+        })
+      },
       initProjectMarket(icoName,success) {
         this.$axios.get(`/api/tradition/mark/${icoName}`).then(res => {
           success(res.data);
@@ -997,6 +1106,188 @@
         this.$axios.get(`/api/tradition/medio/${icoName}`).then(res => {
           this.initThreeLine(res.data)
         })
+      },
+      initScoreChart(data) {
+        data.reverse();
+        let xList = data.map(item => item.times.split(" ")[0]);
+        let totalScoreList = data.map(item => item.totalordercount);
+        let fundSuperList = data.map(item => item.fundsupervision);
+        let fundaMentList = data.map(item => item.fundamentalsanalysis );
+        let teamList = data.map(item => item.teamanalysis);
+        let techList = data.map(item => item.technicalanalysis);
+        let marketList = data.map(item => item.marketanalysis );
+
+        let scoreLine = echarts.init(this.$refs.scoreChart);
+        let scoreLineOption = {
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'cross',
+              label: {
+                backgroundColor: '#6a7985'
+              }
+            }
+          },
+          legend: {
+            selected: {'总评分': true, '资金监管': false, '基本面': false, '团队': false, '技术': false, '市场': false},
+            data: ['总评分', '资金监管', '基本面', '团队', '技术', '市场'],
+            selectedMode:false
+          },
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '40',
+            containLabel: true
+          },
+          xAxis: [
+            {
+              type: 'category',
+              boundaryGap: false,
+              data: xList,
+              splitLine: {
+                show: false,
+                lineStyle: {
+                  type: 'dashed'
+                }
+              }
+            }
+          ],
+          yAxis: [
+            {
+              type: 'value'
+            }
+          ],
+          dataZoom: [
+            {
+              type: 'slider',
+              xAxisIndex: 0,
+              filterMode: 'empty',
+            },
+          ],
+          series: [
+            {
+              name: '总评分',
+              type: 'line',
+              stack: '总量',
+              label: {
+                normal: {
+                  show: true,
+                  position: 'top'
+                }
+              },
+              areaStyle: {normal: {}},
+              data: totalScoreList,
+              showSymbol: false
+            },
+            {
+              name: '资金监管',
+              type: 'line',
+              stack: '总量',
+              data: fundSuperList,
+              showSymbol: false
+
+            },
+            {
+              name: '基本面',
+              type: 'line',
+              stack: '总量',
+              data: fundaMentList,
+              showSymbol: false
+            },
+            {
+              name: '团队',
+              type: 'line',
+              stack: '总量',
+              data: teamList,
+              showSymbol: false
+            },
+            {
+              name: '技术',
+              type: 'line',
+              stack: '总量',
+              data: techList,
+              showSymbol: false
+            },
+            {
+              name: '市场',
+              type: 'line',
+              stack: '总量',
+              data: marketList,
+              showSymbol: false
+            },
+          ]
+        };
+        scoreLine.setOption(scoreLineOption);
+        window.addEventListener('resize', e =>{
+          scoreLine.resize();
+        })
+
+        this.$refs.scoreButton2.addEventListener('click', e => {
+          let $this = e.target;
+          let mykey = false;
+          let className = $this.classList.toString();
+          if (className.indexOf('check') !== -1) {
+            scoreLineOption.legend.selected['资金监管'] = false;
+            $this.classList.remove('check');
+          } else {
+            scoreLineOption.legend.selected['资金监管'] = true;
+            $this.classList.add('check');
+          }
+          scoreLine.setOption(scoreLineOption);
+        });
+        this.$refs.scoreButton3.addEventListener('click', e => {
+          let $this = e.target;
+          let mykey = false;
+          let className = $this.classList.toString();
+          if (className.indexOf('check') !== -1) {
+            scoreLineOption.legend.selected['基本面'] = false;
+            $this.classList.remove('check');
+          } else {
+            scoreLineOption.legend.selected['基本面'] = true;
+            $this.classList.add('check');
+          }
+          scoreLine.setOption(scoreLineOption);
+        });
+        this.$refs.scoreButton4.addEventListener('click', e => {
+          let $this = e.target;
+          let mykey = false;
+          let className = $this.classList.toString();
+          if (className.indexOf('check') !== -1) {
+            scoreLineOption.legend.selected['团队'] = false;
+            $this.classList.remove('check');
+          } else {
+            scoreLineOption.legend.selected['团队'] = true;
+            $this.classList.add('check');
+          }
+          scoreLine.setOption(scoreLineOption);
+        });
+        this.$refs.scoreButton5.addEventListener('click', e => {
+          let $this = e.target;
+          let mykey = false;
+          let className = $this.classList.toString();
+          if (className.indexOf('check') !== -1) {
+            scoreLineOption.legend.selected['技术'] = false;
+            $this.classList.remove('check');
+          } else {
+            scoreLineOption.legend.selected['技术'] = true;
+            $this.classList.add('check');
+          }
+          scoreLine.setOption(scoreLineOption);
+        });
+        this.$refs.scoreButton6.addEventListener('click', e => {
+          let $this = e.target;
+          let mykey = false;
+          let className = $this.classList.toString();
+          if (className.indexOf('check') !== -1) {
+            scoreLineOption.legend.selected['市场'] = false;
+            $this.classList.remove('check');
+          } else {
+            scoreLineOption.legend.selected['市场'] = true;
+            $this.classList.add('check');
+          }
+          scoreLine.setOption(scoreLineOption);
+        });
+        this.scoreLine = scoreLine;
       },
       initMarketChart(data) {
         data.reverse();
@@ -1025,7 +1316,7 @@
           grid: {
             left: '3%',
             right: '4%',
-            bottom: '3%',
+            bottom: '40',
             containLabel: true
           },
           xAxis: [
@@ -1045,6 +1336,13 @@
             {
               type: 'value'
             }
+          ],
+          dataZoom: [
+            {
+              type: 'slider',
+              xAxisIndex: 0,
+              filterMode: 'empty',
+            },
           ],
           series: [
             {
@@ -1229,7 +1527,7 @@
           grid: {
             left: '3%',
             right: '4%',
-            bottom: '3%',
+            bottom: '8%',
             containLabel: true
           },
           xAxis: [
@@ -1243,6 +1541,13 @@
             {
               type: 'value'
             }
+          ],
+          dataZoom: [
+            {
+              type: 'slider',
+              xAxisIndex: 0,
+              filterMode: 'empty',
+            },
           ],
           series: [
             {
@@ -1349,7 +1654,7 @@
           grid: {
             left: '3%',
             right: '4%',
-            bottom: '3%',
+            bottom: '40',
             containLabel: true
           },
           xAxis: [
@@ -1363,6 +1668,13 @@
             {
               type: 'value'
             }
+          ],
+          dataZoom: [
+            {
+              type: 'slider',
+              xAxisIndex: 0,
+              filterMode: 'empty',
+            },
           ],
           series: [
             {
@@ -1413,7 +1725,7 @@
           grid: {
             left: '3%',
             right: '4%',
-            bottom: '3%',
+            bottom: '40',
             containLabel: true
           },
           xAxis: [
@@ -1427,6 +1739,13 @@
             {
               type: 'value'
             }
+          ],
+          dataZoom: [
+            {
+              type: 'slider',
+              xAxisIndex: 0,
+              filterMode: 'empty',
+            },
           ],
           series: [
             {
@@ -1478,7 +1797,7 @@
           grid: {
             left: '3%',
             right: '4%',
-            bottom: '3%',
+            bottom: '40',
             containLabel: true
           },
           xAxis: [
@@ -1492,6 +1811,13 @@
             {
               type: 'value'
             }
+          ],
+          dataZoom: [
+            {
+              type: 'slider',
+              xAxisIndex: 0,
+              filterMode: 'empty',
+            },
           ],
           series: [
             {
@@ -1534,11 +1860,6 @@
           }
           socialHeatLine.setOption(socialHeatLineOption);
           this.socialHeatLine = socialHeatLine;
-            window.addEventListener('resize', e =>{
-               let width = this.$refs.bigBox.offsetWidth;
-            socialHeatLine.resize({'width': `${width}px`});
-
-          })
         });
         // this.$refs.socialHeatLineButton2.addEventListener('click', e => {
         //   let $this = e.target;
@@ -1554,6 +1875,10 @@
         //   socialHeatLine.setOption(socialHeatLineOption);
         // });
         this.socialHeatLine = socialHeatLine;
+        window.addEventListener('resize', e =>{
+          let width = this.$refs.bigBox.offsetWidth;
+          socialHeatLine.resize({'width': `${width}px`});
+        })
       },
       initThreeLine(data) {
         data.reverse();
@@ -1567,6 +1892,17 @@
         this.initMediaDisseminateLine({xList: xList, allnumList: allnumList, twitterAvgList: twitterAvgList});
         this.initMediaFollowLine({xList: xList, sitenameList: sitenameList, twitterAvgList: twitterAvgList});
         this.initSocialHeatLine({xList: xList, twitterList: twitterList, twitterAvgList: twitterAvgList});
+      },
+      goProjectByName(obj, event) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
+        // sensors.quick('trackHeatMap', event.currentTarget);
+        window.open(routeData.href, '_blank');
       },
     },
     watch: {
@@ -1635,6 +1971,12 @@
             break;
           case 8:
             // 微信
+            if (this.weixinpage !== false) {
+              this.ListHasData = true;
+              this.initWeixin(this.project.project, '290000');
+            }else{
+              this.ListHasData = false;
+            }
             break;
           default:
         }

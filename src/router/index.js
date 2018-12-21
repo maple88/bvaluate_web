@@ -14,6 +14,7 @@ import author from '@/pages/author'
 import list from '@/pages/list'
 import search from '@/pages/search'
 import newsList from '@/pages/newsList'
+import pdfShow from '@/pages/pdfShow'
 
 Vue.use(Router);
 
@@ -110,6 +111,10 @@ export default new Router({
     {
       path: '/newsList',
       component: newsList
+    },
+    {
+      path: '/pdfShow',
+      component: pdfShow
     }
   ],
   scrollBehavior(to, from, savedPosition) {
