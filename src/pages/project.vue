@@ -62,7 +62,21 @@
             <li v-show="project.outerTwitter"><a target="_blank" :href="project.outerTwitter"><img src="../assets/project/f2.png"></a></li>
             <li v-show="project.outerTelegram"><a target="_blank" :href="project.outerTelegram "><img src="../assets/project/f3.png"></a></li>
             <li v-show="project.outerBitCoinTalk"><a target="_blank" :href="project.outerBitCoinTalk"><img src="../assets/project/f4.png"></a></li>
-            <li v-show="project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f5.png"></a></li>
+            <li v-show="project.outerGitHub"><a target="_blank" :href="project.outerGitHub"><img src="../assets/project/f5.png"></a></li>
+            <li v-show="project.outerInstagram"><a target="_blank" :href="project.outerInstagram"><img src="../assets/project/f6.png"></a></li>
+            <li v-show="project.outerMedium"><a target="_blank" :href="project.outerMedium"><img src="../assets/project/f7.png"></a></li>
+            <li v-show="project.outerReddit"><a target="_blank" :href="project.outerReddit"><img src="../assets/project/f8.png"></a></li>
+            <!-- <li v-show="!project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f9.png"></a></li>
+            <li v-show="!project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f10.png"></a></li>
+            <li v-show="!project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f11.png"></a></li>
+            <li v-show="!project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f12.png"></a></li>
+            <li v-show="!project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f13.png"></a></li>
+            <li v-show="!project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f14.png"></a></li>
+            <li v-show="!project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f15.png"></a></li>
+            <li v-show="!project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f16.png"></a></li>
+            <li v-show="!project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f17.png"></a></li>
+            <li v-show="!project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f18.png"></a></li>
+            <li v-show="!project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f19.png"></a></li> -->
           </ul>
         </div>
       </div>
@@ -117,28 +131,28 @@
           <div class="echartsbox2">
             <div ref="scoreChart" class="chartbox" :style="{width: '100%', height: '600px'}"></div>
             <div class="btn-list">
-              <label for="item2" ref="scoreButton2">
-                <input type="checkbox" id="item2">
+              <label for="citem2" ref="scoreButton2">
+                <input type="checkbox" id="citem2">
                 <div class="checkbox"></div>
                 资金监管
               </label>
-              <label for="item3" ref="scoreButton3">
-                <input type="checkbox" id="item3">
+              <label for="citem3" ref="scoreButton3">
+                <input type="checkbox" id="citem3">
                 <div class="checkbox"></div>
                 基本面
               </label>
-              <label for="item4" ref="scoreButton4">
-                <input type="checkbox" id="item4">
+              <label for="citem4" ref="scoreButton4">
+                <input type="checkbox" id="citem4">
                 <div class="checkbox"></div>
                 团队
               </label>
-              <label for="item5" ref="scoreButton5">
-                <input type="checkbox" id="item5">
+              <label for="citem5" ref="scoreButton5">
+                <input type="checkbox" id="citem5">
                 <div class="checkbox"></div>
                 技术
               </label>
-              <label for="item6" ref="scoreButton6">
-                <input type="checkbox" id="item6">
+              <label for="citem6" ref="scoreButton6">
+                <input type="checkbox" id="citem6">
                 <div class="checkbox"></div>
                 市场
               </label>
@@ -1496,7 +1510,8 @@
         };
         myChart.setOption(option);
         window.addEventListener('resize', e =>{
-          myChart.resize();
+          let width = this.$refs.bigBox.offsetWidth;
+          mediaFollowLine.resize({'width': `${width}px`});
         })
       },
       initGithubLine(data) {
@@ -1505,7 +1520,7 @@
         let commitList = data.map(item => item.commit);
         let watchList = data.map(item => item.watch);
         let starList = data.map(item => item.star);
-        let commitAvgList = data.map(item => item.commitAvg.toFixed(2));
+        let commitAvgList = data.map(item => (item.commitAvg) ? item.commitAvg.toFixed(2): item.commitAvg);
 
         let githubLine = echarts.init(this.$refs.githubLine);
         let githubLineOption = {
