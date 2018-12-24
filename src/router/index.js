@@ -9,12 +9,12 @@ import industry from '@/pages/industry'
 import recommend from '@/pages/recommend'
 import article from '@/pages/article'
 import project from '@/pages/project'
-import project1 from '@/pages/project1'
 import projectTest from '@/pages/projectTest'
 import author from '@/pages/author'
 import list from '@/pages/list'
 import search from '@/pages/search'
 import newsList from '@/pages/newsList'
+import pdfShow from '@/pages/pdfShow'
 
 Vue.use(Router);
 
@@ -94,10 +94,6 @@ export default new Router({
       }
     },
     {
-      path: '/project1',
-      component: project1
-    },
-    {
       path: '/projectTest',
       component: projectTest
     },
@@ -115,6 +111,10 @@ export default new Router({
     {
       path: '/newsList',
       component: newsList
+    },
+    {
+      path: '/pdfShow',
+      component: pdfShow
     }
   ],
   scrollBehavior(to, from, savedPosition) {

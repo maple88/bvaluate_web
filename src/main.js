@@ -17,6 +17,8 @@ import 'es6-promise/auto'
 import Vuex from 'vuex'
 import sensors from 'sa-sdk-javascript/sensorsdata.min.js'
 
+axios.defaults.timeout = 30000;
+
 Vue.prototype.$axios = axios;
 Vue.prototype.$sugar = 12;
 Vue.config.productionTip = false;
@@ -61,11 +63,33 @@ router.afterEach((to,from) => {
   };
 });
 
-// router.afterEach((to,from) => {
-//   Vue.nextTick(() => {
-//     sensors.quick("autoTrackSinglePage");
-//   });
-// });
+// try{
+//   axios.interceptors.response.use(
+//     response => {
+//       if (response.status === 200) {
+//         return Promise.resolve(response);
+//       } else {
+//         return Promise.reject(response);
+//       }
+//     },
+//     // 服务器状态码不是200的情况
+//     error => {
+//       if (error.response.status) {
+//         switch (error.response.status) {
+//           case 500:
+//             alert("服务器错误，请刷新后重试！");
+//             break;
+//           // 其他错误，直接抛出错误提示   
+//           default:
+//             alert(error.response.data.message);
+//         }
+//         return Promise.reject(error.response);
+//       }
+//     }
+//   );
+// }catch(err) {
+//   console.log(err)
+// }
 
 const store = new Vuex.Store({
   state: {
