@@ -41,7 +41,7 @@
                     </div>
                   </transition>
                 </div>
-                <button class="whitepaper" @click="goArticle('/pdfShow', {id:1})">白皮书</button>
+                <button class="whitepaper" @click="goArticle('/pdfShow', {project: project.project})">白皮书</button>
               </div>
               <p class="des">{{project.introduction}}</p>
             </div>
@@ -62,21 +62,21 @@
             <li v-show="project.outerTwitter"><a target="_blank" :href="project.outerTwitter"><img src="../assets/project/f2.png"></a></li>
             <li v-show="project.outerTelegram"><a target="_blank" :href="project.outerTelegram "><img src="../assets/project/f3.png"></a></li>
             <li v-show="project.outerBitCoinTalk"><a target="_blank" :href="project.outerBitCoinTalk"><img src="../assets/project/f4.png"></a></li>
-            <li v-show="project.outerGitHub"><a target="_blank" :href="project.outerGitHub"><img src="../assets/project/f5.png"></a></li>
-            <li v-show="project.outerInstagram"><a target="_blank" :href="project.outerInstagram"><img src="../assets/project/f6.png"></a></li>
-            <li v-show="project.outerMedium"><a target="_blank" :href="project.outerMedium"><img src="../assets/project/f7.png"></a></li>
-            <li v-show="project.outerReddit"><a target="_blank" :href="project.outerReddit"><img src="../assets/project/f8.png"></a></li>
-            <!-- <li v-show="!project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f9.png"></a></li>
-            <li v-show="!project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f10.png"></a></li>
-            <li v-show="!project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f11.png"></a></li>
-            <li v-show="!project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f12.png"></a></li>
-            <li v-show="!project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f13.png"></a></li>
-            <li v-show="!project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f14.png"></a></li>
-            <li v-show="!project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f15.png"></a></li>
-            <li v-show="!project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f16.png"></a></li>
-            <li v-show="!project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f17.png"></a></li>
-            <li v-show="!project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f18.png"></a></li>
-            <li v-show="!project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f19.png"></a></li> -->
+            <li v-show="project.outerDiscord"><a target="_blank" :href="project.outerDiscord"><img src="../assets/project/f5.png"></a></li>
+            <li v-show="project.outerGitHub"><a target="_blank" :href="project.outerGitHub"><img src="../assets/project/f6.png"></a></li>
+            <li v-show="project.outerInstagram"><a target="_blank" :href="project.outerInstagram"><img src="../assets/project/f7.png"></a></li>
+            <li v-show="project.outerMedium"><a target="_blank" :href="project.outerMedium"><img src="../assets/project/f8.png"></a></li>
+            <li v-show="project.outerReddit"><a target="_blank" :href="project.outerReddit"><img src="../assets/project/f9.png"></a></li>
+            <li v-show="project.outerBlog"><a target="_blank" :href="project.outerBlog"><img src="../assets/project/f10.png"></a></li>
+            <li v-show="project.outerGitter"><a target="_blank" :href="project.outerGitter"><img src="../assets/project/f11.png"></a></li>
+            <li v-show="project.outerGoogle"><a target="_blank" :href="project.outerGoogle"><img src="../assets/project/f12.png"></a></li>
+            <li v-show="false"><a target="_blank"><img src="../assets/project/f13.png"></a></li>
+            <li v-show="project.outerLinkedIn"><a target="_blank" :href="project.outerLinkedIn"><img src="../assets/project/f14.png"></a></li>
+            <li v-show="false"><a target="_blank"><img src="../assets/project/f15.png"></a></li>
+            <li v-show="project.outerSlack"><a target="_blank" :href="project.outerSlack"><img src="../assets/project/f16.png"></a></li>
+            <li v-show="project.outerStackExchange"><a target="_blank" :href="project.outerStackExchange"><img src="../assets/project/f17.png"></a></li>
+            <li v-show="false"><a target="_blank"><img src="../assets/project/f18.png"></a></li>
+            <li v-show="project.outerYoutube"><a target="_blank" :href="project.outerYoutube"><img src="../assets/project/f19.png"></a></li>
           </ul>
         </div>
       </div>

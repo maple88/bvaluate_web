@@ -5,10 +5,13 @@
       <!-- content here -->
         <div class="main-content">
           <div class="top-h">
-            <div class="tit">项目名称白皮书pdf</div>
-            <button class="down-btn">下载</button>
+            <div class="tit">{{projectName}} 白皮书pdf</div>
+            <button class="down-btn" @click="downloadPDF">下载</button>
           </div>
           <div class="pdf-box">
+            <div class="pdfloading" v-if="pdfloading">
+              <img :src="loading"/>
+            </div>
             <div class="pdf-tool">
               <div class="page" @click="(pageNum !== 1) ? pageNum-- : ''">上一页</div>
               <div class="page-num">{{`${currentPage}/${pageCount}`}}</div>
@@ -28,6 +31,11 @@
                 ></pdf>
               </div>
             </div>
+            <div class="pdf-tool">
+              <div class="page" @click="(pageNum !== 1) ? pageNum-- : ''">上一页</div>
+              <div class="page-num">{{`${currentPage}/${pageCount}`}}</div>
+              <div class="page" @click="(pageNum !== pageCount) ? pageNum++ : ''">下一页</div>
+            </div>
           </div>
         </div>
         <div class="pop-box" v-show="popShow">
@@ -45,9 +53,13 @@
 </template>
 <script>
   import pdf from 'vue-pdf'
+  let loading = require('../assets/login/loading.gif');
+
   export default {
     data() {
       return {
+        loading: loading,
+        pdfloading: true,
         src: '',
         numPages: '',
         currentPage: 0,
@@ -55,23 +67,49 @@
         popShow: false,
         pageNum: 1,
         oWidth: '',
-        pdfWidth: ''
+        pdfWidth: '',
+        projectName: ''
       }
     },
     mounted() {
-      this.src = pdf.createLoadingTask('https://pdfobject.com/pdf/sample-3pp.pdf');
-      this.src.then(pdf => {
-        this.numPages = pdf.numPages;
-        this.oWidth = this.$refs.bigBox.offsetWidth;
-        this.pdfWidth = this.$refs.bigBox.offsetWidth;
-      });
+      this.projectName = this.$route.query.project;
+      this.$axios.get('/api/file/review/bps?project=' + this.$route.query.project).then(res => {
+        for (let i = 0; i < res.data.length; i++) {
+          for (let key in res.data[i]) {
+            if (key === 'cn') {
+              this.src = pdf.createLoadingTask(res.data[i]['cn']);
+              this.src.then(pdf => {
+                this.pdfloading = false;
+                this.numPages = pdf.numPages;
+                this.oWidth = this.$refs.bigBox.offsetWidth;
+                this.pdfWidth = this.$refs.bigBox.offsetWidth;
+              });
+              break;
+            }
+          }
+        }
+      })
+
       window.addEventListener('resize', res =>  {
         this.pdfWidth = this.$refs.bigBox.offsetWidth;
-
       });
     },
     methods: {
-      
+      isLogin(url) {
+        this.$store.state.loginPop = true;
+      },
+      downloadPDF() {
+        let token = localStorage.getItem('apelink_user_token');
+        if (token) {
+          if (localStorage.getItem('apelink_user_candies') >= 30) {
+            // download
+          }else{
+            this.popShow = true;
+          }
+        } else {
+          this.isLogin(null);
+        }
+      }
     },
     components: {
       pdf
