@@ -108,23 +108,24 @@
               <p class="total">总分：{{hotInfo.totalordercount}}</p>
               <div class="item">
                 <p><img src="../assets/project/pb1.png"> 资金监管：{{hotInfo.fundsupervision}}</p>
-                <p>近期交易流动性大，大单交易较多</p>
+                <p>{{(hotInfoTips.length>=3)?hotInfoTips[2]:''}}</p>
               </div>
               <div class="item">
                 <p><img src="../assets/project/pb2.png"> 基本面：{{hotInfo.fundamentalsanalysis}}</p>
-                <p>项目白皮书结构完整，行业热度高</p>
+                <p>{{(hotInfoTips.length>=5)?hotInfoTips[4]:''}}</p>
               </div>
               <div class="item">
                 <p><img src="../assets/project/pb3.png"> 团队：{{hotInfo.teamanalysis}}</p>
-                <p>团队有人员较多，职位结构完整</p>
+                <p>{{(hotInfoTips.length>=7)?hotInfoTips[6]:''}}</p>
               </div>
               <div class="item">
                 <p><img src="../assets/project/pb4.png"> 技术：{{hotInfo.technicalanalysis}}</p>
-                <p>近期github代码提交量高</p>
+                
+                <p>{{(hotInfoTips.length>=9)?hotInfoTips[8]:''}}</p>
               </div>
               <div class="item">
                 <p><img src="../assets/project/pb5.png"> 市场：{{hotInfo.marketanalysis}}</p>
-                <p>项目近期宣传力度高，媒体关注度高</p>
+                <p>{{(hotInfoTips.length>=11)?hotInfoTips[10]:''}}</p>
               </div>
             </div>
           </div>
@@ -438,8 +439,8 @@
                     </div>
                   </div>
                   <!--<div class="swiper-scrollbar"></div>-->
-            </div>
-          </div>
+                </div>
+              </div>
             </div>
             <!-- Github -->
             <div class="tabcontent" v-show="tabactive === 3">
@@ -777,6 +778,7 @@
         qqQrCode: false,
         wechatQrCode: false,
         hotInfo: '',
+        hotInfoTips: '',
         marketInfo: '',
         weixinList: [],
         projectTabs: []
@@ -845,12 +847,13 @@
                 that.initMarketChart(res)
               });
               that.getHotInfo(res.data.project);
+              that.getScoreChart(res.data.project);
+              // that.getTabs(res.data.project)
+              that.getDetails(res.data.project);
               if (partner) {
                 partner = JSON.parse(partner);
               }
               that.project.partner = partner;
-              that.getScoreChart(res.data.project)
-              that.getTabs(res.data.project)
               that.$nextTick(() => {  // 下一个UI帧再初始化swiper
                 new Swiper('#partnerSwiper', {
                   direction: 'vertical',
@@ -895,8 +898,9 @@
               }
               that.project.partner = partner;
               that.getHotInfo(res.data.project);
-              that.getScoreChart(res.data.project)
-              that.getTabs(res.data.project)
+              that.getScoreChart(res.data.project);
+              // that.getTabs(res.data.project)
+              that.getDetails(res.data.project);
               that.$nextTick(() => {  // 下一个UI帧再初始化swiper
                 new Swiper('#partnerSwiper', {
                   direction: 'vertical',
@@ -1093,6 +1097,19 @@
           });
         })    
       },
+      getDetails(icoName) {
+        let uid = localStorage.getItem('apelink_user_uid');
+        let headers = {'uid': uid};
+        let url = '/api/tradition/details/' + icoName;
+        this.$axios({
+          method: 'get',
+          url: url,
+          headers: headers
+        }).then((res) => {
+          this.projectTabs = res.data.catalog1Avg.replace(/"/g, "").split(';');
+          this.hotInfoTips = JSON.parse(res.data.anaString);
+        }) 
+      },
       getTabs(icoName) {
         this.$axios.get(`/api/tradition/catalog1Avg/${icoName}`).then(res => {
           this.projectTabs = res.data.split(';');
@@ -1107,7 +1124,6 @@
         this.$axios.get(`/api/tradition/mark/${icoName}`).then(res => {
           success(res.data);
           this.marketInfo = res.data[0];
-          console.log(this.marketInfo)
         })
       },
       initGithubChart(icoName) {
@@ -1475,11 +1491,11 @@
               }
             },
             indicator: [
-              {name: '资金监管', max: param.max},
-              {name: '基本面', max: param.max},
-              {name: '团队', max: param.max},
-              {name: '技术', max: param.max},
-              {name: '市场', max: param.max},
+              {name: '资金监管', max: 0.5},
+              {name: '基本面', max: 1.5},
+              {name: '团队', max: 1.75},
+              {name: '技术', max: 0.5},
+              {name: '市场', max: 0.75},
             ]
           },
           series: [{
