@@ -1107,7 +1107,7 @@
           headers: headers
         }).then((res) => {
           this.projectTabs = res.data.catalog1Avg.replace(/"/g, "").split(';');
-          this.hotInfoTips = JSON.parse(res.data.anaString);
+          this.hotInfoTips = res.data.anaString;
         }) 
       },
       getTabs(icoName) {
