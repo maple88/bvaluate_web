@@ -109,6 +109,14 @@
           </div>
           <div class="fcol">
             <div class="item">
+              <div class="eweima">
+                <img src="../assets/app.png">
+                <p>App下载</p>
+              </div>
+            </div>
+          </div>
+          <div class="fcol">
+            <div class="item">
               <p class="i1">联系我们</p>
               <p class="i2">service.us@bvaluate.com</p>
             </div>

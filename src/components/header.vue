@@ -3,7 +3,7 @@
     <div class="tophead">
       <div class="container">
         <p>Bvaluate</p>
-        <!--<span>中/EN</span>-->
+        <span class="btn btn-primary"><a href="https://api.bvaluate.com.cn/apk/bvaluate.apk">App下载</a></span>
       </div>
     </div>
     <div class="mainhead">

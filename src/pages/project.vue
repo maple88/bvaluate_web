@@ -1107,7 +1107,7 @@
           headers: headers
         }).then((res) => {
           this.projectTabs = res.data.catalog1Avg.replace(/"/g, "").split(';');
-          this.hotInfoTips = res.data.anaString;
+          this.hotInfoTips = JSON.parse(res.data.anaString);
         }) 
       },
       getTabs(icoName) {
@@ -1198,11 +1198,11 @@
             {
               name: '总评分',
               type: 'line',
-              stack: '总量',
+              // stack: '总量',
               label: {
                 normal: {
                   show: true,
-                  position: 'top'
+                  // position: 'top'
                 }
               },
               areaStyle: {normal: {}},
@@ -1212,7 +1212,7 @@
             {
               name: '资金监管',
               type: 'line',
-              stack: '总量',
+              // stack: '总量',
               data: fundSuperList,
               showSymbol: false
 
@@ -1220,28 +1220,28 @@
             {
               name: '基本面',
               type: 'line',
-              stack: '总量',
+              // stack: '总量',
               data: fundaMentList,
               showSymbol: false
             },
             {
               name: '团队',
               type: 'line',
-              stack: '总量',
+              // stack: '总量',
               data: teamList,
               showSymbol: false
             },
             {
               name: '技术',
               type: 'line',
-              stack: '总量',
+              // stack: '总量',
               data: techList,
               showSymbol: false
             },
             {
               name: '市场',
               type: 'line',
-              stack: '总量',
+              // stack: '总量',
               data: marketList,
               showSymbol: false
             },
