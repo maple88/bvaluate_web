@@ -63,9 +63,12 @@
     }
     span {
       position: absolute;
-      height: 100%;
-      top: 0;
+      top: 8px;
       right: 15px;
+      background-color: $mainColor;
+      a{
+        color: #fff;
+      }
     }
   }
   .mainhead {
