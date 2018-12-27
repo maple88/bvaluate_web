@@ -1,0 +1,323 @@
+.myProfile {
+  position: relative;
+  width: 100%;
+  min-height: 650px;
+  background: #fff;
+  box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.3);
+  padding: 40px;
+  margin-bottom: 40px;
+  .left {
+    position: absolute;
+    .userbrand {
+      width: 155px;
+      height: 155px;
+      padding: 15px;
+      overflow: hidden;
+      margin-bottom: 45px;
+      cursor: pointer;
+      position: relative;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      &:hover {
+        .edit_bg {
+          opacity: 1;
+        }
+      }
+      .edit_bg {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, .3);
+        color: #ffffff;
+        z-index: 1;
+        transition: opacity 0.3s;
+        opacity: 0;
+      }
+      input {
+        position: absolute;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+        top: 0px;
+        left: 0px;
+      }
+      img {
+        width: 100%;
+      }
+    }
+    .usertips {
+      font-size: 24px;
+      color: $mainColor;
+      text-align: center;
+    }
+  }
+  .right {
+    padding: 0 0 0 210px;
+    .list-item {
+      display: flex;
+      position: relative;
+      padding: 30px 0 0;
+      border-bottom: 1px solid #cfcfcf;
+      .showbox {
+        display: flex;
+      }
+      .tb-cell {
+        display: table-cell;
+        vertical-align: top;
+      }
+      .nickname {
+        font-size: 20px;
+      }
+      .leftips {
+        font-size: 16px;
+        color: #000;
+        flex: 0 0 100px;
+      }
+      .edit {
+        cursor: pointer;
+        padding-left: 30px;
+        padding-top: 3px;
+        i {
+          font-size: 18px;
+          margin-right: 8px;
+        }
+        font-size: 14px;
+        color: $mainColor;
+      }
+      .center {
+        max-width: 450px;
+        font-size: 16px;
+        padding-left: 50px;
+        margin-bottom: 30px;
+      }
+      .botoperate {
+        margin: 20px 0;
+        button {
+          font-size: 16px;
+          color: #666;
+          border: 1px solid #666;
+          border-radius: 3px;
+          padding: 4px 25px;
+          margin-right: 25px;
+          box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.3);
+          outline: none !important;
+          &:last-child {
+            margin: 0;
+          }
+          &.ok {
+            background: $mainColor;
+            color: #fff;
+            border-color: $mainColor;
+          }
+        }
+      }
+      .radiobox {
+        label {
+          font-size: 16px;
+          color: $black;
+          vertical-align: middle;
+          margin-right: 25px;
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+        input {
+          margin-right: 5px;
+          position: static;
+        }
+      }
+      .editbox {
+        width: 100%;
+        padding-left: 50px;
+        margin-bottom: -1px;
+        textarea {
+          font-size: 16px;
+          width: 100%;
+          resize: none;
+          border-color: #cfcfcf;
+        }
+      }
+      .nicknamedit {
+        padding-left: 0;
+        input {
+          font-size: 20px;
+          width: 100%;
+          max-width: 400px;
+          border: 0;
+          outline: none;
+          border-radius: 0;
+          border-bottom: 1px solid #3991d1;
+        }
+      }
+    }
+    .item-head {
+      border: 0;
+      padding: 0;
+      .edit {
+        vertical-align: middle;
+        padding-top: 0;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .myProfile {
+    min-height: inherit;
+    padding: 30px 15px;
+    .right {
+      padding: 0 0 0 175px;
+    }
+    .right .list-item .center {
+      padding-left: 20px;
+      max-width: 315px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .myProfile {
+    .left {
+      position: static;
+    }
+    .left .userbrand {
+      margin: 0 auto 30px;
+    }
+    .left .usertips {
+      display: none;
+    }
+    .right {
+      padding: 0;
+    }
+    .right .list-item .showbox {
+      width: 100%;
+      position: relative;
+    }
+    .right .item-head {
+      justify-content: center;
+    }
+    .right .list-item .nickname {
+      width: 100%;
+    }
+    .right .item-head .edit {
+      position: absolute;
+      top: 8px;
+      right: 0;
+    }
+    .right .list-item .edit {
+      min-width: 86px;
+    }
+    .right .list-item .center {
+      max-width: inherit;
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 564px) {
+  .myProfile {
+    padding: 20px 15px 40px;
+    .left .userbrand {
+      margin: 0 auto 20px;
+      width: 130px;
+      height: 130px;
+    }
+    .right .list-item {
+      padding: 15px 0 0;
+      width: 100%;
+    }
+    .right .item-head {
+      padding: 0;
+    }
+    .right .list-item .nickname {
+      font-size: 18px;
+      width: 80%;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      font-weight: 700;
+    }
+    .right .list-item .center {
+      font-size: 15px;
+      padding-left: 10px;
+      min-height: 21px;
+      margin-bottom: 15px;
+    }
+    .right .list-item .center.emailstyle {
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    .right .list-item .leftips {
+      font-size: 15px;
+      flex: 0 0 78px;
+    }
+    .right .list-item .edit {
+      min-width: 60px;
+      font-size: 15px;
+      padding: 0;
+      display: flex;
+      justify-content: flex-end;
+      align-items: baseline;
+    }
+    .right .list-item .edit i {
+      font-size: 16px;
+    }
+    .right .item-head .edit {
+      top: 2px
+    }
+    .right .list-item .nicknamedit input {
+      font-size: 18px;
+      max-width: inherit;
+      text-align: center;
+      font-weight: 700;
+    }
+    .right .list-item .radiobox label {
+      font-size: 15px;
+    }
+    .right .list-item .botoperate button {
+      font-size: 15px;
+    }
+    .right .list-item .editbox {
+      padding-left: 10px;
+    }
+    .right .list-item .editbox textarea {
+      font-size: 15px;
+      max-height: 90px;
+    }
+    .right .list-item .botoperate {
+      margin: 15px 0;
+      text-align: right;
+    }
+    .right .list-item .nicknamedit {
+      padding-left: 0;
+    }
+    .right .list-item .botoperate button {
+      padding: 4px 20px;
+      margin-right: 15px;
+    }
+    .right .list-item.xs-sign {
+      display: block;
+      .showbox {
+        padding: 15px 0 0;
+        .center {
+          padding-left: 0;
+        }
+      }
+      .editbox {
+        display: block;
+        padding: 15px 0 0 !important;
+        width: 100%;
+      }
+    }
+  }
+}
