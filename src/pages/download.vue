@@ -5,10 +5,13 @@
         <img src="../assets/download/logo.png" alt="Bvaluate">
       </div>
       <div class="button_box">
-        <button @click="downloading">
-          <img src="../assets/download/android.png" alt="android"/>
-          下载
-        </button>
+        <div class="button_style" @click="downloading">
+          <!--<h4>-->
+          <!--<span class="icon_android"></span>-->
+          <img src="../assets/download/android.png" alt="">
+          <span>下载</span>
+          <!--</h4>-->
+        </div>
       </div>
       <transition name="fade">
         <div class="tip_box" v-if="showTip">
@@ -61,7 +64,7 @@
 
   .download_page {
     position: fixed;
-    background-image: url("../assets/download/bg.png");
+    background-image: url("../assets/download/bg.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -82,19 +85,42 @@
     .button_box {
       position: fixed;
       bottom: 10%;
-      width: 100%;
+      /*width: 30%;*/
       left: 0;
       text-align: center;
-      > button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      > div.button_style {
         > img {
+          display: block;
           height: 23px;
           width: 20px;
           margin-right: 10px;
         }
-        font-size: 17px;
+        .icon_android {
+          position: relative;
+          margin-right: 3px;
+          display: block;
+          width: 20px;
+          height: 20px;
+          &:after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 17px;
+            height: 20px;
+            background-image: url("../assets/download/android.png");
+            background-size: 100%;
+            background-repeat: no-repeat;
+          }
+        }
+        font-size: 18px;
         font-weight: 500;
         color: rgba(9, 189, 140, 1);
-        line-height: 11px;
+        /*line-height: 11px;*/
         border-radius: 20px;
         border: none;
         padding: 6px 35px;
@@ -104,6 +130,17 @@
         margin: auto;
         background-color: #fff;
         outline: none;
+        h4 {
+          margin: 0;
+          display: flex;
+          align-items: center;
+          span {
+            line-height: 1;
+          }
+        }
+        span:last-child {
+          transform: translateY(1px);
+        }
       }
     }
     .tip_box {
