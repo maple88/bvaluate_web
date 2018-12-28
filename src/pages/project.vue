@@ -85,24 +85,24 @@
           <div class="tophead">
             <div class="item price up">
               <p class="pt">价格</p>
-              <p class="pb"><img src="../assets/project/up.png"><span v-show="hotInfo.priceChange">{{hotInfo.priceChange}}%</span></p>
+              <p class="pb"><span>{{hotInfo.price}}</span></p>
             </div>
             <div class="item">
               <p class="t">流通量</p>
-              <p class="b" v-show="hotInfo.markValue">${{hotInfo.markValue}}</p>
+              <p class="b">{{hotInfo.famc || '--'}}</p>
             </div>
             <div class="item">
               <p class="t">流通市值</p>
-              <p class="b" v-show="hotInfo.famc">${{hotInfo.famc}}</p>
+              <p class="b">{{hotInfo.markValue || '--'}}</p>
             </div>
             <div class="item">
-              <p class="t">大单交易笔数</p>
-              <p class="b" v-show="hotInfo.linkBig">${{hotInfo.linkBig}}</p>
+              <p class="t">近24小时链上大单交易笔数</p>
+              <p class="b" v-show="hotInfo.linkBig">{{hotInfo.linkBig | rounding}}</p>
             </div>
           </div>
           <div class="bluesection">
             <div class="echartsbox1">
-              <div ref="radar" class="githubLine" :style="{width: '100%', height: '600px'}"></div>
+              <div ref="radar" class="githubLine" :style="{width: '100%', height: '600px', padding: '15px 0'}"></div>
             </div>
             <div class="details">
               <p class="total">总分：{{hotInfo.totalordercount}}</p>
@@ -197,28 +197,37 @@
                 <div class="item">
                   <div class="left">
                     <p class="i1">昨日流通笔数</p>
-                    <p class="i2">${{marketInfo.count}}</p>
+                    <p class="i2">{{marketInfo.count || '--'}}</p>
                   </div>
                   <div class="right">
-                    <img src="../assets/project/up.png"><span class="up">{{marketInfo.countPer}}%</span>
+                    <img src="../assets/project/up.png" v-if="marketInfo.countPer>0 ? true : false">
+                    <img src="../assets/project/ddown.png" v-if="marketInfo.countPer<0 ? true : false">
+                    <span class="up" v-if="marketInfo.countPer !== '0'">{{marketInfo.countPer}}%</span>
+                    <span class="up" v-else>--</span>
                   </div>
                 </div>
                 <div class="item">
                   <div class="left">
                     <p class="i1">昨日流通总额</p>
-                    <p class="i2">${{marketInfo.allcount}}</p>
+                    <p class="i2">{{marketInfo.allcount || '--'}}</p>
                   </div>
                   <div class="right">
-                    <img src="../assets/project/up.png"><span class="up">{{marketInfo.allcountPer}}%</span>
+                    <img src="../assets/project/up.png" v-if="marketInfo.allcountPer>0 ? true : false">
+                    <img src="../assets/project/ddown.png" v-if="marketInfo.allcountPer<0 ? true : false">
+                    <span class="up" v-if="marketInfo.countPer !== '0'">{{marketInfo.allcountPer}}%</span>
+                    <span class="up" v-else>--</span>
                   </div>
                 </div>
                 <div class="item">
                   <div class="left">
                     <p class="i1">昨日流通参与用户量</p>
-                    <p class="i2">${{marketInfo.countUser}}</p>
+                    <p class="i2">{{marketInfo.countUser || '--'}}</p>
                   </div>
                   <div class="right">
-                    <img src="../assets/project/up.png"><span class="up">{{marketInfo.countUserPer}}%</span>
+                    <img src="../assets/project/up.png" v-if="marketInfo.countUserPer>0 ? true : false">
+                    <img src="../assets/project/ddown.png" v-if="marketInfo.countUserPer<0 ? true : false">
+                    <span class="up" v-if="marketInfo.countPer !== '0'">{{marketInfo.countUserPer}}%</span>
+                    <span class="up" v-else>--</span>
                   </div>
                 </div>
               </div>
@@ -447,13 +456,13 @@
               <div class="echartsbox4">
                 <div class="control_button github_box">
                     <div class="control_item">
-                      <button ref="githubLineButton1">更新量</button>
+                      <button ref="githubLineButton1" :class="githubButton === 0 ?'check':''" @click="changeGithubButton(0)">更新量</button>
                     </div>
                     <div class="control_item">
-                      <button ref="githubLineButton2"> 浏览量</button>
+                      <button ref="githubLineButton2" :class="githubButton === 1 ?'check':''" @click="changeGithubButton(1)"> 浏览量</button>
                     </div>
                     <div class="control_item">
-                      <button ref="githubLineButton3"> 收藏量</button>
+                      <button ref="githubLineButton3"  :class="githubButton === 2 ?'check':''" @click="changeGithubButton(2)"> 收藏量</button>
                     </div>
                   </div>
                 <div ref="githubLine" class="chartbox" :style="{width: '100%', height: '600px'}"></div>
@@ -777,6 +786,8 @@
         weiboQrCode: false,
         qqQrCode: false,
         wechatQrCode: false,
+        githubButton:0,
+        githubData:[],
         hotInfo: '',
         hotInfoTips: '',
         marketInfo: '',
@@ -1122,13 +1133,15 @@
       },
       initProjectMarket(icoName,success) {
         this.$axios.get(`/api/tradition/mark/${icoName}`).then(res => {
-          success(res.data);
           this.marketInfo = res.data[0];
+          success(res.data);
         })
       },
       initGithubChart(icoName) {
         this.$axios.get(`/api/tradition/githubScore/${icoName}`).then(res => {
           console.log(res)
+        res.data.reverse();
+          this.githubData = res.data;
           this.initGithubLine(res.data)
         })
       },
@@ -1378,7 +1391,7 @@
             {
               name: '价格',
               type: 'line',
-              stack: '总量',
+              // stack: '总量',
               label: {
                 normal: {
                   show: true,
@@ -1392,7 +1405,7 @@
             {
               name: '流通参与用户量',
               type: 'line',
-              stack: '总量',
+              // stack: '总量',
               data: countUserList,
               showSymbol: false
 
@@ -1400,14 +1413,14 @@
             {
               name: '流通总量',
               type: 'line',
-              stack: '总量',
+              // stack: '总量',
               data: allCountList,
               showSymbol: false
             },
             {
               name: '流通笔数',
               type: 'line',
-              stack: '总量',
+              // stack: '总量',
               data: countList,
               showSymbol: false
             },
@@ -1463,6 +1476,24 @@
         let myChart = echarts.init(this.$refs.radar);
         let option = {
           tooltip: {},
+          legend: {
+            data: [
+              {
+                name: '今日',
+                textStyle: {
+                  color: '#F82F4C',
+                }
+              },
+              {
+                name: '昨日',
+                textStyle: {
+                  color: '#0ACEF0'
+                }
+              }
+            ],
+            right: 10,
+            // selectedMode: false,
+          },
           radar: {
             // shape: 'circle',
             name: {
@@ -1499,26 +1530,21 @@
             ]
           },
           series: [{
-            name: '预算 vs 开销（Budget vs spending）',
             type: 'radar',
             // areaStyle: {normal: {}},
             data: [
               {
                 value: param.data[1],
-                name: '前一天',
-                lineStyle: {
-                  normal: {
-                    color: '#0ACEF0'
-                  }
+                name: '昨日',
+                itemStyle: {
+                  color: '#0ACEF0'
                 }
               },
               {
                 value: param.data[0],
-                name: '最近',
-                lineStyle: {
-                  normal: {
-                    color: '#F82F4C'
-                  }
+                name: '今日',
+                itemStyle: {
+                  color: '#F82F4C'
                 }
               }
             ]
@@ -1531,12 +1557,27 @@
         })
       },
       initGithubLine(data) {
-        data.reverse();
         let xList = data.map(item => item.times.split(" ")[0]);
         let commitList = data.map(item => item.commit);
         let watchList = data.map(item => item.watch);
         let starList = data.map(item => item.star);
         let commitAvgList = data.map(item => (item.commitAvg) ? item.commitAvg.toFixed(2): item.commitAvg);
+        let watchAvgList = data.map(item => (item.watchAvg) ? item.watchAvg.toFixed(2): item.watchAvg);
+        let starAvgList = data.map(item => (item.starAvg) ? item.starAvg.toFixed(2): item.starAvg);
+        let commit = false;
+        let watch = false;
+        let star = false;
+        let avgList = commitAvgList;
+        if(this.githubButton === 0){
+          commit = true;
+          avgList = commitAvgList;
+        }else if(this.githubButton === 1){
+          watch = true;
+          avgList = watchAvgList;
+        }else{
+          star = true;
+          avgList = starAvgList;
+        }
 
         let githubLine = echarts.init(this.$refs.githubLine);
         let githubLineOption = {
@@ -1550,8 +1591,8 @@
             }
           },
           legend: {
-            selected: {'近30天平均值': true, '更新量': false, '浏览量': false, '收藏量': false},
-            data: ['近30天平均值', '更新量', '浏览量', '收藏量'],
+            selected: {'近30天平均值':true,'更新量': commit, '浏览量': watch, '收藏量': star}, //'近30天平均值': true, 
+            data: ['近30天平均值','更新量', '浏览量', '收藏量'], //'近30天平均值', 
             selectedMode:false,
             x: 'right'
           },
@@ -1584,20 +1625,28 @@
             {
               name: '近30天平均值',
               type: 'line',
-              stack: '总量',
+              smooth:false,
               label: {
                 normal: {
                   show: true,
                   position: 'top'
                 }
               },
-              data: commitAvgList,
+              itemStyle:{
+                normal:{
+                    lineStyle:{
+                        width:2,
+                        type:'dotted'  //'dotted'虚线 'solid'实线
+                    }
+                }
+              },
+              data: avgList,
               showSymbol: false
             },
             {
               name: '收藏量',
               type: 'line',
-              stack: '总量',
+              // stack: '总量',
               data: starList,
               showSymbol: false
 
@@ -1605,64 +1654,68 @@
             {
               name: '浏览量',
               type: 'line',
-              stack: '总量',
+              // stack: '总量',
               data: watchList,
               showSymbol: false
             },
             {
               name: '更新量',
               type: 'line',
-              stack: '总量',
+              // stack: '总量',
               data: commitList,
               showSymbol: false
             },
           ]
         };
         githubLine.setOption(githubLineOption);
-        this.$refs.githubLineButton1.addEventListener('click', e => {
-          let $this = e.target;
-          let mykey = false;
-          let className = $this.classList.toString();
-          if (className.indexOf('check') !== -1) {
-            githubLineOption.legend.selected['更新量'] = false;
-            $this.classList.remove('check');
-          } else {
-            githubLineOption.legend.selected['更新量'] = true;
-            $this.classList.add('check');
-          }
-          githubLine.setOption(githubLineOption);
-        });
-        this.$refs.githubLineButton2.addEventListener('click', e => {
-          let $this = e.target;
-          let mykey = false;
-          let className = $this.classList.toString();
-          if (className.indexOf('check') !== -1) {
-            githubLineOption.legend.selected['浏览量'] = false;
-            $this.classList.remove('check');
-          } else {
-            githubLineOption.legend.selected['浏览量'] = true;
-            $this.classList.add('check');
-          }
-          githubLine.setOption(githubLineOption);
-        });
-        this.$refs.githubLineButton3.addEventListener('click', e => {
-          let $this = e.target;
-          let mykey = false;
-          let className = $this.classList.toString();
-          if (className.indexOf('check') !== -1) {
-            githubLineOption.legend.selected['收藏量'] = false;
-            $this.classList.remove('check');
-          } else {
-            githubLineOption.legend.selected['收藏量'] = true;
-            $this.classList.add('check');
-          }
-          githubLine.setOption(githubLineOption);
-        });
+        // this.$refs.githubLineButton1.addEventListener('click', e => {
+        //   let $this = e.target;
+        //   let mykey = false;
+        //   let className = $this.classList.toString();
+        //   if (className.indexOf('check') !== -1) {
+        //     githubLineOption.legend.selected['更新量'] = false;
+        //     $this.classList.remove('check');
+        //   } else {
+        //     githubLineOption.legend.selected['更新量'] = true;
+        //     $this.classList.add('check');
+        //   }
+        //   githubLine.setOption(githubLineOption);
+        // });
+        // this.$refs.githubLineButton2.addEventListener('click', e => {
+        //   let $this = e.target;
+        //   let mykey = false;
+        //   let className = $this.classList.toString();
+        //   if (className.indexOf('check') !== -1) {
+        //     githubLineOption.legend.selected['浏览量'] = false;
+        //     $this.classList.remove('check');
+        //   } else {
+        //     githubLineOption.legend.selected['浏览量'] = true;
+        //     $this.classList.add('check');
+        //   }
+        //   githubLine.setOption(githubLineOption);
+        // });
+        // this.$refs.githubLineButton3.addEventListener('click', e => {
+        //   let $this = e.target;
+        //   let mykey = false;
+        //   let className = $this.classList.toString();
+        //   if (className.indexOf('check') !== -1) {
+        //     githubLineOption.legend.selected['收藏量'] = false;
+        //     $this.classList.remove('check');
+        //   } else {
+        //     githubLineOption.legend.selected['收藏量'] = true;
+        //     $this.classList.add('check');
+        //   }
+        //   githubLine.setOption(githubLineOption);
+        // });
         this.githubLine = githubLine;
         window.addEventListener('resize', e =>{
           let width = this.$refs.bigBox.offsetWidth;
           githubLine.resize({'width': `${width}px`});
         })
+      },
+      changeGithubButton(type){
+        this.githubButton = type;
+        this.initGithubLine(this.githubData)
       },
       //媒体宣传度
       initMediaDisseminateLine(param) {
@@ -1678,7 +1731,7 @@
             }
           },
           legend: {
-            data: ['近30天平均值', '报道量'],
+            data: ['报道量'], //'近30天平均值', 
             selectedMode:false,
             x: 'right'
           },
@@ -1708,22 +1761,22 @@
             },
           ],
           series: [
-            {
-              name: '近30天平均值',
-              type: 'line',
-              stack: '总量',
-              label: {
-                normal: {
-                  show: true,
-                  position: 'top'
-                }
-              },
-              data: param.twitterAvgList
-            },
+            // {
+            //   name: '近30天平均值',
+            //   type: 'line',
+            //   stack: '总量',
+            //   label: {
+            //     normal: {
+            //       show: true,
+            //       position: 'top'
+            //     }
+            //   },
+            //   data: param.twitterAvgList
+            // },
             {
               name: '报道量',
               type: 'line',
-              stack: '总量',
+              // stack: '总量',
               data: param.allnumList,
             },
           ]
@@ -1749,7 +1802,7 @@
             }
           },
           legend: {
-            data: ['近30天平均值', '网站数'],
+            data: ['网站数'], //'近30天平均值', 
             selectedMode:false,
             x: 'right'
           },
@@ -1779,22 +1832,22 @@
             },
           ],
           series: [
-            {
-              name: '近30天平均值',
-              type: 'line',
-              stack: '总量',
-              label: {
-                normal: {
-                  show: true,
-                  position: 'top'
-                }
-              },
-              data: param.twitterAvgList
-            },
+            // {
+            //   name: '近30天平均值',
+            //   type: 'line',
+            //   stack: '总量',
+            //   label: {
+            //     normal: {
+            //       show: true,
+            //       position: 'top'
+            //     }
+            //   },
+            //   data: param.twitterAvgList
+            // },
             {
               name: '网站数',
               type: 'line',
-              stack: '总量',
+              // stack: '总量',
               data: param.sitenameList,
             },
           ]
@@ -2070,6 +2123,9 @@
             }
           }
         }
+      },
+      rounding(val) {
+        return parseInt(val);
       }
     }
   }

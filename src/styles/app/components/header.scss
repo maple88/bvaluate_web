@@ -66,6 +66,9 @@
       top: 8px;
       right: 15px;
       background-color: $mainColor;
+      @media (max-width: 768px) {
+        top: 3px;
+      }
       a{
         color: #fff;
       }

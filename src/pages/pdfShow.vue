@@ -12,30 +12,30 @@
             <div class="pdfloading" v-if="pdfloading">
               <img :src="loading"/>
             </div>
-            <div class="pdf-tool">
+            <!-- <div class="pdf-tool">
               <div class="page" @click="(pageNum !== 1) ? pageNum-- : ''">上一页</div>
               <div class="page-num">{{`${currentPage}/${pageCount}`}}</div>
               <div class="page" @click="(pageNum !== pageCount) ? pageNum++ : ''">下一页</div>
-            </div>
+            </div> -->
             <div class="pdf-tool2">
               <div @click="pdfWidth = oWidth"><img src="../assets/project/icon1.png"></div>
               <div @click="pdfWidth = (parseInt(pdfWidth)+100 > 1200) ? 1200 : parseInt(pdfWidth)+100"><img src="../assets/project/icon2.png"></div>
               <div @click="pdfWidth = (parseInt(pdfWidth)-100 > 1200) ? 1200 : parseInt(pdfWidth)-100"><img src="../assets/project/icon3.png"></div>
             </div>
             <div class="pdf-wrap" ref="bigBox">
-              <div class="pdf" :style="{'width': pdfWidth + 'px'}" >
+              <div class="pdf" :style="{'width': pdfWidth + 'px'}">
                 <pdf :src="src"
-                :page="pageNum" 
-                @num-pages="pageCount = $event"
-                @page-loaded="currentPage = $event"
+                v-for="(item, index) in numPages"
+                :key="index"
+                :page="item"
                 ></pdf>
               </div>
             </div>
-            <div class="pdf-tool">
+            <!-- <div class="pdf-tool">
               <div class="page" @click="(pageNum !== 1) ? pageNum-- : ''">上一页</div>
               <div class="page-num">{{`${currentPage}/${pageCount}`}}</div>
               <div class="page" @click="(pageNum !== pageCount) ? pageNum++ : ''">下一页</div>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="pop-box" v-show="popShow">

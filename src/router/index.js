@@ -15,7 +15,6 @@ import list from '@/pages/list'
 import search from '@/pages/search'
 import newsList from '@/pages/newsList'
 import pdfShow from '@/pages/pdfShow'
-import download from '@/pages/download'
 
 Vue.use(Router);
 
@@ -116,10 +115,6 @@ export default new Router({
     {
       path: '/pdfShow',
       component: pdfShow
-    },
-    {
-      path: '/download',
-      component: download
     }
   ],
   scrollBehavior(to, from, savedPosition) {
