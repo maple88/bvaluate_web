@@ -26,13 +26,13 @@
                           <div class="qrCode_box" ref="wechat_qrCode" v-show="wechatQrCode"></div>
                         </transition>
                       </div>
-                      <div class="share_item" @click.stop="qqQrCodeShow">
+                      <div class="share_item" v-show="false" @click.stop="qqQrCodeShow">
                         <img src="../assets/project/QQ.png" alt="">
                         <transition name="fade">
                           <div class="qrCode_box" ref="qq_qrCode" v-show="qqQrCode"></div>
                         </transition>
                       </div>
-                      <div class="share_item" @click.stop="weiboQrCodeShow">
+                      <div class="share_item" v-show="false" @click.stop="weiboQrCodeShow">
                         <img src="../assets/project/weibo.png" alt="">
                         <transition name="fade">
                           <div class="qrCode_box" ref="weibo_qrCode" v-show="weiboQrCode"></div>
@@ -1256,7 +1256,7 @@
                   position: 'top'
                 }
               },
-              areaStyle: {normal: {}},
+              // areaStyle: {normal: {}},
               data: price,
               color: '#b0b0b0',
               showSymbol: false

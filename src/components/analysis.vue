@@ -46,7 +46,7 @@
                 </div>
               </div>
               <div class="loadUp_box">
-                <p class="uploadtips">注：暂只支持pdf格式文件，文件名称格式为项目名称-版本号-语言.pdf<br>(例如300cubits TEU-2.0.00-cn.pdf)</p>
+                <p class="uploadtips">注：暂只支持pdf格式文件，文件名称格式为项目名称-版本号-语言.pdf<br>(例如300cubits TEU-02.00.00-cn.pdf)</p>
                 <div class="uploadWhitePaper">
                   <div class="filename">
                     <input type="text" data="点击了只读状态的输入框" name="no_content" id="input_analysis_filename" readonly="readonly" v-model="filename">
