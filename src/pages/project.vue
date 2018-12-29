@@ -1429,7 +1429,7 @@
           },
           grid: {
             left: '3%',
-            right: '4%',
+            right: '0%',
             bottom: '40',
             containLabel: true
           },
@@ -1438,6 +1438,9 @@
               type: 'category',
               boundaryGap: false,
               data: xList,
+              axisPointer: {
+                triggerTooltip: false
+              },
               splitLine: {
                 show: false,
                 lineStyle: {
@@ -1460,6 +1463,9 @@
               show: false,
               min: Math.min.apply(null,filter_array(countList)),
               max: Math.max.apply(null,filter_array(countList)),
+              axisLabel: {
+                formatter: '1'
+              }
             },
             {
               type: 'value',
@@ -1468,6 +1474,9 @@
               show: false,
               min: Math.min.apply(null,filter_array(allCountList)),
               max: Math.max.apply(null,filter_array(allCountList)),
+              axisLabel: {
+                formatter: '1'
+              }
             },
             {
               type: 'value',
@@ -1476,8 +1485,10 @@
               position: 'right',
               min: Math.min.apply(null,filter_array(countUserList)),
               max: Math.max.apply(null,filter_array(countUserList)),
+              axisLabel: {
+                formatter: '1'
+              }
             }
-
           ],
           dataZoom: [
             {
