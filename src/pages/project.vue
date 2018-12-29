@@ -1402,13 +1402,15 @@
         }
       },
       initMarketChart(data) {
+        function filter_array(array) {  
+          return array.filter(item=>item); 
+        } 
         data.reverse();
         let xList = data.map(item => item.times.split(" ")[0]);
         let totalScoreList = data.map(item => item.totalScore);
         let countUserList = data.map(item => item.countUser);
         let allCountList = data.map(item => item.allcount);
         let countList = data.map(item => item.count);
-
         let marketLine = echarts.init(this.$refs.marketChart);
         let marketLineOption = {
           tooltip: {
@@ -1446,8 +1448,36 @@
           ],
           yAxis: [
             {
-              type: 'value'
+              type: 'value',
+              name: '价格',
+              min: Math.min.apply(null,filter_array(totalScoreList)),
+              max: Math.max.apply(null,filter_array(totalScoreList)),
+            },
+            {
+              type: 'value',
+              name: '流通笔数',
+              position: 'right',
+              show: false,
+              min: Math.min.apply(null,filter_array(countList)),
+              max: Math.max.apply(null,filter_array(countList)),
+            },
+            {
+              type: 'value',
+              name: '流通总额',
+              position: 'right',
+              show: false,
+              min: Math.min.apply(null,filter_array(allCountList)),
+              max: Math.max.apply(null,filter_array(allCountList)),
+            },
+            {
+              type: 'value',
+              name: '流通参与用户量',
+              show: false,
+              position: 'right',
+              min: Math.min.apply(null,filter_array(countUserList)),
+              max: Math.max.apply(null,filter_array(countUserList)),
             }
+
           ],
           dataZoom: [
             {
@@ -1461,6 +1491,7 @@
             {
               name: '价格',
               type: 'line',
+              yAxisIndex: 0,
               // stack: '总量',
               label: {
                 normal: {
@@ -1475,6 +1506,7 @@
             },
             {
               name: '流通笔数',
+              yAxisIndex: 1,
               type: 'line',
               // stack: '总量',
               data: countList,
@@ -1485,6 +1517,7 @@
               name: '流通总额',
               type: 'line',
               // stack: '总量',
+              yAxisIndex: 2,
               data: allCountList,
               color: '#fd5908',
               showSymbol: false
@@ -1492,6 +1525,7 @@
             {
               name: '流通参与用户量',
               type: 'line',
+              yAxisIndex: 3,
               // stack: '总量',
               data: countUserList,
               color: '#49cb55',
@@ -1523,10 +1557,10 @@
           let mykey = false;
           let className = $this.classList.toString();
           if (className.indexOf('check') !== -1) {
-            marketLineOption.legend.selected['流通总量'] = false;
+            marketLineOption.legend.selected['流通总额'] = false;
             $this.classList.remove('check');
           } else {
-            marketLineOption.legend.selected['流通总量'] = true;
+            marketLineOption.legend.selected['流通总额'] = true;
             $this.classList.add('check');
           }
           marketLine.setOption(marketLineOption);
