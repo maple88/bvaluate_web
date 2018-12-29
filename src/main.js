@@ -17,7 +17,7 @@ import 'es6-promise/auto'
 import Vuex from 'vuex'
 import sensors from 'sa-sdk-javascript/sensorsdata.min.js'
 
-axios.defaults.timeout = 30000;
+// axios.defaults.timeout = 30000;
 
 Vue.prototype.$axios = axios;
 Vue.prototype.$sugar = 12;

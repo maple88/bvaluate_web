@@ -102,34 +102,40 @@
           </div>
           <div class="bluesection">
             <div class="echartsbox1">
+              <div class="echarts_loading" v-if="radar_loading">
+                <img :src="loading"/>
+              </div>
               <div ref="radar" class="githubLine" :style="{width: '100%', height: '600px', padding: '15px 0'}"></div>
             </div>
             <div class="details">
-              <p class="total">总分：{{hotInfo.totalordercount}}</p>
+              <p class="total">总分：{{hotInfo.totalordercount}} <span>/ 5</span></p>
               <div class="item">
                 <p><img src="../assets/project/pb1.png"> 资金监管：{{hotInfo.fundsupervision}}</p>
-                <p>{{(hotInfoTips.length>=3)?hotInfoTips[2]:''}}</p>
+                <p class="des">{{(hotInfoTips.length>=3)?hotInfoTips[2]:''}}</p>
               </div>
               <div class="item">
                 <p><img src="../assets/project/pb2.png"> 基本面：{{hotInfo.fundamentalsanalysis}}</p>
-                <p>{{(hotInfoTips.length>=5)?hotInfoTips[4]:''}}</p>
+                <p class="des">{{(hotInfoTips.length>=5)?hotInfoTips[4]:''}}</p>
               </div>
               <div class="item">
                 <p><img src="../assets/project/pb3.png"> 团队：{{hotInfo.teamanalysis}}</p>
-                <p>{{(hotInfoTips.length>=7)?hotInfoTips[6]:''}}</p>
+                <p class="des">{{(hotInfoTips.length>=7)?hotInfoTips[6]:''}}</p>
               </div>
               <div class="item">
                 <p><img src="../assets/project/pb4.png"> 技术：{{hotInfo.technicalanalysis}}</p>
                 
-                <p>{{(hotInfoTips.length>=9)?hotInfoTips[8]:''}}</p>
+                <p class="des">{{(hotInfoTips.length>=9)?hotInfoTips[8]:''}}</p>
               </div>
               <div class="item">
                 <p><img src="../assets/project/pb5.png"> 市场：{{hotInfo.marketanalysis}}</p>
-                <p>{{(hotInfoTips.length>=11)?hotInfoTips[10]:''}}</p>
+                <p class="des">{{(hotInfoTips.length>=11)?hotInfoTips[10]:''}}</p>
               </div>
             </div>
           </div>
           <div class="echartsbox2">
+            <div class="echarts_loading" v-if="scoreChart_loading">
+              <img :src="loading"/>
+            </div>
             <div ref="scoreChart" class="chartbox" :style="{width: '100%', height: '600px'}"></div>
             <div class="btn-list">
               <label for="citem2" ref="scoreButton2">
@@ -174,6 +180,9 @@
             <!-- 行情 -->
             <div class="tabcontent" v-show="tabactive === 0">
               <div class="echartsbox3">
+                  <div class="echarts_loading" v-if="marketChart_loading">
+                    <img :src="loading"/>
+                  </div>
                   <div ref="marketChart" class="chartbox" :style="{width: '100%', height: '680px'}"></div>
                   <div class="btn-list">
                     <label for="item1" ref="marketLineButton1">
@@ -184,7 +193,7 @@
                     <label for="item2" ref="marketLineButton2">
                       <input type="checkbox" id="item2">
                       <div class="checkbox"></div>
-                      流通总量
+                      流通总额
                     </label>
                     <label for="item3" ref="marketLineButton3">
                       <input type="checkbox" id="item3">
@@ -202,7 +211,7 @@
                   <div class="right">
                     <img src="../assets/project/up.png" v-if="marketInfo.countPer>0 ? true : false">
                     <img src="../assets/project/ddown.png" v-if="marketInfo.countPer<0 ? true : false">
-                    <span class="up" v-if="marketInfo.countPer !== '0'">{{marketInfo.countPer}}%</span>
+                    <span class="up" v-if="marketInfo.countPer !== '0'" :style="marketInfo.countPer>0 ? '' : 'color:#eb2c38'">{{marketInfo.countPer? Math.abs(marketInfo.countPer): marketInfo.countPer }}%</span>
                     <span class="up" v-else>--</span>
                   </div>
                 </div>
@@ -214,7 +223,7 @@
                   <div class="right">
                     <img src="../assets/project/up.png" v-if="marketInfo.allcountPer>0 ? true : false">
                     <img src="../assets/project/ddown.png" v-if="marketInfo.allcountPer<0 ? true : false">
-                    <span class="up" v-if="marketInfo.countPer !== '0'">{{marketInfo.allcountPer}}%</span>
+                    <span class="up" v-if="marketInfo.allcountPer !== '0'" :style="marketInfo.allcountPer>0 ? '' : 'color:#eb2c38'">{{marketInfo.allcountPer? Math.abs(marketInfo.allcountPer): marketInfo.allcountPer }}%</span>
                     <span class="up" v-else>--</span>
                   </div>
                 </div>
@@ -226,7 +235,7 @@
                   <div class="right">
                     <img src="../assets/project/up.png" v-if="marketInfo.countUserPer>0 ? true : false">
                     <img src="../assets/project/ddown.png" v-if="marketInfo.countUserPer<0 ? true : false">
-                    <span class="up" v-if="marketInfo.countPer !== '0'">{{marketInfo.countUserPer}}%</span>
+                    <span class="up" v-if="marketInfo.countUserPer !== '0'" :style="marketInfo.countUserPer>0 ? '' : 'color:#eb2c38'">{{marketInfo.countUserPer? Math.abs(marketInfo.countUserPer): marketInfo.countUserPer }}%</span>
                     <span class="up" v-else>--</span>
                   </div>
                 </div>
@@ -429,7 +438,7 @@
             <!-- 团队信息 -->
             <div class="tabcontent" v-show="tabactive === 2">
               <div class="section2">
-                <div class="swiper-container section-swiper orther_swiper" id="partnerSwiper">
+                <div class="swiper-container section-swiper orther_swiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
                       <div class="col4" v-for="(partner, index) in project.partner" :key="index">
@@ -454,6 +463,9 @@
             <!-- Github -->
             <div class="tabcontent" v-show="tabactive === 3">
               <div class="echartsbox4">
+                <div class="echarts_loading" v-if="githubLine_loading">
+                  <img :src="loading"/>
+                </div>
                 <div class="control_button github_box">
                     <div class="control_item">
                       <button ref="githubLineButton1" :class="githubButton === 0 ?'check':''" @click="changeGithubButton(0)">更新量</button>
@@ -465,6 +477,7 @@
                       <button ref="githubLineButton3"  :class="githubButton === 2 ?'check':''" @click="changeGithubButton(2)"> 收藏量</button>
                     </div>
                   </div>
+
                 <div ref="githubLine" class="chartbox" :style="{width: '100%', height: '600px'}"></div>
               </div>
             </div>
@@ -477,19 +490,29 @@
                       媒体宣传度
                     </h4>
                   </div>
-                  <div class="chart_box" ref="mediaDisseminateLine" style="height: 300px;width: 100%"></div>
+                  <div style="position: relative">
+                    <div class="echarts_loading" v-if="mediaDisseminateLine_loading">
+                      <img :src="loading"/>
+                    </div>
+                    <div class="chart_box" ref="mediaDisseminateLine" style="height: 300px;width: 100%"></div>
+                  </div>
                   <div class="line_title">
                     <h4>
                       媒体关注度
                     </h4>
                   </div>
-                  <div class="chart_box" ref="mediaFollowLine" style="height: 300px;width: 100%"></div>
-                  <div class="line_title">
+                  <div style="position: relative">
+                    <div class="echarts_loading" v-if="mediaFollowLine_loading">
+                      <img :src="loading"/>
+                    </div>
+                    <div class="chart_box" ref="mediaFollowLine" style="height: 300px;width: 100%"></div>
+                  </div>
+                  <div v-show="false" class="line_title">
                     <h4>
                       社交热度
                     </h4>
                   </div>
-                  <div class="control_button github_box">
+                  <div v-show="false" class="control_button github_box">
                     <div class="control_item">
                       <button ref="socialHeatLineButton1">Twitter粉丝数</button>
                     </div>
@@ -497,7 +520,7 @@
                     <!--<button ref="socialHeatLineButton2"> Twitter评论数</button>-->
                     <!--</div>-->
                   </div>
-                  <div class="chart_box" ref="socialHeatLine" style="height: 300px;width: 100%"></div>
+                  <div v-show="false" class="chart_box" ref="socialHeatLine" style="height: 300px;width: 100%"></div>
                 </div>
               </div>
             </div>
@@ -732,7 +755,7 @@
           <div class="recommendproject">
             <div class="recommendhead">推荐项目</div>
             <div class="recommend-item" v-for="(project, index) in recommendProjects" :key="index">
-              <router-link :to="'/project?sid='+project.sid" :data="project.project">
+              <router-link :to="'/project?sid='+project.sid" target="_blank" :data="project.project">
                 <div class="left"><img :src="project.logoSrc"></div>
                 <div class="right">
                   <p class="r1">{{project.project}}</p>
@@ -792,7 +815,13 @@
         hotInfoTips: '',
         marketInfo: '',
         weixinList: [],
-        projectTabs: []
+        projectTabs: [],
+        scoreChart_loading: true,
+        radar_loading: true,
+        marketChart_loading: true,
+        githubLine_loading: true,
+        mediaDisseminateLine_loading: true,
+        mediaFollowLine_loading: true
       }
     },
     mounted () {
@@ -855,6 +884,7 @@
               that.project = res.data;
               let partner = that.project.partner;
               that.initProjectMarket(res.data.project,res=>{
+                that.marketChart_loading = false;
                 that.initMarketChart(res)
               });
               that.getHotInfo(res.data.project);
@@ -901,6 +931,7 @@
             }).then(function (res) {
               that.project = res.data;
               that.initProjectMarket(res.data.project,res=>{
+                that.marketChart_loading = false;
                 that.initMarketChart(res)
               });
               let partner = that.project.partner;
@@ -1090,6 +1121,7 @@
           url: url,
           headers: headers
         }).then((res) => {
+          this.radar_loading = false;
           this.hotInfo = res.data;
           let res1 = res.data;
           let dataArr = [];
@@ -1128,6 +1160,7 @@
       },
       getScoreChart(icoName) {
         this.$axios.get(`/api/tradition/HotESICOHisScore/${icoName}`).then(res => {
+          this.scoreChart_loading = false;
           this.initScoreChart(res.data)
         })
       },
@@ -1140,19 +1173,23 @@
       initGithubChart(icoName) {
         this.$axios.get(`/api/tradition/githubScore/${icoName}`).then(res => {
           console.log(res)
-        res.data.reverse();
+          res.data.reverse();
           this.githubData = res.data;
+          this.githubLine_loading = false;
           this.initGithubLine(res.data)
         })
       },
       initMediaChart(icoName) {
         this.$axios.get(`/api/tradition/medio/${icoName}`).then(res => {
+          this.mediaDisseminateLine_loading = false;
+          this.mediaFollowLine_loading = false;
           this.initThreeLine(res.data)
         })
       },
       initScoreChart(data) {
         data.reverse();
         let xList = data.map(item => item.times.split(" ")[0]);
+        let price = data.map(item => item.price);
         let totalScoreList = data.map(item => item.totalordercount);
         let fundSuperList = data.map(item => item.fundsupervision);
         let fundaMentList = data.map(item => item.fundamentalsanalysis );
@@ -1172,8 +1209,8 @@
             }
           },
           legend: {
-            selected: {'总评分': true, '资金监管': false, '基本面': false, '团队': false, '技术': false, '市场': false},
-            data: ['总评分', '资金监管', '基本面', '团队', '技术', '市场'],
+            selected: {'价格': true, '总评分': true, '资金监管': false, '基本面': false, '团队': false, '技术': false, '市场': false},
+            data: ['价格', '总评分', '资金监管', '基本面', '团队', '技术', '市场'],
             selectedMode:false
           },
           grid: {
@@ -1205,20 +1242,37 @@
               type: 'slider',
               xAxisIndex: 0,
               filterMode: 'empty',
+              startValue: this.getStartValue(data[data.length-1].times, data[0].times)
             },
           ],
           series: [
             {
+              name: '价格',
+              type: 'line',
+              // stack: '总量',
+              label: {
+                normal: {
+                  show: true,
+                  position: 'top'
+                }
+              },
+              areaStyle: {normal: {}},
+              data: price,
+              color: '#b0b0b0',
+              showSymbol: false
+            },
+            {
               name: '总评分',
               type: 'line',
               // stack: '总量',
+              color: '#3555da',
               label: {
                 normal: {
                   show: true,
                   // position: 'top'
                 }
               },
-              areaStyle: {normal: {}},
+              // areaStyle: {normal: {}},
               data: totalScoreList,
               showSymbol: false
             },
@@ -1227,6 +1281,7 @@
               type: 'line',
               // stack: '总量',
               data: fundSuperList,
+              color: '#fdd208',
               showSymbol: false
 
             },
@@ -1235,6 +1290,7 @@
               type: 'line',
               // stack: '总量',
               data: fundaMentList,
+              color: '#5ad8ae',
               showSymbol: false
             },
             {
@@ -1242,6 +1298,7 @@
               type: 'line',
               // stack: '总量',
               data: teamList,
+              color: '#f185f8',
               showSymbol: false
             },
             {
@@ -1249,6 +1306,7 @@
               type: 'line',
               // stack: '总量',
               data: techList,
+              color: '#82d5fe',
               showSymbol: false
             },
             {
@@ -1256,6 +1314,7 @@
               type: 'line',
               // stack: '总量',
               data: marketList,
+              color: '#9cb2fa',
               showSymbol: false
             },
           ]
@@ -1332,6 +1391,16 @@
         });
         this.scoreLine = scoreLine;
       },
+      getStartValue(date1, date2) {
+        let oDate1 = new Date(date1);
+        oDate1.setMonth(oDate1.getMonth() - 1);
+        let oDate2 = new Date(date2);
+        if(oDate1.getTime() > oDate2.getTime()){
+          return (oDate1.getFullYear()+'-'+(oDate1.getMonth()+1)+'-'+oDate1.getDate());
+        } else {
+          return date2;
+        }
+      },
       initMarketChart(data) {
         data.reverse();
         let xList = data.map(item => item.times.split(" ")[0]);
@@ -1352,8 +1421,8 @@
             }
           },
           legend: {
-            selected: {'价格': true, '流通笔数': false, '流通总量': false, '流通参与用户量': false},
-            data: ['价格', '流通笔数', '流通总量', '流通参与用户量'],
+            selected: {'价格': true, '流通笔数': false, '流通总额': false, '流通参与用户量': false},
+            data: ['价格', '流通笔数', '流通总额', '流通参与用户量'],
             selectedMode:false
           },
           grid: {
@@ -1385,6 +1454,7 @@
               type: 'slider',
               xAxisIndex: 0,
               filterMode: 'empty',
+              startValue: this.getStartValue(data[data.length-1].times, data[0].times)
             },
           ],
           series: [
@@ -1400,21 +1470,7 @@
               },
               areaStyle: {normal: {}},
               data: totalScoreList,
-              showSymbol: false
-            },
-            {
-              name: '流通参与用户量',
-              type: 'line',
-              // stack: '总量',
-              data: countUserList,
-              showSymbol: false
-
-            },
-            {
-              name: '流通总量',
-              type: 'line',
-              // stack: '总量',
-              data: allCountList,
+              color: '#b0b0b0',
               showSymbol: false
             },
             {
@@ -1422,7 +1478,25 @@
               type: 'line',
               // stack: '总量',
               data: countList,
+              color: '#f1982f',
               showSymbol: false
+            },
+            {
+              name: '流通总额',
+              type: 'line',
+              // stack: '总量',
+              data: allCountList,
+              color: '#fd5908',
+              showSymbol: false
+            },
+            {
+              name: '流通参与用户量',
+              type: 'line',
+              // stack: '总量',
+              data: countUserList,
+              color: '#49cb55',
+              showSymbol: false
+
             },
           ]
         };
@@ -1522,11 +1596,11 @@
               }
             },
             indicator: [
-              {name: '资金监管', max: 0.5},
-              {name: '基本面', max: 1.5},
-              {name: '团队', max: 1.75},
-              {name: '技术', max: 0.5},
-              {name: '市场', max: 0.75},
+              {name: '资金监管', max: 0.5, color: '#0ACEF0'},
+              {name: '基本面', max: 1.5, color: '#0ACEF0'},
+              {name: '团队', max: 1.75, color: '#0ACEF0'},
+              {name: '技术', max: 0.5, color: '#0ACEF0'},
+              {name: '市场', max: 0.75, color: '#0ACEF0'},
             ]
           },
           series: [{
@@ -1619,6 +1693,7 @@
               type: 'slider',
               xAxisIndex: 0,
               filterMode: 'empty',
+              startValue: this.getStartValue(data[data.length-1].times, data[0].times)
             },
           ],
           series: [
@@ -1641,6 +1716,7 @@
                 }
               },
               data: avgList,
+              color: '#4cc96b',
               showSymbol: false
             },
             {
@@ -1648,6 +1724,7 @@
               type: 'line',
               // stack: '总量',
               data: starList,
+              color: '#f4ab44',
               showSymbol: false
 
             },
@@ -1656,6 +1733,7 @@
               type: 'line',
               // stack: '总量',
               data: watchList,
+              color: '#8547f7',
               showSymbol: false
             },
             {
@@ -1663,6 +1741,7 @@
               type: 'line',
               // stack: '总量',
               data: commitList,
+              color: '#47a1ff',
               showSymbol: false
             },
           ]
@@ -1757,7 +1836,7 @@
             {
               type: 'slider',
               xAxisIndex: 0,
-              filterMode: 'empty',
+              filterMode: 'empty'
             },
           ],
           series: [
@@ -1778,6 +1857,7 @@
               type: 'line',
               // stack: '总量',
               data: param.allnumList,
+              color: '#f4ab44'
             },
           ]
         };
@@ -1828,7 +1908,7 @@
             {
               type: 'slider',
               xAxisIndex: 0,
-              filterMode: 'empty',
+              filterMode: 'empty'
             },
           ],
           series: [
@@ -1849,6 +1929,7 @@
               type: 'line',
               // stack: '总量',
               data: param.sitenameList,
+              color: '#6363e5'
             },
           ]
         };
@@ -1860,110 +1941,110 @@
         })
       },
       //社交热度图
-      initSocialHeatLine(param) {
-        let socialHeatLine = echarts.init(this.$refs.socialHeatLine);
-        let socialHeatLineOption = {
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'cross',
-              label: {
-                backgroundColor: '#6a7985'
-              }
-            }
-          },
-          legend: {
-            selected: {'近30天平均值': true, '粉丝数': false, '评论数': false},
-            data: ['近30天平均值', '粉丝数', '评论数'],
-            selectedMode:false,
-            x: 'right'
-          },
-          grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '40',
-            containLabel: true
-          },
-          xAxis: [
-            {
-              type: 'category',
-              boundaryGap: false,
-              data: param.xList
-            }
-          ],
-          yAxis: [
-            {
-              type: 'value'
-            }
-          ],
-          dataZoom: [
-            {
-              type: 'slider',
-              xAxisIndex: 0,
-              filterMode: 'empty',
-            },
-          ],
-          series: [
-            {
-              name: '近30天平均值',
-              type: 'line',
-              stack: '总量',
-              label: {
-                normal: {
-                  show: true,
-                  position: 'top'
-                }
-              },
-              data: param.twitterAvgList
-            },
-            {
-              name: '粉丝数',
-              type: 'line',
-              stack: '总量',
-              data: param.twitterList,
-            },
-            // {
-            //   name: '评论数',
-            //   type: 'line',
-            //   stack: '总量',
-            //   data: [254, 354, 854, 684],
-            // },
-          ]
-        };
-        socialHeatLine.setOption(socialHeatLineOption);
-        this.$refs.socialHeatLineButton1.addEventListener('click', e => {
-          let $this = e.target;
-          let mykey = false;
-          let className = $this.classList.toString();
-          if (className.indexOf('check') !== -1) {
-            socialHeatLineOption.legend.selected['粉丝数'] = false;
-            $this.classList.remove('check');
-          } else {
-            socialHeatLineOption.legend.selected['粉丝数'] = true;
-            $this.classList.add('check');
-          }
-          socialHeatLine.setOption(socialHeatLineOption);
-          this.socialHeatLine = socialHeatLine;
-        });
-        // this.$refs.socialHeatLineButton2.addEventListener('click', e => {
-        //   let $this = e.target;
-        //   let mykey = false;
-        //   let className = $this.classList.toString();
-        //   if (className.indexOf('check') !== -1) {
-        //     socialHeatLineOption.legend.selected['评论数'] = false;
-        //     $this.classList.remove('check');
-        //   } else {
-        //     socialHeatLineOption.legend.selected['评论数'] = true;
-        //     $this.classList.add('check');
-        //   }
-        //   socialHeatLine.setOption(socialHeatLineOption);
-        // });
-        this.socialHeatLine = socialHeatLine;
-        window.addEventListener('resize', e =>{
-          let width = this.$refs.bigBox.offsetWidth;
-          socialHeatLine.resize({'width': `${width}px`});
-        })
-      },
+      // initSocialHeatLine(param) {
+      //   let socialHeatLine = echarts.init(this.$refs.socialHeatLine);
+      //   let socialHeatLineOption = {
+      //     tooltip: {
+      //       trigger: 'axis',
+      //       axisPointer: {
+      //         type: 'cross',
+      //         label: {
+      //           backgroundColor: '#6a7985'
+      //         }
+      //       }
+      //     },
+      //     legend: {
+      //       selected: {'近30天平均值': true, '粉丝数': false, '评论数': false},
+      //       data: ['近30天平均值', '粉丝数', '评论数'],
+      //       selectedMode:false,
+      //       x: 'right'
+      //     },
+      //     grid: {
+      //       left: '3%',
+      //       right: '4%',
+      //       bottom: '40',
+      //       containLabel: true
+      //     },
+      //     xAxis: [
+      //       {
+      //         type: 'category',
+      //         boundaryGap: false,
+      //         data: param.xList
+      //       }
+      //     ],
+      //     yAxis: [
+      //       {
+      //         type: 'value'
+      //       }
+      //     ],
+      //     dataZoom: [
+      //       {
+      //         type: 'slider',
+      //         xAxisIndex: 0,
+      //         filterMode: 'empty',
+      //       },
+      //     ],
+      //     series: [
+      //       {
+      //         name: '近30天平均值',
+      //         type: 'line',
+      //         stack: '总量',
+      //         label: {
+      //           normal: {
+      //             show: true,
+      //             position: 'top'
+      //           }
+      //         },
+      //         data: param.twitterAvgList
+      //       },
+      //       {
+      //         name: '粉丝数',
+      //         type: 'line',
+      //         stack: '总量',
+      //         data: param.twitterList,
+      //       },
+      //       // {
+      //       //   name: '评论数',
+      //       //   type: 'line',
+      //       //   stack: '总量',
+      //       //   data: [254, 354, 854, 684],
+      //       // },
+      //     ]
+      //   };
+      //   socialHeatLine.setOption(socialHeatLineOption);
+      //   this.$refs.socialHeatLineButton1.addEventListener('click', e => {
+      //     let $this = e.target;
+      //     let mykey = false;
+      //     let className = $this.classList.toString();
+      //     if (className.indexOf('check') !== -1) {
+      //       socialHeatLineOption.legend.selected['粉丝数'] = false;
+      //       $this.classList.remove('check');
+      //     } else {
+      //       socialHeatLineOption.legend.selected['粉丝数'] = true;
+      //       $this.classList.add('check');
+      //     }
+      //     socialHeatLine.setOption(socialHeatLineOption);
+      //     this.socialHeatLine = socialHeatLine;
+      //   });
+      //   // this.$refs.socialHeatLineButton2.addEventListener('click', e => {
+      //   //   let $this = e.target;
+      //   //   let mykey = false;
+      //   //   let className = $this.classList.toString();
+      //   //   if (className.indexOf('check') !== -1) {
+      //   //     socialHeatLineOption.legend.selected['评论数'] = false;
+      //   //     $this.classList.remove('check');
+      //   //   } else {
+      //   //     socialHeatLineOption.legend.selected['评论数'] = true;
+      //   //     $this.classList.add('check');
+      //   //   }
+      //   //   socialHeatLine.setOption(socialHeatLineOption);
+      //   // });
+      //   this.socialHeatLine = socialHeatLine;
+      //   window.addEventListener('resize', e =>{
+      //     let width = this.$refs.bigBox.offsetWidth;
+      //     socialHeatLine.resize({'width': `${width}px`});
+      //   })
+      // },
       initThreeLine(data) {
         data.reverse();
         let xList = data.map(item => item.times.split(" ")[0]);
@@ -1971,11 +2052,11 @@
         let sitenameList = data.map(item => item.sitename);
         let twitterList = data.map(item => item.twitter);
         let twitterAvgList = data.map(item => item.twitterAvg);
-        console.log(xList);
+        // console.log(xList);
 
         this.initMediaDisseminateLine({xList: xList, allnumList: allnumList, twitterAvgList: twitterAvgList});
         this.initMediaFollowLine({xList: xList, sitenameList: sitenameList, twitterAvgList: twitterAvgList});
-        this.initSocialHeatLine({xList: xList, twitterList: twitterList, twitterAvgList: twitterAvgList});
+        // this.initSocialHeatLine({xList: xList, twitterList: twitterList, twitterAvgList: twitterAvgList});
       },
       goProjectByName(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
