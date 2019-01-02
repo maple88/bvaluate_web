@@ -26,7 +26,7 @@
         let token = localStorage.getItem('apelink_user_token');
         if (!token) {
           let path = this.$route.path;
-          if (path !== '/login') {
+          if (path !== '/login' && path !== '/download') {
             let isCloseRegisterTip = sessionStorage.getItem('apelink_user_close_register_tip');
             if (!isCloseRegisterTip) {
               this.$store.state.registerTip = true;
@@ -51,7 +51,9 @@
             this.$store.state.sugar = candies;
             localStorage.setItem('apelink_user_signedIn', signedIn);
             if (!signedIn) {
-              this.$store.state.signInTips = true;
+              if (path !== '/download') {
+                this.$store.state.signInTips = true;
+              }
             }
           });
         }
