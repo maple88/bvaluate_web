@@ -1212,8 +1212,8 @@
             }
           },
           legend: {
-            selected: {'价格': true, '总评分': true, '资金监管': false, '基本面': false, '团队': false, '技术': false, '市场': false},
-            data: ['价格', '总评分', '资金监管', '基本面', '团队', '技术', '市场'],
+            selected: {'价格': true, '评分': true, '资金监管': false, '基本面': false, '团队': false, '技术': false, '市场': false},
+            data: ['价格', '评分', '资金监管', '基本面', '团队', '技术', '市场'],
             selectedMode:false
           },
           grid: {
@@ -1241,23 +1241,25 @@
           yAxis: [
             {
               type: 'value',
-              name: '总评分',
+              name: '评分',
               position: 'right',
-              min: Math.min.apply(null,filter_array(totalScoreList)),
+              // min: Math.min.apply(null,filter_array(totalScoreList)),
               max: Math.max.apply(null,filter_array(totalScoreList)),
+              minInterval: Math.max.apply(null,filter_array(totalScoreList)) / 4
             },
             {
               type: 'value',
               name: '价格',
               position: 'left',
-              min: Math.min.apply(null,filter_array(price)),
+              // min: Math.min.apply(null,filter_array(price)),
               max: Math.max.apply(null,filter_array(price)),
+              minInterval: Math.max.apply(null,filter_array(price)) / 4
             },
             {
               type: 'value',
               name: '资金监管',
               position: 'right',
-              min: Math.min.apply(null,filter_array(fundSuperList)),
+              // min: Math.min.apply(null,filter_array(fundSuperList)),
               max: Math.max.apply(null,filter_array(fundSuperList)),
               show: false,
               axisLabel : {
@@ -1268,7 +1270,7 @@
               type: 'value',
               name: '基本面',
               position: 'right',
-              min: Math.min.apply(null,filter_array(fundaMentList)),
+              // min: Math.min.apply(null,filter_array(fundaMentList)),
               max: Math.max.apply(null,filter_array(fundaMentList)),
               show: false,
               axisLabel : {
@@ -1279,7 +1281,7 @@
               type: 'value',
               name: '团队',
               position: 'right',
-              min: Math.min.apply(null,filter_array(teamList)),
+              // min: Math.min.apply(null,filter_array(teamList)),
               max: Math.max.apply(null,filter_array(teamList)),
               show: false,
               axisLabel : {
@@ -1290,7 +1292,7 @@
               type: 'value',
               name: '技术',
               position: 'right',
-              min: Math.min.apply(null,filter_array(techList)),
+              // min: Math.min.apply(null,filter_array(techList)),
               max: Math.max.apply(null,filter_array(techList)),
               show: false,
               axisLabel : {
@@ -1301,7 +1303,7 @@
               type: 'value',
               name: '市场',
               position: 'right',
-              min: Math.min.apply(null,filter_array(marketList)),
+              // min: Math.min.apply(null,filter_array(marketList)),
               max: Math.max.apply(null,filter_array(marketList)),
               show: false,
               axisLabel : {
@@ -1319,7 +1321,7 @@
           ],
           series: [
             {
-              name: '总评分',
+              name: '评分',
               type: 'line',
               // stack: '总量',
               yAxisIndex: 0,
