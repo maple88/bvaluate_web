@@ -1244,23 +1244,23 @@
               name: '评分',
               position: 'right',
               // min: Math.min.apply(null,filter_array(totalScoreList)),
-              max: Math.max.apply(null,filter_array(totalScoreList)),
-              minInterval: Math.max.apply(null,filter_array(totalScoreList)) / 4
+              max: 5, //Math.max.apply(null,filter_array(totalScoreList)),
+              minInterval: 1.25
             },
             {
               type: 'value',
               name: '价格',
               position: 'left',
               // min: Math.min.apply(null,filter_array(price)),
-              max: Math.max.apply(null,filter_array(price)),
-              minInterval: Math.max.apply(null,filter_array(price)) / 4
+              max: (Math.max.apply(null,filter_array(price)) * 1.5).toFixed(3),
+              minInterval: (Math.max.apply(null,filter_array(price)) * 1.5).toFixed(3) / 4
             },
             {
               type: 'value',
               name: '资金监管',
               position: 'right',
               // min: Math.min.apply(null,filter_array(fundSuperList)),
-              max: Math.max.apply(null,filter_array(fundSuperList)),
+              max: 5, //Math.max.apply(null,filter_array(fundSuperList)),
               show: false,
               axisLabel : {
                 show: false
@@ -1271,7 +1271,7 @@
               name: '基本面',
               position: 'right',
               // min: Math.min.apply(null,filter_array(fundaMentList)),
-              max: Math.max.apply(null,filter_array(fundaMentList)),
+              max: 5, //Math.max.apply(null,filter_array(fundaMentList)),
               show: false,
               axisLabel : {
                 show: false
@@ -1282,7 +1282,7 @@
               name: '团队',
               position: 'right',
               // min: Math.min.apply(null,filter_array(teamList)),
-              max: Math.max.apply(null,filter_array(teamList)),
+              max: 5, //Math.max.apply(null,filter_array(teamList)),
               show: false,
               axisLabel : {
                 show: false
@@ -1293,7 +1293,7 @@
               name: '技术',
               position: 'right',
               // min: Math.min.apply(null,filter_array(techList)),
-              max: Math.max.apply(null,filter_array(techList)),
+              max: 5, //Math.max.apply(null,filter_array(techList)),
               show: false,
               axisLabel : {
                 show: false
@@ -1304,7 +1304,7 @@
               name: '市场',
               position: 'right',
               // min: Math.min.apply(null,filter_array(marketList)),
-              max: Math.max.apply(null,filter_array(marketList)),
+              max: 5, //Math.max.apply(null,filter_array(marketList)),
               show: false,
               axisLabel : {
                 show: false
