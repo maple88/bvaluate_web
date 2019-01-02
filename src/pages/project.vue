@@ -1234,7 +1234,14 @@
           ],
           yAxis: [
             {
-              type: 'value'
+              type: 'value',
+              name: '价格',
+              position: 'right'
+            },
+            {
+              type: 'value',
+              name: '总评分',
+              position: 'left'
             }
           ],
           dataZoom: [
@@ -1250,6 +1257,7 @@
               name: '价格',
               type: 'line',
               // stack: '总量',
+              yAxisIndex: 0,
               label: {
                 normal: {
                   show: true,
@@ -1265,6 +1273,7 @@
               name: '总评分',
               type: 'line',
               // stack: '总量',
+              yAxisIndex: 1,
               color: '#3555da',
               label: {
                 normal: {
