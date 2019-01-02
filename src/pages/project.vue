@@ -101,7 +101,7 @@
             </div>
           </div>
           <div class="bluesection">
-            <div class="echartsbox1">
+            <div class="echartsbox1" ref="bluebox">
               <div class="echarts_loading" v-if="radar_loading">
                 <img :src="loading"/>
               </div>
@@ -136,7 +136,7 @@
             <div class="echarts_loading" v-if="scoreChart_loading">
               <img :src="loading"/>
             </div>
-            <div ref="scoreChart" class="chartbox" :style="{width: '100%', height: '600px'}"></div>
+            <div ref="scoreChart" class="chartbox" :style="{width: '100%', height: '680px'}"></div>
             <div class="btn-list">
               <label for="citem2" ref="scoreButton2">
                 <input type="checkbox" id="citem2">
@@ -735,7 +735,7 @@
                   <img :src="loading"/>
                 </div>
                 <div class="loading_box loadmore" v-if="!ListLoading">
-                  <div class="btn btn-primary" v-if="ListHasData" @click="initNews(project.project, '290001')">加载更多</div>
+                  <div class="btn btn-primary" v-if="ListHasData" @click="initWeixin(project.project, '290001')">加载更多</div>
                   <span v-if="!ListHasData">没有数据了</span>
                 </div>
               </div>
@@ -1187,6 +1187,9 @@
         })
       },
       initScoreChart(data) {
+        function filter_array(array) {  
+          return array.filter(item=>item); 
+        }
         data.reverse();
         let xList = data.map(item => item.times.split(" ")[0]);
         let price = data.map(item => item.price);
@@ -1214,8 +1217,8 @@
             selectedMode:false
           },
           grid: {
-            left: '3%',
-            right: '4%',
+            left: '0',
+            right: '0',
             bottom: '40',
             containLabel: true
           },
@@ -1224,6 +1227,9 @@
               type: 'category',
               boundaryGap: false,
               data: xList,
+              axisPointer: {
+                triggerTooltip: false
+              },
               splitLine: {
                 show: false,
                 lineStyle: {
@@ -1235,13 +1241,72 @@
           yAxis: [
             {
               type: 'value',
-              name: '价格',
-              position: 'right'
+              name: '总评分',
+              position: 'right',
+              min: Math.min.apply(null,filter_array(totalScoreList)),
+              max: Math.max.apply(null,filter_array(totalScoreList)),
             },
             {
               type: 'value',
-              name: '总评分',
-              position: 'left'
+              name: '价格',
+              position: 'left',
+              min: Math.min.apply(null,filter_array(price)),
+              max: Math.max.apply(null,filter_array(price)),
+            },
+            {
+              type: 'value',
+              name: '资金监管',
+              position: 'right',
+              min: Math.min.apply(null,filter_array(fundSuperList)),
+              max: Math.max.apply(null,filter_array(fundSuperList)),
+              show: false,
+              axisLabel : {
+                show: false
+              }
+            },
+            {
+              type: 'value',
+              name: '基本面',
+              position: 'right',
+              min: Math.min.apply(null,filter_array(fundaMentList)),
+              max: Math.max.apply(null,filter_array(fundaMentList)),
+              show: false,
+              axisLabel : {
+                show: false
+              }
+            },
+            {
+              type: 'value',
+              name: '团队',
+              position: 'right',
+              min: Math.min.apply(null,filter_array(teamList)),
+              max: Math.max.apply(null,filter_array(teamList)),
+              show: false,
+              axisLabel : {
+                show: false
+              }
+            },
+            {
+              type: 'value',
+              name: '技术',
+              position: 'right',
+              min: Math.min.apply(null,filter_array(techList)),
+              max: Math.max.apply(null,filter_array(techList)),
+              show: false,
+              axisLabel : {
+                show: false
+              }
+            },
+            {
+              type: 'value',
+              name: '市场',
+              position: 'right',
+              min: Math.min.apply(null,filter_array(marketList)),
+              max: Math.max.apply(null,filter_array(marketList)),
+              show: false,
+              axisLabel : {
+                show: false
+              }
             }
           ],
           dataZoom: [
@@ -1254,26 +1319,10 @@
           ],
           series: [
             {
-              name: '价格',
-              type: 'line',
-              // stack: '总量',
-              yAxisIndex: 0,
-              label: {
-                normal: {
-                  show: true,
-                  position: 'top'
-                }
-              },
-              // areaStyle: {normal: {}},
-              data: price,
-              color: '#b0b0b0',
-              showSymbol: false
-            },
-            {
               name: '总评分',
               type: 'line',
               // stack: '总量',
-              yAxisIndex: 1,
+              yAxisIndex: 0,
               color: '#3555da',
               label: {
                 normal: {
@@ -1286,18 +1335,35 @@
               showSymbol: false
             },
             {
+              name: '价格',
+              type: 'line',
+              // stack: '总量',
+              yAxisIndex: 1,
+              label: {
+                normal: {
+                  show: true,
+                  position: 'top'
+                }
+              },
+              // areaStyle: {normal: {}},
+              data: price,
+              color: '#b0b0b0',
+              showSymbol: false
+            },
+            {
               name: '资金监管',
               type: 'line',
               // stack: '总量',
+              yAxisIndex: 2,
               data: fundSuperList,
               color: '#fdd208',
               showSymbol: false
-
             },
             {
               name: '基本面',
               type: 'line',
               // stack: '总量',
+              yAxisIndex: 3,
               data: fundaMentList,
               color: '#5ad8ae',
               showSymbol: false
@@ -1306,6 +1372,7 @@
               name: '团队',
               type: 'line',
               // stack: '总量',
+              yAxisIndex: 4,
               data: teamList,
               color: '#f185f8',
               showSymbol: false
@@ -1314,6 +1381,7 @@
               name: '技术',
               type: 'line',
               // stack: '总量',
+              yAxisIndex: 5,
               data: techList,
               color: '#82d5fe',
               showSymbol: false
@@ -1322,6 +1390,7 @@
               name: '市场',
               type: 'line',
               // stack: '总量',
+              yAxisIndex: 6,
               data: marketList,
               color: '#9cb2fa',
               showSymbol: false
@@ -1437,8 +1506,8 @@
             selectedMode:false
           },
           grid: {
-            left: '3%',
-            right: '0%',
+            left: '0',
+            right: '3%',
             bottom: '40',
             containLabel: true
           },
@@ -1472,8 +1541,8 @@
               show: false,
               min: Math.min.apply(null,filter_array(countList)),
               max: Math.max.apply(null,filter_array(countList)),
-              axisLabel: {
-                formatter: '1'
+              axisLabel : {
+                show: false
               }
             },
             {
@@ -1483,8 +1552,8 @@
               show: false,
               min: Math.min.apply(null,filter_array(allCountList)),
               max: Math.max.apply(null,filter_array(allCountList)),
-              axisLabel: {
-                formatter: '1'
+              axisLabel : {
+                show: false
               }
             },
             {
@@ -1494,8 +1563,8 @@
               position: 'right',
               min: Math.min.apply(null,filter_array(countUserList)),
               max: Math.max.apply(null,filter_array(countUserList)),
-              axisLabel: {
-                formatter: '1'
+              axisLabel : {
+                show: false
               }
             }
           ],
@@ -1550,7 +1619,6 @@
               data: countUserList,
               color: '#49cb55',
               showSymbol: false
-
             },
           ]
         };
@@ -1680,8 +1748,8 @@
         };
         myChart.setOption(option);
         window.addEventListener('resize', e =>{
-          let width = this.$refs.bigBox.offsetWidth;
-          mediaFollowLine.resize({'width': `${width}px`});
+          let width = this.$refs.bluebox.offsetWidth;
+          myChart.resize({'width': `${width}px`});
         })
       },
       initGithubLine(data) {

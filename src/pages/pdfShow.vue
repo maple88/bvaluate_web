@@ -6,7 +6,7 @@
         <div class="main-content">
           <div class="top-h">
             <div class="tit">{{projectName}} 白皮书pdf</div>
-            <button class="down-btn" @click="downloadPDF">下载</button>
+            <!-- <button class="down-btn" @click="downloadPDF">下载</button> -->
           </div>
           <div class="pdf-box">
             <div class="pdfloading" v-if="pdfloading">
