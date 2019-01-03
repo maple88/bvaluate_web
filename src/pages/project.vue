@@ -111,24 +111,23 @@
               <p class="total">总分：{{hotInfo.totalordercount}} <span>/ 5</span></p>
               <div class="item">
                 <p><img src="../assets/project/pb1.png"> 资金监管：{{hotInfo.fundsupervision}}</p>
-                <p class="des">{{(hotInfoTips.length>=3)?hotInfoTips[2]:''}}</p>
+                <p class="des">{{hotInfoTips.fundana}}</p>
               </div>
               <div class="item">
                 <p><img src="../assets/project/pb2.png"> 基本面：{{hotInfo.fundamentalsanalysis}}</p>
-                <p class="des">{{(hotInfoTips.length>=5)?hotInfoTips[4]:''}}</p>
+                <p class="des">{{hotInfoTips.baseana}}</p>
               </div>
               <div class="item">
                 <p><img src="../assets/project/pb3.png"> 团队：{{hotInfo.teamanalysis}}</p>
-                <p class="des">{{(hotInfoTips.length>=7)?hotInfoTips[6]:''}}</p>
+                <p class="des">{{hotInfoTips.teamana}}</p>
               </div>
               <div class="item">
                 <p><img src="../assets/project/pb4.png"> 技术：{{hotInfo.technicalanalysis}}</p>
-                
-                <p class="des">{{(hotInfoTips.length>=9)?hotInfoTips[8]:''}}</p>
+                <p class="des">{{hotInfoTips.skillana}}</p>
               </div>
               <div class="item">
                 <p><img src="../assets/project/pb5.png"> 市场：{{hotInfo.marketanalysis}}</p>
-                <p class="des">{{(hotInfoTips.length>=11)?hotInfoTips[10]:''}}</p>
+                <p class="des">{{hotInfoTips.markana}}</p>
               </div>
             </div>
           </div>
@@ -1143,7 +1142,7 @@
       getDetails(icoName) {
         let uid = localStorage.getItem('apelink_user_uid');
         let headers = {'uid': uid};
-        let url = '/api/tradition/details/' + icoName;
+        let url = '/api/tradition/detailsNew/' + icoName;
         this.$axios({
           method: 'get',
           url: url,
