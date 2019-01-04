@@ -24,8 +24,8 @@
     mounted() {
       let clearTime = setTimeout(() => {
         let token = localStorage.getItem('apelink_user_token');
+        let path = this.$route.path;
         if (!token) {
-          let path = this.$route.path;
           if (path !== '/login' && path !== '/download') {
             let isCloseRegisterTip = sessionStorage.getItem('apelink_user_close_register_tip');
             if (!isCloseRegisterTip) {
