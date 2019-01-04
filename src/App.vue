@@ -52,7 +52,10 @@
             localStorage.setItem('apelink_user_signedIn', signedIn);
             if (!signedIn) {
               if (path !== '/download') {
-                this.$store.state.signInTips = true;
+                let isCloseSignTip = sessionStorage.getItem('apelink_user_close_sign_tip');
+                if (!isCloseSignTip) {
+                  this.$store.state.signInTips = true;
+                }
               }
             }
           });
