@@ -24,8 +24,8 @@
     mounted() {
       let clearTime = setTimeout(() => {
         let token = localStorage.getItem('apelink_user_token');
+        let path = this.$route.path;
         if (!token) {
-          let path = this.$route.path;
           if (path !== '/login' && path !== '/download') {
             let isCloseRegisterTip = sessionStorage.getItem('apelink_user_close_register_tip');
             if (!isCloseRegisterTip) {
@@ -33,7 +33,6 @@
             }
           }
         } else {
-
           let uid = localStorage.getItem('apelink_user_uid');
           let token = localStorage.getItem('apelink_user_token');
           if (!token) {
@@ -52,7 +51,10 @@
             localStorage.setItem('apelink_user_signedIn', signedIn);
             if (!signedIn) {
               if (path !== '/download') {
-                this.$store.state.signInTips = true;
+                let isCloseSignTip = sessionStorage.getItem('apelink_user_close_sign_tip');
+                if (!isCloseSignTip) {
+                  this.$store.state.signInTips = true;
+                }
               }
             }
           });

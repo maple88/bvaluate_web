@@ -130,6 +130,7 @@
       fn2() {
         this.click = true;
         this.$store.state.signInTips = false;
+        sessionStorage.setItem('apelink_user_close_sign_tip', true);
       },
       receive() {
         this.clicked = !this.clicked;

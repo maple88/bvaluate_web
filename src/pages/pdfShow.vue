@@ -12,6 +12,7 @@
             <div class="pdfloading" v-if="pdfloading">
               <img :src="loading"/>
             </div>
+            <div class="pdfnothing" v-if="pdfnothing">暂无白皮书</div>
             <!-- <div class="pdf-tool">
               <div class="page" @click="(pageNum !== 1) ? pageNum-- : ''">上一页</div>
               <div class="page-num">{{`${currentPage}/${pageCount}`}}</div>
@@ -68,25 +69,35 @@
         pageNum: 1,
         oWidth: '',
         pdfWidth: '',
-        projectName: ''
+        projectName: '',
+        pdfnothing: false
       }
     },
     mounted() {
       this.projectName = this.$route.query.project;
       this.$axios.get('/api/file/review/bps?project=' + this.$route.query.project).then(res => {
-        for (let i = 0; i < res.data.length; i++) {
-          for (let key in res.data[i]) {
-            if (key === 'cn') {
-              this.src = pdf.createLoadingTask(res.data[i]['cn']);
-              this.src.then(pdf => {
-                this.pdfloading = false;
-                this.numPages = pdf.numPages;
-                this.oWidth = this.$refs.bigBox.offsetWidth;
-                this.pdfWidth = this.$refs.bigBox.offsetWidth;
-              });
-              break;
-            }
+        if (res.data.length === 0) {
+          this.pdfloading = false;
+          this.pdfnothing = true
+          return false;
+        }
+
+        let obj = '';
+        res.data.forEach(item=> {
+          if(Object.keys(item)[0] == 'en') {
+            obj = item;
+          } else {
+            obj = item;
           }
+        })
+        for(let key in obj){
+          this.src = pdf.createLoadingTask(obj[key]);
+          this.src.then(pdf => {
+            this.pdfloading = false;
+            this.numPages = pdf.numPages;
+            this.oWidth = this.$refs.bigBox.offsetWidth;
+            this.pdfWidth = this.$refs.bigBox.offsetWidth;
+          });
         }
       })
 

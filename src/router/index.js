@@ -5,6 +5,7 @@ import userCenter from '@/pages/userCenter/userCenter'
 import my from '@/pages/myProfile'
 import follow from '@/pages/follow'
 import home from '@/pages/home'
+import v2home from '@/pages/v2home'
 import industry from '@/pages/industry'
 import recommend from '@/pages/recommend'
 import article from '@/pages/article'
@@ -25,7 +26,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/list',
+      redirect: '/home',
       meta: {
         pageTitle: '榜单'
       },
@@ -120,7 +121,14 @@ export default new Router({
     {
       path: '/download',
       component: download
-    }
+    },
+    {
+      path: '/home',
+      component: v2home,
+      meta: {
+        pageTitle: '首页'
+      },
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
