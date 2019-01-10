@@ -4,9 +4,9 @@
       <div class="container v2container">
         <div class="flexbox">
           <ul>
-            <li><span>项目总量：</span><span>4117</span></li>
-            <li><span>项目相关人员总数：</span><span>268666</span></li>
-            <li><span>白皮书收录总数：</span><span>3666633</span></li>
+            <li><span>项目总量：</span><span>{{tophead.totalProject}}</span></li>
+            <li><span>项目相关人员总数：</span><span>{{tophead.totalRelatedProjectPerson}}</span></li>
+            <li><span>白皮书收录总数：</span><span>{{tophead.totalWhitePaper}}</span></li>
           </ul>
           <div class="appdownload">
             <img src="../assets/tdownload.png">
@@ -142,6 +142,7 @@
   import login from '@/components/login';
   import message from '@/components/message';
   import analysis from '@/components/analysis';
+  import Bus from '../bus.js'
 
   let default_header = require('../assets/user/default-header.png');
   export default {
@@ -155,6 +156,7 @@
     },
     data() {
       return {
+        tophead: [],
         candy: 100,
         profileUrl: '',
         token: '',
@@ -176,6 +178,7 @@
       });
       window.addEventListener('scroll', this.handleScroll);
       this.initUser();
+      this.getTophead();
 
       $(".open_search").on("click", function(){
         $(".out-search-box").collapse('show');
@@ -196,6 +199,14 @@
       }
     },
     methods: {
+      // 头部数量
+      getTophead() {
+        let that = this;
+        that.$axios.get('/api/ICO/icoRank?type=周榜&pageNo=0&pageSize=3').then(function (res) {
+          that.tophead = res.data;
+          Bus.$emit('val', res.data.topProject);
+        });
+      },
       invitation() {
         let token = this.token;
         if (token) {

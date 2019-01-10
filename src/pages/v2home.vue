@@ -13,7 +13,7 @@
 								<input type="text" placeholder="请输入关键词" v-model="search" class="search_input" data="输入搜素内容" name="no_content" id="input_search_input" @keyup.enter="goSearch($event)">
 							</div>
 							<div class="right">
-								<button class="search_submit" @click="goSearch($event), trackSearch(searchType, search)" name="no_content" id="search_submit" data="搜索按钮">
+								<button class="search_submit" @click="goSearch($event)" name="no_content" id="search_submit" data="搜索按钮">
 									<img src="../assets/search.png" alt="search"/>
 								</button>
 							</div>
@@ -32,30 +32,12 @@
 				<div class="container v2container">
 					<div class="top-list">
 						<div class="box-row">
-							<div class="box-col">
-								<div class="item top1">
-									<a href="#">
+							<div class="box-col" v-for="(item, index) in topProject" :key="index">
+								<div class="item" :class="'top'+(index+1)">
+									<a href="javascript:;" @click="goArticle('/project',{sid: item.sid}, $event)">
 										<img src="../assets/billboard-logo.png" class="tlogo">
-										<p class="tit">Zilliqailliqa</p>
-										<p class="des">Cross-protocol for digital entertainm Cross-protocol for digital entertainm</p>
-									</a>
-								</div>
-							</div>
-							<div class="box-col">
-								<div class="item top2">
-									<a href="#">
-										<img src="../assets/billboard-logo.png" class="tlogo">
-										<p class="tit">Zilliqailliqa</p>
-										<p class="des">Cross-protocol for digital entertainm Cross-protocol for digital entertainm</p>
-									</a>
-								</div>
-							</div>
-							<div class="box-col">
-								<div class="item top3">
-									<a href="#">
-										<img src="../assets/billboard-logo.png" class="tlogo">
-										<p class="tit">Zilliqailliqa</p>
-										<p class="des">Cross-protocol for digital entertainm Cross-protocol for digital entertainm</p>
+										<div class="img-box"><img :src="item.logoSrc"></div>
+										<p class="tit">{{item.project}}</p>
 									</a>
 								</div>
 							</div>
@@ -78,7 +60,7 @@
 										<div class="right">总评分</div>
 									</div>
 									<div class="table-content">
-										<div class="list_item" slot="scrollList" v-for="(item,index) in list">
+										<div class="list_item" slot="scrollList" v-for="(item, index) in zongpingList" :key="index" @click="goArticle('/project',{sid: item.sid}, $event)">
 											<div class="item_left">
 												<div class="ranking_box">
 													<div class="ranking_number" v-if="index>2">
@@ -122,7 +104,7 @@
 										<div class="right">总评分</div>
 									</div>
 									<div class="table-content">
-										<div class="list_item" slot="scrollList" v-for="(item,index) in list">
+										<div class="list_item" slot="scrollList" v-for="(item, index) in stoList" :key="index">
 											<div class="item_left">
 												<div class="ranking_box">
 													<div class="ranking_number" v-if="index>2">
@@ -166,51 +148,15 @@
 					</div>
 					<div class="flexbox">
 						<div class="box-row">
-							<div class="box-col">
+							<div class="box-col" v-for="(item, index) in starProject" :key="index">
 								<div class="item">
-									<a href="#">
+									<a href="javascript:;" @click="goArticle('/project',{sid: item.sid}, $event)">
 										<div class="img-box">
-											<img src="../assets/project/recommend.jpg">
+											<img :src="item.logoSrc">
 										</div>
-										<p class="tit">BTC<span>(BEC)</span></p>
-										<p class="num">3.48</p>
-										<p class="des">A worldwide cryptocurrency and digital payment system</p>
-									</a>
-								</div>
-							</div>
-							<div class="box-col">
-								<div class="item">
-									<a href="#">
-										<div class="img-box">
-											<img src="../assets/project/recommend.jpg">
-										</div>
-										<p class="tit">BTC<span>(BEC)</span></p>
-										<p class="num">3.48</p>
-										<p class="des">A worldwide cryptocurrency and digital payment system</p>
-									</a>
-								</div>
-							</div>
-							<div class="box-col">
-								<div class="item">
-									<a href="#">
-										<div class="img-box">
-											<img src="../assets/project/recommend.jpg">
-										</div>
-										<p class="tit">BTC<span>(BEC)</span></p>
-										<p class="num">3.48</p>
-										<p class="des">A worldwide cryptocurrency and digital payment systemA worldwide cryptocurrency and digital payment system</p>
-									</a>
-								</div>
-							</div>
-							<div class="box-col">
-								<div class="item">
-									<a href="#">
-										<div class="img-box">
-											<img src="../assets/project/recommend.jpg">
-										</div>
-										<p class="tit">BTC<span>(BEC)</span></p>
-										<p class="num">3.48</p>
-										<p class="des">A worldwide cryptocurrency and digital payment system</p>
+										<p class="tit">{{item.project}}<span>{{item.tokenCoin | formatName}}</span></p>
+										<p class="num">{{item.totalScore}}</p>
+										<p class="des">{{item.abstracts}}</p>
 									</a>
 								</div>
 							</div>
@@ -229,7 +175,19 @@
 					</div>
 					<div class="flexbox">
 						<div class="box-row">
-							<div class="box-col">
+							<div class="box-col" v-for="(item, index) in hostIndustries" :key="index">
+								<div class="item">
+									<p class="tit"><a href="#">{{item.categoryName}}</a></p>
+									<p class="num">项目量：36</p>
+									<ul class="pro">
+										<li>项目：</li>
+										<li v-for="(project, pindex) in item.project" :key="pindex">
+											<a href="javascript:;" @click="goArticle('/project',{sid:project.sid})">{{project.project}}</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<!-- <div class="box-col">
 								<div class="item">
 									<p class="tit"><a href="#">社交</a></p>
 									<p class="num">项目量：36</p>
@@ -264,19 +222,7 @@
 										<li><a href="#">TRON</a></li>
 									</ul>
 								</div>
-							</div>
-							<div class="box-col">
-								<div class="item">
-									<p class="tit"><a href="#">社交</a></p>
-									<p class="num">项目量：36</p>
-									<ul class="pro">
-										<li>项目：</li>
-										<li><a href="#">BTC</a></li>
-										<li><a href="#">NON</a></li>
-										<li><a href="#">TRON</a></li>
-									</ul>
-								</div>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>
@@ -298,7 +244,7 @@
 										<div class="right3">排名升降</div>
 									</div>
 									<div class="table-content">
-										<div class="list_item" slot="scrollList" v-for="(item,index) in list">
+										<div class="list_item" slot="scrollList" v-for="(item, index) in heimaList" :key="index" @click="goArticle('/project',{sid: item.sid}, $event)">
 											<div class="item_left">
 												<div class="ranking_box">
 													<div class="ranking_number" v-if="index>2">
@@ -324,7 +270,7 @@
 												<h4>{{item.totalScore | formatToFixed }}</h4>
 											</div>
 											<div class="item_right2">
-												<h4>{{item.totalScore | formatToFixed }}</h4>
+												<h4>{{item.rank}}</h4>
 											</div>
 											<div class="item_right3">
 												<div class="item_right3_box">
@@ -357,7 +303,7 @@
 										<div class="right">项目量</div>
 									</div>
 									<div class="table-content">
-										<div class="list_item" slot="scrollList" v-for="(item,index) in list">
+										<div class="list_item" slot="scrollList" v-for="(item, index) in guojiaList" :key="index" @click="goIndustryByCountry(item.countName, $event)">
 											<div class="item_left">
 												<div class="ranking_box">
 													<div class="ranking_number" v-if="index>2">
@@ -372,11 +318,11 @@
 											</div>
 											<div class="item_center">
 												<div class="center_right">
-													<h4 class="center_right_title">{{item.project}}</h4>
+													<h4 class="center_right_title">{{item.countName}}</h4>
 												</div>
 											</div>
 											<div class="item_right">
-												<h4>{{item.totalScore | formatToFixed }}</h4>
+												<h4>{{item.num}}</h4>
 											</div>
 										</div>
 									</div>
@@ -393,7 +339,7 @@
 										<div class="right">宣传力度</div>
 									</div>
 									<div class="table-content">
-										<div class="list_item" slot="scrollList" v-for="(item,index) in list">
+										<div class="list_item" slot="scrollList" v-for="(item, index) in meitiList" :key="index" @click="goArticle('/project',{sid: item.sid}, $event)">
 											<div class="item_left">
 												<div class="ranking_box">
 													<div class="ranking_number" v-if="index>2">
@@ -437,77 +383,23 @@
 					</div>
 					<div class="flexbox">
 						<div class="box-row">
-							<div class="box-col">
+							<div class="box-col" v-for="(item, index) in hotNews">
 								<div class="item">
 									<div class="img-box">
-										<a href="#"><img src="../assets/news.jpg"></a>
+										<a href="javascript:;" @click="goArticle('/article',{sid:item.sid})"><img :src="item.titlePicture"></a>
 									</div>
 									<div class="info">
-										<p class="tit"><span class="projectname">项目</span><span class="time">2018-10-11</span></p>
-										<p class="name"><a href="#">摆在 NEO 面前的首要问题，是如何实现真正的分布式</a></p>
-										<p class="des">摆在 NEO 面前的首要问题，是如何实现真正的分布式摆在 NEO 面前的首要问题，是如何实现真正的分布式,摆在 NEO 面前的首要问题，是如何实现真正的分布式,摆在...</p>
+										<p class="tit">
+											<span class="projectname" @click="goProjectByName(item.projectCategory)">{{item.projectCategory | labelFormat}}</span>
+											<span class="time">{{item.urlDate}}</span>
+										</p>
+										<p class="name"><a href="javascript:;" @click="goArticle('/article',{sid:item.sid})">{{item.title}}</a></p>
+										<p class="des">{{item.content}}</p>
 										<div class="line"></div>
 										<div class="itemuser">
-											<a href="#">
-												<div class="userimg"><img src="../assets/logo_brand3.png"></div>
-												<span>寒含</span>
-											</a>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="box-col">
-								<div class="item">
-									<div class="img-box">
-										<a href="#"><img src="../assets/news.jpg"></a>
-									</div>
-									<div class="info">
-										<p class="tit"><span class="projectname">项目</span><span class="time">2018-10-11</span></p>
-										<p class="name"><a href="#">摆在 NEO 面前的首要问题，是如何实现真正的分布式</a></p>
-										<p class="des">摆在 NEO 面前的首要问题，是如何实现真正的分布式摆在 NEO 面前的首要问题，是如何实现真正的分布式,摆在 NEO 面前的首要问题，是如何实现真正的分布式,摆在...</p>
-										<div class="line"></div>
-										<div class="itemuser">
-											<a href="#">
-												<div class="userimg"><img src="../assets/logo_brand3.png"></div>
-												<span>寒含</span>
-											</a>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="box-col">
-								<div class="item">
-									<div class="img-box">
-										<a href="#"><img src="../assets/news.jpg"></a>
-									</div>
-									<div class="info">
-										<p class="tit"><span class="projectname">项目</span><span class="time">2018-10-11</span></p>
-										<p class="name"><a href="#">摆在 NEO 面前的首要问题，是如何实现真正的分布式</a></p>
-										<p class="des">摆在 NEO 面前的首要问题，是如何实现真正的分布式摆在 NEO 面前的首要问题，是如何实现真正的分布式,摆在 NEO 面前的首要问题，是如何实现真正的分布式,摆在...</p>
-										<div class="line"></div>
-										<div class="itemuser">
-											<a href="#">
-												<div class="userimg"><img src="../assets/logo_brand3.png"></div>
-												<span>寒含</span>
-											</a>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="box-col">
-								<div class="item">
-									<div class="img-box">
-										<a href="#"><img src="../assets/news.jpg"></a>
-									</div>
-									<div class="info">
-										<p class="tit"><span class="projectname">项目</span><span class="time">2018-10-11</span></p>
-										<p class="name"><a href="#">摆在 NEO 面前的首要问题，是如何实现真正的分布式</a></p>
-										<p class="des">摆在 NEO 面前的首要问题，是如何实现真正的分布式摆在 NEO 面前的首要问题，是如何实现真正的分布式,摆在 NEO 面前的首要问题，是如何实现真正的分布式,摆在...</p>
-										<div class="line"></div>
-										<div class="itemuser">
-											<a href="#">
-												<div class="userimg"><img src="../assets/logo_brand3.png"></div>
-												<span>寒含</span>
+											<a href="javascript:;" @click="goArticle('/author',{author: item.siteName,type: 'siteName'})">
+												<!-- <div class="userimg"><img src="../assets/logo_brand3.png"></div> -->
+												<span>{{item.siteName}}</span>
 											</a>
 										</div>
 									</div>
@@ -530,22 +422,22 @@
 							<div class="box-row">
 								<div class="box-col">
 									<div class="item">
-										<a href="#"><div><img src="../assets/p1.png"></div></a>
+										<a><div><img src="../assets/p1.png"></div></a>
 									</div>
 								</div>
 								<div class="box-col">
 									<div class="item">
-										<a href="#"><div><img src="../assets/p2.png"></div></a>
+										<a><div><img src="../assets/p2.png"></div></a>
 									</div>
 								</div>
 								<div class="box-col">
 									<div class="item">
-										<a href="#"><div><img src="../assets/p3.png"></div></a>
+										<a><div><img src="../assets/p3.png"></div></a>
 									</div>
 								</div>
 								<div class="box-col">
 									<div class="item">
-										<a href="#"><div><img src="../assets/p4.png"></div></a>
+										<a><div><img src="../assets/p4.png"></div></a>
 									</div>
 								</div>
 							</div>
@@ -559,12 +451,12 @@
 							<div class="box-row">
 								<div class="box-col">
 									<div class="item">
-										<a href="#"><div><img src="../assets/p5.png"></div></a>
+										<a><div><img src="../assets/p5.png"></div></a>
 									</div>
 								</div>
 								<div class="box-col">
 									<div class="item">
-										<a href="#"><div><img src="../assets/p6.png"></div></a>
+										<a><div><img src="../assets/p6.png"></div></a>
 									</div>
 								</div>
 							</div>
@@ -578,6 +470,8 @@
 </template>
 
 <script>
+	import Bus from '../bus.js'
+
 	export default {
 		data () {
 			return {
@@ -632,10 +526,175 @@
 					tokenCoin: "DGD",
 					totalScore: 3.8
 				}
-				]
+				],
+				search: '',
+				topProject: [],
+				zongpingList: [],
+				stoList: [],
+				heimaList: [],
+				guojiaList: [],
+				meitiList: [],
+				starProject: [],
+				hotNews: [],
+				hostIndustries: []
 			}
-		}
-	}
+		},
+		mounted () {
+			var that = this
+      Bus.$on('val', (data) => {
+        that.topProject = data;
+      })
+			that.getHotindustry();
+			that.getZongpingList();
+			that.getSTOList();
+			that.getHeimaList();
+			that.getGuojiaList();
+			that.getMeitiList();
+			that.getstarProject();
+			that.getHotNews();
+		},
+		methods: {
+			goSearch(event) {
+				let pageTitle
+				if (this.searchType === '文章') {
+					pageTitle = '文章搜索结果'
+				}
+				if (this.searchType === '项目') {
+					pageTitle = '项目搜索结果'
+				}
+				this.$router.push({
+					path: '/search',
+					query: {
+						keyword: this.search,
+						searchType: this.searchType,
+						pageTitle: pageTitle
+					}
+				})
+			},
+			// 热门行业
+			getHotindustry () {
+				let that = this;
+				that.$axios.get('/api/ICO/hotestIndustries')
+				.then(res => {
+					let data = res.data.slice(0, 4);
+					for (let i = 0; i < data.length; i++) {
+            let Industry = {};
+            Industry.categoryName = data[i];
+            that.$axios.get('/api/ICO/relatedICO?categoryName=' + Industry.categoryName + '&pageSize=4').then(function (res) {
+              Industry.project = res.data;
+              that.$axios.get('/api/traditional/categoryList?categoryName=' + Industry.categoryName + '&pageSize=4').then(function (res) {
+                Industry.content = res.data.content;
+                that.hostIndustries.push(Industry);
+              })
+            })
+          }
+				})
+			},
+      // 总评榜
+      getZongpingList () {
+      	this.$axios.get('/api/hotICO/listForApp?pageNo=1&pageSize=10')
+      	.then(res => {
+      		this.zongpingList = res.data.slice(0, 5);
+      	})
+      },
+      // STO榜单
+      getSTOList () {
+      	this.$axios.get('/api/hotICO/stolistForApp?pageNo=1&pageSize=10')
+      	.then(res => {
+      		this.stoList = res.data.slice(0, 5);
+      	})
+      },
+      // 黑马榜
+      getHeimaList () {
+      	this.$axios.get('/api/hotICO/blackHouselistForApp?pageNo=1&pageSize=10')
+      	.then(res => {
+      		this.heimaList = res.data
+      	})
+      },
+      // 国家排行榜
+      getGuojiaList () {
+      	this.$axios.get('/api/hotICO/countrylistForApp?pageNo=1&pageSize=10')
+      	.then(res => {
+      		this.guojiaList = res.data
+      	})
+      },
+      // 媒体声量榜
+      getMeitiList () {
+      	this.$axios.get('/api/hotICO/medialistForApp?pageNo=1&pageSize=10')
+      	.then(res => {
+      		this.meitiList = res.data
+      	})
+      },
+      // 明星项目
+      getstarProject () {
+      	this.$axios.get('/api/hotICO/startlistForApp')
+      	.then(res => {
+      		this.starProject = res.data.slice(0, 4);
+      	})
+      },
+      // 新闻头条
+      getHotNews () {
+        let categoryName = '首页-新闻列表';
+        this.$axios.get('/api/traditional/list?pageSize=4&categoryName=' + categoryName)
+        .then(res => {
+          this.hotNews = res.data.content;
+        })
+      },
+      goArticle(url, query, event) {
+        let routeData = this.$router.resolve({path: url, query: query});
+        window.open(routeData.href, '_blank');
+      },
+      goIndustryByCountry(obj, event) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj, pageTitle: '国家文章列表'}});
+        window.open(routeData.href);
+      },
+      //根据项目名称进行跳转到项目页面 主要用于新闻列表中标签跳转
+      goProjectByName(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        //这种写法是将路由转为正常的url然后进行跳转
+        let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
+        window.open(routeData.href, '_blank');
+      }
+    },
+    filters: {
+    	formatToFixed: val => {
+    		if (val === 0) {
+    			return `0.00`
+    		} else {
+    			return val ? val.toFixed(2) : val
+    		}
+    	},
+    	formatAbs: val => Math.abs(val),
+    	formatName: val => {
+    		if (val !== null && val !== '' && val !== undefined && val !== 'NULL') {
+    			return '('+val+')';
+    		}else{
+    			return '';
+    		}
+    	},
+    	labelFormat(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            return arr[0];
+          }
+          return obj;
+        }
+        return obj;
+      }
+    }
+  }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

@@ -439,12 +439,30 @@
   transition: top .3s;
   &.scroll {
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, .2);
-    top: -60px;
+    top: -36px;
+    .navbar{
+      height: 66px;
+    }
+    .nav.navbar-nav>li>a{
+      padding: 23px 0;
+      &:after{
+        bottom: 14px;
+      }
+    }
+    .search-box{
+      margin: 14px 25px 0 0;
+    }
+    .nav.navbar-nav .header-btn{
+      padding: 9px 23px;
+    }
+    .navbar-brand{
+      padding: 12px 0 0 15px;
+    }
   }
   .tophead{
     position: relative;
     z-index: 3;
-    height: 60px;
+    height: 36px;
     background: #030303;
     overflow: hidden;
     @media ($max-sm) {
@@ -769,7 +787,7 @@
   .search-box{
     display: flex;
     float: right;
-    margin: 14px 25px 0 0;
+    margin: 20px 25px 0 0;
     width: 400px;
     background: #d3d4d6;
     border-radius: 5px;
@@ -783,7 +801,7 @@
       .dropdown {
         width: 100%;
         .btn-default {
-          height: 50px;
+          height: 38px;
           width: 100%;
           border-radius: 0;
           border-top-left-radius: 5px;
@@ -803,7 +821,7 @@
       input {
         width: 100%;
         outline: none;
-        height: 50px;
+        height: 38px;
         border: 0;
         padding: 0 0 0 16px;
         background: transparent;
@@ -830,7 +848,7 @@
       flex: 0 0 50px;
       background: transparent;
       .search_submit {
-        height: 50px;
+        height: 38px;
         transition: all .3s;
         width: 100%;
         outline: none;

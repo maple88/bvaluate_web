@@ -39,7 +39,7 @@
           </div>
         </div>
       </div>
-      <div class="bottom">ALL rights reserved by Bvaluate @2018</div>
+      <div class="bottom">ALL rights reserved by Bvaluate @2018 京ICP备18058682号-1</div>
     </div>
   </div>
 </template>
