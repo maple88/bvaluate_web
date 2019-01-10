@@ -125,7 +125,7 @@
       </div>
     </div>
     <div class="bottom">
-      <p>ALL rights reserved by Bvaluate @2018</p>
+      <p>ALL rights reserved by Bvaluate @2018 京ICP备18058682号-1</p>
     </div>
   </div>
 </template>
