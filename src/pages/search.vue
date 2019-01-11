@@ -560,6 +560,13 @@
         });
       },
       searchKeyWord() {
+        if (this.search.keyword == '') {
+          layui.use('layer', function(){
+            var layer = layui.layer;
+            layer.msg('关键词不能为空！');
+          });
+          return false;
+        }
         this.showloading = true;
         this.newsList = [];
         this.search.pageNo = 0;
