@@ -233,6 +233,13 @@
         this.$store.state.analysisPop = true
       },
       goSearch(event) {
+        if (this.search == '') {
+          layui.use('layer', function(){
+            var layer = layui.layer;
+            layer.msg('关键词不能为空！');
+          });
+          return false;
+        }
         sensors.quick('trackHeatMap', event.currentTarget);
         let pageTitle
         if (this.searchType === '文章') {
