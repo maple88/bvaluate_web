@@ -1,7 +1,7 @@
 <template>
   <div class="page project" @click="shareButton = false">
-    <vheader/>
-    <div class="maintainer">
+    <v2header/>
+    <div class="v2maintainer">
       <!-- content here -->
       <div class="project-topmain">
         <div class="topmaintainer">
@@ -766,7 +766,7 @@
           </div>
         </div>
       </div>
-      <vfooter/>
+      <v2footer/>
     </div>
   </div>
 </template>

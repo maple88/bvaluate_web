@@ -1,7 +1,7 @@
 <template>
   <div class="page search_page">
-    <vheader/>
-    <div class="maintainer">
+    <v2header/>
+    <div class="v2maintainer">
       <div class="search_div">
         <div class="fish_container">
           <div class="search_box">
@@ -260,7 +260,7 @@
           </div>
         </div>
       </div>
-      <vfooter/>
+      <v2footer/>
     </div>
 
   </div>
@@ -560,6 +560,13 @@
         });
       },
       searchKeyWord() {
+        if (this.search.keyword == '') {
+          layui.use('layer', function(){
+            var layer = layui.layer;
+            layer.msg('关键词不能为空！');
+          });
+          return false;
+        }
         this.showloading = true;
         this.newsList = [];
         this.search.pageNo = 0;

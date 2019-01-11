@@ -1716,3 +1716,275 @@
     }
   }
 }
+
+.v2login{
+  .loginbox{
+    max-width: 662px;
+  }
+  .loginlogo{
+    margin: 0 0 40px;
+    @media ($max-xs) {
+      margin: 0 0 15px;
+    }
+  }
+  .loginbox .hd{
+    margin: 0 0 5px;
+    @media ($max-xs) {
+      padding: 15px 0 0px;
+    }
+  }
+  .loginbox .hd li{
+    margin: 0 15px;
+    color: #1a1a1a;
+    &:after{
+      background: transparent;
+    }
+  }
+  .inputInner{
+    max-width: 370px;
+    width: 100%;
+    .input-group{
+      margin: 0 0 15px;
+      @media (max-width: 662px) {
+        margin: 0 0 20px;
+      }
+      &.mg10{
+        margin: 0 0 10px;
+      }
+    }
+    @media ($max-xs) {
+      padding: 0;
+    }
+  }
+  .inputInner .input-group-addon{
+    border: 2px solid #d2d2d2;
+    border-radius: 5px 0 0 5px;
+    &:first-child{
+      border-right: 0;
+    }
+  }
+  .inputInner input.form-control{
+    border: 2px solid #d2d2d2;
+    border-left: 0;
+    border-radius: 0 5px 5px 0;
+    font-size: 14px;
+    color: #1a1a1a;
+    &.password{
+      padding-right: 60px;
+      border-radius: 0 5px 5px 0;
+    }
+    @media ($max-xs) {
+      height: 40px;
+    }
+  }
+  .showpwd{
+    position: absolute;
+    width: 60px;
+    height: 100%;
+    right: 0;
+    top: 0;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+  }
+  .inputInner .other-group{
+    margin: 0 0 40px;
+    span{
+      font-size: 12px;
+      color: $mainColor;
+    }
+  }
+  .inputInner .submit-group{
+    margin: 0 0 25px;
+  }
+  .inputInner .other-login:before{
+    background: transparent;
+  }
+  .loginbox .close_box .icon_close2{
+    width: 18px;
+    height: 18px;
+    display: block;
+    background: url("../assets/login/close2.png") center / cover no-repeat;
+    cursor: pointer;
+  }
+  .inputInner .input-group .ok-btn{
+    border-radius: 5px;
+  }
+  .inputInner .code input{
+    border: 2px solid #d2d2d2;
+    border-left: 0;
+    border-radius: 0 5px 5px 0;
+    font-size: 14px;
+    color: #1a1a1a;
+    border-left: 0;
+    padding-left: 0;
+    -webkit-appearance: none;
+  }
+  .inputInner .code{
+    display: flex;
+    .input-group-addon{
+      flex: 0 0 45px;
+      min-width: 45px;
+      height: 47px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      @media ($max-xs) {
+        height: 40px;
+      }
+    }
+    input{
+      flex: 1;
+      @media ($max-xs) {
+        height: 40px;
+      }
+    }
+    .code-btn{
+      position: static;
+      flex: 0 0 118px;
+      min-width: 118px;
+      border: 2px solid $mainColor;
+      border-radius: 5px;
+      font-size: 14px;
+      color: $mainColor;
+      margin-left: 10px;
+      line-height: inherit;
+      &:before{
+        background: transparent;
+      }
+    }
+  }
+  .backicon{
+    position: absolute;
+    z-index: 1;
+    left: 10px;
+    top: 10px;
+    font-size: 28px;
+    color: rgb(160, 160, 160);
+    cursor: pointer;
+  }
+  .inputInner .input-group .help-block{
+    position: absolute;
+    width: 115px;
+    height: 100%;
+    top: 0;
+    left: 100%;
+    font-size: 12px;
+    color: #e8964d;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    margin: 0 0 0 10px;
+    @media (max-width: 662px) {
+      left: 0;
+      top: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0 0 0 15px;
+      height: inherit;
+    }
+  }
+}
+
+.login_fixed.register_tips.v2register_tips{
+  @media ($max-xs) {
+    padding: 0 20px;
+  }
+  .loginbox.register_tips .close_box{
+    top: 10px;
+    right: 10px;
+    z-index: 99;
+    .icon_close2{
+      width: 18px;
+      height: 18px;
+      display: block;
+      background: url("../assets/login/close2.png") center / cover no-repeat;
+      cursor: pointer;
+    }
+  }
+  .loginbox{
+    max-width: 602px;
+  }
+  .loginbox.register_tips .bd{
+    position: relative;
+    background: url(../assets/register/bg2.jpg) center / cover no-repeat;
+  }
+  .loginbox.register_tips .bd .tips_title{
+    margin: 0;
+    &:before, &:after{
+      background: none;
+    }
+  }
+  .loginbox.register_tips .bd .tips_title h4{
+    background: transparent;
+    color: $mainColor;
+    font-size: 30px;
+    letter-spacing: 8px;
+    font-weight: normal;
+    box-shadow: none;
+    padding: 60px 0;
+    @media ($max-xs) {
+      padding: 30px 0;
+      font-size: 20px;
+    }
+  }
+  .loginbox.register_tips .bd .tips_content .tips_button{
+    display: flex;
+    justify-content: center;
+    padding: 0 0 55px;
+    @media ($max-xs) {
+      padding: 0 0 20px;
+    }
+  }
+  .register-btn{
+    position: relative;
+    padding: 15px 75px;
+    font-size: 20px;
+    color: #fff;
+    background: $mainColor;
+    border-radius: 30px;
+    letter-spacing: 3px;
+    cursor: pointer;
+    @media ($max-xs) {
+      padding: 8px 45px;
+      font-size: 14px;
+      letter-spacing: 2px;
+    }
+    span{
+      font-size: 24px;
+      color: #ffe075;
+      @media ($max-xs) {
+        font-size: 18px;
+      }
+    }
+    .goicon{
+      position: absolute;
+      right: 25px;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      width: 17px;
+      height: 14px;
+      display: block;
+      background: url(../assets/register/go.png) center / cover no-repeat;
+      @media ($max-xs) {
+        right: 15px;
+      }
+    }
+  }
+  .loginbox.register_tips .bd .tips_content .content_tips p{
+    color: #000;
+    &:first-child{
+      margin: 5px 0;
+    }
+  }
+  .loginbox.register_tips .bd .tips_content .content_tips{
+    padding: 0 0 55px;
+    @media ($max-xs) {
+      padding: 0 0 30px;
+    }
+  }
+}

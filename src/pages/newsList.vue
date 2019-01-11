@@ -1,7 +1,7 @@
 <template>
   <div class="page search_page">
-    <vheader/>
-    <div class="maintainer">
+    <v2header/>
+    <div class="v2maintainer">
       <div class="label_div" v-if="search.show">
         <div class="fish_container">
           <div class="label_box newsList_page">
@@ -186,7 +186,7 @@
           </div>
         </div>
       </div>
-      <vfooter/>
+      <v2footer/>
     </div>
 
   </div>

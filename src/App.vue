@@ -33,7 +33,6 @@
             }
           }
         } else {
-
           let uid = localStorage.getItem('apelink_user_uid');
           let token = localStorage.getItem('apelink_user_token');
           if (!token) {

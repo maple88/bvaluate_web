@@ -1,7 +1,7 @@
 <template>
   <div class="page">
-    <vheader/>
-    <div class="maintainer home-maintainer" @scroll.passive="showheader" ref="box">
+    <v2header/>
+    <div class="v2maintainer home-maintainer" @scroll.passive="showheader" ref="box">
       <div class="home-banner">
         <img src="../assets/home/home-banner.jpg" class="bgimg">
         <!--<div class="bannerwds">-->
@@ -361,7 +361,7 @@
       <!--isShow控制显示 goUrl控制登录成功后跳转（不跳转不给此值） success回调函数（登录成功后执行，默认空方法）在list.vue中使用-->
       <!-- <v-login v-model="isShow" :success="refreshHome"></v-login> -->
       <!-- <v-analysis v-model="isWhitePaper"></v-analysis> -->
-      <vfooter/>
+      <v2footer/>
     </div>
   </div>
 </template>

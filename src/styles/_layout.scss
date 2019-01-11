@@ -1,7 +1,7 @@
 html, body {
   font-family: PingFangSC-Regular, sans-serif;
   font-family: '微软雅黑';
-  background-color: #f5f5f5 !important;
+  background-color: #fafafa !important;
 }
 
 ul {
@@ -46,7 +46,7 @@ a, a:hover {
 }
 
 // absolute是避免在移动端ios下fixed不能固定的问题
-.header {
+.header, .v2header{
   position: absolute;
   left: 0;
   top: 0;
@@ -54,7 +54,7 @@ a, a:hover {
   z-index: 99;
 }
 
-.maintainer {
+.maintainer{
   position: absolute;
   width: 100%;
   height: 100%;
@@ -67,6 +67,18 @@ a, a:hover {
   }
   @media (max-width: 767px) {
     padding-top: 103px;
+  }
+}
+.v2maintainer{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  padding-top: 116px;
+  transition: 0.3s;
+  -webkit-overflow-scrolling: touch;
+  @media ($max-sm) {
+    padding-top: 100px;
   }
 }
 
@@ -84,10 +96,18 @@ a, a:hover {
 
 // PC下的header为fixed
 @media (min-width: 992px) {
-  .header {
+  .header{
     position: fixed !important;
   }
-  .maintainer {
+  .maintainer{
+    position: static;
+  }
+}
+@media (min-width: 768px) {
+  .v2header{
+    position: fixed !important;
+  }
+  .v2maintainer{
     position: static;
   }
 }
@@ -169,3 +189,11 @@ a, a:hover {
         }
     }
 }
+
+@media (min-width: 1330px) {
+  .container.v2container{
+    width: 1300px;
+  }
+}
+
+

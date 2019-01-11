@@ -1,7 +1,7 @@
 <template>
   <div class="page">
-    <vheader :parantProfileUrl="user.profileUrl"/>
-    <div class="maintainer">
+    <v2header :parantProfileUrl="user.profileUrl"/>
+    <div class="v2maintainer">
       <div class="container">
         <div class="myProfile mt20">
           <div class="left">
@@ -192,7 +192,7 @@
         </div>
       </div>
     </div><!-- /.modal -->
-    <vfooter></vfooter>
+    <v2footer/>
   </div>
 </template>
 

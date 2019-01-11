@@ -1,7 +1,7 @@
 <template>
   <div class="page follow_page">
-    <vheader/>
-    <div class="maintainer">
+    <v2header/>
+    <div class="v2maintainer">
       <div class="follow_content">
         <div class="fish_container">
           <div class="clearfix">
@@ -297,7 +297,7 @@
       <transition name="fade">
         <vtips :tipText="tipText" v-if="showTip"/>
       </transition>
-      <vfooter/>
+      <v2footer/>
     </div>
 
   </div>
