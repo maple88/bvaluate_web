@@ -9,8 +9,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min'
 import header from '@/components/header.vue'
 import footer from '@/components/footer.vue'
-import v2header from '@/components/v2header.vue'
-import v2footer from '@/components/v2footer.vue'
 import tip from '@/components/tip.vue'
 import 'swiper/dist/css/swiper.min.css'
 import axios from 'axios'
@@ -26,8 +24,6 @@ Vue.prototype.$sugar = 12;
 Vue.config.productionTip = false;
 Vue.component('vheader', header);
 Vue.component('vfooter', footer);
-Vue.component('v2header', v2header);
-Vue.component('v2footer', v2footer);
 Vue.component('vtips', tip);
 Vue.use(Vuex);
 
@@ -123,7 +119,6 @@ layui.use('layer', function(){
     console.log(err)
   }
 });
-
 
 const store = new Vuex.Store({
   state: {
