@@ -102,7 +102,7 @@ layui.use('layer', function(){
                 this.$router.push('/login');
               }, 3100);
             case 500:
-              layer.msg('服务器错误，请刷新后重试！');
+              layer.msg(error.response.data.message);
               break;
             case 502:
               layer.msg('服务器错误，请刷新后重试！');

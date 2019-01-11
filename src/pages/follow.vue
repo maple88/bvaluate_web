@@ -427,7 +427,7 @@
         })
         // 推荐
         let tuijian_url = '/api/individual/recommend?type=ICO&pageSize=' + that.tuijian_pageSize;
-        let tuijian_headers = {'Authorization': that.token};
+        let tuijian_headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
           method: 'get',
           url: tuijian_url,
@@ -462,7 +462,7 @@
         })
         // 推荐
         let tuijian_url = '/api/individual/recommend?type=INDUSTRY&pageSize=' + that.tuijian_pageSize;
-        let tuijian_headers = {'Authorization': that.token};
+        let tuijian_headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
           method: 'get',
           url: tuijian_url,
@@ -497,7 +497,7 @@
         })
         // 推荐
         let tuijian_url = '/api/individual/recommend?type=COUNTRY&pageSize=' + that.tuijian_pageSize;
-        let tuijian_headers = {'Authorization': that.token};
+        let tuijian_headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
           method: 'get',
           url: tuijian_url,
@@ -532,7 +532,7 @@
         })
         // 推荐
         let tuijian_url = '/api/individual/recommend?type=AUTHOR&pageSize=' + that.tuijian_pageSize;
-        let tuijian_headers = {'Authorization': that.token};
+        let tuijian_headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
           method: 'get',
           url: tuijian_url,
@@ -606,7 +606,11 @@
                   }, 1300);
                 }
               }).catch(function (error) {
-                console.log(error.code)
+                // layui.use('layer', function(){
+                //   var layer = layui.layer;
+                //   layer.msg(error.data.message);
+                // });
+                console.error(error.data.message);
               })
             }
           })
