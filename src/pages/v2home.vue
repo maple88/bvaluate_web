@@ -177,52 +177,16 @@
 						<div class="box-row">
 							<div class="box-col" v-for="(item, index) in hostIndustries" :key="index">
 								<div class="item">
-									<p class="tit"><a href="#">{{item.categoryName}}</a></p>
-									<p class="num">项目量：36</p>
+									<p class="tit"><a href="javascript:;" @click="goIndustryByIndustry(item.categoryName, $event)">{{item.categoryName}}</a></p>
+									<p class="num">项目量：{{item.projectNum}}</p>
 									<ul class="pro">
 										<li>项目：</li>
-										<li v-for="(project, pindex) in item.project" :key="pindex">
+										<li v-for="(project, pindex) in item.relatedICODTOs" :key="pindex">
 											<a href="javascript:;" @click="goArticle('/project',{sid:project.sid})">{{project.project}}</a>
 										</li>
 									</ul>
 								</div>
 							</div>
-							<!-- <div class="box-col">
-								<div class="item">
-									<p class="tit"><a href="#">社交</a></p>
-									<p class="num">项目量：36</p>
-									<ul class="pro">
-										<li>项目：</li>
-										<li><a href="#">BTC</a></li>
-										<li><a href="#">NON</a></li>
-										<li><a href="#">TRON</a></li>
-									</ul>
-								</div>
-							</div>
-							<div class="box-col">
-								<div class="item">
-									<p class="tit"><a href="#">社交</a></p>
-									<p class="num">项目量：36</p>
-									<ul class="pro">
-										<li>项目：</li>
-										<li><a href="#">BTC</a></li>
-										<li><a href="#">NON</a></li>
-										<li><a href="#">TRON</a></li>
-									</ul>
-								</div>
-							</div>
-							<div class="box-col">
-								<div class="item">
-									<p class="tit"><a href="#">社交</a></p>
-									<p class="num">项目量：36</p>
-									<ul class="pro">
-										<li>项目：</li>
-										<li><a href="#">BTC</a></li>
-										<li><a href="#">NON</a></li>
-										<li><a href="#">TRON</a></li>
-									</ul>
-								</div>
-							</div> -->
 						</div>
 					</div>
 				</div>
@@ -390,7 +354,15 @@
 									</div>
 									<div class="info">
 										<p class="tit">
-											<span class="projectname" @click="goProjectByName(item.projectCategory)">{{item.projectCategory | labelFormat}}</span>
+											<span class="projectname" 
+											v-if="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'" 
+											@click="goProjectByName(item.projectCategory)">{{item.projectCategory | labelFormat}}</span>
+											<span class="projectname" 
+											v-else-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
+											@click="goIndustryByIndustry(item.industryCategory)">{{item.industryCategory | labelFormat}}</span>
+											<span class="projectname" 
+											v-else="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'" 
+											@click="goIndustryByCountry(item.countryCategory)">{{item.countryCategory | labelFormat}}</span>
 											<span class="time">{{item.urlDate}}</span>
 										</p>
 										<p class="name"><a href="javascript:;" @click="goArticle('/article',{sid:item.sid})">{{item.title}}</a></p>
@@ -475,59 +447,8 @@
 	export default {
 		data () {
 			return {
-				list: [
-				{
-					amountIncrease: 0,
-					logoSrc: "https://apelink-ico.oss-ap-southeast-1.aliyuncs.com/cf1cad8e-b1bd-4f50-ae15-163daad3b832.jpg",
-					price: 100,
-					project: "Zilliqa",
-					rank: 0,
-					sid: "839b623c-6f49-467a-b2db-65c0ad5a50a2",
-					tokenCoin: "ZIL",
-					totalScore: 3.84
-				},
-				{
-					amountIncrease: 1,
-					logoSrc: "https://apelink-ico.oss-ap-southeast-1.aliyuncs.com/b5248b7b-4bc6-4efb-8c93-f78daea21f04.jpg",
-					price: null,
-					project: "0x",
-					rank: 0,
-					sid: "4a41590a-be8c-4c1e-808d-5eec640b6976",
-					tokenCoin: "ZRX",
-					totalScore: 3.82
-				},
-				{
-					amountIncrease: -1,
-					logoSrc: "https://apelink-ico.oss-ap-southeast-1.aliyuncs.com/835f6a0d-566b-4e4f-b19a-0eaf7cb60c40.jpg",
-					price: null,
-					project: "Decentraland",
-					rank: 0,
-					sid: "64c9bf9b-a888-4aa4-98da-b4c2abbb46b3",
-					tokenCoin: "MANA",
-					totalScore: 3.81
-				},
-				{
-					amountIncrease: 70,
-					logoSrc: "https://apelink-ico.oss-ap-southeast-1.aliyuncs.com/3014e1d8-6f77-4a53-bd8a-cad7469faf24.jpg",
-					price: null,
-					project: "TrustToken",
-					rank: 0,
-					sid: "5c4a8bfa-eaae-4ff0-9d3e-634c7ac0985a",
-					tokenCoin: "TUSD",
-					totalScore: 3.8
-				},
-				{
-					amountIncrease: 960,
-					logoSrc: "https://apelink-ico.oss-ap-southeast-1.aliyuncs.com/4bf4f54d-987e-4872-9ee4-f78c1f50f4ba.jpg",
-					price: null,
-					project: "DigixDAO",
-					rank: 0,
-					sid: "4985fe09-79a6-4700-8090-44c232d2429a",
-					tokenCoin: "DGD",
-					totalScore: 3.8
-				}
-				],
 				search: '',
+				searchType: '文章',
 				topProject: [],
 				zongpingList: [],
 				stoList: [],
@@ -573,21 +494,9 @@
 			},
 			// 热门行业
 			getHotindustry () {
-				let that = this;
-				that.$axios.get('/api/ICO/hotestIndustries')
+				this.$axios.get('/api/ICO/hotFourIndustries')
 				.then(res => {
-					let data = res.data.slice(0, 4);
-					for (let i = 0; i < data.length; i++) {
-            let Industry = {};
-            Industry.categoryName = data[i];
-            that.$axios.get('/api/ICO/relatedICO?categoryName=' + Industry.categoryName + '&pageSize=4').then(function (res) {
-              Industry.project = res.data;
-              that.$axios.get('/api/traditional/categoryList?categoryName=' + Industry.categoryName + '&pageSize=4').then(function (res) {
-                Industry.content = res.data.content;
-                that.hostIndustries.push(Industry);
-              })
-            })
-          }
+					this.hostIndustries = res.data.slice(0, 4);;
 				})
 			},
       // 总评榜
@@ -665,6 +574,38 @@
         //这种写法是将路由转为正常的url然后进行跳转
         let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
         window.open(routeData.href, '_blank');
+      },
+      //根据行业名称进行跳转新闻列表页面 主要用于新闻列表中标签跳转
+      goIndustryByIndustry(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
+        window.open(routeData.href, '_blank');
+      },
+      //根据行业名称进行跳转新闻列表页面 主要用于新闻列表中标签跳转
+      goIndustryByCountry(obj) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        let routeData = this.$router.resolve({path: '/recommend', query: {country: obj}});
+        window.open(routeData.href, '_blank');
+      },
+      goIndustryByIndustry(obj, event) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj, pageTitle: '行业文章列表'}});
+        window.open(routeData.href);
       }
     },
     filters: {

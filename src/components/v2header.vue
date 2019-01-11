@@ -33,9 +33,9 @@
               </div>
               <ul class="dropdown-menu header-dropdown-menu">
                 <router-link tag="li" to="/userCenter" active-class="active"><a data="个人中心">个人中心</a></router-link>
-                <li>
+                <!-- <li>
                   <a href="javascript:;" data="消息" @click="$store.state.messagePop = true">消息</a>
-                </li>
+                </li> -->
                 <router-link tag="li" to="/my" active-class="active"><a data="设置">设置</a></router-link>
                 <li>
                   <a href="javascript:;" data="退出" @click="logout()">退出</a>
@@ -43,11 +43,11 @@
               </ul>
             </div>
             <div class="navbar-toggle navbar-header-remind" v-if="token">
-              <img src="../assets/remind.png">
-              <span class="remind-num">10</span><!-- ··· -->
+              <img src="../assets/remind.png" @click="$store.state.messagePop = true">
+              <!-- <span class="remind-num">10</span> --><!-- ··· -->
             </div>
             <div class="navbar-toggle open_search navbar-header-search" data-toggle="collapse" data-target="#out-search-box"><img src="../assets/hsearch.png"></div>
-            <router-link to="/list" class="navbar-brand" data="logo"><img src="../assets/logo2.png"></router-link>
+            <router-link to="/home" class="navbar-brand" data="logo"><img src="../assets/logo2.png"></router-link>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
@@ -56,7 +56,7 @@
               <router-link tag="li" to="/home" active-class="active"><a data="首页">首页</a></router-link>
               <router-link tag="li" to="/list" active-class="active"><a data="榜单">榜单</a></router-link>
               <router-link tag="li" to="/index" active-class="active"><a data="资讯">资讯</a></router-link>
-              <router-link tag="li" to="/follow" active-class="active" v-show="token"><a data="新增项目">新增项目</a></router-link>
+              <router-link tag="li" to="/follow" active-class="active" v-show="token"><a data="新增项目" @click="analysis()">新增项目</a></router-link>
               <li v-show="!token" @click="isLogin('新增项目')"><a data="新增项目">新增项目</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -68,16 +68,16 @@
                 </div>
               </li>
               <li class="header-token hidden-xs" v-if="token">
-                <div class="hicon">
+                <div class="hicon" @click="$store.state.messagePop = true">
                   <img src="../assets/remind.png">
-                  <span class="remind-num">10</span><!-- ··· -->
+                  <!-- <span class="remind-num">10</span> --><!-- ··· -->
                 </div>
               </li>
               <li class="header-token hidden-xs" v-if="token">
                 <div class="hicon" data-toggle="dropdown">
                   <img src="../assets/usericon.png">
                 </div>
-                <div class="htips icon-htips">邀请有礼</div>
+                <div class="htips icon-htips" @click="invitation">邀请有礼</div>
                 <ul class="dropdown-menu header-dropdown-menu">
                   <router-link tag="li" to="/userCenter" active-class="active"><a data="个人中心">个人中心</a></router-link>
                   <li>

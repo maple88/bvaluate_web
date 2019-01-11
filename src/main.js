@@ -67,33 +67,63 @@ router.afterEach((to,from) => {
   };
 });
 
-// try{
-//   axios.interceptors.response.use(
-//     response => {
-//       if (response.status === 200) {
-//         return Promise.resolve(response);
-//       } else {
-//         return Promise.reject(response);
-//       }
-//     },
-//     // 服务器状态码不是200的情况
-//     error => {
-//       if (error.response.status) {
-//         switch (error.response.status) {
-//           case 500:
-//             alert("服务器错误，请刷新后重试！");
-//             break;
-//           // 其他错误，直接抛出错误提示   
-//           default:
-//             alert(error.response.data.message);
-//         }
-//         return Promise.reject(error.response);
-//       }
-//     }
-//   );
-// }catch(err) {
-//   console.log(err)
-// }
+layui.use('layer', function(){
+  var layer = layui.layer;
+  
+  try{
+    axios.interceptors.response.use(
+      response => {
+        if (response.status === 200) {
+          return Promise.resolve(response);
+        } else {
+          return Promise.reject(response);
+        }
+      },
+      // 服务器状态码不是200的情况
+      error => {
+        if (error.response.status) {
+          switch (error.response.status) {
+            case 403:
+              localStorage.removeItem('apelink_user_candies');
+              localStorage.removeItem('apelink_user_email');
+              localStorage.removeItem('apelink_user_expirationDate');
+              localStorage.removeItem('apelink_user_nickName');
+              localStorage.removeItem('apelink_user_phoneNumber');
+              localStorage.removeItem('apelink_user_profileUrl');
+              localStorage.removeItem('apelink_user_sex');
+              localStorage.removeItem('apelink_user_signedIn');
+              localStorage.removeItem('apelink_user_synopsis');
+              localStorage.removeItem('apelink_user_token');
+              localStorage.removeItem('apelink_user_uid');
+              sensors.registerPage({
+                platform_type: 'web',
+                is_login: false,
+                is_register: true
+              });
+              layer.msg('请重新登录');
+
+              setTimeout(()=>{
+                this.$router.push('/login');
+              }, 3100);
+            case 500:
+              layer.msg(error.response.data.message);
+              break;
+            case 502:
+              layer.msg('服务器错误，请刷新后重试！');
+              break;
+            // 其他错误，直接抛出错误提示   
+            default:
+              console.error(error.response.data.message);
+          }
+          return Promise.reject(error.response);
+        }
+      }
+    );
+  }catch(err) {
+    console.log(err)
+  }
+});
+
 
 const store = new Vuex.Store({
   state: {
