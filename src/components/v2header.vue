@@ -192,7 +192,10 @@
       })
     },
     watch: {
-      '$route': 'initUser'
+      '$route': function () {
+        this.initUser();
+        this.is_header_scroll();
+      }
     },
     computed: {
       sugarNum() {
@@ -341,8 +344,10 @@
       },
       is_header_scroll () {
         window.addEventListener('scroll', this.handleScroll);
-        if (this.$router.history.current.path !== '/home') {
-          this.showSearch = true
+        if (this.$router.history.current.path == '/home') {
+          this.showSearch = false;
+        }else{
+          this.showSearch = true;
         }
       },
       handleScroll(e) {
