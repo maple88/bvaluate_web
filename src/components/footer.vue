@@ -125,7 +125,8 @@
       </div>
     </div>
     <div class="bottom">
-      <p>ALL rights reserved by Bvaluate @2018 京ICP备18058682号-1</p>
+      <p><a href="http://www.miitbeian.gov.cn/state/outPortal/loginPortal.action">ICP备案号：京ICP备18058682号-1</a></p>
+      <p>Copyright &copy; 2018 - 2019 Bvaluate. All Rights Reserved</p>
     </div>
   </div>
 </template>
