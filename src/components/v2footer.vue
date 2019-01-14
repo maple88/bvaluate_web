@@ -39,7 +39,7 @@
           </div>
         </div>
       </div>
-      <div class="bottom">ALL rights reserved by Bvaluate @2018 京ICP备18058682号-1</div>
+      <div class="bottom">ALL rights reserved by Bvaluate @2018-2019 <a href="http://www.miitbeian.gov.cn/state/outPortal/loginPortal.action" target="_blank">京ICP备18058682号-1</a></div>
     </div>
   </div>
 </template>
