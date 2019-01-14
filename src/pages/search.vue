@@ -456,6 +456,9 @@
       //初始化搜索页
       initSearch() {
         this.search.class = this.$route.query.searchType;
+        if (!this.search.class) {
+          this.search.class = '项目';
+        }
         this.search.keyword = this.$route.query.keyword;
       },
       //关注
