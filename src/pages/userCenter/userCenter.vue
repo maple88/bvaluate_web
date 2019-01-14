@@ -1,7 +1,7 @@
 <template>
   <div class="page">
-    <vheader/>
-    <div class="maintainer">
+    <v2header/>
+    <div class="v2maintainer">
       <div class="user-center" :style="'background-image: url('+userbg+')'">
         <div class="usertainer">
           <div class="userimg">
@@ -45,6 +45,8 @@
         </div>
       </div>
       <prince v-on:toggleTab="toggleTab" :is="currentTab"></prince>
+
+      <v2footer/>
     </div>
   </div>
 </template>

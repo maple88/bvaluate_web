@@ -1,7 +1,7 @@
 <template>
   <div class="page">
-    <vheader/>
-    <div class="maintainer">
+    <v2header/>
+    <div class="v2maintainer">
       <div class="user-center" :style="'background-image: url('+userbg+')'">
         <div class="usertainer author">
           <div class="userimg"><img src="../assets/logo_brand.png"></div>
@@ -135,7 +135,7 @@
         </div>
       </div>
     </div>
-    <vfooter></vfooter>
+    <v2footer/>
   </div>
 </template>
 

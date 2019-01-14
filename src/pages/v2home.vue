@@ -477,6 +477,13 @@
 		methods: {
 			goSearch(event) {
 				let pageTitle
+				if (this.search == '') {
+          layui.use('layer', function(){
+            var layer = layui.layer;
+            layer.msg('关键词不能为空！');
+          });
+          return false;
+        }
 				if (this.searchType === '文章') {
 					pageTitle = '文章搜索结果'
 				}

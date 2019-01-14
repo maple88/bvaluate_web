@@ -1,7 +1,7 @@
 <template>
   <div class="page">
-    <vheader/>
-    <div class="maintainer">
+    <v2header/>
+    <div class="v2maintainer">
       <div class="swiper-container" id="top_banner">
         <div class="swiper-wrapper">
           <div class="swiper-slide" :style="'background-image: url('+banner1+')'">
@@ -306,7 +306,7 @@
           </div>
         </div>
       </div>
-      <vfooter></vfooter>
+      <v2footer/>
     </div>
   </div>
 </template>

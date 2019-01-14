@@ -56,7 +56,7 @@
               <router-link tag="li" to="/home" active-class="active"><a data="首页">首页</a></router-link>
               <router-link tag="li" to="/list" active-class="active"><a data="榜单">榜单</a></router-link>
               <router-link tag="li" to="/index" active-class="active"><a data="资讯">资讯</a></router-link>
-              <router-link tag="li" to="/follow" active-class="active" v-show="token"><a data="新增项目" @click="analysis()">新增项目</a></router-link>
+              <li v-show="token"><a href="javascript:;" data="新增项目" @click="analysis()">新增项目</a></li>
               <li v-show="!token" @click="isLogin('新增项目')"><a data="新增项目">新增项目</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -80,9 +80,9 @@
                 <div class="htips icon-htips" @click="invitation">邀请有礼</div>
                 <ul class="dropdown-menu header-dropdown-menu">
                   <router-link tag="li" to="/userCenter" active-class="active"><a data="个人中心">个人中心</a></router-link>
-                  <li>
+                  <!-- <li>
                     <a href="javascript:;" data="消息" @click="$store.state.messagePop = true">消息</a>
-                  </li>
+                  </li> -->
                   <router-link tag="li" to="/my" active-class="active"><a data="设置">设置</a></router-link>
                   <li>
                     <a href="javascript:;" data="退出" @click="logout()">退出</a>
@@ -133,6 +133,7 @@
       </nav>
     </div>
     <v-login></v-login>
+    <v-analysis></v-analysis>
     <v-message></v-message>
   </div>
 </template>
@@ -176,7 +177,7 @@
       $(".nav.navbar-nav li a").on('click', function () {
         $('.collapse').removeClass('in');
       });
-      window.addEventListener('scroll', this.handleScroll);
+      this.is_header_scroll();
       this.initUser();
       this.getTophead();
 
@@ -251,6 +252,13 @@
       goSearch(event) {
         sensors.quick('trackHeatMap', event.currentTarget);
         let pageTitle
+        if (this.search == '') {
+          layui.use('layer', function(){
+            var layer = layui.layer;
+            layer.msg('关键词不能为空！');
+          });
+          return false;
+        }
         if (this.searchType === '文章') {
           pageTitle = '文章搜索结果'
         }
@@ -331,6 +339,12 @@
           this.profileUrl = this.parantProfileUrl
         }
       },
+      is_header_scroll () {
+        window.addEventListener('scroll', this.handleScroll);
+        if (this.$router.history.current.path !== '/home') {
+          this.showSearch = true
+        }
+      },
       handleScroll(e) {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
         if (scrollTop > 100) {
@@ -338,10 +352,12 @@
         } else {
           this.scroll = '';
         }
-        if (scrollTop > 360) {
-          this.showSearch = true;
-        } else {
-          this.showSearch = false;
+        if (this.$router.history.current.path == '/home') {
+          if (scrollTop > 360) {
+            this.showSearch = true;
+          } else {
+            this.showSearch = false;
+          }
         }
       }
     }

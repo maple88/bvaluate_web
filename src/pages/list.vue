@@ -1,7 +1,7 @@
 <template>
   <div class="page" id="list_page">
-    <vheader/>
-    <div class="maintainer">
+    <v2header/>
+    <div class="v2maintainer">
       <div class="follow_content" id="article">
         <div class="fish_container list_container">
           <div class="clearfix">
@@ -247,7 +247,7 @@
           </div>
         </div>
       </div>
-      <vfooter/>
+      <v2footer/>
     </div>
     <!--<div class="popover fade bottom in" role="tooltip" id="popover91482">-->
     <!--<div class="arrow" style="left: 50%;"></div>-->
