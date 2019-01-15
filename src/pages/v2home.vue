@@ -104,7 +104,7 @@
 										<div class="right">总评分</div>
 									</div>
 									<div class="table-content">
-										<div class="list_item" slot="scrollList" v-for="(item, index) in stoList" :key="index">
+										<div class="list_item" slot="scrollList" v-for="(item, index) in stoList" :key="index" @click="goArticle('/project',{sid: item.sid}, $event)">
 											<div class="item_left">
 												<div class="ranking_box">
 													<div class="ranking_number" v-if="index>2">

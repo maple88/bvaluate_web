@@ -441,6 +441,7 @@
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, .2);
     top: -36px;
     .navbar{
+      background: #212831;
       height: 66px;
     }
     .nav.navbar-nav>li>a{
@@ -531,6 +532,8 @@
       margin: 0 0 0 15px;
       @media ($max-xs) {
         font-size: 12px;
+        position: absolute;
+        right: 15px;
       }
       img{
         margin: 0 10px 0 0;
@@ -540,6 +543,9 @@
           margin: 0 5px 0 0;
         }
       }
+      a{
+        color: #fff;
+      }
       span{
         white-space: nowrap;
       }
@@ -547,15 +553,20 @@
   }
   .navbar{
     height: 80px;
-    background: #212831;
+    background: transparent;
     border: 0;
     margin: 0;
     border-radius: 0;
+    transition: .3s;
     @media ($max-sm) {
       height: 60px;
       .navbar-header{
         height: 60px;
+        background: #212831;
       }
+    }
+    &.hasbg{
+      background: #212831;
     }
   }
   .navbar-brand{
@@ -671,6 +682,7 @@
       line-height: 1.5;
       right: -51px;
       top: -3px;
+      cursor: pointer;
     }
     &.navbar-right{
       display: flex;
@@ -1002,7 +1014,10 @@
     }
   }
   .navbar-collapse{
-    background: #212831;
+    // background: #212831;
     border: 0;
+    @media ($max-sm) {
+      background: #212831;
+    }
   }
 }

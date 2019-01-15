@@ -9,14 +9,16 @@
             <li><span>白皮书收录总数：</span><span>{{tophead.totalWhitePaper}}</span></li>
           </ul>
           <div class="appdownload">
-            <img src="../assets/tdownload.png">
-            <span>APP下载</span>
+            <a href="https://api.bvaluate.com.cn/apk/bvaluate.apk">
+              <img src="../assets/tdownload.png">
+              <span>APP下载</span>
+            </a>
           </div>
         </div>
       </div>
     </div>
     <div class="mainhead">
-      <nav class="navbar navbar-default">
+      <nav class="navbar navbar-default" :class="{ hasbg:hasbg }">
         <div class="container v2container">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
@@ -90,11 +92,13 @@
                 </ul>
               </li>
               <li class="hidden-xs" v-if="!token">
-                <router-link to="/login" class="header-btn" data="登录" @click="salogin($event)">登录</router-link>
+                <!-- <router-link to="/login" class="header-btn" data="登录" @click="salogin($event)">登录</router-link> -->
+                <a href="javascript:;" class="header-btn" data="登录" @click="isLogin('登录按钮')">登录</a>
               </li>
               <li class="hidden-xs" v-if="!token">
-                <router-link to="/login?page=register" class="header-btn blue" data="注册" @click="saregister($event)">注册</router-link>
-                <div class="htips">送糖果</div>
+                <!-- <router-link to="/login?page=register" class="header-btn blue" data="注册" @click="saregister($event)">注册</router-link> -->
+                <a href="javascript:;" class="header-btn blue" data="注册" @click="isLogin('注册按钮')">注册</a>
+                <div class="htips" @click="registerTip">送糖果</div>
               </li>
               <li class="sbs-btn visible-xs" v-if="!token">
                 <router-link to="/login" class="header-btn" data="登录" @click="salogin($event)">登录</router-link>
@@ -169,7 +173,8 @@
         successGo: '',
         isWhitePaper: false,
         path: '',
-        showSearch: false
+        showSearch: false,
+        hasbg: false
       }
     },
     mounted() {
@@ -218,6 +223,9 @@
         } else {
           this.$store.state.loginPop = true;
         }
+      },
+      registerTip () {
+        this.$store.state.registerTip = true;
       },
       trackSearch(category, content) {
         // 榜单，项目详情页，我的关注，个人中心，白皮书分析，行业国家资讯，文章详情，作者, 搜索页面
@@ -292,7 +300,11 @@
         });
       },
       isLogin(name) {
-        this.$store.state.loginPop = true;
+        if(name === '注册按钮'){
+          this.$store.commit('register');
+        }else{
+          this.$store.state.loginPop = true;
+        }
         if (name === '我的关注') {
           sensors.track("Loginstart", {
             entrance: '列表页',
@@ -346,8 +358,10 @@
         window.addEventListener('scroll', this.handleScroll);
         if (this.$router.history.current.path == '/home') {
           this.showSearch = false;
+          this.hasbg = false;
         }else{
           this.showSearch = true;
+          this.hasbg = true;
         }
       },
       handleScroll(e) {
