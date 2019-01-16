@@ -16,6 +16,7 @@ import search from '@/pages/search'
 import newsList from '@/pages/newsList'
 import pdfShow from '@/pages/pdfShow'
 import download from '@/pages/download'
+import wechatCode from '@/pages/wechatCode'
 
 Vue.use(Router);
 
@@ -24,6 +25,11 @@ export default new Router({
   // mode: 'history',
   routes: [
     {path: '/', redirect: '/home'},
+    {
+      path: '/wechatCode',
+      name: 'wechatCode',
+      component: wechatCode,
+    },
     {
       path: '/home',
       name: 'home',

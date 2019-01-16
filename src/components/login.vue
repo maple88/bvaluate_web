@@ -290,6 +290,7 @@
         this.login();
       },
       weChatLogin() {
+        this.$store.state.wechatPop = true;
         // let random = parseInt(Math.random() * 100000000);
         // window.location.href = 'https://open.weixin.qq.com/connect/qrconnect?appid=wx67252f94be009c71&redirect_uri=https://bvaluate.com.cn/user/passAuth&response_type=code&scope=snsapi_login&state=' + random + '#wechat_redirect';
       },
