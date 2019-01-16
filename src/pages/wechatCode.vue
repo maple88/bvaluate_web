@@ -17,9 +17,12 @@ export default {
 			this.layer = layui.layer;
 			this.load = layer.load(2);
 		});
-		let data = this.$route.query.code;
-		console.log(data);
-		if (data) {
+		let code = this.$route.query.code;
+		if (code) {
+			let json = {
+				bvaluateUserCode: code
+			}
+			let data = json;
 			parent.postMessage(data, '*');
 		}else{
 			
