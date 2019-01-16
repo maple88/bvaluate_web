@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div class="login_fixed v2login" v-if="wechatPop">
+    <div class="login_fixed v2login" v-show="wechatPop">
       <div class="loginbox">
         <div class="close_box" @click="fn2">
           <i class="icon_close2"></i>
@@ -19,19 +19,84 @@
 
 <script>
   import sensors from '../../static/sa-init.js'
+  import '../../static/wxLogin.js'
 
   let loading = require('../assets/login/loading.gif');
   export default {
     data() {
       return {
-        
       }
     },
     mounted () {
       this.wechatCode();
-      window.addEventListener('message', function(messageEvent) { 
+      window.addEventListener('message', messageEvent => { 
         var data = messageEvent.data;
-        console.info('message from child:', data);
+        if (data) {
+          if (data.bvaluateUserCode) {
+            this.$axios.get('https://api.bvaluate.com.cn/user/passAuth?code=' + data.bvaluateUserCode + '&state=' + Math.random())
+            .then(res => {
+              if(!res.data.phoneNumber){
+                let that = this;
+                localStorage.setItem('apelink_user_uid', res.data.uid);
+                localStorage.setItem('apelink_user_token', res.data.token);
+                localStorage.setItem('apelink_user_phoneNumber', phoneNumber);
+                let url = '/api/user/info';
+                let headers = {'uid': res.data.uid, 'Authorization': res.data.token};
+                that.$axios({
+                  method: 'get',
+                  url: url,
+                  headers: headers
+                }).then(function (res) {
+                  that.aplinkUser = res.data;
+                  localStorage.setItem('apelink_user_candies', res.data.candies);
+                  localStorage.setItem('apelink_user_nickName', res.data.nickName);
+                  sensors.setProfile({nickname: res.data.nickName});
+                  localStorage.setItem('apelink_user_signedIn', res.data.signedIn);
+                  let synopsis = res.data.synopsis;
+                  let profileUrl = res.data.profileUrl;
+                  let email = res.data.email;
+                  let sex = res.data.sex;
+                  if (!(synopsis != null && synopsis !== undefined && synopsis !== '' && synopsis !== 'null')) {
+                    synopsis = ''
+                  }
+                  if (!(profileUrl != null && profileUrl !== undefined && profileUrl !== '' && profileUrl !== 'null')) {
+                    profileUrl = ''
+                  }
+                  if (!(email != null && email !== undefined && email !== '' && email !== 'null')) {
+                    email = ''
+                  }
+                  if (sex < 1) {
+                    sex = 1
+                  }
+                  localStorage.setItem('apelink_user_synopsis', synopsis);
+                  localStorage.setItem('apelink_user_profileUrl', profileUrl);
+                  localStorage.setItem('apelink_user_email', email);
+                  sensors.setProfile({Email: email});
+                  localStorage.setItem('apelink_user_sex', sex);
+                  if (sex === '2') {
+                    sensors.setProfile({gender: '男'});
+                  } else if (sex === '3') {
+                    sensors.setProfile({gender: '女'});
+                  }
+                  sensors.registerPage({
+                    platform_type: 'web',
+                    is_login: true,
+                    is_register: true
+                  });
+                  sensors.login(uid);
+                  sensors.track("Loginresult", {
+                    is_true: true,
+                    false_reason: '登录成功'
+                  });
+                  window.location.reload();
+                }).catch(function (res) {
+                })
+              }else{
+                // 弹绑定手机
+              }
+            })
+          }
+        }
       }, false);
     },
     computed: {
@@ -49,17 +114,11 @@
           id:"wechat", 
           appid: "wx67252f94be009c71", 
           scope: "snsapi_login", 
-          redirect_uri: "http://test.bvaluate.com.cn/#/wechatCode",
+          redirect_uri: "http%3a%2f%2ftest.bvaluate.com.cn%2f%23%2fwechatCode",
           state: "",
           style: "black",
           href: ""
         });
-      },
-      getAccessToken (code) {
-        this.$axios.get('/wechat/sns/oauth2/access_token?appid=wx67252f94be009c71&secret=63f3d2deb5836caca8105015f75c5c69&code='+ code +'&grant_type=authorization_code')
-        .then(res=>{
-          console.log(res.data);
-        })
       }
     }
   }

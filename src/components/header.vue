@@ -118,13 +118,13 @@
         <h4>邀请有礼</h4>
       </div>
     </div>
-    <v-wechatLogin></v-wechatLogin>
     <v-login></v-login>
     <v-analysis></v-analysis>
     <v-message></v-message>
     <v-register-tip></v-register-tip>
     <v-invitation-tip></v-invitation-tip>
     <v-signIn-tips></v-signIn-tips>
+    <v-wechatLogin></v-wechatLogin>
   </div>
 </template>
 

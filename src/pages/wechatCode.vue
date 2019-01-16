@@ -8,28 +8,23 @@
 export default {
 	data () {
 		return {
-			load: '',
-			layer: ''
+			load: ''
 		}
 	},
 	created () {
 		layui.use('layer', () => {
-			this.layer = layui.layer;
+			var layer = layui.layer;
 			this.load = layer.load(2);
 		});
-		let code = this.$route.query.code;
-		if (code) {
-			let json = {
-				bvaluateUserCode: code
-			}
-			let data = json;
+		let data = this.$route.query.code;
+		if (data) {
 			parent.postMessage(data, '*');
 		}else{
-			
+			this.$router.push('/home');
 		}
 	},
 	beforeRouteLeave (to, from, next) {
-    this.layer.close(this.load);
+    layer.close(this.load);
     next();
   }
 }
