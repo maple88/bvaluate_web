@@ -118,6 +118,7 @@
         <h4>邀请有礼</h4>
       </div>
     </div>
+    <v-wechatLogin></v-wechatLogin>
     <v-login></v-login>
     <v-analysis></v-analysis>
     <v-message></v-message>
@@ -129,13 +130,15 @@
   import login from '@/components/login';
   import message from '@/components/message';
   import analysis from '@/components/analysis';
+  import wechatLogin from '@/components/wechatLogin';
 
   let default_header = require('../assets/user/default-header.png');
   export default {
     components: {
       'v-login': login,
       'v-analysis': analysis,
-      'v-message': message
+      'v-message': message,
+      'v-wechatLogin': wechatLogin
     },
     props: {
       parantProfileUrl: String
