@@ -122,6 +122,9 @@
     <v-login></v-login>
     <v-analysis></v-analysis>
     <v-message></v-message>
+    <v-register-tip></v-register-tip>
+    <v-invitation-tip></v-invitation-tip>
+    <v-signIn-tips></v-signIn-tips>
   </div>
 </template>
 
@@ -131,6 +134,9 @@
   import message from '@/components/message';
   import analysis from '@/components/analysis';
   import wechatLogin from '@/components/wechatLogin';
+  import registerTip from '@/components/registerTip';
+  import invitationTip from '@/components/invitationTip';
+  import signInTips from '@/components/signInTips';
 
   let default_header = require('../assets/user/default-header.png');
   export default {
@@ -138,7 +144,10 @@
       'v-login': login,
       'v-analysis': analysis,
       'v-message': message,
-      'v-wechatLogin': wechatLogin
+      'v-wechatLogin': wechatLogin,
+      'v-register-tip': registerTip,
+      'v-invitation-tip': invitationTip,
+      'v-signIn-tips': signInTips
     },
     props: {
       parantProfileUrl: String
