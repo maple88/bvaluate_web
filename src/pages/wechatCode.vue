@@ -22,7 +22,7 @@ export default {
 		if (data) {
 			parent.postMessage(data, '*');
 		}else{
-			// this.$router.push('/list');
+			
 		}
 	},
 	beforeRouteLeave (to, from, next) {

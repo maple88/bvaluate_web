@@ -31,8 +31,7 @@
       this.wechatCode();
       window.addEventListener('message', function(messageEvent) { 
         var data = messageEvent.data;
-        // console.info('message from child:', data);
-        this.getAccessToken(data)
+        console.info('message from child:', data);
       }, false);
     },
     computed: {
@@ -50,7 +49,7 @@
           id:"wechat", 
           appid: "wx67252f94be009c71", 
           scope: "snsapi_login", 
-          redirect_uri: "http://bvaluate.com.cn/user/passAuth",
+          redirect_uri: "http://test.bvaluate.com.cn/#/wechatCode",
           state: "",
           style: "black",
           href: ""
