@@ -8,23 +8,25 @@
 export default {
 	data () {
 		return {
-			load: ''
+			load: '',
+			layer: ''
 		}
 	},
 	created () {
 		layui.use('layer', () => {
-			var layer = layui.layer;
+			this.layer = layui.layer;
 			this.load = layer.load(2);
 		});
 		let data = this.$route.query.code;
+		console.log(data);
 		if (data) {
 			parent.postMessage(data, '*');
 		}else{
-			this.$router.push('/list');
+			// this.$router.push('/list');
 		}
 	},
 	beforeRouteLeave (to, from, next) {
-    layer.close(this.load);
+    this.layer.close(this.load);
     next();
   }
 }
