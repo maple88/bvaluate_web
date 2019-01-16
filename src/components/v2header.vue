@@ -57,7 +57,7 @@
             <ul class="nav navbar-nav">
               <router-link tag="li" to="/home" active-class="active"><a data="首页">首页</a></router-link>
               <router-link tag="li" to="/list" active-class="active"><a data="榜单">榜单</a></router-link>
-              <router-link tag="li" to="/index" active-class="active"><a data="资讯">资讯</a></router-link>
+              <router-link tag="li" to="/news" active-class="active"><a data="资讯">资讯</a></router-link>
               <li v-show="token"><a href="javascript:;" data="新增项目" @click="analysis()">新增项目</a></li>
               <li v-show="!token" @click="isLogin('新增项目')"><a data="新增项目">新增项目</a></li>
             </ul>
@@ -127,7 +127,7 @@
                   </button>
                 </div>
                 <div class="center">
-                  <input type="text" placeholder="请输入关键词" v-model="search" class="search_input" data="输入搜素内容" name="no_content" id="input_search_input" @keyup.enter="goSearch($event)">
+                  <input type="text" placeholder="请输入关键词" v-model="search" class="search_input" data="输入搜素内容" name="no_content" id="out_search_input" @keyup.enter="goSearch($event)">
                 </div>
               </div>
               <div class="close-search">取消</div>
@@ -345,7 +345,14 @@
           is_register: true
         });
         // sensors.logout();
-        this.$router.push('/login');
+        layui.use('layer', function(){
+          var layer = layui.layer;
+          let load = layer.load(2);
+          setTimeout(() => {
+            layer.close(load);
+            window.location.reload();
+          }, 1000);
+        });
       },
       initUser() {
         this.profileUrl = localStorage.getItem('apelink_user_profileUrl');
@@ -362,6 +369,11 @@
           this.hasbg = false;
         }else{
           this.showSearch = true;
+          this.hasbg = true;
+        }
+        if (router.name == 'list') {
+          this.hasbg = false;
+        }else{
           this.hasbg = true;
         }
       },

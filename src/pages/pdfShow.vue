@@ -86,18 +86,22 @@
         res.data.forEach(item=> {
           if(Object.keys(item)[0] == 'en') {
             obj = item;
-          } else {
+            return false;
+          } else if(Object.keys(item)[0] == 'cn'){
             obj = item;
+            return false;
           }
         })
-        for(let key in obj){
-          this.src = pdf.createLoadingTask(obj[key]);
-          this.src.then(pdf => {
-            this.pdfloading = false;
-            this.numPages = pdf.numPages;
-            this.oWidth = this.$refs.bigBox.offsetWidth;
-            this.pdfWidth = this.$refs.bigBox.offsetWidth;
-          });
+        if (obj) {
+          for(let key in obj){
+            this.src = pdf.createLoadingTask(obj[key]);
+            this.src.then(pdf => {
+              this.pdfloading = false;
+              this.numPages = pdf.numPages;
+              this.oWidth = this.$refs.bigBox.offsetWidth;
+              this.pdfWidth = this.$refs.bigBox.offsetWidth;
+            });
+          }
         }
       })
 

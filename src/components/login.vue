@@ -290,8 +290,8 @@
         this.login();
       },
       weChatLogin() {
-        let random = parseInt(Math.random() * 100000000);
-        window.location.href = 'https://open.weixin.qq.com/connect/qrconnect?appid=wxf629707128b807cf&redirect_uri=http://job.wehire.ren/web/passAuth&response_type=code&scope=snsapi_login&state=' + random + '#wechat_redirect';
+        // let random = parseInt(Math.random() * 100000000);
+        // window.location.href = 'https://open.weixin.qq.com/connect/qrconnect?appid=wx67252f94be009c71&redirect_uri=https://bvaluate.com.cn/user/passAuth&response_type=code&scope=snsapi_login&state=' + random + '#wechat_redirect';
       },
       loginSubmit() {
         let phoneNumber = this.loginUser.phoneNumber;
@@ -314,6 +314,11 @@
             phoneNumber: phoneNumber,
             password: password
           };
+          let load;
+          layui.use('layer', function(){
+            var layer = layui.layer;
+            load = layer.load(2);
+          });
           that.$axios.post('/api/login', json).then(function (res) {
             let data = res.data;
             let uid = data.uid;
@@ -373,40 +378,13 @@
                 is_true: true,
                 false_reason: '登录成功'
               });
+              layer.close(load);
               window.location.reload();
             }).catch(function (res) {
             })
-          }).catch(function (res) {
-            let msgCode = res.response.data.message;
-            switch (msgCode) {
-              case '9019':
-                that.errorMsg.loginUser.phoneNumber = '账号不正确';
-                sensors.track("Loginresult", {
-                  is_true: false,
-                  false_reason: that.errorMsg.loginUser.phoneNumber
-                });
-                break;
-              case '9002':
-                that.errorMsg.loginUser.password = '密码格式不正确';
-                sensors.track("Loginresult", {
-                  is_true: false,
-                  false_reason: that.errorMsg.loginUser.password
-                });
-                break;
-              case '9008':
-                that.errorMsg.loginUser.password = '密码不正确';
-                sensors.track("Loginresult", {
-                  is_true: false,
-                  false_reason: that.errorMsg.loginUser.password
-                });
-                break;
-              default:
-                that.errorMsg.loginUser.phoneNumber = msgCode;
-                sensors.track("Loginresult", {
-                  is_true: false,
-                  false_reason: that.errorMsg.loginUser.phoneNumber
-                });
-            }
+          }).catch((res) => {
+            layer.close(load);
+            that.$toast(res.data.message);
           })
         }
       },

@@ -4,13 +4,12 @@ import login from '@/pages/login'
 import userCenter from '@/pages/userCenter/userCenter'
 import my from '@/pages/myProfile'
 import follow from '@/pages/follow'
-import home from '@/pages/home'
+import news from '@/pages/news'
 import v2home from '@/pages/v2home'
 import industry from '@/pages/industry'
 import recommend from '@/pages/recommend'
 import article from '@/pages/article'
 import project from '@/pages/project'
-import projectTest from '@/pages/projectTest'
 import author from '@/pages/author'
 import list from '@/pages/list'
 import search from '@/pages/search'
@@ -70,8 +69,8 @@ export default new Router({
       },
     },
     {
-      path: '/index',
-      component: home,
+      path: '/news',
+      component: news,
       meta: {
         pageTitle: '综合'
       },
@@ -97,10 +96,6 @@ export default new Router({
       meta: {
         pageTitle: '项目详情页'
       }
-    },
-    {
-      path: '/projectTest',
-      component: projectTest
     },
     {
       path: '/author',
