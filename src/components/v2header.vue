@@ -356,7 +356,8 @@
       },
       is_header_scroll () {
         window.addEventListener('scroll', this.handleScroll);
-        if (this.$router.history.current.path == '/home') {
+        let router = this.$router.history.current;
+        if (router.name == 'home') {
           this.showSearch = false;
           this.hasbg = false;
         }else{
@@ -365,13 +366,14 @@
         }
       },
       handleScroll(e) {
+        let router = this.$router.history.current;
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
         if (scrollTop > 100) {
           this.scroll = 'scroll';
         } else {
           this.scroll = '';
         }
-        if (this.$router.history.current.path == '/home') {
+        if (router.name == 'home') {
           if (scrollTop > 360) {
             this.showSearch = true;
           } else {

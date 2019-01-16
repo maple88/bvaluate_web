@@ -24,11 +24,13 @@ export default new Router({
   linkExactActiveClass: 'active',
   // mode: 'history',
   routes: [
+    {path: '/', redirect: '/home'},
     {
-      path: '/',
-      redirect: '/home',
+      path: '/home',
+      name: 'home',
+      component: v2home,
       meta: {
-        pageTitle: '榜单'
+        pageTitle: '首页'
       },
     },
     {
@@ -40,6 +42,7 @@ export default new Router({
     },
     {
       path: '/list',
+      name: 'list',
       component: list,
       meta: {
         pageTitle: '榜单'
@@ -121,14 +124,7 @@ export default new Router({
     {
       path: '/download',
       component: download
-    },
-    {
-      path: '/home',
-      component: v2home,
-      meta: {
-        pageTitle: '首页'
-      },
-    },
+    }
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
