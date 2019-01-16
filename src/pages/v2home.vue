@@ -300,7 +300,7 @@
 									<div class="table-header">
 										<div class="left">排名</div>
 										<div class="center">项目</div>
-										<div class="right">宣传力度</div>
+										<div class="right">声量指数</div>
 									</div>
 									<div class="table-content">
 										<div class="list_item" slot="scrollList" v-for="(item, index) in meitiList" :key="index" @click="goArticle('/project',{sid: item.sid}, $event)">
@@ -355,14 +355,7 @@
 									<div class="info">
 										<p class="tit">
 											<span class="projectname" 
-											v-if="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'" 
 											@click="goProjectByName(item.projectCategory)">{{item.projectCategory | labelFormat}}</span>
-											<span class="projectname" 
-											v-else-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
-											@click="goIndustryByIndustry(item.industryCategory)">{{item.industryCategory | labelFormat}}</span>
-											<span class="projectname" 
-											v-else="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'" 
-											@click="goIndustryByCountry(item.countryCategory)">{{item.countryCategory | labelFormat}}</span>
 											<span class="time">{{item.urlDate}}</span>
 										</p>
 										<p class="name"><a href="javascript:;" @click="goArticle('/article',{sid:item.sid})">{{item.title}}</a></p>
@@ -508,35 +501,35 @@
 			},
       // 总评榜
       getZongpingList () {
-      	this.$axios.get('/api/hotICO/listForApp?pageNo=1&pageSize=10')
+      	this.$axios.get('/api/hotICO/listForApp?pageNo=0&pageSize=10')
       	.then(res => {
       		this.zongpingList = res.data.slice(0, 5);
       	})
       },
       // STO榜单
       getSTOList () {
-      	this.$axios.get('/api/hotICO/stolistForApp?pageNo=1&pageSize=10')
+      	this.$axios.get('/api/hotICO/stolistForApp?pageNo=0&pageSize=10')
       	.then(res => {
       		this.stoList = res.data.slice(0, 5);
       	})
       },
       // 黑马榜
       getHeimaList () {
-      	this.$axios.get('/api/hotICO/blackHouselistForApp?pageNo=1&pageSize=10')
+      	this.$axios.get('/api/hotICO/blackHouselistForApp?pageNo=0&pageSize=10')
       	.then(res => {
       		this.heimaList = res.data
       	})
       },
       // 国家排行榜
       getGuojiaList () {
-      	this.$axios.get('/api/hotICO/countrylistForApp?pageNo=1&pageSize=10')
+      	this.$axios.get('/api/hotICO/countrylistForApp?pageNo=0&pageSize=10')
       	.then(res => {
       		this.guojiaList = res.data
       	})
       },
       // 媒体声量榜
       getMeitiList () {
-      	this.$axios.get('/api/hotICO/medialistForApp?pageNo=1&pageSize=10')
+      	this.$axios.get('/api/hotICO/medialistForApp?pageNo=0&pageSize=10')
       	.then(res => {
       		this.meitiList = res.data
       	})
@@ -638,6 +631,8 @@
             return arr[0];
           }
           return obj;
+        }else{
+        	return '';
         }
         return obj;
       }
