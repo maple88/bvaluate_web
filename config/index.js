@@ -18,6 +18,14 @@ module.exports = {
         pathRewrite: {
           '^/api': '/'
         }
+      },
+      '/wechat': {
+        target: 'https://api.weixin.qq.com',
+        secure: false,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/wechat': '/'
+        },
       }
     },
 

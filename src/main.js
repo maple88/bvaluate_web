@@ -130,6 +130,8 @@ const store = new Vuex.Store({
     analysisPop: false,
     registerPop: false,
     messagePop: false,
+    wechatPop: false,
+    bindPhonePop: false
   },
   mutations: {
     register(state) {

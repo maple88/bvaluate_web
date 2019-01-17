@@ -47,19 +47,19 @@
               </label>
               <span @click="resetpwd()">忘记密码</span>
             </div>
-            <!--<div class="other-login">-->
-            <!--<div class="head">第三方登录</div>-->
-            <!--<ul>-->
-            <!--<li @click="weChatLogin">-->
-            <!--<img src="../assets/login/wechat.png">-->
-            <!--<p>微信</p>-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--<img src="../assets/login/qq.png">-->
-            <!--<p>QQ</p>-->
-            <!--</li>-->
-            <!--</ul>-->
-            <!--</div>-->
+            <div class="other-login" v-show="false">
+              <div class="head">第三方登录</div>
+              <ul>
+                <li @click="weChatLogin">
+                  <img src="../assets/login/wechat.png">
+                  <p>微信</p>
+                </li>
+                <!-- <li>
+                  <img src="../assets/login/qq.png">
+                  <p>QQ</p>
+                </li> -->
+              </ul>
+            </div>
           </div>
           <div class="inputInner" v-if="registerForm">
             <div class="input-group">
@@ -285,8 +285,9 @@
         this.login();
       },
       weChatLogin() {
-        let random = parseInt(Math.random() * 100000000);
-        window.location.href = 'https://open.weixin.qq.com/connect/qrconnect?appid=wxf629707128b807cf&redirect_uri=http://job.wehire.ren/web/passAuth&response_type=code&scope=snsapi_login&state=' + random + '#wechat_redirect';
+        this.$store.state.wechatPop = true;
+        // let random = parseInt(Math.random() * 100000000);
+        // window.location.href = 'https://open.weixin.qq.com/connect/qrconnect?appid=wxf629707128b807cf&redirect_uri=http://job.wehire.ren/web/passAuth&response_type=code&scope=snsapi_login&state=' + random + '#wechat_redirect';
       },
       loginSubmit() {
         let phoneNumber = this.loginUser.phoneNumber;
