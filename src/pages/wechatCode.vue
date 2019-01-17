@@ -25,7 +25,7 @@ export default {
 			let data = json;
 			parent.postMessage(data, '*');
 		}else{
-			this.$router.push('/home');
+			this.$router.push('/list');
 		}
 	},
 	// beforeRouteLeave (to, from, next) {
