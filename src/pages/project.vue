@@ -89,11 +89,11 @@
             </div>
             <div class="item">
               <p class="t">流通量</p>
-              <p class="b">{{hotInfo.famc || '--'}}</p>
+              <p class="b">{{hotInfo.markValue || '--'}}</p>
             </div>
             <div class="item">
               <p class="t">流通市值</p>
-              <p class="b">{{hotInfo.markValue || '--'}}</p>
+              <p class="b">{{hotInfo.famc || '--'}}</p>
             </div>
             <div class="item">
               <p class="t">近24小时链上大单交易笔数</p>

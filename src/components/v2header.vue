@@ -143,6 +143,7 @@
     <v-invitation-tip></v-invitation-tip>
     <v-signIn-tips></v-signIn-tips>
     <v-wechatLogin></v-wechatLogin>
+    <v-bindPhone></v-bindPhone>
   </div>
 </template>
 
@@ -155,6 +156,7 @@
   import registerTip from '@/components/registerTip';
   import invitationTip from '@/components/invitationTip';
   import signInTips from '@/components/signInTips';
+  import bindPhone from '@/components/bindPhone';
   import Bus from '../bus.js'
 
   let default_header = require('../assets/user/default-header.png');
@@ -166,7 +168,8 @@
       'v-wechatLogin': wechatLogin,
       'v-register-tip': registerTip,
       'v-invitation-tip': invitationTip,
-      'v-signIn-tips': signInTips
+      'v-signIn-tips': signInTips,
+      'v-bindPhone': bindPhone
     },
     props: {
       parantProfileUrl: String

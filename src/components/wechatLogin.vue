@@ -7,7 +7,12 @@
         </div>
         <div class="hd">
           <div class="loginlogo"><img src="../assets/loginlogo.png"></div>
-          <div id="wechat"></div>
+          <div class="wechatBox">
+            <div id="wechat"></div>
+            <div class="Loginloading" v-show="showLoading">
+              <img :src="loading">
+            </div>
+          </div>
         </div>
         <!-- <div class="bd">
           
@@ -19,12 +24,13 @@
 
 <script>
   import sensors from '../../static/sa-init.js'
-  import '../../static/wxLogin.js'
 
   let loading = require('../assets/login/loading.gif');
   export default {
     data() {
       return {
+        loading: loading,
+        showLoading: false
       }
     },
     mounted () {
@@ -32,10 +38,12 @@
       window.addEventListener('message', messageEvent => { 
         var data = messageEvent.data;
         if (data) {
+          console.log(data.bvaluateUserCode);
           if (data.bvaluateUserCode) {
+            this.showLoading = true;
             this.$axios.get('https://api.bvaluate.com.cn/user/passAuth?code=' + data.bvaluateUserCode + '&state=' + Math.random())
             .then(res => {
-              if(!res.data.phoneNumber){
+              if(res.data.phoneNumber){
                 let that = this;
                 localStorage.setItem('apelink_user_uid', res.data.uid);
                 localStorage.setItem('apelink_user_token', res.data.token);
@@ -89,10 +97,12 @@
                     false_reason: '登录成功'
                   });
                   window.location.reload();
-                }).catch(function (res) {
                 })
               }else{
                 // 弹绑定手机
+                this.$store.state.loginPop = false;
+                this.$store.state.wechatPop = false;
+                this.$store.state.bindPhonePop = true;
               }
             })
           }
