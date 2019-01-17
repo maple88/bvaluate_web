@@ -8,23 +8,28 @@
 export default {
 	data () {
 		return {
-			load: ''
+			load: '',
+			layer: ''
 		}
 	},
 	created () {
-		// layui.use('layer', () => {
-		// 	var layer = layui.layer;
-		// 	this.load = layer.load(2);
-		// });
-		let data = this.$route.query.code;
-		if (data) {
+		layui.use('layer', () => {
+			this.layer = layui.layer;
+			this.load = layer.load(2);
+		});
+		let code = this.$route.query.code;
+		if (code) {
+			let json = {
+				bvaluateUserCode: code
+			}
+			let data = json;
 			parent.postMessage(data, '*');
 		}else{
-			// this.$router.push('/home');
+			this.$router.push('/home');
 		}
 	},
 	// beforeRouteLeave (to, from, next) {
- //    layer.close(this.load);
+ //    this.layer.close(this.load);
  //    next();
  //  }
 }
