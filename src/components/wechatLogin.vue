@@ -19,7 +19,6 @@
 
 <script>
   import sensors from '../../static/sa-init.js'
-  import '../../static/wxLogin.js'
 
   let loading = require('../assets/login/loading.gif');
   export default {

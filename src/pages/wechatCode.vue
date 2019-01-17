@@ -12,21 +12,21 @@ export default {
 		}
 	},
 	created () {
-		layui.use('layer', () => {
-			var layer = layui.layer;
-			this.load = layer.load(2);
-		});
+		// layui.use('layer', () => {
+		// 	var layer = layui.layer;
+		// 	this.load = layer.load(2);
+		// });
 		let data = this.$route.query.code;
 		if (data) {
 			parent.postMessage(data, '*');
 		}else{
-			this.$router.push('/home');
+			// this.$router.push('/home');
 		}
 	},
-	beforeRouteLeave (to, from, next) {
-    layer.close(this.load);
-    next();
-  }
+	// beforeRouteLeave (to, from, next) {
+ //    layer.close(this.load);
+ //    next();
+ //  }
 }
 </script>
 
