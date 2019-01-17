@@ -13,10 +13,10 @@ export default {
 		}
 	},
 	created () {
-		layui.use('layer', () => {
-			this.layer = layui.layer;
-			this.load = layer.load(2);
-		});
+		// layui.use('layer', () => {
+		// 	this.layer = layui.layer;
+		// 	this.load = layer.load(2);
+		// });
 		let code = this.$route.query.code;
 		if (code) {
 			let json = {
