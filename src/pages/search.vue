@@ -55,34 +55,34 @@
                             </div>
                           </div>
                           <div class="media-body">
-                            <h4 class="media-heading" :data="news.title" :title="news.title" 
-                            :name="'search_media-heading_title_'+index" :id="'search_media-heading_title_'+index" 
-                            @click="goArticle('/article',{sid:news.sid}, $event), 
-                            trackArticle('搜索页', news.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', search.type, news.sid)"
-                            v-if="!(news.dataType === 'WEIBO' || news.dataType === 'TWITTER')">
+                            <h4 class="media-heading" v-if="!(news.dataType === 'WEIBO' || news.dataType === 'TWITTER')">
                               <span class="tips"
-                                :name="'search_tips_projectCategory_'+index" :id="'search_tips_projectCategory_'+index" 
-                                v-if="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL' || news.dataType !== 'WEIBO' || news.dataType !== 'TWITTER'"
-                                @click="goProjectByName(news.projectCategory, $event), trackProject('搜索页文章的项目标签', news.projectCategory, '搜索页文章的项目标签没有项目ID', '搜索页文章的项目标签没有排行榜位置', '搜索页文章的项目标签没有项目总分')"
-                                :data="news.projectCategory"
+                              :name="'search_tips_projectCategory_'+index" :id="'search_tips_projectCategory_'+index" 
+                              v-if="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL' || news.dataType !== 'WEIBO' || news.dataType !== 'TWITTER'"
+                              @click="goProjectByName(news.projectCategory, $event), trackProject('搜索页文章的项目标签', news.projectCategory, '搜索页文章的项目标签没有项目ID', '搜索页文章的项目标签没有排行榜位置', '搜索页文章的项目标签没有项目总分')"
+                              :data="news.projectCategory"
                               >
                                 {{news.projectCategory | labelFormat}}
                               </span>
-                              <span class="tit" v-html="news.title"></span>
+                              <span class="tit" :data="news.title" :title="news.title" 
+                              :name="'search_media-heading_title_'+index" :id="'search_media-heading_title_'+index" 
+                              @click="goArticle('/article',{sid:news.sid}, $event), 
+                              trackArticle('搜索页', news.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', search.type, news.sid)"
+                              v-html="news.title"></span>
                             </h4>
-                            <p class="media-words TorW" :data="news.content" v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'" 
-                            :name="'search_media-wordsTorW_content_'+index" :id="'search_media-wordsTorW_content_'+index" 
-                            @click="goArticle('/article',{sid:news.sid}, $event), 
-                            trackArticle('搜索页', news.content, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', search.type, news.sid)">
-                            <span class="tips"
-                                 :name="'search_tips_projectCategory_'+index" :id="'search_tips_projectCategory_'+index" 
-                                 v-if="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL'"
-                                 @click="goProjectByName(news.projectCategory, $event), trackProject('搜索页文章的项目标签', news.projectCategory, '搜索页文章的项目标签没有项目ID', '搜索页文章的项目标签没有排行榜位置', '搜索页文章的项目标签没有项目总分')"
-                                 :data="news.projectCategory"
-                            >
-                              {{news.projectCategory | labelFormat}}
-                            </span>
-                            <span v-html="news.content"></span>
+                            <p class="media-words TorW" v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'" >
+                              <span class="tips"
+                              :name="'search_tips_projectCategory_'+index" :id="'search_tips_projectCategory_'+index" 
+                              v-if="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL'"
+                              @click="goProjectByName(news.projectCategory, $event), trackProject('搜索页文章的项目标签', news.projectCategory, '搜索页文章的项目标签没有项目ID', '搜索页文章的项目标签没有排行榜位置', '搜索页文章的项目标签没有项目总分')"
+                              :data="news.projectCategory"
+                              >
+                                {{news.projectCategory | labelFormat}}
+                              </span>
+                              <span :data="news.content" v-html="news.content" 
+                              :name="'search_media-wordsTorW_content_'+index" :id="'search_media-wordsTorW_content_'+index" 
+                              @click="goArticle('/article',{sid:news.sid}, $event), 
+                              trackArticle('搜索页', news.content, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', search.type, news.sid)"></span>
                             </p>
                             <p class="media-words" v-else v-html="news.content">
                             </p>

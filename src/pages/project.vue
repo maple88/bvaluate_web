@@ -89,11 +89,11 @@
             </div>
             <div class="item">
               <p class="t">流通量</p>
-              <p class="b">{{hotInfo.markValue || '--'}}</p>
+              <p class="b">{{hotInfo.markValue | formatDataForMark}}</p>
             </div>
             <div class="item">
               <p class="t">流通市值</p>
-              <p class="b">{{hotInfo.famc || '--'}}</p>
+              <p class="b">{{hotInfo.famc | formatDataForMark}}</p>
             </div>
             <div class="item">
               <p class="t">近24小时链上大单交易笔数</p>
@@ -2330,6 +2330,23 @@
       },
       rounding(val) {
         return parseInt(val);
+      },
+      formatDataForMark(val) {
+        if (val) {
+          if (val > 100000000) {
+            let num = val / 100000000;
+            return `${num.toFixed(2)} 亿`
+          } else {
+            if (val > 10000) {
+              let num = val / 10000;
+              return `${num.toFixed(2)} 万`
+            } else {
+              return val;
+            }
+          }
+        } else {
+          return '--'
+        }
       }
     }
   }
