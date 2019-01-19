@@ -20,10 +20,10 @@
 						</div>
 						<ul class="hotsearch">
 							<li>热门搜索：</li>
-							<li>BTC</li>
-							<li>ETH</li>
-							<li>EOS</li>
-							<li>TRON</li>
+							<li><a href="javascript:;" @click="goSearch($event, 'BTC')">BTC</a></li>
+							<li><a href="javascript:;" @click="goSearch($event, 'ETH')">ETH</a></li>
+							<li><a href="javascript:;" @click="goSearch($event, 'EOS')">EOS</a></li>
+							<li><a href="javascript:;" @click="goSearch($event, 'TRON')">TRON</a></li>
 						</ul>
 					</div>
 				</div>
@@ -468,29 +468,40 @@
 			that.getHotNews();
 		},
 		methods: {
-			goSearch(event) {
+			goSearch(event, searchKeyword) {
 				let pageTitle
-				if (this.search == '') {
-          layui.use('layer', function(){
-            var layer = layui.layer;
-            layer.msg('关键词不能为空！');
-          });
-          return false;
-        }
 				if (this.searchType === '文章') {
 					pageTitle = '文章搜索结果'
 				}
 				if (this.searchType === '项目') {
 					pageTitle = '项目搜索结果'
 				}
-				this.$router.push({
-					path: '/search',
-					query: {
-						keyword: this.search,
-						searchType: this.searchType,
-						pageTitle: pageTitle
+				if (searchKeyword) {
+					this.$router.push({
+						path: '/search',
+						query: {
+							keyword: searchKeyword,
+							searchType: this.searchType,
+							pageTitle: pageTitle
+						}
+					})
+				}else{
+					if (this.search == '') {
+						layui.use('layer', function(){
+							var layer = layui.layer;
+							layer.msg('关键词不能为空！');
+						});
+						return false;
 					}
-				})
+					this.$router.push({
+						path: '/search',
+						query: {
+							keyword: this.search,
+							searchType: this.searchType,
+							pageTitle: pageTitle
+						}
+					})
+				}
 			},
 			// 热门行业
 			getHotindustry () {

@@ -155,6 +155,12 @@
           @media ($max-sm) {
             font-size: 12px;
           }
+          a{
+            color: #fff;
+            &:hover{
+              color: $mainColor;
+            }
+          }
           &:first-child, &:last-child{
             margin: 0;
           }
