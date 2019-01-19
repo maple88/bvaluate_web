@@ -145,7 +145,7 @@
         if (file.type !== 'application/pdf') {
           this.fileTips = '文件类型错误';
           this.uploadBtn = true
-        } else if (file.size >= 10485760) {
+        } else if (file.size >= 52428800) {
           this.fileTips = '文件过大，请修改后重新选择';
           this.uploadBtn = true
         } else if (filename.length !== 3 || j > 0) {

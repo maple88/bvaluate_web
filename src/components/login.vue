@@ -1,13 +1,14 @@
 <template>
   <transition name="fade">
-    <div class="login_fixed" v-if="loginPop">
+    <div class="login_fixed v2login" v-if="loginPop">
       <div class="login_bg" @click="fn2"></div>
       <div class="loginbox">
+        <i class="fa fa-arrow-circle-o-left backicon" v-show="resetpwd_head" @click="login()"></i>
         <div class="close_box" @click="fn2">
-          <i class="icon_close"></i>
+          <i class="icon_close2"></i>
         </div>
         <div class="hd">
-          <i class="fa fa-arrow-circle-o-left back-btn" v-show="resetpwd_head" @click="login()"></i>
+          <div class="loginlogo"><img src="../assets/loginlogo.png"></div>
           <ul v-show="login_register_head">
             <li :class="{ active : isLogin }" @click="login()">登录</li>
             <li :class="{ active : isRegister }" @click="register()">注册</li>
@@ -19,27 +20,23 @@
         <div class="bd">
           <div class="inputInner" v-if="loginForm">
             <div class="input-group">
-              <div class="input-group-addon"><img src="../assets/login/icon1.png"></div>
+              <div class="input-group-addon"><img src="../assets/login/icon2-1.png"></div>
               <input type="text" class="form-control" v-model="loginUser.phoneNumber" placeholder="手机号" data="输入手机号"
                      @focus="errorMsg.loginUser.phoneNumber = ''"
                      name="no_content" id="input_login_phoneNumber">
               <span class="help-block" v-if="errorMsg.loginUser.phoneNumber">
-										<img src="../assets/login/iclose.png">
 										{{errorMsg.loginUser.phoneNumber}}
 									</span>
             </div>
-            <div class="input-group">
-              <div class="input-group-addon"><img src="../assets/login/icon2.png"></div>
-              <input type="password" class="form-control" v-model="loginUser.password" placeholder="密码" data="输入密码"
+            <div class="input-group mg10">
+              <div class="input-group-addon"><img src="../assets/login/icon2-2.png"></div>
+              <input :type="pwdtype" class="form-control password" v-model="loginUser.password" placeholder="密码" data="输入密码"
                      @focus="errorMsg.loginUser.password = ''" @keyup.enter="loginSubmit"
                      name="no_content" id="input_login_password">
+              <div class="showpwd" @click="changePwdtype"><img :src="eye"></div>
               <span class="help-block" v-if="errorMsg.loginUser.password">
-										<img src="../assets/login/iclose.png">
 										{{errorMsg.loginUser.password}}
 									</span>
-            </div>
-            <div class="input-group submit-group">
-              <button type="button" class="btn ok-btn" data="登录" name="login_ok" id="login_ok" @click="loginSubmit">登录</button>
             </div>
             <div class="other-group">
               <label class="remember">
@@ -47,19 +44,21 @@
               </label>
               <span @click="resetpwd()">忘记密码</span>
             </div>
-            <!--<div class="other-login">-->
-            <!--<div class="head">第三方登录</div>-->
-            <!--<ul>-->
-            <!--<li @click="weChatLogin">-->
-            <!--<img src="../assets/login/wechat.png">-->
-            <!--<p>微信</p>-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--<img src="../assets/login/qq.png">-->
-            <!--<p>QQ</p>-->
-            <!--</li>-->
-            <!--</ul>-->
-            <!--</div>-->
+            <div class="input-group submit-group">
+              <button type="button" class="btn ok-btn" data="登录" name="login_ok" id="login_ok" @click="loginSubmit">登录</button>
+            </div>
+            <div class="other-login">
+              <div class="head">第三方登录</div>
+              <ul>
+                <li @click="weChatLogin">
+                  <img src="../assets/login/wechat2.png">
+                </li>
+                <!-- <li>
+                  <img src="../assets/login/qq.png">
+                  <p>QQ</p>
+                </li> -->
+              </ul>
+            </div>
           </div>
           <div class="inputInner" v-if="registerForm">
             <div class="input-group">
@@ -73,12 +72,11 @@
                      name="no_content" id="input_login_nickName"
               >
               <span class="help-block" v-if="errorMsg.registerUser.nickName">
-										<img src="../assets/login/iclose.png">
 										{{errorMsg.registerUser.nickName}}
 									</span>
             </div>
             <div class="input-group">
-              <div class="input-group-addon"><img src="../assets/login/icon3.png"></div>
+              <div class="input-group-addon"><img src="../assets/login/icon2-1.png"></div>
               <input type="text" class="form-control" v-model="registerUser.phoneNumber" placeholder="手机号"
                      @focus="errorMsg.registerUser.phoneNumber = ''"
                      @blur="checkPhoneNumber()"
@@ -86,12 +84,11 @@
                      name="no_content" id="input_login_phoneNumber2"
               >
               <span class="help-block" v-if="errorMsg.registerUser.phoneNumber">
-										<img src="../assets/login/iclose.png">
 										{{errorMsg.registerUser.phoneNumber}}
 									</span>
             </div>
             <div class="input-group">
-              <div class="input-group-addon"><img src="../assets/login/icon2.png"></div>
+              <div class="input-group-addon"><img src="../assets/login/icon2-2.png"></div>
               <input type="password" class="form-control" v-model="registerUser.password" placeholder="密码"
                      @focus="errorMsg.registerUser.password = ''"
                      @blur="checkPassword(true)"
@@ -99,12 +96,11 @@
                      name="no_content" id="input_login_password2"
               >
               <span class="help-block" v-if="errorMsg.registerUser.password">
-										<img src="../assets/login/iclose.png">
 										{{errorMsg.registerUser.password}}
 									</span>
             </div>
             <div class="input-group">
-              <div class="input-group-addon"><img src="../assets/login/icon2.png"></div>
+              <div class="input-group-addon"><img src="../assets/login/icon2-2.png"></div>
               <input type="password" class="form-control" v-model="registerUser.confirmpsd" placeholder="确认密码"
                      @focus="errorMsg.registerUser.confirmpsd = ''"
                      @blur="checkPassword(false)"
@@ -112,16 +108,15 @@
                      name="no_content" id="input_login_confirmpsd"
               >
               <span class="help-block" v-if="errorMsg.registerUser.confirmpsd">
-										<img src="../assets/login/iclose.png">
 										{{errorMsg.registerUser.confirmpsd}}
 									</span>
             </div>
             <div class="input-group code">
+              <div class="input-group-addon"><img src="../assets/login/icon2-3.png"></div>
               <input type="text" v-model="registerUser.code" placeholder="输入验证码" data="输入验证码"
                      @focus="errorMsg.registerUser.code = ''"
                      name="no_content" id="input_login_code">
               <span class="help-block" v-if="errorMsg.registerUser.code">
-										<img src="../assets/login/iclose.png">
 										{{errorMsg.registerUser.code}}
 									</span>
               <button class="code-btn" :disabled="registerSendBtn" name="login_code-btn" id="login_code-btn" data="获取验证码" @click.stop="sendCode">
@@ -132,11 +127,11 @@
             <div class="input-group submit-group">
               <button type="button" class="btn ok-btn" data="注册" name="login_register" id="login_register" @click.stop="registerSubmit()">注册</button>
             </div>
-            <p class="register-tips">点击“注册”即表示您同意并愿意接收<br>BVALUATE<span>用户此协议</span>和<span>隐私政策</span></p>
+            <!-- <p class="register-tips">点击“注册”即表示您同意并愿意接收<br>BVALUATE<span>用户此协议</span>和<span>隐私政策</span></p> -->
           </div>
           <div class="inputInner" v-if="resetpwdForm">
             <div class="input-group">
-              <div class="input-group-addon"><img src="../assets/login/icon1.png"></div>
+              <div class="input-group-addon"><img src="../assets/login/icon2-1.png"></div>
               <input type="text" class="form-control" v-model="resetpwdUser.phoneNumber" placeholder="手机号"
                      @focus="errorMsg.resetpwdUser.phoneNumber = ''"
                      @blur="checkResetPhoneNumber"
@@ -144,7 +139,6 @@
                      name="no_content" id="input_login_phoneNumber3"
               >
               <span class="help-block" v-if="errorMsg.resetpwdUser.phoneNumber">
-										<img src="../assets/login/iclose.png">
 										{{errorMsg.resetpwdUser.phoneNumber}}
 									</span>
             </div>
@@ -157,7 +151,6 @@
                      name="no_content" id="input_login_password3"
               >
               <span class="help-block" v-if="errorMsg.resetpwdUser.password">
-										<img src="../assets/login/iclose.png">
 										{{errorMsg.resetpwdUser.password}}
 									</span>
             </div>
@@ -170,18 +163,17 @@
                      name="no_content" id="input_login_confirmpsd2"
               >
               <span class="help-block" v-if="errorMsg.resetpwdUser.confirmpsd">
-										<img src="../assets/login/iclose.png">
 										{{errorMsg.resetpwdUser.confirmpsd}}
 									</span>
             </div>
-            <div class="code input-group">
+            <div class="input-group code">
+              <div class="input-group-addon"><img src="../assets/login/icon2-3.png"></div>
               <input type="text" placeholder="输入验证码" v-model="resetpwdUser.code"
                      @focus="errorMsg.resetpwdUser.code = ''"
                      data="输入验证码"
                      name="no_content" id="input_login_code2"
               >
               <span class="help-block" v-if="errorMsg.resetpwdUser.code">
-										<img src="../assets/login/iclose.png">
 										{{errorMsg.resetpwdUser.code}}
 									</span>
               <button class="code-btn" :disabled="resetPwdSendBtn" name="login_code-btn2" id="login_code-btn2" @click.stop="sendresetPwdCode" data="获取验证码">
@@ -207,6 +199,8 @@
 
   let loading = require('../assets/login/loading.gif');
   let bg = require('../assets/login/login_bg.jpg');
+  let eye = require('../assets/login/eye.png');
+  let openeye = require('../assets/login/eye-on.png');
   export default {
     data() {
       return {
@@ -265,7 +259,9 @@
         resetPwdShowloading: false,
         loading: loading,
         tipText: '',
-        showTip: false
+        showTip: false,
+        pwdtype: 'password',
+        eye: eye
       }
     },
     computed: {
@@ -279,14 +275,24 @@
       }
     },
     methods: {
+      changePwdtype () {
+        if (this.pwdtype === 'password') {
+          this.pwdtype = 'text';
+          this.eye = openeye;
+        }else{
+          this.pwdtype = 'password';
+          this.eye = eye;
+        }
+      },
       fn2() {
         this.$store.state.loginPop = false;
         this.$store.state.registerPop = false;
         this.login();
       },
       weChatLogin() {
-        let random = parseInt(Math.random() * 100000000);
-        window.location.href = 'https://open.weixin.qq.com/connect/qrconnect?appid=wxf629707128b807cf&redirect_uri=http://job.wehire.ren/web/passAuth&response_type=code&scope=snsapi_login&state=' + random + '#wechat_redirect';
+        this.$store.state.wechatPop = true;
+        // let random = parseInt(Math.random() * 100000000);
+        // window.location.href = 'https://open.weixin.qq.com/connect/qrconnect?appid=wx67252f94be009c71&redirect_uri=https://bvaluate.com.cn/user/passAuth&response_type=code&scope=snsapi_login&state=' + random + '#wechat_redirect';
       },
       loginSubmit() {
         let phoneNumber = this.loginUser.phoneNumber;
@@ -309,6 +315,11 @@
             phoneNumber: phoneNumber,
             password: password
           };
+          let load;
+          layui.use('layer', function(){
+            var layer = layui.layer;
+            load = layer.load(2);
+          });
           that.$axios.post('/api/login', json).then(function (res) {
             let data = res.data;
             let uid = data.uid;
@@ -368,40 +379,13 @@
                 is_true: true,
                 false_reason: '登录成功'
               });
+              layer.close(load);
               window.location.reload();
             }).catch(function (res) {
             })
-          }).catch(function (res) {
-            let msgCode = res.response.data.message;
-            switch (msgCode) {
-              case '9019':
-                that.errorMsg.loginUser.phoneNumber = '账号不正确';
-                sensors.track("Loginresult", {
-                  is_true: false,
-                  false_reason: that.errorMsg.loginUser.phoneNumber
-                });
-                break;
-              case '9002':
-                that.errorMsg.loginUser.password = '密码格式不正确';
-                sensors.track("Loginresult", {
-                  is_true: false,
-                  false_reason: that.errorMsg.loginUser.password
-                });
-                break;
-              case '9008':
-                that.errorMsg.loginUser.password = '密码不正确';
-                sensors.track("Loginresult", {
-                  is_true: false,
-                  false_reason: that.errorMsg.loginUser.password
-                });
-                break;
-              default:
-                that.errorMsg.loginUser.phoneNumber = msgCode;
-                sensors.track("Loginresult", {
-                  is_true: false,
-                  false_reason: that.errorMsg.loginUser.phoneNumber
-                });
-            }
+          }).catch((res) => {
+            layer.close(load);
+            that.$toast(res.data.message);
           })
         }
       },

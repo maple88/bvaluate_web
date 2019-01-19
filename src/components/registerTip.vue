@@ -1,21 +1,18 @@
 <template>
   <transition name="fade">
-    <div class="login_fixed register_tips" v-show="registerTip">
+    <div class="login_fixed register_tips v2register_tips" v-show="registerTip">
       <div class="login_bg"></div>
       <div class="loginbox register_tips">
-        <div class="close_box" @click="fn2">
-          <i class="icon_close"></i>
-        </div>
         <div class="bd">
+          <div class="close_box" @click="fn2">
+            <i class="icon_close2"></i>
+          </div>
           <div class="tips_title">
             <h4>注册送糖果</h4>
           </div>
           <div class="tips_content">
-            <div class="content_default">
-              <h4>新用户注册即送<span>888</span>糖果</h4>
-            </div>
             <div class="tips_button">
-              <button @click="goRegister" name="tips_button" id="tips_button">立即注册</button>
+              <div class="register-btn" @click="goRegister">新用户注册即送<span>888</span>糖果<i class="goicon"></i></div>
             </div>
             <div class="erCode_box">
               <img src="../assets/register/erCode.png" alt="">

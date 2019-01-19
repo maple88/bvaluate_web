@@ -53,7 +53,6 @@
 
 <script>
   import sensors from '../../../static/sa-init.js'
-  import vheader from '@/components/header.vue';
   import contribute from '@/pages/userCenter/contribute';
   import read from '@/pages/userCenter/read';
   import collection from '@/pages/userCenter/collection';
@@ -64,7 +63,6 @@
 
   export default {
     components: {
-      vheader,
       contribute,
       read,
       collection,

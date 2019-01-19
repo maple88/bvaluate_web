@@ -7,8 +7,6 @@ import $ from 'jquery'
 import 'swiper/dist/css/swiper.min.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min'
-import header from '@/components/header.vue'
-import footer from '@/components/footer.vue'
 import v2header from '@/components/v2header.vue'
 import v2footer from '@/components/v2footer.vue'
 import tip from '@/components/tip.vue'
@@ -24,12 +22,17 @@ import sensors from 'sa-sdk-javascript/sensorsdata.min.js'
 Vue.prototype.$axios = axios;
 Vue.prototype.$sugar = 12;
 Vue.config.productionTip = false;
-Vue.component('vheader', header);
-Vue.component('vfooter', footer);
 Vue.component('v2header', v2header);
 Vue.component('v2footer', v2footer);
 Vue.component('vtips', tip);
 Vue.use(Vuex);
+
+Vue.prototype.$toast = function(msg){
+  layui.use('layer', function(){
+    var layer = layui.layer;
+    layer.msg(msg);
+  });
+}
 
 // 页面标题
 router.beforeEach((to, from, next) => {
@@ -135,6 +138,8 @@ const store = new Vuex.Store({
     analysisPop: false,
     registerPop: false,
     messagePop: false,
+    wechatPop: false,
+    bindPhonePop: false
   },
   mutations: {
     register(state) {

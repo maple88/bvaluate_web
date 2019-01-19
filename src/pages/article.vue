@@ -8,7 +8,7 @@
             <div class="span6">
               <ul class="breadcrumb">
                 <li>
-                  <router-link to="/index" data="首页" name="breadcrumb_home" id="breadcrumb_home">首页</router-link>
+                  <router-link to="/home" data="首页" name="breadcrumb_home" id="breadcrumb_home">首页</router-link>
                   <span class="divider"></span>
                 </li>
                 <li>
@@ -561,7 +561,7 @@
             //   }
             // })
           } else {
-            this.$router.push('/index');
+            this.$router.push('/home');
           }
         }
       },

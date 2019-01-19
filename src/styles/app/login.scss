@@ -306,6 +306,7 @@
 }
 
 .login_fixed {
+  background: rgba(0, 0, 0, .3);
   position: fixed;
   width: 100%;
   height: 100%;
@@ -381,6 +382,7 @@
         font-size: 20px;
         color: $black;
         cursor: pointer;
+        font-weight: bold;
         &.active {
           color: $mainColor;
         }
@@ -1986,5 +1988,34 @@
     @media ($max-xs) {
       padding: 0 0 30px;
     }
+  }
+}
+
+.wechatBox{
+  position: relative;
+  .Loginloading{
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img{
+      width: 60px;
+    }
+  }
+}
+
+.bindPhone{
+  .input-group-addon{
+    font-size: 15px;
+    font-weight: bold;
+  }
+  .inputInner input{
+    border-left: 2px solid #d2d2d2 !important;
+    padding: 0 0 0 10px !important;
   }
 }

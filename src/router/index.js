@@ -4,19 +4,19 @@ import login from '@/pages/login'
 import userCenter from '@/pages/userCenter/userCenter'
 import my from '@/pages/myProfile'
 import follow from '@/pages/follow'
-import home from '@/pages/home'
+import news from '@/pages/news'
 import v2home from '@/pages/v2home'
 import industry from '@/pages/industry'
 import recommend from '@/pages/recommend'
 import article from '@/pages/article'
 import project from '@/pages/project'
-import projectTest from '@/pages/projectTest'
 import author from '@/pages/author'
 import list from '@/pages/list'
 import search from '@/pages/search'
 import newsList from '@/pages/newsList'
 import pdfShow from '@/pages/pdfShow'
 import download from '@/pages/download'
+import wechatCode from '@/pages/wechatCode'
 
 Vue.use(Router);
 
@@ -24,11 +24,18 @@ export default new Router({
   linkExactActiveClass: 'active',
   // mode: 'history',
   routes: [
+    {path: '/', redirect: '/home'},
     {
-      path: '/',
-      redirect: '/home',
+      path: '/wechatCode',
+      name: 'wechatCode',
+      component: wechatCode,
+    },
+    {
+      path: '/home',
+      name: 'home',
+      component: v2home,
       meta: {
-        pageTitle: '榜单'
+        pageTitle: '首页'
       },
     },
     {
@@ -40,6 +47,7 @@ export default new Router({
     },
     {
       path: '/list',
+      name: 'list',
       component: list,
       meta: {
         pageTitle: '榜单'
@@ -67,8 +75,8 @@ export default new Router({
       },
     },
     {
-      path: '/index',
-      component: home,
+      path: '/news',
+      component: news,
       meta: {
         pageTitle: '综合'
       },
@@ -96,10 +104,6 @@ export default new Router({
       }
     },
     {
-      path: '/projectTest',
-      component: projectTest
-    },
-    {
       path: '/author',
       component: author,
       meta: {
@@ -121,14 +125,7 @@ export default new Router({
     {
       path: '/download',
       component: download
-    },
-    {
-      path: '/home',
-      component: v2home,
-      meta: {
-        pageTitle: '首页'
-      },
-    },
+    }
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

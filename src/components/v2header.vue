@@ -9,14 +9,16 @@
             <li><span>白皮书收录总数：</span><span>{{tophead.totalWhitePaper}}</span></li>
           </ul>
           <div class="appdownload">
-            <img src="../assets/tdownload.png">
-            <span>APP下载</span>
+            <a href="https://api.bvaluate.com.cn/apk/bvaluate.apk">
+              <img src="../assets/tdownload.png">
+              <span>APP下载</span>
+            </a>
           </div>
         </div>
       </div>
     </div>
     <div class="mainhead">
-      <nav class="navbar navbar-default">
+      <nav class="navbar navbar-default" :class="{ hasbg:hasbg }">
         <div class="container v2container">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
@@ -55,7 +57,7 @@
             <ul class="nav navbar-nav">
               <router-link tag="li" to="/home" active-class="active"><a data="首页">首页</a></router-link>
               <router-link tag="li" to="/list" active-class="active"><a data="榜单">榜单</a></router-link>
-              <router-link tag="li" to="/index" active-class="active"><a data="资讯">资讯</a></router-link>
+              <router-link tag="li" to="/news" active-class="active"><a data="资讯">资讯</a></router-link>
               <li v-show="token"><a href="javascript:;" data="新增项目" @click="analysis()">新增项目</a></li>
               <li v-show="!token" @click="isLogin('新增项目')"><a data="新增项目">新增项目</a></li>
             </ul>
@@ -90,11 +92,13 @@
                 </ul>
               </li>
               <li class="hidden-xs" v-if="!token">
-                <router-link to="/login" class="header-btn" data="登录" @click="salogin($event)">登录</router-link>
+                <!-- <router-link to="/login" class="header-btn" data="登录" @click="salogin($event)">登录</router-link> -->
+                <a href="javascript:;" class="header-btn" data="登录" @click="isLogin('登录按钮')">登录</a>
               </li>
               <li class="hidden-xs" v-if="!token">
-                <router-link to="/login?page=register" class="header-btn blue" data="注册" @click="saregister($event)">注册</router-link>
-                <div class="htips">送糖果</div>
+                <!-- <router-link to="/login?page=register" class="header-btn blue" data="注册" @click="saregister($event)">注册</router-link> -->
+                <a href="javascript:;" class="header-btn blue" data="注册" @click="isLogin('注册按钮')">注册</a>
+                <div class="htips" @click="registerTip">送糖果</div>
               </li>
               <li class="sbs-btn visible-xs" v-if="!token">
                 <router-link to="/login" class="header-btn" data="登录" @click="salogin($event)">登录</router-link>
@@ -123,7 +127,7 @@
                   </button>
                 </div>
                 <div class="center">
-                  <input type="text" placeholder="请输入关键词" v-model="search" class="search_input" data="输入搜素内容" name="no_content" id="input_search_input" @keyup.enter="goSearch($event)">
+                  <input type="text" placeholder="请输入关键词" v-model="search" class="search_input" data="输入搜素内容" name="no_content" id="out_search_input" @keyup.enter="goSearch($event)">
                 </div>
               </div>
               <div class="close-search">取消</div>
@@ -135,6 +139,11 @@
     <v-login></v-login>
     <v-analysis></v-analysis>
     <v-message></v-message>
+    <v-register-tip></v-register-tip>
+    <v-invitation-tip></v-invitation-tip>
+    <v-signIn-tips></v-signIn-tips>
+    <v-wechatLogin></v-wechatLogin>
+    <v-bindPhone></v-bindPhone>
   </div>
 </template>
 
@@ -143,6 +152,11 @@
   import login from '@/components/login';
   import message from '@/components/message';
   import analysis from '@/components/analysis';
+  import wechatLogin from '@/components/wechatLogin';
+  import registerTip from '@/components/registerTip';
+  import invitationTip from '@/components/invitationTip';
+  import signInTips from '@/components/signInTips';
+  import bindPhone from '@/components/bindPhone';
   import Bus from '../bus.js'
 
   let default_header = require('../assets/user/default-header.png');
@@ -150,7 +164,12 @@
     components: {
       'v-login': login,
       'v-analysis': analysis,
-      'v-message': message
+      'v-message': message,
+      'v-wechatLogin': wechatLogin,
+      'v-register-tip': registerTip,
+      'v-invitation-tip': invitationTip,
+      'v-signIn-tips': signInTips,
+      'v-bindPhone': bindPhone
     },
     props: {
       parantProfileUrl: String
@@ -169,7 +188,8 @@
         successGo: '',
         isWhitePaper: false,
         path: '',
-        showSearch: false
+        showSearch: false,
+        hasbg: false
       }
     },
     mounted() {
@@ -218,6 +238,9 @@
         } else {
           this.$store.state.loginPop = true;
         }
+      },
+      registerTip () {
+        this.$store.state.registerTip = true;
       },
       trackSearch(category, content) {
         // 榜单，项目详情页，我的关注，个人中心，白皮书分析，行业国家资讯，文章详情，作者, 搜索页面
@@ -292,7 +315,11 @@
         });
       },
       isLogin(name) {
-        this.$store.state.loginPop = true;
+        if(name === '注册按钮'){
+          this.$store.commit('register');
+        }else{
+          this.$store.state.loginPop = true;
+        }
         if (name === '我的关注') {
           sensors.track("Loginstart", {
             entrance: '列表页',
@@ -333,7 +360,14 @@
           is_register: true
         });
         // sensors.logout();
-        this.$router.push('/login');
+        layui.use('layer', function(){
+          var layer = layui.layer;
+          let load = layer.load(2);
+          setTimeout(() => {
+            layer.close(load);
+            window.location.reload();
+          }, 1000);
+        });
       },
       initUser() {
         this.profileUrl = localStorage.getItem('apelink_user_profileUrl');
@@ -344,20 +378,29 @@
       },
       is_header_scroll () {
         window.addEventListener('scroll', this.handleScroll);
-        if (this.$router.history.current.path == '/home') {
+        let router = this.$router.history.current;
+        if (router.name == 'home') {
           this.showSearch = false;
+          this.hasbg = false;
         }else{
           this.showSearch = true;
+          this.hasbg = true;
+        }
+        if (router.name == 'list') {
+          this.hasbg = false;
+        }else{
+          this.hasbg = true;
         }
       },
       handleScroll(e) {
+        let router = this.$router.history.current;
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
         if (scrollTop > 100) {
           this.scroll = 'scroll';
         } else {
           this.scroll = '';
         }
-        if (this.$router.history.current.path == '/home') {
+        if (router.name == 'home') {
           if (scrollTop > 360) {
             this.showSearch = true;
           } else {
