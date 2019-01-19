@@ -37,21 +37,22 @@
                             :name="'search_newimg_box_title_'+index" :id="'search_newimg_box_title_'+index" 
                             @click="goArticle('/article',{sid:news.sid}, $event), 
                             trackArticle('搜索页', news.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', search.type, news.sid)">
-                              <img v-if="news.titlePicture" :src="news.titlePicture"/>
-                              <div class="date_box">
+                              <img :src="news.titlePicture===''?newsimg:news.titlePicture"/>
+                              <!-- <div class="date_box">
                                 <span class="day">{{news.urlTime | showDay}}</span>
                                 <span class="years">{{news.urlTime | showYear}}</span>
-                              </div>
+                              </div> -->
+                              <span class="time" v-if="!news.titlePicture">{{news.urlDate | formatTime}}</span>
                             </div>
                           </div>
                           <div class="media-left media-middle"
                                v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'">
-                            <div class="newimg_box TorW" :data="news.title" 
+                            <div class="newimg_box" :data="news.title" 
                             :name="'search_newimg_boxTorW_title_'+index" :id="'search_newimg_boxTorW_title_'+index" 
                             @click="goArticle('/article',{sid:news.sid}, $event), 
                             trackArticle('搜索页', news.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', search.type, news.sid)">
                               <img :src="news.dataType === 'WEIBO'?weibo:tuiwen"/>
-                              <span class="day">{{news.urlDate }}</span>
+                              <span class="time">{{news.urlDate | formatTime}}</span>
                             </div>
                           </div>
                           <div class="media-body">
@@ -201,8 +202,9 @@
   let img2 = require('../assets/follow/adv01.png');
   let img3 = require('../assets/media.jpg');
   let loading = require('../assets/login/loading.gif');
-  let tuiwen = require('../assets/home/tuite.png');
-  let weibo = require('../assets/home/weibo.png');
+  let newsimg = require('../assets/search/news.png');
+  let tuiwen = require('../assets/search/twitter.png');
+  let weibo = require('../assets/search/weibo.png');
 
 
   export default {
@@ -228,6 +230,7 @@
         affairList: [],
         loading: loading,
         showloading: true,
+        newsimg: newsimg,
         tuiwen: tuiwen,
         weibo: weibo,
       }
@@ -303,6 +306,9 @@
             }
           }
         }
+      },
+      formatTime (val) {
+        return val.replace(/\//g, "-");
       }
     },
     mounted() {
@@ -591,7 +597,7 @@
           }
         });
       }
-    },
+    }
   }
 </script>
 

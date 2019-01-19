@@ -2757,6 +2757,23 @@
               }
               .newimg_box{
                 background-color: #f5f5f5;
+                .time{
+                  position: absolute;
+                  font-size: 14px;
+                  color: #fff;
+                  left: 15px;
+                  bottom: 15px;
+                  @media ($max-sm) {
+                    left: 0;
+                    right: 0;
+                    bottom: 10px;
+                    text-align: center;
+                    font-size: 12px;
+                  }
+                  @media ($max-xs) {
+                    bottom: 5px;
+                  }
+                }
               }
               .newimg_box.TorW{
                 flex-direction: column;
