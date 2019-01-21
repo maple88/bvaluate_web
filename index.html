@@ -18,5 +18,60 @@
 <div id="app"></div>
 <!-- built files will be auto injected -->
 
+<!-- 表格排名 -->
+<script type="text/html" id="list-table-ranking">
+  {{#  if(d.ranking === '1'){ }}
+    <div class="list-ranking"><img src="./static/images/first.png"></div>
+  {{#  } else if (d.ranking === '2') { }}
+    <div class="list-ranking"><img src="./static/images/second.png"></div>
+  {{#  } else if (d.ranking === '3') { }}
+    <div class="list-ranking"><img src="./static/images/thire.png"></div>
+  {{#  } else { }}
+    <div class="list-ranking">{{d.ranking}}</div>
+  {{#  } }}
+</script>
+<!-- 表格项目 -->
+<script type="text/html" id="list-table-project">
+  <div class="list-project-flexbox">
+    <div class="left">
+      <div class="img-box"><img src="{{d.img}}"></div>
+      {{#  if(d.crown){ }}
+      <div class="crown"><img src="./static/images/crown.png"></div>
+      {{#  } }}
+    </div>
+    <div class="info">
+      <p class="tit"><a href="#">{{d.project}}</a></p>
+      <p class="des">{{d.des}}</p>
+    </div>
+  </div>
+</script>
+<!-- 表格升降 -->
+<script type="text/html" id="list-table-updown">
+  {{#  
+    var updown = function(){
+      return d.updown.replace(/-/g, '');
+    }; 
+  }}
+
+  {{#  if(d.updown > 0){ }}
+    <div class="list-updown">{{d.updown}}<img src="./static/images/up.png"></div>
+  {{#  } else if (d.updown < 0){ }}
+    <div class="list-updown">{{ updown() }}<img src="./static/images/down.png"></div>
+  {{#  } else { }}
+    <div class="list-updown">{{d.updown}}</div>
+  {{#  }  }}
+</script>
+<!-- 表格涨跌幅 -->
+<script type="text/html" id="list-table-increase">
+  {{#  
+    var increase = function(){
+    let val = d.increase.replace(/%/g, '');
+      return Math.abs(val) + '%';
+    }; 
+  }}
+
+  {{ increase() }}
+</script>
+
 </body>
 </html>

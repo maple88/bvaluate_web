@@ -4,8 +4,8 @@
       <div class="container v2container">
         <div class="flexbox">
           <ul>
-            <li><span>项目总量：</span><span>{{tophead.totalProject}}</span></li>
-            <li><span>项目相关人员总数：</span><span>{{tophead.totalRelatedProjectPerson}}</span></li>
+            <li><span style="font-family: PingFangSC-Regular;">项目总量：</span><span>{{tophead.totalProject}}</span></li>
+            <li><span style="font-family: '微软雅黑';">项目相关人员总数：</span><span>{{tophead.totalRelatedProjectPerson}}</span></li>
             <li><span>白皮书收录总数：</span><span>{{tophead.totalWhitePaper}}</span></li>
           </ul>
           <div class="appdownload">

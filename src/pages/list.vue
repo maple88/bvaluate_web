@@ -4,9 +4,9 @@
     <div class="v2maintainer v2home-v2maintainer">
       <div class="swiper-container" id="list-banner-swiper">
         <div class="swiper-wrapper">
-          <div class="swiper-slide"><img src="../assets/list/banner.jpg"></div>
-          <div class="swiper-slide"><img src="../assets/list/banner.jpg"></div>
-          <div class="swiper-slide"><img src="../assets/list/banner.jpg"></div>
+          <div class="swiper-slide"><img src="../assets/list/banner1.jpg"></div>
+          <div class="swiper-slide"><img src="../assets/list/banner1.jpg"></div>
+          <div class="swiper-slide"><img src="../assets/list/banner1.jpg"></div>
         </div>
         <div class="swiper-pagination list-banner-pagination"></div>
         <div class="swiper-button-prev swiper-button-white"></div>
@@ -132,18 +132,17 @@
             ,size: 'sm'
             ,cellMinWidth: 60
             ,cols: [[
-            {field:'sid', title: 'ID', hide: true}
-            ,{type: 'numbers', title: '排名', width: 50, minWidth: 50, fixed: true}
-            ,{field:'project', title: '项目', minWidth: 190, fixed: true}
-            ,{field:'githubActivity', title: '价格', width: 70, sort: true}
-            ,{field:'teamIntegrity', title: '流通市值', width: 70, sort: true}
-            ,{field:'mediaAttention', title: '基本面', width: 70, sort: true}
-            ,{field:'negativeImpact', title: '市场', width: 70, sort: true}
-            ,{field:'teamAuthenticity', title: '技术', width: 70, sort: true}
-            ,{field:'teamIntegrity', title: '团队', width: 70, sort: true}
-            ,{field:'teamSocialActivity', title: '资金监管', width: 70, sort: true}
-            ,{field:'rankingTotalScore', title: '总评分', width: 70, sort: true}
-            ,{field:'whitpaperAnalysis', title: '排名升降', width: 70, sort: true}
+            {field: 'ranking', title: '排名', width: 50, minWidth: 50, fixed: true, templet: '#list-table-ranking', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'project', title: '项目', minWidth: 190, fixed: true, templet: '#list-table-project', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'githubActivity', title: '价格', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'teamIntegrity', title: '流通市值', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'mediaAttention', title: '基本面', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'negativeImpact', title: '市场', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'teamAuthenticity', title: '技术', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'teamIntegrity', title: '团队', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'teamSocialActivity', title: '资金监管', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'rankingTotalScore', title: '总评分', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'updown', title: '排名升降', width: 70, sort: true, templet: '#list-table-updown', style: 'height:64px; padding: 0; line-height: inherit'}
             ]]
           });
         });
@@ -163,12 +162,11 @@
             ,skin: 'nob'
             ,size: 'sm'
             ,cols: [[
-            {field:'sid', title: 'ID', hide: true}
-            ,{type: 'numbers', title: '排名', fixed: true}
+            {field: 'ranking', title: '排名', width: 50, fixed: true, templet: '#list-table-ranking'}
             ,{field:'name', title: '货币名称', fixed: true, style: 'font-weight: bold; font-size: 12px; color: #000;'}
             ,{field:'turnover1day', title: '成交额'}
             ,{field:'price', title: '价格'}
-            ,{field:'increase', title: '涨幅', style: 'color: #4eb772;'}
+            ,{field:'increase', title: '涨幅', style: 'color: #4eb772;', templet: '#list-table-increase'}
             ]]
           });
         });
@@ -188,12 +186,11 @@
             ,skin: 'nob'
             ,size: 'sm'
             ,cols: [[
-            {field:'sid', title: 'ID', hide: true}
-            ,{type: 'numbers', title: '排名', fixed: true}
+            {field: 'ranking', title: '排名', width: 50, fixed: true, templet: '#list-table-ranking'}
             ,{field:'name', title: '货币名称', fixed: true, style: 'font-weight: bold; font-size: 12px; color: #000;'}
             ,{field:'turnover1day', title: '成交额'}
             ,{field:'price', title: '价格'}
-            ,{field:'increase', title: '跌幅', style: 'color: #ee6560;'}
+            ,{field:'increase', title: '跌幅', style: 'color: #ee6560;', templet: '#list-table-increase'}
             ]]
           });
         });
