@@ -13,7 +13,7 @@
       <transition name="fade">
         <div class="tip_box" v-if="showTip">
           <div class="b_bg" @click="cancelTip"></div>
-          <h4>点击右上角选择游览器打开</h4>
+          <h4>点击右上角选择浏览器打开</h4>
           <img src="../assets/download/tip_line.png" alt="tip_line"/>
         </div>
       </transition>
