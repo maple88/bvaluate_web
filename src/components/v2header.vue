@@ -392,20 +392,18 @@
         let router = this.$router.history.current;
         if (router.name == 'home') {
           this.showSearch = false;
-          this.hasbg = false;
         }else{
           this.showSearch = true;
-          this.hasbg = true;
-        }
-        if (router.name == 'list') {
-          this.hasbg = false;
-        }else{
-          this.hasbg = true;
         }
       },
       handleScroll(e) {
         let router = this.$router.history.current;
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+        if (scrollTop > 50) {
+          this.hasbg = true;
+        } else {
+          this.hasbg = false;
+        }
         if (scrollTop > 100) {
           this.scroll = 'scroll';
         } else {
