@@ -17,6 +17,7 @@ import newsList from '@/pages/newsList'
 import pdfShow from '@/pages/pdfShow'
 import download from '@/pages/download'
 import wechatCode from '@/pages/wechatCode'
+import about from '@/pages/about'
 
 Vue.use(Router);
 
@@ -125,6 +126,11 @@ export default new Router({
     {
       path: '/download',
       component: download
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: about
     }
   ],
   scrollBehavior(to, from, savedPosition) {

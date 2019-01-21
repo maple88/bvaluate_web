@@ -1,10 +1,10 @@
 <template>
 	<div class="page">
-		<vheader/>
-		<div class="maintainer">
+		<v2header/>
+		<div class="v2maintainer">
 			<!-- content here -->
 
-			<vfooter/>
+			<v2footer/>
 		</div>
 
 	</div>
