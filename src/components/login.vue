@@ -21,7 +21,7 @@
           <div class="inputInner" v-if="loginForm">
             <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2-1.png"></div>
-              <input type="text" class="form-control" v-model="loginUser.phoneNumber" placeholder="手机号" data="输入手机号"
+              <input type="tel" class="form-control" v-model="loginUser.phoneNumber" placeholder="手机号" data="输入手机号"
                      @focus="errorMsg.loginUser.phoneNumber = ''"
                      name="no_content" id="input_login_phoneNumber">
               <span class="help-block" v-if="errorMsg.loginUser.phoneNumber">
@@ -77,7 +77,7 @@
             </div>
             <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2-1.png"></div>
-              <input type="text" class="form-control" v-model="registerUser.phoneNumber" placeholder="手机号"
+              <input type="tel" class="form-control" v-model="registerUser.phoneNumber" placeholder="手机号"
                      @focus="errorMsg.registerUser.phoneNumber = ''"
                      @blur="checkPhoneNumber()"
                      data="输入手机号"
@@ -132,7 +132,7 @@
           <div class="inputInner" v-if="resetpwdForm">
             <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2-1.png"></div>
-              <input type="text" class="form-control" v-model="resetpwdUser.phoneNumber" placeholder="手机号"
+              <input type="tel" class="form-control" v-model="resetpwdUser.phoneNumber" placeholder="手机号"
                      @focus="errorMsg.resetpwdUser.phoneNumber = ''"
                      @blur="checkResetPhoneNumber"
                      data="输入手机号"
@@ -264,6 +264,12 @@
         eye: eye
       }
     },
+    props: {
+      initUser: {
+        type: Function,
+        default: null
+      }
+    },
     computed: {
       loginPop() {
         let isRegister = this.$store.state.registerPop;
@@ -275,6 +281,11 @@
       }
     },
     methods: {
+      headerInitUser () {
+        if (this.initUser) {
+          this.initUser();
+        }
+      },
       changePwdtype () {
         if (this.pwdtype === 'password') {
           this.pwdtype = 'text';
@@ -380,7 +391,10 @@
                 false_reason: '登录成功'
               });
               layer.close(load);
-              window.location.reload();
+              // window.location.reload();
+              that.headerInitUser();
+              that.$store.state.loginPop = false;
+              layer.msg('登录成功');
             }).catch(function (res) {
             })
           }).catch((res) => {
@@ -574,7 +588,10 @@
                   is_true: true,
                   false_reason: '登录成功'
                 });
-                window.location.reload();
+                // window.location.reload();
+                that.headerInitUser();
+                that.$store.state.loginPop = false;
+                layer.msg('登录成功');
               })
             });
           })

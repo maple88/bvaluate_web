@@ -3,6 +3,14 @@
 		background: #f5f5f5;
 	}
 	#list-banner-swiper{
+		height: 340px;
+		.swiper-slide{
+			img{
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+		}
 		.swiper-pagination{
 			bottom: 50px;
 		}
@@ -34,45 +42,6 @@
 			content: "";
 			display: table;
 			clear: both;
-		}
-		.layui-table-view{
-			margin: 0;
-			color: #1a1a1a;
-			border: 0;
-			.layui-table-header{
-				border: 0;
-			}
-			.layui-table th{
-				background: #f4f7f8;
-				color: #96a2b3;
-				font-weight: bold;
-			}
-			.layui-table td, .layui-table th{
-				padding: 10px 0;
-			}
-			.layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even){
-				background-color: #ffffff;
-				box-shadow: 0 0 10px 2px #e1ecf1;
-			}
-			.layui-table-cell{
-				padding: 0;
-				text-align: center;
-			}
-			.layui-table-sort{
-				margin: 0;
-			}
-			.layui-table-sort .layui-table-sort-asc:hover{
-				border-bottom-color: #7593ff;
-			}
-			.layui-table-sort .layui-table-sort-desc:hover{
-				border-top-color: #7593ff;
-			}
-			.layui-table-sort[lay-sort=asc] .layui-table-sort-asc{
-				border-bottom-color: $mainColor;
-			}
-			.layui-table-sort[lay-sort=desc] .layui-table-sort-desc{
-				border-top-color: $mainColor;
-			}
 		}
 		>.left{
 			float: left;
@@ -209,5 +178,127 @@
 				padding: 15px 0 0;
 			}
 		}
+	}
+}
+.layui-table-view{
+	margin: 0;
+	color: #1a1a1a;
+	border: 0;
+	.layui-table-box{
+		.layui-table-fixed-l{
+			box-shadow: none;
+			.layui-table-header{
+				box-shadow: none;
+			}
+		}
+		.layui-table-header{
+			border: 0;
+		}
+		.layui-table th{
+			background: #f4f7f8;
+			color: #96a2b3;
+			font-weight: bold;
+			.layui-table-cell{
+				height: 20px;
+				line-height: 20px;
+				padding: 0;
+				text-align: center;
+			}
+		}
+		.layui-table td, .layui-table th{
+			padding: 10px 0;
+		}
+		.layui-table tr td:first-child{
+			padding: 0;
+		}
+		.layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even){
+			background-color: #ffffff;
+			box-shadow: 0 0 10px 2px #e1ecf1;
+		}
+		.layui-table-body{
+			margin: 0;
+			.layui-table-cell{
+				padding: 0;
+				text-align: center;
+				height: auto;
+				line-height: inherit;
+			}
+		}
+		.layui-table-sort{
+			margin: 0;
+		}
+		.layui-table-sort .layui-table-sort-asc:hover{
+			border-bottom-color: #7593ff;
+		}
+		.layui-table-sort .layui-table-sort-desc:hover{
+			border-top-color: #7593ff;
+		}
+		.layui-table-sort[lay-sort=asc] .layui-table-sort-asc{
+			border-bottom-color: $mainColor;
+		}
+		.layui-table-sort[lay-sort=desc] .layui-table-sort-desc{
+			border-top-color: $mainColor;
+		}
+	}
+}
+.layui-table-tips-c{
+	padding: 0;
+}
+.list-project-flexbox{
+	display: flex;
+	align-items: center;
+	.left{
+		position: relative;
+		flex: 0 0 54px;
+		min-width: 54px;
+		height: 54px;
+		margin: 0 8px 0 0;
+		.img-box{
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			overflow: hidden;
+			img{
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.crown{
+			position: absolute;
+			z-index: 1;
+			right: -3px;
+			top: 0;
+		}
+	}
+	.info{
+		p{
+			margin: 0;
+			text-align: left;
+		}
+		.tit{
+			a{
+				color: #1a1a1a;
+				font-size: 14px;
+				font-weight: bold;
+				transition: .3s;
+				&:hover{
+					color: $mainColor;
+				}
+			}
+		}
+		.des{
+			font-size: 12px;
+			color: #212121;
+		}
+	}
+}
+.list-updown{
+	img{
+		margin: 0 0 0 3px;
+	}
+}
+.list-ranking{
+	img{
+		width: 25px;
 	}
 }

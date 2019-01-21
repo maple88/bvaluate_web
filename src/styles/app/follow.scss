@@ -2711,7 +2711,7 @@
               margin: 0;
             }
             @media ($max-xs) {
-              padding: 12px 0 40px;
+              padding: 12px 0 35px;
             }
             .media-heading{
               font-size: 16px;
@@ -2757,6 +2757,23 @@
               }
               .newimg_box{
                 background-color: #f5f5f5;
+                .time{
+                  position: absolute;
+                  font-size: 14px;
+                  color: #fff;
+                  left: 15px;
+                  bottom: 15px;
+                  @media ($max-sm) {
+                    left: 0;
+                    right: 0;
+                    bottom: 10px;
+                    text-align: center;
+                    font-size: 12px;
+                  }
+                  @media ($max-xs) {
+                    bottom: 5px;
+                  }
+                }
               }
               .newimg_box.TorW{
                 flex-direction: column;
@@ -3002,9 +3019,61 @@
         width: 100%;
         float: none;
       }
+      .right_item .hot_content>ul.scoll_style{
+        max-height: 700px;
+        height: auto;
+      }
       .right_item .hot_content>ul>li .news_item>.item_body{
+        display: flex;
+        min-height: 95px;
         @media ($max-xs) {
           min-height: 70px;
+        }
+        .info{
+          flex: 1;
+          overflow: hidden;
+        }
+        .img-box{
+          flex: 0 0 134px;
+          min-width: 134px;
+          height: 80px;
+          overflow: hidden;
+          margin-left: 5px;
+          cursor: pointer;
+          border-radius: 5px;
+          img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: .3s;
+          }
+          &:hover{
+            img{
+              transform: scale(1.1);
+            }
+          }
+        }
+        h4{
+          color: #000;
+          margin: 6px 0 11px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          cursor: pointer;
+          transition: color .3s;
+          &:hover{
+            color: $mainColor;
+          }
+        }
+        p{
+          font-size: 14px;
+          color: #393939;
+          height: 40px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
         }
       }
       .right_item .hot_content>ul.scoll_style{

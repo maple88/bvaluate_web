@@ -4,8 +4,8 @@
       <div class="container v2container">
         <div class="flexbox">
           <ul>
-            <li><span>项目总量：</span><span>{{tophead.totalProject}}</span></li>
-            <li><span>项目相关人员总数：</span><span>{{tophead.totalRelatedProjectPerson}}</span></li>
+            <li><span style="font-family: PingFangSC-Regular;">项目总量：</span><span>{{tophead.totalProject}}</span></li>
+            <li><span style="font-family: '微软雅黑';">项目相关人员总数：</span><span>{{tophead.totalRelatedProjectPerson}}</span></li>
             <li><span>白皮书收录总数：</span><span>{{tophead.totalWhitePaper}}</span></li>
           </ul>
           <div class="appdownload">
@@ -101,8 +101,10 @@
                 <div class="htips" @click="registerTip">送糖果</div>
               </li>
               <li class="sbs-btn visible-xs" v-if="!token">
-                <router-link to="/login" class="header-btn" data="登录" @click="salogin($event)">登录</router-link>
-                <router-link to="/login?page=register" class="header-btn blue" data="注册" @click="saregister($event)">注册</router-link>
+                <!-- <router-link to="/login" class="header-btn" data="登录" @click="salogin($event)">登录</router-link>
+                <router-link to="/login?page=register" class="header-btn blue" data="注册" @click="saregister($event)">注册</router-link> -->
+                <a href="javascript:;" class="header-btn" data="登录" @click="isLogin('登录按钮')">登录</a>
+                <a href="javascript:;" class="header-btn blue" data="注册" @click="isLogin('注册按钮')">注册</a>
               </li>
             </ul>
             <transition name="fade">
@@ -136,7 +138,7 @@
         </div>
       </nav>
     </div>
-    <v-login></v-login>
+    <v-login :initUser="initUser"></v-login>
     <v-analysis></v-analysis>
     <v-message></v-message>
     <v-register-tip></v-register-tip>
@@ -193,7 +195,8 @@
       }
     },
     mounted() {
-      this.path = this.$router.history.current.path
+      this.path = this.$router.history.current.path;
+      console.log(this.path)
       $(".nav.navbar-nav li a").on('click', function () {
         $('.collapse').removeClass('in');
       });
@@ -343,6 +346,7 @@
         }
       },
       logout() {
+        let that = this;
         localStorage.removeItem('apelink_user_candies');
         localStorage.removeItem('apelink_user_email');
         localStorage.removeItem('apelink_user_expirationDate');
@@ -365,7 +369,14 @@
           let load = layer.load(2);
           setTimeout(() => {
             layer.close(load);
-            window.location.reload();
+            if (that.path === '/home' || that.path === '/list' || that.path === '/news' || that.path === '/project' || that.path === '/article') {
+              // window.location.reload();
+              that.initUser();
+              layer.msg('用户已退出');
+            }else{
+              that.$router.push('/home');
+              layer.msg('用户已退出');
+            }
           }, 1000);
         });
       },
@@ -381,20 +392,18 @@
         let router = this.$router.history.current;
         if (router.name == 'home') {
           this.showSearch = false;
-          this.hasbg = false;
         }else{
           this.showSearch = true;
-          this.hasbg = true;
-        }
-        if (router.name == 'list') {
-          this.hasbg = false;
-        }else{
-          this.hasbg = true;
         }
       },
       handleScroll(e) {
         let router = this.$router.history.current;
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+        if (scrollTop > 50) {
+          this.hasbg = true;
+        } else {
+          this.hasbg = false;
+        }
         if (scrollTop > 100) {
           this.scroll = 'scroll';
         } else {

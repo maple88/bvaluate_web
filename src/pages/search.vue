@@ -37,21 +37,18 @@
                             :name="'search_newimg_box_title_'+index" :id="'search_newimg_box_title_'+index" 
                             @click="goArticle('/article',{sid:news.sid}, $event), 
                             trackArticle('搜索页', news.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', search.type, news.sid)">
-                              <img v-if="news.titlePicture" :src="news.titlePicture"/>
-                              <div class="date_box">
-                                <span class="day">{{news.urlTime | showDay}}</span>
-                                <span class="years">{{news.urlTime | showYear}}</span>
-                              </div>
+                              <img :src="news.titlePicture===''?newsimg:news.titlePicture"/>
+                              <span class="time" v-if="!news.titlePicture">{{news.urlDate | formatTime}}</span>
                             </div>
                           </div>
                           <div class="media-left media-middle"
                                v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'">
-                            <div class="newimg_box TorW" :data="news.title" 
+                            <div class="newimg_box" :data="news.title" 
                             :name="'search_newimg_boxTorW_title_'+index" :id="'search_newimg_boxTorW_title_'+index" 
                             @click="goArticle('/article',{sid:news.sid}, $event), 
                             trackArticle('搜索页', news.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', search.type, news.sid)">
                               <img :src="news.dataType === 'WEIBO'?weibo:tuiwen"/>
-                              <span class="day">{{news.urlDate }}</span>
+                              <span class="time">{{news.urlDate | formatTime}}</span>
                             </div>
                           </div>
                           <div class="media-body">
@@ -92,9 +89,6 @@
                                   v-if="!(news.siteName !== 'NULL' && news.siteName !== null && news.siteName !== '')"
                                   :name="'search_media-bottom_author_'+index" :id="'search_media-bottom_author_'+index" 
                                   @click="goArticle('/author',{author: news.author,type: 'author'}, $event)" :data="news.author">
-                                  <div class="userimg">
-                                    <img src="../assets/follow/user_head.png">
-                                  </div>
                                   {{news.author}}
                                 </li>
                                 <li v-else :name="'search_media-bottom_siteName_'+index" :id="'search_media-bottom_siteName_'+index"  :data="news.siteName" @click="goArticle('/author',{author: news.siteName,type: 'siteName'}, $event)">
@@ -160,7 +154,7 @@
             <div class="right">
               <div class="right_item">
                 <div class="hot_title">
-                  <h4>相关政策</h4>
+                  <h4>政策</h4>
                 </div>
                 <div class="hot_content">
                   <ul class="scoll_style" id="scoll_scoll_style">
@@ -173,10 +167,15 @@
                           <span>{{flash.urlTime | dataFormat}}</span>
                         </div>
                         <div class="item_body">
-                          <h4 :data="flash.title" :name="'search_item_body_h4_'+index" :id="'search_item_body_h4_'+index" 
-                          @click="goArticle('/article',{sid:flash.sid}, $event), 
-                          trackArticle('搜索页', flash.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', '快讯', flash.sid)">{{flash.title}}</h4>
-                          <p>{{flash.content}}</p>
+                          <div class="info">
+                            <h4 :data="flash.title" :name="'search_item_body_h4_'+index" :id="'search_item_body_h4_'+index" 
+                            @click="goArticle('/article',{sid:flash.sid}, $event), 
+                            trackArticle('搜索页', flash.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', '快讯', flash.sid)">{{flash.title}}</h4>
+                            <p>{{flash.content}}</p>
+                          </div>
+                          <div class="img-box" v-if="flash.titlePicture" @click="goArticle('/article',{sid:flash.sid}, $event)">
+                            <img :src="flash.titlePicture">
+                          </div>
                         </div>
                       </div>
                     </li>
@@ -201,8 +200,9 @@
   let img2 = require('../assets/follow/adv01.png');
   let img3 = require('../assets/media.jpg');
   let loading = require('../assets/login/loading.gif');
-  let tuiwen = require('../assets/home/tuite.png');
-  let weibo = require('../assets/home/weibo.png');
+  let newsimg = require('../assets/search/news.png');
+  let tuiwen = require('../assets/search/twitter.png');
+  let weibo = require('../assets/search/weibo.png');
 
 
   export default {
@@ -228,6 +228,7 @@
         affairList: [],
         loading: loading,
         showloading: true,
+        newsimg: newsimg,
         tuiwen: tuiwen,
         weibo: weibo,
       }
@@ -303,6 +304,9 @@
             }
           }
         }
+      },
+      formatTime (val) {
+        return val.replace(/\//g, "-");
       }
     },
     mounted() {
@@ -591,7 +595,7 @@
           }
         });
       }
-    },
+    }
   }
 </script>
 
