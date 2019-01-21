@@ -14,7 +14,7 @@
               <ul class="links">
                 <li><router-link to="/about">关于我们</router-link></li>
                 <li><a href="#">公司动态</a></li>
-                <li><a href="#">战略合作</a></li>
+                <li><router-link to="/cooperation">战略合作</router-link></li>
                 <li><a href="#">API</a></li>
               </ul>
             </div>

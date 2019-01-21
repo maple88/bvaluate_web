@@ -20,3 +20,35 @@
 		}
 	}
 }
+.cooperation-page{
+	.cooperation-box{
+		margin: 60px 0;
+		padding: 65px;
+		background: #fff;
+		border-radius: 5px;
+		h3{
+			font-size: 20px;
+			color: #000;
+			margin: 0 0 20px;
+			font-weight: bold;
+		}
+		.img-box{
+			text-align: center;
+			margin: 0 auto 45px;
+		}
+		p{
+			font-size: 16px;
+			color: #1a1a1a;
+			margin: 0 0 20px;
+			line-height: 1.8;
+			letter-spacing: 1px;
+			text-indent: 34px;
+		}
+		p.time{
+			font-size: 12px;
+			color: #666;
+			margin: 0 0 30px;
+			text-indent: 0;
+		}
+	}
+}

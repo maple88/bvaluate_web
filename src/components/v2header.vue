@@ -390,7 +390,7 @@
       is_header_scroll () {
         window.addEventListener('scroll', this.handleScroll);
         let router = this.$router.history.current;
-        if (router.name === 'about') {
+        if (router.name === 'about' || router.name === 'cooperation') {
           this.hasbg = true;
         }
         if (router.name === 'home') {
@@ -405,8 +405,9 @@
         if (scrollTop > 50) {
           this.hasbg = true;
         } else {
-          if (router.name !== 'about') {
+          if (router.name !== 'about' && router.name !== 'cooperation') {
             this.hasbg = false;
+            console.log(11)
           }
         }
         if (scrollTop > 100) {

@@ -18,6 +18,7 @@ import pdfShow from '@/pages/pdfShow'
 import download from '@/pages/download'
 import wechatCode from '@/pages/wechatCode'
 import about from '@/pages/about'
+import cooperation from '@/pages/cooperation'
 
 Vue.use(Router);
 
@@ -131,6 +132,11 @@ export default new Router({
       path: '/about',
       name: 'about',
       component: about
+    },
+    {
+      path: '/cooperation',
+      name: 'cooperation',
+      component: cooperation
     }
   ],
   scrollBehavior(to, from, savedPosition) {
