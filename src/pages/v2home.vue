@@ -564,16 +564,6 @@
         let routeData = this.$router.resolve({path: url, query: query});
         window.open(routeData.href, '_blank');
       },
-      goIndustryByCountry(obj, event) {
-        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
-          if (obj.indexOf(';') > 0) {
-            let arr = obj.split(';')
-            obj = arr[0];
-          }
-        }
-        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj, pageTitle: '国家文章列表'}});
-        window.open(routeData.href);
-      },
       //根据项目名称进行跳转到项目页面 主要用于新闻列表中标签跳转
       goProjectByName(obj) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
@@ -597,26 +587,15 @@
         let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
         window.open(routeData.href, '_blank');
       },
-      //根据行业名称进行跳转新闻列表页面 主要用于新闻列表中标签跳转
-      goIndustryByCountry(obj) {
+      goIndustryByCountry(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
             let arr = obj.split(';')
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/recommend', query: {country: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj, pageTitle: '国家文章列表'}});
         window.open(routeData.href, '_blank');
-      },
-      goIndustryByIndustry(obj, event) {
-        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
-          if (obj.indexOf(';') > 0) {
-            let arr = obj.split(';')
-            obj = arr[0];
-          }
-        }
-        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj, pageTitle: '行业文章列表'}});
-        window.open(routeData.href);
       }
     },
     filters: {

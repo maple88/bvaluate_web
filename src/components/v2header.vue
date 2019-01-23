@@ -196,7 +196,6 @@
     },
     mounted() {
       this.path = this.$router.history.current.path;
-      console.log(this.path)
       $(".nav.navbar-nav li a").on('click', function () {
         $('.collapse').removeClass('in');
       });
@@ -390,7 +389,7 @@
       is_header_scroll () {
         window.addEventListener('scroll', this.handleScroll);
         let router = this.$router.history.current;
-        if (router.name === 'about' || router.name === 'cooperation') {
+        if (!router.meta.headerNobg) {
           this.hasbg = true;
         }
         if (router.name === 'home') {
@@ -405,9 +404,8 @@
         if (scrollTop > 50) {
           this.hasbg = true;
         } else {
-          if (router.name !== 'about' && router.name !== 'cooperation') {
+          if (router.meta.headerNobg) {
             this.hasbg = false;
-            console.log(11)
           }
         }
         if (scrollTop > 100) {

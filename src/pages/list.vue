@@ -24,19 +24,11 @@
                 <div class="layui-form">
                   <select name="hot-industry" lay-filter="hot-industry">
                     <option value="">热门行业</option>
-                    <option value="行业1">行业1</option>
-                    <option value="行业2">行业2</option>
-                    <option value="行业3行业3行业3行业3">行业3行业3行业3行业3</option>
-                    <option value="行业4">行业4</option>
-                    <option value="行业5">行业5</option>
+                    <option :value="item.categoryName" v-for="(item, index) in hostIndustries" :key="index">{{item.categoryName}}</option>
                   </select>
                   <select name="hot-country" lay-filter="hot-country">
                     <option value="">热门国家</option>
-                    <option value="国家1">国家1</option>
-                    <option value="国家2">国家2</option>
-                    <option value="国家3国家3国家3国家3">国家3国家3国家3国家3</option>
-                    <option value="国家4">国家4</option>
-                    <option value="国家5">国家5</option>
+                    <option :value="item.countName" v-for="(item, index) in guojiaList" :key="index">{{item.countName}}</option>
                   </select>
                 </div>
                 <div class="weekmonth-group">
@@ -83,9 +75,11 @@
         type: '周榜',
         name: 'GLOBAL',
         pageSize: 50,
+        guojiaList: [],
+        hostIndustries: []
       }
     },
-    mounted() {
+    created () {
       new Swiper('#list-banner-swiper', {
         autoplay: {
           disableOnInteraction: false,
@@ -103,6 +97,8 @@
       this.getMainTable();
       this.getRiseTable();
       this.getFallTable();
+      this.getHotindustry();
+      this.getGuojiaList();
 
       layui.use('form', function(){
         var form = layui.form;
@@ -114,9 +110,34 @@
           console.log(data);
         });
       });
+
+      this.$axios.get('http://119.254.68.8:10020/projectList/list?pageNo=0&pageSize=10&type=天榜')
+      .then(res => {
+        console.log(res);
+      })
+    },
+    activated () {
+      layui.use('table', function(){
+        var table = layui.table;
+        table.resize('main-list-table');
+        table.resize('rise-list-table');
+        table.resize('fall-list-table');
+      })
+
+      layui.use('form', function(){
+        var form = layui.form;
+        form.render('select'); 
+      });
+    },
+    updated () {
+      layui.use('form', function(){
+        var form = layui.form;
+        form.render('select');
+      });
     },
     methods: {
       getMainTable () {
+        let that = this;
         layui.use('table', function(){
           var table = layui.table;
           table.render({
@@ -152,7 +173,7 @@
           var table = layui.table;
           table.render({
             elem: '#rise-list-table'
-            ,url:'../../static/rise.json'
+            ,url:'/api/hotICO/priceList?type=inc&pageSize=15'
             ,parseData: function(res){
               return {
                 "code": 0,
@@ -176,7 +197,7 @@
           var table = layui.table;
           table.render({
             elem: '#fall-list-table'
-            ,url:'../../static/fall.json'
+            ,url:'/api/hotICO/priceList?type=dec&pageSize=15'
             ,parseData: function(res){
               return {
                 "code": 0,
@@ -194,7 +215,21 @@
             ]]
           });
         });
-      }
+      },
+      // 热门行业
+      getHotindustry () {
+        this.$axios.get('/api/ICO/hotFourIndustries')
+        .then(res => {
+          this.hostIndustries = res.data.slice(0, 4);
+        })
+      },
+      // 国家排行榜
+      getGuojiaList () {
+        this.$axios.get('/api/hotICO/countrylistForApp?pageNo=0&pageSize=10')
+        .then(res => {
+          this.guojiaList = res.data;
+        })
+      },
     }
   }
 </script>

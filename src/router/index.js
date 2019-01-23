@@ -19,6 +19,8 @@ import download from '@/pages/download'
 import wechatCode from '@/pages/wechatCode'
 import about from '@/pages/about'
 import cooperation from '@/pages/cooperation'
+import dynamicList from '@/pages/dynamicList'
+import dynamicView from '@/pages/dynamicView'
 
 Vue.use(Router);
 
@@ -37,7 +39,8 @@ export default new Router({
       name: 'home',
       component: v2home,
       meta: {
-        pageTitle: '首页'
+        pageTitle: '首页',
+        headerNobg: true
       },
     },
     {
@@ -52,7 +55,8 @@ export default new Router({
       name: 'list',
       component: list,
       meta: {
-        pageTitle: '榜单'
+        pageTitle: '榜单',
+        headerNobg: true
       },
     },
     {
@@ -80,7 +84,8 @@ export default new Router({
       path: '/news',
       component: news,
       meta: {
-        pageTitle: '综合'
+        pageTitle: '综合',
+        headerNobg: true
       },
     },
     {
@@ -130,13 +135,19 @@ export default new Router({
     },
     {
       path: '/about',
-      name: 'about',
       component: about
     },
     {
       path: '/cooperation',
-      name: 'cooperation',
       component: cooperation
+    },
+    {
+      path: '/dynamicList',
+      component: dynamicList
+    },
+    {
+      path: '/dynamicView',
+      component: dynamicView
     }
   ],
   scrollBehavior(to, from, savedPosition) {
