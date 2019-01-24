@@ -158,11 +158,13 @@
       if (that.$route.query.listNameType) {that.listNameType = that.$route.query.listNameType;}
       if (that.$route.query.country) {
         that.country = that.$route.query.country;
+        that.listNameType = '总评榜';
       }else{
         that.country = '';
       }
       if (that.$route.query.industry) {
         that.industry = that.$route.query.industry;
+        that.listNameType = '总评榜';
       }else{
         that.industry = '';
       }
