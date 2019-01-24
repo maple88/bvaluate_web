@@ -21,6 +21,7 @@ import about from '@/pages/about'
 import cooperation from '@/pages/cooperation'
 import dynamicList from '@/pages/dynamicList'
 import dynamicView from '@/pages/dynamicView'
+import privacy from '@/pages/privacy'
 
 Vue.use(Router);
 
@@ -148,6 +149,10 @@ export default new Router({
     {
       path: '/dynamicView',
       component: dynamicView
+    },
+    {
+      path: '/privacy',
+      component: privacy
     }
   ],
   scrollBehavior(to, from, savedPosition) {

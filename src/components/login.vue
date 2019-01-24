@@ -61,7 +61,7 @@
             </div>
           </div>
           <div class="inputInner" v-if="registerForm">
-            <div class="input-group">
+            <!-- <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon1.png"></div>
               <input type="text" class="form-control" v-model="registerUser.nickName"
                      maxlength="14"
@@ -74,7 +74,7 @@
               <span class="help-block" v-if="errorMsg.registerUser.nickName">
 										{{errorMsg.registerUser.nickName}}
 									</span>
-            </div>
+            </div> -->
             <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2-1.png"></div>
               <input type="tel" class="form-control" v-model="registerUser.phoneNumber" placeholder="手机号"
@@ -99,7 +99,7 @@
 										{{errorMsg.registerUser.password}}
 									</span>
             </div>
-            <div class="input-group">
+            <!-- <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2-2.png"></div>
               <input type="password" class="form-control" v-model="registerUser.confirmpsd" placeholder="确认密码"
                      @focus="errorMsg.registerUser.confirmpsd = ''"
@@ -110,12 +110,12 @@
               <span class="help-block" v-if="errorMsg.registerUser.confirmpsd">
 										{{errorMsg.registerUser.confirmpsd}}
 									</span>
-            </div>
+            </div> -->
             <div class="input-group code">
               <div class="input-group-addon"><img src="../assets/login/icon2-3.png"></div>
               <input type="text" v-model="registerUser.code" placeholder="输入验证码" data="输入验证码"
                      @focus="errorMsg.registerUser.code = ''"
-                     name="no_content" id="input_login_code">
+                     name="no_content" id="input_register_code">
               <span class="help-block" v-if="errorMsg.registerUser.code">
 										{{errorMsg.registerUser.code}}
 									</span>
@@ -171,7 +171,7 @@
               <input type="text" placeholder="输入验证码" v-model="resetpwdUser.code"
                      @focus="errorMsg.resetpwdUser.code = ''"
                      data="输入验证码"
-                     name="no_content" id="input_login_code2"
+                     name="no_content" id="input_resetpwd_code2"
               >
               <span class="help-block" v-if="errorMsg.resetpwdUser.code">
 										{{errorMsg.resetpwdUser.code}}

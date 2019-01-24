@@ -15,7 +15,7 @@
                 <li><router-link to="/about">关于我们</router-link></li>
                 <li><router-link to="/dynamicList">公司动态</router-link></li>
                 <li><router-link to="/cooperation">战略合作</router-link></li>
-                <li><a href="#">API</a></li>
+                <li><router-link to="/privacy">隐私政策</router-link></li>
               </ul>
             </div>
             <div class="box-col">

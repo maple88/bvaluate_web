@@ -20,14 +20,26 @@
 
 <!-- 表格排名 -->
 <script type="text/html" id="list-table-ranking">
-  {{#  if(d.rank === '1'){ }}
+  {{#  if(d.rank === 1){ }}
     <div class="list-ranking"><img src="./static/images/first.png"></div>
-  {{#  } else if (d.rank === '2') { }}
+  {{#  } else if (d.rank === 2) { }}
     <div class="list-ranking"><img src="./static/images/second.png"></div>
-  {{#  } else if (d.rank === '3') { }}
+  {{#  } else if (d.rank === 3) { }}
     <div class="list-ranking"><img src="./static/images/thire.png"></div>
   {{#  } else { }}
     <div class="list-ranking">{{d.rank}}</div>
+  {{#  } }}
+</script>
+<!-- 涨跌表格排名 -->
+<script type="text/html" id="zdlist-table-ranking">
+  {{#  if(d.ranking === '1'){ }}
+    <div class="list-ranking"><img src="./static/images/first.png"></div>
+  {{#  } else if (d.ranking === '2') { }}
+    <div class="list-ranking"><img src="./static/images/second.png"></div>
+  {{#  } else if (d.ranking === '3') { }}
+    <div class="list-ranking"><img src="./static/images/thire.png"></div>
+  {{#  } else { }}
+    <div class="list-ranking">{{d.ranking}}</div>
   {{#  } }}
 </script>
 <!-- 表格项目 -->

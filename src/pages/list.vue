@@ -18,18 +18,20 @@
             <div class="main-table">
               <div class="list-tab">
                 <div class="tabtn" :class="listNameType==='总评榜'?'on':''" @click="changeListName('总评榜')">总评榜</div>
-                <div class="tabtn" :class="listNameType==='STO榜'?'on':''" @click="changeListName('STO榜')">STO榜</div>
+                <div class="tabtn" :class="listNameType==='sto榜'?'on':''" @click="changeListName('sto榜')">STO榜</div>
               </div>
               <div class="table-filter">
-                <div class="layui-form">
-                  <select name="hot-industry" lay-filter="hot-industry">
-                    <option value="">热门行业</option>
-                    <option :value="item.categoryName" v-for="(item, index) in hostIndustries" :key="index">{{item.categoryName}}</option>
-                  </select>
-                  <select name="hot-country" lay-filter="hot-country">
-                    <option value="">热门国家</option>
-                    <option :value="item.countName" v-for="(item, index) in guojiaList" :key="index">{{item.countName}}</option>
-                  </select>
+                <div>
+                  <div class="layui-form" v-show="listNameType !== 'sto榜'">
+                    <select name="hot-industry" v-model="industry" lay-filter="hot-industry">
+                      <option value="">热门行业</option>
+                      <option :value="item.categoryName" v-for="(item, index) in hostIndustries" :key="index">{{item.categoryName}}</option>
+                    </select>
+                    <select name="hot-country" v-model="country" lay-filter="hot-country">
+                      <option value="">热门国家</option>
+                      <option :value="item.countName" v-for="(item, index) in guojiaList" :key="index">{{item.countName}}</option>
+                    </select>
+                  </div>
                 </div>
                 <div class="layui-form month-week">
                   <select name="month-week" v-model="listDateType" lay-filter="month-week">
@@ -42,7 +44,12 @@
                   <div class="wmbtn" :class="listDateType==='月榜'?'on':''" @click="changeListDate('月榜')">月榜</div>
                 </div>
               </div>
-              <table id="main-list-table" lay-filter="main-list-table"></table>
+              <div class="table-box">
+                <table id="main-list-table" lay-filter="main-list-table"></table>
+                <div class="table-loading" v-if="mainloading">
+                  <img src="../assets/login/loading.gif"/>
+                </div>
+              </div>
             </div>
           </div>
           <div class="right">
@@ -51,14 +58,24 @@
                 <span class="tl">涨幅排行</span>
                 <span class="tr">CNY</span>
               </div>
-              <table id="rise-list-table" lay-filter="rise-list-table"></table>
+              <div class="table-box">
+                <table id="rise-list-table" lay-filter="rise-list-table"></table>
+                <div class="table-loading" v-if="riseloading">
+                  <img src="../assets/login/loading.gif"/>
+                </div>
+              </div>
             </div>
             <div class="fall-table">
               <div class="table-header">
                 <span class="tl">跌幅排行</span>
                 <span class="tr">CNY</span>
               </div>
-              <table id="fall-list-table" lay-filter="fall-list-table"></table>
+              <div class="table-box">
+                <table id="fall-list-table" lay-filter="fall-list-table"></table>
+                <div class="table-loading" v-if="fallloading">
+                  <img src="../assets/login/loading.gif"/>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -84,10 +101,14 @@
         country: '',
         industry: '',
         guojiaList: [],
-        hostIndustries: []
+        hostIndustries: [],
+        mainloading: false,
+        riseloading: false,
+        fallloading: false
       }
     },
     mounted () {
+      let that = this;
       new Swiper('#list-banner-swiper', {
         autoplay: {
           disableOnInteraction: false,
@@ -102,35 +123,62 @@
         },
       });
 
-      this.getMainTable();
-      this.getRiseTable();
-      this.getFallTable();
-      this.getHotindustry();
-      this.getGuojiaList();
+      that.getRiseTable();
+      that.getFallTable();
+      that.getHotindustry();
+      that.getGuojiaList();
 
       layui.use('form', function(){
         var form = layui.form;
         // 监听下拉菜单事件
         form.on('select(hot-industry)', function(data){
-          console.log(data);
+          that.industry = data.value;
+          that.getMainTable(that.country, that.industry);
         });
         form.on('select(hot-country)', function(data){
-          console.log(data);
+          that.country = data.value;
+          that.getMainTable(that.country, that.industry);
+        });
+        form.on('select(month-week)', function(data){
+          that.listDateType = data.value;
         });
       });
+
+      // window.onresize = () => {
+      //   return (() => {
+      //     window.screenWidth = document.body.clientWidth
+      //     if (window.screenWidth === 576) {
+
+      //     }
+      //   })()
+      // }
     },
     activated () {
-      layui.use('table', function(){
-        var table = layui.table;
-        table.resize('main-list-table');
-        table.resize('rise-list-table');
-        table.resize('fall-list-table');
-      })
+      let that = this;
+      if (that.$route.query.listNameType) {that.listNameType = that.$route.query.listNameType;}
+      if (that.$route.query.country) {
+        that.country = that.$route.query.country;
+      }else{
+        that.country = '';
+      }
+      if (that.$route.query.industry) {
+        that.industry = that.$route.query.industry;
+      }else{
+        that.industry = '';
+      }
 
       layui.use('form', function(){
         var form = layui.form;
-        form.render('select'); 
+        form.render('select');
       });
+
+      if (that.listNameType === '总评榜') {
+        that.getMainTable(that.country, that.industry);
+      }else if (that.listNameType === 'sto榜') {
+        that.getStoTable();
+      }else{
+        that.getMainTable(that.country, that.industry);
+      }
     },
     updated () {
       layui.use('form', function(){
@@ -139,13 +187,22 @@
       });
     },
     methods: {
-      getMainTable () {
+      getMainTable (country, industry) {
         let that = this;
+        that.mainloading = true;
         layui.use('table', function(){
           var table = layui.table;
           table.render({
             elem: '#main-list-table'
-            ,url:'http://119.254.68.8:10020/projectList/list?type='+that.listDateType+'&pageNo=0&pageSize='+that.pageSize+'&country'+that.country+'&industry'+that.industry
+            ,url:'http://119.254.68.8:10020/projectList/list?type='+that.listDateType+'&country='+country+'&industry='+industry
+            ,request: {
+              pageName: 'pageNo'
+              ,limitName: 'pageSize'
+            }
+            ,page: {
+              curr: '0'
+              ,limit: that.pageSize
+            }
             ,parseData: function(res){
               return {
                 "code": 0,
@@ -154,24 +211,71 @@
             }
             ,skin: 'nob'
             ,size: 'sm'
-            ,cellMinWidth: 60
             ,cols: [[
             {field: 'rank', title: '排名', width: 50, minWidth: 50, fixed: true, templet: '#list-table-ranking', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'project', title: '项目', minWidth: 190, fixed: true, templet: '#list-table-project', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'price', title: '价格', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'famc', title: '流通市值', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'fundamentalsanalysis', title: '基本面', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'marketanalysis', title: '市场', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'technicalanalysis', title: '技术', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'teamanalysis', title: '团队', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'fundsupervision', title: '资金监管', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'totalScore', title: '总评分', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'amountIncrease', title: '排名升降', width: 70, sort: true, templet: '#list-table-updown', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'project', title: '项目', width: 180, fixed: true, templet: '#list-table-project', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'price', title: '价格', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'famc', title: '流通市值', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'fundamentalsanalysis', title: '基本面', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'marketanalysis', title: '市场', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'technicalanalysis', title: '技术', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'teamanalysis', title: '团队', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'fundsupervision', title: '资金监管', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'totalScore', title: '总评分', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'amountIncrease', title: '排名升降', sort: true, templet: '#list-table-updown', style: 'height:64px; padding: 0; line-height: inherit'}
             ]]
+            ,done: function(res, curr, count){
+              that.mainloading = false;
+            }
+          });
+        });
+      },
+      getStoTable () {
+        let that = this;
+        that.mainloading = true;
+        layui.use('table', function(){
+          var table = layui.table;
+          table.render({
+            elem: '#main-list-table'
+            ,url:'http://119.254.68.8:10020/projectList/stolistForApp?type='+that.listDateType
+            ,request: {
+              pageName: 'pageNo'
+              ,limitName: 'pageSize'
+            }
+            ,page: {
+              curr: '0'
+              ,limit: that.pageSize
+            }
+            ,parseData: function(res){
+              return {
+                "code": 0,
+                "data": res
+              };
+            }
+            ,skin: 'nob'
+            ,size: 'sm'
+            ,cols: [[
+            {field: 'rank', title: '排名', width: 50, minWidth: 50, fixed: true, templet: '#list-table-ranking', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'project', title: '项目', width: 180, fixed: true, templet: '#list-table-project', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'price', title: '价格', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'famc', title: '流通市值', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'fundamentalsanalysis', title: '基本面', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'marketanalysis', title: '市场', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'technicalanalysis', title: '技术', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'teamanalysis', title: '团队', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'fundsupervision', title: '资金监管', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'totalScore', title: '总评分', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'amountIncrease', title: '排名升降', sort: true, templet: '#list-table-updown', style: 'height:64px; padding: 0; line-height: inherit'}
+            ]]
+            ,done: function(res, curr, count){
+              that.mainloading = false;
+            }
           });
         });
       },
       getRiseTable () {
+        let that = this;
+        that.riseloading = true;
         layui.use('table', function(){
           var table = layui.table;
           table.render({
@@ -186,16 +290,21 @@
             ,skin: 'nob'
             ,size: 'sm'
             ,cols: [[
-            {field: 'ranking', title: '排名', width: 50, fixed: true, templet: '#list-table-ranking'}
+            {field: 'ranking', title: '排名', width: 50, fixed: true, templet: '#zdlist-table-ranking'}
             ,{field:'name', title: '货币名称', fixed: true, style: 'font-weight: bold; font-size: 12px; color: #000;'}
             ,{field:'turnover1day', title: '成交额'}
             ,{field:'price', title: '价格'}
             ,{field:'increase', title: '涨幅', style: 'color: #4eb772;', templet: '#list-table-increase'}
             ]]
+            ,done: function(res, curr, count){
+              that.riseloading = false;
+            }
           });
         });
       },
       getFallTable () {
+        let that = this;
+        that.fallloading = true;
         layui.use('table', function(){
           var table = layui.table;
           table.render({
@@ -210,12 +319,15 @@
             ,skin: 'nob'
             ,size: 'sm'
             ,cols: [[
-            {field: 'ranking', title: '排名', width: 50, fixed: true, templet: '#list-table-ranking'}
+            {field: 'ranking', title: '排名', width: 50, fixed: true, templet: '#zdlist-table-ranking'}
             ,{field:'name', title: '货币名称', fixed: true, style: 'font-weight: bold; font-size: 12px; color: #000;'}
             ,{field:'turnover1day', title: '成交额'}
             ,{field:'price', title: '价格'}
             ,{field:'increase', title: '跌幅', style: 'color: #ee6560;', templet: '#list-table-increase'}
             ]]
+            ,done: function(res, curr, count){
+              that.fallloading = false;
+            }
           });
         });
       },
@@ -235,6 +347,11 @@
       },
       changeListName (val) {
         this.listNameType = val;
+        if (val === '总评榜') {
+          this.getMainTable(this.country, this.industry);
+        }else{
+          this.getStoTable();
+        }
       },
       changeListDate (val) {
         this.listDateType = val;
@@ -242,7 +359,27 @@
           var form = layui.form;
           form.render('select'); 
         });
+        if (this.listNameType === '总评榜') {
+          this.getMainTable(this.country, this.industry);
+        }else{
+          this.getStoTable();
+        }
       }
+    },
+    beforeRouteEnter (to, from, next) {
+      next(vm => {
+        layui.use('table', function(){
+          var table = layui.table;
+          table.resize('main-list-table');
+          table.resize('rise-list-table');
+          table.resize('fall-list-table');
+        })
+
+        layui.use('form', function(){
+          var form = layui.form;
+          form.render('select'); 
+        });
+      })
     }
   }
 </script>

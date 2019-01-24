@@ -48,7 +48,7 @@
 							<div class="box-col">
 								<div class="list-header">
 									<span class="tit">总评榜</span>
-									<a href="#" class="more">
+									<a href="javascript:;" class="more" @click="goList('总评榜')">
 										<div class="word"><div>查看全部</div></div> 
 										<i class="more-icon"></i>
 									</a>
@@ -92,7 +92,7 @@
 							<div class="box-col">
 								<div class="list-header">
 									<span class="tit">STO榜</span>
-									<a href="#" class="more">
+									<a href="javascript:;" class="more" @click="goList('sto榜')">
 										<div class="word"><div>查看全部</div></div> 
 										<i class="more-icon"></i>
 									</a>
@@ -168,16 +168,16 @@
 				<div class="container v2container">
 					<div class="head">
 						<p class="tit">热门行业</p>
-						<a href="#" class="more">
+						<!-- <a href="#" class="more">
 							<div class="word"><div>查看全部</div></div> 
 							<i class="more-icon"></i>
-						</a>
+						</a> -->
 					</div>
 					<div class="flexbox">
 						<div class="box-row">
 							<div class="box-col" v-for="(item, index) in hostIndustries" :key="index">
 								<div class="item">
-									<p class="tit"><a href="javascript:;" @click="goIndustryByIndustry(item.categoryName, $event)">{{item.categoryName}}</a></p>
+									<p class="tit"><a href="javascript:;" @click="goListForIndustry(item.categoryName)">{{item.categoryName}}</a></p>
 									<p class="num">项目量：{{item.projectNum}}</p>
 									<ul class="pro">
 										<li>项目：</li>
@@ -267,7 +267,7 @@
 										<div class="right">项目量</div>
 									</div>
 									<div class="table-content">
-										<div class="list_item" slot="scrollList" v-for="(item, index) in guojiaList" :key="index" @click="goIndustryByCountry(item.countName, $event)">
+										<div class="list_item" slot="scrollList" v-for="(item, index) in guojiaList" :key="index" @click="goListForCountry(item.countName)">
 											<div class="item_left">
 												<div class="ranking_box">
 													<div class="ranking_number" v-if="index>2">
@@ -468,6 +468,30 @@
 			that.getHotNews();
 		},
 		methods: {
+			goList (val) {
+				this.$router.push({
+					path: '/list',
+					query: {
+						listNameType: val
+					}
+				})
+			},
+			goListForIndustry (val) {
+				this.$router.push({
+					path: '/list',
+					query: {
+						industry: val
+					}
+				})
+			},
+			goListForCountry (val) {
+				this.$router.push({
+					path: '/list',
+					query: {
+						country: val
+					}
+				})
+			},
 			goSearch(event, searchKeyword) {
 				let pageTitle
 				if (this.searchType === '文章') {
