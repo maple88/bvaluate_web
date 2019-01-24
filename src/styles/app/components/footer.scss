@@ -261,6 +261,18 @@
       margin: 0;
     }
   }
+  .i0{
+    font-family: "微软雅黑";
+    text-align: center;
+    margin: 0 0 10px;
+    a{
+      font-size: 20px;
+      color: #fff;
+      &:hover{
+        color: $mainColor;
+      }
+    }
+  }
   .i1{
     font-size: 30px;
     color: #fff;
@@ -357,5 +369,55 @@
   }
   .footerflex .eweima{
     margin: 15px auto;
+  }
+}
+
+
+.privacy-page{
+  .about-box{
+    margin: 60px 0;
+    padding: 65px;
+    background: #fff;
+    border-radius: 5px;
+    @media ($max-sm) {
+      margin: 15px 0;
+      padding: 30px;
+    }
+    @media ($max-xs) {
+      padding: 20px 15px 15px;
+    }
+    h3{
+      font-size: 20px;
+      color: #000;
+      margin: 0 0 23px;
+      font-weight: bold;
+      text-align: center;
+      @media ($max-xs) {
+        margin: 0 0 15px;
+        font-size: 18px;
+      }
+    }
+    p{
+      font-size: 16px;
+      color: #1a1a1a;
+      margin: 0 0 27px;
+      line-height: 1.8;
+      letter-spacing: 1px;
+      @media ($max-sm) {
+        margin: 0 0 15px;
+      }
+      @media ($max-xs) {
+        margin: 0 0 10px;
+        font-size: 14px;
+        line-height: 1.5;
+        letter-spacing: 0.5px;
+      }
+      &.smmg{
+        margin: 0 0 15px;
+      }
+      &.tein{
+        padding: 0 0 0 33px;
+      }
+    }
   }
 }
