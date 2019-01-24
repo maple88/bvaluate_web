@@ -141,10 +141,10 @@
 				<div class="container v2container">
 					<div class="head">
 						<p class="tit">明星项目</p>
-						<a href="#" class="more">
+						<router-link to="/list" class="more">
 							<div class="word"><div>查看全部</div></div> 
 							<i class="more-icon"></i>
-						</a>
+						</router-link>
 					</div>
 					<div class="flexbox">
 						<div class="box-row">
@@ -340,10 +340,10 @@
 				<div class="container v2container">
 					<div class="head">
 						<p class="tit">新闻头条</p>
-						<a href="#" class="more">
+						<router-link to="/news" class="more">
 							<div class="word"><div>查看全部</div></div> 
 							<i class="more-icon"></i>
-						</a>
+						</router-link>
 					</div>
 					<div class="flexbox">
 						<div class="box-row">

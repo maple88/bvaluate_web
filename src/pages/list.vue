@@ -49,6 +49,7 @@
                 <div class="table-loading" v-if="mainloading">
                   <img src="../assets/login/loading.gif"/>
                 </div>
+                <div class="loadmore" v-if="showLoadMore" @click="listLoadMore">加载更多<i class="moreimg"></i></div>
               </div>
             </div>
           </div>
@@ -104,7 +105,8 @@
         hostIndustries: [],
         mainloading: false,
         riseloading: false,
-        fallloading: false
+        fallloading: false,
+        showLoadMore: false
       }
     },
     mounted () {
@@ -133,14 +135,17 @@
         // 监听下拉菜单事件
         form.on('select(hot-industry)', function(data){
           that.industry = data.value;
+          that.showLoadMore = false;
           that.getMainTable(that.country, that.industry);
         });
         form.on('select(hot-country)', function(data){
           that.country = data.value;
+          that.showLoadMore = false;
           that.getMainTable(that.country, that.industry);
         });
         form.on('select(month-week)', function(data){
           that.listDateType = data.value;
+          that.showLoadMore = false;
         });
       });
 
@@ -189,13 +194,32 @@
       });
     },
     methods: {
+      listLoadMore () {
+        let that = this;
+        that.showLoadMore = false;
+        that.mainloading = true;
+        layui.use('table', function(){
+          var table = layui.table;
+          table.reload('main-list-table', {
+            page: {
+              curr: '0'
+              ,limit: 100
+            }
+            ,done: function(res, curr, count){
+              that.mainloading = false;
+            }
+          })
+        })
+      },
       getMainTable (country, industry) {
         let that = this;
         that.mainloading = true;
         layui.use('table', function(){
           var table = layui.table;
           table.render({
-            elem: '#main-list-table'
+            id: 'main-list-table'
+            ,elem: '#main-list-table'
+            ,method: 'get'
             ,url:'http://119.254.68.8:10020/projectList/list?type='+that.listDateType+'&country='+country+'&industry='+industry
             ,request: {
               pageName: 'pageNo'
@@ -228,6 +252,11 @@
             ]]
             ,done: function(res, curr, count){
               that.mainloading = false;
+              if (res.data.length === 0) {
+                that.showLoadMore = false;
+              }else{
+                that.showLoadMore = true;
+              }
             }
           });
         });
@@ -239,6 +268,7 @@
           var table = layui.table;
           table.render({
             elem: '#main-list-table'
+            ,method: 'get'
             ,url:'http://119.254.68.8:10020/projectList/stolistForApp?type='+that.listDateType
             ,request: {
               pageName: 'pageNo'
@@ -271,6 +301,11 @@
             ]]
             ,done: function(res, curr, count){
               that.mainloading = false;
+              if (res.data.length === 0) {
+                that.showLoadMore = false;
+              }else{
+                that.showLoadMore = true;
+              }
             }
           });
         });
@@ -282,6 +317,7 @@
           var table = layui.table;
           table.render({
             elem: '#rise-list-table'
+            ,method: 'get'
             ,url:'/api/hotICO/priceList?type=inc&pageSize=15'
             ,parseData: function(res){
               return {
@@ -311,6 +347,7 @@
           var table = layui.table;
           table.render({
             elem: '#fall-list-table'
+            ,method: 'get'
             ,url:'/api/hotICO/priceList?type=dec&pageSize=15'
             ,parseData: function(res){
               return {
@@ -349,6 +386,7 @@
       },
       changeListName (val) {
         this.listNameType = val;
+        this.showLoadMore = false;
         if (val === '总评榜') {
           this.getMainTable(this.country, this.industry);
         }else{
@@ -357,6 +395,7 @@
       },
       changeListDate (val) {
         this.listDateType = val;
+        this.showLoadMore = false;
         layui.use('form', function(){
           var form = layui.form;
           form.render('select'); 
@@ -370,17 +409,19 @@
     },
     beforeRouteEnter (to, from, next) {
       next(vm => {
-        layui.use('table', function(){
-          var table = layui.table;
-          table.resize('main-list-table');
-          table.resize('rise-list-table');
-          table.resize('fall-list-table');
-        })
+        setTimeout(()=>{
+          layui.use('table', function(){
+            var table = layui.table;
+            table.resize('main-list-table');
+            table.resize('rise-list-table');
+            table.resize('fall-list-table');
+          })
 
-        layui.use('form', function(){
-          var form = layui.form;
-          form.render('select'); 
-        });
+          layui.use('form', function(){
+            var form = layui.form;
+            form.render('select'); 
+          });
+        }, 30)
       })
     }
   }
