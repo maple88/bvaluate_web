@@ -266,7 +266,7 @@
     text-align: center;
     margin: 0 0 10px;
     a{
-      font-size: 20px;
+      font-size: 30px;
       color: #fff;
       &:hover{
         color: $mainColor;
@@ -301,6 +301,9 @@
   .footerflex .eweima{
     width: 120px;
     margin: 0 auto;
+  }
+  .footerflex .i0 a{
+    font-size: 25px;
   }
   .footerflex .i1{
     font-size: 25px;
@@ -354,6 +357,9 @@
   }
   .footerflex .eweima, .footerflex .flogo{
     max-width: 130px;
+  }
+  .footerflex .i0 a{
+    font-size: 16px;
   }
   .footerflex .i1{
     font-size: 16px;
