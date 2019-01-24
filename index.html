@@ -20,28 +20,28 @@
 
 <!-- 表格排名 -->
 <script type="text/html" id="list-table-ranking">
-  {{#  if(d.ranking === '1'){ }}
+  {{#  if(d.rank === '1'){ }}
     <div class="list-ranking"><img src="./static/images/first.png"></div>
-  {{#  } else if (d.ranking === '2') { }}
+  {{#  } else if (d.rank === '2') { }}
     <div class="list-ranking"><img src="./static/images/second.png"></div>
-  {{#  } else if (d.ranking === '3') { }}
+  {{#  } else if (d.rank === '3') { }}
     <div class="list-ranking"><img src="./static/images/thire.png"></div>
   {{#  } else { }}
-    <div class="list-ranking">{{d.ranking}}</div>
+    <div class="list-ranking">{{d.rank}}</div>
   {{#  } }}
 </script>
 <!-- 表格项目 -->
 <script type="text/html" id="list-table-project">
   <div class="list-project-flexbox">
     <div class="left">
-      <div class="img-box"><img src="{{d.img}}"></div>
+      <div class="img-box"><img src="{{d.logoSrc}}"></div>
       {{#  if(d.crown){ }}
       <div class="crown"><img src="./static/images/crown.png"></div>
       {{#  } }}
     </div>
     <div class="info">
       <p class="tit"><a href="#">{{d.project}}</a></p>
-      <p class="des">{{d.des}}</p>
+      <p class="des">{{d.abstracts}}</p>
     </div>
   </div>
 </script>
@@ -49,16 +49,16 @@
 <script type="text/html" id="list-table-updown">
   {{#  
     var updown = function(){
-      return d.updown.replace(/-/g, '');
+      return new String(d.amountIncrease).replace(/-/g, '');
     }; 
   }}
 
-  {{#  if(d.updown > 0){ }}
-    <div class="list-updown">{{d.updown}}<img src="./static/images/up.png"></div>
-  {{#  } else if (d.updown < 0){ }}
+  {{#  if(d.amountIncrease > 0){ }}
+    <div class="list-updown">{{d.amountIncrease}}<img src="./static/images/up.png"></div>
+  {{#  } else if (d.amountIncrease < 0){ }}
     <div class="list-updown">{{ updown() }}<img src="./static/images/down.png"></div>
   {{#  } else { }}
-    <div class="list-updown">{{d.updown}}</div>
+    <div class="list-updown">{{d.amountIncrease}}</div>
   {{#  }  }}
 </script>
 <!-- 表格涨跌幅 -->

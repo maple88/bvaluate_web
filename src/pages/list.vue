@@ -17,8 +17,8 @@
           <div class="left">
             <div class="main-table">
               <div class="list-tab">
-                <div class="tabtn on">总评榜</div>
-                <div class="tabtn">STO榜</div>
+                <div class="tabtn" :class="listNameType==='总评榜'?'on':''" @click="changeListName('总评榜')">总评榜</div>
+                <div class="tabtn" :class="listNameType==='STO榜'?'on':''" @click="changeListName('STO榜')">STO榜</div>
               </div>
               <div class="table-filter">
                 <div class="layui-form">
@@ -31,9 +31,15 @@
                     <option :value="item.countName" v-for="(item, index) in guojiaList" :key="index">{{item.countName}}</option>
                   </select>
                 </div>
+                <div class="layui-form month-week">
+                  <select name="month-week" v-model="listDateType" lay-filter="month-week">
+                    <option value="周榜">周榜</option>
+                    <option value="月榜">月榜</option>
+                  </select>
+                </div>
                 <div class="weekmonth-group">
-                  <div class="wmbtn on">周榜</div>
-                  <div class="wmbtn">月榜</div>
+                  <div class="wmbtn" :class="listDateType==='周榜'?'on':''" @click="changeListDate('周榜')">周榜</div>
+                  <div class="wmbtn" :class="listDateType==='月榜'?'on':''" @click="changeListDate('月榜')">月榜</div>
                 </div>
               </div>
               <table id="main-list-table" lay-filter="main-list-table"></table>
@@ -72,14 +78,16 @@
   export default {
     data() {
       return {
-        type: '周榜',
-        name: 'GLOBAL',
+        listNameType: '总评榜',
+        listDateType: '周榜',
         pageSize: 50,
+        country: '',
+        industry: '',
         guojiaList: [],
         hostIndustries: []
       }
     },
-    created () {
+    mounted () {
       new Swiper('#list-banner-swiper', {
         autoplay: {
           disableOnInteraction: false,
@@ -110,11 +118,6 @@
           console.log(data);
         });
       });
-
-      this.$axios.get('http://119.254.68.8:10020/projectList/list?pageNo=0&pageSize=10&type=天榜')
-      .then(res => {
-        console.log(res);
-      })
     },
     activated () {
       layui.use('table', function(){
@@ -142,7 +145,7 @@
           var table = layui.table;
           table.render({
             elem: '#main-list-table'
-            ,url:'../../static/table.json'
+            ,url:'http://119.254.68.8:10020/projectList/list?type='+that.listDateType+'&pageNo=0&pageSize='+that.pageSize+'&country'+that.country+'&industry'+that.industry
             ,parseData: function(res){
               return {
                 "code": 0,
@@ -153,17 +156,17 @@
             ,size: 'sm'
             ,cellMinWidth: 60
             ,cols: [[
-            {field: 'ranking', title: '排名', width: 50, minWidth: 50, fixed: true, templet: '#list-table-ranking', style: 'height:64px; padding: 0; line-height: inherit'}
+            {field: 'rank', title: '排名', width: 50, minWidth: 50, fixed: true, templet: '#list-table-ranking', style: 'height:64px; padding: 0; line-height: inherit'}
             ,{field:'project', title: '项目', minWidth: 190, fixed: true, templet: '#list-table-project', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'githubActivity', title: '价格', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'teamIntegrity', title: '流通市值', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'mediaAttention', title: '基本面', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'negativeImpact', title: '市场', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'teamAuthenticity', title: '技术', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'teamIntegrity', title: '团队', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'teamSocialActivity', title: '资金监管', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'rankingTotalScore', title: '总评分', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'updown', title: '排名升降', width: 70, sort: true, templet: '#list-table-updown', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'price', title: '价格', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'famc', title: '流通市值', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'fundamentalsanalysis', title: '基本面', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'marketanalysis', title: '市场', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'technicalanalysis', title: '技术', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'teamanalysis', title: '团队', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'fundsupervision', title: '资金监管', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'totalScore', title: '总评分', width: 70, sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'amountIncrease', title: '排名升降', width: 70, sort: true, templet: '#list-table-updown', style: 'height:64px; padding: 0; line-height: inherit'}
             ]]
           });
         });
@@ -230,6 +233,16 @@
           this.guojiaList = res.data;
         })
       },
+      changeListName (val) {
+        this.listNameType = val;
+      },
+      changeListDate (val) {
+        this.listDateType = val;
+        layui.use('form', function(){
+          var form = layui.form;
+          form.render('select'); 
+        });
+      }
     }
   }
 </script>
