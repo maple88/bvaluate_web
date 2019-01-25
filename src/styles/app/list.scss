@@ -223,7 +223,7 @@
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				margin: 0 0 20px;
+				margin: 0 0 15px;
 				padding: 0 15px;
 				@media ($max-sm) {
 					margin: 0;
@@ -316,6 +316,20 @@
 					}
 				}
 			}
+			&.main-table-box{
+				.layui-table-box{
+					.layui-table-fixed-l{
+						@media ($max-xs) {
+							box-shadow: 0 -1px 8px rgba(0,0,0,.08);
+						}
+						.layui-table-header{
+							@media ($max-xs) {
+								box-shadow: 0 0 10px 2px #e1ecf1;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }
@@ -400,6 +414,7 @@
 			height: 100%;
 			border-radius: 50%;
 			overflow: hidden;
+			border: 1px solid #f8f8f8;
 			img{
 				width: 100%;
 				height: 100%;
@@ -413,9 +428,13 @@
 		}
 	}
 	.info{
+		overflow: hidden;
 		p{
 			margin: 0;
 			text-align: left;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
 		.tit{
 			a{

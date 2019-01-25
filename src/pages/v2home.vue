@@ -151,8 +151,11 @@
 							<div class="box-col" v-for="(item, index) in starProject" :key="index">
 								<div class="item">
 									<a href="javascript:;" @click="goArticle('/project',{sid: item.sid}, $event)">
-										<div class="img-box">
-											<img :src="item.logoSrc">
+										<div class="top">
+											<div class="img-box">
+												<img :src="item.logoSrc">
+											</div>
+											<img src="../assets/list/crown.png" class="crown">
 										</div>
 										<p class="tit">{{item.project}}<span>{{item.tokenCoin | formatName}}</span></p>
 										<p class="num">{{item.totalScore}}</p>
@@ -586,7 +589,8 @@
       },
       goArticle(url, query, event) {
         let routeData = this.$router.resolve({path: url, query: query});
-        window.open(routeData.href, '_blank');
+        console.log(routeData.href);
+        // window.open(routeData.href, '_blank');
       },
       //根据项目名称进行跳转到项目页面 主要用于新闻列表中标签跳转
       goProjectByName(obj) {

@@ -47,18 +47,18 @@
             <div class="input-group submit-group">
               <button type="button" class="btn ok-btn" data="登录" name="login_ok" id="login_ok" @click="loginSubmit">登录</button>
             </div>
-            <div class="other-login">
+            <!-- <div class="other-login">
               <div class="head">第三方登录</div>
               <ul>
                 <li @click="weChatLogin">
                   <img src="../assets/login/wechat2.png">
                 </li>
-                <!-- <li>
+                <li>
                   <img src="../assets/login/qq.png">
                   <p>QQ</p>
-                </li> -->
+                </li>
               </ul>
-            </div>
+            </div> -->
           </div>
           <div class="inputInner" v-if="registerForm">
             <!-- <div class="input-group">

@@ -30,34 +30,32 @@
     <div class="list-ranking">{{d.rank}}</div>
   {{#  } }}
 </script>
-<!-- 涨跌表格排名 -->
-<script type="text/html" id="zdlist-table-ranking">
-  {{#  if(d.ranking === '1'){ }}
-    <div class="list-ranking"><img src="./static/images/first.png"></div>
-  {{#  } else if (d.ranking === '2') { }}
-    <div class="list-ranking"><img src="./static/images/second.png"></div>
-  {{#  } else if (d.ranking === '3') { }}
-    <div class="list-ranking"><img src="./static/images/thire.png"></div>
-  {{#  } else { }}
-    <div class="list-ranking">{{d.ranking}}</div>
-  {{#  } }}
-</script>
 <!-- 表格项目 -->
 <script type="text/html" id="list-table-project">
+  {{#  
+    var tokenCoin = function(){
+      if (d.tokenCoin === null || d.tokenCoin === '') {
+        return '--';
+      }else{
+        return d.tokenCoin;
+      }
+    }; 
+  }}
+
   <div class="list-project-flexbox">
     <div class="left">
-      <div class="img-box"><img src="{{d.logoSrc}}"></div>
-      {{#  if(d.crown){ }}
+      <div class="img-box"><a href="/#/project?sid={{d.sid}}" target="_blank"><img src="{{d.logoSrc}}"></a></div>
+      {{#  if(d.start === '1'){ }}
       <div class="crown"><img src="./static/images/crown.png"></div>
       {{#  } }}
     </div>
     <div class="info">
-      <p class="tit"><a href="#">{{d.project}}</a></p>
-      <p class="des">{{d.abstracts}}</p>
+      <p class="tit"><a href="/#/project?sid={{d.sid}}" target="_blank">{{d.project}}</a></p>
+      <p class="des">{{ tokenCoin() }}</p>
     </div>
   </div>
 </script>
-<!-- 表格升降 -->
+<!-- 表格排名升降 -->
 <script type="text/html" id="list-table-updown">
   {{#  
     var updown = function(){
@@ -70,8 +68,133 @@
   {{#  } else if (d.amountIncrease < 0){ }}
     <div class="list-updown">{{ updown() }}<img src="./static/images/down.png"></div>
   {{#  } else { }}
-    <div class="list-updown">{{d.amountIncrease}}</div>
+    <div class="list-updown">--</div>
   {{#  }  }}
+</script>
+<!-- 表格价格 -->
+<script type="text/html" id="list-table-price">
+  {{#  
+    var price = function(){
+      if (d.price === null) {
+        return '--';
+      }else{
+        return d.price;
+      }
+    }; 
+  }}
+
+  {{ price() }}
+</script>
+<!-- 表格流通市值 -->
+<script type="text/html" id="list-table-famc">
+  {{#  
+    var famc = function(){
+      if (d.famc === null) {
+        return '--';
+      }else{
+        return d.famc;
+      }
+    }; 
+  }}
+
+  {{ famc() }}
+</script>
+<!-- 表格基本面 -->
+<script type="text/html" id="list-table-fundamentalsanalysis">
+  {{#  
+    var fundamentalsanalysis = function(){
+      if (d.fundamentalsanalysis === null) {
+        return '--';
+      }else{
+        return d.fundamentalsanalysis;
+      }
+    }; 
+  }}
+
+  {{ fundamentalsanalysis() }}
+</script>
+<!-- 表格市场 -->
+<script type="text/html" id="list-table-marketanalysis">
+  {{#  
+    var marketanalysis = function(){
+      if (d.marketanalysis === null) {
+        return '--';
+      }else{
+        return d.marketanalysis;
+      }
+    }; 
+  }}
+
+  {{ marketanalysis() }}
+</script>
+<!-- 表格技术 -->
+<script type="text/html" id="list-table-technicalanalysis">
+  {{#  
+    var technicalanalysis = function(){
+      if (d.technicalanalysis === null) {
+        return '--';
+      }else{
+        return d.technicalanalysis;
+      }
+    }; 
+  }}
+
+  {{ technicalanalysis() }}
+</script>
+<!-- 表格团队 -->
+<script type="text/html" id="list-table-teamanalysis">
+  {{#  
+    var teamanalysis = function(){
+      if (d.teamanalysis === null) {
+        return '--';
+      }else{
+        return d.teamanalysis;
+      }
+    }; 
+  }}
+
+  {{ teamanalysis() }}
+</script>
+<!-- 表格资金监管 -->
+<script type="text/html" id="list-table-fundsupervision">
+  {{#  
+    var fundsupervision = function(){
+      if (d.fundsupervision === null) {
+        return '--';
+      }else{
+        return d.fundsupervision;
+      }
+    }; 
+  }}
+
+  {{ fundsupervision() }}
+</script>
+<!-- 表格总评分 -->
+<script type="text/html" id="list-table-totalScore">
+  {{#  
+    var totalScore = function(){
+      if (d.totalScore === null) {
+        return '--';
+      }else{
+        return d.totalScore;
+      }
+    }; 
+  }}
+
+  {{ totalScore() }}
+</script>
+
+<!-- 涨跌表格排名 -->
+<script type="text/html" id="zdlist-table-ranking">
+  {{#  if(d.ranking === '1'){ }}
+    <div class="list-ranking"><img src="./static/images/first.png"></div>
+  {{#  } else if (d.ranking === '2') { }}
+    <div class="list-ranking"><img src="./static/images/second.png"></div>
+  {{#  } else if (d.ranking === '3') { }}
+    <div class="list-ranking"><img src="./static/images/thire.png"></div>
+  {{#  } else { }}
+    <div class="list-ranking">{{d.ranking}}</div>
+  {{#  } }}
 </script>
 <!-- 表格涨跌幅 -->
 <script type="text/html" id="list-table-increase">

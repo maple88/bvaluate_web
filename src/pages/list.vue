@@ -5,12 +5,12 @@
       <div class="swiper-container" id="list-banner-swiper">
         <div class="swiper-wrapper">
           <div class="swiper-slide"><img src="../assets/list/banner1.jpg"></div>
-          <div class="swiper-slide"><img src="../assets/list/banner1.jpg"></div>
-          <div class="swiper-slide"><img src="../assets/list/banner1.jpg"></div>
+          <!-- <div class="swiper-slide"><img src="../assets/list/banner1.jpg"></div>
+          <div class="swiper-slide"><img src="../assets/list/banner1.jpg"></div> -->
         </div>
         <div class="swiper-pagination list-banner-pagination"></div>
-        <div class="swiper-button-prev swiper-button-white"></div>
-        <div class="swiper-button-next swiper-button-white"></div>
+        <!-- <div class="swiper-button-prev swiper-button-white"></div> -->
+        <!-- <div class="swiper-button-next swiper-button-white"></div> -->
       </div>
       <div class="container v2container">
         <div class="list-container">
@@ -44,12 +44,12 @@
                   <div class="wmbtn" :class="listDateType==='月榜'?'on':''" @click="changeListDate('月榜')">月榜</div>
                 </div>
               </div>
-              <div class="table-box">
+              <div class="table-box main-table-box">
                 <table id="main-list-table" lay-filter="main-list-table"></table>
                 <div class="table-loading" v-if="mainloading">
                   <img src="../assets/login/loading.gif"/>
                 </div>
-                <div class="loadmore" v-if="showLoadMore" @click="listLoadMore">加载更多<i class="moreimg"></i></div>
+                <div class="loadmore" v-if="showLoadMore" @click="getListMore">加载更多<i class="moreimg"></i></div>
               </div>
             </div>
           </div>
@@ -59,7 +59,7 @@
                 <span class="tl">涨幅排行</span>
                 <span class="tr">CNY</span>
               </div>
-              <div class="table-box">
+              <div class="table-box rise-table-box">
                 <table id="rise-list-table" lay-filter="rise-list-table"></table>
                 <div class="table-loading" v-if="riseloading">
                   <img src="../assets/login/loading.gif"/>
@@ -71,7 +71,7 @@
                 <span class="tl">跌幅排行</span>
                 <span class="tr">CNY</span>
               </div>
-              <div class="table-box">
+              <div class="table-box fall-table-box">
                 <table id="fall-list-table" lay-filter="fall-list-table"></table>
                 <div class="table-loading" v-if="fallloading">
                   <img src="../assets/login/loading.gif"/>
@@ -119,6 +119,7 @@
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
         },
+        watchOverflow: true,
         pagination: {
           el: '.list-banner-pagination',
           clickable :true
@@ -194,6 +195,17 @@
       });
     },
     methods: {
+      getListMore () {
+        let token = localStorage.getItem('apelink_user_token');
+        if (token) {
+          this.listLoadMore();
+        } else {
+          this.isLogin();
+        }
+      },
+      isLogin() {
+        this.$store.state.loginPop = true;
+      },
       listLoadMore () {
         let that = this;
         that.showLoadMore = false;
@@ -238,21 +250,28 @@
             ,skin: 'nob'
             ,size: 'sm'
             ,cols: [[
-            {field: 'rank', title: '排名', width: 50, minWidth: 50, fixed: true, templet: '#list-table-ranking', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'project', title: '项目', width: 180, fixed: true, templet: '#list-table-project', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'price', title: '价格', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'famc', title: '流通市值', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'fundamentalsanalysis', title: '基本面', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'marketanalysis', title: '市场', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'technicalanalysis', title: '技术', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'teamanalysis', title: '团队', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'fundsupervision', title: '资金监管', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'totalScore', title: '总评分', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'amountIncrease', title: '排名升降', sort: true, templet: '#list-table-updown', style: 'height:64px; padding: 0; line-height: inherit'}
+            {field: 'rank', title: '排名', width: 45, minWidth: 50, fixed: true, templet: '#list-table-ranking', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'project', title: '项目', minWidth: 110, fixed: true, templet: '#list-table-project', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'price', title: '价格', width: 70, sort: true, templet: '#list-table-price', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'famc', title: '流通市值', width: 70, sort: true, templet: '#list-table-famc', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'fundamentalsanalysis', title: '基本面', width: 70, sort: true, templet: '#fundamentalsanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'marketanalysis', title: '市场', width: 70, sort: true, templet: '#marketanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'technicalanalysis', title: '技术', width: 70, sort: true, templet: '#technicalanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'teamanalysis', title: '团队', width: 70, sort: true, templet: '#teamanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'fundsupervision', title: '资金监管', width: 70, sort: true, templet: '#fundsupervision', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'totalScore', title: '总评分', width: 70, sort: true, templet: '#list-table-totalScore', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'amountIncrease', title: '排名升降', width: 70, sort: true, templet: '#list-table-updown', style: 'height:64px; padding: 0; line-height: inherit'}
             ]]
+            ,initSort: {
+              field: 'rank'
+              ,type: 'asc'
+            }
+            ,text: {
+              none: '暂无相关数据'
+            }
             ,done: function(res, curr, count){
               that.mainloading = false;
-              if (res.data.length === 0) {
+              if (res.data.length < that.pageSize) {
                 that.showLoadMore = false;
               }else{
                 that.showLoadMore = true;
@@ -289,19 +308,26 @@
             ,cols: [[
             {field: 'rank', title: '排名', width: 50, minWidth: 50, fixed: true, templet: '#list-table-ranking', style: 'height:64px; padding: 0; line-height: inherit'}
             ,{field:'project', title: '项目', width: 180, fixed: true, templet: '#list-table-project', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'price', title: '价格', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'famc', title: '流通市值', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'fundamentalsanalysis', title: '基本面', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'marketanalysis', title: '市场', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'technicalanalysis', title: '技术', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'teamanalysis', title: '团队', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'fundsupervision', title: '资金监管', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'totalScore', title: '总评分', sort: true, style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'price', title: '价格', sort: true, templet: '#list-table-price', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'famc', title: '流通市值', sort: true, templet: '#list-table-famc', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'fundamentalsanalysis', title: '基本面', sort: true, templet: '#fundamentalsanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'marketanalysis', title: '市场', sort: true, templet: '#marketanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'technicalanalysis', title: '技术', sort: true, templet: '#technicalanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'teamanalysis', title: '团队', sort: true, templet: '#teamanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'fundsupervision', title: '资金监管', sort: true, templet: '#fundsupervision', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'totalScore', title: '总评分', sort: true, templet: '#list-table-totalScore', style: 'height:64px; padding: 0; line-height: inherit'}
             ,{field:'amountIncrease', title: '排名升降', sort: true, templet: '#list-table-updown', style: 'height:64px; padding: 0; line-height: inherit'}
             ]]
+            ,initSort: {
+              field: 'rank'
+              ,type: 'asc'
+            }
+            ,text: {
+              none: '暂无相关数据'
+            }
             ,done: function(res, curr, count){
               that.mainloading = false;
-              if (res.data.length === 0) {
+              if (res.data.length < that.pageSize) {
                 that.showLoadMore = false;
               }else{
                 that.showLoadMore = true;
@@ -318,7 +344,15 @@
           table.render({
             elem: '#rise-list-table'
             ,method: 'get'
-            ,url:'/api/hotICO/priceList?type=inc&pageSize=15'
+            ,url:'/api/hotICO/priceList?type=inc'
+            ,request: {
+              pageName: 'pageNo'
+              ,limitName: 'pageSize'
+            }
+            ,page: {
+              curr: '0'
+              ,limit: 15
+            }
             ,parseData: function(res){
               return {
                 "code": 0,
@@ -334,6 +368,13 @@
             ,{field:'price', title: '价格'}
             ,{field:'increase', title: '涨幅', style: 'color: #4eb772;', templet: '#list-table-increase'}
             ]]
+            ,initSort: {
+              field: 'ranking'
+              ,type: 'asc'
+            }
+            ,text: {
+              none: '暂无相关数据'
+            }
             ,done: function(res, curr, count){
               that.riseloading = false;
             }
@@ -348,7 +389,15 @@
           table.render({
             elem: '#fall-list-table'
             ,method: 'get'
-            ,url:'/api/hotICO/priceList?type=dec&pageSize=15'
+            ,url:'/api/hotICO/priceList?type=dec'
+            ,request: {
+              pageName: 'pageNo'
+              ,limitName: 'pageSize'
+            }
+            ,page: {
+              curr: '0'
+              ,limit: 15
+            }
             ,parseData: function(res){
               return {
                 "code": 0,
@@ -364,6 +413,13 @@
             ,{field:'price', title: '价格'}
             ,{field:'increase', title: '跌幅', style: 'color: #ee6560;', templet: '#list-table-increase'}
             ]]
+            ,initSort: {
+              field: 'ranking'
+              ,type: 'asc'
+            }
+            ,text: {
+              none: '暂无相关数据'
+            }
             ,done: function(res, curr, count){
               that.fallloading = false;
             }
@@ -421,7 +477,7 @@
             var form = layui.form;
             form.render('select'); 
           });
-        }, 30)
+        }, 50)
       })
     }
   }

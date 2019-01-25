@@ -452,15 +452,15 @@
               min-width: 60px;
             }
             @media ($max-xs) {
-              flex: 0 0 80px;
-              min-width: 80px;
+              flex: 0 0 13%;
+              min-width: 13%;
             }
           }
           .center{
             flex: 1;
             text-indent: 45px;
             @media ($max-xs) {
-              text-indent: 25px;
+              text-indent: 16px;
             }
           }
           .right{
@@ -471,8 +471,10 @@
               min-width: 50px;
             }
             @media ($max-xs) {
-              flex: 0 0 60px;
-              min-width: 60px;
+              flex: 0 0 18%;
+              min-width: 18%;
+              margin: 0 5px 0 0;
+              text-align: center;
             }
           }
         }
@@ -505,8 +507,8 @@
                 min-width: 60px;
               }
               @media ($max-xs) {
-                flex: 0 0 80px;
-                min-width: 80px;
+                flex: 0 0 13%;
+                min-width: 13%;
               }
               .ranking_box {
                 flex: 0 0 33px;
@@ -521,6 +523,10 @@
                     background-repeat: no-repeat;
                     background-position: center;
                     margin: auto;
+                    @media ($max-xs) {
+                      width: 28px;
+                      height: 28px;
+                    }
                   }
                   .icon_second {
                     width: 33px;
@@ -531,6 +537,10 @@
                     background-repeat: no-repeat;
                     background-position: center;
                     margin: auto;
+                    @media ($max-xs) {
+                      width: 28px;
+                      height: 28px;
+                    }
                   }
                   .icon_thire {
                     width: 33px;
@@ -541,6 +551,10 @@
                     background-repeat: no-repeat;
                     background-position: center;
                     margin: auto;
+                    @media ($max-xs) {
+                      width: 28px;
+                      height: 28px;
+                    }
                   }
                 }
                 .ranking_number {
@@ -548,6 +562,9 @@
                   font-weight: 500;
                   color: $black;
                   line-height: 26px;
+                  @media ($max-xs) {
+                    font-size: 12px;
+                  }
                 }
               }
               .contrast_box {
@@ -611,6 +628,11 @@
                 background-size: 80%;
                 background-image: url("../assets/list/list_default.png");
                 overflow: hidden;
+                @media ($max-xs) {
+                  flex: 0 0 36px;
+                  min-width: 36px;
+                  height: 36px;
+                }
                 &.hasPic {
                   background: none;
                 }
@@ -623,6 +645,9 @@
               .center_right {
                 padding-left: 10px;
                 overflow: hidden;
+                @media ($max-xs) {
+                  padding-left: 5px;
+                }
                 .center_right_title {
                   font-size: 14px;
                   font-weight: 700;
@@ -631,6 +656,9 @@
                   overflow: hidden;
                   text-overflow: ellipsis;
                   white-space: nowrap;
+                  @media ($max-xs) {
+                    font-size: 12px;
+                  }
                 }
                 .center_right_info {
                   font-size: 12px;
@@ -640,6 +668,9 @@
                   overflow: hidden;
                   text-overflow: ellipsis;
                   white-space: nowrap;
+                  @media ($max-xs) {
+                    color: #666;
+                  }
                   span {
                     padding-right: 12px;
                   }
@@ -654,14 +685,19 @@
                 min-width: 50px;
               }
               @media ($max-xs) {
-                flex: 0 0 60px;
-                min-width: 60px;
+                flex: 0 0 18%;
+                min-width: 18%;
+                margin: 0 5px 0 0;
+                text-align: center;
               }
               h4 {
                 font-size: 14px;
                 font-weight: bold;
                 color: #212121;
                 margin: 0;
+                @media ($max-xs) {
+                  font-size: 12px;
+                }
               }
             }
           }
@@ -829,12 +865,20 @@
         flex-direction: column;
         justify-content: center;
       }
+      .top{
+        margin: 0 auto 16px;
+        position: relative;
+        .crown{
+          position: absolute;
+          top: 0;
+          right: 0;
+        }
+      }
       .img-box{
         width: 64px;
         height: 64px;
         border-radius: 50%;
         overflow: hidden;
-        margin: 0 auto 16px;
         img{
           width: 100%;
           height: 100%;
@@ -1197,8 +1241,8 @@
             min-width: 20%;
           }
           @media ($max-xs) {
-            flex: 0 0 15%;
-            min-width: 15%;
+            flex: 0 0 14%;
+            min-width: 14%;
           }
         }
         .center{
@@ -1216,8 +1260,10 @@
             min-width: 20%;
           }
           @media ($max-xs) {
-            flex: 0 0 80px;
-            min-width: 80px;
+            flex: 0 0 18%;
+            min-width: 18%;
+            margin: 0 5px 0 0;
+            text-align: center;
           }
         }
       }
@@ -1270,6 +1316,10 @@
                   background-repeat: no-repeat;
                   background-position: center;
                   margin: auto;
+                  @media ($max-xs) {
+                    width: 28px;
+                    height: 28px;
+                  }
                 }
                 .icon_second {
                   width: 33px;
@@ -1280,6 +1330,10 @@
                   background-repeat: no-repeat;
                   background-position: center;
                   margin: auto;
+                  @media ($max-xs) {
+                    width: 28px;
+                    height: 28px;
+                  }
                 }
                 .icon_thire {
                   width: 33px;
@@ -1290,6 +1344,10 @@
                   background-repeat: no-repeat;
                   background-position: center;
                   margin: auto;
+                  @media ($max-xs) {
+                    width: 28px;
+                    height: 28px;
+                  }
                 }
               }
               .ranking_number {
@@ -1297,6 +1355,9 @@
                 font-weight: 500;
                 color: $black;
                 line-height: 26px;
+                @media ($max-xs) {
+                  font-size: 12px;
+                }
               }
             }
             .contrast_box {
@@ -1360,6 +1421,11 @@
               background-size: 80%;
               background-image: url("../assets/list/list_default.png");
               overflow: hidden;
+              @media ($max-xs) {
+                flex: 0 0 36px;
+                min-width: 36px;
+                height: 36px;
+              }
               &.hasPic {
                 background: none;
               }
@@ -1380,6 +1446,9 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+                @media ($max-xs) {
+                  font-size: 12px;
+                }
               }
               .center_right_info {
                 font-size: 12px;
@@ -1389,6 +1458,9 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+                @media ($max-xs) {
+                  color: #666;
+                }
                 span {
                   padding-right: 12px;
                 }
@@ -1403,14 +1475,19 @@
               min-width: 20%;
             }
             @media ($max-xs) {
-              flex: 0 0 80px;
-              min-width: 80px;
+              flex: 0 0 18%;
+              min-width: 18%;
+              margin: 0 5px 0 0;
+              text-align: center;
             }
             h4 {
               font-size: 14px;
               font-weight: bold;
               color: #212121;
               margin: 0;
+              @media ($max-xs) {
+                font-size: 12px;
+              }
             }
           }
         }
@@ -1424,6 +1501,10 @@
         @media ($max-lg) {
           flex: 0 0 15%;
           min-width: 15%;
+        }
+        @media ($max-xs) {
+          flex: 0 0 13%;
+          min-width: 13%;
         }
       }
       .table-header .right1,
@@ -1452,8 +1533,9 @@
         min-width: 80px;
         text-align: center;
         @media ($max-lg) {
-          flex: 0 0 15%;
-          min-width: 15%;
+          flex: 0 0 18%;
+          min-width: 18%;
+          margin: 0 5px 0 0;
         }
       }
       .table-content .list_item .item_center{
@@ -1465,6 +1547,9 @@
         font-weight: 700;
         color: #212121;
         margin: 0;
+        @media ($max-xs) {
+          font-size: 12px;
+        }
       }
       .table-content .list_item .item_right3{
         .contrast_box{
@@ -1476,10 +1561,16 @@
             width: 17px;
             height: 13px;
             margin: 0 0 0 5px;
+            @media ($max-xs) {
+              width: 13px;
+              height: 10px;
+              margin: 0 0 0 3px;
+            }
           }
           &.up{
             .contrast_num{
               color: #4eb772;
+              font-size: 12px;
             }
             .icon_style{
               background: url(../assets/up.png) center / cover no-repeat;
@@ -1488,6 +1579,7 @@
           &.down{
             .contrast_num{
               color: #ee6560;
+              font-size: 12px;
             }
             .icon_style{
               background: url(../assets/down.png) center / cover no-repeat;
@@ -1497,6 +1589,9 @@
       }
     }
     .guojia-list{
+      .table-content .list_item .item_center .center_right{
+        padding: 0 0 0 21px;
+      }
       .table-content .list_item .item_center .center_right .center_right_title{
         margin: 0;
         font-weight: bold;
