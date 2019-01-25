@@ -312,25 +312,25 @@
     mounted() {
       this.initSearch();
       this.searchKeyWord();
-      this.initRightNews('快讯', this.flashPageSize, res => {
+      this.initRightNews('国家时事', this.flashPageSize, res => {
         this.flashPageSize += 20;
         this.flashList = res;
       });
-      this.initRightNews('国家时事', 10, res => {
-        this.affairList = res;
-      });
+      // this.initRightNews('国家时事', 10, res => {
+      //   this.affairList = res;
+      // });
       this.scrollFlash();
     },
     activated() {
       this.initSearch();
       this.searchKeyWord();
-      this.initRightNews('快讯', this.flashPageSize, res => {
+      this.initRightNews('国家时事', this.flashPageSize, res => {
         this.flashPageSize += 20;
         this.flashList = res;
       });
-      this.initRightNews('国家时事', 10, res => {
-        this.affairList = res;
-      });
+      // this.initRightNews('国家时事', 10, res => {
+      //   this.affairList = res;
+      // });
       this.scrollFlash();
     },
     beforeRouteUpdate(to, from, next) {
@@ -502,7 +502,7 @@
           let offsetHeight = $this.offsetHeight;
           if ((boxTop / (boxHeight - offsetHeight) >= 0.80) && finished) {
             finished = false;
-            this.initRightNews('快讯', this.flashPageSize, res => {
+            this.initRightNews('国家时事', this.flashPageSize, res => {
               this.flashPageSize += 20;
               this.flashList = res;
               finished = true;

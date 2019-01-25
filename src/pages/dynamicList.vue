@@ -8,13 +8,17 @@
 					<p class="head">公司动态</p>
 					<div class="news-list">
 						<div class="item" v-for="(item, index) in list" :key="index">
-							<div class="left" @click="goView"><img :src="item.img"/></div>
+							<div class="left" @click="goArticle('/dynamicView',{sid:item.sid})"><img :src="item.logoSrc?item.logoSrc:defaultImg"/></div>
 							<div class="right">
-								<p class="tit" @click="goView">{{item.tit}}</p>
-								<p class="des">{{item.des}}</p>
-								<p class="time">{{item.time}}</p>
+								<p class="tit" @click="goArticle('/dynamicView',{sid:item.sid})">{{item.title}}</p>
+								<p class="des">{{item.content}}</p>
+								<p class="time">{{item.urlTime}}</p>
 							</div>
 						</div>
+						<div class="listLoading" v-if="showloading">
+							<img src="../assets/login/loading.gif"/>
+						</div>
+						<div class="loadmore" v-if="showLoadMore" @click="getData">加载更多<i class="moreimg"></i></div>
 					</div>
 				</div>
 			</div>
@@ -26,36 +30,42 @@
 
 <script>
 	let defaultImg = require('../assets/search/news.png');
+	let loading = require('../assets/login/loading.gif');
 
 	export default {
 		data () {
 			return {
 				defaultImg: defaultImg,
-				list: [
-				{
-					"img": defaultImg,
-					"tit": "2018年智慧能源与能源区块链技术创新峰会于澳门圆满落幕2018年智慧能源与能源区块链技术创新峰会于澳门圆满落",
-					"des": "2018年12月11日至12月13日Bvaluate团队前往澳门参与第七届国际清洁能源论坛，论坛以“清洁能源智能引领，中国东盟携手合作”为主题，围绕水电、风电、光伏、核电、电力、煤炭清洁高效利用以及智慧能源和区块链技术创新等议题进行讨论和交流。今年大会首次开立“区块链能源”分论坛，旨在促进中国与东盟国家以及“一带一路”沿线国家的清洁能源合作，推动智慧能源和能源区块链技术创2018年12月11日至12月13日Bvaluate团队前往澳门参与第七届国际清洁能源论坛，论坛以“清洁能源智能引领，中国东盟携手合作”为主题，围绕水电、风电、光伏、核电、电力、煤炭清洁高效利用以及智慧能源和区块链技术创新等议题进行讨论和交流。今年大会首次开立“区块链能源”分论坛，旨在促进中国与东盟国家以及“一带一路”沿线国家的清洁能源合作，推动智慧能源和能源区块链技术创",
-					"time": "2018-10-11 10:00"
-				},
-				{
-					"img": defaultImg,
-					"tit": "2018年智慧能源与能源区块链技术创新峰会于澳门圆满落幕2018年智慧能源与能源区块链技术创新峰会于澳门圆满落",
-					"des": "2018年12月11日至12月13日Bvaluate团队前往澳门参与第七届国际清洁能源论坛，论坛以“清洁能源智能引领，中国东盟携手合作”为主题，围绕水电、风电、光伏、核电、电力、煤炭清洁高效利用以及智慧能源和区块链技术创新等议题进行讨论和交流。今年大会首次开立“区块链能源”分论坛，旨在促进中国与东盟国家以及“一带一路”沿线国家的清洁能源合作，推动智慧能源和能源区块链技术创2018年12月11日至12月13日Bvaluate团队前往澳门参与第七届国际清洁能源论坛，论坛以“清洁能源智能引领，中国东盟携手合作”为主题，围绕水电、风电、光伏、核电、电力、煤炭清洁高效利用以及智慧能源和区块链技术创新等议题进行讨论和交流。今年大会首次开立“区块链能源”分论坛，旨在促进中国与东盟国家以及“一带一路”沿线国家的清洁能源合作，推动智慧能源和能源区块链技术创",
-					"time": "2018-10-11 10:00"
-				},
-				{
-					"img": defaultImg,
-					"tit": "2018年智慧能源与能源区块链技术创新峰会于澳门圆满落幕2018年智慧能源与能源区块链技术创新峰会于澳门圆满落",
-					"des": "2018年12月11日至12月13日Bvaluate团队前往澳门参与第七届国际清洁能源论坛，论坛以“清洁能源智能引领，中国东盟携手合作”为主题，围绕水电、风电、光伏、核电、电力、煤炭清洁高效利用以及智慧能源和区块链技术创新等议题进行讨论和交流。今年大会首次开立“区块链能源”分论坛，旨在促进中国与东盟国家以及“一带一路”沿线国家的清洁能源合作，推动智慧能源和能源区块链技术创2018年12月11日至12月13日Bvaluate团队前往澳门参与第七届国际清洁能源论坛，论坛以“清洁能源智能引领，中国东盟携手合作”为主题，围绕水电、风电、光伏、核电、电力、煤炭清洁高效利用以及智慧能源和区块链技术创新等议题进行讨论和交流。今年大会首次开立“区块链能源”分论坛，旨在促进中国与东盟国家以及“一带一路”沿线国家的清洁能源合作，推动智慧能源和能源区块链技术创",
-					"time": "2018-10-11 10:00"
-				}
-				]
+				list: [],
+				pageNo: 0,
+				showLoadMore: false,
+				showloading: false
 			}
 		},
+		mounted () {
+			this.getData();
+		},
 		methods: {
-			goView () {
-				this.$router.push('/dynamicView');
+			goArticle(url, query) {
+        let routeData = this.$router.resolve({path: url, query: query});
+        window.open(routeData.href, '_blank');
+      },
+			getData () {
+				this.showloading = true;
+				this.showLoadMore = false;
+				this.$axios.get('/api/traditional/bvaluate?pageNo='+this.pageNo+'&pageSize=10')
+				.then(res=>{
+					this.showloading = false;
+					this.showLoadMore = true;
+					this.list = this.list.concat(res.data.content);
+					if (res.data.totalElements === 0) {
+						alert('没数据');
+					}else if (res.data.totalPages == (res.data.pageNo+1)) {
+						this.showLoadMore = false;
+					}else{
+						this.pageNo++;
+					}
+				})
 			}
 		}
 	}

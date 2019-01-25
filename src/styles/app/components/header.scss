@@ -658,17 +658,17 @@
         padding: 8px 16px;
       }
       &:hover{
-        background: #fff;
+        background: #fff !important;
         color: #1a1a1a;
       }
       &.blue{
-        background: $mainColor;
+        background: $mainColor !important;
         border-color: $mainColor;
         margin: 0 0 0 10px;
-        &:hover{
-          background: #4363e8;
-          color: #fff;
-        }
+        color: #fff;
+        // &:hover{
+        //   background: #4363e8 !important;
+        // }
       }
     }
     .htips{

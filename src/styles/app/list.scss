@@ -367,6 +367,9 @@
 		.layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even){
 			background-color: #ffffff;
 			box-shadow: 0 0 10px 2px #e1ecf1;
+			@media ($max-xs) {
+				box-shadow: none;
+			}
 		}
 		.layui-table-body{
 			margin: 0;

@@ -589,8 +589,7 @@
       },
       goArticle(url, query, event) {
         let routeData = this.$router.resolve({path: url, query: query});
-        console.log(routeData.href);
-        // window.open(routeData.href, '_blank');
+        window.open(routeData.href, '_blank');
       },
       //根据项目名称进行跳转到项目页面 主要用于新闻列表中标签跳转
       goProjectByName(obj) {
