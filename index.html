@@ -89,10 +89,20 @@
 <script type="text/html" id="list-table-famc">
   {{#  
     var famc = function(){
-      if (d.famc === null) {
-        return '--';
-      }else{
-        return d.famc;
+      if (d.famc) {
+        if (d.famc > 100000000) {
+          let num = d.famc / 100000000;
+          return num.toFixed(2)+'亿'
+        } else {
+          if (d.famc > 10000) {
+            let num = d.famc / 10000;
+            return num.toFixed(2)+'万'
+          } else {
+            return d.famc;
+          }
+        }
+      } else {
+        return '--'
       }
     }; 
   }}
