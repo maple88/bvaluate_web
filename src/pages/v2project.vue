@@ -1,23 +1,23 @@
 <template>
   <div class="page project" @click="shareButton = false">
     <v2header/>
-    <div class="v2maintainer">
+    <div class="v2maintainer pd0">
       <!-- content here -->
       <div class="project-topmain">
-        <div class="topmaintainer">
+        <div class="container v2container">
           <div class="projectTop">
             <div class="img-box"><img :src="project.logoSrc"></div>
             <div class="textRight">
-              <div class="title">
+              <div class="tit">
                 <a :href="project.outerOfficial" target="_blank" class="atitle">{{project.project}}</a>
-                <div class="followbtn" v-if="!isFollow" @click="setFollow($event)">
-                  <i class="fa fa-plus wicon"></i> 关注
-                </div>
-                <div class="followbtn on" v-if="isFollow" @click="deleteFollow(project.collected, $event)">
-                  <i class="fa fa-check wicon"></i> 已关注
-                </div>
+                <button class="whitepaper" @click="goArticle('/pdfShow', {project: project.project})">白皮书</button>
+              </div>
+              <p class="smtit">(BTT)</p>
+              <div class="fol">
+                <div class="followbtn on" v-if="!isFollow" @click="setFollow($event)">关注</div>
+                <div class="followbtn" v-if="isFollow" @click="deleteFollow(project.collected, $event)">已关注</div>
                 <div class="followbtn share_button" @click.stop="shareButton = !shareButton">
-                  <i class="fa fa-share-alt wicon"></i> 分享
+                  分享
                   <transition name="fade">
                     <div class="share_box" v-show="shareButton">
                       <div class="share_item" @click.stop="weChatQrCodeShow">
@@ -41,22 +41,18 @@
                     </div>
                   </transition>
                 </div>
-                <button class="whitepaper" @click="goArticle('/pdfShow', {project: project.project})">白皮书</button>
               </div>
-              <p class="des">{{project.introduction}}</p>
             </div>
           </div>
           <p class="describe">{{project.irAbstract}}</p>
-          <div class="hangyeTips">
+          <!-- <div class="hangyeTips">
             <p class="title">行业标签</p>
             <ul>
               <li v-for="(item,index) in projectTabs" :key="index">
                 {{item}}
-                <!-- <p class="top">众筹</p>
-                <p class="bottom">平均评分<span>3.6</span></p> -->
               </li>
             </ul>
-          </div>
+          </div> -->
           <ul class="projectBottom">
             <li v-show="project.outerFaceBook"><a target="_blank" :href="project.outerFaceBook"><img src="../assets/project/f1.png"></a></li>
             <li v-show="project.outerTwitter"><a target="_blank" :href="project.outerTwitter"><img src="../assets/project/f2.png"></a></li>
@@ -81,687 +77,690 @@
         </div>
       </div>
       <div class="project-main">
-        <div class="leftmain">
-          <div class="tophead">
-            <div class="item price up">
-              <p class="pt">价格</p>
-              <p class="pb"><span>{{hotInfo.price}}</span></p>
+        <div class="container v2container">
+          <div class="leftmain">
+            <div class="tophead">
+              <div class="item price up">
+                <p class="pt">价格</p>
+                <p class="pb"><span>{{hotInfo.price}}</span></p>
+              </div>
+              <div class="item">
+                <p class="t">流通量</p>
+                <p class="b">{{hotInfo.markValue | formatDataForMark}}</p>
+              </div>
+              <div class="item">
+                <p class="t">流通市值</p>
+                <p class="b">{{hotInfo.famc | formatDataForMark}}</p>
+              </div>
+              <div class="item">
+                <p class="t">近24小时链上大单交易笔数</p>
+                <p class="b" v-show="hotInfo.linkBig">{{hotInfo.linkBig | rounding}}</p>
+              </div>
             </div>
-            <div class="item">
-              <p class="t">流通量</p>
-              <p class="b">{{hotInfo.markValue | formatDataForMark}}</p>
+            <div class="bluesection">
+              <div class="echartsbox1" ref="bluebox">
+                <div class="echarts_loading" v-if="radar_loading">
+                  <img :src="loading"/>
+                </div>
+                <div ref="radar" class="githubLine" :style="{width: '100%', height: '600px', padding: '15px 0'}"></div>
+              </div>
+              <div class="details">
+                <p class="total">总分：{{hotInfo.totalordercount}} <span>/ 5</span></p>
+                <div class="item">
+                  <p><img src="../assets/project/pb1.png"> 资金监管：{{hotInfo.fundsupervision}}</p>
+                  <p class="des">{{hotInfoTips.fundana}}</p>
+                </div>
+                <div class="item">
+                  <p><img src="../assets/project/pb2.png"> 基本面：{{hotInfo.fundamentalsanalysis}}</p>
+                  <p class="des">{{hotInfoTips.baseana}}</p>
+                </div>
+                <div class="item">
+                  <p><img src="../assets/project/pb3.png"> 团队：{{hotInfo.teamanalysis}}</p>
+                  <p class="des">{{hotInfoTips.teamana}}</p>
+                </div>
+                <div class="item">
+                  <p><img src="../assets/project/pb4.png"> 技术：{{hotInfo.technicalanalysis}}</p>
+                  <p class="des">{{hotInfoTips.skillana}}</p>
+                </div>
+                <div class="item">
+                  <p><img src="../assets/project/pb5.png"> 市场：{{hotInfo.marketanalysis}}</p>
+                  <p class="des">{{hotInfoTips.markana}}</p>
+                </div>
+              </div>
             </div>
-            <div class="item">
-              <p class="t">流通市值</p>
-              <p class="b">{{hotInfo.famc | formatDataForMark}}</p>
-            </div>
-            <div class="item">
-              <p class="t">近24小时链上大单交易笔数</p>
-              <p class="b" v-show="hotInfo.linkBig">{{hotInfo.linkBig | rounding}}</p>
-            </div>
-          </div>
-          <div class="bluesection">
-            <div class="echartsbox1" ref="bluebox">
-              <div class="echarts_loading" v-if="radar_loading">
+            <div class="echartsbox2">
+              <div class="echarts_loading" v-if="scoreChart_loading">
                 <img :src="loading"/>
               </div>
-              <div ref="radar" class="githubLine" :style="{width: '100%', height: '600px', padding: '15px 0'}"></div>
-            </div>
-            <div class="details">
-              <p class="total">总分：{{hotInfo.totalordercount}} <span>/ 5</span></p>
-              <div class="item">
-                <p><img src="../assets/project/pb1.png"> 资金监管：{{hotInfo.fundsupervision}}</p>
-                <p class="des">{{hotInfoTips.fundana}}</p>
-              </div>
-              <div class="item">
-                <p><img src="../assets/project/pb2.png"> 基本面：{{hotInfo.fundamentalsanalysis}}</p>
-                <p class="des">{{hotInfoTips.baseana}}</p>
-              </div>
-              <div class="item">
-                <p><img src="../assets/project/pb3.png"> 团队：{{hotInfo.teamanalysis}}</p>
-                <p class="des">{{hotInfoTips.teamana}}</p>
-              </div>
-              <div class="item">
-                <p><img src="../assets/project/pb4.png"> 技术：{{hotInfo.technicalanalysis}}</p>
-                <p class="des">{{hotInfoTips.skillana}}</p>
-              </div>
-              <div class="item">
-                <p><img src="../assets/project/pb5.png"> 市场：{{hotInfo.marketanalysis}}</p>
-                <p class="des">{{hotInfoTips.markana}}</p>
-              </div>
-            </div>
-          </div>
-          <div class="echartsbox2">
-            <div class="echarts_loading" v-if="scoreChart_loading">
-              <img :src="loading"/>
-            </div>
-            <div ref="scoreChart" class="chartbox" :style="{width: '100%', height: '680px'}"></div>
-            <div class="btn-list">
-              <label for="citem2" ref="scoreButton2">
-                <input type="checkbox" id="citem2">
-                <div class="checkbox"></div>
-                资金监管
-              </label>
-              <label for="citem3" ref="scoreButton3">
-                <input type="checkbox" id="citem3">
-                <div class="checkbox"></div>
-                基本面
-              </label>
-              <label for="citem4" ref="scoreButton4">
-                <input type="checkbox" id="citem4">
-                <div class="checkbox"></div>
-                团队
-              </label>
-              <label for="citem5" ref="scoreButton5">
-                <input type="checkbox" id="citem5">
-                <div class="checkbox"></div>
-                技术
-              </label>
-              <label for="citem6" ref="scoreButton6">
-                <input type="checkbox" id="citem6">
-                <div class="checkbox"></div>
-                市场
-              </label>
-            </div>
-          </div>
-          <div class="project-projectMainTab" ref="bigBox">
-            <div class="tabheader">
-              <div class="item" :class="tabactive === index ? 'on' : ''" v-for="(item, index) in tablist" :key="index" 
-              @click="tabindex(index)">{{item}}</div>
-              <div class="item btn-group" :class="{on:tabactive>4}">
-                <div data-toggle="dropdown">资讯</div>
-                <ul class="dropdown-menu">
-                  <li :class="tabactive === index + tablist.length ? 'on':''" v-for="(item, index) in tabinlist" :key="index" 
-                  @click="tabindex(index+tablist.length)">{{item}}</li>
-                </ul>
+              <div ref="scoreChart" class="chartbox" :style="{width: '100%', height: '680px'}"></div>
+              <div class="btn-list">
+                <label for="citem2" ref="scoreButton2">
+                  <input type="checkbox" id="citem2">
+                  <div class="checkbox"></div>
+                  资金监管
+                </label>
+                <label for="citem3" ref="scoreButton3">
+                  <input type="checkbox" id="citem3">
+                  <div class="checkbox"></div>
+                  基本面
+                </label>
+                <label for="citem4" ref="scoreButton4">
+                  <input type="checkbox" id="citem4">
+                  <div class="checkbox"></div>
+                  团队
+                </label>
+                <label for="citem5" ref="scoreButton5">
+                  <input type="checkbox" id="citem5">
+                  <div class="checkbox"></div>
+                  技术
+                </label>
+                <label for="citem6" ref="scoreButton6">
+                  <input type="checkbox" id="citem6">
+                  <div class="checkbox"></div>
+                  市场
+                </label>
               </div>
             </div>
-            <!-- 行情 -->
-            <div class="tabcontent" v-show="tabactive === 0">
-              <div class="echartsbox3">
-                  <div class="echarts_loading" v-if="marketChart_loading">
+            <div class="project-projectMainTab" ref="bigBox">
+              <div class="tabheader">
+                <div class="item" :class="tabactive === index ? 'on' : ''" v-for="(item, index) in tablist" :key="index" 
+                @click="tabindex(index)">{{item}}</div>
+                <div class="item btn-group" :class="{on:tabactive>4}">
+                  <div data-toggle="dropdown">资讯</div>
+                  <ul class="dropdown-menu">
+                    <li :class="tabactive === index + tablist.length ? 'on':''" v-for="(item, index) in tabinlist" :key="index" 
+                    @click="tabindex(index+tablist.length)">{{item}}</li>
+                  </ul>
+                </div>
+              </div>
+              <!-- 行情 -->
+              <div class="tabcontent" v-show="tabactive === 0">
+                <div class="echartsbox3">
+                    <div class="echarts_loading" v-if="marketChart_loading">
+                      <img :src="loading"/>
+                    </div>
+                    <div ref="marketChart" class="chartbox" :style="{width: '100%', height: '680px'}"></div>
+                    <div class="btn-list">
+                      <label for="item1" ref="marketLineButton1">
+                        <input type="checkbox" id="item1">
+                        <div class="checkbox"></div>
+                        流通笔数
+                      </label>
+                      <label for="item2" ref="marketLineButton2">
+                        <input type="checkbox" id="item2">
+                        <div class="checkbox"></div>
+                        流通总额
+                      </label>
+                      <label for="item3" ref="marketLineButton3">
+                        <input type="checkbox" id="item3">
+                        <div class="checkbox"></div>
+                        流通参与用户量
+                      </label>
+                    </div>
+                </div>
+                <div class="hangqing-total">
+                  <div class="item">
+                    <div class="left">
+                      <p class="i1">昨日流通笔数</p>
+                      <p class="i2">{{marketInfo.count || '--'}}</p>
+                    </div>
+                    <div class="right">
+                      <img src="../assets/project/up.png" v-if="marketInfo.countPer>0 ? true : false">
+                      <img src="../assets/project/ddown.png" v-if="marketInfo.countPer<0 ? true : false">
+                      <span class="up" v-if="marketInfo.countPer !== '0'" :style="marketInfo.countPer>0 ? '' : 'color:#eb2c38'">{{marketInfo.countPer? Math.abs(marketInfo.countPer): marketInfo.countPer }}%</span>
+                      <span class="up" v-else>--</span>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="left">
+                      <p class="i1">昨日流通总额</p>
+                      <p class="i2">{{marketInfo.allcount || '--'}}</p>
+                    </div>
+                    <div class="right">
+                      <img src="../assets/project/up.png" v-if="marketInfo.allcountPer>0 ? true : false">
+                      <img src="../assets/project/ddown.png" v-if="marketInfo.allcountPer<0 ? true : false">
+                      <span class="up" v-if="marketInfo.allcountPer !== '0'" :style="marketInfo.allcountPer>0 ? '' : 'color:#eb2c38'">{{marketInfo.allcountPer? Math.abs(marketInfo.allcountPer): marketInfo.allcountPer }}%</span>
+                      <span class="up" v-else>--</span>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <div class="left">
+                      <p class="i1">昨日流通参与用户量</p>
+                      <p class="i2">{{marketInfo.countUser || '--'}}</p>
+                    </div>
+                    <div class="right">
+                      <img src="../assets/project/up.png" v-if="marketInfo.countUserPer>0 ? true : false">
+                      <img src="../assets/project/ddown.png" v-if="marketInfo.countUserPer<0 ? true : false">
+                      <span class="up" v-if="marketInfo.countUserPer !== '0'" :style="marketInfo.countUserPer>0 ? '' : 'color:#eb2c38'">{{marketInfo.countUserPer? Math.abs(marketInfo.countUserPer): marketInfo.countUserPer }}%</span>
+                      <span class="up" v-else>--</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 项目信息 -->
+              <div class="tabcontent project-tab-projectInfo" v-show="tabactive === 1">
+                <div class="infobox">
+                  <div class="col4" v-if="project.preICOStartDate">
+                    <div class="item">
+                      <div class="left"><img src="../assets/project/nx1.png"></div>
+                      <div class="right">
+                        <p class="tit">开始时间</p>
+                        <p class="time">{{project.preICOStartDate}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col4" v-if="project.preICOEndDate">
+                    <div class="item">
+                      <div class="left"><img src="../assets/project/nx2.png"></div>
+                      <div class="right">
+                        <p class="tit">结束时间</p>
+                        <p class="time">{{project.preICOEndDate }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col4" v-if="project.token">
+                    <div class="item">
+                      <div class="left"><img src="../assets/project/nx3.png"></div>
+                      <div class="right">
+                        <p class="tit">代币</p>
+                        <p class="time">{{project.token }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col4" v-if="project.price">
+                    <div class="item">
+                      <div class="left"><img src="../assets/project/nx4.png"></div>
+                      <div class="right">
+                        <p class="tit">价格</p>
+                        <p class="time price">{{project.price }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col4" v-if="project.bonus">
+                    <div class="item">
+                      <div class="left"><img src="../assets/project/nx5.png"></div>
+                      <div class="right">
+                        <p class="tit">花红</p>
+                        <p class="time">{{project.bonus }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col4" v-if="project.bounty">
+                    <div class="item">
+                      <div class="left"><img src="../assets/project/nx6.png"></div>
+                      <div class="right">
+                        <p class="tit">奖励金</p>
+                        <p class="time">{{project.bounty }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col4" v-if="project.platform">
+                    <div class="item">
+                      <div class="left"><img src="../assets/project/nx7.png"></div>
+                      <div class="right">
+                        <p class="tit">平台</p>
+                        <p class="time">{{project.platform }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col4" v-if="project.accepting">
+                    <div class="item">
+                      <div class="left"><img src="../assets/project/nx8.png"></div>
+                      <div class="right">
+                        <p class="tit">接受投资的币种</p>
+                        <p class="time">{{project.accepting }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col4" v-if="project.softCap">
+                    <div class="item">
+                      <div class="left"><img src="../assets/project/nx9.png"></div>
+                      <div class="right">
+                        <p class="tit">启动最小值</p>
+                        <p class="time">{{project.softCap }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col4" v-if="project.hardCap">
+                    <div class="item">
+                      <div class="left"><img src="../assets/project/nx10.png"></div>
+                      <div class="right">
+                        <p class="tit">启动最大值</p>
+                        <p class="time">{{project.hardCap }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col4" v-if="project.country">
+                    <div class="item">
+                      <div class="left"><img src="../assets/project/nx11.png"></div>
+                      <div class="right">
+                        <p class="tit">所属国家</p>
+                        <p class="time">{{project.country }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col4" v-if="project.whiteListKYC">
+                    <div class="item">
+                      <div class="left"><img src="../assets/project/nx12.png"></div>
+                      <div class="right">
+                        <p class="tit">名单</p>
+                        <p class="time">{{project.whiteListKYC }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col4" v-if="project.restrictAreas">
+                    <div class="item">
+                      <div class="left"><img src="../assets/project/nx13.png"></div>
+                      <div class="right">
+                        <p class="tit">限制区域</p>
+                        <p class="time">{{project.restrictAreas }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col4" v-if="project.minimumInvestment">
+                    <div class="item">
+                      <div class="left"><img src="../assets/project/nx14.png"></div>
+                      <div class="right">
+                        <p class="tit">单笔交易最低额度</p>
+                        <p class="time">{{project.minimumInvestment }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col4" v-if="project.pricePreICO">
+                    <div class="item">
+                      <div class="left"><img src="../assets/project/nx15.png"></div>
+                      <div class="right">
+                        <p class="tit">PREICO价格</p>
+                        <p class="time price">{{project.pricePreICO }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col4" v-if="project.priceICO">
+                    <div class="item">
+                      <div class="left"><img src="../assets/project/nx16.png"></div>
+                      <div class="right">
+                        <p class="tit">ICO价格</p>
+                        <p class="time price">{{project.priceICO }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col4" v-if="project.preICOStartDate">
+                    <div class="item">
+                      <div class="left"><img src="../assets/project/nx17.png"></div>
+                      <div class="right">
+                        <p class="tit">PREICO开始日期</p>
+                        <p class="time">{{project.preICOStartDate }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col4" v-if="project.preICOEndDate">
+                    <div class="item">
+                      <div class="left"><img src="../assets/project/nx18.png"></div>
+                      <div class="right">
+                        <p class="tit">PREICO截止日期</p>
+                        <p class="time">{{project.preICOEndDate }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col4" v-if="project.icoStartDate">
+                    <div class="item">
+                      <div class="left"><img src="../assets/project/nx19.png"></div>
+                      <div class="right">
+                        <p class="tit">ICO开始日期</p>
+                        <p class="time">{{project.icoStartDate }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col4" v-if="project.icoEndDate">
+                    <div class="item">
+                      <div class="left"><img src="../assets/project/nx20.png"></div>
+                      <div class="right">
+                        <p class="tit">ICO截止日期</p>
+                        <p class="time">{{project.icoEndDate }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col4" v-if="project.baishupi">
+                    <div class="item">
+                      <div class="left"><img src="../assets/project/nx21.png"></div>
+                      <div class="right">
+                        <p class="tit">白皮书原创度</p>
+                        <p class="time">{{project.baishupi}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 团队信息 -->
+              <div class="tabcontent" v-show="tabactive === 2">
+                <div class="section2">
+                  <div class="swiper-container section-swiper orther_swiper">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide">
+                        <div class="col4" v-for="(partner, index) in project.partner" :key="index">
+                          <div class="item">
+                            <img :src="partner.image">
+                            <p class="name">{{partner.h3}}</p>
+                            <p class="posi">{{partner.h4}}</p>
+                            <div class="i" :class="partner.linkin?'on':''">
+                              <a :href="partner.linkin" target="_blank" :data="partner.h3" :name="'project_i_a_'+index" :id="'project_i_a_'+index">
+                                <i class="fa fa-linkedin"></i>
+                              </a>
+                            </div>
+                            <!--<div class="i"><a :href="partner.u"><i class="fa fa-linkedin"></i></a></div>-->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--<div class="swiper-scrollbar"></div>-->
+                  </div>
+                </div>
+              </div>
+              <!-- Github -->
+              <div class="tabcontent" v-show="tabactive === 3">
+                <div class="echartsbox4">
+                  <div class="echarts_loading" v-if="githubLine_loading">
                     <img :src="loading"/>
                   </div>
-                  <div ref="marketChart" class="chartbox" :style="{width: '100%', height: '680px'}"></div>
-                  <div class="btn-list">
-                    <label for="item1" ref="marketLineButton1">
-                      <input type="checkbox" id="item1">
-                      <div class="checkbox"></div>
-                      流通笔数
-                    </label>
-                    <label for="item2" ref="marketLineButton2">
-                      <input type="checkbox" id="item2">
-                      <div class="checkbox"></div>
-                      流通总额
-                    </label>
-                    <label for="item3" ref="marketLineButton3">
-                      <input type="checkbox" id="item3">
-                      <div class="checkbox"></div>
-                      流通参与用户量
-                    </label>
-                  </div>
-              </div>
-              <div class="hangqing-total">
-                <div class="item">
-                  <div class="left">
-                    <p class="i1">昨日流通笔数</p>
-                    <p class="i2">{{marketInfo.count || '--'}}</p>
-                  </div>
-                  <div class="right">
-                    <img src="../assets/project/up.png" v-if="marketInfo.countPer>0 ? true : false">
-                    <img src="../assets/project/ddown.png" v-if="marketInfo.countPer<0 ? true : false">
-                    <span class="up" v-if="marketInfo.countPer !== '0'" :style="marketInfo.countPer>0 ? '' : 'color:#eb2c38'">{{marketInfo.countPer? Math.abs(marketInfo.countPer): marketInfo.countPer }}%</span>
-                    <span class="up" v-else>--</span>
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="left">
-                    <p class="i1">昨日流通总额</p>
-                    <p class="i2">{{marketInfo.allcount || '--'}}</p>
-                  </div>
-                  <div class="right">
-                    <img src="../assets/project/up.png" v-if="marketInfo.allcountPer>0 ? true : false">
-                    <img src="../assets/project/ddown.png" v-if="marketInfo.allcountPer<0 ? true : false">
-                    <span class="up" v-if="marketInfo.allcountPer !== '0'" :style="marketInfo.allcountPer>0 ? '' : 'color:#eb2c38'">{{marketInfo.allcountPer? Math.abs(marketInfo.allcountPer): marketInfo.allcountPer }}%</span>
-                    <span class="up" v-else>--</span>
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="left">
-                    <p class="i1">昨日流通参与用户量</p>
-                    <p class="i2">{{marketInfo.countUser || '--'}}</p>
-                  </div>
-                  <div class="right">
-                    <img src="../assets/project/up.png" v-if="marketInfo.countUserPer>0 ? true : false">
-                    <img src="../assets/project/ddown.png" v-if="marketInfo.countUserPer<0 ? true : false">
-                    <span class="up" v-if="marketInfo.countUserPer !== '0'" :style="marketInfo.countUserPer>0 ? '' : 'color:#eb2c38'">{{marketInfo.countUserPer? Math.abs(marketInfo.countUserPer): marketInfo.countUserPer }}%</span>
-                    <span class="up" v-else>--</span>
-                  </div>
+                  <div class="control_button github_box">
+                      <div class="control_item">
+                        <button ref="githubLineButton1" :class="githubButton === 0 ?'check':''" @click="changeGithubButton(0)">更新量</button>
+                      </div>
+                      <div class="control_item">
+                        <button ref="githubLineButton2" :class="githubButton === 1 ?'check':''" @click="changeGithubButton(1)"> 浏览量</button>
+                      </div>
+                      <div class="control_item">
+                        <button ref="githubLineButton3"  :class="githubButton === 2 ?'check':''" @click="changeGithubButton(2)"> 收藏量</button>
+                      </div>
+                    </div>
+
+                  <div ref="githubLine" class="chartbox" :style="{width: '100%', height: '600px'}"></div>
                 </div>
               </div>
-            </div>
-            <!-- 项目信息 -->
-            <div class="tabcontent project-tab-projectInfo" v-show="tabactive === 1">
-              <div class="infobox">
-                <div class="col4" v-if="project.preICOStartDate">
-                  <div class="item">
-                    <div class="left"><img src="../assets/project/nx1.png"></div>
-                    <div class="right">
-                      <p class="tit">开始时间</p>
-                      <p class="time">{{project.preICOStartDate}}</p>
+              <!-- 社交媒体 -->
+              <div class="tabcontent" v-show="tabactive === 4">
+                <div class="echartsbox5">
+                  <div class="market_box">
+                    <div class="line_title">
+                      <h4>
+                        媒体宣传度
+                      </h4>
                     </div>
-                  </div>
-                </div>
-                <div class="col4" v-if="project.preICOEndDate">
-                  <div class="item">
-                    <div class="left"><img src="../assets/project/nx2.png"></div>
-                    <div class="right">
-                      <p class="tit">结束时间</p>
-                      <p class="time">{{project.preICOEndDate }}</p>
+                    <div style="position: relative">
+                      <div class="echarts_loading" v-if="mediaDisseminateLine_loading">
+                        <img :src="loading"/>
+                      </div>
+                      <div class="chart_box" ref="mediaDisseminateLine" style="height: 300px;width: 100%"></div>
                     </div>
-                  </div>
-                </div>
-                <div class="col4" v-if="project.token">
-                  <div class="item">
-                    <div class="left"><img src="../assets/project/nx3.png"></div>
-                    <div class="right">
-                      <p class="tit">代币</p>
-                      <p class="time">{{project.token }}</p>
+                    <div class="line_title">
+                      <h4>
+                        媒体关注度
+                      </h4>
                     </div>
-                  </div>
-                </div>
-                <div class="col4" v-if="project.price">
-                  <div class="item">
-                    <div class="left"><img src="../assets/project/nx4.png"></div>
-                    <div class="right">
-                      <p class="tit">价格</p>
-                      <p class="time price">{{project.price }}</p>
+                    <div style="position: relative">
+                      <div class="echarts_loading" v-if="mediaFollowLine_loading">
+                        <img :src="loading"/>
+                      </div>
+                      <div class="chart_box" ref="mediaFollowLine" style="height: 300px;width: 100%"></div>
                     </div>
-                  </div>
-                </div>
-                <div class="col4" v-if="project.bonus">
-                  <div class="item">
-                    <div class="left"><img src="../assets/project/nx5.png"></div>
-                    <div class="right">
-                      <p class="tit">花红</p>
-                      <p class="time">{{project.bonus }}</p>
+                    <div v-show="false" class="line_title">
+                      <h4>
+                        社交热度
+                      </h4>
                     </div>
-                  </div>
-                </div>
-                <div class="col4" v-if="project.bounty">
-                  <div class="item">
-                    <div class="left"><img src="../assets/project/nx6.png"></div>
-                    <div class="right">
-                      <p class="tit">奖励金</p>
-                      <p class="time">{{project.bounty }}</p>
+                    <div v-show="false" class="control_button github_box">
+                      <div class="control_item">
+                        <button ref="socialHeatLineButton1">Twitter粉丝数</button>
+                      </div>
+                      <!--<div class="control_item">-->
+                      <!--<button ref="socialHeatLineButton2"> Twitter评论数</button>-->
+                      <!--</div>-->
                     </div>
-                  </div>
-                </div>
-                <div class="col4" v-if="project.platform">
-                  <div class="item">
-                    <div class="left"><img src="../assets/project/nx7.png"></div>
-                    <div class="right">
-                      <p class="tit">平台</p>
-                      <p class="time">{{project.platform }}</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col4" v-if="project.accepting">
-                  <div class="item">
-                    <div class="left"><img src="../assets/project/nx8.png"></div>
-                    <div class="right">
-                      <p class="tit">接受投资的币种</p>
-                      <p class="time">{{project.accepting }}</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col4" v-if="project.softCap">
-                  <div class="item">
-                    <div class="left"><img src="../assets/project/nx9.png"></div>
-                    <div class="right">
-                      <p class="tit">启动最小值</p>
-                      <p class="time">{{project.softCap }}</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col4" v-if="project.hardCap">
-                  <div class="item">
-                    <div class="left"><img src="../assets/project/nx10.png"></div>
-                    <div class="right">
-                      <p class="tit">启动最大值</p>
-                      <p class="time">{{project.hardCap }}</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col4" v-if="project.country">
-                  <div class="item">
-                    <div class="left"><img src="../assets/project/nx11.png"></div>
-                    <div class="right">
-                      <p class="tit">所属国家</p>
-                      <p class="time">{{project.country }}</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col4" v-if="project.whiteListKYC">
-                  <div class="item">
-                    <div class="left"><img src="../assets/project/nx12.png"></div>
-                    <div class="right">
-                      <p class="tit">名单</p>
-                      <p class="time">{{project.whiteListKYC }}</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col4" v-if="project.restrictAreas">
-                  <div class="item">
-                    <div class="left"><img src="../assets/project/nx13.png"></div>
-                    <div class="right">
-                      <p class="tit">限制区域</p>
-                      <p class="time">{{project.restrictAreas }}</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col4" v-if="project.minimumInvestment">
-                  <div class="item">
-                    <div class="left"><img src="../assets/project/nx14.png"></div>
-                    <div class="right">
-                      <p class="tit">单笔交易最低额度</p>
-                      <p class="time">{{project.minimumInvestment }}</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col4" v-if="project.pricePreICO">
-                  <div class="item">
-                    <div class="left"><img src="../assets/project/nx15.png"></div>
-                    <div class="right">
-                      <p class="tit">PREICO价格</p>
-                      <p class="time price">{{project.pricePreICO }}</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col4" v-if="project.priceICO">
-                  <div class="item">
-                    <div class="left"><img src="../assets/project/nx16.png"></div>
-                    <div class="right">
-                      <p class="tit">ICO价格</p>
-                      <p class="time price">{{project.priceICO }}</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col4" v-if="project.preICOStartDate">
-                  <div class="item">
-                    <div class="left"><img src="../assets/project/nx17.png"></div>
-                    <div class="right">
-                      <p class="tit">PREICO开始日期</p>
-                      <p class="time">{{project.preICOStartDate }}</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col4" v-if="project.preICOEndDate">
-                  <div class="item">
-                    <div class="left"><img src="../assets/project/nx18.png"></div>
-                    <div class="right">
-                      <p class="tit">PREICO截止日期</p>
-                      <p class="time">{{project.preICOEndDate }}</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col4" v-if="project.icoStartDate">
-                  <div class="item">
-                    <div class="left"><img src="../assets/project/nx19.png"></div>
-                    <div class="right">
-                      <p class="tit">ICO开始日期</p>
-                      <p class="time">{{project.icoStartDate }}</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col4" v-if="project.icoEndDate">
-                  <div class="item">
-                    <div class="left"><img src="../assets/project/nx20.png"></div>
-                    <div class="right">
-                      <p class="tit">ICO截止日期</p>
-                      <p class="time">{{project.icoEndDate }}</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col4" v-if="project.baishupi">
-                  <div class="item">
-                    <div class="left"><img src="../assets/project/nx21.png"></div>
-                    <div class="right">
-                      <p class="tit">白皮书原创度</p>
-                      <p class="time">{{project.baishupi}}</p>
-                    </div>
+                    <div v-show="false" class="chart_box" ref="socialHeatLine" style="height: 300px;width: 100%"></div>
                   </div>
                 </div>
               </div>
-            </div>
-            <!-- 团队信息 -->
-            <div class="tabcontent" v-show="tabactive === 2">
-              <div class="section2">
-                <div class="swiper-container section-swiper orther_swiper">
-                  <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                      <div class="col4" v-for="(partner, index) in project.partner" :key="index">
-                        <div class="item">
-                          <img :src="partner.image">
-                          <p class="name">{{partner.h3}}</p>
-                          <p class="posi">{{partner.h4}}</p>
-                          <div class="i" :class="partner.linkin?'on':''">
-                            <a :href="partner.linkin" target="_blank" :data="partner.h3" :name="'project_i_a_'+index" :id="'project_i_a_'+index">
-                              <i class="fa fa-linkedin"></i>
-                            </a>
-                          </div>
-                          <!--<div class="i"><a :href="partner.u"><i class="fa fa-linkedin"></i></a></div>-->
+              <!-- 新闻 -->
+              <div class="tabcontent project-tab-NewsList" v-show="tabactive === 5">
+                <div class="list">
+                  <div class="media" v-for="(item, index) in NewsList" :key="index">
+                    <div class="media-left media-middle">
+                      <div class="newimg_box">
+                        <img v-if="item.titlePicture" :src="item.titlePicture"/>
+                        <div class="date_box">
+                          <span class="day">{{item.urlTime | showDay}}</span>
+                          <span class="years">{{item.urlTime | showYear}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="media-body">
+                      <h4 :name="'project_media-heading_h4_'+index" :id="'project_media-heading_h4_'+index"
+                      class="media-heading" :title="item.title" :data="item.title"
+                      @click="goArticle('/article',{sid:item.sid}, $event),
+                      trackArticle('项目页', item.title, project.project, project.sid, atvNewOrGrade==1?'新闻':'评级文章', item.sid)">
+                        {{item.title}}
+                      </h4>
+                      <p class="media-words">
+                        {{item.content}}
+                      </p>
+                      <div class="media-bottom">
+                        <ul>
+                          <li>
+                            <div class="userimg" v-if="!(item.siteName !== 'NULL' && item.siteName !== null && item.siteName !== '')">
+                              <img src="../assets/follow/user_head.png">
+                            </div>
+                            {{(item.siteName !== 'NULL' && item.siteName !== null && item.siteName !== '')?item.siteName:item.author}}
+                          </li>
+                          <li>{{item.urlTime}}</li>
+                        </ul>
+                        <div class="tips" :name="'project_tips_projectCategory_'+index" :id="'project_tips_projectCategory_'+index"
+                        v-if="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
+                        @click="goProjectByName(item.projectCategory, $event)"
+                        :data="item.projectCategory">
+                          {{item.projectCategory | labelFormat}}
+                        </div>
+                        <div class="tips" :name="'project_tips_industryCategory_'+index" :id="'project_tips_industryCategory_'+index"
+                        v-else-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
+                        @click="goIndustryByIndustry(item.industryCategory, $event)"
+                        :data="item.industryCategory">
+                          {{item.industryCategory | labelFormat}}
+                        </div>
+                        <div class="tips" :name="'project_tips_countryCategory_'+index" :id="'project_tips_countryCategory_'+index"
+                        v-else="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
+                        @click="goIndustryByCountry(item.countryCategory, $event)"
+                        :data="item.countryCategory">
+                          {{item.countryCategory | labelFormat}}
                         </div>
                       </div>
                     </div>
                   </div>
-                  <!--<div class="swiper-scrollbar"></div>-->
+                  <div class="loading_box" v-if="ListLoading">
+                    <img :src="loading"/>
+                  </div>
+                  <div class="loading_box loadmore" v-if="!ListLoading">
+                    <div class="btn btn-primary" v-if="ListHasData" @click="initNews(project.project, '290001')">加载更多</div>
+                    <span v-if="!ListHasData">没有数据了</span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <!-- Github -->
-            <div class="tabcontent" v-show="tabactive === 3">
-              <div class="echartsbox4">
-                <div class="echarts_loading" v-if="githubLine_loading">
-                  <img :src="loading"/>
-                </div>
-                <div class="control_button github_box">
-                    <div class="control_item">
-                      <button ref="githubLineButton1" :class="githubButton === 0 ?'check':''" @click="changeGithubButton(0)">更新量</button>
+              <!-- 推文 -->
+              <div class="tabcontent project-tab-TwitterOrWeibo" v-show="tabactive === 6">
+                <div class="list">
+                  <div class="item" v-for="(item, index) in TwitterList" :key="index">
+                    <div class="left TorW">
+                      <img :src="showIcon"/>
+                      <span class="day">{{item.urlDate }}</span>
                     </div>
-                    <div class="control_item">
-                      <button ref="githubLineButton2" :class="githubButton === 1 ?'check':''" @click="changeGithubButton(1)"> 浏览量</button>
+                    <div class="right">
+                      <p class="des" :data="item.content" :name="'project_des_content_'+index" :id="'project_des_content_'+index" 
+                      @click="goArticle('/article',{sid:item.sid}, $event), 
+                      trackArticle('项目页', item.title, project.project, project.sid, atvTwitterOrWeibo==1?'推文':'微博', item.sid)">{{item.content}}</p>
+                      <div class="bottom">
+                        <span class="name">{{item.author}}</span>
+                        <span class="time">{{item.urlTime}}</span>
+                        <span class="tips" :name="'project_tips_projectCategory2_'+index" :id="'project_tips_projectCategory2_'+index" 
+                        v-if="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
+                        @click="goProjectByName(item.projectCategory, $event)"
+                        :data="item.projectCategory">
+                          {{item.projectCategory | labelFormat}}
+                        </span>
+                        <span class="tips" :name="'project_tips_industryCategory2_'+index" :id="'project_tips_industryCategory2_'+index" 
+                        v-else-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
+                        @click="goIndustryByIndustry(item.industryCategory, $event)"
+                        :data="item.industryCategory">
+                          {{item.industryCategory | labelFormat}}
+                        </span>
+                        <span class="tips" :name="'project_tips_countryCategory2_'+index" :id="'project_tips_countryCategory2_'+index" 
+                        v-else="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
+                        @click="goIndustryByCountry(item.countryCategory, $event)"
+                        :data="item.countryCategory">
+                          {{item.countryCategory | labelFormat}}
+                        </span>
+                      </div>
                     </div>
-                    <div class="control_item">
-                      <button ref="githubLineButton3"  :class="githubButton === 2 ?'check':''" @click="changeGithubButton(2)"> 收藏量</button>
-                    </div>
                   </div>
-
-                <div ref="githubLine" class="chartbox" :style="{width: '100%', height: '600px'}"></div>
-              </div>
-            </div>
-            <!-- 社交媒体 -->
-            <div class="tabcontent" v-show="tabactive === 4">
-              <div class="echartsbox5">
-                <div class="market_box">
-                  <div class="line_title">
-                    <h4>
-                      媒体宣传度
-                    </h4>
+                  <div class="loading_box" v-if="ListLoading">
+                    <img :src="loading"/>
                   </div>
-                  <div style="position: relative">
-                    <div class="echarts_loading" v-if="mediaDisseminateLine_loading">
-                      <img :src="loading"/>
-                    </div>
-                    <div class="chart_box" ref="mediaDisseminateLine" style="height: 300px;width: 100%"></div>
+                  <div class="loading_box loadmore" v-if="!ListLoading">
+                    <div class="btn btn-primary" v-if="ListHasData" @click="initTwitter(project.project, '290002')">加载更多</div>
+                    <span v-if="!ListHasData">没有数据了</span>
                   </div>
-                  <div class="line_title">
-                    <h4>
-                      媒体关注度
-                    </h4>
-                  </div>
-                  <div style="position: relative">
-                    <div class="echarts_loading" v-if="mediaFollowLine_loading">
-                      <img :src="loading"/>
-                    </div>
-                    <div class="chart_box" ref="mediaFollowLine" style="height: 300px;width: 100%"></div>
-                  </div>
-                  <div v-show="false" class="line_title">
-                    <h4>
-                      社交热度
-                    </h4>
-                  </div>
-                  <div v-show="false" class="control_button github_box">
-                    <div class="control_item">
-                      <button ref="socialHeatLineButton1">Twitter粉丝数</button>
-                    </div>
-                    <!--<div class="control_item">-->
-                    <!--<button ref="socialHeatLineButton2"> Twitter评论数</button>-->
-                    <!--</div>-->
-                  </div>
-                  <div v-show="false" class="chart_box" ref="socialHeatLine" style="height: 300px;width: 100%"></div>
                 </div>
               </div>
-            </div>
-            <!-- 新闻 -->
-            <div class="tabcontent project-tab-NewsList" v-show="tabactive === 5">
-              <div class="list">
-                <div class="media" v-for="(item, index) in NewsList" :key="index">
-                  <div class="media-left media-middle">
-                    <div class="newimg_box">
-                      <img v-if="item.titlePicture" :src="item.titlePicture"/>
-                      <div class="date_box">
-                        <span class="day">{{item.urlTime | showDay}}</span>
-                        <span class="years">{{item.urlTime | showYear}}</span>
+              <!-- 微博 -->
+              <div class="tabcontent project-tab-TwitterOrWeibo" v-show="tabactive === 7">
+                <div class="list">
+                  <div class="item" v-for="(item, index) in WeiboList" :key="index">
+                    <div class="left TorW">
+                      <img :src="showIcon"/>
+                      <span class="day">{{item.urlDate }}</span>
+                    </div>
+                    <div class="right">
+                      <p class="des" :data="item.content" :name="'project_des_content_'+index" :id="'project_des_content_'+index" 
+                      @click="goArticle('/article',{sid:item.sid}, $event), 
+                      trackArticle('项目页', item.title, project.project, project.sid, atvTwitterOrWeibo==1?'推文':'微博', item.sid)">{{item.content}}</p>
+                      <div class="bottom">
+                        <span class="name">{{item.author}}</span>
+                        <span class="time">{{item.urlTime}}</span>
+                        <span class="tips" :name="'project_tips_projectCategory2_'+index" :id="'project_tips_projectCategory2_'+index" 
+                        v-if="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
+                        @click="goProjectByName(item.projectCategory, $event)"
+                        :data="item.projectCategory">
+                          {{item.projectCategory | labelFormat}}
+                        </span>
+                        <span class="tips" :name="'project_tips_industryCategory2_'+index" :id="'project_tips_industryCategory2_'+index" 
+                        v-else-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
+                        @click="goIndustryByIndustry(item.industryCategory, $event)"
+                        :data="item.industryCategory">
+                          {{item.industryCategory | labelFormat}}
+                        </span>
+                        <span class="tips" :name="'project_tips_countryCategory2_'+index" :id="'project_tips_countryCategory2_'+index" 
+                        v-else="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
+                        @click="goIndustryByCountry(item.countryCategory, $event)"
+                        :data="item.countryCategory">
+                          {{item.countryCategory | labelFormat}}
+                        </span>
                       </div>
                     </div>
                   </div>
-                  <div class="media-body">
-                    <h4 :name="'project_media-heading_h4_'+index" :id="'project_media-heading_h4_'+index"
-                    class="media-heading" :title="item.title" :data="item.title"
-                    @click="goArticle('/article',{sid:item.sid}, $event),
-                    trackArticle('项目页', item.title, project.project, project.sid, atvNewOrGrade==1?'新闻':'评级文章', item.sid)">
-                      {{item.title}}
-                    </h4>
-                    <p class="media-words">
-                      {{item.content}}
-                    </p>
-                    <div class="media-bottom">
-                      <ul>
-                        <li>
-                          <div class="userimg" v-if="!(item.siteName !== 'NULL' && item.siteName !== null && item.siteName !== '')">
-                            <img src="../assets/follow/user_head.png">
-                          </div>
-                          {{(item.siteName !== 'NULL' && item.siteName !== null && item.siteName !== '')?item.siteName:item.author}}
-                        </li>
-                        <li>{{item.urlTime}}</li>
-                      </ul>
-                      <div class="tips" :name="'project_tips_projectCategory_'+index" :id="'project_tips_projectCategory_'+index"
-                      v-if="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
-                      @click="goProjectByName(item.projectCategory, $event)"
-                      :data="item.projectCategory">
-                        {{item.projectCategory | labelFormat}}
-                      </div>
-                      <div class="tips" :name="'project_tips_industryCategory_'+index" :id="'project_tips_industryCategory_'+index"
-                      v-else-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
-                      @click="goIndustryByIndustry(item.industryCategory, $event)"
-                      :data="item.industryCategory">
-                        {{item.industryCategory | labelFormat}}
-                      </div>
-                      <div class="tips" :name="'project_tips_countryCategory_'+index" :id="'project_tips_countryCategory_'+index"
-                      v-else="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
-                      @click="goIndustryByCountry(item.countryCategory, $event)"
-                      :data="item.countryCategory">
-                        {{item.countryCategory | labelFormat}}
-                      </div>
-                    </div>
+                  <div class="loading_box" v-if="ListLoading">
+                    <img :src="loading"/>
                   </div>
-                </div>
-                <div class="loading_box" v-if="ListLoading">
-                  <img :src="loading"/>
-                </div>
-                <div class="loading_box loadmore" v-if="!ListLoading">
-                  <div class="btn btn-primary" v-if="ListHasData" @click="initNews(project.project, '290001')">加载更多</div>
-                  <span v-if="!ListHasData">没有数据了</span>
+                  <div class="loading_box loadmore" v-if="!ListLoading">
+                    <div class="btn btn-primary" v-if="ListHasData" @click="initWeibo(project.project, '290004')">加载更多</div>
+                    <span v-if="!ListHasData">没有数据了</span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <!-- 推文 -->
-            <div class="tabcontent project-tab-TwitterOrWeibo" v-show="tabactive === 6">
-              <div class="list">
-                <div class="item" v-for="(item, index) in TwitterList" :key="index">
-                  <div class="left TorW">
-                    <img :src="showIcon"/>
-                    <span class="day">{{item.urlDate }}</span>
-                  </div>
-                  <div class="right">
-                    <p class="des" :data="item.content" :name="'project_des_content_'+index" :id="'project_des_content_'+index" 
-                    @click="goArticle('/article',{sid:item.sid}, $event), 
-                    trackArticle('项目页', item.title, project.project, project.sid, atvTwitterOrWeibo==1?'推文':'微博', item.sid)">{{item.content}}</p>
-                    <div class="bottom">
-                      <span class="name">{{item.author}}</span>
-                      <span class="time">{{item.urlTime}}</span>
-                      <span class="tips" :name="'project_tips_projectCategory2_'+index" :id="'project_tips_projectCategory2_'+index" 
-                      v-if="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
-                      @click="goProjectByName(item.projectCategory, $event)"
-                      :data="item.projectCategory">
-                        {{item.projectCategory | labelFormat}}
-                      </span>
-                      <span class="tips" :name="'project_tips_industryCategory2_'+index" :id="'project_tips_industryCategory2_'+index" 
-                      v-else-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
-                      @click="goIndustryByIndustry(item.industryCategory, $event)"
-                      :data="item.industryCategory">
-                        {{item.industryCategory | labelFormat}}
-                      </span>
-                      <span class="tips" :name="'project_tips_countryCategory2_'+index" :id="'project_tips_countryCategory2_'+index" 
-                      v-else="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
-                      @click="goIndustryByCountry(item.countryCategory, $event)"
-                      :data="item.countryCategory">
-                        {{item.countryCategory | labelFormat}}
-                      </span>
+              <!-- 微信 -->
+              <div class="tabcontent project-tab-NewsList" v-show="tabactive === 8">
+                <div class="list">
+                  <div class="media" v-for="(item, index) in weixinList" :key="index">
+                    <div class="media-left media-middle">
+                      <div class="newimg_box">
+                        <img v-if="item.titlePicture" :src="item.titlePicture"/>
+                        <div class="date_box">
+                          <span class="day">{{item.urlTime | showDay}}</span>
+                          <span class="years">{{item.urlTime | showYear}}</span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div class="loading_box" v-if="ListLoading">
-                  <img :src="loading"/>
-                </div>
-                <div class="loading_box loadmore" v-if="!ListLoading">
-                  <div class="btn btn-primary" v-if="ListHasData" @click="initTwitter(project.project, '290002')">加载更多</div>
-                  <span v-if="!ListHasData">没有数据了</span>
-                </div>
-              </div>
-            </div>
-            <!-- 微博 -->
-            <div class="tabcontent project-tab-TwitterOrWeibo" v-show="tabactive === 7">
-              <div class="list">
-                <div class="item" v-for="(item, index) in WeiboList" :key="index">
-                  <div class="left TorW">
-                    <img :src="showIcon"/>
-                    <span class="day">{{item.urlDate }}</span>
-                  </div>
-                  <div class="right">
-                    <p class="des" :data="item.content" :name="'project_des_content_'+index" :id="'project_des_content_'+index" 
-                    @click="goArticle('/article',{sid:item.sid}, $event), 
-                    trackArticle('项目页', item.title, project.project, project.sid, atvTwitterOrWeibo==1?'推文':'微博', item.sid)">{{item.content}}</p>
-                    <div class="bottom">
-                      <span class="name">{{item.author}}</span>
-                      <span class="time">{{item.urlTime}}</span>
-                      <span class="tips" :name="'project_tips_projectCategory2_'+index" :id="'project_tips_projectCategory2_'+index" 
-                      v-if="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
-                      @click="goProjectByName(item.projectCategory, $event)"
-                      :data="item.projectCategory">
-                        {{item.projectCategory | labelFormat}}
-                      </span>
-                      <span class="tips" :name="'project_tips_industryCategory2_'+index" :id="'project_tips_industryCategory2_'+index" 
-                      v-else-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
-                      @click="goIndustryByIndustry(item.industryCategory, $event)"
-                      :data="item.industryCategory">
-                        {{item.industryCategory | labelFormat}}
-                      </span>
-                      <span class="tips" :name="'project_tips_countryCategory2_'+index" :id="'project_tips_countryCategory2_'+index" 
-                      v-else="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
-                      @click="goIndustryByCountry(item.countryCategory, $event)"
-                      :data="item.countryCategory">
-                        {{item.countryCategory | labelFormat}}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div class="loading_box" v-if="ListLoading">
-                  <img :src="loading"/>
-                </div>
-                <div class="loading_box loadmore" v-if="!ListLoading">
-                  <div class="btn btn-primary" v-if="ListHasData" @click="initWeibo(project.project, '290004')">加载更多</div>
-                  <span v-if="!ListHasData">没有数据了</span>
-                </div>
-              </div>
-            </div>
-            <!-- 微信 -->
-            <div class="tabcontent project-tab-NewsList" v-show="tabactive === 8">
-              <div class="list">
-                <div class="media" v-for="(item, index) in weixinList" :key="index">
-                  <div class="media-left media-middle">
-                    <div class="newimg_box">
-                      <img v-if="item.titlePicture" :src="item.titlePicture"/>
-                      <div class="date_box">
-                        <span class="day">{{item.urlTime | showDay}}</span>
-                        <span class="years">{{item.urlTime | showYear}}</span>
+                    <div class="media-body">
+                      <h4 :name="'project_media-heading_h4_'+index" :id="'project_media-heading_h4_'+index"
+                      class="media-heading" :title="item.title" :data="item.title"
+                      @click="goArticle('/article',{sid:item.sid}, $event),
+                      trackArticle('项目页', item.title, project.project, project.sid, atvNewOrGrade==1?'新闻':'评级文章', item.sid)">
+                        {{item.title}}
+                      </h4>
+                      <p class="media-words">
+                        {{item.content}}
+                      </p>
+                      <div class="media-bottom">
+                        <ul>
+                          <li>
+                            <div class="userimg" v-if="!(item.siteName !== 'NULL' && item.siteName !== null && item.siteName !== '')">
+                              <img src="../assets/follow/user_head.png">
+                            </div>
+                            {{(item.siteName !== 'NULL' && item.siteName !== null && item.siteName !== '')?item.siteName:item.author}}
+                          </li>
+                          <li>{{item.urlTime}}</li>
+                        </ul>
+                        <div class="tips" :name="'project_tips_projectCategory_'+index" :id="'project_tips_projectCategory_'+index"
+                        v-if="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
+                        @click="goProjectByName(item.projectCategory, $event)"
+                        :data="item.projectCategory">
+                          {{item.projectCategory | labelFormat}}
+                        </div>
+                        <div class="tips" :name="'project_tips_industryCategory_'+index" :id="'project_tips_industryCategory_'+index"
+                        v-else-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
+                        @click="goIndustryByIndustry(item.industryCategory, $event)"
+                        :data="item.industryCategory">
+                          {{item.industryCategory | labelFormat}}
+                        </div>
+                        <div class="tips" :name="'project_tips_countryCategory_'+index" :id="'project_tips_countryCategory_'+index"
+                        v-else="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
+                        @click="goIndustryByCountry(item.countryCategory, $event)"
+                        :data="item.countryCategory">
+                          {{item.countryCategory | labelFormat}}
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div class="media-body">
-                    <h4 :name="'project_media-heading_h4_'+index" :id="'project_media-heading_h4_'+index"
-                    class="media-heading" :title="item.title" :data="item.title"
-                    @click="goArticle('/article',{sid:item.sid}, $event),
-                    trackArticle('项目页', item.title, project.project, project.sid, atvNewOrGrade==1?'新闻':'评级文章', item.sid)">
-                      {{item.title}}
-                    </h4>
-                    <p class="media-words">
-                      {{item.content}}
-                    </p>
-                    <div class="media-bottom">
-                      <ul>
-                        <li>
-                          <div class="userimg" v-if="!(item.siteName !== 'NULL' && item.siteName !== null && item.siteName !== '')">
-                            <img src="../assets/follow/user_head.png">
-                          </div>
-                          {{(item.siteName !== 'NULL' && item.siteName !== null && item.siteName !== '')?item.siteName:item.author}}
-                        </li>
-                        <li>{{item.urlTime}}</li>
-                      </ul>
-                      <div class="tips" :name="'project_tips_projectCategory_'+index" :id="'project_tips_projectCategory_'+index"
-                      v-if="item.projectCategory !==null && item.projectCategory !== '' && item.projectCategory !==undefined && item.projectCategory !=='NULL'"
-                      @click="goProjectByName(item.projectCategory, $event)"
-                      :data="item.projectCategory">
-                        {{item.projectCategory | labelFormat}}
-                      </div>
-                      <div class="tips" :name="'project_tips_industryCategory_'+index" :id="'project_tips_industryCategory_'+index"
-                      v-else-if="item.industryCategory !==null && item.industryCategory !== '' && item.industryCategory !==undefined && item.industryCategory !=='NULL'"
-                      @click="goIndustryByIndustry(item.industryCategory, $event)"
-                      :data="item.industryCategory">
-                        {{item.industryCategory | labelFormat}}
-                      </div>
-                      <div class="tips" :name="'project_tips_countryCategory_'+index" :id="'project_tips_countryCategory_'+index"
-                      v-else="item.countryCategory !==null && item.countryCategory !== '' && item.countryCategory !==undefined && item.countryCategory !=='NULL'"
-                      @click="goIndustryByCountry(item.countryCategory, $event)"
-                      :data="item.countryCategory">
-                        {{item.countryCategory | labelFormat}}
-                      </div>
-                    </div>
+                  <div class="loading_box" v-if="ListLoading">
+                    <img :src="loading"/>
                   </div>
-                </div>
-                <div class="loading_box" v-if="ListLoading">
-                  <img :src="loading"/>
-                </div>
-                <div class="loading_box loadmore" v-if="!ListLoading">
-                  <div class="btn btn-primary" v-if="ListHasData" @click="initWeixin(project.project, '290001')">加载更多</div>
-                  <span v-if="!ListHasData">没有数据了</span>
+                  <div class="loading_box loadmore" v-if="!ListLoading">
+                    <div class="btn btn-primary" v-if="ListHasData" @click="initWeixin(project.project, '290001')">加载更多</div>
+                    <span v-if="!ListHasData">没有数据了</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="rightmain">
-          <div class="swiper-container advert-swiper">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide"><img src="../assets/bangdan1.jpg"></div>
-              <div class="swiper-slide"><img src="../assets/bangdan2.jpg"></div>
+          <div class="rightmain">
+            <div class="swiper-container advert-swiper">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="../assets/bangdan1.jpg"></div>
+                <div class="swiper-slide"><img src="../assets/bangdan2.jpg"></div>
+              </div>
+              <div class="swiper-pagination"></div>
+              <div class="swiper-button-prev"><i class="fa fa-angle-left"></i></div>
+              <div class="swiper-button-next"><i class="fa fa-angle-right"></i></div>
             </div>
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-prev"><i class="fa fa-angle-left"></i></div>
-            <div class="swiper-button-next"><i class="fa fa-angle-right"></i></div>
-          </div>
-          <div class="recommendproject">
-            <div class="recommendhead">推荐项目</div>
-            <div class="recommend-item" v-for="(project, index) in recommendProjects" :key="index">
-              <router-link :to="'/project?sid='+project.sid" target="_blank" :data="project.project">
-                <div class="left"><img :src="project.logoSrc"></div>
-                <div class="right">
-                  <p class="r1">{{project.project}}</p>
-                  <p class="r2">{{project.introduction}}</p>
-                  <p class="r3">{{project.totalScore | showTatolCore}}</p>
-                </div>
-              </router-link>
+            <div class="recommendproject">
+              <div class="recommendhead">推荐项目</div>
+              <div class="recommend-item" v-for="(project, index) in recommendProjects" :key="index">
+                <router-link :to="'/project?sid='+project.sid" target="_blank" :data="project.project">
+                  <div class="left"><img :src="project.logoSrc"></div>
+                  <div class="center">
+                    <p class="r1">{{project.project}}</p>
+                    <p class="r2">{{project.token | formatRecommendProjects}}</p>
+                    <p class="r3">{{project.introduction}}</p>
+                  </div>
+                  <div class="right">{{project.totalScore | showTatolCore}}</div>
+                </router-link>
+              </div>
             </div>
           </div>
         </div>
@@ -2271,6 +2270,13 @@
       },
     },
     filters: {
+      formatRecommendProjects (val) {
+        if (val !== null || val !== '') {
+          return  '( '+ val +' )';
+        }else{
+          return '--';
+        }
+      },
       showTatolCore(obj) {
         let num = parseFloat(obj).toFixed(2) + '';
         // console.log(num);
