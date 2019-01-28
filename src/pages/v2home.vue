@@ -1,7 +1,7 @@
 <template>
 	<div class="page v2home-page">
 		<v2header/>
-		<div class="v2maintainer v2home-v2maintainer">
+		<div class="v2maintainer pd0">
 			<!-- content here -->
 			<div class="banner-search-section">
 				<div class="banner-container">

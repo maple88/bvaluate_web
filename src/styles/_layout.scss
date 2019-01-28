@@ -79,6 +79,9 @@ a, a:hover {
   @media ($max-sm) {
     padding-top: 100px;
   }
+  &.pd0{
+    padding: 0;
+  }
 }
 
 .btn-primary {

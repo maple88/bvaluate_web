@@ -258,6 +258,10 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
+				@media ($max-xs) {
+					font-size: 14px;
+					padding: 15px 0 20px;
+				}
 				.moreimg{
 					display: block;
 					margin: 0 0 0 8px;
@@ -265,6 +269,10 @@
 					height: 9px;
 					overflow: hidden;
 					background: url(../assets/moredown.png) 0 -11px / 100% no-repeat;
+					@media ($max-xs) {
+						width: 13px;
+						height: 6px;
+					}
 				}
 				&:hover{
 					color: $mainColor;
@@ -273,6 +281,12 @@
 						background: url(../assets/moredown.png) 0 0 / 100% no-repeat;
 					}
 				}
+			}
+			.nothing{
+				font-size: 16px;
+				text-align: center;
+				padding: 60px 0;
+				color: #666;
 			}
 		}
 	}

@@ -1,12 +1,12 @@
 <template>
   <div class="page v2list">
     <v2header/>
-    <div class="v2maintainer v2home-v2maintainer">
+    <div class="v2maintainer pd0">
       <div class="swiper-container" id="list-banner-swiper">
         <div class="swiper-wrapper">
-          <div class="swiper-slide"><img src="../assets/list/banner1.jpg"></div>
-          <!-- <div class="swiper-slide"><img src="../assets/list/banner1.jpg"></div>
-          <div class="swiper-slide"><img src="../assets/list/banner1.jpg"></div> -->
+          <div class="swiper-slide"><img src="../assets/list/banner.jpg"></div>
+          <!-- <div class="swiper-slide"><img src="../assets/list/banner.jpg"></div>
+          <div class="swiper-slide"><img src="../assets/list/banner.jpg"></div> -->
         </div>
         <div class="swiper-pagination list-banner-pagination"></div>
         <!-- <div class="swiper-button-prev swiper-button-white"></div> -->

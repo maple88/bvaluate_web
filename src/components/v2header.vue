@@ -57,7 +57,7 @@
             <ul class="nav navbar-nav">
               <router-link tag="li" to="/home" active-class="active"><a data="首页">首页</a></router-link>
               <router-link tag="li" to="/list" active-class="active"><a data="榜单">榜单</a></router-link>
-              <router-link tag="li" to="/news" active-class="active"><a data="资讯">资讯</a></router-link>
+              <router-link tag="li" to="/v2news" active-class="active"><a data="资讯">资讯</a></router-link>
               <li v-show="token"><a href="javascript:;" data="新增项目" @click="analysis()">新增项目</a></li>
               <li v-show="!token" @click="isLogin('新增项目')"><a data="新增项目">新增项目</a></li>
             </ul>
@@ -391,6 +391,8 @@
         let router = this.$router.history.current;
         if (!router.meta.headerNobg) {
           this.hasbg = true;
+        }else{
+          this.hasbg = false;
         }
         if (router.name === 'home') {
           this.showSearch = false;

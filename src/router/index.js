@@ -5,14 +5,15 @@ import userCenter from '@/pages/userCenter/userCenter'
 import my from '@/pages/myProfile'
 import follow from '@/pages/follow'
 import news from '@/pages/news'
+import v2news from '@/pages/v2news'
 import v2home from '@/pages/v2home'
 import industry from '@/pages/industry'
 import recommend from '@/pages/recommend'
 import article from '@/pages/article'
-import project from '@/pages/project'
+import v2project from '@/pages/v2project'
 import author from '@/pages/author'
-import list from '@/pages/list'
-import search from '@/pages/search'
+import v2list from '@/pages/v2list'
+import v2search from '@/pages/v2search'
 import newsList from '@/pages/newsList'
 import pdfShow from '@/pages/pdfShow'
 import download from '@/pages/download'
@@ -54,7 +55,7 @@ export default new Router({
     {
       path: '/list',
       name: 'list',
-      component: list,
+      component: v2list,
       meta: {
         pageTitle: '榜单',
         headerNobg: true
@@ -90,6 +91,13 @@ export default new Router({
       },
     },
     {
+      path: '/v2news',
+      component: v2news,
+      meta: {
+        pageTitle: '资讯'
+      },
+    },
+    {
       path: '/industry',
       component: industry
     },
@@ -106,7 +114,7 @@ export default new Router({
     },
     {
       path: '/project',
-      component: project,
+      component: v2project,
       meta: {
         pageTitle: '项目详情页'
       }
@@ -120,7 +128,7 @@ export default new Router({
     },
     {
       path: '/search',
-      component: search
+      component: v2search
     },
     {
       path: '/newsList',

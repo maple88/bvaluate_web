@@ -2571,6 +2571,7 @@
     >.center {
       width: 70%;
       padding-left: 0;
+      margin: 0 0 60px;
       @media ($max-md) {
         width: 100%;
         padding: 0;
@@ -2703,6 +2704,9 @@
         border-radius: 3px;
         @media ($max-xs) {
           padding: 0 15px;
+        }
+        >ul{
+          margin: 0;
         }
         .medialist{
           .media{
@@ -3015,13 +3019,19 @@
     >.right{
       border-radius: 3px;
       overflow: hidden;
+      margin: 0 0 60px;
       @media ($max-md) {
         width: 100%;
         float: none;
+        margin: 0 0 20px;
+      }
+      @media ($max-sm) {
+        margin: 0 0 15px;
       }
       .right_item .hot_content>ul.scoll_style{
         max-height: 700px;
         height: auto;
+        margin: 0;
       }
       .right_item .hot_content>ul>li .news_item>.item_body{
         display: flex;
@@ -3079,6 +3089,75 @@
       .right_item .hot_content>ul.scoll_style{
         @media ($max-xs) {
           height: 300px;
+        }
+      }
+      .right_item{
+        &.mgb-20{
+          margin: 0 0 20px;
+          @media ($max-xs) {
+            margin: 0 0 15px;
+          }
+        }
+      }
+      .recommend-item{
+        width: 100%;
+        height: 150px;
+        border-radius: 5px;
+        overflow: hidden;
+        margin: 0 0 15px;
+        background: url(../assets/project/recommend-banner1.jpg) center / cover no-repeat;
+        a{
+          display: flex;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+          @media(max-width: 767px) {
+            flex-direction: column;
+          }
+        }
+        .left{
+          flex: 0 0 72px;
+          min-width: 72px;
+          height: 72px;
+          border: 2px solid #5f6da8;
+          overflow: hidden;
+          border-radius: 50%;
+          margin: 0 15px;
+          img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+        p{
+          margin: 0;
+          color: #fff;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .r1{
+          font-size: 16px;
+        }
+        .r2{
+          font-size: 12px;
+          margin: 10px 0;
+        }
+        .r3{
+          font-size: 12px;
+        }
+        .center{
+          flex: 1;
+          overflow: hidden;
+          padding: 0 15px 0 0;
+        }
+        .right{
+          flex: 0 0 70px;
+          min-width: 70px;
+          overflow: hidden;
+          margin: 0 15px 0 0;
+          font-size: 18px;
+          color: #fff;
         }
       }
     }

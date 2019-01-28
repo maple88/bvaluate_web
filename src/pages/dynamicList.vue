@@ -19,6 +19,7 @@
 							<img src="../assets/login/loading.gif"/>
 						</div>
 						<div class="loadmore" v-if="showLoadMore" @click="getData">加载更多<i class="moreimg"></i></div>
+						<div class="nothing" v-if="nothing">什么也没有~</div>
 					</div>
 				</div>
 			</div>
@@ -39,7 +40,8 @@
 				list: [],
 				pageNo: 0,
 				showLoadMore: false,
-				showloading: false
+				showloading: false,
+				nothing: false
 			}
 		},
 		mounted () {
@@ -59,7 +61,7 @@
 					this.showLoadMore = true;
 					this.list = this.list.concat(res.data.content);
 					if (res.data.totalElements === 0) {
-						alert('没数据');
+						this.nothing = true;
 					}else if (res.data.totalPages == (res.data.pageNo+1)) {
 						this.showLoadMore = false;
 					}else{

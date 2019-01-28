@@ -44,10 +44,12 @@
 
   <div class="list-project-flexbox">
     <div class="left">
-      <div class="img-box"><a href="/#/project?sid={{d.sid}}" target="_blank"><img src="{{d.logoSrc}}"></a></div>
-      {{#  if(d.start === '1'){ }}
-      <div class="crown"><img src="./static/images/crown.png"></div>
-      {{#  } }}
+      <a href="/#/project?sid={{d.sid}}" target="_blank">
+        <div class="img-box"><img src="{{d.logoSrc}}"></div>
+        {{#  if(d.start === '1'){ }}
+        <div class="crown"><img src="./static/images/crown.png"></div>
+        {{#  } }}
+      </a>
     </div>
     <div class="info">
       <p class="tit"><a href="/#/project?sid={{d.sid}}" target="_blank">{{d.project}}</a></p>
