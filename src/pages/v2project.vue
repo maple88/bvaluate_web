@@ -924,8 +924,6 @@
           that.ListLoading = false;
         })
       },
-
-
       // 推荐项目
       initRecommendProjects(categoryName) {
         let that = this;

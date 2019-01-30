@@ -851,10 +851,10 @@
       }
       @media ($max-sm) {
         overflow: auto;
-        padding: 0;
       }
       @media ($max-xs) {
         height: 55px;
+        padding: 0;
       }
       .item {
         position: relative;
@@ -941,7 +941,9 @@
           }
         }
         @media ($max-xs) {
-          flex: 0 0 22%;
+          margin: 0;
+          flex: 1;
+          text-align: center;
           font-size: 14px;
           .dropdown-menu {
             li {
@@ -1626,6 +1628,9 @@
     border-radius: 5px;
     overflow: hidden;
     padding: 20px 45px;
+    @media ($max-xs) {
+      padding: 15px;
+    }
     .infobox {
       display: flex;
       flex-direction: row;
@@ -1686,6 +1691,10 @@
     .des {
       line-height: 1.5;
       margin: 0 0 35px;
+      @media ($max-xs) {
+        margin: 0 0 15px;
+        font-size: 12px;
+      }
     }
     .flexbox {
       overflow: hidden;
@@ -1701,9 +1710,17 @@
         justify-content: space-between;
         margin: 0 0 26px;
         align-items: center;
+        @media ($max-sm) {
+          flex: 0 0 100%;
+          min-width: 100%;
+          margin: 0 0 15px;
+        }
         .iteml, .itemr {
           font-size: 14px;
           color: #1a1a1a;
+          @media ($max-xs) {
+            font-size: 12px;
+          }
         }
         .itemr {
           color: #424242;
@@ -1714,6 +1731,10 @@
             background: $mainColor;
             border-radius: 3px;
             cursor: pointer;
+            @media ($max-xs) {
+              font-size: 12px;
+              padding: 4px 12px;
+            }
           }
         }
       }
