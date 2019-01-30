@@ -94,6 +94,55 @@
       </div>
       <div class="project-main">
         <div class="container v2container">
+          <div class="middlemain">
+            <div class="mainrow">
+              <div class="maincol">
+                <div class="item score-item">
+                  <div class="head">评分</div>
+                  <div class="score-main">
+                    <div class="scorel">
+                      <!--进度条-->
+                    </div>
+                    <div class="scorer">
+                      <p><span>总评榜排名：<i>23</i></span><span>20<img src="../assets/up.png"></span></p>
+                      <p><span>STO榜排名：<i>23</i></span><span>20<img src="../assets/up.png"></span></p>
+                      <p><span>创投板排名：<i>10</i></span><span>20<img src="../assets/down.png"></span></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="maincol">
+                <div class="item industry-item">
+                  <div class="head">行业</div>
+                  <div class="industry-tab">
+                    <div class="on">众筹</div>
+                    <div>行业行业行业</div>
+                    <div>众筹众筹众筹众筹</div>
+                  </div>
+                  <div class="industry-main">
+                    <!--三角形-->
+                  </div>
+                </div>
+              </div>
+              <div class="maincol">
+                <div class="item media-item">
+                  <div class="head">媒体声量</div>
+                  <div class="media-main">
+                    <div class="medial">
+                      <!--进度条-->
+                    </div>
+                    <div class="mediar">
+                      <div class="computerbox">
+                        <p class="wordtop">345篇</p>
+                        <p class="wordbot">近一周</p>
+                      </div>
+                      <p class="des">媒体报道量</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="leftmain">
             <div class="tophead">
               <div class="item">
@@ -416,66 +465,6 @@
               </div>
               <!-- 资讯 -->
               <div class="tabcontent project-tab-news" v-show="tabactive >= 5">
-                <!--<div class="tab-lable">-->
-                <!--<div :class="tabactive === index+tablist.length ? 'on' : ''" v-for="(item, index) in tabinlist" :key="index" @click="tabindex(index+tablist.length)">{{item}}</div>-->
-                <!--</div>-->
-                <!--<div class="medialist">-->
-                <!--<div v-show="tabactive === 5">-->
-                <!--<div class="item" v-for="(news, index) in newsList" :key="index">-->
-                <!--<div class="leftimg">-->
-                <!--<img :src="news.titlePicture===''?newsimg:news.titlePicture">-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--<div v-show="tabactive === 6">推文</div>-->
-                <!--<div v-show="tabactive === 7">微博</div>-->
-                <!--<div v-show="tabactive === 8">微信</div>-->
-                <!--</div>-->
-                <!-- <div class="medialist">
-                  <div class="media" v-for="(news, index) in NewsList" :key="index">
-                    <div class="media-left media-middle"
-                         v-if="news.dataType === 'NEWS'||news.dataType === 'WEIXIN'">
-                      <div class="newimg_box" :data="news.title"
-                      :name="'search_newimg_box_title_'+index" :id="'search_newimg_box_title_'+index"
-                      @click="goArticle('/article',{sid:news.sid}, $event)">
-                        <img :src="news.titlePicture===''?newsimg:news.titlePicture"/>
-                        <span class="time" v-if="!news.titlePicture">{{news.urlDate | formatTime}}</span>
-                      </div>
-                    </div>
-                    <div class="media-body">
-                      <h4 class="media-heading" v-if="!(news.dataType === 'WEIBO' || news.dataType === 'TWITTER')">
-                        <span class="tips"
-                        :name="'search_tips_projectCategory_'+index" :id="'search_tips_projectCategory_'+index"
-                        v-if="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL' || news.dataType !== 'WEIBO' || news.dataType !== 'TWITTER'"
-                        @click="goProjectByName(news.projectCategory, $event), trackProject('搜索页文章的项目标签', news.projectCategory, '搜索页文章的项目标签没有项目ID', '搜索页文章的项目标签没有排行榜位置', '搜索页文章的项目标签没有项目总分')"
-                        :data="news.projectCategory"
-                        >
-                          {{news.projectCategory | labelFormat}}
-                        </span>
-                        <span class="tit" :data="news.title" :title="news.title"
-                        :name="'search_media-heading_title_'+index" :id="'search_media-heading_title_'+index"
-                        @click="goArticle('/article',{sid:news.sid}, $event)"
-                        v-html="news.title"></span>
-                      </h4>
-                      <p class="media-words" v-html="news.content">
-                      </p>
-                      <div class="media-bottom">
-                        <ul>
-                          <li
-                            v-if="!(news.siteName !== 'NULL' && news.siteName !== null && news.siteName !== '')"
-                            :name="'search_media-bottom_author_'+index" :id="'search_media-bottom_author_'+index"
-                            @click="goArticle('/author',{author: news.author,type: 'author'}, $event)" :data="news.author">
-                            {{news.author}}
-                          </li>
-                          <li v-else :name="'search_media-bottom_siteName_'+index" :id="'search_media-bottom_siteName_'+index"  :data="news.siteName" @click="goArticle('/author',{author: news.siteName,type: 'siteName'}, $event)">
-                            {{news.siteName}}
-                          </li>
-                          <li>{{news.urlTime}}</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
                 <div class="follow_list serach_follow_list">
                   <div class="label_box">
                     <a name="search_label_box_xinwen" id="search_label_box_xinwen" data="新闻" href="javascript:void(0);"
