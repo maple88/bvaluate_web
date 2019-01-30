@@ -3100,18 +3100,33 @@
         }
       }
       .recommend-item{
+        position: relative;
         width: 100%;
         height: 150px;
         border-radius: 5px;
         overflow: hidden;
         margin: 0 0 15px;
         background: url(../assets/project/recommend-banner1.jpg) center / cover no-repeat;
+        @media ($max-md) {
+          flex: 0 0 49%;
+          min-width: 0 0 49%;
+        }
+        @media ($max-sm) {
+          height: auto;
+          padding: 15px;
+        }
+        @media ($max-sm) {
+          margin: 0 0 8px;
+        }
+        &:last-child{
+          margin: 0;
+        }
         a{
           display: flex;
           align-items: center;
           width: 100%;
           height: 100%;
-          @media(max-width: 767px) {
+          @media ($max-sm) {
             flex-direction: column;
           }
         }
@@ -3123,6 +3138,15 @@
           overflow: hidden;
           border-radius: 50%;
           margin: 0 15px;
+          @media ($max-sm) {
+            width: 72px;
+            margin: 0 0 8px;
+          }
+          @media ($max-xs) {
+            width: 60px;
+            height: 60px;
+            margin: 0 0 8px;
+          }
           img{
             width: 100%;
             height: 100%;
@@ -3138,10 +3162,16 @@
         }
         .r1{
           font-size: 16px;
+          @media ($max-xs) {
+            font-size: 14px;
+          }
         }
         .r2{
           font-size: 12px;
           margin: 10px 0;
+          @media ($max-sm) {
+            margin: 3px 0;
+          }
         }
         .r3{
           font-size: 12px;
@@ -3150,6 +3180,12 @@
           flex: 1;
           overflow: hidden;
           padding: 0 15px 0 0;
+          @media ($max-sm) {
+            flex: inherit;
+            text-align: center;
+            width: 100%;
+            padding: 0;
+          }
         }
         .right{
           flex: 0 0 70px;
@@ -3158,6 +3194,16 @@
           margin: 0 15px 0 0;
           font-size: 18px;
           color: #fff;
+          @media ($max-sm) {
+            flex: inherit;
+            min-width: inherit;
+            position: absolute;
+            top: 15px;
+            right: 0;
+          }
+          @media ($max-xs) {
+            font-size: 14px;
+          }
         }
       }
     }
