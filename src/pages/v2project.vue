@@ -636,7 +636,7 @@
       return {
         tablist: ['行情', '简介', '团队', '技术', '市场'],
         tabinlist: ['新闻', '推文', '微博', '微信'],
-        tabactive: 5,
+        tabactive: 0,
         loading: loading,
         ListLoading: true,
         nicon: nicon,
@@ -928,11 +928,10 @@
 
       // 推荐项目
       initRecommendProjects(categoryName) {
-        // let that = this;
-        // that.$axios.get('/api/ICO/relatedICO?categoryName=' + categoryName).then(function (res) {
-        //   that.recommendProjects = res.data
-        // })
-        console.log('notes');
+        let that = this;
+        that.$axios.get('/api/ICO/relatedICO?categoryName=' + categoryName).then(function (res) {
+          that.recommendProjects = res.data
+        })
       },
       goArticle(url, query, event) {
         let routeData = this.$router.resolve({path: url, query: query});
@@ -1008,371 +1007,363 @@
         }
       },
       getHotInfo(icoName) {
-        // let uid = localStorage.getItem('apelink_user_uid')
-        // let url = '/api/tradition/HotESICOScore/' + icoName;
-        // let headers = {'uid': uid};
-        // this.$axios({
-        //   method: 'get',
-        //   url: url,
-        //   headers: headers
-        // }).then((res) => {
-        //   this.radar_loading = false;
-        //   this.hotInfo = res.data;
-        //   let res1 = res.data;
-        //   let dataArr = [];
-        //   let arr1 = [res1.fundsupervision, res1.fundamentalsanalysis, res1.teamanalysis, res1.technicalanalysis, res1.marketanalysis];
-        //   let arr2 = [res1.fundsupervisionYesd, res1.fundamentalsanalysisYesd, res1.teamanalysisYesd, res1.technicalanalysisYesd, res1.marketanalysisYesd];
-        //   let max = Math.max.apply(null, arr1);
-        //   let temp = Math.max.apply(null, arr2);
-        //   if (temp > max) {
-        //     max = temp
-        //   }
-        //   dataArr.push(arr1);
-        //   dataArr.push(arr2);
-        //   this.initRadar({
-        //     max: max,
-        //     data: dataArr
-        //   });
-        // })
-        console.log('notes');
+        let uid = localStorage.getItem('apelink_user_uid')
+        let url = '/api/tradition/HotESICOScore/' + icoName;
+        let headers = {'uid': uid};
+        this.$axios({
+          method: 'get',
+          url: url,
+          headers: headers
+        }).then((res) => {
+          this.radar_loading = false;
+          this.hotInfo = res.data;
+          let res1 = res.data;
+          let dataArr = [];
+          let arr1 = [res1.fundsupervision, res1.fundamentalsanalysis, res1.teamanalysis, res1.technicalanalysis, res1.marketanalysis];
+          let arr2 = [res1.fundsupervisionYesd, res1.fundamentalsanalysisYesd, res1.teamanalysisYesd, res1.technicalanalysisYesd, res1.marketanalysisYesd];
+          let max = Math.max.apply(null, arr1);
+          let temp = Math.max.apply(null, arr2);
+          if (temp > max) {
+            max = temp
+          }
+          dataArr.push(arr1);
+          dataArr.push(arr2);
+          this.initRadar({
+            max: max,
+            data: dataArr
+          });
+        })
       },
       getDetails(icoName) {
-        // let uid = localStorage.getItem('apelink_user_uid');
-        // let headers = {'uid': uid};
-        // let url = '/api/tradition/detailsNew/' + icoName;
-        // this.$axios({
-        //   method: 'get',
-        //   url: url,
-        //   headers: headers
-        // }).then((res) => {
-        //   this.projectTabs = res.data.catalog1Avg.replace(/"/g, "").split(';');
-        //   this.hotInfoTips = JSON.parse(res.data.anaString);
-        // })
-        console.log('notes');
+        let uid = localStorage.getItem('apelink_user_uid');
+        let headers = {'uid': uid};
+        let url = '/api/tradition/detailsNew/' + icoName;
+        this.$axios({
+          method: 'get',
+          url: url,
+          headers: headers
+        }).then((res) => {
+          this.projectTabs = res.data.catalog1Avg.replace(/"/g, "").split(';');
+          this.hotInfoTips = JSON.parse(res.data.anaString);
+        })
       },
       getTabs(icoName) {
-        // this.$axios.get(`/api/tradition/catalog1Avg/${icoName}`).then(res => {
-        //   this.projectTabs = res.data.split(';');
-        // })
-        console.log('notes');
+        this.$axios.get(`/api/tradition/catalog1Avg/${icoName}`).then(res => {
+          this.projectTabs = res.data.split(';');
+        })
       },
       getScoreChart(icoName) {
-        // this.$axios.get(`/api/tradition/HotESICOHisScore/${icoName}`).then(res => {
-        //   this.scoreChart_loading = false;
-        //   this.initScoreChart(res.data)
-        // })
-        console.log('notes');
+        this.$axios.get(`/api/tradition/HotESICOHisScore/${icoName}`).then(res => {
+          this.scoreChart_loading = false;
+          this.initScoreChart(res.data)
+        })
       },
       initProjectMarket(icoName, success) {
-        // this.$axios.get(`/api/tradition/mark/${icoName}`).then(res => {
-        //   this.marketInfo = res.data[0];
-        //   success(res.data);
-        // })
-        console.log('notes');
+        this.$axios.get(`/api/tradition/mark/${icoName}`).then(res => {
+          this.marketInfo = res.data[0];
+          success(res.data);
+        })
       },
       initGithubChart(icoName) {
-        // this.$axios.get(`/api/tradition/githubScore/${icoName}`).then(res => {
-        //   console.log(res)
-        //   res.data.reverse();
-        //   this.githubData = res.data;
-        //   this.githubLine_loading = false;
-        //   this.initGithubLine(res.data)
-        // })
-        console.log('notes');
+        this.$axios.get(`/api/tradition/githubScore/${icoName}`).then(res => {
+          console.log(res)
+          res.data.reverse();
+          this.githubData = res.data;
+          this.githubLine_loading = false;
+          this.initGithubLine(res.data)
+        })
       },
       initMediaChart(icoName) {
-        // this.$axios.get(`/api/tradition/medio/${icoName}`).then(res => {
-        //   this.mediaDisseminateLine_loading = false;
-        //   this.mediaFollowLine_loading = false;
-        //   this.initThreeLine(res.data)
-        // })
-        console.log('notes');
+        this.$axios.get(`/api/tradition/medio/${icoName}`).then(res => {
+          this.mediaDisseminateLine_loading = false;
+          this.mediaFollowLine_loading = false;
+          this.initThreeLine(res.data)
+        })
       },
       initScoreChart(data) {
-        // function filter_array(array) {
-        //   return array.filter(item=>item);
-        // }
-        // data.reverse();
-        // let xList = data.map(item => item.times.split(" ")[0]);
-        // let price = data.map(item => item.price);
-        // let totalScoreList = data.map(item => item.totalordercount);
-        // let fundSuperList = data.map(item => item.fundsupervision);
-        // let fundaMentList = data.map(item => item.fundamentalsanalysis );
-        // let teamList = data.map(item => item.teamanalysis);
-        // let techList = data.map(item => item.technicalanalysis);
-        // let marketList = data.map(item => item.marketanalysis );
+        function filter_array(array) {
+          return array.filter(item=>item);
+        }
+        data.reverse();
+        let xList = data.map(item => item.times.split(" ")[0]);
+        let price = data.map(item => item.price);
+        let totalScoreList = data.map(item => item.totalordercount);
+        let fundSuperList = data.map(item => item.fundsupervision);
+        let fundaMentList = data.map(item => item.fundamentalsanalysis );
+        let teamList = data.map(item => item.teamanalysis);
+        let techList = data.map(item => item.technicalanalysis);
+        let marketList = data.map(item => item.marketanalysis );
 
-        // let scoreLine = echarts.init(this.$refs.scoreChart);
-        // let scoreLineOption = {
-        //   tooltip: {
-        //     trigger: 'axis',
-        //     axisPointer: {
-        //       type: 'cross',
-        //       label: {
-        //         backgroundColor: '#6a7985'
-        //       }
-        //     }
-        //   },
-        //   legend: {
-        //     selected: {'价格': true, '评分': true, '资金监管': false, '基本面': false, '团队': false, '技术': false, '市场': false},
-        //     data: ['价格', '评分', '资金监管', '基本面', '团队', '技术', '市场'],
-        //     selectedMode:false
-        //   },
-        //   grid: {
-        //     left: '0',
-        //     right: '0',
-        //     bottom: '40',
-        //     containLabel: true
-        //   },
-        //   xAxis: [
-        //     {
-        //       type: 'category',
-        //       boundaryGap: false,
-        //       data: xList,
-        //       axisPointer: {
-        //         triggerTooltip: false
-        //       },
-        //       splitLine: {
-        //         show: false,
-        //         lineStyle: {
-        //           type: 'dashed'
-        //         }
-        //       }
-        //     }
-        //   ],
-        //   yAxis: [
-        //     {
-        //       type: 'value',
-        //       name: '评分',
-        //       position: 'right',
-        //       // min: Math.min.apply(null,filter_array(totalScoreList)),
-        //       max: 5, //Math.max.apply(null,filter_array(totalScoreList)),
-        //       minInterval: 1.25
-        //     },
-        //     {
-        //       type: 'value',
-        //       name: '价格',
-        //       position: 'left',
-        //       // min: Math.min.apply(null,filter_array(price)),
-        //       max: (Math.max.apply(null,filter_array(price)) * 1.5).toFixed(3),
-        //       minInterval: (Math.max.apply(null,filter_array(price)) * 1.5).toFixed(3) / 4
-        //     },
-        //     {
-        //       type: 'value',
-        //       name: '资金监管',
-        //       position: 'right',
-        //       // min: Math.min.apply(null,filter_array(fundSuperList)),
-        //       max: 5, //Math.max.apply(null,filter_array(fundSuperList)),
-        //       show: false,
-        //       axisLabel : {
-        //         show: false
-        //       }
-        //     },
-        //     {
-        //       type: 'value',
-        //       name: '基本面',
-        //       position: 'right',
-        //       // min: Math.min.apply(null,filter_array(fundaMentList)),
-        //       max: 5, //Math.max.apply(null,filter_array(fundaMentList)),
-        //       show: false,
-        //       axisLabel : {
-        //         show: false
-        //       }
-        //     },
-        //     {
-        //       type: 'value',
-        //       name: '团队',
-        //       position: 'right',
-        //       // min: Math.min.apply(null,filter_array(teamList)),
-        //       max: 5, //Math.max.apply(null,filter_array(teamList)),
-        //       show: false,
-        //       axisLabel : {
-        //         show: false
-        //       }
-        //     },
-        //     {
-        //       type: 'value',
-        //       name: '技术',
-        //       position: 'right',
-        //       // min: Math.min.apply(null,filter_array(techList)),
-        //       max: 5, //Math.max.apply(null,filter_array(techList)),
-        //       show: false,
-        //       axisLabel : {
-        //         show: false
-        //       }
-        //     },
-        //     {
-        //       type: 'value',
-        //       name: '市场',
-        //       position: 'right',
-        //       // min: Math.min.apply(null,filter_array(marketList)),
-        //       max: 5, //Math.max.apply(null,filter_array(marketList)),
-        //       show: false,
-        //       axisLabel : {
-        //         show: false
-        //       }
-        //     }
-        //   ],
-        //   dataZoom: [
-        //     {
-        //       type: 'slider',
-        //       xAxisIndex: 0,
-        //       filterMode: 'empty',
-        //       startValue: this.getStartValue(data[data.length-1].times, data[0].times)
-        //     },
-        //   ],
-        //   series: [
-        //     {
-        //       name: '评分',
-        //       type: 'line',
-        //       // stack: '总量',
-        //       yAxisIndex: 0,
-        //       color: '#3555da',
-        //       label: {
-        //         normal: {
-        //           show: true,
-        //           // position: 'top'
-        //         }
-        //       },
-        //       // areaStyle: {normal: {}},
-        //       data: totalScoreList,
-        //       showSymbol: false
-        //     },
-        //     {
-        //       name: '价格',
-        //       type: 'line',
-        //       // stack: '总量',
-        //       yAxisIndex: 1,
-        //       label: {
-        //         normal: {
-        //           show: true,
-        //           position: 'top'
-        //         }
-        //       },
-        //       // areaStyle: {normal: {}},
-        //       data: price,
-        //       color: '#b0b0b0',
-        //       showSymbol: false
-        //     },
-        //     {
-        //       name: '资金监管',
-        //       type: 'line',
-        //       // stack: '总量',
-        //       yAxisIndex: 2,
-        //       data: fundSuperList,
-        //       color: '#fdd208',
-        //       showSymbol: false
-        //     },
-        //     {
-        //       name: '基本面',
-        //       type: 'line',
-        //       // stack: '总量',
-        //       yAxisIndex: 3,
-        //       data: fundaMentList,
-        //       color: '#5ad8ae',
-        //       showSymbol: false
-        //     },
-        //     {
-        //       name: '团队',
-        //       type: 'line',
-        //       // stack: '总量',
-        //       yAxisIndex: 4,
-        //       data: teamList,
-        //       color: '#f185f8',
-        //       showSymbol: false
-        //     },
-        //     {
-        //       name: '技术',
-        //       type: 'line',
-        //       // stack: '总量',
-        //       yAxisIndex: 5,
-        //       data: techList,
-        //       color: '#82d5fe',
-        //       showSymbol: false
-        //     },
-        //     {
-        //       name: '市场',
-        //       type: 'line',
-        //       // stack: '总量',
-        //       yAxisIndex: 6,
-        //       data: marketList,
-        //       color: '#9cb2fa',
-        //       showSymbol: false
-        //     },
-        //   ]
-        // };
-        // scoreLine.setOption(scoreLineOption);
-        // window.addEventListener('resize', e =>{
-        //   scoreLine.resize();
-        // })
+        let scoreLine = echarts.init(this.$refs.scoreChart);
+        let scoreLineOption = {
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'cross',
+              label: {
+                backgroundColor: '#6a7985'
+              }
+            }
+          },
+          legend: {
+            selected: {'价格': true, '评分': true, '资金监管': false, '基本面': false, '团队': false, '技术': false, '市场': false},
+            data: ['价格', '评分', '资金监管', '基本面', '团队', '技术', '市场'],
+            selectedMode:false
+          },
+          grid: {
+            left: '0',
+            right: '0',
+            bottom: '40',
+            containLabel: true
+          },
+          xAxis: [
+            {
+              type: 'category',
+              boundaryGap: false,
+              data: xList,
+              axisPointer: {
+                triggerTooltip: false
+              },
+              splitLine: {
+                show: false,
+                lineStyle: {
+                  type: 'dashed'
+                }
+              }
+            }
+          ],
+          yAxis: [
+            {
+              type: 'value',
+              name: '评分',
+              position: 'right',
+              // min: Math.min.apply(null,filter_array(totalScoreList)),
+              max: 5, //Math.max.apply(null,filter_array(totalScoreList)),
+              minInterval: 1.25
+            },
+            {
+              type: 'value',
+              name: '价格',
+              position: 'left',
+              // min: Math.min.apply(null,filter_array(price)),
+              max: (Math.max.apply(null,filter_array(price)) * 1.5).toFixed(3),
+              minInterval: (Math.max.apply(null,filter_array(price)) * 1.5).toFixed(3) / 4
+            },
+            {
+              type: 'value',
+              name: '资金监管',
+              position: 'right',
+              // min: Math.min.apply(null,filter_array(fundSuperList)),
+              max: 5, //Math.max.apply(null,filter_array(fundSuperList)),
+              show: false,
+              axisLabel : {
+                show: false
+              }
+            },
+            {
+              type: 'value',
+              name: '基本面',
+              position: 'right',
+              // min: Math.min.apply(null,filter_array(fundaMentList)),
+              max: 5, //Math.max.apply(null,filter_array(fundaMentList)),
+              show: false,
+              axisLabel : {
+                show: false
+              }
+            },
+            {
+              type: 'value',
+              name: '团队',
+              position: 'right',
+              // min: Math.min.apply(null,filter_array(teamList)),
+              max: 5, //Math.max.apply(null,filter_array(teamList)),
+              show: false,
+              axisLabel : {
+                show: false
+              }
+            },
+            {
+              type: 'value',
+              name: '技术',
+              position: 'right',
+              // min: Math.min.apply(null,filter_array(techList)),
+              max: 5, //Math.max.apply(null,filter_array(techList)),
+              show: false,
+              axisLabel : {
+                show: false
+              }
+            },
+            {
+              type: 'value',
+              name: '市场',
+              position: 'right',
+              // min: Math.min.apply(null,filter_array(marketList)),
+              max: 5, //Math.max.apply(null,filter_array(marketList)),
+              show: false,
+              axisLabel : {
+                show: false
+              }
+            }
+          ],
+          dataZoom: [
+            {
+              type: 'slider',
+              xAxisIndex: 0,
+              filterMode: 'empty',
+              startValue: this.getStartValue(data[data.length-1].times, data[0].times)
+            },
+          ],
+          series: [
+            {
+              name: '评分',
+              type: 'line',
+              // stack: '总量',
+              yAxisIndex: 0,
+              color: '#3555da',
+              label: {
+                normal: {
+                  show: true,
+                  // position: 'top'
+                }
+              },
+              // areaStyle: {normal: {}},
+              data: totalScoreList,
+              showSymbol: false
+            },
+            {
+              name: '价格',
+              type: 'line',
+              // stack: '总量',
+              yAxisIndex: 1,
+              label: {
+                normal: {
+                  show: true,
+                  position: 'top'
+                }
+              },
+              // areaStyle: {normal: {}},
+              data: price,
+              color: '#b0b0b0',
+              showSymbol: false
+            },
+            {
+              name: '资金监管',
+              type: 'line',
+              // stack: '总量',
+              yAxisIndex: 2,
+              data: fundSuperList,
+              color: '#fdd208',
+              showSymbol: false
+            },
+            {
+              name: '基本面',
+              type: 'line',
+              // stack: '总量',
+              yAxisIndex: 3,
+              data: fundaMentList,
+              color: '#5ad8ae',
+              showSymbol: false
+            },
+            {
+              name: '团队',
+              type: 'line',
+              // stack: '总量',
+              yAxisIndex: 4,
+              data: teamList,
+              color: '#f185f8',
+              showSymbol: false
+            },
+            {
+              name: '技术',
+              type: 'line',
+              // stack: '总量',
+              yAxisIndex: 5,
+              data: techList,
+              color: '#82d5fe',
+              showSymbol: false
+            },
+            {
+              name: '市场',
+              type: 'line',
+              // stack: '总量',
+              yAxisIndex: 6,
+              data: marketList,
+              color: '#9cb2fa',
+              showSymbol: false
+            },
+          ]
+        };
+        scoreLine.setOption(scoreLineOption);
+        window.addEventListener('resize', e =>{
+          scoreLine.resize();
+        })
 
-        // this.$refs.scoreButton2.addEventListener('click', e => {
-        //   let $this = e.target;
-        //   let mykey = false;
-        //   let className = $this.classList.toString();
-        //   if (className.indexOf('check') !== -1) {
-        //     scoreLineOption.legend.selected['资金监管'] = false;
-        //     $this.classList.remove('check');
-        //   } else {
-        //     scoreLineOption.legend.selected['资金监管'] = true;
-        //     $this.classList.add('check');
-        //   }
-        //   scoreLine.setOption(scoreLineOption);
-        // });
-        // this.$refs.scoreButton3.addEventListener('click', e => {
-        //   let $this = e.target;
-        //   let mykey = false;
-        //   let className = $this.classList.toString();
-        //   if (className.indexOf('check') !== -1) {
-        //     scoreLineOption.legend.selected['基本面'] = false;
-        //     $this.classList.remove('check');
-        //   } else {
-        //     scoreLineOption.legend.selected['基本面'] = true;
-        //     $this.classList.add('check');
-        //   }
-        //   scoreLine.setOption(scoreLineOption);
-        // });
-        // this.$refs.scoreButton4.addEventListener('click', e => {
-        //   let $this = e.target;
-        //   let mykey = false;
-        //   let className = $this.classList.toString();
-        //   if (className.indexOf('check') !== -1) {
-        //     scoreLineOption.legend.selected['团队'] = false;
-        //     $this.classList.remove('check');
-        //   } else {
-        //     scoreLineOption.legend.selected['团队'] = true;
-        //     $this.classList.add('check');
-        //   }
-        //   scoreLine.setOption(scoreLineOption);
-        // });
-        // this.$refs.scoreButton5.addEventListener('click', e => {
-        //   let $this = e.target;
-        //   let mykey = false;
-        //   let className = $this.classList.toString();
-        //   if (className.indexOf('check') !== -1) {
-        //     scoreLineOption.legend.selected['技术'] = false;
-        //     $this.classList.remove('check');
-        //   } else {
-        //     scoreLineOption.legend.selected['技术'] = true;
-        //     $this.classList.add('check');
-        //   }
-        //   scoreLine.setOption(scoreLineOption);
-        // });
-        // this.$refs.scoreButton6.addEventListener('click', e => {
-        //   let $this = e.target;
-        //   let mykey = false;
-        //   let className = $this.classList.toString();
-        //   if (className.indexOf('check') !== -1) {
-        //     scoreLineOption.legend.selected['市场'] = false;
-        //     $this.classList.remove('check');
-        //   } else {
-        //     scoreLineOption.legend.selected['市场'] = true;
-        //     $this.classList.add('check');
-        //   }
-        //   scoreLine.setOption(scoreLineOption);
-        // });
-        // this.scoreLine = scoreLine;
-        console.log('notes');
+        this.$refs.scoreButton2.addEventListener('click', e => {
+          let $this = e.target;
+          let mykey = false;
+          let className = $this.classList.toString();
+          if (className.indexOf('check') !== -1) {
+            scoreLineOption.legend.selected['资金监管'] = false;
+            $this.classList.remove('check');
+          } else {
+            scoreLineOption.legend.selected['资金监管'] = true;
+            $this.classList.add('check');
+          }
+          scoreLine.setOption(scoreLineOption);
+        });
+        this.$refs.scoreButton3.addEventListener('click', e => {
+          let $this = e.target;
+          let mykey = false;
+          let className = $this.classList.toString();
+          if (className.indexOf('check') !== -1) {
+            scoreLineOption.legend.selected['基本面'] = false;
+            $this.classList.remove('check');
+          } else {
+            scoreLineOption.legend.selected['基本面'] = true;
+            $this.classList.add('check');
+          }
+          scoreLine.setOption(scoreLineOption);
+        });
+        this.$refs.scoreButton4.addEventListener('click', e => {
+          let $this = e.target;
+          let mykey = false;
+          let className = $this.classList.toString();
+          if (className.indexOf('check') !== -1) {
+            scoreLineOption.legend.selected['团队'] = false;
+            $this.classList.remove('check');
+          } else {
+            scoreLineOption.legend.selected['团队'] = true;
+            $this.classList.add('check');
+          }
+          scoreLine.setOption(scoreLineOption);
+        });
+        this.$refs.scoreButton5.addEventListener('click', e => {
+          let $this = e.target;
+          let mykey = false;
+          let className = $this.classList.toString();
+          if (className.indexOf('check') !== -1) {
+            scoreLineOption.legend.selected['技术'] = false;
+            $this.classList.remove('check');
+          } else {
+            scoreLineOption.legend.selected['技术'] = true;
+            $this.classList.add('check');
+          }
+          scoreLine.setOption(scoreLineOption);
+        });
+        this.$refs.scoreButton6.addEventListener('click', e => {
+          let $this = e.target;
+          let mykey = false;
+          let className = $this.classList.toString();
+          if (className.indexOf('check') !== -1) {
+            scoreLineOption.legend.selected['市场'] = false;
+            $this.classList.remove('check');
+          } else {
+            scoreLineOption.legend.selected['市场'] = true;
+            $this.classList.add('check');
+          }
+          scoreLine.setOption(scoreLineOption);
+        });
+        this.scoreLine = scoreLine;
       },
       getStartValue(date1, date2) {
         let oDate1 = new Date(date1);
@@ -1385,403 +1376,400 @@
         }
       },
       initMarketChart(data) {
-        // function filter_array(array) {
-        //   return array.filter(item=>item);
-        // }
-        // data.reverse();
-        // let xList = data.map(item => item.times.split(" ")[0]);
-        // let totalScoreList = data.map(item => item.totalScore);
-        // let countUserList = data.map(item => item.countUser);
-        // let allCountList = data.map(item => item.allcount);
-        // let countList = data.map(item => item.count);
-        // let marketLine = echarts.init(this.$refs.marketChart);
-        // let marketLineOption = {
-        //   tooltip: {
-        //     trigger: 'axis',
-        //     axisPointer: {
-        //       type: 'cross',
-        //       label: {
-        //         backgroundColor: '#6a7985'
-        //       }
-        //     }
-        //   },
-        //   legend: {
-        //     selected: {'价格': true, '流通笔数': false, '流通总额': false, '流通参与用户量': false},
-        //     data: ['价格', '流通笔数', '流通总额', '流通参与用户量'],
-        //     selectedMode:false
-        //   },
-        //   grid: {
-        //     left: '0',
-        //     right: '3%',
-        //     bottom: '40',
-        //     containLabel: true
-        //   },
-        //   xAxis: [
-        //     {
-        //       type: 'category',
-        //       boundaryGap: false,
-        //       data: xList,
-        //       axisPointer: {
-        //         triggerTooltip: false
-        //       },
-        //       splitLine: {
-        //         show: false,
-        //         lineStyle: {
-        //           type: 'dashed'
-        //         }
-        //       }
-        //     }
-        //   ],
-        //   yAxis: [
-        //     {
-        //       type: 'value',
-        //       name: '价格',
-        //       min: Math.min.apply(null,filter_array(totalScoreList)),
-        //       max: Math.max.apply(null,filter_array(totalScoreList)),
-        //     },
-        //     {
-        //       type: 'value',
-        //       name: '流通笔数',
-        //       position: 'right',
-        //       show: false,
-        //       min: Math.min.apply(null,filter_array(countList)),
-        //       max: Math.max.apply(null,filter_array(countList)),
-        //       axisLabel : {
-        //         show: false
-        //       }
-        //     },
-        //     {
-        //       type: 'value',
-        //       name: '流通总额',
-        //       position: 'right',
-        //       show: false,
-        //       min: Math.min.apply(null,filter_array(allCountList)),
-        //       max: Math.max.apply(null,filter_array(allCountList)),
-        //       axisLabel : {
-        //         show: false
-        //       }
-        //     },
-        //     {
-        //       type: 'value',
-        //       name: '流通参与用户量',
-        //       show: false,
-        //       position: 'right',
-        //       min: Math.min.apply(null,filter_array(countUserList)),
-        //       max: Math.max.apply(null,filter_array(countUserList)),
-        //       axisLabel : {
-        //         show: false
-        //       }
-        //     }
-        //   ],
-        //   dataZoom: [
-        //     {
-        //       type: 'slider',
-        //       xAxisIndex: 0,
-        //       filterMode: 'empty',
-        //       startValue: this.getStartValue(data[data.length-1].times, data[0].times)
-        //     },
-        //   ],
-        //   series: [
-        //     {
-        //       name: '价格',
-        //       type: 'line',
-        //       yAxisIndex: 0,
-        //       // stack: '总量',
-        //       label: {
-        //         normal: {
-        //           show: true,
-        //           position: 'top'
-        //         }
-        //       },
-        //       areaStyle: {normal: {}},
-        //       data: totalScoreList,
-        //       color: '#b0b0b0',
-        //       showSymbol: false
-        //     },
-        //     {
-        //       name: '流通笔数',
-        //       yAxisIndex: 1,
-        //       type: 'line',
-        //       // stack: '总量',
-        //       data: countList,
-        //       color: '#f1982f',
-        //       showSymbol: false
-        //     },
-        //     {
-        //       name: '流通总额',
-        //       type: 'line',
-        //       // stack: '总量',
-        //       yAxisIndex: 2,
-        //       data: allCountList,
-        //       color: '#fd5908',
-        //       showSymbol: false
-        //     },
-        //     {
-        //       name: '流通参与用户量',
-        //       type: 'line',
-        //       yAxisIndex: 3,
-        //       // stack: '总量',
-        //       data: countUserList,
-        //       color: '#49cb55',
-        //       showSymbol: false
-        //     },
-        //   ]
-        // };
-        // marketLine.setOption(marketLineOption);
-        // window.addEventListener('resize', e =>{
-        //   marketLine.resize();
-        // })
+        function filter_array(array) {
+          return array.filter(item=>item);
+        }
+        data.reverse();
+        let xList = data.map(item => item.times.split(" ")[0]);
+        let totalScoreList = data.map(item => item.totalScore);
+        let countUserList = data.map(item => item.countUser);
+        let allCountList = data.map(item => item.allcount);
+        let countList = data.map(item => item.count);
+        let marketLine = echarts.init(this.$refs.marketChart);
+        let marketLineOption = {
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'cross',
+              label: {
+                backgroundColor: '#6a7985'
+              }
+            }
+          },
+          legend: {
+            selected: {'价格': true, '流通笔数': false, '流通总额': false, '流通参与用户量': false},
+            data: ['价格', '流通笔数', '流通总额', '流通参与用户量'],
+            selectedMode:false
+          },
+          grid: {
+            left: '0',
+            right: '3%',
+            bottom: '40',
+            containLabel: true
+          },
+          xAxis: [
+            {
+              type: 'category',
+              boundaryGap: false,
+              data: xList,
+              axisPointer: {
+                triggerTooltip: false
+              },
+              splitLine: {
+                show: false,
+                lineStyle: {
+                  type: 'dashed'
+                }
+              }
+            }
+          ],
+          yAxis: [
+            {
+              type: 'value',
+              name: '价格',
+              min: Math.min.apply(null,filter_array(totalScoreList)),
+              max: Math.max.apply(null,filter_array(totalScoreList)),
+            },
+            {
+              type: 'value',
+              name: '流通笔数',
+              position: 'right',
+              show: false,
+              min: Math.min.apply(null,filter_array(countList)),
+              max: Math.max.apply(null,filter_array(countList)),
+              axisLabel : {
+                show: false
+              }
+            },
+            {
+              type: 'value',
+              name: '流通总额',
+              position: 'right',
+              show: false,
+              min: Math.min.apply(null,filter_array(allCountList)),
+              max: Math.max.apply(null,filter_array(allCountList)),
+              axisLabel : {
+                show: false
+              }
+            },
+            {
+              type: 'value',
+              name: '流通参与用户量',
+              show: false,
+              position: 'right',
+              min: Math.min.apply(null,filter_array(countUserList)),
+              max: Math.max.apply(null,filter_array(countUserList)),
+              axisLabel : {
+                show: false
+              }
+            }
+          ],
+          dataZoom: [
+            {
+              type: 'slider',
+              xAxisIndex: 0,
+              filterMode: 'empty',
+              startValue: this.getStartValue(data[data.length-1].times, data[0].times)
+            },
+          ],
+          series: [
+            {
+              name: '价格',
+              type: 'line',
+              yAxisIndex: 0,
+              // stack: '总量',
+              label: {
+                normal: {
+                  show: true,
+                  position: 'top'
+                }
+              },
+              areaStyle: {normal: {}},
+              data: totalScoreList,
+              color: '#b0b0b0',
+              showSymbol: false
+            },
+            {
+              name: '流通笔数',
+              yAxisIndex: 1,
+              type: 'line',
+              // stack: '总量',
+              data: countList,
+              color: '#f1982f',
+              showSymbol: false
+            },
+            {
+              name: '流通总额',
+              type: 'line',
+              // stack: '总量',
+              yAxisIndex: 2,
+              data: allCountList,
+              color: '#fd5908',
+              showSymbol: false
+            },
+            {
+              name: '流通参与用户量',
+              type: 'line',
+              yAxisIndex: 3,
+              // stack: '总量',
+              data: countUserList,
+              color: '#49cb55',
+              showSymbol: false
+            },
+          ]
+        };
+        marketLine.setOption(marketLineOption);
+        window.addEventListener('resize', e =>{
+          marketLine.resize();
+        })
 
-        // this.$refs.marketLineButton1.addEventListener('click', e => {
-        //   let $this = e.target;
-        //   let mykey = false;
-        //   let className = $this.classList.toString();
-        //   if (className.indexOf('check') !== -1) {
-        //     marketLineOption.legend.selected['流通笔数'] = false;
-        //     $this.classList.remove('check');
-        //   } else {
-        //     marketLineOption.legend.selected['流通笔数'] = true;
-        //     $this.classList.add('check');
-        //   }
-        //   marketLine.setOption(marketLineOption);
-        // });
-        // this.$refs.marketLineButton2.addEventListener('click', e => {
-        //   let $this = e.target;
-        //   let mykey = false;
-        //   let className = $this.classList.toString();
-        //   if (className.indexOf('check') !== -1) {
-        //     marketLineOption.legend.selected['流通总额'] = false;
-        //     $this.classList.remove('check');
-        //   } else {
-        //     marketLineOption.legend.selected['流通总额'] = true;
-        //     $this.classList.add('check');
-        //   }
-        //   marketLine.setOption(marketLineOption);
-        // });
-        // this.$refs.marketLineButton3.addEventListener('click', e => {
-        //   let $this = e.target;
-        //   let mykey = false;
-        //   let className = $this.classList.toString();
-        //   if (className.indexOf('check') !== -1) {
-        //     marketLineOption.legend.selected['流通参与用户量'] = false;
-        //     $this.classList.remove('check');
-        //   } else {
-        //     marketLineOption.legend.selected['流通参与用户量'] = true;
-        //     $this.classList.add('check');
-        //   }
-        //   marketLine.setOption(marketLineOption);
-        // });
-        // this.marketLine = marketLine;
-        console.log('notes');
+        this.$refs.marketLineButton1.addEventListener('click', e => {
+          let $this = e.target;
+          let mykey = false;
+          let className = $this.classList.toString();
+          if (className.indexOf('check') !== -1) {
+            marketLineOption.legend.selected['流通笔数'] = false;
+            $this.classList.remove('check');
+          } else {
+            marketLineOption.legend.selected['流通笔数'] = true;
+            $this.classList.add('check');
+          }
+          marketLine.setOption(marketLineOption);
+        });
+        this.$refs.marketLineButton2.addEventListener('click', e => {
+          let $this = e.target;
+          let mykey = false;
+          let className = $this.classList.toString();
+          if (className.indexOf('check') !== -1) {
+            marketLineOption.legend.selected['流通总额'] = false;
+            $this.classList.remove('check');
+          } else {
+            marketLineOption.legend.selected['流通总额'] = true;
+            $this.classList.add('check');
+          }
+          marketLine.setOption(marketLineOption);
+        });
+        this.$refs.marketLineButton3.addEventListener('click', e => {
+          let $this = e.target;
+          let mykey = false;
+          let className = $this.classList.toString();
+          if (className.indexOf('check') !== -1) {
+            marketLineOption.legend.selected['流通参与用户量'] = false;
+            $this.classList.remove('check');
+          } else {
+            marketLineOption.legend.selected['流通参与用户量'] = true;
+            $this.classList.add('check');
+          }
+          marketLine.setOption(marketLineOption);
+        });
+        this.marketLine = marketLine;
       },
       initRadar(param) {
-        // let myChart = echarts.init(this.$refs.radar);
-        // let option = {
-        //   tooltip: {},
-        //   legend: {
-        //     data: [
-        //       {
-        //         name: '今日',
-        //         textStyle: {
-        //           color: '#F82F4C',
-        //         }
-        //       },
-        //       {
-        //         name: '昨日',
-        //         textStyle: {
-        //           color: '#0ACEF0'
-        //         }
-        //       }
-        //     ],
-        //     right: 10,
-        //     // selectedMode: false,
-        //   },
-        //   radar: {
-        //     // shape: 'circle',
-        //     name: {
-        //       textStyle: {
-        //         color: '#fff',
-        //         borderRadius: 3,
-        //         padding: [3, 5]
-        //       }
-        //     },
-        //     splitArea: {
-        //       areaStyle: {
-        //         color: ['#29316E',
-        //           '#39417C'],
-        //         shadowColor: '#39417C',
-        //         shadowBlur: 10
-        //       }
-        //     },
-        //     axisLine: {
-        //       lineStyle: {
-        //         color: '#445BCA'
-        //       }
-        //     },
-        //     splitLine: {
-        //       lineStyle: {
-        //         color: '#444B83'
-        //       }
-        //     },
-        //     indicator: [
-        //       {name: '资金监管', max: 0.5, color: '#0ACEF0'},
-        //       {name: '基本面', max: 1.5, color: '#0ACEF0'},
-        //       {name: '团队', max: 1.75, color: '#0ACEF0'},
-        //       {name: '技术', max: 0.5, color: '#0ACEF0'},
-        //       {name: '市场', max: 0.75, color: '#0ACEF0'},
-        //     ]
-        //   },
-        //   series: [{
-        //     type: 'radar',
-        //     // areaStyle: {normal: {}},
-        //     data: [
-        //       {
-        //         value: param.data[1],
-        //         name: '昨日',
-        //         itemStyle: {
-        //           color: '#0ACEF0'
-        //         }
-        //       },
-        //       {
-        //         value: param.data[0],
-        //         name: '今日',
-        //         itemStyle: {
-        //           color: '#F82F4C'
-        //         }
-        //       }
-        //     ]
-        //   }]
-        // };
-        // myChart.setOption(option);
-        // window.addEventListener('resize', e =>{
-        //   let width = this.$refs.bluebox.offsetWidth;
-        //   myChart.resize({'width': `${width}px`});
-        // })
-        console.log('notes');
+        let myChart = echarts.init(this.$refs.radar);
+        let option = {
+          tooltip: {},
+          legend: {
+            data: [
+              {
+                name: '今日',
+                textStyle: {
+                  color: '#F82F4C',
+                }
+              },
+              {
+                name: '昨日',
+                textStyle: {
+                  color: '#0ACEF0'
+                }
+              }
+            ],
+            right: 10,
+            // selectedMode: false,
+          },
+          radar: {
+            // shape: 'circle',
+            name: {
+              textStyle: {
+                color: '#fff',
+                borderRadius: 3,
+                padding: [3, 5]
+              }
+            },
+            splitArea: {
+              areaStyle: {
+                color: ['#29316E',
+                  '#39417C'],
+                shadowColor: '#39417C',
+                shadowBlur: 10
+              }
+            },
+            axisLine: {
+              lineStyle: {
+                color: '#445BCA'
+              }
+            },
+            splitLine: {
+              lineStyle: {
+                color: '#444B83'
+              }
+            },
+            indicator: [
+              {name: '资金监管', max: 0.5, color: '#0ACEF0'},
+              {name: '基本面', max: 1.5, color: '#0ACEF0'},
+              {name: '团队', max: 1.75, color: '#0ACEF0'},
+              {name: '技术', max: 0.5, color: '#0ACEF0'},
+              {name: '市场', max: 0.75, color: '#0ACEF0'},
+            ]
+          },
+          series: [{
+            type: 'radar',
+            // areaStyle: {normal: {}},
+            data: [
+              {
+                value: param.data[1],
+                name: '昨日',
+                itemStyle: {
+                  color: '#0ACEF0'
+                }
+              },
+              {
+                value: param.data[0],
+                name: '今日',
+                itemStyle: {
+                  color: '#F82F4C'
+                }
+              }
+            ]
+          }]
+        };
+        myChart.setOption(option);
+        window.addEventListener('resize', e =>{
+          let width = this.$refs.bluebox.offsetWidth;
+          myChart.resize({'width': `${width}px`});
+        })
       },
       initGithubLine(data) {
-        // let xList = data.map(item => item.times.split(" ")[0]);
-        // let commitList = data.map(item => item.commit);
-        // let watchList = data.map(item => item.watch);
-        // let starList = data.map(item => item.star);
-        // let commitAvgList = data.map(item => (item.commitAvg) ? item.commitAvg.toFixed(2): item.commitAvg);
-        // let watchAvgList = data.map(item => (item.watchAvg) ? item.watchAvg.toFixed(2): item.watchAvg);
-        // let starAvgList = data.map(item => (item.starAvg) ? item.starAvg.toFixed(2): item.starAvg);
-        // let commit = false;
-        // let watch = false;
-        // let star = false;
-        // let avgList = commitAvgList;
-        // if(this.githubButton === 0){
-        //   commit = true;
-        //   avgList = commitAvgList;
-        // }else if(this.githubButton === 1){
-        //   watch = true;
-        //   avgList = watchAvgList;
-        // }else{
-        //   star = true;
-        //   avgList = starAvgList;
-        // }
+        let xList = data.map(item => item.times.split(" ")[0]);
+        let commitList = data.map(item => item.commit);
+        let watchList = data.map(item => item.watch);
+        let starList = data.map(item => item.star);
+        let commitAvgList = data.map(item => (item.commitAvg) ? item.commitAvg.toFixed(2): item.commitAvg);
+        let watchAvgList = data.map(item => (item.watchAvg) ? item.watchAvg.toFixed(2): item.watchAvg);
+        let starAvgList = data.map(item => (item.starAvg) ? item.starAvg.toFixed(2): item.starAvg);
+        let commit = false;
+        let watch = false;
+        let star = false;
+        let avgList = commitAvgList;
+        if(this.githubButton === 0){
+          commit = true;
+          avgList = commitAvgList;
+        }else if(this.githubButton === 1){
+          watch = true;
+          avgList = watchAvgList;
+        }else{
+          star = true;
+          avgList = starAvgList;
+        }
 
-        // let githubLine = echarts.init(this.$refs.githubLine);
-        // let githubLineOption = {
-        //   tooltip: {
-        //     trigger: 'axis',
-        //     axisPointer: {
-        //       type: 'cross',
-        //       label: {
-        //         backgroundColor: '#6a7985'
-        //       }
-        //     }
-        //   },
-        //   legend: {
-        //     selected: {'近30天平均值':true,'更新量': commit, '浏览量': watch, '收藏量': star}, //'近30天平均值': true,
-        //     data: ['近30天平均值','更新量', '浏览量', '收藏量'], //'近30天平均值',
-        //     selectedMode:false,
-        //     x: 'right'
-        //   },
-        //   grid: {
-        //     left: '3%',
-        //     right: '4%',
-        //     bottom: '8%',
-        //     containLabel: true
-        //   },
-        //   xAxis: [
-        //     {
-        //       type: 'category',
-        //       boundaryGap: false,
-        //       data: xList
-        //     }
-        //   ],
-        //   yAxis: [
-        //     {
-        //       type: 'value'
-        //     }
-        //   ],
-        //   dataZoom: [
-        //     {
-        //       type: 'slider',
-        //       xAxisIndex: 0,
-        //       filterMode: 'empty',
-        //       startValue: this.getStartValue(data[data.length-1].times, data[0].times)
-        //     },
-        //   ],
-        //   series: [
-        //     {
-        //       name: '近30天平均值',
-        //       type: 'line',
-        //       smooth:false,
-        //       label: {
-        //         normal: {
-        //           show: true,
-        //           position: 'top'
-        //         }
-        //       },
-        //       itemStyle:{
-        //         normal:{
-        //           lineStyle:{
-        //             width:2,
-        //             type:'dotted'
-        //           }
-        //         }
-        //       },
-        //       data: avgList,
-        //       color: '#4cc96b',
-        //       showSymbol: false
-        //     },
-        //     {
-        //       name: '收藏量',
-        //       type: 'line',
-        //       // stack: '总量',
-        //       data: starList,
-        //       color: '#f4ab44',
-        //       showSymbol: false
+        let githubLine = echarts.init(this.$refs.githubLine);
+        let githubLineOption = {
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'cross',
+              label: {
+                backgroundColor: '#6a7985'
+              }
+            }
+          },
+          legend: {
+            selected: {'近30天平均值':true,'更新量': commit, '浏览量': watch, '收藏量': star}, //'近30天平均值': true,
+            data: ['近30天平均值','更新量', '浏览量', '收藏量'], //'近30天平均值',
+            selectedMode:false,
+            x: 'right'
+          },
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '8%',
+            containLabel: true
+          },
+          xAxis: [
+            {
+              type: 'category',
+              boundaryGap: false,
+              data: xList
+            }
+          ],
+          yAxis: [
+            {
+              type: 'value'
+            }
+          ],
+          dataZoom: [
+            {
+              type: 'slider',
+              xAxisIndex: 0,
+              filterMode: 'empty',
+              startValue: this.getStartValue(data[data.length-1].times, data[0].times)
+            },
+          ],
+          series: [
+            {
+              name: '近30天平均值',
+              type: 'line',
+              smooth:false,
+              label: {
+                normal: {
+                  show: true,
+                  position: 'top'
+                }
+              },
+              itemStyle:{
+                normal:{
+                  lineStyle:{
+                    width:2,
+                    type:'dotted'
+                  }
+                }
+              },
+              data: avgList,
+              color: '#4cc96b',
+              showSymbol: false
+            },
+            {
+              name: '收藏量',
+              type: 'line',
+              // stack: '总量',
+              data: starList,
+              color: '#f4ab44',
+              showSymbol: false
 
-        //     },
-        //     {
-        //       name: '浏览量',
-        //       type: 'line',
-        //       // stack: '总量',
-        //       data: watchList,
-        //       color: '#8547f7',
-        //       showSymbol: false
-        //     },
-        //     {
-        //       name: '更新量',
-        //       type: 'line',
-        //       // stack: '总量',
-        //       data: commitList,
-        //       color: '#47a1ff',
-        //       showSymbol: false
-        //     },
-        //   ]
-        // };
-        // githubLine.setOption(githubLineOption);
-        // this.githubLine = githubLine;
-        // window.addEventListener('resize', e =>{
-        //   let width = this.$refs.bigBox.offsetWidth;
-        //   githubLine.resize({'width': `${width}px`});
-        // })
-        console.log('notes');
+            },
+            {
+              name: '浏览量',
+              type: 'line',
+              // stack: '总量',
+              data: watchList,
+              color: '#8547f7',
+              showSymbol: false
+            },
+            {
+              name: '更新量',
+              type: 'line',
+              // stack: '总量',
+              data: commitList,
+              color: '#47a1ff',
+              showSymbol: false
+            },
+          ]
+        };
+        githubLine.setOption(githubLineOption);
+        this.githubLine = githubLine;
+        window.addEventListener('resize', e =>{
+          let width = this.$refs.bigBox.offsetWidth;
+          githubLine.resize({'width': `${width}px`});
+        })
       },
       changeGithubButton(type) {
         this.githubButton = type;
@@ -1789,149 +1777,147 @@
       },
       //媒体宣传度
       initMediaDisseminateLine(param) {
-        // let mediaDisseminateLine = echarts.init(this.$refs.mediaDisseminateLine);
-        // let mediaDisseminateLineOption = {
-        //   tooltip: {
-        //     trigger: 'axis',
-        //     axisPointer: {
-        //       type: 'cross',
-        //       label: {
-        //         backgroundColor: '#6a7985'
-        //       }
-        //     }
-        //   },
-        //   legend: {
-        //     data: ['报道量'], //'近30天平均值',
-        //     selectedMode:false,
-        //     x: 'right'
-        //   },
-        //   grid: {
-        //     left: '3%',
-        //     right: '4%',
-        //     bottom: '40',
-        //     containLabel: true
-        //   },
-        //   xAxis: [
-        //     {
-        //       type: 'category',
-        //       boundaryGap: false,
-        //       data: param.xList
-        //     }
-        //   ],
-        //   yAxis: [
-        //     {
-        //       type: 'value'
-        //     }
-        //   ],
-        //   dataZoom: [
-        //     {
-        //       type: 'slider',
-        //       xAxisIndex: 0,
-        //       filterMode: 'empty'
-        //     },
-        //   ],
-        //   series: [
-        //     // {
-        //     //   name: '近30天平均值',
-        //     //   type: 'line',
-        //     //   stack: '总量',
-        //     //   label: {
-        //     //     normal: {
-        //     //       show: true,
-        //     //       position: 'top'
-        //     //     }
-        //     //   },
-        //     //   data: param.twitterAvgList
-        //     // },
-        //     {
-        //       name: '报道量',
-        //       type: 'line',
-        //       // stack: '总量',
-        //       data: param.allnumList,
-        //       color: '#f4ab44'
-        //     },
-        //   ]
-        // };
-        // mediaDisseminateLine.setOption(mediaDisseminateLineOption);
-        // this.mediaDisseminateLine = mediaDisseminateLine;
-        // window.addEventListener('resize', e =>{
-        //   let width = this.$refs.bigBox.offsetWidth;
-        //   mediaDisseminateLine.resize({'width': `${width}px`});
-        // })
-        console.log('notes');
+        let mediaDisseminateLine = echarts.init(this.$refs.mediaDisseminateLine);
+        let mediaDisseminateLineOption = {
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'cross',
+              label: {
+                backgroundColor: '#6a7985'
+              }
+            }
+          },
+          legend: {
+            data: ['报道量'], //'近30天平均值',
+            selectedMode:false,
+            x: 'right'
+          },
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '40',
+            containLabel: true
+          },
+          xAxis: [
+            {
+              type: 'category',
+              boundaryGap: false,
+              data: param.xList
+            }
+          ],
+          yAxis: [
+            {
+              type: 'value'
+            }
+          ],
+          dataZoom: [
+            {
+              type: 'slider',
+              xAxisIndex: 0,
+              filterMode: 'empty'
+            },
+          ],
+          series: [
+            // {
+            //   name: '近30天平均值',
+            //   type: 'line',
+            //   stack: '总量',
+            //   label: {
+            //     normal: {
+            //       show: true,
+            //       position: 'top'
+            //     }
+            //   },
+            //   data: param.twitterAvgList
+            // },
+            {
+              name: '报道量',
+              type: 'line',
+              // stack: '总量',
+              data: param.allnumList,
+              color: '#f4ab44'
+            },
+          ]
+        };
+        mediaDisseminateLine.setOption(mediaDisseminateLineOption);
+        this.mediaDisseminateLine = mediaDisseminateLine;
+        window.addEventListener('resize', e =>{
+          let width = this.$refs.bigBox.offsetWidth;
+          mediaDisseminateLine.resize({'width': `${width}px`});
+        })
       },
       //媒体关注度
       initMediaFollowLine(param) {
-        // let mediaFollowLine = echarts.init(this.$refs.mediaFollowLine);
-        // let mediaFollowLineOption = {
-        //   tooltip: {
-        //     trigger: 'axis',
-        //     axisPointer: {
-        //       type: 'cross',
-        //       label: {
-        //         backgroundColor: '#6a7985'
-        //       }
-        //     }
-        //   },
-        //   legend: {
-        //     data: ['网站数'], //'近30天平均值',
-        //     selectedMode:false,
-        //     x: 'right'
-        //   },
-        //   grid: {
-        //     left: '3%',
-        //     right: '4%',
-        //     bottom: '40',
-        //     containLabel: true
-        //   },
-        //   xAxis: [
-        //     {
-        //       type: 'category',
-        //       boundaryGap: false,
-        //       data: param.xList
-        //     }
-        //   ],
-        //   yAxis: [
-        //     {
-        //       type: 'value'
-        //     }
-        //   ],
-        //   dataZoom: [
-        //     {
-        //       type: 'slider',
-        //       xAxisIndex: 0,
-        //       filterMode: 'empty'
-        //     },
-        //   ],
-        //   series: [
-        //     // {
-        //     //   name: '近30天平均值',
-        //     //   type: 'line',
-        //     //   stack: '总量',
-        //     //   label: {
-        //     //     normal: {
-        //     //       show: true,
-        //     //       position: 'top'
-        //     //     }
-        //     //   },
-        //     //   data: param.twitterAvgList
-        //     // },
-        //     {
-        //       name: '网站数',
-        //       type: 'line',
-        //       // stack: '总量',
-        //       data: param.sitenameList,
-        //       color: '#6363e5'
-        //     },
-        //   ]
-        // };
-        // mediaFollowLine.setOption(mediaFollowLineOption);
-        // this.mediaFollowLine = mediaFollowLine;
-        //  window.addEventListener('resize', e =>{
-        //   let width = this.$refs.bigBox.offsetWidth;
-        //   mediaFollowLine.resize({'width': `${width}px`});
-        // })
-        console.log('notes');
+        let mediaFollowLine = echarts.init(this.$refs.mediaFollowLine);
+        let mediaFollowLineOption = {
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'cross',
+              label: {
+                backgroundColor: '#6a7985'
+              }
+            }
+          },
+          legend: {
+            data: ['网站数'], //'近30天平均值',
+            selectedMode:false,
+            x: 'right'
+          },
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '40',
+            containLabel: true
+          },
+          xAxis: [
+            {
+              type: 'category',
+              boundaryGap: false,
+              data: param.xList
+            }
+          ],
+          yAxis: [
+            {
+              type: 'value'
+            }
+          ],
+          dataZoom: [
+            {
+              type: 'slider',
+              xAxisIndex: 0,
+              filterMode: 'empty'
+            },
+          ],
+          series: [
+            // {
+            //   name: '近30天平均值',
+            //   type: 'line',
+            //   stack: '总量',
+            //   label: {
+            //     normal: {
+            //       show: true,
+            //       position: 'top'
+            //     }
+            //   },
+            //   data: param.twitterAvgList
+            // },
+            {
+              name: '网站数',
+              type: 'line',
+              // stack: '总量',
+              data: param.sitenameList,
+              color: '#6363e5'
+            },
+          ]
+        };
+        mediaFollowLine.setOption(mediaFollowLineOption);
+        this.mediaFollowLine = mediaFollowLine;
+         window.addEventListener('resize', e =>{
+          let width = this.$refs.bigBox.offsetWidth;
+          mediaFollowLine.resize({'width': `${width}px`});
+        })
       },
       //社交热度图
       // initSocialHeatLine(param) {
@@ -2039,30 +2025,28 @@
       //   })
       // },
       initThreeLine(data) {
-        // data.reverse();
-        // let xList = data.map(item => item.times.split(" ")[0]);
-        // let allnumList = data.map(item => item.allnum);
-        // let sitenameList = data.map(item => item.sitename);
-        // let twitterList = data.map(item => item.twitter);
-        // let twitterAvgList = data.map(item => item.twitterAvg);
-        // // console.log(xList);
+        data.reverse();
+        let xList = data.map(item => item.times.split(" ")[0]);
+        let allnumList = data.map(item => item.allnum);
+        let sitenameList = data.map(item => item.sitename);
+        let twitterList = data.map(item => item.twitter);
+        let twitterAvgList = data.map(item => item.twitterAvg);
+        // console.log(xList);
 
-        // this.initMediaDisseminateLine({xList: xList, allnumList: allnumList, twitterAvgList: twitterAvgList});
-        // this.initMediaFollowLine({xList: xList, sitenameList: sitenameList, twitterAvgList: twitterAvgList});
-        // // this.initSocialHeatLine({xList: xList, twitterList: twitterList, twitterAvgList: twitterAvgList});
-        console.log('notes');
+        this.initMediaDisseminateLine({xList: xList, allnumList: allnumList, twitterAvgList: twitterAvgList});
+        this.initMediaFollowLine({xList: xList, sitenameList: sitenameList, twitterAvgList: twitterAvgList});
+        // this.initSocialHeatLine({xList: xList, twitterList: twitterList, twitterAvgList: twitterAvgList});
       },
       goProjectByName(obj, event) {
-        // if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
-        //   if (obj.indexOf(';') > 0) {
-        //     let arr = obj.split(';')
-        //     obj = arr[0];
-        //   }
-        // }
-        // let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
-        // // sensors.quick('trackHeatMap', event.currentTarget);
-        // window.open(routeData.href, '_blank');
-        console.log('notes');
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
+        // sensors.quick('trackHeatMap', event.currentTarget);
+        window.open(routeData.href, '_blank');
       },
     },
     watch: {
