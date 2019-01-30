@@ -106,7 +106,8 @@
 							.share_box {
 								position: absolute;
 								top: calc(100% + 13px);
-								left: -50%;
+								left: 50%;
+								margin: 0 0 0 -70px;
 								display: flex;
 								background-color: #FFFFFF;
 								border-radius: 100px;
@@ -268,25 +269,28 @@
 		}
 	}
 	&-main{
+		>.container.v2container{
+			@media ($max-sm) {
+				padding: 0;
+			}
+		}
 		.leftmain{
 			float: left;
 			width: 72%;
 			padding: 0 12px 0 0;
 			@media ($max-md) {
 				width: 100%;
-				margin: 0;
+				padding: 0;
 			}
 			.tophead{
 				border-radius: 5px;
 				background: #fff;
 				display: flex;
 				padding: 30px 0;
-				margin: 0 0 30px;
-				@media (max-width: 1400px) {
-					padding: 15px 0;
-				}
+				margin: 0 0 20px;
 				@media ($max-sm) {
 					flex-wrap: wrap;
+					padding: 15px 0;
 				}
 				@media ($max-xs) {
 					padding: 0;
@@ -299,42 +303,20 @@
 					justify-content: center;
 					align-items: center;
 					position: relative;
-					padding: 12px 0;
 					&:last-child .t{
 						padding: 0 8px;
 						text-align: center;
 					}
-					@media ($max-sm) {
+					@media ($max-xs) {
 						flex: 0 0 50%;
 						min-width: 50%;
-						padding: 3px 0;
+						padding: 8px 0;
 						justify-content: flex-start;
+						&:nth-child(1), &:nth-child(2){
+							border-bottom: 1px solid #e2e2e2;
+						}
 						&:nth-child(2):after{
 							background: transparent;
-						}
-					}
-					@media ($max-xs) {
-						padding: 8px 0;
-						&:nth-child(1){
-							flex: 0 0 33.33%;
-							min-width: 33.33%;
-							border: solid #eee;
-							border-width: 0 0 1px 0;
-						}
-						&:nth-child(2){
-							flex: 0 0 33.33%;
-							min-width: 33.33%;
-							border: solid #eee;
-							border-width: 0 1px 1px 1px;
-						}
-						&:nth-child(3){
-							flex: 0 0 33.33%;
-							min-width: 33.33%;
-							border: solid #eee;
-							border-width: 0 0 1px 0;
-						}
-						&:nth-child(4){
-							flex: 0 0 100%;
 						}
 					}
 					&.price{
@@ -392,9 +374,6 @@
 						width: 1px;
 						height: 100%;
 						background: #e2e2e2;
-						@media ($max-xs) {
-							background: transparent;
-						}
 					}
 					&:last-child:after{
 						background: transparent;
@@ -403,23 +382,16 @@
 						margin: 0;
 					}
 					.t{
-						font-size: 20px;
+						font-size: 12px;
 						color: #606060;
-						margin: 0 0 15px;
-						@media (max-width: 1600px) {
-							font-size: 18px;
-						}
-						@media ($max-sm) {
-							margin: 0;
-							font-size: 14px;
+						margin: 0 0 18px;
+						@media ($max-xs) {
+							margin: 0 0 5px;
 						}
 					}
 					.b{
-						font-size: 24px;
+						font-size: 14px;
 						color: #000;
-						@media (max-width: 1600px) {
-							font-size: 16px;
-						}
 					}
 				}
 			}
@@ -428,9 +400,9 @@
 				align-items: center;
 				border-radius: 5px;
 				background: #202470;
-				margin: 0 0 30px;
+				margin: 0 0 20px;
 				padding: 0 15px;
-				@media (max-width: 1200px) {
+				@media ($max-lg) {
 					flex-direction: column;
 				}
 				@media ($max-xs) {
@@ -438,87 +410,84 @@
 				}
 				.echartsbox1{
 					position: relative;
-					flex: 0 0 70%;
-					min-width: 70%;
-					@media ($max-md) {
-						flex: 0 0 100%;
-						min-width: 100%;
+					flex: 0 0 60%;
+					min-width: 60%;
+					@media ($max-lg) {
+						flex: inherit;
+						min-width: inherit;
+						width: 100%;
 					}
 					.githubLine {
-						@media(min-width: 1200px) and (max-width: 1439px) {
-							height: 500px !important;
-						}
-						@media(min-width: 992px) and (max-width: 1199px) {
-							height: 400px !important;
-						}
-						@media(min-width: 768px) and (max-width: 991px) {
-							height: 400px !important;
-						}
 						@media($max-sm) {
 							height: 300px !important;
 						}
 					}
 				}
 				.details{
-					flex: 0 0 30%;
-					min-width: 30%;
+					flex: 0 0 40%;
+					min-width: 40%;
 					margin: 50px 0;
-					@media (max-width: 1600px) {
-						margin: 30px 0;
-					}
-					@media (max-width: 1200px) {
-						display: flex;
-						align-items: flex-start;
-						flex-direction: row;
-						flex-wrap: wrap;
-						padding: 15px 0;
-					}
-					@media ($max-sm) {
+					@media ($max-lg) {
+						flex: inherit;
+						min-width: inherit;
+						width: 90%;
 						margin: 0;
 					}
+					@media ($max-xs) {
+						width: 100%;
+					}
 					.total{
-						text-align: center;
-						font-size: 30px;
+						font-size: 16px;
+						font-weight: bold;
 						color: #71cefe;
-						margin: 0 0 40px;
-						@media (max-width: 1600px) {
-							font-size: 24px;
+						margin: 0 0 30px;
+						@media ($max-xs) {
 							margin: 0 0 20px;
 						}
-						@media (max-width: 1200px) {
-							flex: 0 0 33.33%;
-						}
-						@media ($max-sm) {
-							flex: 0 0 50%;
-							font-size: 20px;
-						}
 						span{
-							color: #d6d6d6;
+							color: #c6c6c6;
 						}
 					}
 					.item{
+						display: flex;
+						align-items: flex-start;
 						font-size: 16px;
 						color: #fff;
-						text-align: center;
 						margin: 0 0 30px;
-						@media (max-width: 1600px) {
-							font-size: 14px;
+						@media ($max-xs) {
+							margin: 0 0 15px;
 						}
-						@media (max-width: 1200px) {
-							flex: 0 0 33.33%;
-							img{
-								height: 20px;
+						.tit{
+							display: flex;
+							align-items: center;
+							flex: 0 0 120px;
+							font-size: 12px;
+							color: #fff;
+							margin: 0 8px 0 0;
+							position: relative;
+							&:after{
+								content: "";
+								position: absolute;
+								width: 1px;
+								height: 12px;
+								background: #fff;
+								right: 0;
+								top: 2px;
 							}
-						}
-						@media ($max-sm) {
-							flex: 0 0 50%;
-							margin: 0 0 10px;
-						}
-						p{
-							margin: 0 0 10px;
+							img{
+								height: 13px;
+								margin: 0 6px 0 0;
+							}
+							.word{
+								display: flex;
+								width: 52px;
+								justify-content: space-between;
+							}
 						}
 						.des{
 							font-size: 12px;
+							color: #e1e1e1;
+							margin: 0;
 						}
 					}
 				}
@@ -526,7 +495,7 @@
 			.echartsbox2{
 				border-radius: 5px;
 				background: #fff;
-				margin: 0 0 30px;
+				margin: 0 0 20px;
 				padding: 30px;
 				position: relative;
 				overflow: hidden;
@@ -535,12 +504,6 @@
 					margin: 0 0 15px;
 				}
 				.chartbox {
-					@media(min-width: 1200px) and (max-width: 1439px) {
-						height: 500px !important;
-					}
-					@media(min-width: 992px) and (max-width: 1199px) {
-						height: 400px !important;
-					}
 					@media(min-width: 768px) and (max-width: 991px) {
 						height: 400px !important;
 					}
@@ -552,21 +515,22 @@
 					display: flex;
 					justify-content: space-around;
 					@media($max-sm) {
-						flex-direction: column;
-						margin-left: 20px;
-
+						justify-content: space-between;
 					}
 					label {
 						margin: 0;
 						cursor: pointer;
 						user-select: none;
+						font-size: 12px;
+						display: flex;
+						align-items: center;
 						@media ($max-xs) {
 							font-weight: normal;
 						}
 						.checkbox {
 							display: inline-block;
-							width: 20px;
-							height: 20px;
+							width: 15px;
+							height: 15px;
 							border-radius: 2px;
 							border: 2px solid #9d9d9d;
 							vertical-align: middle;
@@ -581,15 +545,8 @@
 						}
 					}
 				}
-
 			}
 			.section2 {
-				padding: 15px;
-				background: #f0f0f0;
-				margin-bottom: 25px;
-				@media ($max-xs) {
-					padding: 10px 0;
-				}
 				.section-swiper {
 					.swiper-slide {
 						display: flex;
@@ -658,11 +615,15 @@
 		.rightmain{
 			float: left;
 			width: 28%;
+			margin: 0 0 60px;
 			@media ($max-md) {
 				width: 100%;
 				display: flex;
 				align-items: flex-start;
-				margin: 15px 0 0;
+				margin: 0 0 30px;
+			}
+			@media ($max-xs) {
+				margin: 0 0 15px;
 			}
 			.advert-swiper {
 				margin: 0 0 10px;
@@ -738,10 +699,8 @@
 				color: #1a1a1a;
 				font-weight: 700;
 				padding: 0 0 0 15px;
-				@media ($max-md) {
-					flex: 0 0 100%;
-				}
-				@media ($max-xs) {
+				flex: 0 0 100%;
+				@media ($max-sm) {
 					font-size: 14px;
 					padding: 0 0 0 30px;
 				}
@@ -753,7 +712,7 @@
 					background: $mainColor;
 					left: 0;
 					top: 13px;
-					@media ($max-xs) {
+					@media ($max-sm) {
 						width: 3px;
 						height: 20px;
 						top: 15px;
@@ -762,79 +721,130 @@
 				}
 			}
 			.recommend-item{
-        width: 100%;
-        height: 150px;
-        border-radius: 5px;
-        overflow: hidden;
-        margin: 0 0 15px;
-        background: url(../assets/project/recommend-banner1.jpg) center / cover no-repeat;
-        a{
-          display: flex;
-          align-items: center;
-          width: 100%;
-          height: 100%;
-          @media(max-width: 767px) {
-            flex-direction: column;
-          }
-        }
-        .left{
-          flex: 0 0 72px;
-          min-width: 72px;
-          height: 72px;
-          border: 2px solid #5f6da8;
-          overflow: hidden;
-          border-radius: 50%;
-          margin: 0 15px;
-          img{
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-        }
-        p{
-          margin: 0;
-          color: #fff;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
-        .r1{
-          font-size: 16px;
-        }
-        .r2{
-          font-size: 12px;
-          margin: 10px 0;
-        }
-        .r3{
-          font-size: 12px;
-        }
-        .center{
-          flex: 1;
-          overflow: hidden;
-          padding: 0 15px 0 0;
-        }
-        .right{
-          flex: 0 0 70px;
-          min-width: 70px;
-          overflow: hidden;
-          margin: 0 15px 0 0;
-          font-size: 18px;
-          color: #fff;
-        }
-      }
+				position: relative;
+				width: 100%;
+				height: 150px;
+				border-radius: 5px;
+				overflow: hidden;
+				margin: 0 0 15px;
+				background: url(../assets/project/recommend-banner1.jpg) center / cover no-repeat;
+				@media ($max-md) {
+					flex: 0 0 49%;
+					min-width: 0 0 49%;
+				}
+				@media ($max-sm) {
+					height: auto;
+					padding: 15px;
+				}
+				@media ($max-sm) {
+					margin: 0 0 8px;
+				}
+				&:last-child{
+					margin: 0;
+				}
+				a{
+					display: flex;
+					align-items: center;
+					width: 100%;
+					height: 100%;
+					@media ($max-sm) {
+						flex-direction: column;
+					}
+				}
+				.left{
+					flex: 0 0 72px;
+					min-width: 72px;
+					height: 72px;
+					border: 2px solid #5f6da8;
+					overflow: hidden;
+					border-radius: 50%;
+					margin: 0 15px;
+					@media ($max-sm) {
+						width: 72px;
+						margin: 0 0 8px;
+					}
+					@media ($max-xs) {
+						width: 60px;
+						height: 60px;
+						margin: 0 0 8px;
+					}
+					img{
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+					}
+				}
+				p{
+					margin: 0;
+					color: #fff;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+				}
+				.r1{
+					font-size: 16px;
+					@media ($max-xs) {
+						font-size: 14px;
+					}
+				}
+				.r2{
+					font-size: 12px;
+					margin: 10px 0;
+					@media ($max-sm) {
+						margin: 3px 0;
+					}
+				}
+				.r3{
+					font-size: 12px;
+				}
+				.center{
+					flex: 1;
+					overflow: hidden;
+					padding: 0 15px 0 0;
+					@media ($max-sm) {
+						flex: inherit;
+						text-align: center;
+						width: 100%;
+						padding: 0;
+					}
+				}
+				.right{
+					flex: 0 0 70px;
+					min-width: 70px;
+					overflow: hidden;
+					margin: 0 15px 0 0;
+					font-size: 18px;
+					color: #fff;
+					@media ($max-sm) {
+						flex: inherit;
+						min-width: inherit;
+						position: absolute;
+						top: 15px;
+						right: 0;
+					}
+					@media ($max-xs) {
+						font-size: 14px;
+					}
+				}
+			}
 		}
 	}
 	&-projectMainTab{
 		position: relative;
+		margin: 0 0 60px;
+		@media ($max-sm) {
+			margin: 0;
+		}
 		.tabheader{
 			position: relative;
+			z-index: 1;
 			display: flex;
 			align-items: center;
 			width: 100%;
-			height: 66px;
+			height: 60px;
 			border-radius: 5px;
 			background: #fff;
-			padding: 0 0 0 60px;
+			padding: 0 0 0 45px;
 			box-shadow: 0 3px 8px 0 rgba(130, 130, 130, 0.2);
 			@media (max-width: 1600px) {
 				padding: 0 0 0 30px;
@@ -848,19 +858,24 @@
 			}
 			.item{
 				position: relative;
-				font-size: 20px;
+				font-size: 16px;
+				font-weight: bold;
 				cursor: pointer;
+				user-select: none;
 				padding: 0 5px;
-				margin: 0 60px 0 0;
+				margin: 0 40px 0 0;
+				color: #1a1a1a;
 				&.on{
 					color: $mainColor;
 					&:after{
 						content: "";
 						position: absolute;
 						left: 0;
-						bottom: -8px;
-						width: 100%;
-						height: 4px;
+						right: 0;
+						bottom: -5px;
+						margin: auto;
+						width: 20px;
+						height: 2px;
 						background: $mainColor;
 						@media ($max-xs) {
 							height: 2px;
@@ -886,14 +901,14 @@
 						}
 					}
 				}
-				@media (max-width: 1600px) {
-					margin: 0 30px 0 0;
-					font-size: 18px;
-				}
+				// @media (max-width: 1600px) {
+				// 	margin: 0 30px 0 0;
+				// 	font-size: 18px;
+				// }
 				@media ($max-sm) {
-					flex: 0 0 30%;
-					text-align: center;
-					margin: 0;
+					// flex: 0 0 30%;
+					// text-align: center;
+					// margin: 0;
 					&.btn-group.on:after{
 						background: transparent;
 					}
@@ -946,12 +961,12 @@
 			.echartsbox3{
 				position: relative;
 				padding: 30px;
-				margin: 0 0 30px;
+				margin: 0 0 25px;
 				border-radius: 5px;
 				background: #fff;
 				overflow: hidden;
 				@media($max-sm) {
-					padding: 10px;
+					padding: 15px;
 				}
 				@media($max-xs) {
 					margin: 0 0 15px;
@@ -974,14 +989,15 @@
 					display: flex;
 					justify-content: center;
 					@media($max-sm) {
-						flex-direction: column;
-						margin-left: 20px;
-
+						justify-content: space-between;
 					}
 					label {
 						margin: 0;
 						cursor: pointer;
 						user-select: none;
+						font-size: 12px;
+						display: flex;
+						align-items: center;
 						@media ($max-xs) {
 							font-weight: normal;
 						}
@@ -992,8 +1008,8 @@
 						}
 						.checkbox {
 							display: inline-block;
-							width: 20px;
-							height: 20px;
+							width: 15px;
+							height: 15px;
 							border-radius: 2px;
 							border: 2px solid #9d9d9d;
 							vertical-align: middle;
@@ -1014,9 +1030,9 @@
 				width: 100%;
 				background: #fff;
 				padding: 30px 0;
-				@media (max-width: 1600px) {
-					padding: 15px 0;
-				}
+				// @media (max-width: 1600px) {
+				// 	padding: 15px 0;
+				// }
 				@media ($max-sm) {
 					flex-direction: column;
 					padding: 0;
@@ -1028,16 +1044,16 @@
 					justify-content: center;
 					align-items: center;
 					flex: 1;
-					@media (max-width: 1800px) {
-						flex-direction: column;
-					}
+					// @media (ma) {
+					// 	flex-direction: column;
+					// }
 					@media ($max-sm) {
 						flex-direction: row;
 						justify-content: space-between;
 						align-items: center;
 						margin-bottom: 10px;
 						background-color: #fff;
-						padding: 8px;
+						padding: 8px 15px;
 						&:last-child {
 							margin-bottom: 0;
 						}
@@ -1057,7 +1073,7 @@
 							width: 1px;
 						}
 						@media ($max-sm) {
-							width: 0px;
+							width: 0;
 						}
 					}
 					&:last-child:after{
@@ -1065,52 +1081,29 @@
 					}
 					.left{
 						.i1{
-							font-size: 20px;
+							font-size: 12px;
 							color: #606060;
-							margin: 0 0 15px;
-							text-align: center;
-							@media (max-width: 1600px) {
-								font-size: 18px;
-								margin: 0 0 5px;
-							}
-							@media ($max-sm) {
-								text-align: left;
-							}
-							@media ($max-xs) {
-								font-size: 14px;
-							}
+							margin: 0 0 12px;
 						}
 						.i2{
-							font-size: 24px;
-							text-align: center;
+							font-size: 14px;
+							color: #000;
 							margin: 0;
-							@media (max-width: 1600px) {
-								font-size: 20px;
-								margin: 0;
-							}
-							@media ($max-sm) {
-								text-align: left;
-							}
-							@media ($max-xs) {
-								font-size: 16px;
-							}
 						}
 					}
 					.right{
-						font-size: 30px;
-						@media (max-width: 1600px) {
-							font-size: 25px;
-						}
-						@media ($max-xs) {
-							text-align: right;
-							font-size: 18px;
+						font-size: 14px;
+						margin: 0 0 0 45px;
+						@media ($max-lg) {
+							margin: 0 0 0 15px;
 						}
 						img{
-							margin: 0 15px;
-							@media (max-width: 1800px) {
-								margin: 0 10px 0 0;
-								width: 25px;
-							}
+							margin: 0 0 0 2px;
+							height: 10px;
+							// @media (max-width: 1800px) {
+							// 	margin: 0 10px 0 0;
+							// 	width: 25px;
+							// }
 						}
 						span.up{
 							color: #08ba07;
@@ -1120,10 +1113,6 @@
 			}
 			.echartsbox4 {
 				position: relative;
-				margin-top: 30px;
-				@media ($max-xs) {
-					margin-top: 5px;
-				}
 				.chartbox {
 					@media(min-width: 1200px) and (max-width: 1439px) {
 						height: 500px !important;
@@ -1145,7 +1134,7 @@
 					display: flex;
 					padding: 10px 0 20px;
 					&.github_box {
-						padding: 10px 15px 20px;
+						padding: 0 45px;
 						.control_item {
 							flex: inherit;
 							margin-right: 15px;
@@ -1156,20 +1145,20 @@
 						text-align: center;
 						button {
 							padding: 8px 10px;
-							font-size: 16px;
+							font-size: 12px;
 							font-weight: 400;
-							color: #fff;
+							color: #1a1a1a;
 							line-height: 15px;
 							border: none;
-							background-color: #BEBEBE;
+							background-color: #cacaca;
 							border-radius: 3px;
 							outline: none;
 							@media ($max-xs) {
 								font-size: 12px;
 							}
 							&.check {
+								color: #fff;
 								background-color: $mainColor;
-								box-shadow: 0 0 15px -2px $mainColor;
 							}
 						}
 					}
@@ -1177,37 +1166,26 @@
 			}
 			.echartsbox5 {
 				.chart_box {
+					padding: 0 15px;
 					@media(min-width: 1200px) {
 						margin-bottom: 50px;
 					}
-					@media(min-width: 1200px) and (max-width: 1439px) {
-						height: 500px !important;
-					}
-					@media(min-width: 992px) and (max-width: 1199px) {
-						height: 400px !important;
-					}
-					@media(min-width: 768px) and (max-width: 991px) {
-						height: 400px !important;
-					}
 					@media($max-sm) {
-						height: 300px !important;
 						margin-bottom: 15px;
 					}
 				}
 				.market_box {
-					margin: 20px 0;
-					@media ($max-xs) {
-						margin: 15px 0;
-						h4{
-							font-size: 14px;
-							padding: 0 0 0 15px;
-						}
+					h4{
+						font-size: 14px;
+						padding: 0 45px;
+						margin: 0;
+						color: #1a1a1a;
 					}
 					.control_button {
 						display: flex;
 						padding: 10px 0 20px;
 						&.github_box {
-							padding: 10px 15px 20px;
+							padding: 0 45px;
 							.control_item {
 								flex: inherit;
 								margin-right: 21px;
@@ -1644,6 +1622,10 @@
 		}
 	}
 	&-tab-projectInfo{
+		background: #fff;
+		border-radius: 5px;
+		overflow: hidden;
+		padding: 20px 45px;
 		.infobox{
 			display: flex;
 			flex-direction: row;
@@ -1700,6 +1682,96 @@
 					}
 				}
 			}
+		}
+		.des{
+			line-height: 1.5;
+			margin: 0 0 35px;
+		}
+		.flexbox{
+			overflow: hidden;
+			.box-row{
+				display: flex;
+				justify-content: space-between;
+				flex-wrap: wrap;
+			}
+			.box-col{
+				flex: 0 0 35%;
+				min-width: 35%;
+				display: flex;
+				justify-content: space-between;
+				margin: 0 0 26px;
+				align-items: center;
+				.iteml, .itemr{
+					font-size: 14px;
+					color: #1a1a1a;
+				}
+				.itemr{
+					color: #424242;
+					.bps-btn{
+						font-size: 14px;
+						color: #fff;
+						padding: 8px 20px;
+						background: $mainColor;
+						border-radius: 3px;
+						cursor: pointer;
+					}
+				}
+			}
+		}
+	}
+	&-tab-team{
+		.section2{
+			background: transparent;
+			padding: 15px 15px 0;
+		}
+	}
+	&-tab-tech{
+		background: #fff;
+		padding: 30px 0;
+		border-radius: 5px;
+		overflow: hidden;
+	}
+	&-tab-mark{
+		background: #fff;
+		padding: 30px 0;
+		border-radius: 5px;
+		overflow: hidden;
+	}
+	&-tab-news{
+		background: #fff;
+		border-radius: 5px;
+		overflow: hidden;
+		.tab-lable{
+			height: 80px;
+			display: flex;
+			align-items: center;
+			padding: 0 50px;
+			>div{
+				font-size: 14px;
+				color: #666;
+				margin: 0 45px 0 0;
+				position: relative;
+				cursor: pointer;
+				user-select: none;
+				&.on{
+					color: #010101;
+					font-weight: 700;
+					&:after{
+						content: "";
+						position: absolute;
+						width: 70%;
+						height: 3px;
+						background: #3e60dc;
+						left: 0;
+						right: 0;
+						margin: auto;
+						bottom: -5px;
+					}
+				}
+			}
+		}
+		.medialist{
+			padding: 0 45px;
 		}
 	}
 }
