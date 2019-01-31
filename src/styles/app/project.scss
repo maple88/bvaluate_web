@@ -274,64 +274,84 @@
         padding: 0;
       }
     }
-    .middlemain{
+    .middlemain {
       position: relative;
       z-index: 1;
       width: 100%;
       margin: -18px 0 20px;
-      .mainrow{
+      .mainrow {
         margin: 0 -10px;
         display: flex;
         flex-wrap: wrap;
       }
-      .maincol{
+      .maincol {
         flex: 0 0 33.33%;
         min-width: 33.33%;
         padding: 0 10px;
       }
-      .item{
+      .item {
         background: #fff;
         overflow: hidden;
         border-radius: 5px;
         box-shadow: 0 0 10px 0 rgba(102, 102, 102, .3);
         height: 100%;
         padding: 12px 20px;
-        .head{
+        .head {
           color: #1a1a1a;
           font-size: 16px;
           margin: 0 0 20px;
         }
       }
-      .score-item{
-        .score-main{
+      .score-item {
+        .score-main {
           display: flex;
           justify-content: space-between;
-          .scorel{
-            padding: 10px 0 0;
+          .scorel {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            .scorel-info {
+              position: absolute;
+              height: 100%;
+              width: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              h4 {
+                font-size: 18px;
+                line-height: 30px;
+                color: #1b1b1b;
+                span {
+                  color: #999999;
+                }
+              }
+            }
           }
-          .scorer{
+          .scorer {
             width: 200px;
             padding: 10px 0 0;
-            p{
+            p {
               display: flex;
               justify-content: space-between;
               flex: 0 0 100%;
               min-width: 100%;
               margin: 0 0 20px;
               font-size: 14px;
-              span{
-                &:first-child{
+              span {
+                &:first-child {
                   color: #747474;
                 }
-                &:last-child{
+                &:last-child {
                   color: #5c5c5c;
                 }
-                img{
+                img {
                   height: 10px;
                   margin: 0 0 0 5px;
                 }
               }
-              i{
+              i {
                 color: #3555da;
                 font-style: normal;
               }
@@ -339,11 +359,11 @@
           }
         }
       }
-      .industry-item{
-        .industry-tab{
+      .industry-item {
+        .industry-tab {
           display: flex;
           justify-content: space-around;
-          div{
+          div {
             border-radius: 3px;
             user-select: none;
             cursor: pointer;
@@ -351,44 +371,119 @@
             font-size: 12px;
             color: #666;
             border: 1px solid #666;
-            &.on{
+            &.on {
               color: $mainColor;
               border-color: $mainColor;
             }
           }
         }
+        .industry-main {
+          padding: 10px 0;
+          .polygon_box {
+            display: flex;
+            justify-content: center;
+            .polygon_img {
+              position: relative;
+              margin: 13px 0 9px 0;
+              > img {
+                margin: -13px 0 -9px 0;
+                pointer-events: none;
+                user-select: none;
+              }
+              .polygon_info {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                border-bottom: 1px dashed #bfbfbf;
+                width: 100%;
+                transition: bottom 1s ease-in;
+                .data_info {
+                  position: absolute;
+                  left: -50px;
+                  transform: translateY(-50%);
+                  p {
+                    margin: 0;
+                    color: #1a1a1a;
+                    font-size: 12px;
+                  }
+                  h4 {
+                    color: #1a1a1a;
+                    font-size: 16px;
+                    margin: 0;
+                    span {
+                      color: #6f6f6f;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
-      .media-item{
-        .media-main{
-          padding: 20px 0 0;
+      .media-item {
+        .media-main {
           display: flex;
           justify-content: space-around;
-          .mediar{
-            .computerbox{
+          align-items: center;
+          .mediar {
+            .computerbox {
               width: 77px;
               height: 66px;
               background: url(../assets/project/computer.png) center / cover no-repeat;
               margin: 0 0 14px;
               padding: 8px 0 0;
-              .wordtop{
+              .wordtop {
                 font-size: 14px;
                 color: #1a1a1a;
                 margin: 0;
                 text-align: center;
                 font-weight: bold;
               }
-              .wordbot{
+              .wordbot {
                 font-size: 12px;
                 color: #878787;
                 margin: 0;
                 text-align: center;
               }
             }
-            .des{
+            .des {
               text-align: center;
               font-size: 12px;
               color: #747474;
               margin: 0;
+            }
+          }
+          .medial {
+            .circle_box {
+              position: relative;
+              .circle_img {
+                position: absolute;
+                width: 125px;
+                height: 125px;
+                pointer-events: none;
+                user-select: none;
+              }
+              .scorel-info {
+                position: absolute;
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                z-index: 1;
+                height: 100%;
+                text-align: center;
+                width: 100%;
+                h4 {
+                  font-size: 18px;
+                  line-height: 24px;
+                  color: #1a1a1a;
+                  margin: 0;
+                }
+                p {
+                  font-size: 12px;
+                  line-height: 24px;
+                  color: #747474;
+                }
+              }
             }
           }
         }

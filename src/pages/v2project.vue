@@ -101,7 +101,12 @@
                   <div class="head">评分</div>
                   <div class="score-main">
                     <div class="scorel">
-                      <!--进度条-->
+                      <div class="scorel-info">
+                        <h4>{{completeness}}<span>/5</span></h4>
+                      </div>
+                      <v-circle :completeness="completeness"
+                                :progress-option="{innerColor:'#26baff',strokeWidth:5,max:5,radius:60,toInnerColor:'#29e4e5'}">
+                      </v-circle>
                     </div>
                     <div class="scorer">
                       <p><span>总评榜排名：<i>23</i></span><span>20<img src="../assets/up.png"></span></p>
@@ -116,11 +121,21 @@
                   <div class="head">行业</div>
                   <div class="industry-tab">
                     <div class="on">众筹</div>
-                    <div>行业行业行业</div>
-                    <div>众筹众筹众筹众筹</div>
+                    <div @click="changeIndesty">行业行业行业</div>
+                    <div @click="changeIndesty">众筹众筹众筹众筹</div>
                   </div>
                   <div class="industry-main">
-                    <!--三角形-->
+                    <div class="polygon_box">
+                      <div class="polygon_img">
+                        <img src="../assets/project/polygon.png" alt="polygon">
+                        <div class="polygon_info" :style="`bottom: ${completenessHandle(completeness)}%;`">
+                          <div class="data_info">
+                            <p>平均分</p>
+                            <h4>{{completeness}}/<span>5</span></h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -129,7 +144,16 @@
                   <div class="head">媒体声量</div>
                   <div class="media-main">
                     <div class="medial">
-                      <!--进度条-->
+                      <div class="circle_box">
+                        <div class="scorel-info">
+                          <h4>{{completeness}}</h4>
+                          <p>声量指数</p>
+                        </div>
+                        <img class="circle_img" src="../assets/project/circle.png" alt="circle">
+                        <v-circle :completeness="completeness"
+                                  :progress-option="{innerColor:'#00c7dc',strokeWidth:35,max:5,radius:45,outerColor:'#e5f9fb',strokeLinecap:'butt'}">
+                        </v-circle>
+                      </div>
                     </div>
                     <div class="mediar">
                       <div class="computerbox">
@@ -612,6 +636,8 @@
   import Swiper from 'swiper'
   import QRCode from 'qrcodejs2'
   import echarts from 'echarts'
+  import CommonLoopProgress from '../components/commonLoopProgress'
+  import polygonProgress from '../components/polygonProgress'
 
   let loading = require('../assets/login/loading.gif');
   let nicon = require('../assets/home/tuite.png');
@@ -621,6 +647,10 @@
   let banner = require('../assets/project/probanner.jpg');
 
   export default {
+    components: {
+      'v-circle': CommonLoopProgress,
+      'v-polygon': polygonProgress,
+    },
     data() {
       return {
         tablist: ['行情', '简介', '团队', '技术', '市场'],
@@ -668,7 +698,8 @@
         },
         projectList: [],
         showloading: true,
-        typeNumber: '290001'
+        typeNumber: '290001',
+        completeness: 0
       }
     },
     mounted() {
@@ -687,12 +718,21 @@
         observer: true,
         observeParents: true,
       });
-
+      setTimeout(() => {
+        this.completeness = 2.3
+      }, 2000);
 
       this.initProject();
 
     },
     methods: {
+      changeIndesty() {
+        this.completeness = 5;
+      },
+      completenessHandle(completeness) {
+        let val = parseFloat(completeness / 5).toFixed(2);
+        return val * 100
+      },
       changeType(type) {
         this.search.type = type;
         console.log(type);
@@ -1069,17 +1109,18 @@
       },
       initScoreChart(data) {
         function filter_array(array) {
-          return array.filter(item=>item);
+          return array.filter(item => item);
         }
+
         data.reverse();
         let xList = data.map(item => item.times.split(" ")[0]);
         let price = data.map(item => item.price);
         let totalScoreList = data.map(item => item.totalordercount);
         let fundSuperList = data.map(item => item.fundsupervision);
-        let fundaMentList = data.map(item => item.fundamentalsanalysis );
+        let fundaMentList = data.map(item => item.fundamentalsanalysis);
         let teamList = data.map(item => item.teamanalysis);
         let techList = data.map(item => item.technicalanalysis);
-        let marketList = data.map(item => item.marketanalysis );
+        let marketList = data.map(item => item.marketanalysis);
 
         let scoreLine = echarts.init(this.$refs.scoreChart);
         let scoreLineOption = {
@@ -1095,7 +1136,7 @@
           legend: {
             selected: {'价格': true, '评分': true, '资金监管': false, '基本面': false, '团队': false, '技术': false, '市场': false},
             data: ['价格', '评分', '资金监管', '基本面', '团队', '技术', '市场'],
-            selectedMode:false
+            selectedMode: false
           },
           grid: {
             left: '0',
@@ -1133,8 +1174,8 @@
               name: '价格',
               position: 'left',
               // min: Math.min.apply(null,filter_array(price)),
-              max: (Math.max.apply(null,filter_array(price)) * 1.5).toFixed(3),
-              minInterval: (Math.max.apply(null,filter_array(price)) * 1.5).toFixed(3) / 4
+              max: (Math.max.apply(null, filter_array(price)) * 1.5).toFixed(3),
+              minInterval: (Math.max.apply(null, filter_array(price)) * 1.5).toFixed(3) / 4
             },
             {
               type: 'value',
@@ -1143,7 +1184,7 @@
               // min: Math.min.apply(null,filter_array(fundSuperList)),
               max: 5, //Math.max.apply(null,filter_array(fundSuperList)),
               show: false,
-              axisLabel : {
+              axisLabel: {
                 show: false
               }
             },
@@ -1154,7 +1195,7 @@
               // min: Math.min.apply(null,filter_array(fundaMentList)),
               max: 5, //Math.max.apply(null,filter_array(fundaMentList)),
               show: false,
-              axisLabel : {
+              axisLabel: {
                 show: false
               }
             },
@@ -1165,7 +1206,7 @@
               // min: Math.min.apply(null,filter_array(teamList)),
               max: 5, //Math.max.apply(null,filter_array(teamList)),
               show: false,
-              axisLabel : {
+              axisLabel: {
                 show: false
               }
             },
@@ -1176,7 +1217,7 @@
               // min: Math.min.apply(null,filter_array(techList)),
               max: 5, //Math.max.apply(null,filter_array(techList)),
               show: false,
-              axisLabel : {
+              axisLabel: {
                 show: false
               }
             },
@@ -1187,7 +1228,7 @@
               // min: Math.min.apply(null,filter_array(marketList)),
               max: 5, //Math.max.apply(null,filter_array(marketList)),
               show: false,
-              axisLabel : {
+              axisLabel: {
                 show: false
               }
             }
@@ -1197,7 +1238,7 @@
               type: 'slider',
               xAxisIndex: 0,
               filterMode: 'empty',
-              startValue: this.getStartValue(data[data.length-1].times, data[0].times)
+              startValue: this.getStartValue(data[data.length - 1].times, data[0].times)
             },
           ],
           series: [
@@ -1281,7 +1322,7 @@
           ]
         };
         scoreLine.setOption(scoreLineOption);
-        window.addEventListener('resize', e =>{
+        window.addEventListener('resize', e => {
           scoreLine.resize();
         })
 
@@ -1364,8 +1405,9 @@
       },
       initMarketChart(data) {
         function filter_array(array) {
-          return array.filter(item=>item);
+          return array.filter(item => item);
         }
+
         data.reverse();
         let xList = data.map(item => item.times.split(" ")[0]);
         let totalScoreList = data.map(item => item.totalScore);
@@ -1386,7 +1428,7 @@
           legend: {
             selected: {'价格': true, '流通笔数': false, '流通总额': false, '流通参与用户量': false},
             data: ['价格', '流通笔数', '流通总额', '流通参与用户量'],
-            selectedMode:false
+            selectedMode: false
           },
           grid: {
             left: '0',
@@ -1414,17 +1456,17 @@
             {
               type: 'value',
               name: '价格',
-              min: Math.min.apply(null,filter_array(totalScoreList)),
-              max: Math.max.apply(null,filter_array(totalScoreList)),
+              min: Math.min.apply(null, filter_array(totalScoreList)),
+              max: Math.max.apply(null, filter_array(totalScoreList)),
             },
             {
               type: 'value',
               name: '流通笔数',
               position: 'right',
               show: false,
-              min: Math.min.apply(null,filter_array(countList)),
-              max: Math.max.apply(null,filter_array(countList)),
-              axisLabel : {
+              min: Math.min.apply(null, filter_array(countList)),
+              max: Math.max.apply(null, filter_array(countList)),
+              axisLabel: {
                 show: false
               }
             },
@@ -1433,9 +1475,9 @@
               name: '流通总额',
               position: 'right',
               show: false,
-              min: Math.min.apply(null,filter_array(allCountList)),
-              max: Math.max.apply(null,filter_array(allCountList)),
-              axisLabel : {
+              min: Math.min.apply(null, filter_array(allCountList)),
+              max: Math.max.apply(null, filter_array(allCountList)),
+              axisLabel: {
                 show: false
               }
             },
@@ -1444,9 +1486,9 @@
               name: '流通参与用户量',
               show: false,
               position: 'right',
-              min: Math.min.apply(null,filter_array(countUserList)),
-              max: Math.max.apply(null,filter_array(countUserList)),
-              axisLabel : {
+              min: Math.min.apply(null, filter_array(countUserList)),
+              max: Math.max.apply(null, filter_array(countUserList)),
+              axisLabel: {
                 show: false
               }
             }
@@ -1456,7 +1498,7 @@
               type: 'slider',
               xAxisIndex: 0,
               filterMode: 'empty',
-              startValue: this.getStartValue(data[data.length-1].times, data[0].times)
+              startValue: this.getStartValue(data[data.length - 1].times, data[0].times)
             },
           ],
           series: [
@@ -1506,7 +1548,7 @@
           ]
         };
         marketLine.setOption(marketLineOption);
-        window.addEventListener('resize', e =>{
+        window.addEventListener('resize', e => {
           marketLine.resize();
         })
 
@@ -1630,7 +1672,7 @@
           }]
         };
         myChart.setOption(option);
-        window.addEventListener('resize', e =>{
+        window.addEventListener('resize', e => {
           let width = this.$refs.bluebox.offsetWidth;
           myChart.resize({'width': `${width}px`});
         })
@@ -1640,20 +1682,20 @@
         let commitList = data.map(item => item.commit);
         let watchList = data.map(item => item.watch);
         let starList = data.map(item => item.star);
-        let commitAvgList = data.map(item => (item.commitAvg) ? item.commitAvg.toFixed(2): item.commitAvg);
-        let watchAvgList = data.map(item => (item.watchAvg) ? item.watchAvg.toFixed(2): item.watchAvg);
-        let starAvgList = data.map(item => (item.starAvg) ? item.starAvg.toFixed(2): item.starAvg);
+        let commitAvgList = data.map(item => (item.commitAvg) ? item.commitAvg.toFixed(2) : item.commitAvg);
+        let watchAvgList = data.map(item => (item.watchAvg) ? item.watchAvg.toFixed(2) : item.watchAvg);
+        let starAvgList = data.map(item => (item.starAvg) ? item.starAvg.toFixed(2) : item.starAvg);
         let commit = false;
         let watch = false;
         let star = false;
         let avgList = commitAvgList;
-        if(this.githubButton === 0){
+        if (this.githubButton === 0) {
           commit = true;
           avgList = commitAvgList;
-        }else if(this.githubButton === 1){
+        } else if (this.githubButton === 1) {
           watch = true;
           avgList = watchAvgList;
-        }else{
+        } else {
           star = true;
           avgList = starAvgList;
         }
@@ -1670,9 +1712,9 @@
             }
           },
           legend: {
-            selected: {'近30天平均值':true,'更新量': commit, '浏览量': watch, '收藏量': star}, //'近30天平均值': true,
-            data: ['近30天平均值','更新量', '浏览量', '收藏量'], //'近30天平均值',
-            selectedMode:false,
+            selected: {'近30天平均值': true, '更新量': commit, '浏览量': watch, '收藏量': star}, //'近30天平均值': true,
+            data: ['近30天平均值', '更新量', '浏览量', '收藏量'], //'近30天平均值',
+            selectedMode: false,
             x: 'right'
           },
           grid: {
@@ -1698,25 +1740,25 @@
               type: 'slider',
               xAxisIndex: 0,
               filterMode: 'empty',
-              startValue: this.getStartValue(data[data.length-1].times, data[0].times)
+              startValue: this.getStartValue(data[data.length - 1].times, data[0].times)
             },
           ],
           series: [
             {
               name: '近30天平均值',
               type: 'line',
-              smooth:false,
+              smooth: false,
               label: {
                 normal: {
                   show: true,
                   position: 'top'
                 }
               },
-              itemStyle:{
-                normal:{
-                  lineStyle:{
-                    width:2,
-                    type:'dotted'
+              itemStyle: {
+                normal: {
+                  lineStyle: {
+                    width: 2,
+                    type: 'dotted'
                   }
                 }
               },
@@ -1753,7 +1795,7 @@
         };
         githubLine.setOption(githubLineOption);
         this.githubLine = githubLine;
-        window.addEventListener('resize', e =>{
+        window.addEventListener('resize', e => {
           let width = this.$refs.bigBox.offsetWidth;
           githubLine.resize({'width': `${width}px`});
         })
@@ -1777,7 +1819,7 @@
           },
           legend: {
             data: ['报道量'], //'近30天平均值',
-            selectedMode:false,
+            selectedMode: false,
             x: 'right'
           },
           grid: {
@@ -1829,7 +1871,7 @@
         };
         mediaDisseminateLine.setOption(mediaDisseminateLineOption);
         this.mediaDisseminateLine = mediaDisseminateLine;
-        window.addEventListener('resize', e =>{
+        window.addEventListener('resize', e => {
           let width = this.$refs.bigBox.offsetWidth;
           mediaDisseminateLine.resize({'width': `${width}px`});
         })
@@ -1849,7 +1891,7 @@
           },
           legend: {
             data: ['网站数'], //'近30天平均值',
-            selectedMode:false,
+            selectedMode: false,
             x: 'right'
           },
           grid: {
@@ -1901,7 +1943,7 @@
         };
         mediaFollowLine.setOption(mediaFollowLineOption);
         this.mediaFollowLine = mediaFollowLine;
-         window.addEventListener('resize', e =>{
+        window.addEventListener('resize', e => {
           let width = this.$refs.bigBox.offsetWidth;
           mediaFollowLine.resize({'width': `${width}px`});
         })
