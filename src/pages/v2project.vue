@@ -102,16 +102,30 @@
                   <div class="score-main">
                     <div class="scorel">
                       <div class="scorel-info">
-                        <h4>{{completeness}}<span>/5</span></h4>
+                        <h4>{{project.totalScore}}<span>/5</span></h4>
                       </div>
-                      <v-circle :completeness="completeness"
+                      <v-circle :completeness="parseFloat(project.totalScore)"
                                 :progress-option="{innerColor:'#26baff',strokeWidth:5,max:5,radius:60,toInnerColor:'#29e4e5'}">
                       </v-circle>
                     </div>
                     <div class="scorer">
-                      <p><span>总评榜排名：<i>23</i></span><span>20<img src="../assets/up.png"></span></p>
-                      <p><span>STO榜排名：<i>23</i></span><span>20<img src="../assets/up.png"></span></p>
-                      <p><span>创投板排名：<i>10</i></span><span>20<img src="../assets/down.png"></span></p>
+                      <p>
+                        <span>总评榜排名：<i>{{completeness.rank}}</i></span>
+                        <span>
+                          {{completeness.rankAm | formatRank}}
+                          <img src="../assets/up.png" v-if="completeness.rankAm > 0">
+                          <img src="../assets/down.png" v-if="completeness.rankAm < 0">
+                        </span>
+                      </p>
+                      <p v-if="completeness.stoRank !== 0">
+                        <span>STO榜排名：<i>{{completeness.stoRank}}</i></span>
+                        <span>
+                          {{completeness.stoRankAm | formatRank}}
+                          <img src="../assets/up.png" v-if="completeness.stoRankAm > 0">
+                          <img src="../assets/down.png" v-if="completeness.stoRankAm < 0">
+                        </span>
+                      </p>
+                      <!-- <p><span>创投板排名：<i>10</i></span><span>20<img src="../assets/down.png"></span></p> -->
                     </div>
                   </div>
                 </div>
@@ -120,18 +134,16 @@
                 <div class="item industry-item">
                   <div class="head">行业</div>
                   <div class="industry-tab">
-                    <div class="on">众筹</div>
-                    <div @click="changeIndesty">行业行业行业</div>
-                    <div @click="changeIndesty">众筹众筹众筹众筹</div>
+                    <div :class="indestyIndex === index ? 'on' : ''" @click="changeIndesty(item.mark, index)" v-for="(item, index) in completeness.trade">{{item.explain}}</div>
                   </div>
                   <div class="industry-main">
                     <div class="polygon_box">
                       <div class="polygon_img">
                         <img src="../assets/project/polygon.png" alt="polygon">
-                        <div class="polygon_info" :style="`bottom: ${completenessHandle(completeness)}%;`">
+                        <div class="polygon_info" :style="`bottom: ${completenessHandle(indestyMark)}%;`">
                           <div class="data_info">
                             <p>平均分</p>
-                            <h4>{{completeness}}/<span>5</span></h4>
+                            <h4>{{indestyMark}}/<span>5</span></h4>
                           </div>
                         </div>
                       </div>
@@ -146,18 +158,18 @@
                     <div class="medial">
                       <div class="circle_box">
                         <div class="scorel-info">
-                          <h4>{{completeness}}</h4>
+                          <h4>{{parseFloat(completeness.media).toFixed(2)}}</h4>
                           <p>声量指数</p>
                         </div>
                         <img class="circle_img" src="../assets/project/circle.png" alt="circle">
-                        <v-circle :completeness="completeness"
+                        <v-circle :completeness="parseFloat(completeness.media)"
                                   :progress-option="{innerColor:'#00c7dc',strokeWidth:35,max:5,radius:45,outerColor:'#e5f9fb',strokeLinecap:'butt'}">
                         </v-circle>
                       </div>
                     </div>
                     <div class="mediar">
                       <div class="computerbox">
-                        <p class="wordtop">345篇</p>
+                        <p class="wordtop">{{completeness.report}}篇</p>
                         <p class="wordbot">近一周</p>
                       </div>
                       <p class="des">媒体报道量</p>
@@ -699,7 +711,9 @@
         projectList: [],
         showloading: true,
         typeNumber: '290001',
-        completeness: 0
+        completeness: [],
+        indestyIndex: 0,
+        indestyMark: 0
       }
     },
     mounted() {
@@ -718,16 +732,18 @@
         observer: true,
         observeParents: true,
       });
-      setTimeout(() => {
-        this.completeness = 2.3
-      }, 2000);
+      // setTimeout(() => {
+      //   this.completeness = 2.3
+      // }, 2000);
 
       this.initProject();
 
     },
     methods: {
-      changeIndesty() {
-        this.completeness = 5;
+      changeIndesty(value, index) {
+        // console.log(value)
+        this.indestyMark = parseFloat(value);
+        this.indestyIndex = index;
       },
       completenessHandle(completeness) {
         let val = parseFloat(completeness / 5).toFixed(2);
@@ -735,7 +751,7 @@
       },
       changeType(type) {
         this.search.type = type;
-        console.log(type);
+        // console.log(type);
         this.newsPage = 0;
         this.newsList = [];
         if (type === 'NEWS') {
@@ -790,6 +806,7 @@
                 that.marketChart_loading = false;
                 that.initMarketChart(res)
               });
+              that.getMiddle(res.data.project);
               that.getHotInfo(res.data.project);
               that.getScoreChart(res.data.project);
               // that.getTabs(res.data.project)
@@ -876,7 +893,13 @@
           }
         }
       },
-
+      getMiddle (project) {
+        this.$axios.get('http://119.254.68.8:10020/tradition/minute/'+ project)
+        .then(res => {
+          this.completeness = res.data;
+          this.indestyMark = res.data.trade[0].mark;
+        })
+      },
       //获取新闻
       initNewsList(projectName, categoryId) {
         let that = this;
@@ -1093,7 +1116,6 @@
       },
       initGithubChart(icoName) {
         this.$axios.get(`/api/tradition/githubScore/${icoName}`).then(res => {
-          console.log(res)
           res.data.reverse();
           this.githubData = res.data;
           this.githubLine_loading = false;
@@ -2122,6 +2144,13 @@
       },
     },
     filters: {
+      formatRank (val) {
+        if (val === 0) {
+          return '--';
+        }else{
+          return val;
+        }
+      },
       formatRecommendProjects(val) {
         if (val !== null || val !== '') {
           return '( ' + val + ' )';

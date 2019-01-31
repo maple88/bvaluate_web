@@ -279,6 +279,9 @@
       z-index: 1;
       width: 100%;
       margin: -18px 0 20px;
+      @media ($max-sm) {
+        margin: 0 0 15px;
+      }
       .mainrow {
         margin: 0 -10px;
         display: flex;
@@ -288,6 +291,10 @@
         flex: 0 0 33.33%;
         min-width: 33.33%;
         padding: 0 10px;
+        @media ($max-sm) {
+          flex: 0 0 100%;
+          min-width: 100%;
+        }
       }
       .item {
         background: #fff;
@@ -296,16 +303,28 @@
         box-shadow: 0 0 10px 0 rgba(102, 102, 102, .3);
         height: 100%;
         padding: 12px 20px;
+        @media ($max-sm) {
+          padding: 12px 15px;
+        }
         .head {
           color: #1a1a1a;
           font-size: 16px;
           margin: 0 0 20px;
+          @media ($max-sm) {
+            margin: 0;
+          }
         }
       }
       .score-item {
         .score-main {
+          padding: 15px 0 0;
           display: flex;
           justify-content: space-between;
+          align-items: center;
+          @media ($max-md) {
+            padding: 0;
+            flex-direction: column;
+          }
           .scorel {
             flex: 1;
             display: flex;
@@ -332,6 +351,7 @@
           .scorer {
             width: 200px;
             padding: 10px 0 0;
+            
             p {
               display: flex;
               justify-content: space-between;
@@ -363,6 +383,7 @@
         .industry-tab {
           display: flex;
           justify-content: space-around;
+          flex-wrap: wrap;
           div {
             border-radius: 3px;
             user-select: none;
@@ -371,6 +392,7 @@
             font-size: 12px;
             color: #666;
             border: 1px solid #666;
+            margin: 0 0 5px;
             &.on {
               color: $mainColor;
               border-color: $mainColor;
@@ -382,6 +404,9 @@
           .polygon_box {
             display: flex;
             justify-content: center;
+            @media ($min-sm) and ($max-lg) {
+              justify-content: flex-end;
+            }
             .polygon_img {
               position: relative;
               margin: 13px 0 9px 0;
@@ -395,8 +420,11 @@
                 bottom: 0;
                 right: 0;
                 border-bottom: 1px dashed #bfbfbf;
-                width: 100%;
+                width: 120%;
                 transition: bottom 1s ease-in;
+                @media ($max-md) {
+                  width: 100%;
+                }
                 .data_info {
                   position: absolute;
                   left: -50px;
@@ -422,16 +450,37 @@
       }
       .media-item {
         .media-main {
+          padding: 15px 0 0;
           display: flex;
           justify-content: space-around;
           align-items: center;
+          @media ($max-md) {
+            padding: 0;
+            flex-direction: column;
+          }
           .mediar {
+            @media ($max-md) {
+              display: flex;
+              align-items: center;
+              width: 200px;
+              justify-content: space-between;
+              flex-direction: row-reverse;
+              padding: 10px 0 0;
+            }
             .computerbox {
               width: 77px;
               height: 66px;
               background: url(../assets/project/computer.png) center / cover no-repeat;
               margin: 0 0 14px;
               padding: 8px 0 0;
+              @media ($max-md) {
+                background: transparent;
+                display: flex;
+                width: auto;
+                height: auto;
+                padding: 0;
+                margin: 0;
+              }
               .wordtop {
                 font-size: 14px;
                 color: #1a1a1a;
@@ -444,6 +493,9 @@
                 color: #878787;
                 margin: 0;
                 text-align: center;
+                @media ($max-md) {
+                  display: none;
+                }
               }
             }
             .des {

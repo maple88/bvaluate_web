@@ -52,7 +52,7 @@
       completenessHandle() {
         let circleLength = Math.floor(2 * Math.PI * this.option.radius);
         let val = parseFloat(this.completeness / this.option.max).toFixed(2);
-        console.log(val);
+        // console.log(val);
         val = Math.max(this.option.min, val);
         val = Math.min(this.option.max, val);
         return `${val * 100 * circleLength / 100},10000`
