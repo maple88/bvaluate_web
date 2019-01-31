@@ -1265,6 +1265,7 @@
           ],
           series: [
             {
+              smooth:true,
               name: '评分',
               type: 'line',
               // stack: '总量',
@@ -1281,6 +1282,7 @@
               showSymbol: false
             },
             {
+              smooth:true,
               name: '价格',
               type: 'line',
               // stack: '总量',
@@ -1297,6 +1299,7 @@
               showSymbol: false
             },
             {
+              smooth:true,
               name: '资金监管',
               type: 'line',
               // stack: '总量',
@@ -1306,6 +1309,7 @@
               showSymbol: false
             },
             {
+              smooth:true,
               name: '基本面',
               type: 'line',
               // stack: '总量',
@@ -1315,6 +1319,7 @@
               showSymbol: false
             },
             {
+              smooth:true,
               name: '团队',
               type: 'line',
               // stack: '总量',
@@ -1324,6 +1329,7 @@
               showSymbol: false
             },
             {
+              smooth:true,
               name: '技术',
               type: 'line',
               // stack: '总量',
@@ -1333,6 +1339,7 @@
               showSymbol: false
             },
             {
+              smooth:true,
               name: '市场',
               type: 'line',
               // stack: '总量',
@@ -1525,6 +1532,7 @@
           ],
           series: [
             {
+              smooth:true,
               name: '价格',
               type: 'line',
               yAxisIndex: 0,
@@ -1677,6 +1685,7 @@
             // areaStyle: {normal: {}},
             data: [
               {
+                // smooth:true,
                 value: param.data[1],
                 name: '昨日',
                 itemStyle: {
@@ -1684,6 +1693,7 @@
                 }
               },
               {
+                // smooth:true,
                 value: param.data[0],
                 name: '今日',
                 itemStyle: {
@@ -1767,6 +1777,7 @@
           ],
           series: [
             {
+              smooth:true,
               name: '近30天平均值',
               type: 'line',
               smooth: false,
@@ -1789,6 +1800,7 @@
               showSymbol: false
             },
             {
+              smooth:true,
               name: '收藏量',
               type: 'line',
               // stack: '总量',
@@ -1798,6 +1810,7 @@
 
             },
             {
+              smooth:true,
               name: '浏览量',
               type: 'line',
               // stack: '总量',
@@ -1806,6 +1819,7 @@
               showSymbol: false
             },
             {
+              smooth:true,
               name: '更新量',
               type: 'line',
               // stack: '总量',
@@ -1883,6 +1897,7 @@
             //   data: param.twitterAvgList
             // },
             {
+              smooth:true,
               name: '报道量',
               type: 'line',
               // stack: '总量',
@@ -1955,6 +1970,7 @@
             //   data: param.twitterAvgList
             // },
             {
+              smooth:true,
               name: '网站数',
               type: 'line',
               // stack: '总量',
