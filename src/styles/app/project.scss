@@ -16,7 +16,7 @@
       padding: 130px 0 30px;
     }
     @media ($max-xs) {
-      padding: 115px 0 15px;
+      padding: 115px 0 33px;
     }
     .whitepaper {
       font-size: 12px;
@@ -280,20 +280,25 @@
       width: 100%;
       margin: -18px 0 20px;
       @media ($max-sm) {
-        margin: 0 0 15px;
+        overflow: auto;
+        margin: -18px 0 0;
+        padding: 0 0 15px;
       }
       .mainrow {
         margin: 0 -10px;
         display: flex;
-        flex-wrap: wrap;
+        @media ($max-sm) {
+          margin: 0 -8px;
+        }
       }
       .maincol {
         flex: 0 0 33.33%;
         min-width: 33.33%;
         padding: 0 10px;
         @media ($max-sm) {
-          flex: 0 0 100%;
-          min-width: 100%;
+          flex: 0 0 65%;
+          min-width: 65%;
+          padding: 0 8px;
         }
       }
       .item {
@@ -311,7 +316,7 @@
           font-size: 16px;
           margin: 0 0 20px;
           @media ($max-sm) {
-            margin: 0;
+            margin: 0 0 10px;
           }
         }
       }
@@ -407,9 +412,16 @@
             @media ($min-sm) and ($max-lg) {
               justify-content: flex-end;
             }
+            @media ($max-xs) {
+              justify-content: flex-end;
+              position: relative;
+            }
             .polygon_img {
               position: relative;
               margin: 13px 0 9px 0;
+              @media ($max-xs) {
+                position: static;
+              }
               > img {
                 margin: -13px 0 -9px 0;
                 pointer-events: none;
@@ -422,8 +434,11 @@
                 border-bottom: 1px dashed #bfbfbf;
                 width: 120%;
                 transition: bottom 1s ease-in;
-                @media ($max-md) {
+                @media ($min-sm) and ($max-md) {
                   width: 100%;
+                }
+                @media ($max-xs) {
+                  width: 70%;
                 }
                 .data_info {
                   position: absolute;

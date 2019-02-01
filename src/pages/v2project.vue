@@ -102,9 +102,9 @@
                   <div class="score-main">
                     <div class="scorel">
                       <div class="scorel-info">
-                        <h4>{{project.totalScore}}<span>/5</span></h4>
+                        <h4>{{project.totalScore || '0'}}<span>/5</span></h4>
                       </div>
-                      <v-circle :completeness="parseFloat(project.totalScore)"
+                      <v-circle :completeness="parseFloat(project.totalScore || 0)"
                                 :progress-option="{innerColor:'#26baff',strokeWidth:5,max:5,radius:60,toInnerColor:'#29e4e5'}">
                       </v-circle>
                     </div>
@@ -158,18 +158,18 @@
                     <div class="medial">
                       <div class="circle_box">
                         <div class="scorel-info">
-                          <h4>{{parseFloat(completeness.media).toFixed(2)}}</h4>
+                          <h4>{{completeness.media?parseFloat(completeness.media).toFixed(2):'0'}}</h4>
                           <p>声量指数</p>
                         </div>
                         <img class="circle_img" src="../assets/project/circle.png" alt="circle">
-                        <v-circle :completeness="parseFloat(completeness.media)"
+                        <v-circle :completeness="parseFloat(completeness.media) || 0"
                                   :progress-option="{innerColor:'#00c7dc',strokeWidth:35,max:5,radius:45,outerColor:'#e5f9fb',strokeLinecap:'butt'}">
                         </v-circle>
                       </div>
                     </div>
                     <div class="mediar">
                       <div class="computerbox">
-                        <p class="wordtop">{{completeness.report}}篇</p>
+                        <p class="wordtop">{{completeness.report || '0'}}篇</p>
                         <p class="wordbot">近一周</p>
                       </div>
                       <p class="des">媒体报道量</p>
@@ -763,7 +763,7 @@
         } else if (type === 'WEIXIN') {
           this.typeNumber = '290000'
         }
-        this.initNewsList(this.project.project, this.typeNumber)
+        this.initNewsList(this.project.project, this.typeNumber);
       },
       tabindex(index) {
         this.tabactive = index;
@@ -2153,7 +2153,8 @@
             break;
           case 5:
             // 新闻
-            this.initNews(this.project.project, '290001');
+            // this.initNews(this.project.project, '290001');
+            this.initNewsList(this.project.project, '290001');
             break;
           default:
         }
