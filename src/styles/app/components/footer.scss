@@ -222,10 +222,16 @@
 }
 .footer .bottom{
   padding: 30px 0;
-  font-size: 20px;
+  font-size: 13px;
   font-family: "微软雅黑";
+  display: flex;
+  justify-content: center;
+  align-items: center;
   p:first-child{
     margin: 0 0 5px;
+  }
+  div:nth-child(2){
+    margin: 0 30px;
   }
   a{
     color: #fff;
@@ -311,13 +317,20 @@
   .footerflex .i2{
     font-size: 18px;
   }
-  .footer .bottom{
-    font-size: 18px;
-  }
 }
 @media (max-width: 992px) {
   .footerflex{
     flex-wrap: wrap;
+  }
+  .footerflex .flogo{
+    margin: 0 auto 30px;
+  }
+  .footer .top{
+    padding: 30px 0;
+  }
+  .footerflex .fcol:nth-child(1){
+    flex: 0 0 100%;
+    min-width: 100%;
   }
   .footerflex .fcol{
     flex: 0 0 50%;
@@ -325,9 +338,11 @@
   }
 }
 @media (max-width: 768px) {
-  .footerflex{
-    justify-content: center;
+  .footer .bottom{
     flex-direction: column;
+    div:nth-child(2){
+      margin: 5px 0;
+    }
   }
   .footerflex .eweima{
     margin: 30px auto;
@@ -338,12 +353,12 @@
     width: 100%;
     max-width: 150px;
   }
-  .footerflex .fcol{
-    // max-width: 150px;
-    flex: inherit;
-    min-width: inherit;
-    width: 100%;
-  }
+  // .footerflex .fcol{
+  //   // max-width: 150px;
+  //   flex: inherit;
+  //   min-width: inherit;
+  //   width: 100%;
+  // }
   .footer .top{
     padding: 30px 0;
   }
@@ -356,7 +371,7 @@
     font-size: 18px;
   }
   .footerflex .eweima, .footerflex .flogo{
-    max-width: 130px;
+    max-width: 110px;
   }
   .footerflex .i0 a{
     font-size: 16px;

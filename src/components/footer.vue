@@ -115,19 +115,27 @@
               </div>
             </div>
           </div>
-          <div class="fcol">
+          <!-- <div class="fcol">
             <div class="item">
-              <p class="i0"><a href="https://bvaluate.com.cn/#/privacy" target="_blank">隐私政策</a></p>
+              <p class="i0"></p>
               <p class="i1">联系我们</p>
               <p class="i2">service.us@bvaluate.com</p>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
     <div class="bottom">
-      <p><a href="http://www.miitbeian.gov.cn/state/outPortal/loginPortal.action" target="_blank">ICP备案号：京ICP备18058682号-1</a></p>
-      <p>Copyright &copy; 2018 - 2019 Bvaluate. All Rights Reserved</p>
+      <div>
+        <p><a href="http://www.miitbeian.gov.cn/state/outPortal/loginPortal.action" target="_blank">ICP备案号：京ICP备18058682号-1</a></p>
+        <p>Copyright &copy; 2018 - 2019 Bvaluate. All Rights Reserved</p>
+      </div>
+      <div>
+        <a href="https://bvaluate.com.cn/#/privacy" target="_blank">隐私政策</a>
+      </div>
+      <div>
+        <span class="i1">联系我们</span> <span class="i2">service.us@bvaluate.com</span>
+      </div>
     </div>
   </div>
 </template>
