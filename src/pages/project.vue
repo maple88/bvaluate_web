@@ -744,8 +744,15 @@
         <div class="rightmain">
           <div class="swiper-container advert-swiper">
             <div class="swiper-wrapper">
-              <div class="swiper-slide"><img src="../assets/bangdan1.jpg"></div>
-              <div class="swiper-slide"><img src="../assets/bangdan2.jpg"></div>
+              <div class="swiper-slide">
+                <a target="_blank" href="https://mp.weixin.qq.com/s/k8mMDvOQYiwxzgS9WsSbaA"><img src="../assets/bangdan1.jpg"></a>
+              </div>
+              <div class="swiper-slide">
+                <a target="_blank" href="https://mp.weixin.qq.com/s/KjKyZQlQbOaoKZtW824MeQ"><img src="../assets/bangdan2.jpg"></a>
+              </div>
+              <div class="swiper-slide">
+                <a target="_blank" href="http://www.bvaluate.yibencaijing.com/?from=singlemessage&isappinstalled=0"><img src="../assets/bangdan3.jpg"></a>
+              </div>
             </div>
             <div class="swiper-pagination"></div>
             <div class="swiper-button-prev"><i class="fa fa-angle-left"></i></div>
