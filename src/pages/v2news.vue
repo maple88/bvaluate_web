@@ -21,7 +21,7 @@
                       <div class="medialist">
                         <div class="media" v-for="(news, index) in newsList" :key="index">
                           <div class="media-left media-middle"
-                               v-if="news.dataType === 'NEWS'||news.dataType === 'WEIXIN'">
+                               v-if="news.dataType === 'NEWS' || news.dataType === 'WEIXIN'">
                             <div class="newimg_box" :data="news.title" 
                             :name="'search_newimg_box_title_'+index" :id="'search_newimg_box_title_'+index" 
                             @click="goArticle('/article',{sid:news.sid}, $event), 
@@ -44,7 +44,7 @@
                             <h4 class="media-heading" v-if="!(news.dataType === 'WEIBO' || news.dataType === 'TWITTER')">
                               <span class="tips"
                               :name="'search_tips_projectCategory_'+index" :id="'search_tips_projectCategory_'+index" 
-                              v-if="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL' || news.dataType !== 'WEIBO' || news.dataType !== 'TWITTER'"
+                              v-if="news.projectCategory !==null && news.projectCategory !== '' && news.projectCategory !==undefined && news.projectCategory !=='NULL' && news.dataType !== 'WEIBO' && news.dataType !== 'TWITTER'"
                               @click="goProjectByName(news.projectCategory, $event), trackProject('搜索页文章的项目标签', news.projectCategory, '搜索页文章的项目标签没有项目ID', '搜索页文章的项目标签没有排行榜位置', '搜索页文章的项目标签没有项目总分')"
                               :data="news.projectCategory"
                               >

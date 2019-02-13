@@ -116,7 +116,8 @@ export default new Router({
       path: '/project',
       component: v2project,
       meta: {
-        pageTitle: '项目详情页'
+        pageTitle: '项目详情页',
+        headerNobg: true
       }
     },
     {

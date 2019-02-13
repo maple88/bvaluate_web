@@ -866,6 +866,7 @@
                 partner = JSON.parse(partner);
               }
               that.project.partner = partner;
+              that.getMiddle(res.data.project);
               that.getHotInfo(res.data.project);
               that.getScoreChart(res.data.project);
               // that.getTabs(res.data.project)
@@ -1272,7 +1273,7 @@
           ],
           series: [
             {
-              smooth:true,
+              // smooth:true,
               name: '评分',
               type: 'line',
               // stack: '总量',
@@ -1306,7 +1307,7 @@
               showSymbol: false
             },
             {
-              smooth:true,
+              // smooth:true,
               name: '资金监管',
               type: 'line',
               // stack: '总量',
@@ -1316,7 +1317,7 @@
               showSymbol: false
             },
             {
-              smooth:true,
+              // smooth:true,
               name: '基本面',
               type: 'line',
               // stack: '总量',
@@ -1326,7 +1327,7 @@
               showSymbol: false
             },
             {
-              smooth:true,
+              // smooth:true,
               name: '团队',
               type: 'line',
               // stack: '总量',
@@ -1336,7 +1337,7 @@
               showSymbol: false
             },
             {
-              smooth:true,
+              // smooth:true,
               name: '技术',
               type: 'line',
               // stack: '总量',
@@ -1346,7 +1347,7 @@
               showSymbol: false
             },
             {
-              smooth:true,
+              // smooth:true,
               name: '市场',
               type: 'line',
               // stack: '总量',
@@ -1434,7 +1435,10 @@
         oDate1.setMonth(oDate1.getMonth() - 1);
         let oDate2 = new Date(date2);
         if (oDate1.getTime() > oDate2.getTime()) {
-          return (oDate1.getFullYear() + '-' + (oDate1.getMonth() + 1) + '-' + oDate1.getDate());
+          console.log(date1);
+          console.log(date2);
+          console.log(oDate1.getFullYear() + '-' + (oDate1.getMonth() + 1) + '-' + oDate1.getDate());
+          return (oDate1.getFullYear() + '-' + (((oDate1.getMonth() + 1) > 10) ? (oDate1.getMonth() + 1) : ('0' + (oDate1.getMonth() + 1))) + '-' + ((oDate1.getDate() > 10) ? oDate1.getDate() : '0' + ('0' + oDate1.getDate())));
         } else {
           return date2;
         }
@@ -1784,7 +1788,7 @@
           ],
           series: [
             {
-              smooth:true,
+              // smooth:true,
               name: '近30天平均值',
               type: 'line',
               smooth: false,
@@ -1807,7 +1811,7 @@
               showSymbol: false
             },
             {
-              smooth:true,
+              // smooth:true,
               name: '收藏量',
               type: 'line',
               // stack: '总量',
@@ -1817,7 +1821,7 @@
 
             },
             {
-              smooth:true,
+              // smooth:true,
               name: '浏览量',
               type: 'line',
               // stack: '总量',
@@ -1826,7 +1830,7 @@
               showSymbol: false
             },
             {
-              smooth:true,
+              // smooth:true,
               name: '更新量',
               type: 'line',
               // stack: '总量',
@@ -1904,7 +1908,7 @@
             //   data: param.twitterAvgList
             // },
             {
-              smooth:true,
+              // smooth:true,
               name: '报道量',
               type: 'line',
               // stack: '总量',
@@ -1977,7 +1981,7 @@
             //   data: param.twitterAvgList
             // },
             {
-              smooth:true,
+              // smooth:true,
               name: '网站数',
               type: 'line',
               // stack: '总量',
