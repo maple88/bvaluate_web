@@ -2004,8 +2004,21 @@
             font-size: 12px;
           }
         }
+        .iteml{
+          flex: 0 0 60px;
+          min-width: 60px;
+        }
         .itemr {
+          padding-left: 15px;
           color: #424242;
+          text-align: right;
+          a{
+            color: #424242;
+            transition: .3s;
+            &:hover{
+              color: $mainColor;
+            }
+          }
           .bps-btn {
             font-size: 14px;
             color: #fff;

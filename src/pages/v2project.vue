@@ -358,34 +358,32 @@
               </div>
               <!-- 简介 -->
               <div class="tabcontent project-tab-projectInfo" v-show="tabactive === 1">
-                <p class="des">The Aion Network is a multi-tier blockchain system designed to address scalability,
-                  privacy, andinteroperability.The Aion Network is a multi-tier blockchain system designed to address
-                  scalability, privacy, and interoperability.</p>
+                <p class="des" v-if="project.about">{{project.about}}</p>
                 <div class="flexbox">
                   <div class="box-row">
-                    <div class="box-col">
+                    <div class="box-col" v-if="project.startDate">
                       <div class="iteml">开始时间</div>
-                      <div class="itemr">2018.12.11</div>
+                      <div class="itemr">{{project.startDate}}</div>
                     </div>
-                    <div class="box-col">
+                    <div class="box-col" v-if="project.outerOfficial">
                       <div class="iteml">官网地址</div>
-                      <div class="itemr">www.baidu.com</div>
+                      <div class="itemr"><a target="_blank" :href="project.outerOfficial">{{project.outerOfficial}}</a></div>
                     </div>
                     <!-- </div>
                     <div class="box-row"> -->
-                    <div class="box-col">
+                    <div class="box-col" v-if="project.priceICO">
                       <div class="iteml">发行价格</div>
-                      <div class="itemr">￥112345</div>
+                      <div class="itemr">{{project.priceICO}}</div>
                     </div>
-                    <div class="box-col">
+                    <div class="box-col" v-if="project.country">
                       <div class="iteml">所属国家</div>
-                      <div class="itemr">中国</div>
+                      <div class="itemr">{{project.country}}</div>
                     </div>
                     <!-- </div>
                     <div class="box-row"> -->
-                    <div class="box-col">
+                    <div class="box-col" v-if="project.totalSupply">
                       <div class="iteml">发行总量</div>
-                      <div class="itemr">112345</div>
+                      <div class="itemr">{{project.totalSupply}}</div>
                     </div>
                     <div class="box-col">
                       <div class="iteml">白皮书</div>
@@ -395,9 +393,9 @@
                     </div>
                     <!-- </div>
                     <div class="box-row"> -->
-                    <div class="box-col">
+                    <div class="box-col" v-if="project.tokenPlatform">
                       <div class="iteml">代币平台</div>
-                      <div class="itemr">ETH（ERCO）</div>
+                      <div class="itemr">{{project.tokenPlatform}}</div>
                     </div>
                   </div>
 
