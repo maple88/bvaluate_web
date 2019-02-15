@@ -1184,8 +1184,8 @@
           }
         }
         // @media (max-width: 1600px) {
-        // 	margin: 0 30px 0 0;
-        // 	font-size: 18px;
+        //  margin: 0 30px 0 0;
+        //  font-size: 18px;
         // }
         @media ($max-sm) {
           // flex: 0 0 30%;
@@ -1315,7 +1315,7 @@
         background: #fff;
         padding: 30px 0;
         // @media (max-width: 1600px) {
-        // 	padding: 15px 0;
+        //  padding: 15px 0;
         // }
         @media ($max-sm) {
           flex-direction: column;
@@ -1329,7 +1329,7 @@
           align-items: center;
           flex: 1;
           // @media (ma) {
-          // 	flex-direction: column;
+          //  flex-direction: column;
           // }
           @media ($max-sm) {
             flex-direction: row;
@@ -1385,8 +1385,8 @@
               margin: 0 0 0 2px;
               height: 10px;
               // @media (max-width: 1800px) {
-              // 	margin: 0 10px 0 0;
-              // 	width: 25px;
+              //  margin: 0 10px 0 0;
+              //  width: 25px;
               // }
             }
             span.up {
@@ -1935,8 +1935,8 @@
           padding: 0 8px;
         }
         // @media ($max-xs) {
-        // 	width: 100%;
-        // 	padding: 0 8px;
+        //  width: 100%;
+        //  padding: 0 8px;
         // }
       }
       .item {
@@ -2004,21 +2004,8 @@
             font-size: 12px;
           }
         }
-        .iteml{
-          flex: 0 0 60px;
-          min-width: 60px;
-        }
         .itemr {
-          padding-left: 15px;
           color: #424242;
-          text-align: right;
-          a{
-            color: #424242;
-            transition: .3s;
-            &:hover{
-              color: $mainColor;
-            }
-          }
           .bps-btn {
             font-size: 14px;
             color: #fff;

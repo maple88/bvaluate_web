@@ -23,6 +23,7 @@ import cooperation from '@/pages/cooperation'
 import dynamicList from '@/pages/dynamicList'
 import dynamicView from '@/pages/dynamicView'
 import privacy from '@/pages/privacy'
+import userCollect from '@/pages/userCollect'
 
 Vue.use(Router);
 
@@ -162,6 +163,10 @@ export default new Router({
     {
       path: '/privacy',
       component: privacy
+    },
+    {
+      path: '/userCollect',
+      component: userCollect
     }
   ],
   scrollBehavior(to, from, savedPosition) {

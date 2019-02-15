@@ -395,6 +395,16 @@
               that.headerInitUser();
               that.$store.state.loginPop = false;
               layer.msg('登录成功');
+              setTimeout(() => {
+                that.showTip = false;
+                that.login();
+                if (res.data.signedIn) {
+                  that.$router.push('/home')
+                } else {
+                  that.$store.state.signInTips = true;
+                  that.$router.push('/home')
+                }
+              }, 1000);
             }).catch(function (res) {
             })
           }).catch((res) => {
