@@ -8,31 +8,36 @@
         </div>
         <div class="bd">
           <div class="tips_title">
-            <img src="../assets/invitation/invitation_title.png" alt="">
+            <h4>邀请有礼</h4>
           </div>
           <div class="tips_content">
             <div class="content_default">
               <h4>邀请好友注册即送<span>288</span>糖果</h4>
               <h4>好友邀请其他人还可以获得<span>188</span>糖果</h4>
             </div>
-            <div class="invitation_info">
-              <h4>已成功邀请<span>{{people}}</span>名</h4>
-              <h4>累计获得糖果<span>{{sugar}}</span></h4>
-            </div>
-            <div class="erCode_box">
-              <div class="img_box">
-                <div id="qrCodeUrl"></div>
-                <!--<img src="../assets/invitation/test.png" alt="">-->
-              </div>
-              <div class="content_tips">
-                <p>截图将此二维码</p>
-                <p>发送给好友注册</p>
-              </div>
-            </div>
-            <div class="decorate_box">
-              <img src="../assets/invitation/gift.png" alt="">
+            <div class="invitation_wrapbox">
+                <div class="invitation_info">
+                    <h4>已成功邀请好友<span>{{people}}</span>名</h4>
+                    <h4>累计获得糖果<span>{{sugar}}</span></h4>
+                </div>
+                <div class="erCode_box">
+                    <div class="img_box">
+                        <div id="qrCodeUrl"></div>
+                        <!--<img src="../assets/invitation/test.png" alt="">-->
+                    </div>
+                    <div class="content_tips">
+                        <p>截图将此二维码</p>
+                        <p>发送给好友注册</p>
+                    </div>
+                </div>
             </div>
           </div>
+        </div>
+        <div class="invitation-bg-l">
+            <img src="../assets/invitation/l_sbg.png" alt="">
+        </div>
+        <div class="invitation-bg-r">
+            <img src="../assets/invitation/r_sbg.png" alt="">
         </div>
       </div>
     </div>
