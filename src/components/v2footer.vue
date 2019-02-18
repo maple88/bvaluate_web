@@ -27,6 +27,10 @@
             <div class="box-col">
               <div class="eweima-row">
                 <div class="item">
+                  <p>小程序</p>
+                  <div class="img-div"><img src="../assets/feweima3.jpg"></div>
+                </div>
+                <div class="item">
                   <p>APP下载</p>
                   <div class="img-div"><img src="../assets/feweima1.jpg"></div>
                 </div>

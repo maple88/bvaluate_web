@@ -253,15 +253,15 @@
             ,cols: [[
             {field: 'rank', title: '排名', width: 45, fixed: true, templet: '#list-table-ranking', style: 'height:64px; padding: 0; line-height: inherit'}
             ,{field:'project', title: '项目', minWidth: 110, fixed: true, templet: '#list-table-project', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'price', title: '价格', width: 75, sort: true, templet: '#list-table-price', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'famc', title: '流通市值', width: 75, sort: true, templet: '#list-table-famc', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'totalScore', title: '总评分', width: 75, sort: true, templet: '#list-table-totalScore', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'amountIncrease', title: '排名升降', width: 75, sort: true, templet: '#list-table-updown', style: 'height:64px; padding: 0; line-height: inherit'}
             ,{field:'fundamentalsanalysis', title: '基本面', width: 75, sort: true, templet: '#fundamentalsanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
             ,{field:'marketanalysis', title: '市场', width: 75, sort: true, templet: '#marketanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
             ,{field:'technicalanalysis', title: '技术', width: 75, sort: true, templet: '#technicalanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
             ,{field:'teamanalysis', title: '团队', width: 75, sort: true, templet: '#teamanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
             ,{field:'fundsupervision', title: '资金监管', width: 75, sort: true, templet: '#fundsupervision', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'totalScore', title: '总评分', width: 75, sort: true, templet: '#list-table-totalScore', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'amountIncrease', title: '排名升降', width: 75, sort: true, templet: '#list-table-updown', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'price', title: '价格', width: 75, sort: true, templet: '#list-table-price', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'famc', title: '流通市值', width: 75, sort: true, templet: '#list-table-famc', style: 'height:64px; padding: 0; line-height: inherit'}
             ]]
             ,initSort: {
               field: 'rank'

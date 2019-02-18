@@ -432,7 +432,7 @@
           this.user.sex = sex;
           this.user.oldSex = sex;
         } else {
-          this.$router.push('/login')
+          this.$router.push('/home')
         }
       },
       editInfor(json, callback, error) {

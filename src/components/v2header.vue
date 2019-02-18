@@ -106,11 +106,20 @@
                 <a href="javascript:;" class="header-btn" data="登录" @click="isLogin('登录按钮')">登录</a>
                 <a href="javascript:;" class="header-btn blue" data="注册" @click="isLogin('注册按钮')">注册</a>
               </li>
+              <li class="language">
+                <div class="layui-form">
+                  <select name="language" lay-filter="language">
+                    <option value="简体">简体</option>
+                    <option value="繁体">繁体</option>
+                    <option value="English">English</option>
+                  </select>
+                </div>
+              </li>
             </ul>
             <transition name="fade">
-              <div class="search-box" v-show="showSearch">
+              <div class="search-box" ref="innerSearch" v-show="showSearch">
                 <div class="center">
-                  <input type="text" placeholder="请输入关键词" v-model="search" class="search_input" data="输入搜素内容" name="no_content" id="input_search_input" @keyup.enter="goSearch($event)">
+                  <input type="text" placeholder="请输入关键词" v-model="search" ref="search_input" class="search_input" data="输入搜素内容" name="no_content" id="input_search_input" @keyup.enter="goSearch($event)">
                 </div>
                 <div class="right">
                   <button class="search_submit" @click="goSearch($event), trackSearch(searchType, search)" name="no_content" id="search_submit" data="搜索按钮">
@@ -195,13 +204,14 @@
       }
     },
     mounted() {
-      this.path = this.$router.history.current.path;
+      let that = this;
+      that.path = that.$router.history.current.path;
       $(".nav.navbar-nav li a").on('click', function () {
         $('.collapse').removeClass('in');
       });
-      this.is_header_scroll();
-      this.initUser();
-      this.getTophead();
+      that.is_header_scroll();
+      that.initUser();
+      that.getTophead();
 
       $(".open_search").on("click", function(){
         $(".out-search-box").collapse('show');
@@ -212,6 +222,22 @@
         $(".out-search-box").collapse('hide');
         $(".out-search-box").css('top', '-100%');
       })
+
+      layui.use('form', function(){
+        var form = layui.form;
+        form.render('select');
+        form.on('select(language)', function(data){
+          console.log(data.value);
+        });
+      });
+
+      that.$refs.search_input.onfocus = function () {
+        that.$refs.innerSearch.style.background = '#fff';
+        // that.$refs.innerSearch.style.background = '#e0e1e2';
+      }
+      that.$refs.search_input.onblur = function () {
+        that.$refs.innerSearch.style.background = '#d3d4d6';
+      }
     },
     watch: {
       '$route': function () {
@@ -368,7 +394,7 @@
           let load = layer.load(2);
           setTimeout(() => {
             layer.close(load);
-            if (that.path === '/home' || that.path === '/list' || that.path === '/news' || that.path === '/project' || that.path === '/article') {
+            if (that.path === '/home' || that.path === '/list' || that.path === '/v2news' || that.path === '/project' || that.path === '/article') {
               // window.location.reload();
               that.initUser();
               layer.msg('用户已退出');

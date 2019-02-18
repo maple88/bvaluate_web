@@ -1811,10 +1811,12 @@
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
+          max-height: 55px;
           -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
           @media ($max-sm) {
             -webkit-line-clamp: 2;
+            max-height: 35px;
           }
         }
         .line{

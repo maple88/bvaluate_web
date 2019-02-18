@@ -805,6 +805,7 @@
     background: #d3d4d6;
     border-radius: 5px;
     overflow: hidden;
+    transition: .3s;
     @media ($max-lg) {
       display: none;
     }
@@ -1018,6 +1019,32 @@
     border: 0;
     @media ($max-sm) {
       background: #212831;
+    }
+  }
+  .language{
+    margin: 0 0 0 50px !important;
+    .layui-form-select{
+      .layui-input{
+        width: 50px;
+        background: transparent;
+        color: #fff;
+        border: 0;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding: 0 10px 0 0;
+        overflow: hidden;
+      }
+      .layui-edge{
+        border-top-color: #fff;
+        right: 0;
+      }
+      dl dd.layui-this{
+        background-color: $mainColor;
+      }
+    }
+    .layui-form-selected dl{
+      left: auto;
+      right: 0;
     }
   }
 }
