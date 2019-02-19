@@ -16,6 +16,9 @@ import '@/styles/main.scss'
 import 'es6-promise/auto'
 import Vuex from 'vuex'
 import sensors from 'sa-sdk-javascript/sensorsdata.min.js'
+import VueI18n from 'vue-i18n'
+import cn from '@/lang/cn.js'
+import hk from '@/lang/hk.js'
 
 // axios.defaults.timeout = 30000;
 
@@ -26,6 +29,7 @@ Vue.component('v2header', v2header);
 Vue.component('v2footer', v2footer);
 Vue.component('vtips', tip);
 Vue.use(Vuex);
+Vue.use(VueI18n);
 
 Vue.prototype.$toast = function(msg){
   layui.use('layer', function(){
@@ -149,11 +153,29 @@ const store = new Vuex.Store({
   }
 });
 
+let messages = {
+  cn: cn,
+  en: {},
+  hk: hk
+};
+
+//获取选择语言
+let lang = localStorage.getItem('bvaluate-lang');
+
+let i18n = new VueI18n({
+  //定义默认语言
+  locale: lang || 'cn',
+  messages
+});
+
+
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   store,
+  i18n,
   components: {App},
   template: '<App/>'
 })

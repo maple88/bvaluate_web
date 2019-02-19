@@ -455,6 +455,10 @@
     }
     .nav.navbar-nav .header-btn{
       padding: 9px 23px;
+      @media ($min-sm) and ($max-md) {
+        padding: 5px 10px;
+        font-size: 13px;
+      }
     }
     .navbar-brand{
       padding: 12px 0 0 15px;
@@ -530,6 +534,7 @@
       font-size: 14px;
       cursor: pointer;
       margin: 0 0 0 15px;
+      white-space: nowrap;
       @media ($max-xs) {
         font-size: 12px;
         position: absolute;
@@ -610,6 +615,9 @@
         font-size: 16px;
         cursor: pointer;
         transition: .3s;
+        @media ($min-sm) and ($max-md) {
+          font-size: 13px;
+        }
         @media ($max-sm) {
           padding: 8px 0;
           color: #aaa;
@@ -656,6 +664,10 @@
       transition: .3s;
       @media ($max-md) {
         padding: 8px 16px;
+      }
+      @media ($min-sm) and ($max-md) {
+        padding: 5px 10px;
+        font-size: 13px;
       }
       &:hover{
         background: #fff !important;
@@ -708,6 +720,9 @@
             cursor: pointer;
             img{
               width: 23px;
+              @media ($min-sm) and ($max-md) {
+                width: 18px;
+              }
             }
           }
         }
@@ -801,13 +816,16 @@
     display: flex;
     float: right;
     margin: 20px 25px 0 0;
-    width: 400px;
+    width: 320px;
     background: #d3d4d6;
     border-radius: 5px;
     overflow: hidden;
     transition: .3s;
     @media ($max-lg) {
       display: none;
+    }
+    @media (max-width: 1329px) {
+      width: 220px;
     }
     .left {
       flex: 0 0 90px;
@@ -1023,6 +1041,13 @@
   }
   .language{
     margin: 0 0 0 50px !important;
+    @media ($min-sm) and ($max-md) {
+      margin: 0 0 0 55px !important;
+    }
+    @media ($max-sm) {
+      margin: 0 auto !important;
+      width: 110px;
+    }
     .layui-form-select{
       .layui-input{
         width: 50px;
@@ -1033,6 +1058,12 @@
         text-overflow: ellipsis;
         padding: 0 10px 0 0;
         overflow: hidden;
+        @media ($min-sm) and ($max-md) {
+          font-size: 13px;
+        }
+        @media ($max-sm) {
+          width: 100%;
+        }
       }
       .layui-edge{
         border-top-color: #fff;
@@ -1045,6 +1076,11 @@
     .layui-form-selected dl{
       left: auto;
       right: 0;
+      @media ($max-sm) {
+        top: auto;
+        bottom: 100%;
+        margin: 0px;
+      }
     }
   }
 }

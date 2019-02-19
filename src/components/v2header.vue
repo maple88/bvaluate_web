@@ -4,7 +4,7 @@
       <div class="container v2container">
         <div class="flexbox">
           <ul>
-            <li><span style="font-family: PingFangSC-Regular;">项目总量：</span><span>{{tophead.totalProject}}</span></li>
+            <li><span style="font-family: PingFangSC-Regular;">{{ $t("Total projects") }}：</span><span>{{tophead.totalProject}}</span></li>
             <li><span style="font-family: '微软雅黑';">项目相关人员总数：</span><span>{{tophead.totalRelatedProjectPerson}}</span></li>
             <li><span>白皮书收录总数：</span><span>{{tophead.totalWhitePaper}}</span></li>
           </ul>
@@ -109,9 +109,9 @@
               <li class="language">
                 <div class="layui-form">
                   <select name="language" lay-filter="language">
-                    <option value="简体">简体</option>
-                    <option value="繁体">繁体</option>
-                    <option value="English">English</option>
+                    <option value="简体" :selected="$i18n.locale === 'cn' ? true : false">简体</option>
+                    <option value="繁体" :selected="$i18n.locale === 'hk' ? true : false">繁体</option>
+                    <option value="English" :selected="$i18n.locale === 'en' ? true : false">English</option>
                   </select>
                 </div>
               </li>
@@ -228,6 +228,13 @@
         form.render('select');
         form.on('select(language)', function(data){
           console.log(data.value);
+          if (data.value === '简体') {
+            that.$i18n.locale = 'cn';
+            localStorage.setItem('bvaluate-lang', 'cn');
+          }else if (data.value === 'English') {
+            that.$i18n.locale = 'en';
+            localStorage.setItem('bvaluate-lang', 'en');
+          }
         });
       });
 
