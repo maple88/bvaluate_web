@@ -168,6 +168,10 @@ let i18n = new VueI18n({
   messages
 });
 
+$(document).scroll(function() {
+  console.log('1');
+});
+
 
 
 /* eslint-disable no-new */
