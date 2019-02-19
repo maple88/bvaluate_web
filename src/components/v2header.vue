@@ -4,14 +4,14 @@
       <div class="container v2container">
         <div class="flexbox">
           <ul>
-            <li><span style="font-family: PingFangSC-Regular;">{{ $t("Total projects") }}：</span><span>{{tophead.totalProject}}</span></li>
-            <li><span style="font-family: '微软雅黑';">项目相关人员总数：</span><span>{{tophead.totalRelatedProjectPerson}}</span></li>
-            <li><span>白皮书收录总数：</span><span>{{tophead.totalWhitePaper}}</span></li>
+            <li><span style="font-family: PingFangSC-Regular;">{{$t("Total projects")}}：</span><span>{{tophead.totalProject}}</span></li>
+            <li><span style="font-family: '微软雅黑';">{{$t("Total people of blockchain")}}：</span><span>{{tophead.totalRelatedProjectPerson}}</span></li>
+            <li><span>{{$t("Total White papers")}}：</span><span>{{tophead.totalWhitePaper}}</span></li>
           </ul>
           <div class="appdownload">
             <a href="https://api.bvaluate.com.cn/apk/bvaluate.apk">
               <img src="../assets/tdownload.png">
-              <span>APP下载</span>
+              <span>{{$t("Download App")}}</span>
             </a>
           </div>
         </div>
@@ -34,13 +34,13 @@
                 <img src="../assets/usericon.png">
               </div>
               <ul class="dropdown-menu header-dropdown-menu">
-                <router-link tag="li" to="/userCenter" active-class="active"><a data="个人中心">个人中心</a></router-link>
+                <router-link tag="li" to="/userCenter" active-class="active"><a data="个人中心">{{$t("Personal center")}}</a></router-link>
                 <!-- <li>
                   <a href="javascript:;" data="消息" @click="$store.state.messagePop = true">消息</a>
                 </li> -->
-                <router-link tag="li" to="/my" active-class="active"><a data="设置">设置</a></router-link>
+                <router-link tag="li" to="/my" active-class="active"><a data="设置">{{$t("Set up")}}</a></router-link>
                 <li>
-                  <a href="javascript:;" data="退出" @click="logout()">退出</a>
+                  <a href="javascript:;" data="退出" @click="logout()">{{$t("Exit")}}</a>
                 </li>
               </ul>
             </div>
@@ -55,15 +55,15 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <router-link tag="li" to="/home" active-class="active"><a data="首页">首页</a></router-link>
-              <router-link tag="li" to="/list" active-class="active"><a data="榜单">榜单</a></router-link>
-              <router-link tag="li" to="/v2news" active-class="active"><a data="资讯">资讯</a></router-link>
-              <li v-show="token"><a href="javascript:;" data="新增项目" @click="analysis()">新增项目</a></li>
-              <li v-show="!token" @click="isLogin('新增项目')"><a data="新增项目">新增项目</a></li>
+              <router-link tag="li" to="/home" active-class="active"><a data="首页">{{$t("Home")}}</a></router-link>
+              <router-link tag="li" to="/list" active-class="active"><a data="榜单">{{$t("List")}}</a></router-link>
+              <router-link tag="li" to="/v2news" active-class="active"><a data="资讯">{{$t("News")}}</a></router-link>
+              <li v-show="token"><a href="javascript:;" data="新增项目" @click="analysis()">{{$t("New Projects")}}</a></li>
+              <li v-show="!token" @click="isLogin('新增项目')"><a data="新增项目">{{$t("New Projects")}}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <router-link tag="li" to="/follow" active-class="active" v-show="token"><a data="我的关注">我的关注</a></router-link>
-              <li v-show="!token" @click="isLogin('我的关注')"><a data="我的关注">我的关注</a></li>
+              <router-link tag="li" to="/follow" active-class="active" v-show="token"><a data="我的关注">{{$t("Attention")}}</a></router-link>
+              <li v-show="!token" @click="isLogin('我的关注')"><a data="我的关注">{{$t("Attention")}}</a></li>
               <li class="header-token hsearch">
                 <div class="open_search">
                   <img src="../assets/hsearch.png">
@@ -79,32 +79,32 @@
                 <div class="hicon" data-toggle="dropdown">
                   <img src="../assets/usericon.png">
                 </div>
-                <div class="htips icon-htips" @click="invitation">邀请有礼</div>
+                <div class="htips icon-htips" @click="invitation">{{$t("gift")}}</div>
                 <ul class="dropdown-menu header-dropdown-menu">
-                  <router-link tag="li" to="/userCenter" active-class="active"><a data="个人中心">个人中心</a></router-link>
+                  <router-link tag="li" to="/userCenter" active-class="active"><a data="个人中心">{{$t("Personal center")}}</a></router-link>
                   <!-- <li>
                     <a href="javascript:;" data="消息" @click="$store.state.messagePop = true">消息</a>
                   </li> -->
-                  <router-link tag="li" to="/my" active-class="active"><a data="设置">设置</a></router-link>
+                  <router-link tag="li" to="/my" active-class="active"><a data="设置">{{$t("Set up")}}</a></router-link>
                   <li>
-                    <a href="javascript:;" data="退出" @click="logout()">退出</a>
+                    <a href="javascript:;" data="退出" @click="logout()">{{$t("Exit")}}</a>
                   </li>
                 </ul>
               </li>
               <li class="hidden-xs" v-if="!token">
                 <!-- <router-link to="/login" class="header-btn" data="登录" @click="salogin($event)">登录</router-link> -->
-                <a href="javascript:;" class="header-btn" data="登录" @click="isLogin('登录按钮')">登录</a>
+                <a href="javascript:;" class="header-btn" data="登录" @click="isLogin('登录按钮')">{{$t("login")}}</a>
               </li>
               <li class="hidden-xs" v-if="!token">
                 <!-- <router-link to="/login?page=register" class="header-btn blue" data="注册" @click="saregister($event)">注册</router-link> -->
-                <a href="javascript:;" class="header-btn blue" data="注册" @click="isLogin('注册按钮')">注册</a>
-                <div class="htips" @click="registerTip">送糖果</div>
+                <a href="javascript:;" class="header-btn blue" data="注册" @click="isLogin('注册按钮')">{{$t("Sign")}}</a>
+                <div class="htips" @click="registerTip">{{$t("Candy")}}</div>
               </li>
               <li class="sbs-btn visible-xs" v-if="!token">
                 <!-- <router-link to="/login" class="header-btn" data="登录" @click="salogin($event)">登录</router-link>
                 <router-link to="/login?page=register" class="header-btn blue" data="注册" @click="saregister($event)">注册</router-link> -->
-                <a href="javascript:;" class="header-btn" data="登录" @click="isLogin('登录按钮')">登录</a>
-                <a href="javascript:;" class="header-btn blue" data="注册" @click="isLogin('注册按钮')">注册</a>
+                <a href="javascript:;" class="header-btn" data="登录" @click="isLogin('登录按钮')">{{$t("login")}}</a>
+                <a href="javascript:;" class="header-btn blue" data="注册" @click="isLogin('注册按钮')">{{$t("Sign")}}</a>
               </li>
               <li class="language">
                 <div class="layui-form">
@@ -119,7 +119,7 @@
             <transition name="fade">
               <div class="search-box" ref="innerSearch" v-show="showSearch">
                 <div class="center">
-                  <input type="text" placeholder="请输入关键词" v-model="search" ref="search_input" class="search_input" data="输入搜素内容" name="no_content" id="input_search_input" @keyup.enter="goSearch($event)">
+                  <input type="text" :placeholder="$t('Enter Keywords')" v-model="search" ref="search_input" class="search_input" data="输入搜素内容" name="no_content" id="input_search_input" @keyup.enter="goSearch($event)">
                 </div>
                 <div class="right">
                   <button class="search_submit" @click="goSearch($event), trackSearch(searchType, search)" name="no_content" id="search_submit" data="搜索按钮">
@@ -463,4 +463,3 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 </style>
-

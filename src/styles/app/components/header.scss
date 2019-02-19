@@ -471,7 +471,7 @@
     background: #030303;
     overflow: hidden;
     @media ($max-sm) {
-      height: 40px;
+      height: 60px;
     }
     .container{
       height: 100%;
@@ -479,6 +479,9 @@
         height: 100%;
         display: flex;
         justify-content: space-between;
+        @media ($max-sm) {
+          align-items: center;
+        }
       }
     }
     ul{
@@ -486,7 +489,10 @@
       height: 100%;
       align-items: center;
       @media ($max-sm) {
-        // justify-content: center;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        margin: 0;
       }
       li{
         font-size: 14px;
@@ -498,17 +504,17 @@
         @media ($max-sm) {
           margin: 0;
           font-size: 14px;
-          &:nth-child(2){
-            margin: 0 30px;
-          }
+          // &:nth-child(2){
+          //   margin: 0 30px;
+          // }
         }
         @media ($max-xs) {
           font-size: 12px;
-          display: flex;
-          flex-direction: column;
-          &:nth-child(2){
-            margin: 0;
-          }
+          // display: flex;
+          // flex-direction: column;
+          // &:nth-child(2){
+          //   margin: 0;
+          // }
         }
         &:last-child{
           margin: 0;
