@@ -380,7 +380,7 @@
             sensors.setProfile({phone: phoneNumber});
             let url = '/user/info';
             let headers = {'uid': uid, 'Authorization': token};
-            console.log(token);
+            console.log(headers);
             that.$axios({
               method: 'get',
               url: url,
