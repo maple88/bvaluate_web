@@ -235,6 +235,10 @@
             that.$i18n.locale = 'en';
             localStorage.setItem('bvaluate-lang', 'en');
           }
+          else if (data.value === '繁体') {
+            that.$i18n.locale = 'hk';
+            localStorage.setItem('bvaluate-lang', 'hk');
+          }
         });
       });
 

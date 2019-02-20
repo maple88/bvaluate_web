@@ -10,18 +10,18 @@
         <div class="hd">
           <div class="loginlogo"><img src="../assets/loginlogo.png"></div>
           <ul v-show="login_register_head">
-            <li :class="{ active : isLogin }" @click="login()">登录</li>
-            <li :class="{ active : isRegister }" @click="register()">注册</li>
+            <li :class="{ active : isLogin }" @click="login()">{{$t('login')}}</li>
+            <li :class="{ active : isRegister }" @click="register()">{{$t('Submit')}}</li>
           </ul>
           <ul v-show="resetpwd_head">
-            <li class="active">重置密码</li>
+            <li class="active">{{$t('Reset passwords')}}</li>
           </ul>
         </div>
         <div class="bd">
           <div class="inputInner" v-if="loginForm">
             <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2-1.png"></div>
-              <input type="tel" class="form-control" v-model="loginUser.phoneNumber" placeholder="手机号" data="输入手机号"
+              <input type="tel" class="form-control" v-model="loginUser.phoneNumber" :placeholder="$t('phone number')" data="输入手机号"
                      @focus="errorMsg.loginUser.phoneNumber = ''"
                      name="no_content" id="input_login_phoneNumber">
               <span class="help-block" v-if="errorMsg.loginUser.phoneNumber">
@@ -30,7 +30,7 @@
             </div>
             <div class="input-group mg10">
               <div class="input-group-addon"><img src="../assets/login/icon2-2.png"></div>
-              <input :type="pwdtype" class="form-control password" v-model="loginUser.password" placeholder="密码" data="输入密码"
+              <input :type="pwdtype" class="form-control password" v-model="loginUser.password" :placeholder="$t('password')" data="输入密码"
                      @focus="errorMsg.loginUser.password = ''" @keyup.enter="loginSubmit"
                      name="no_content" id="input_login_password">
               <div class="showpwd" @click="changePwdtype"><img :src="eye"></div>
@@ -40,12 +40,12 @@
             </div>
             <div class="other-group">
               <label class="remember">
-                <input type="checkbox" checked data="记住我" name="no_content" id="input_checkbox"> 记住我
+                <input type="checkbox" checked data="记住我" name="no_content" id="input_checkbox"> {{$t('Remember me')}}
               </label>
-              <span @click="resetpwd()">忘记密码</span>
+              <span @click="resetpwd()">{{$t('Forgot password')}}</span>
             </div>
             <div class="input-group submit-group">
-              <button type="button" class="btn ok-btn" data="登录" name="login_ok" id="login_ok" @click="loginSubmit">登录</button>
+              <button type="button" class="btn ok-btn" data="登录" name="login_ok" id="login_ok" @click="loginSubmit">{{$t('login')}}</button>
             </div>
             <!-- <div class="other-login">
               <div class="head">第三方登录</div>
@@ -77,7 +77,7 @@
             </div> -->
             <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2-1.png"></div>
-              <input type="tel" class="form-control" v-model="registerUser.phoneNumber" placeholder="手机号"
+              <input type="tel" class="form-control" v-model="registerUser.phoneNumber" :placeholder="$t('phone number')"
                      @focus="errorMsg.registerUser.phoneNumber = ''"
                      @blur="checkPhoneNumber()"
                      data="输入手机号"
@@ -89,7 +89,7 @@
             </div>
             <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2-2.png"></div>
-              <input type="password" class="form-control" v-model="registerUser.password" placeholder="密码"
+              <input type="password" class="form-control" v-model="registerUser.password" :placeholder="$t('password')"
                      @focus="errorMsg.registerUser.password = ''"
                      @blur="checkPassword(true)"
                      data="输入密码"
@@ -113,7 +113,7 @@
             </div> -->
             <div class="input-group code">
               <div class="input-group-addon"><img src="../assets/login/icon2-3.png"></div>
-              <input type="text" v-model="registerUser.code" placeholder="输入验证码" data="输入验证码"
+              <input type="text" v-model="registerUser.code" :placeholder="$t('Input verification code')" data="输入验证码"
                      @focus="errorMsg.registerUser.code = ''"
                      name="no_content" id="input_register_code">
               <span class="help-block" v-if="errorMsg.registerUser.code">
@@ -125,14 +125,14 @@
               </button>
             </div>
             <div class="input-group submit-group">
-              <button type="button" class="btn ok-btn" data="注册" name="login_register" id="login_register" @click.stop="registerSubmit()">注册</button>
+              <button type="button" class="btn ok-btn" data="注册" name="login_register" id="login_register" @click.stop="registerSubmit()">{{$t('Submit')}}</button>
             </div>
             <!-- <p class="register-tips">点击“注册”即表示您同意并愿意接收<br>BVALUATE<span>用户此协议</span>和<span>隐私政策</span></p> -->
           </div>
           <div class="inputInner" v-if="resetpwdForm">
             <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2-1.png"></div>
-              <input type="tel" class="form-control" v-model="resetpwdUser.phoneNumber" placeholder="手机号"
+              <input type="tel" class="form-control" v-model="resetpwdUser.phoneNumber" :placeholder="$t('phone number')"
                      @focus="errorMsg.resetpwdUser.phoneNumber = ''"
                      @blur="checkResetPhoneNumber"
                      data="输入手机号"
@@ -144,7 +144,7 @@
             </div>
             <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2.png"></div>
-              <input type="password" class="form-control" v-model="resetpwdUser.password" placeholder="重置密码"
+              <input type="password" class="form-control" v-model="resetpwdUser.password" :placeholder="$t('Reset passwords')"
                      @focus="errorMsg.resetpwdUser.password = ''"
                      @blur="checkResetPassword(true)"
                      data="输入重置的密码"
@@ -156,7 +156,7 @@
             </div>
             <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2.png"></div>
-              <input type="password" class="form-control" v-model="resetpwdUser.confirmpsd" placeholder="确认密码"
+              <input type="password" class="form-control" v-model="resetpwdUser.confirmpsd" :placeholder="$t('Confirm password')"
                      @focus="errorMsg.resetpwdUser.confirmpsd = ''"
                      @blur="checkResetPassword(false)"
                      data="输入确认的密码"
@@ -168,7 +168,7 @@
             </div>
             <div class="input-group code">
               <div class="input-group-addon"><img src="../assets/login/icon2-3.png"></div>
-              <input type="text" placeholder="输入验证码" v-model="resetpwdUser.code"
+              <input type="text" :placeholder="$t('Input verification code')" v-model="resetpwdUser.code"
                      @focus="errorMsg.resetpwdUser.code = ''"
                      data="输入验证码"
                      name="no_content" id="input_resetpwd_code2"
@@ -182,7 +182,7 @@
               </button>
             </div>
             <div class="input-group submit-group">
-              <button type="button" class="btn ok-btn" name="login_ok2" id="login_ok2" data="重置密码" @click="resetpwdSubmit">重置密码</button>
+              <button type="button" class="btn ok-btn" name="login_ok2" id="login_ok2" data="重置密码" @click="resetpwdSubmit">{{$t('Reset passwords')}}</button>
             </div>
           </div>
         </div>

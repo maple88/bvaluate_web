@@ -8,18 +8,18 @@
             <i class="icon_close2"></i>
           </div>
           <div class="tips_title">
-            <h4>注册送糖果</h4>
+            <h4>{{$t('Register for free candy')}}</h4>
           </div>
           <div class="tips_content">
             <div class="tips_button">
-              <div class="register-btn" @click="goRegister">新用户注册即送<span>888</span>糖果<i class="goicon"></i></div>
+              <div class="register-btn" @click="goRegister">{{$t('New users  sign up will get')}}<span>888</span>{{$t('candies')}}<i class="goicon"></i></div>
             </div>
             <div class="erCode_box">
               <img src="../assets/register/erCode.png" alt="">
             </div>
             <div class="content_tips">
-              <p>更多活动资讯</p>
-              <p>请关注我们的公众号</p>
+              <p>{{$t('For more information')}}</p>
+              <p>{{$t('Please follow our official account')}}</p>
             </div>
           </div>
         </div>
