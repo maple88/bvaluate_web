@@ -9,6 +9,7 @@
             <li><span>{{$t('Total White papers')}}：</span><span>{{tophead.totalWhitePaper}}</span></li>
           </ul>
           <div class="appdownload">
+            <div class="rookie" @click="isTourShow">{{$t('Feature Tour')}}</div>
             <a href="https://api.bvaluate.com.cn/apk/bvaluate.apk">
               <img src="../assets/tdownload.png">
               <span>{{$t('Download App')}}</span>
@@ -57,7 +58,7 @@
             <ul class="nav navbar-nav">
               <router-link tag="li" to="/home" active-class="active" data-v-step="1"><a data="首页">{{$t('Home')}}</a></router-link>
               <router-link tag="li" to="/list" active-class="active" data-v-step="2"><a data="榜单">{{$t('List')}}</a></router-link>
-              <router-link tag="li" to="/v2news" active-class="active" data-v-step="3"><a data="资讯">{{$t('News')}}</a></router-link>
+              <router-link tag="li" to="/v2news" active-class="active" data-v-step="3"><a data="资讯">{{$t('headerNews')}}</a></router-link>
               <li v-if="token" data-v-step="4"><a href="javascript:;" data="新增项目" @click="analysis()">{{$t('New Projects')}}</a></li>
               <li v-if="!token" data-v-step="4" @click="isLogin('新增项目')"><a data="新增项目">{{$t('New Projects')}}</a></li>
             </ul>
@@ -156,8 +157,8 @@
     <v-wechatLogin></v-wechatLogin>
     <v-bindPhone></v-bindPhone>
 
-    <!-- <v-tour name="myTour" :steps="steps" :callbacks="myCallbacks"></v-tour> -->
-    <v-tour v-if="$store.state.isTour" name="myTour" :steps="steps" :callbacks="myCallbacks">
+    <!-- <v-tour name="headerTour" :steps="steps" :callbacks="myCallbacks"></v-tour> -->
+    <v-tour v-show="$store.state.isTour" name="headerTour" :steps="steps" :callbacks="myCallbacks">
       <template slot-scope="tour">
         <transition name="fade">
           <v-step
@@ -174,14 +175,15 @@
           >
             <template v-if="tour.currentStep !== 4">
               <div slot="actions" class="v-step__buttons">
-                <button @click="tour.previousStep" class="btn btn-primary">上一步</button>
-                <button @click="tour.nextStep" class="btn btn-primary">下一步</button>
+                <button @click="tour.previousStep" class="v-step-button prev">上一步</button>
+                <button @click="tour.nextStep" class="v-step-button">下一步</button>
               </div>
             </template>
             <template v-if="tour.currentStep === 4">
               <div slot="actions" class="v-step__buttons">
-                <button @click="tour.previousStep" class="btn btn-primary">上一步</button>
-                <button @click="tour.stop" class="btn btn-primary">完成</button>
+                <button @click="tour.stop" class="v-step-button nostyle">跳过</button>
+                <button @click="tour.previousStep" class="v-step-button prev">上一步</button>
+                <button @click="tour.stop" class="v-step-button">完成</button>
               </div>
             </template>
           </v-step>
@@ -266,21 +268,24 @@
           },
         ],
         myCallbacks: {
-          onPreviousStep: this.PreviousStepCallback,
           onNextStep: this.NextStepCallback
         }
       }
     },
-    mounted() {
-      let that = this;
+    activated () {
       let isTour = JSON.parse(localStorage.getItem('isTour'));
       if (isTour) {
         if(!isTour.header){
-          that.$tours['myTour'].start();
+          console.warn('2222222222222222222222222222222222222222222222222222222222222')
+          this.$tours['headerTour'].start();
         }
       }else{
-        that.$tours['myTour'].start();
+        console.warn('11111111111111111111111111111111111111111111111111111111111111')
+        this.$tours['headerTour'].start();
       }
+    },
+    mounted() {
+      let that = this;
       that.path = that.$router.history.current.path;
       $(".nav.navbar-nav li a").on('click', function () {
         $('.collapse').removeClass('in');
@@ -338,11 +343,12 @@
       }
     },
     methods: {
-      PreviousStepCallback (currentStep) {
-        // console.log('[Vue Tour] A custom previousStep callback has been called on step ' + (currentStep + 1))
+      isTourShow () {
+        localStorage.removeItem('isTour');
+        this.$tours['headerTour'].start();
+        this.$tours['myTour'].start();
       },
       NextStepCallback (currentStep) {
-        // console.log('[Vue Tour] A custom nextStep callback has been called on step ' + (currentStep + 1))
         let isTour = JSON.parse(localStorage.getItem('isTour'));
         if(isTour) {
           isTour.header = true;
@@ -352,7 +358,6 @@
           isTour.header = true;
           localStorage.setItem('isTour', JSON.stringify(isTour));
         }
-        
       },
       // 头部数量
       getTophead() {

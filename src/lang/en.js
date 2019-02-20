@@ -1,4 +1,5 @@
 export default {
+	'Feature Tour': 'Feature Tour',
 	'Cancel': 'Cancel',
 	'Total projects': 'Total projects',
 	'Total people of blockchain': 'Total people of blockchain',
@@ -6,7 +7,7 @@ export default {
 	'Download App': 'Download App',
 	'Home': 'Home',
 	'List': 'List',
-	'News': 'News',
+	'headerNews': 'News',
 	'New Projects': 'New Projects',
 	'Attention': 'Attention',
 	'login': 'login',

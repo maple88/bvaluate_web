@@ -26,7 +26,7 @@
                             :name="'search_newimg_box_title_'+index" :id="'search_newimg_box_title_'+index" 
                             @click="goArticle('/article',{sid:news.sid}, $event), 
                             trackArticle('搜索页', news.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', search.type, news.sid)">
-                              <img :src="news.titlePicture===''?newsimg:news.titlePicture"/>
+                              <img :src="news.titlePicture===''||news.titlePicture===null?newsimg:news.titlePicture"/>
                               <span class="time" v-if="!news.titlePicture">{{news.urlDate | formatTime}}</span>
                             </div>
                           </div>
@@ -244,7 +244,7 @@
     filters: {
       formatRecommendProjects (val) {
         if (val !== null && val !== '' && val !== undefined) {
-          console.log(val)
+          // console.log(val)
           return  '( '+ val +' )';
         }else{
           return '--';

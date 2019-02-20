@@ -343,7 +343,7 @@
 				<div class="container v2container">
 					<div class="head">
 						<p class="tit">{{$t('Headline')}}</p>
-						<router-link to="/news" class="more">
+						<router-link to="/v2news" class="more">
 							<div class="word"><div>{{$t('View all')}}</div></div> 
 							<i class="more-icon"></i>
 						</router-link>
@@ -353,7 +353,9 @@
 							<div class="box-col" v-for="(item, index) in hotNews">
 								<div class="item">
 									<div class="img-box">
-										<a href="javascript:;" @click="goArticle('/article',{sid:item.sid})"><img :src="item.titlePicture"></a>
+										<a href="javascript:;" @click="goArticle('/article',{sid:item.sid})">
+											<img :src="item.titlePicture===''||item.titlePicture===null?newsimg:item.titlePicture">
+										</a>
 									</div>
 									<div class="info">
 										<p class="tit">
@@ -439,6 +441,7 @@
 
 <script>
 	import Bus from '../bus.js'
+	let newsimg = require('../assets/search/news.png');
 
 	export default {
 		data () {
@@ -453,7 +456,8 @@
 				meitiList: [],
 				starProject: [],
 				hotNews: [],
-				hostIndustries: []
+				hostIndustries: [],
+				newsimg: newsimg
 			}
 		},
 		mounted () {

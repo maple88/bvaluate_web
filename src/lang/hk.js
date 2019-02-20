@@ -1,4 +1,5 @@
 export default {
+	'Feature Tour': '新手指導',
 	'Cancel': '取消',
 	'Total projects': '項目總量',
 	'Total people of blockchain': '項目相關人員總數',
@@ -6,7 +7,7 @@ export default {
 	'Download App': 'APP下載',
 	'Home': '首頁',
 	'List': '榜單',
-	'News': '資訊',
+	'headerNews': '資訊',
 	'New Projects': '新增項目',
 	'Attention': '我的關注',
 	'login': '登錄',

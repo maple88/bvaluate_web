@@ -141,6 +141,7 @@ layui.use('layer', function(){
 
 let token = localStorage.getItem('apelink_user_token');
 let uid = localStorage.getItem('apelink_user_uid');
+let isTour = localStorage.getItem('isTour');
 
 const store = new Vuex.Store({
   state: {
@@ -156,7 +157,7 @@ const store = new Vuex.Store({
     bindPhonePop: false,
     token: token,
     uid: uid,
-    isTour: false
+    isTour: true
   },
   mutations: {
     register(state) {

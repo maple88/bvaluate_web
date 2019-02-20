@@ -3,7 +3,7 @@
     <v2header/>
     <div class="v2maintainer pd0">
       <!-- content here -->
-      <div class="project-topmain">
+      <div class="project-topmain" data-v-step="8">
         <div class="container v2container">
           <div class="projectTop">
             <div class="img-box"><img :src="project.logoSrc"></div>
@@ -645,6 +645,32 @@
       </div>
       <v2footer/>
     </div>
+
+    <v-tour v-show="$store.state.isTour" name="myTour" :steps="steps" :callbacks="myCallbacks">
+      <template slot-scope="tour">
+        <transition name="fade">
+          <v-step
+          v-if="tour.currentStep === index"
+          v-for="(step, index) of tour.steps"
+          :key="index"
+          :step="step"
+          :previous-step="tour.previousStep"
+          :next-step="tour.nextStep"
+          :stop="tour.stop"
+          :is-first="tour.isFirst"
+          :is-last="tour.isLast"
+          :labels="tour.labels"
+          >
+            <template>
+              <div slot="actions" class="v-step__buttons">
+                <button @click="tour.stop" class="btn btn-primary">完成</button>
+              </div>
+            </template>
+          </v-step>
+        </transition>
+      </template>
+    </v-tour>
+
   </div>
 </template>
 
@@ -718,7 +744,28 @@
         typeNumber: '290001',
         completeness: [],
         indestyIndex: 0,
-        indestyMark: 0
+        indestyMark: 0,
+        steps: [
+          {
+            target: '[data-v-step="8"]',
+            content: `<h4>项目信息总览</h4>
+                      <p>1、项目评分、声量指数、行业</p>
+                      <p>2、项目行情、简介、团队、技术、市场、资讯</p>`
+          },
+        ],
+        myCallbacks: {
+          onNextStep: this.NextStepCallback
+        }
+      }
+    },
+    activated () {
+      let isTour = JSON.parse(localStorage.getItem('isTour'));
+      if (isTour) {
+        if(!isTour.project){
+          this.$tours['myTour'].start();
+        }
+      }else{
+        this.$tours['myTour'].start();
       }
     },
     mounted() {
@@ -745,6 +792,17 @@
 
     },
     methods: {
+      NextStepCallback (currentStep) {
+        let isTour = JSON.parse(localStorage.getItem('isTour'));
+        if(isTour) {
+          isTour.project = true;
+          localStorage.setItem('isTour', JSON.stringify(isTour));
+        } else {
+          isTour = {}
+          isTour.project = true;
+          localStorage.setItem('isTour', JSON.stringify(isTour));
+        }
+      },
       changeIndesty(value, index) {
         // console.log(value)
         this.indestyMark = parseFloat(value);

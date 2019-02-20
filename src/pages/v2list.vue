@@ -83,7 +83,8 @@
       </div>
       <v2footer/>
     </div>
-    <v-tour v-if="$store.state.isTour" name="myTour" :steps="steps" :callbacks="myCallbacks">
+
+    <v-tour v-show="$store.state.isTour" name="myTour" :steps="steps" :callbacks="myCallbacks">
       <template slot-scope="tour">
         <transition name="fade">
           <v-step
@@ -152,7 +153,6 @@
           }
         ],
         myCallbacks: {
-          onPreviousStep: this.PreviousStepCallback,
           onNextStep: this.NextStepCallback
         }
       }
@@ -251,13 +251,16 @@
       });
     },
     methods: {
-      PreviousStepCallback (currentStep) {
-        // console.log('[Vue Tour] A custom previousStep callback has been called on step ' + (currentStep + 1))
-      },
       NextStepCallback (currentStep) {
         let isTour = JSON.parse(localStorage.getItem('isTour'));
-        isTour.list = true;
-        localStorage.setItem('isTour', JSON.stringify(isTour));
+        if(isTour) {
+          isTour.list = true;
+          localStorage.setItem('isTour', JSON.stringify(isTour));
+        } else {
+          isTour = {}
+          isTour.list = true;
+          localStorage.setItem('isTour', JSON.stringify(isTour));
+        }
       },
       getListMore () {
         let token = localStorage.getItem('apelink_user_token');
