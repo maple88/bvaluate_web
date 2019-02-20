@@ -420,7 +420,9 @@
         }
       },
       is_header_scroll () {
-        window.addEventListener('scroll', this.handleScroll);
+        this.$nextTick(() => {
+          window.addEventListener('scroll', this.handleScroll);
+        });
         let router = this.$router.history.current;
         if (!router.meta.headerNobg) {
           this.hasbg = true;
@@ -435,7 +437,7 @@
       },
       handleScroll(e) {
         let router = this.$router.history.current;
-        let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
         if (scrollTop > 50) {
           this.hasbg = true;
         } else {

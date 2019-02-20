@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" ref="viewbox">
     <keep-alive>
       <router-view/>
     </keep-alive>
@@ -11,6 +11,8 @@
   export default {
     name: 'App',
     mounted() {
+      // console.log(this.$refs.viewbox.scrollTop);
+
       let clearTime = setTimeout(() => {
         let token = localStorage.getItem('apelink_user_token');
         let path = this.$route.path;

@@ -13,20 +13,6 @@
   	var lock = false;
   	var start_time = new Date();
   </script>
-  <script type="text/javascript">
-    window.addEventListener('scroll', windowScroll, true);
-
-    function windowScroll (e) {
-      let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-      console.log(scrollTop);
-      if (scrollTop > 100) {
-        document.getElementById("v2header").classList.add("scroll");
-      } else {
-        document.getElementById("v2header").classList.remove("scroll");
-        // console.log('1');
-      }
-    }
-  </script>
 </head>
 <body>
 <div id="app"></div>

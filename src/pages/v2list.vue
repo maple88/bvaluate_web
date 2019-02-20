@@ -233,7 +233,7 @@
             id: 'main-list-table'
             ,elem: '#main-list-table'
             ,method: 'get'
-            ,url:'/projectList/list?type='+that.listDateType+'&country='+country+'&industry='+industry
+            ,url:'http://119.254.68.8:10020/projectList/list?type='+that.listDateType+'&country='+country+'&industry='+industry
             ,request: {
               pageName: 'pageNo'
               ,limitName: 'pageSize'
@@ -290,7 +290,7 @@
           table.render({
             elem: '#main-list-table'
             ,method: 'get'
-            ,url:'/projectList/stolistForApp?type='+that.listDateType
+            ,url:'http://119.254.68.8:10020/projectList/stolistForApp?type='+that.listDateType
             ,request: {
               pageName: 'pageNo'
               ,limitName: 'pageSize'
@@ -346,7 +346,7 @@
           table.render({
             elem: '#rise-list-table'
             ,method: 'get'
-            ,url:'/hotICO/priceList?type=inc'
+            ,url:'http://119.254.68.8:10020/hotICO/priceList?type=inc'
             ,request: {
               pageName: 'pageNo'
               ,limitName: 'pageSize'
@@ -391,7 +391,7 @@
           table.render({
             elem: '#fall-list-table'
             ,method: 'get'
-            ,url:'/hotICO/priceList?type=dec'
+            ,url:'http://119.254.68.8:10020/hotICO/priceList?type=dec'
             ,request: {
               pageName: 'pageNo'
               ,limitName: 'pageSize'
