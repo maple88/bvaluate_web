@@ -514,6 +514,30 @@
     .input-group {
       width: 100%;
       margin-bottom: 27px;
+
+      .select-input {
+        display: flex;
+        .layui-form {
+          .layui-form-select {
+            height: 100%;
+            .layui-select-title{
+              height: 100%;
+              .layui-input{
+                height: 100%;
+                width: 80px;
+                border-color: #d2d2d2;
+                border-width: 2px;
+                border-left: none;
+                border-right: none;
+              }
+            }
+            .layui-this{
+              background-color: $mainColor;
+            }
+          }
+        }
+
+      }
       .help-block {
         position: absolute;
         top: 100%;
@@ -1146,8 +1170,8 @@
     padding: 0;
     .close_box {
       position: absolute;
-      top: 10px!important;
-      right: 10px!important;
+      top: 10px !important;
+      right: 10px !important;
       .icon_close {
         background-image: url("../assets/invitation/close_icon.png");
         background-color: transparent;
@@ -1166,12 +1190,12 @@
         background-position: center bottom;
         background-repeat: no-repeat;
         padding: 60px 0 35px;
-        h4{
-            color: #ec51a9;
-            font-size: 30px;
-            font-weight: bold;
-            letter-spacing: 9px;
-            margin: 0;
+        h4 {
+          color: #ec51a9;
+          font-size: 30px;
+          font-weight: bold;
+          letter-spacing: 9px;
+          margin: 0;
         }
       }
       .tips_content {
@@ -1194,12 +1218,12 @@
           bottom: -55px;
           left: -85px;
         }
-        .invitation_wrapbox{
-            position: relative;
-            margin: 55px 0;
-            @media (max-width:768px){
-                margin: 30px 0;
-            }
+        .invitation_wrapbox {
+          position: relative;
+          margin: 55px 0;
+          @media (max-width: 768px) {
+            margin: 30px 0;
+          }
         }
         .erCode_box {
           .img_box {
@@ -1207,8 +1231,8 @@
             height: 112px;
             margin: 0 auto;
             img {
-                width: 112px;
-                height: 112px;
+              width: 112px;
+              height: 112px;
               margin: auto;
             }
           }
@@ -1216,25 +1240,25 @@
             text-align: center;
             margin-top: 10px;
             p {
-                font-size: 12px;
-                color: #000;
-                margin: 0;
+              font-size: 12px;
+              color: #000;
+              margin: 0;
             }
           }
         }
         .invitation_info {
-            position: absolute;
-            left: 15%;
-            bottom: 0;
-            @media (max-width:768px){
-                position: relative;
-                left: 0;
-            }
+          position: absolute;
+          left: 15%;
+          bottom: 0;
+          @media (max-width: 768px) {
+            position: relative;
+            left: 0;
+          }
           h4 {
             font-size: 14px;
             text-align: left;
-            @media (max-width:768px){
-                text-align: center;
+            @media (max-width: 768px) {
+              text-align: center;
             }
             span {
               font-size: 19px;
@@ -1245,21 +1269,21 @@
         }
       }
     }
-    .invitation-bg-l{
-        position: absolute;
-        top:0;
-        left: 0;
-        @media (max-width:480px){
-            display: none;
-        }
+    .invitation-bg-l {
+      position: absolute;
+      top: 0;
+      left: 0;
+      @media (max-width: 480px) {
+        display: none;
+      }
     }
-    .invitation-bg-r{
-        position: absolute;
-        bottom:0;
-        right: 0;
-        @media (max-width:480px){
-            display: none;
-        }
+    .invitation-bg-r {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      @media (max-width: 480px) {
+        display: none;
+      }
     }
   }
   @media (max-width: 768px) {
@@ -1764,38 +1788,38 @@
   }
 }
 
-.v2login{
-  .loginbox{
+.v2login {
+  .loginbox {
     max-width: 662px;
   }
-  .loginlogo{
+  .loginlogo {
     margin: 0 0 40px;
     @media ($max-xs) {
       margin: 0 0 15px;
     }
   }
-  .loginbox .hd{
+  .loginbox .hd {
     margin: 0 0 5px;
     @media ($max-xs) {
       padding: 15px 0 0px;
     }
   }
-  .loginbox .hd li{
+  .loginbox .hd li {
     margin: 0 15px;
     color: #1a1a1a;
-    &:after{
+    &:after {
       background: transparent;
     }
   }
-  .inputInner{
+  .inputInner {
     max-width: 370px;
     width: 100%;
-    .input-group{
+    .input-group {
       margin: 0 0 15px;
       @media (max-width: 662px) {
         margin: 0 0 20px;
       }
-      &.mg10{
+      &.mg10 {
         margin: 0 0 10px;
       }
     }
@@ -1803,20 +1827,20 @@
       padding: 0;
     }
   }
-  .inputInner .input-group-addon{
+  .inputInner .input-group-addon {
     border: 2px solid #d2d2d2;
     border-radius: 5px 0 0 5px;
-    &:first-child{
+    &:first-child {
       border-right: 0;
     }
   }
-  .inputInner input.form-control{
+  .inputInner input.form-control {
     border: 2px solid #d2d2d2;
     border-left: 0;
     border-radius: 0 5px 5px 0;
     font-size: 14px;
     color: #1a1a1a;
-    &.password{
+    &.password {
       padding-right: 60px;
       border-radius: 0 5px 5px 0;
     }
@@ -1824,7 +1848,7 @@
       height: 40px;
     }
   }
-  .showpwd{
+  .showpwd {
     position: absolute;
     width: 60px;
     height: 100%;
@@ -1837,30 +1861,30 @@
     cursor: pointer;
     user-select: none;
   }
-  .inputInner .other-group{
+  .inputInner .other-group {
     margin: 0 0 40px;
-    span{
+    span {
       font-size: 12px;
       color: $mainColor;
     }
   }
-  .inputInner .submit-group{
+  .inputInner .submit-group {
     margin: 0 0 25px;
   }
-  .inputInner .other-login:before{
+  .inputInner .other-login:before {
     background: transparent;
   }
-  .loginbox .close_box .icon_close2{
+  .loginbox .close_box .icon_close2 {
     width: 18px;
     height: 18px;
     display: block;
     background: url("../assets/login/close2.png") center / cover no-repeat;
     cursor: pointer;
   }
-  .inputInner .input-group .ok-btn{
+  .inputInner .input-group .ok-btn {
     border-radius: 5px;
   }
-  .inputInner .code input{
+  .inputInner .code input {
     border: 2px solid #d2d2d2;
     border-left: 0;
     border-radius: 0 5px 5px 0;
@@ -1870,9 +1894,9 @@
     padding-left: 0;
     -webkit-appearance: none;
   }
-  .inputInner .code{
+  .inputInner .code {
     display: flex;
-    .input-group-addon{
+    .input-group-addon {
       flex: 0 0 45px;
       min-width: 45px;
       height: 47px;
@@ -1883,13 +1907,13 @@
         height: 40px;
       }
     }
-    input{
+    input {
       flex: 1;
       @media ($max-xs) {
         height: 40px;
       }
     }
-    .code-btn{
+    .code-btn {
       position: static;
       flex: 0 0 118px;
       min-width: 118px;
@@ -1899,12 +1923,12 @@
       color: $mainColor;
       margin-left: 10px;
       line-height: inherit;
-      &:before{
+      &:before {
         background: transparent;
       }
     }
   }
-  .backicon{
+  .backicon {
     position: absolute;
     z-index: 1;
     left: 10px;
@@ -1913,7 +1937,7 @@
     color: rgb(160, 160, 160);
     cursor: pointer;
   }
-  .inputInner .input-group .help-block{
+  .inputInner .input-group .help-block {
     position: absolute;
     width: 115px;
     height: 100%;
@@ -1936,15 +1960,15 @@
   }
 }
 
-.login_fixed.register_tips.v2register_tips{
+.login_fixed.register_tips.v2register_tips {
   @media ($max-xs) {
     padding: 0 20px;
   }
-  .loginbox.register_tips .close_box{
+  .loginbox.register_tips .close_box {
     top: 10px;
     right: 10px;
     z-index: 99;
-    .icon_close2{
+    .icon_close2 {
       width: 18px;
       height: 18px;
       display: block;
@@ -1952,20 +1976,20 @@
       cursor: pointer;
     }
   }
-  .loginbox{
+  .loginbox {
     max-width: 602px;
   }
-  .loginbox.register_tips .bd{
+  .loginbox.register_tips .bd {
     position: relative;
     background: url(../assets/register/bg2.jpg) center / cover no-repeat;
   }
-  .loginbox.register_tips .bd .tips_title{
+  .loginbox.register_tips .bd .tips_title {
     margin: 0;
-    &:before, &:after{
+    &:before, &:after {
       background: none;
     }
   }
-  .loginbox.register_tips .bd .tips_title h4{
+  .loginbox.register_tips .bd .tips_title h4 {
     background: transparent;
     color: $mainColor;
     font-size: 30px;
@@ -1978,7 +2002,7 @@
       font-size: 20px;
     }
   }
-  .loginbox.register_tips .bd .tips_content .tips_button{
+  .loginbox.register_tips .bd .tips_content .tips_button {
     display: flex;
     justify-content: center;
     padding: 0 0 55px;
@@ -1986,7 +2010,7 @@
       padding: 0 0 20px;
     }
   }
-  .register-btn{
+  .register-btn {
     position: relative;
     padding: 15px 75px;
     font-size: 20px;
@@ -2000,14 +2024,14 @@
       font-size: 14px;
       letter-spacing: 2px;
     }
-    span{
+    span {
       font-size: 24px;
       color: #ffe075;
       @media ($max-xs) {
         font-size: 18px;
       }
     }
-    .goicon{
+    .goicon {
       position: absolute;
       right: 25px;
       top: 0;
@@ -2022,13 +2046,13 @@
       }
     }
   }
-  .loginbox.register_tips .bd .tips_content .content_tips p{
+  .loginbox.register_tips .bd .tips_content .content_tips p {
     color: #000;
-    &:first-child{
+    &:first-child {
       margin: 5px 0;
     }
   }
-  .loginbox.register_tips .bd .tips_content .content_tips{
+  .loginbox.register_tips .bd .tips_content .content_tips {
     padding: 0 0 55px;
     @media ($max-xs) {
       padding: 0 0 30px;
@@ -2036,9 +2060,9 @@
   }
 }
 
-.wechatBox{
+.wechatBox {
   position: relative;
-  .Loginloading{
+  .Loginloading {
     position: absolute;
     z-index: 1;
     width: 100%;
@@ -2048,18 +2072,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    img{
+    img {
       width: 60px;
     }
   }
 }
 
-.bindPhone{
-  .input-group-addon{
+.bindPhone {
+  .input-group-addon {
     font-size: 15px;
     font-weight: bold;
   }
-  .inputInner input{
+  .inputInner input {
     border-left: 2px solid #d2d2d2 !important;
     padding: 0 0 0 10px !important;
   }
