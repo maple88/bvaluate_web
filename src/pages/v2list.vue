@@ -17,31 +17,31 @@
           <div class="left">
             <div class="main-table">
               <div class="list-tab">
-                <div class="tabtn" :class="listNameType==='总评榜'?'on':''" @click="changeListName('总评榜')">总评榜</div>
-                <div class="tabtn" :class="listNameType==='sto榜'?'on':''" @click="changeListName('sto榜')">STO榜</div>
+                <div class="tabtn" :class="listNameType==='总评榜'?'on':''" @click="changeListName('总评榜')">{{$t('Overall list')}}</div>
+                <div class="tabtn" :class="listNameType==='sto榜'?'on':''" @click="changeListName('sto榜')">{{$t('STO list')}}</div>
               </div>
               <div class="table-filter">
                 <div>
                   <div class="layui-form" v-show="listNameType !== 'sto榜'" data-v-step="3">
                     <select name="hot-industry" v-model="industry" lay-filter="hot-industry">
-                      <option value="">热门行业</option>
+                      <option value="">{{$t('Hot industry')}}</option>
                       <option :value="item.categoryName" v-for="(item, index) in hostIndustries" :key="index">{{item.categoryName}}</option>
                     </select>
                     <select name="hot-country" v-model="country" lay-filter="hot-country">
-                      <option value="">热门国家</option>
+                      <option value="">{{$t('Hot nation')}}</option>
                       <option :value="item.countName" v-for="(item, index) in guojiaList" :key="index">{{item.countName}}</option>
                     </select>
                   </div>
                 </div>
                 <div class="layui-form month-week">
                   <select name="month-week" v-model="listDateType" lay-filter="month-week">
-                    <option value="周榜">周榜</option>
-                    <option value="月榜">月榜</option>
+                    <option value="周榜">{{$t('Weekly list')}}</option>
+                    <option value="月榜">{{$t('Monthly list')}}</option>
                   </select>
                 </div>
                 <div class="weekmonth-group">
-                  <div class="wmbtn" :class="listDateType==='周榜'?'on':''" @click="changeListDate('周榜')">周榜</div>
-                  <div class="wmbtn" :class="listDateType==='月榜'?'on':''" @click="changeListDate('月榜')">月榜</div>
+                  <div class="wmbtn" :class="listDateType==='周榜'?'on':''" @click="changeListDate('周榜')">{{$t('Weekly list')}}</div>
+                  <div class="wmbtn" :class="listDateType==='月榜'?'on':''" @click="changeListDate('月榜')">{{$t('Monthly list')}}</div>
                 </div>
               </div>
               <div class="table-box main-table-box">
@@ -49,14 +49,14 @@
                 <div class="table-loading" v-if="mainloading">
                   <img src="../assets/login/loading.gif"/>
                 </div>
-                <div class="loadmore" v-if="showLoadMore" @click="getListMore">加载更多<i class="moreimg"></i></div>
+                <div class="loadmore" v-if="showLoadMore" @click="getListMore">{{$t('Load more')}}<i class="moreimg"></i></div>
               </div>
             </div>
           </div>
           <div class="right">
             <div class="rise-table">
               <div class="table-header">
-                <span class="tl">涨幅排行</span>
+                <span class="tl">{{$t('Growth ranking')}}</span>
                 <span class="tr">CNY</span>
               </div>
               <div class="table-box rise-table-box">
@@ -68,7 +68,7 @@
             </div>
             <div class="fall-table">
               <div class="table-header">
-                <span class="tl">跌幅排行</span>
+                <span class="tl">{{$t('Decline ranking')}}</span>
                 <span class="tr">CNY</span>
               </div>
               <div class="table-box fall-table-box">
@@ -302,17 +302,17 @@
             ,skin: 'nob'
             ,size: 'sm'
             ,cols: [[
-            {field: 'rank', title: '排名', width: 45, fixed: true, templet: '#list-table-ranking', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'project', title: '项目', minWidth: 110, fixed: true, templet: '#list-table-project', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'totalScore', title: '总评分', width: 75, sort: true, templet: '#list-table-totalScore', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'amountIncrease', title: '排名升降', width: 75, sort: true, templet: '#list-table-updown', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'fundamentalsanalysis', title: '基本面', width: 75, sort: true, templet: '#fundamentalsanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'marketanalysis', title: '市场', width: 75, sort: true, templet: '#marketanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'technicalanalysis', title: '技术', width: 75, sort: true, templet: '#technicalanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'teamanalysis', title: '团队', width: 75, sort: true, templet: '#teamanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'fundsupervision', title: '资金监管', width: 75, sort: true, templet: '#fundsupervision', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'price', title: '价格', width: 75, sort: true, templet: '#list-table-price', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'famc', title: '流通市值', width: 75, sort: true, templet: '#list-table-famc', style: 'height:64px; padding: 0; line-height: inherit'}
+            {field: 'rank', title: that.$t("Ranking"), width: 45, fixed: true, templet: '#list-table-ranking', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'project', title: that.$t("Project"), minWidth: 110, fixed: true, templet: '#list-table-project', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'totalScore', title: that.$t("comprehensive evaluation"), width: 75, sort: true, templet: '#list-table-totalScore', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'amountIncrease', title: that.$t("Ranking fluctuation"), width: 75, sort: true, templet: '#list-table-updown', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'fundamentalsanalysis', title: that.$t("Fundamentals"), width: 75, sort: true, templet: '#fundamentalsanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'marketanalysis', title: that.$t("Market"), width: 75, sort: true, templet: '#marketanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'technicalanalysis', title: that.$t("Technology"), width: 75, sort: true, templet: '#technicalanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'teamanalysis', title: that.$t("Team"), width: 75, sort: true, templet: '#teamanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'fundsupervision', title: that.$t("Fund supervision"), width: 75, sort: true, templet: '#fundsupervision', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'price', title: that.$t("Price"), width: 75, sort: true, templet: '#list-table-price', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'famc', title: that.$t("Current market value"), width: 75, sort: true, templet: '#list-table-famc', style: 'height:64px; padding: 0; line-height: inherit'}
             ]]
             ,initSort: {
               field: 'rank'
@@ -359,17 +359,17 @@
             ,skin: 'nob'
             ,size: 'sm'
             ,cols: [[
-            {field: 'rank', title: '排名', width: 45, fixed: true, templet: '#list-table-ranking', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'project', title: '项目', minWidth: 110, fixed: true, templet: '#list-table-project', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'totalScore', title: '总评分', width: 75, sort: true, templet: '#list-table-totalScore', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'amountIncrease', title: '排名升降', width: 75, sort: true, templet: '#list-table-updown', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'fundamentalsanalysis', title: '基本面', width: 75, sort: true, templet: '#fundamentalsanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'marketanalysis', title: '市场', width: 75, sort: true, templet: '#marketanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'technicalanalysis', title: '技术', width: 75, sort: true, templet: '#technicalanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'teamanalysis', title: '团队', width: 75, sort: true, templet: '#teamanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'fundsupervision', title: '资金监管', width: 75, sort: true, templet: '#fundsupervision', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'price', title: '价格', width: 75, sort: true, templet: '#list-table-price', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'famc', title: '流通市值', width: 75, sort: true, templet: '#list-table-famc', style: 'height:64px; padding: 0; line-height: inherit'}
+            {field: 'rank', title: that.$t("Ranking"), width: 45, fixed: true, templet: '#list-table-ranking', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'project', title: that.$t("Project"), minWidth: 110, fixed: true, templet: '#list-table-project', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'totalScore', title: that.$t("comprehensive evaluation"), width: 75, sort: true, templet: '#list-table-totalScore', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'amountIncrease', title: that.$t("Ranking fluctuation"), width: 75, sort: true, templet: '#list-table-updown', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'fundamentalsanalysis', title: that.$t("Fundamentals"), width: 75, sort: true, templet: '#fundamentalsanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'marketanalysis', title: that.$t("Market"), width: 75, sort: true, templet: '#marketanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'technicalanalysis', title: that.$t("Technology"), width: 75, sort: true, templet: '#technicalanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'teamanalysis', title: that.$t("Team"), width: 75, sort: true, templet: '#teamanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'fundsupervision', title: that.$t("Fund supervision"), width: 75, sort: true, templet: '#fundsupervision', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'price', title: that.$t("Price"), width: 75, sort: true, templet: '#list-table-price', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'famc', title: that.$t("Current market value"), width: 75, sort: true, templet: '#list-table-famc', style: 'height:64px; padding: 0; line-height: inherit'}
             ]]
             ,initSort: {
               field: 'rank'
@@ -415,11 +415,11 @@
             ,skin: 'nob'
             ,size: 'sm'
             ,cols: [[
-            {field: 'ranking', title: '排名', width: 50, fixed: true, templet: '#zdlist-table-ranking'}
-            ,{field:'name', title: '货币名称', fixed: true, style: 'font-weight: bold; font-size: 12px; color: #000;'}
-            ,{field:'turnover1day', title: '成交额'}
-            ,{field:'price', title: '价格'}
-            ,{field:'increase', title: '涨幅', style: 'color: #4eb772;', templet: '#list-table-increase'}
+            {field: 'ranking', title: that.$t("Ranking"), width: 50, fixed: true, templet: '#zdlist-table-ranking'}
+            ,{field:'name', title: that.$t('Currency name'), fixed: true, style: 'font-weight: bold; font-size: 12px; color: #000;'}
+            ,{field:'turnover1day', title: that.$t('Transaction amount')}
+            ,{field:'price', title: that.$t("Price")}
+            ,{field:'increase', title: that.$t('Growth'), style: 'color: #4eb772;', templet: '#list-table-increase'}
             ]]
             ,initSort: {
               field: 'ranking'
@@ -460,11 +460,11 @@
             ,skin: 'nob'
             ,size: 'sm'
             ,cols: [[
-            {field: 'ranking', title: '排名', width: 50, fixed: true, templet: '#zdlist-table-ranking'}
-            ,{field:'name', title: '货币名称', fixed: true, style: 'font-weight: bold; font-size: 12px; color: #000;'}
-            ,{field:'turnover1day', title: '成交额'}
-            ,{field:'price', title: '价格'}
-            ,{field:'increase', title: '跌幅', style: 'color: #ee6560;', templet: '#list-table-increase'}
+            {field: 'ranking', title: that.$t("Ranking"), width: 50, fixed: true, templet: '#zdlist-table-ranking'}
+            ,{field:'name', title: that.$t('Currency name'), fixed: true, style: 'font-weight: bold; font-size: 12px; color: #000;'}
+            ,{field:'turnover1day', title: that.$t('Transaction amount')}
+            ,{field:'price', title: that.$t("Price")}
+            ,{field:'increase', title: that.$t('Growth'), style: 'color: #ee6560;', templet: '#list-table-increase'}
             ]]
             ,initSort: {
               field: 'ranking'

@@ -8,12 +8,12 @@
             <div class="center">
               <div class="follow_list serach_follow_list">
                 <div class="label_box">
-                  <a name="search_label_box_xinwen" id="search_label_box_xinwen" data="新闻" href="javascript:void(0);" :class="search.type === 'NEWS'?'active':''" @click="changeType('NEWS')">新闻</a>
-                  <a name="search_label_box_Twitter" id="search_label_box_Twitter" data="Twitter" href="javascript:void(0);" :class="search.type === 'TWITTER'?'active':''" @click="changeType('TWITTER')">推文</a>
+                  <a name="search_label_box_xinwen" id="search_label_box_xinwen" data="新闻" href="javascript:void(0);" :class="search.type === 'NEWS'?'active':''" @click="changeType('NEWS')">{{$t('News')}}</a>
+                  <a name="search_label_box_Twitter" id="search_label_box_Twitter" data="Twitter" href="javascript:void(0);" :class="search.type === 'TWITTER'?'active':''" @click="changeType('TWITTER')">{{$t('Twitter')}}</a>
                   <a name="search_label_box_weibo" id="search_label_box_weibo" data="微博" href="javascript:void(0);" :class="search.type === 'WEIBO'?'active':''"
-                  @click="changeType('WEIBO')">微博</a>
+                  @click="changeType('WEIBO')">{{$t('Microblog')}}</a>
                   <a name="search_label_box_weixin" id="search_label_box_weixin" data="微信" href="javascript:void(0);" :class="search.type === 'WEIXIN'?'active':''"
-                  @click="changeType('WEIXIN')">微信</a>
+                  @click="changeType('WEIXIN')">{{$t('WeChat')}}</a>
                 </div>
                 <ul v-if="search.show">
                   <li>
@@ -95,7 +95,7 @@
                     <p class="loading_more_tip" v-if="showloading===-1">{{loadingTip}}~</p>
                     <button :disabled="showloading" data="加载更多" value="加载更多" name="loading_more" id="loading_more" @click.stop="loadMoreNews" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
-                      <span v-if="!showloading">加载更多</span>
+                      <span v-if="!showloading">{{$t('Load more')}}</span>
                     </button>
                   </div>
                 </ul>
@@ -117,13 +117,13 @@
                         <div class="right">
                           <div class="totalScore">
                             <h4>{{project.totalScore }}</h4>
-                            <p>总分</p>
+                            <p>{{$t('Total score')}}</p>
                           </div>
                           <div class="follow-btn setFollow" v-if="!project.collected" @click="setFollow(project)">
-                            <i class="fa fa-heart-o"></i> <span>关注</span>
+                            <i class="fa fa-heart-o"></i> <span>{{$t('Focus')}}</span>
                           </div>
                           <div class="follow-btn" v-else>
-                            <i class="fa fa-heart-o"></i> <span>已关注</span>
+                            <i class="fa fa-heart-o"></i> <span>{{$t('Followed')}}</span>
                           </div>
                         </div>
                       </div>
@@ -134,7 +134,7 @@
                     <p class="loading_more_tip" v-if="showloading===-1">{{loadingTip}}~</p>
                     <button :disabled="showloading" data="加载更多" value="加载更多" name="loading_more" id="loading_more" @click.stop="loadMoreICO" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
-                      <span v-if="!showloading">加载更多</span>
+                      <span v-if="!showloading">{{$t('Load more')}}</span>
                     </button>
                   </div>
                 </div>
@@ -143,7 +143,7 @@
             <div class="right">
               <div class="right_item mgb-20">
                 <div class="hot_title">
-                  <h4>快讯</h4>
+                  <h4>{{$t('News flash')}}</h4>
                 </div>
                 <div class="hot_content">
                   <ul class="scoll_style" id="scoll_scoll_style">
@@ -173,7 +173,7 @@
               </div>
               <div class="right_item">
                 <div class="hot_title">
-                  <h4>推荐项目</h4>
+                  <h4>{{$t('Recommended project')}}</h4>
                 </div>
                 <div class="hot_content">
                   <div class="recommend-item" v-for="(project, index) in recommendProjects" :key="index">

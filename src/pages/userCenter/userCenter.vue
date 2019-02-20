@@ -20,15 +20,15 @@
           <ul class="datalist">
             <li>
               <p>{{candy}}</p>
-              <p>糖果数</p>
+              <p>{{$t('Number of candy')}}</p>
             </li>
             <li>
               <p>0</p>
-              <p>粉丝</p>
+              <p>{{$t('Followers')}}</p>
             </li>
             <li>
-              <p>0人</p>
-              <p>关注</p>
+              <p>0</p>
+              <p>{{$t('Focus')}}</p>
             </li>
           </ul>
         </div>
