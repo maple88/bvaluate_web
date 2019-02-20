@@ -5,12 +5,12 @@
 			<!-- content here -->
 			<div class="banner-search-section">
 				<div class="banner-container">
-					<p class="b1">全球最大的区块链项目自动评估平台</p>
+					<p class="b1">{{$t('Global largest blockchain projects automatic evaluate platform')}}</p>
 					<p class="b2">通过去中心化动态数据，以大数据及AI技术为工具，构成项目全息画像，帮助您洞察并控制投资风险</p>
 					<div class="banner-search-box">
 						<div class="search-box">
 							<div class="center">
-								<input type="text" placeholder="请输入关键词" v-model="search" class="search_input" data="输入搜素内容" name="no_content" id="banner_search_input" @keyup.enter="goSearch($event)">
+								<input type="text" :placeholder="$t('Enter Keywords')" v-model="search" class="search_input" data="输入搜素内容" name="no_content" id="banner_search_input" @keyup.enter="goSearch($event)">
 							</div>
 							<div class="right">
 								<button class="search_submit" @click="goSearch($event)" name="no_content" id="search_submit" data="搜索按钮">
@@ -19,7 +19,7 @@
 							</div>
 						</div>
 						<ul class="hotsearch">
-							<li>热门搜索：</li>
+							<li>{{$t('Top search')}}：</li>
 							<li><a href="javascript:;" @click="goSearch($event, 'BTC')">BTC</a></li>
 							<li><a href="javascript:;" @click="goSearch($event, 'ETH')">ETH</a></li>
 							<li><a href="javascript:;" @click="goSearch($event, 'EOS')">EOS</a></li>

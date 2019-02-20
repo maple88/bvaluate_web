@@ -1,4 +1,5 @@
 export default {
+	'Cancel': '取消',
 	'Total projects': '项目总量',
 	'Total people of blockchain': '项目相关人员总数',
 	'Total White papers': '白皮书收录总数',
