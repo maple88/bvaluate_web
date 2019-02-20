@@ -55,15 +55,15 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <router-link tag="li" to="/home" active-class="active"><a data="首页">{{$t('Home')}}</a></router-link>
-              <router-link tag="li" to="/list" active-class="active"><a data="榜单">{{$t('List')}}</a></router-link>
-              <router-link tag="li" to="/v2news" active-class="active"><a data="资讯">{{$t('News')}}</a></router-link>
-              <li v-show="token"><a href="javascript:;" data="新增项目" @click="analysis()">{{$t('New Projects')}}</a></li>
-              <li v-show="!token" @click="isLogin('新增项目')"><a data="新增项目">{{$t('New Projects')}}</a></li>
+              <router-link tag="li" to="/home" active-class="active" data-v-step="1"><a data="首页">{{$t('Home')}}</a></router-link>
+              <router-link tag="li" to="/list" active-class="active" data-v-step="2"><a data="榜单">{{$t('List')}}</a></router-link>
+              <router-link tag="li" to="/v2news" active-class="active" data-v-step="3"><a data="资讯">{{$t('News')}}</a></router-link>
+              <li v-if="token" data-v-step="4"><a href="javascript:;" data="新增项目" @click="analysis()">{{$t('New Projects')}}</a></li>
+              <li v-if="!token" data-v-step="4" @click="isLogin('新增项目')"><a data="新增项目">{{$t('New Projects')}}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <router-link tag="li" to="/follow" active-class="active" v-show="token"><a data="我的关注">{{$t('Attention')}}</a></router-link>
-              <li v-show="!token" @click="isLogin('我的关注')"><a data="我的关注">{{$t('Attention')}}</a></li>
+              <li v-show="!token" @click="isLogin('我的关注')" data-v-step="5"><a data="我的关注">{{$t('Attention')}}</a></li>
               <li class="header-token hsearch">
                 <div class="open_search">
                   <img src="../assets/hsearch.png">
@@ -155,6 +155,9 @@
     <v-signIn-tips></v-signIn-tips>
     <v-wechatLogin></v-wechatLogin>
     <v-bindPhone></v-bindPhone>
+
+    <v-tour name="myTour" :steps="steps" :callbacks="myCallbacks">
+    </v-tour>
   </div>
 </template>
 
@@ -200,11 +203,44 @@
         isWhitePaper: false,
         path: '',
         showSearch: false,
-        hasbg: false
+        hasbg: false,
+        steps: [
+          {
+            target: '[data-v-step="1"]',
+            content: `<h4>首页，包括搜索功能和各类排行榜以及新闻头条。</h4>
+                      <p>1、 搜索：输入关键词搜索项目、新闻、微博、推文、微信。</p>
+                      <p>2、各类排行榜</p>
+                      <p>黑马榜：根据每日总评榜各项目排名升降情况筛选黑马项目</p>
+                      <p>明星项目榜：系统定期根据各项目市值及项目总评分综合评估明星项目</p>
+                      <p>媒体声量榜：系统根据算法计算近期各项目相关文章总量占比及增幅情况，依据各自权重得出评分</p>
+                      <p>3、 新闻头条：热门新闻信息。</p>`
+          },
+          {
+            target: '[data-v-step="2"]',
+            content: 'Try it, you\'ll love it!<br>You can put HTML in the steps and completely customize the DOM to suit your needs.'
+          },
+          {
+            target: '[data-v-step="3"]',
+            content: 'Try it, you\'ll love it!<br>You can put HTML in the steps and completely customize the DOM to suit your needs.'
+          },
+          {
+            target: '[data-v-step="4"]',
+            content: 'Try it, you\'ll love it!<br>You can put HTML in the steps and completely customize the DOM to suit your needs.'
+          },
+          {
+            target: '[data-v-step="5"]',
+            content: 'Try it, you\'ll love it!<br>You can put HTML in the steps and completely customize the DOM to suit your needs.'
+          },
+        ],
+        myCallbacks: {
+          onPreviousStep: this.myCustomPreviousStepCallback,
+          onNextStep: this.myCustomNextStepCallback
+        }
       }
     },
     mounted() {
       let that = this;
+      // that.$tours['myTour'].start()
       that.path = that.$router.history.current.path;
       $(".nav.navbar-nav li a").on('click', function () {
         $('.collapse').removeClass('in');
@@ -258,6 +294,16 @@
       }
     },
     methods: {
+      myCustomPreviousStepCallback (currentStep) {
+        console.log('[Vue Tour] A custom previousStep callback has been called on step ' + (currentStep + 1))
+      },
+      myCustomNextStepCallback (currentStep) {
+        console.log('[Vue Tour] A custom nextStep callback has been called on step ' + (currentStep + 1))
+
+        if (currentStep === 1) {
+          console.log('[Vue Tour] A custom nextStep callback has been called from step 2 to step 3')
+        }
+      },
       // 头部数量
       getTophead() {
         let that = this;

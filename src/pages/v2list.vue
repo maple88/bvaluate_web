@@ -22,7 +22,7 @@
               </div>
               <div class="table-filter">
                 <div>
-                  <div class="layui-form" v-show="listNameType !== 'sto榜'">
+                  <div class="layui-form" v-show="listNameType !== 'sto榜'" data-v-step="3">
                     <select name="hot-industry" v-model="industry" lay-filter="hot-industry">
                       <option value="">热门行业</option>
                       <option :value="item.categoryName" v-for="(item, index) in hostIndustries" :key="index">{{item.categoryName}}</option>

@@ -83,7 +83,7 @@
               <div class="select-input">
                 <div class="layui-form">
                   <select name="selectPlace" lay-filter="selectPlace">
-                    <option value="+86">+86</option>
+                    <option value="+86" selected>+86</option>
                     <option value="+852">+852</option>
                     <option value="+853">+853</option>
                     <option value="+81">+81</option>
@@ -284,7 +284,8 @@
         tipText: '',
         showTip: false,
         pwdtype: 'password',
-        eye: eye
+        eye: eye,
+        prefix:'+86'
       }
     },
     props: {
@@ -304,9 +305,13 @@
       }
     },
     mounted() {
+      let that = this;
       layui.use('form', function () {
         let form = layui.form;
         form.render('select');
+        form.on('select(selectPlace)', function(data){
+          that.prefix = data.value;
+        });
       });
     },
     methods: {
@@ -375,7 +380,7 @@
             sensors.setProfile({phone: phoneNumber});
             let url = '/user/info';
             let headers = {'uid': uid, 'Authorization': token};
-            console.log(token);
+            console.log(headers);
             that.$axios({
               method: 'get',
               url: url,
@@ -820,13 +825,12 @@
         this.registerShowloading = true;
         if (/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phone)) {
           let that = this;
-          let lang = this.$i18n.locale;
-          if(lang === 'cn'){
+          let prefix = this.prefix;
+          let lang = 'en';
+          if(prefix === '+86'){
             lang = 'zh'
-          }else{
-            lang = 'en'
           }
-          console.log(lang)
+          console.log(prefix)
           let url = '/login/code?phoneNumber=' + phone + '&codeType=1002&language=' + lang;
           that.$axios.post(url).then(function (res) {
             that.registerShowloading = false;
