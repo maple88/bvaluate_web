@@ -8,6 +8,7 @@
   <link rel="shortcut icon" href="static/favicon.png" />
   <script type="text/javascript" src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
   <link type="text/css" rel="stylesheet" href="./static/layui/css/layui.css"/>
+  <script type="text/javascript" src="./static/headroom.js"></script>
   <script type="text/javascript" src="./static/layui/layui.js"></script>
   <script type="text/javascript">
   	var lock = false;
@@ -221,4 +222,23 @@
 </script>
 
 </body>
+
+<script type="text/javascript">
+  var myElement = document.querySelector("#v2header");
+  // construct an instance of Headroom, passing the element
+  var headroom  = new Headroom(myElement, {
+    // 在元素没有固定之前，垂直方向的偏移量（以px为单位）
+    "offset": 80,
+    // scroll tolerance in px before state changes
+    "tolerance": 5,
+    classes : {
+        // 向上滚动时设置的class
+        pinned : "pinned",
+        // 向下滚动时所设置的class
+        unpinned : "unpinned"
+    }
+  });
+  // initialise
+  headroom.init();
+</script>
 </html>

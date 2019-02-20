@@ -438,6 +438,7 @@
       handleScroll(e) {
         let router = this.$router.history.current;
         var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+        console.log(scrollTop)
         if (scrollTop > 50) {
           this.hasbg = true;
         } else {
@@ -445,11 +446,11 @@
             this.hasbg = false;
           }
         }
-        if (scrollTop > 100) {
-          this.scroll = 'scroll';
-        } else {
-          this.scroll = '';
-        }
+        // if (scrollTop > 100) {
+        //   this.scroll = 'scroll';
+        // } else {
+        //   this.scroll = '';
+        // }
         if (router.name == 'home') {
           if (scrollTop > 360) {
             this.showSearch = true;

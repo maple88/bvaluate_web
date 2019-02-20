@@ -437,9 +437,13 @@
 
 .v2header{
   transition: top .3s;
-  &.scroll {
+  &.pinned {top: 0;}
+  &.unpinned {
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, .2);
     top: -36px;
+    @media ($max-sm) {
+      top: -60px;
+    }
     .navbar{
       background: #212831;
       height: 66px;
