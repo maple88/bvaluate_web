@@ -157,7 +157,7 @@
     <v-bindPhone></v-bindPhone>
 
     <!-- <v-tour name="myTour" :steps="steps" :callbacks="myCallbacks"></v-tour> -->
-    <v-tour name="myTour" :steps="steps" :callbacks="myCallbacks">
+    <v-tour v-if="$store.state.isTour" name="myTour" :steps="steps" :callbacks="myCallbacks">
       <template slot-scope="tour">
         <transition name="fade">
           <v-step
@@ -172,7 +172,7 @@
           :is-last="tour.isLast"
           :labels="tour.labels"
           >
-            <template >
+            <template v-if="tour.currentStep !== 4">
               <div slot="actions" class="v-step__buttons">
                 <button @click="tour.previousStep" class="btn btn-primary">上一步</button>
                 <button @click="tour.nextStep" class="btn btn-primary">下一步</button>
@@ -334,8 +334,21 @@
       }
     },
     methods: {
+      PreviousStepCallback (currentStep) {
+        // console.log('[Vue Tour] A custom previousStep callback has been called on step ' + (currentStep + 1))
+      },
       NextStepCallback (currentStep) {
-        localStorage.setItem('isTour', JSON.stringify({header: true}));
+        // console.log('[Vue Tour] A custom nextStep callback has been called on step ' + (currentStep + 1))
+        let isTour = JSON.parse(localStorage.getItem('isTour'));
+        if(isTour) {
+          isTour.header = true;
+          localStorage.setItem('isTour', JSON.stringify(isTour));
+        } else {
+          isTour = {}
+          isTour.header = true;
+          localStorage.setItem('isTour', JSON.stringify(isTour));
+        }
+        
       },
       // 头部数量
       getTophead() {

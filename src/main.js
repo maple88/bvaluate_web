@@ -155,7 +155,8 @@ const store = new Vuex.Store({
     wechatPop: false,
     bindPhonePop: false,
     token: token,
-    uid: uid
+    uid: uid,
+    isTour: false
   },
   mutations: {
     register(state) {

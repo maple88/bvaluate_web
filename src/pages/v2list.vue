@@ -17,8 +17,8 @@
           <div class="left">
             <div class="main-table">
               <div class="list-tab">
-                <div class="tabtn" :class="listNameType==='总评榜'?'on':''" @click="changeListName('总评榜')">总评榜</div>
-                <div class="tabtn" :class="listNameType==='sto榜'?'on':''" @click="changeListName('sto榜')">STO榜</div>
+                <div class="tabtn" data-v-step="6" :class="listNameType==='总评榜'?'on':''" @click="changeListName('总评榜')">总评榜</div>
+                <div class="tabtn" data-v-step="7" :class="listNameType==='sto榜'?'on':''" @click="changeListName('sto榜')">STO榜</div>
               </div>
               <div class="table-filter">
                 <div>
@@ -83,7 +83,7 @@
       </div>
       <v2footer/>
     </div>
-    <v-tour name="myTour" :steps="steps" :callbacks="myCallbacks">
+    <v-tour v-if="$store.state.isTour" name="myTour" :steps="steps" :callbacks="myCallbacks">
       <template slot-scope="tour">
         <transition name="fade">
           <v-step
@@ -98,13 +98,13 @@
           :is-last="tour.isLast"
           :labels="tour.labels"
           >
-            <template >
+            <template v-if="tour.currentStep !== 1">
               <div slot="actions" class="v-step__buttons">
                 <button @click="tour.previousStep" class="btn btn-primary">上一步</button>
                 <button @click="tour.nextStep" class="btn btn-primary">下一步</button>
               </div>
             </template>
-            <template v-if="tour.currentStep === 4">
+            <template v-if="tour.currentStep === 1">
               <div slot="actions" class="v-step__buttons">
                 <button @click="tour.previousStep" class="btn btn-primary">上一步</button>
                 <button @click="tour.stop" class="btn btn-primary">完成</button>
@@ -141,12 +141,12 @@
         showLoadMore: false,
         steps: [
           {
-            target: '[data-v-step="1"]',
+            target: '[data-v-step="6"]',
             content: `<h4>总评榜，通过大数据及AI技术，系统根据自动评估模型及算法，对每个项目进行综合评估。</h4>
                       <p>提供项目周榜、月榜。也可通过行业、国家进行筛选项目。</p>`
           },
           {
-            target: '[data-v-step="2"]',
+            target: '[data-v-step="7"]',
             content: `<h4>项目榜单，提供项目周榜、月榜，展现项目排名、趋势等动态，更全面的透视项目情况。</h4>
                       <h4>包括总评榜、STO榜、涨幅榜、跌幅榜。</h4>`
           }
@@ -209,6 +209,14 @@
     },
     activated () {
       let that = this;
+      let isTour = JSON.parse(localStorage.getItem('isTour'));
+      if (isTour) {
+        if(!isTour.list){
+          that.$tours['myTour'].start();
+        }
+      }else{
+        that.$tours['myTour'].start();
+      }
       if (that.$route.query.listNameType) {that.listNameType = that.$route.query.listNameType;}
       if (that.$route.query.country) {
         that.country = that.$route.query.country;
@@ -243,8 +251,13 @@
       });
     },
     methods: {
+      PreviousStepCallback (currentStep) {
+        // console.log('[Vue Tour] A custom previousStep callback has been called on step ' + (currentStep + 1))
+      },
       NextStepCallback (currentStep) {
-        localStorage.setItem('isTour', JSON.stringify({header: true}));
+        let isTour = JSON.parse(localStorage.getItem('isTour'));
+        isTour.list = true;
+        localStorage.setItem('isTour', JSON.stringify(isTour));
       },
       getListMore () {
         let token = localStorage.getItem('apelink_user_token');
