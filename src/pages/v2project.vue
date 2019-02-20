@@ -798,7 +798,7 @@
           });
           if (sid != null && sid !== '' && sid !== undefined) {
             let uid = localStorage.getItem('apelink_user_uid')
-            let url = '/api/ICO/id/' + sid;
+            let url = '/ICO/id/' + sid;
             let headers = {'uid': uid};
             that.$axios({
               method: 'get',
@@ -847,7 +847,7 @@
             });
           } else if (project != null && project !== '' && project !== undefined) {
             let uid = localStorage.getItem('apelink_user_uid')
-            let url = '/api/ICO/name/' + project;
+            let url = '/ICO/name/' + project;
             let headers = {'uid': uid};
             that.$axios({
               method: 'get',
@@ -910,7 +910,7 @@
       initNewsList(projectName, categoryId) {
         let that = this;
         that.showloading = true;
-        that.$axios.get('/api/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId + '&pageNo=' + that.newsPage).then(function (res) {
+        that.$axios.get('/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId + '&pageNo=' + that.newsPage).then(function (res) {
           that.newsPage++;
           that.newsList = that.newsList.concat(res.data.content);
           if (res.data.content.length === 0) {
@@ -930,7 +930,7 @@
       initNews(projectName, categoryId) {
         let that = this;
         that.ListLoading = true;
-        that.$axios.get('/api/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId + '&pageNo=' + that.xinwenpage).then(function (res) {
+        that.$axios.get('/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId + '&pageNo=' + that.xinwenpage).then(function (res) {
           that.xinwenpage++;
           that.newsList = that.newsList.concat(res.data.content);
           if (res.data.content.length === 0) {
@@ -944,7 +944,7 @@
       initTwitter(projectName, categoryId) {
         let that = this;
         that.ListLoading = true;
-        that.$axios.get('/api/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId + '&pageNo=' + that.tuiwenpage).then(function (res) {
+        that.$axios.get('/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId + '&pageNo=' + that.tuiwenpage).then(function (res) {
           that.tuiwenpage++;
           that.TwitterList = that.TwitterList.concat(res.data.content);
           if (res.data.content.length === 0) {
@@ -958,7 +958,7 @@
       initWeibo(projectName, categoryId) {
         let that = this;
         this.ListLoading = true;
-        that.$axios.get('/api/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId + '&pageNo=' + that.weibopage).then(function (res) {
+        that.$axios.get('/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId + '&pageNo=' + that.weibopage).then(function (res) {
           that.weibopage++;
           that.WeiboList = that.WeiboList.concat(res.data.content);
           if (res.data.content.length === 0) {
@@ -972,7 +972,7 @@
       initWeixin(projectName, categoryId) {
         let that = this;
         this.ListLoading = true;
-        that.$axios.get('/api/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId + '&pageNo=' + that.weixinpage).then(function (res) {
+        that.$axios.get('/traditional/news?searchBy=' + projectName + '&categoryId=' + categoryId + '&pageNo=' + that.weixinpage).then(function (res) {
           that.weixinpage++;
           that.weixinList = that.weixinList.concat(res.data.content);
           if (res.data.content.length === 0) {
@@ -985,7 +985,7 @@
       // 推荐项目
       initRecommendProjects(categoryName) {
         let that = this;
-        that.$axios.get('/api/ICO/relatedICO?categoryName=' + categoryName).then(function (res) {
+        that.$axios.get('/ICO/relatedICO?categoryName=' + categoryName).then(function (res) {
           that.recommendProjects = res.data
         })
       },
@@ -998,7 +998,7 @@
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid');
-          let url = '/api/individual/add?type=ICO&sid=' + that.project.sid;
+          let url = '/individual/add?type=ICO&sid=' + that.project.sid;
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'post',
@@ -1019,7 +1019,7 @@
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid');
-          let url = '/api/individual/delete?cid=' + cid;
+          let url = '/individual/delete?cid=' + cid;
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'DELETE',
@@ -1064,7 +1064,7 @@
       },
       getHotInfo(icoName) {
         let uid = localStorage.getItem('apelink_user_uid')
-        let url = '/api/tradition/HotESICOScore/' + icoName;
+        let url = '/tradition/HotESICOScore/' + icoName;
         let headers = {'uid': uid};
         this.$axios({
           method: 'get',
@@ -1093,7 +1093,7 @@
       getDetails(icoName) {
         let uid = localStorage.getItem('apelink_user_uid');
         let headers = {'uid': uid};
-        let url = '/api/tradition/detailsNew/' + icoName;
+        let url = '/tradition/detailsNew/' + icoName;
         this.$axios({
           method: 'get',
           url: url,
@@ -1104,24 +1104,24 @@
         })
       },
       getTabs(icoName) {
-        this.$axios.get(`/api/tradition/catalog1Avg/${icoName}`).then(res => {
+        this.$axios.get(`/tradition/catalog1Avg/${icoName}`).then(res => {
           this.projectTabs = res.data.split(';');
         })
       },
       getScoreChart(icoName) {
-        this.$axios.get(`/api/tradition/HotESICOHisScore/${icoName}`).then(res => {
+        this.$axios.get(`/tradition/HotESICOHisScore/${icoName}`).then(res => {
           this.scoreChart_loading = false;
           this.initScoreChart(res.data)
         })
       },
       initProjectMarket(icoName, success) {
-        this.$axios.get(`/api/tradition/mark/${icoName}`).then(res => {
+        this.$axios.get(`/tradition/mark/${icoName}`).then(res => {
           this.marketInfo = res.data[0];
           success(res.data);
         })
       },
       initGithubChart(icoName) {
-        this.$axios.get(`/api/tradition/githubScore/${icoName}`).then(res => {
+        this.$axios.get(`/tradition/githubScore/${icoName}`).then(res => {
           res.data.reverse();
           this.githubData = res.data;
           this.githubLine_loading = false;
@@ -1129,7 +1129,7 @@
         })
       },
       initMediaChart(icoName) {
-        this.$axios.get(`/api/tradition/medio/${icoName}`).then(res => {
+        this.$axios.get(`/tradition/medio/${icoName}`).then(res => {
           this.mediaDisseminateLine_loading = false;
           this.mediaFollowLine_loading = false;
           this.initThreeLine(res.data)

@@ -233,7 +233,7 @@
             id: 'main-list-table'
             ,elem: '#main-list-table'
             ,method: 'get'
-            ,url:'http://119.254.68.8:10020/projectList/list?type='+that.listDateType+'&country='+country+'&industry='+industry
+            ,url:'/projectList/list?type='+that.listDateType+'&country='+country+'&industry='+industry
             ,request: {
               pageName: 'pageNo'
               ,limitName: 'pageSize'
@@ -290,7 +290,7 @@
           table.render({
             elem: '#main-list-table'
             ,method: 'get'
-            ,url:'http://119.254.68.8:10020/projectList/stolistForApp?type='+that.listDateType
+            ,url:'/projectList/stolistForApp?type='+that.listDateType
             ,request: {
               pageName: 'pageNo'
               ,limitName: 'pageSize'
@@ -346,7 +346,7 @@
           table.render({
             elem: '#rise-list-table'
             ,method: 'get'
-            ,url:'/api/hotICO/priceList?type=inc'
+            ,url:'/hotICO/priceList?type=inc'
             ,request: {
               pageName: 'pageNo'
               ,limitName: 'pageSize'
@@ -391,7 +391,7 @@
           table.render({
             elem: '#fall-list-table'
             ,method: 'get'
-            ,url:'/api/hotICO/priceList?type=dec'
+            ,url:'/hotICO/priceList?type=dec'
             ,request: {
               pageName: 'pageNo'
               ,limitName: 'pageSize'
@@ -430,14 +430,14 @@
       },
       // 热门行业
       getHotindustry () {
-        this.$axios.get('/api/ICO/hotFourIndustries')
+        this.$axios.get('/ICO/hotFourIndustries')
         .then(res => {
           this.hostIndustries = res.data.slice(0, 4);
         })
       },
       // 国家排行榜
       getGuojiaList () {
-        this.$axios.get('/api/hotICO/countrylistForApp?pageNo=0&pageSize=10')
+        this.$axios.get('/hotICO/countrylistForApp?pageNo=0&pageSize=10')
         .then(res => {
           this.guojiaList = res.data;
         })

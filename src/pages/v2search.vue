@@ -403,7 +403,7 @@
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid');
-          let url = '/api/individual/add?type=ICO&sid=' + project.sid;
+          let url = '/individual/add?type=ICO&sid=' + project.sid;
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'post',
@@ -488,7 +488,7 @@
         let that = this;
         that.categoryName = categoryName;
         let thisCallback = callback;
-        let url = '/api/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + pageSize
+        let url = '/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + pageSize
         that.$axios.get(url).then(function (res) {
           thisCallback(res.data.content);
         })
@@ -527,7 +527,7 @@
           this.projectList = [];
           this.search.show = false;
           let uid = localStorage.getItem('apelink_user_uid');
-          this.$axios.get('/api/ICO/search?search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20', {
+          this.$axios.get('/ICO/search?search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20', {
             headers: {uid: uid}
           }).then(res => {
             this.showloading = false;
@@ -545,7 +545,7 @@
           });
         }else{
           this.search.show = true;
-          this.$axios.get('/api/traditional/search?newsType=' + this.search.type + '&search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
+          this.$axios.get('/traditional/search?newsType=' + this.search.type + '&search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
             this.showloading = false;
             let allData = res.data.content;
             for (let i = 0; i < allData.length; i++) {
@@ -563,7 +563,7 @@
       loadMoreNews() {
         this.showloading = true;
         this.search.pageNo++;
-        this.$axios.get('/api/traditional/search?newsType=' + this.search.type + '&search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
+        this.$axios.get('/traditional/search?newsType=' + this.search.type + '&search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
           this.showloading = false;
           let allData = res.data.content;
           for (let i = 0; i < allData.length; i++) {
@@ -580,7 +580,7 @@
       loadMoreICO() {
         this.showloading = true;
         this.search.pageNo++;
-        this.$axios.get('/api/ICO/search?search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
+        this.$axios.get('/ICO/search?search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
           this.showloading = false;
           let allData = res.data.content;
           for (let i = 0; i < allData.length; i++) {

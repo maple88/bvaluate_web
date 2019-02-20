@@ -27,7 +27,7 @@
           if (!token) {
             return false;
           }
-          let url = '/api/user/info';
+          let url = '/user/info';
           let headers = {'uid': uid, 'Authorization': token};
           // console.log(headers);
           this.$axios({

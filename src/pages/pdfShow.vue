@@ -75,7 +75,7 @@
     },
     mounted() {
       this.projectName = this.$route.query.project;
-      this.$axios.get('/api/file/review/bps?project=' + this.$route.query.project).then(res => {
+      this.$axios.get('/file/review/bps?project=' + this.$route.query.project).then(res => {
         if (res.data.length === 0) {
           this.pdfloading = false;
           this.pdfnothing = true

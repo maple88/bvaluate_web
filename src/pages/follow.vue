@@ -411,7 +411,7 @@
         let that = this;
         that.showloading = true;
         // 已关注
-        let url = '/api/individual/list?type=ICO&pageSize=' + that.pageSize;
+        let url = '/individual/list?type=ICO&pageSize=' + that.pageSize;
         let headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
           method: 'get',
@@ -426,7 +426,7 @@
           that.pageSize += 5;
         })
         // 推荐
-        let tuijian_url = '/api/individual/recommend?type=ICO&pageSize=' + that.tuijian_pageSize;
+        let tuijian_url = '/individual/recommend?type=ICO&pageSize=' + that.tuijian_pageSize;
         let tuijian_headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
           method: 'get',
@@ -446,7 +446,7 @@
         let that = this;
         that.showloading = true;
         // 已关注
-        let url = '/api/individual/list?type=INDUSTRY&pageSize=' + that.pageSize;
+        let url = '/individual/list?type=INDUSTRY&pageSize=' + that.pageSize;
         let headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
           method: 'get',
@@ -461,7 +461,7 @@
           that.pageSize += 5;
         })
         // 推荐
-        let tuijian_url = '/api/individual/recommend?type=INDUSTRY&pageSize=' + that.tuijian_pageSize;
+        let tuijian_url = '/individual/recommend?type=INDUSTRY&pageSize=' + that.tuijian_pageSize;
         let tuijian_headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
           method: 'get',
@@ -481,7 +481,7 @@
         let that = this;
         that.showloading = true;
         // 已关注
-        let url = '/api/individual/list?type=COUNTRY&pageSize=' + that.pageSize;
+        let url = '/individual/list?type=COUNTRY&pageSize=' + that.pageSize;
         let headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
           method: 'get',
@@ -496,7 +496,7 @@
           that.pageSize += 5;
         })
         // 推荐
-        let tuijian_url = '/api/individual/recommend?type=COUNTRY&pageSize=' + that.tuijian_pageSize;
+        let tuijian_url = '/individual/recommend?type=COUNTRY&pageSize=' + that.tuijian_pageSize;
         let tuijian_headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
           method: 'get',
@@ -516,7 +516,7 @@
         let that = this;
         that.showloading = true;
         // 已关注
-        let url = '/api/individual/list?type=AUTHOR&pageSize=' + that.pageSize;
+        let url = '/individual/list?type=AUTHOR&pageSize=' + that.pageSize;
         let headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
           method: 'get',
@@ -531,7 +531,7 @@
           that.pageSize += 5;
         })
         // 推荐
-        let tuijian_url = '/api/individual/recommend?type=AUTHOR&pageSize=' + that.tuijian_pageSize;
+        let tuijian_url = '/individual/recommend?type=AUTHOR&pageSize=' + that.tuijian_pageSize;
         let tuijian_headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
           method: 'get',
@@ -550,7 +550,7 @@
         this.wenzhang = true
         let that = this;
         that.showloading = true;
-        let url = '/api/individual/list?type=NEWS&pageSize=' + that.pageSize;
+        let url = '/individual/list?type=NEWS&pageSize=' + that.pageSize;
         let headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
           method: 'get',
@@ -572,10 +572,10 @@
           let url = ''
           let uid = localStorage.getItem('apelink_user_uid');
           let arr = [
-            {name: 'xiangmu', url: '/api/individual/add?type=ICO&sid=', type: 1},
-            {name: 'hangye', url: '/api/individual/add?type=INDUSTRY&name=', type: 0},
-            {name: 'guojia', url: '/api/individual/add?type=COUNTRY&name=', type: 0},
-            {name: 'zuozhe', url: '/api/individual/add?type=AUTHOR&name=', type: 0},
+            {name: 'xiangmu', url: '/individual/add?type=ICO&sid=', type: 1},
+            {name: 'hangye', url: '/individual/add?type=INDUSTRY&name=', type: 0},
+            {name: 'guojia', url: '/individual/add?type=COUNTRY&name=', type: 0},
+            {name: 'zuozhe', url: '/individual/add?type=AUTHOR&name=', type: 0},
           ]
           arr.forEach(function(item, index) {
             if(val == item.name ) {
@@ -624,7 +624,7 @@
           let uid = localStorage.getItem('apelink_user_uid')
           let that = this;
           let headers = {'uid': uid, 'Authorization': token};
-          let deteleUrl = '/api/individual/delete?cid=' + cid;
+          let deteleUrl = '/individual/delete?cid=' + cid;
           that.$axios({
             method: 'DELETE',
             url: deteleUrl,

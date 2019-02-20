@@ -532,49 +532,49 @@
 			},
 			// 热门行业
 			getHotindustry () {
-				this.$axios.get('/api/ICO/hotFourIndustries')
+				this.$axios.get('/ICO/hotFourIndustries')
 				.then(res => {
 					this.hostIndustries = res.data.slice(0, 4);;
 				})
 			},
       // 总评榜
       getZongpingList () {
-      	this.$axios.get('/api/hotICO/listForApp?pageNo=0&pageSize=10')
+      	this.$axios.get('/hotICO/listForApp?pageNo=0&pageSize=10')
       	.then(res => {
       		this.zongpingList = res.data.slice(0, 5);
       	})
       },
       // STO榜单
       getSTOList () {
-      	this.$axios.get('/api/hotICO/stolistForApp?pageNo=0&pageSize=10')
+      	this.$axios.get('/hotICO/stolistForApp?pageNo=0&pageSize=10')
       	.then(res => {
       		this.stoList = res.data.slice(0, 5);
       	})
       },
       // 黑马榜
       getHeimaList () {
-      	this.$axios.get('/api/hotICO/blackHouselistForApp?pageNo=0&pageSize=10')
+      	this.$axios.get('/hotICO/blackHouselistForApp?pageNo=0&pageSize=10')
       	.then(res => {
       		this.heimaList = res.data
       	})
       },
       // 国家排行榜
       getGuojiaList () {
-      	this.$axios.get('/api/hotICO/countrylistForApp?pageNo=0&pageSize=10')
+      	this.$axios.get('/hotICO/countrylistForApp?pageNo=0&pageSize=10')
       	.then(res => {
       		this.guojiaList = res.data
       	})
       },
       // 媒体声量榜
       getMeitiList () {
-      	this.$axios.get('/api/hotICO/medialistForApp?pageNo=0&pageSize=10')
+      	this.$axios.get('/hotICO/medialistForApp?pageNo=0&pageSize=10')
       	.then(res => {
       		this.meitiList = res.data
       	})
       },
       // 明星项目
       getstarProject () {
-      	this.$axios.get('/api/hotICO/startlistForApp')
+      	this.$axios.get('/hotICO/startlistForApp')
       	.then(res => {
       		this.starProject = res.data.slice(0, 4);
       	})
@@ -582,7 +582,7 @@
       // 新闻头条
       getHotNews () {
         let categoryName = '首页-新闻列表';
-        this.$axios.get('/api/traditional/list?pageSize=4&categoryName=' + categoryName)
+        this.$axios.get('/traditional/list?pageSize=4&categoryName=' + categoryName)
         .then(res => {
           this.hotNews = res.data.content;
         })

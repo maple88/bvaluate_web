@@ -173,7 +173,7 @@
         let tokenCoin = this.project.projectName;
         let token = localStorage.getItem('apelink_user_token');
         let uid = localStorage.getItem('apelink_user_uid');
-        let url = `/api/individual/uploadProjectPDF?project=${project}&url=${projectUrl}`;
+        let url = `/individual/uploadProjectPDF?project=${project}&url=${projectUrl}`;
         if (tokenCoin) {
           url += `&tokenCoin=${tokenCoin}`;
         }

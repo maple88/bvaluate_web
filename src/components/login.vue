@@ -331,7 +331,7 @@
             var layer = layui.layer;
             load = layer.load(2);
           });
-          that.$axios.post('/api/login', json).then(function (res) {
+          that.$axios.post('/login', json).then(function (res) {
             let data = res.data;
             let uid = data.uid;
             let token = data.token;
@@ -342,7 +342,7 @@
             localStorage.setItem('apelink_user_token', token);
             localStorage.setItem('apelink_user_phoneNumber', phoneNumber);
             sensors.setProfile({phone: phoneNumber});
-            let url = '/api/user/info';
+            let url = '/user/info';
             let headers = {'uid': uid, 'Authorization': token};
             that.$axios({
               method: 'get',
@@ -516,7 +516,7 @@
         }
         if (pass) {
           let that = this;
-          let url = '/api/user/register';
+          let url = '/user/register';
           let json = {
             nickName: nickName,
             code: code,
@@ -540,7 +540,7 @@
               phoneNumber: phoneNumber,
               password: password
             };
-            that.$axios.post('/api/login', json2).then(function (res) {
+            that.$axios.post('/login', json2).then(function (res) {
               let data = res.data;
               let uid = data.uid;
               let token = data.token;
@@ -550,7 +550,7 @@
               localStorage.setItem('apelink_user_uid', uid);
               localStorage.setItem('apelink_user_token', token);
               localStorage.setItem('apelink_user_phoneNumber', phoneNumber);
-              let url = '/api/user/info';
+              let url = '/user/info';
               let headers = {'uid': uid, 'Authorization': token};
               that.$axios({
                 method: 'get',
@@ -655,7 +655,7 @@
           this.errorMsg.resetpwdUser.code = '手机验证码不能为空'
         }
         if (pass) {
-          let url = '/api/user/retrievePassword?phoneNumber=' + phoneNumber + '&code=' + code + '&password=' + password;
+          let url = '/user/retrievePassword?phoneNumber=' + phoneNumber + '&code=' + code + '&password=' + password;
           let that = this
           that.$axios.post(url).then(function (res) {
             if (res.data) {
@@ -698,7 +698,7 @@
           let phone = this.registerUser.phoneNumber;
           if (/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phone)) {
             let that = this;
-            let url = '/api/user/phoneCheck?phoneNumber=' + phone;
+            let url = '/user/phoneCheck?phoneNumber=' + phone;
             that.$axios.post(url).then(function (res) {
               if (res.data) {
                 that.errorMsg.registerUser.phoneNumber = '该手机号码已经注册'
@@ -740,7 +740,7 @@
           let phone = this.resetpwdUser.phoneNumber;
           if (/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phone)) {
             let that = this;
-            let url = '/api/user/phoneCheck?phoneNumber=' + phone;
+            let url = '/user/phoneCheck?phoneNumber=' + phone;
             that.$axios.post(url).then(function (res) {
               if (!res.data) {
                 that.errorMsg.resetpwdUser.phoneNumber = '该手机号码未被注册，请从新输入'
@@ -757,7 +757,7 @@
         let nickName = this.registerUser.nickName;
         if (this.strLength(nickName) <= 14) {
           let that = this;
-          let url = '/api/user/nickNameExist?nickName=' + nickName;
+          let url = '/user/nickNameExist?nickName=' + nickName;
           that.$axios.post(url).then(function (res) {
             if (res.data) {
               that.errorMsg.registerUser.nickName = '该昵称已被注册'
@@ -788,7 +788,7 @@
         this.registerShowloading = true;
         if (/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phone)) {
           let that = this;
-          let url = '/api/login/code?phoneNumber=' + phone + '&codeType=1002'
+          let url = '/login/code?phoneNumber=' + phone + '&codeType=1002'
           that.$axios.post(url).then(function (res) {
             that.registerShowloading = false;
             if (res.status == 200) {
@@ -826,7 +826,7 @@
         this.resetPwdShowloading = true;
         if (/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phone)) {
           let that = this;
-          let url = '/api/login/code?phoneNumber=' + phone + '&codeType=1003'
+          let url = '/login/code?phoneNumber=' + phone + '&codeType=1003'
           that.$axios.post(url).then(function (res) {
             that.resetPwdShowloading = false;
             if (res.status == 200) {

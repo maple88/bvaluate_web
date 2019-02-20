@@ -1,5 +1,5 @@
 <template>
-  <div class="v2header" :class="scroll">
+  <div id="v2header" class="v2header" :class="scroll">
     <div class="tophead">
       <div class="container v2container">
         <div class="flexbox">
@@ -261,7 +261,7 @@
       // 头部数量
       getTophead() {
         let that = this;
-        that.$axios.get('/api/ICO/icoRank?type=周榜&pageNo=0&pageSize=3').then(function (res) {
+        that.$axios.get('/ICO/icoRank?type=周榜&pageNo=0&pageSize=3').then(function (res) {
           that.tophead = res.data;
           Bus.$emit('val', res.data.topProject);
         });

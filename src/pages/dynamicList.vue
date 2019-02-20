@@ -55,7 +55,7 @@
 			getData () {
 				this.showloading = true;
 				this.showLoadMore = false;
-				this.$axios.get('/api/traditional/bvaluate?pageNo='+this.pageNo+'&pageSize=10')
+				this.$axios.get('/traditional/bvaluate?pageNo='+this.pageNo+'&pageSize=10')
 				.then(res=>{
 					this.showloading = false;
 					this.showLoadMore = true;

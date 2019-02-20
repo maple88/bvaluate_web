@@ -334,7 +334,7 @@
         } else {
           let that = this;
           let token = localStorage.getItem('apelink_user_token');
-          let url = '/api/user/changePasswordCode?receiver=' + eamil;
+          let url = '/user/changePasswordCode?receiver=' + eamil;
           let headers = {'Authorization': token};
           that.$axios({
             method: 'post',
@@ -399,7 +399,7 @@
           let that = this;
           let uid = localStorage.getItem('apelink_user_uid');
           let token = localStorage.getItem('apelink_user_token');
-          let url = '/api/user/changePassword?newPassword=' + newPassword + '&oldPassword=' + oldPassword;
+          let url = '/user/changePassword?newPassword=' + newPassword + '&oldPassword=' + oldPassword;
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'post',
@@ -439,7 +439,7 @@
         let that = this;
         let uid = localStorage.getItem('apelink_user_uid');
         let token = localStorage.getItem('apelink_user_token');
-        let url = '/api/user/modify';
+        let url = '/user/modify';
         let headers = {'uid': uid, 'Authorization': token};
         let thatCallback = callback;
         let thatError = error;

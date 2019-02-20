@@ -428,7 +428,7 @@
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid');
-          let url = '/api/individual/add?type=ICO&sid=' + project.sid;
+          let url = '/individual/add?type=ICO&sid=' + project.sid;
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'post',
@@ -501,7 +501,7 @@
         let that = this;
         that.categoryName = categoryName;
         let thisCallback = callback;
-        let url = '/api/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + pageSize
+        let url = '/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + pageSize
         that.$axios.get(url).then(function (res) {
           thisCallback(res.data.content);
         })
@@ -528,7 +528,7 @@
         this.newsList = [];
         this.search.pageNo = 0;
         this.search.show = true;
-        this.$axios.get('/api/traditional/information?newsType=' + this.search.type + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
+        this.$axios.get('/traditional/information?newsType=' + this.search.type + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
           this.showloading = false;
           this.newsList = res.data.content;
           if (res.data.content.length <= 0) {
@@ -540,7 +540,7 @@
       loadMoreNews() {
         this.showloading = true;
         this.search.pageNo++;
-        this.$axios.get('/api/traditional/information?newsType=' + this.search.type + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
+        this.$axios.get('/traditional/information?newsType=' + this.search.type + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
           this.showloading = false;
           this.newsList = this.newsList.concat(res.data.content);
           if (res.data.content.length < 20) {

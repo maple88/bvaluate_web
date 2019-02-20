@@ -141,7 +141,7 @@
         if (!token) {
           return false;
         }
-        let url = '/api/user/info';
+        let url = '/user/info';
         let headers = {'uid': uid, 'Authorization': token};
         this.$axios({
           method: 'get',
@@ -157,7 +157,7 @@
         let uid = localStorage.getItem('apelink_user_uid');
         let token = localStorage.getItem('apelink_user_token');
         let headers = {'uid': uid, 'Authorization': token};
-        let url = '/api/user/signIn';
+        let url = '/user/signIn';
         this.$axios({
           method: 'post',
           url: url,

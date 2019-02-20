@@ -534,7 +534,7 @@
         let that = this;
         let token = localStorage.getItem('apelink_user_token');
         let uid = localStorage.getItem('apelink_user_uid');
-        let url = '/api/individual/add?type=INDUSTRY&name=' + that.industryName;
+        let url = '/individual/add?type=INDUSTRY&name=' + that.industryName;
         let headers = {'uid': uid, 'Authorization': token};
         that.$axios({
           method: 'post',
@@ -553,7 +553,7 @@
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid')
           let that = this;
-          let url = '/api/individual/list?type=INDUSTRY';
+          let url = '/individual/list?type=INDUSTRY';
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'get',
@@ -571,7 +571,7 @@
             }
             if (cid !== '') {
               console.log(cid);
-              let deteleUrl = '/api/individual/delete?cid=' + cid;
+              let deteleUrl = '/individual/delete?cid=' + cid;
               that.$axios({
                 method: 'DELETE',
                 url: deteleUrl,
@@ -594,7 +594,7 @@
         let that = this
         let token = localStorage.getItem('apelink_user_token')
         let uid = localStorage.getItem('apelink_user_uid')
-        let url = '/api/individual/list?type=' + type;
+        let url = '/individual/list?type=' + type;
         let headers = {'uid': uid, 'Authorization': token};
         let thisCallback = callback;
         that.$axios({
@@ -626,7 +626,7 @@
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid');
-          let checkurl = '/api/individual/check?type=INDUSTRY&sidOrName=' + that.industryName;
+          let checkurl = '/individual/check?type=INDUSTRY&sidOrName=' + that.industryName;
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'post',
@@ -694,7 +694,7 @@
       getRollingNew() {
         let that = this;
         let categoryName = '最新动态';
-        let url = '/api/traditional/categoryList?categoryName=' + categoryName + '&pageSize=5';
+        let url = '/traditional/categoryList?categoryName=' + categoryName + '&pageSize=5';
         that.$axios.get(url).then(function (res) {
           that.rollingNew = res.data.content;
           that.$nextTick(() => {  // 下一个UI帧再初始化swiper
@@ -705,7 +705,7 @@
       //获取新闻分类（行业，左侧导航栏）
       getNewsClassfy(show, categoryName, showpage) {
         let that = this;
-        that.$axios.get('/api/traditional/categories?pageSize=' + this.classfyPageSize).then(function (res) {
+        that.$axios.get('/traditional/categories?pageSize=' + this.classfyPageSize).then(function (res) {
           let arr = ['推荐'];
           that.newsClassfy = arr.concat(res.data);
           let industry = that.$route.query.industry;
@@ -729,7 +729,7 @@
       loadMoreClassfy() {
         this.classfyPageSize += 20;
         let that = this;
-        that.$axios.get('/api/traditional/categories?pageSize=' + this.classfyPageSize).then(res => {
+        that.$axios.get('/traditional/categories?pageSize=' + this.classfyPageSize).then(res => {
           let num = res.data.length - (that.newsClassfy.length - 2);
           if (num < 10) {
             this.classfyPageSizeShow = false;
@@ -741,7 +741,7 @@
       //加载对应行业的热门新闻
       getHotnews(industryName) {
         let that = this
-        that.$axios.get('/api/traditional/hotNews?industryName=' + industryName + '&pageSize=10').then(function (res) {
+        that.$axios.get('/traditional/hotNews?industryName=' + industryName + '&pageSize=10').then(function (res) {
           if (that.newsClassfy.length > 0) {
             that.hotNews = res.data.content
           }
@@ -751,7 +751,7 @@
       getNews(newsnum) {
         let that = this;
         //相关参数看接口文档
-        that.$axios.get('/api/traditional/news?searchBy=' + this.industryName + '&categoryId=' + newsnum + '&pageSize=10').then(function (res) {
+        that.$axios.get('/traditional/news?searchBy=' + this.industryName + '&categoryId=' + newsnum + '&pageSize=10').then(function (res) {
           if (that.newsClassfy.length > 0) {
             that.news = res.data.content
           }
@@ -847,7 +847,7 @@
         let that = this;
         let token = localStorage.getItem('apelink_user_token');
         let uid = localStorage.getItem('apelink_user_uid');
-        let url = '/api/traditional/collectionNews?pageNo=' + this.followListNo + '&pageSize=' + this.followListPageSize;
+        let url = '/traditional/collectionNews?pageNo=' + this.followListNo + '&pageSize=' + this.followListPageSize;
         let headers = {'uid': uid};
         that.$axios({
           method: 'get',
@@ -867,7 +867,7 @@
       initNewsList(categoryName, search) {
         let that = this;
         that.categoryName = categoryName;
-        let url = '/api/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + this.pageSize;
+        let url = '/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + this.pageSize;
         if (search !== null && search !== '' && search !== undefined) {
           url += '&search=' + search;
         }
@@ -908,7 +908,7 @@
         let that = this;
         that.categoryName = categoryName;
         let thisCallback = callback;
-        let url = '/api/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + pageSize
+        let url = '/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + pageSize
         that.$axios.get(url).then(function (res) {
           thisCallback(res.data.content);
         })

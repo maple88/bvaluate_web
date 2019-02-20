@@ -20,6 +20,7 @@ import VueI18n from 'vue-i18n'
 import cn from '@/lang/cn.js'
 import hk from '@/lang/hk.js'
 
+axios.defaults.baseURL = 'http://119.254.68.8:10020';
 // axios.defaults.timeout = 30000;
 
 Vue.prototype.$axios = axios;
@@ -167,11 +168,6 @@ let i18n = new VueI18n({
   locale: lang || 'cn',
   messages
 });
-
-$(document).scroll(function() {
-  console.log('1');
-});
-
 
 
 /* eslint-disable no-new */

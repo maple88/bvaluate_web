@@ -98,7 +98,7 @@
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let headers = {'uid': uid, 'Authorization': token};
-          let url = `/api/notify/readUserNotify?notifyId=${notifyId}`;
+          let url = `/notify/readUserNotify?notifyId=${notifyId}`;
           this.$axios({
             method: 'put',
             url: url,
@@ -115,7 +115,7 @@
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let headers = {'uid': uid, 'Authorization': token};
-          let url = '/api/notify/getUserNotify';
+          let url = '/notify/getUserNotify';
           this.$axios({
             method: 'get',
             url: url,
@@ -132,7 +132,7 @@
           let token = localStorage.getItem('apelink_user_token');
           if (token) {
             let headers = {'uid': uid, 'Authorization': token};
-            let url = '/api/notify/getUserNotify?readFlag=unread';
+            let url = '/notify/getUserNotify?readFlag=unread';
             this.$axios({
               method: 'get',
               url: url,

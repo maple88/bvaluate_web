@@ -9,7 +9,7 @@ export default {
 	'New Projects': '新增项目',
 	'Attention': '我的关注',
 	'login': '登录',
-	'Sign Up': '注册',
+	'Sign': '注册',
 	'Candy': '送糖果',
 	'gift': '邀请有礼',
 	'Personal center': '个人中心',
