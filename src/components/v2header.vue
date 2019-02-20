@@ -34,13 +34,13 @@
                 <img src="../assets/usericon.png">
               </div>
               <ul class="dropdown-menu header-dropdown-menu">
-                <router-link tag="li" to="/userCenter" active-class="active"><a data="个人中心">{{$t('Personal center')}}</a></router-link>
+                <router-link tag="li" to="/userCenter" active-class="active"><a data="个人中心">{{$t('My Account')}}</a></router-link>
                 <!-- <li>
                   <a href="javascript:;" data="消息" @click="$store.state.messagePop = true">消息</a>
                 </li> -->
                 <router-link tag="li" to="/my" active-class="active"><a data="设置">{{$t('Set up')}}</a></router-link>
                 <li>
-                  <a href="javascript:;" data="退出" @click="logout()">{{$t('Exit')}}</a>
+                  <a href="javascript:;" data="退出" @click="logout()">{{$t('Log Out')}}</a>
                 </li>
               </ul>
             </div>

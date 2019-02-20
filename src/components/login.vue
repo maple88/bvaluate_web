@@ -340,10 +340,13 @@
             localStorage.setItem('apelink_user_expirationDate', expirationDate);
             localStorage.setItem('apelink_user_uid', uid);
             localStorage.setItem('apelink_user_token', token);
+            that.$store.state.token = token;
+            that.$store.state.uid = uid;
             localStorage.setItem('apelink_user_phoneNumber', phoneNumber);
             sensors.setProfile({phone: phoneNumber});
             let url = '/user/info';
             let headers = {'uid': uid, 'Authorization': token};
+            console.log(token);
             that.$axios({
               method: 'get',
               url: url,

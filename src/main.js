@@ -18,6 +18,7 @@ import Vuex from 'vuex'
 import sensors from 'sa-sdk-javascript/sensorsdata.min.js'
 import VueI18n from 'vue-i18n'
 import cn from '@/lang/cn.js'
+import en from '@/lang/en.js'
 import hk from '@/lang/hk.js'
 
 axios.defaults.baseURL = 'http://119.254.68.8:10020';
@@ -132,6 +133,8 @@ layui.use('layer', function(){
   }
 });
 
+let token = localStorage.getItem('apelink_user_token');
+let uid = localStorage.getItem('apelink_user_uid');
 
 const store = new Vuex.Store({
   state: {
@@ -144,7 +147,9 @@ const store = new Vuex.Store({
     registerPop: false,
     messagePop: false,
     wechatPop: false,
-    bindPhonePop: false
+    bindPhonePop: false,
+    token: token,
+    uid: uid
   },
   mutations: {
     register(state) {
@@ -154,9 +159,26 @@ const store = new Vuex.Store({
   }
 });
 
+axios.interceptors.request.use(
+  config => {
+    // 每次发送请求之前判断是否存在token，如果存在，则统一在http请求的header都加上token，不用每次请求都手动添加了
+    // 即使本地存在token，也有可能token是过期的，所以在响应拦截器中要对返回状态进行判断
+    const token = store.state.token;
+    const uid = store.state.uid;
+    // console.log(token);
+    // console.log(uid);
+    token && (config.headers.Authorization = token);
+    uid && (config.headers.uid = uid);
+    return config;
+  },
+  error => {
+    return Promise.error(error);
+  }
+);
+
 let messages = {
   cn: cn,
-  en: {},
+  en: en,
   hk: hk
 };
 
