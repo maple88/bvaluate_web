@@ -8,18 +8,18 @@
               <div class="flogo">
                 <a href="#"><img src="../assets/logo2.png"></a>
               </div>
-              <p class="flogodes">全球最大的区块链项目自动评估平台</p>
+              <p class="flogodes">{{$t('Global largest blockchain projects automatic evaluate platform')}}</p>
             </div>
             <div class="box-col">
               <ul class="links">
-                <li><router-link to="/about">关于我们</router-link></li>
-                <li><router-link to="/dynamicList">公司动态</router-link></li>
-                <li><router-link to="/cooperation">战略合作</router-link></li>
-                <li><router-link to="/privacy">隐私政策</router-link></li>
+                <li><router-link to="/about">{{$t('About Us')}}</router-link></li>
+                <li><router-link to="/dynamicList">{{$t('Company News')}}</router-link></li>
+                <li><router-link to="/cooperation">{{$t('Strategic cooperation')}}</router-link></li>
+                <li><router-link to="/privacy">{{$t('Privacy policy')}}</router-link></li>
               </ul>
             </div>
             <div class="box-col">
-              <p class="ftitle">联系方式</p>
+              <p class="ftitle">{{$t('Contact us')}}</p>
               <p class="femail">
                 <img src="../assets/email.png"><span>ru.haiyan@bvaluate.com</span>
               </p>
@@ -31,11 +31,11 @@
                   <div class="img-div"><img src="../assets/feweima3.jpg"></div>
                 </div>
                 <div class="item">
-                  <p>APP下载</p>
+                  <p>{{$t('Download App')}}</p>
                   <div class="img-div"><img src="../assets/feweima1.jpg"></div>
                 </div>
                 <div class="item">
-                  <p>微信公众号</p>
+                  <p>{{$t('WeChat official account')}}</p>
                   <div class="img-div"><img src="../assets/feweima2.jpg"></div>
                 </div>
               </div>

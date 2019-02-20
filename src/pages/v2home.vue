@@ -6,7 +6,7 @@
 			<div class="banner-search-section">
 				<div class="banner-container">
 					<p class="b1">{{$t('Global largest blockchain projects automatic evaluate platform')}}</p>
-					<p class="b2">通过去中心化动态数据，以大数据及AI技术为工具，构成项目全息画像，帮助您洞察并控制投资风险</p>
+					<p class="b2">{{$t('Global decentralized dynamic data  Big data + AI algorithm+knoledge map  Individual project portrait  Investment insight & risk control tool')}}</p>
 					<div class="banner-search-box">
 						<div class="search-box">
 							<div class="center">
@@ -47,17 +47,17 @@
 						<div class="box-row">
 							<div class="box-col">
 								<div class="list-header">
-									<span class="tit">总评榜</span>
+									<span class="tit">{{$t('Overall list')}}</span>
 									<a href="javascript:;" class="more" @click="goList('总评榜')">
-										<div class="word"><div>查看全部</div></div> 
+										<div class="word"><div>{{$t('View all')}}</div></div> 
 										<i class="more-icon"></i>
 									</a>
 								</div>
 								<div class="table-list">
 									<div class="table-header">
-										<div class="left">排名</div>
-										<div class="center">项目名称</div>
-										<div class="right">总评分</div>
+										<div class="left">{{$t('Ranking')}}</div>
+										<div class="center">{{$t('project name')}}</div>
+										<div class="right">{{$t('overall score')}}</div>
 									</div>
 									<div class="table-content">
 										<div class="list_item" slot="scrollList" v-for="(item, index) in zongpingList" :key="index" @click="goArticle('/project',{sid: item.sid}, $event)">
@@ -91,17 +91,17 @@
 							</div>
 							<div class="box-col">
 								<div class="list-header">
-									<span class="tit">STO榜</span>
+									<span class="tit">{{$t('STO list')}}</span>
 									<a href="javascript:;" class="more" @click="goList('sto榜')">
-										<div class="word"><div>查看全部</div></div> 
+										<div class="word"><div>{{$t('View all')}}</div></div> 
 										<i class="more-icon"></i>
 									</a>
 								</div>
 								<div class="table-list">
 									<div class="table-header">
-										<div class="left">排名</div>
-										<div class="center">项目名称</div>
-										<div class="right">总评分</div>
+										<div class="left">{{$t('Ranking')}}</div>
+										<div class="center">{{$t('project name')}}</div>
+										<div class="right">{{$t('overall score')}}</div>
 									</div>
 									<div class="table-content">
 										<div class="list_item" slot="scrollList" v-for="(item, index) in stoList" :key="index" @click="goArticle('/project',{sid: item.sid}, $event)">
@@ -140,9 +140,9 @@
 			<div class="starproject">
 				<div class="container v2container">
 					<div class="head">
-						<p class="tit">明星项目</p>
+						<p class="tit">{{$t('Star project')}}</p>
 						<router-link to="/list" class="more">
-							<div class="word"><div>查看全部</div></div> 
+							<div class="word"><div>{{$t('View all')}}</div></div> 
 							<i class="more-icon"></i>
 						</router-link>
 					</div>
@@ -170,9 +170,9 @@
 			<div class="hotindustry">
 				<div class="container v2container">
 					<div class="head">
-						<p class="tit">热门行业</p>
+						<p class="tit">{{$t('Hot industry')}}</p>
 						<!-- <a href="#" class="more">
-							<div class="word"><div>查看全部</div></div> 
+							<div class="word"><div>{{$t('View all')}}</div></div> 
 							<i class="more-icon"></i>
 						</a> -->
 					</div>
@@ -181,9 +181,9 @@
 							<div class="box-col" v-for="(item, index) in hostIndustries" :key="index">
 								<div class="item">
 									<p class="tit"><a href="javascript:;" @click="goListForIndustry(item.categoryName)">{{item.categoryName}}</a></p>
-									<p class="num">项目量：{{item.projectNum}}</p>
+									<p class="num">{{$t('Project volume')}}：{{item.projectNum}}</p>
 									<ul class="pro">
-										<li>项目：</li>
+										<li>{{$t('Project')}}：</li>
 										<li v-for="(project, pindex) in item.relatedICODTOs" :key="pindex">
 											<a href="javascript:;" @click="goArticle('/project',{sid:project.sid})">{{project.project}}</a>
 										</li>
@@ -200,15 +200,15 @@
 						<div class="box-row">
 							<div class="box-col heima-col">
 								<div class="list-header">
-									<span class="tit">黑马榜</span>
+									<span class="tit">{{$t('Dark horse list')}}</span>
 								</div>
 								<div class="table-list heima-list">
 									<div class="table-header">
-										<div class="left">排名</div>
-										<div class="center">项目</div>
-										<div class="right1">总评分</div>
-										<div class="right2">总榜排名</div>
-										<div class="right3">排名升降</div>
+										<div class="left">{{$t('Ranking')}}</div>
+										<div class="center">{{$t('Project')}}</div>
+										<div class="right1">{{$t('overall score')}}</div>
+										<div class="right2">{{$t('Overall ranking')}}</div>
+										<div class="right3">{{$t('Ranking fluctuation')}}</div>
 									</div>
 									<div class="table-content">
 										<div class="list_item" slot="scrollList" v-for="(item, index) in heimaList" :key="index" @click="goArticle('/project',{sid: item.sid}, $event)">
@@ -261,13 +261,13 @@
 							</div>
 							<div class="box-col">
 								<div class="list-header">
-									<span class="tit">国家排行榜</span>
+									<span class="tit">{{$t('National rankings')}}</span>
 								</div>
 								<div class="table-list guojia-list">
 									<div class="table-header">
-										<div class="left">排名</div>
-										<div class="center">国家</div>
-										<div class="right">项目量</div>
+										<div class="left">{{$t('Ranking')}}</div>
+										<div class="center">{{$t('Nation')}}</div>
+										<div class="right">{{$t('Project volume')}}</div>
 									</div>
 									<div class="table-content">
 										<div class="list_item" slot="scrollList" v-for="(item, index) in guojiaList" :key="index" @click="goListForCountry(item.countName)">
@@ -297,13 +297,13 @@
 							</div>
 							<div class="box-col">
 								<div class="list-header">
-									<span class="tit">媒体声量榜</span>
+									<span class="tit">{{$t('Media volume list')}}</span>
 								</div>
 								<div class="table-list">
 									<div class="table-header">
-										<div class="left">排名</div>
-										<div class="center">项目</div>
-										<div class="right">声量指数</div>
+										<div class="left">{{$t('Ranking')}}</div>
+										<div class="center">{{$t('Project')}}</div>
+										<div class="right">{{$t('Index of the volume')}}</div>
 									</div>
 									<div class="table-content">
 										<div class="list_item" slot="scrollList" v-for="(item, index) in meitiList" :key="index" @click="goArticle('/project',{sid: item.sid}, $event)">
@@ -342,9 +342,9 @@
 			<div class="newsheadlines">
 				<div class="container v2container">
 					<div class="head">
-						<p class="tit">新闻头条</p>
+						<p class="tit">{{$t('Headline')}}</p>
 						<router-link to="/news" class="more">
-							<div class="word"><div>查看全部</div></div> 
+							<div class="word"><div>{{$t('View all')}}</div></div> 
 							<i class="more-icon"></i>
 						</router-link>
 					</div>
@@ -380,11 +380,11 @@
 			<div class="partner">
 				<div class="container v2container">
 					<div class="head">
-						<p class="tit">合作伙伴</p>
+						<p class="tit">{{$t('Cooperative partner')}}</p>
 					</div>
 					<div class="institution">
 						<div class="list-header">
-							<span class="tit">投资机构</span>
+							<span class="tit">{{$t('Institutional Investor')}}</span>
 						</div>
 						<div class="flexbox">
 							<div class="box-row">
@@ -413,7 +413,7 @@
 					</div>
 					<div class="mediabox">
 						<div class="list-header">
-							<span class="tit">战略合作媒体</span>
+							<span class="tit">{{$t('Strategic cooperative media')}}</span>
 						</div>
 						<div class="flexbox">
 							<div class="box-row">
