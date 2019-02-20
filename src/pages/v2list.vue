@@ -83,6 +83,38 @@
       </div>
       <v2footer/>
     </div>
+    <v-tour name="myTour" :steps="steps" :callbacks="myCallbacks">
+      <template slot-scope="tour">
+        <transition name="fade">
+          <v-step
+          v-if="tour.currentStep === index"
+          v-for="(step, index) of tour.steps"
+          :key="index"
+          :step="step"
+          :previous-step="tour.previousStep"
+          :next-step="tour.nextStep"
+          :stop="tour.stop"
+          :is-first="tour.isFirst"
+          :is-last="tour.isLast"
+          :labels="tour.labels"
+          >
+            <template >
+              <div slot="actions" class="v-step__buttons">
+                <button @click="tour.previousStep" class="btn btn-primary">上一步</button>
+                <button @click="tour.nextStep" class="btn btn-primary">下一步</button>
+              </div>
+            </template>
+            <template v-if="tour.currentStep === 4">
+              <div slot="actions" class="v-step__buttons">
+                <button @click="tour.previousStep" class="btn btn-primary">上一步</button>
+                <button @click="tour.stop" class="btn btn-primary">完成</button>
+              </div>
+            </template>
+          </v-step>
+        </transition>
+      </template>
+    </v-tour>
+
   </div>
 </template>
 
@@ -106,7 +138,23 @@
         mainloading: false,
         riseloading: false,
         fallloading: false,
-        showLoadMore: false
+        showLoadMore: false,
+        steps: [
+          {
+            target: '[data-v-step="1"]',
+            content: `<h4>总评榜，通过大数据及AI技术，系统根据自动评估模型及算法，对每个项目进行综合评估。</h4>
+                      <p>提供项目周榜、月榜。也可通过行业、国家进行筛选项目。</p>`
+          },
+          {
+            target: '[data-v-step="2"]',
+            content: `<h4>项目榜单，提供项目周榜、月榜，展现项目排名、趋势等动态，更全面的透视项目情况。</h4>
+                      <h4>包括总评榜、STO榜、涨幅榜、跌幅榜。</h4>`
+          }
+        ],
+        myCallbacks: {
+          onPreviousStep: this.PreviousStepCallback,
+          onNextStep: this.NextStepCallback
+        }
       }
     },
     mounted () {
@@ -195,6 +243,9 @@
       });
     },
     methods: {
+      NextStepCallback (currentStep) {
+        localStorage.setItem('isTour', JSON.stringify({header: true}));
+      },
       getListMore () {
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
@@ -233,7 +284,7 @@
             id: 'main-list-table'
             ,elem: '#main-list-table'
             ,method: 'get'
-            ,url:'http://119.254.68.8:10020/projectList/list?type='+that.listDateType+'&country='+country+'&industry='+industry
+            ,url:'http://test.bvaluate.com.cn/api/projectList/list?type='+that.listDateType+'&country='+country+'&industry='+industry
             ,request: {
               pageName: 'pageNo'
               ,limitName: 'pageSize'
@@ -290,7 +341,7 @@
           table.render({
             elem: '#main-list-table'
             ,method: 'get'
-            ,url:'http://119.254.68.8:10020/projectList/stolistForApp?type='+that.listDateType
+            ,url:'http://test.bvaluate.com.cn/api/projectList/stolistForApp?type='+that.listDateType
             ,request: {
               pageName: 'pageNo'
               ,limitName: 'pageSize'
@@ -346,7 +397,7 @@
           table.render({
             elem: '#rise-list-table'
             ,method: 'get'
-            ,url:'http://119.254.68.8:10020/hotICO/priceList?type=inc'
+            ,url:'http://test.bvaluate.com.cn/api/hotICO/priceList?type=inc'
             ,request: {
               pageName: 'pageNo'
               ,limitName: 'pageSize'
@@ -391,7 +442,7 @@
           table.render({
             elem: '#fall-list-table'
             ,method: 'get'
-            ,url:'http://119.254.68.8:10020/hotICO/priceList?type=dec'
+            ,url:'http://test.bvaluate.com.cn/api/hotICO/priceList?type=dec'
             ,request: {
               pageName: 'pageNo'
               ,limitName: 'pageSize'

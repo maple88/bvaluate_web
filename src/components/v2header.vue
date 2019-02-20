@@ -156,8 +156,39 @@
     <v-wechatLogin></v-wechatLogin>
     <v-bindPhone></v-bindPhone>
 
+    <!-- <v-tour name="myTour" :steps="steps" :callbacks="myCallbacks"></v-tour> -->
     <v-tour name="myTour" :steps="steps" :callbacks="myCallbacks">
+      <template slot-scope="tour">
+        <transition name="fade">
+          <v-step
+          v-if="tour.currentStep === index"
+          v-for="(step, index) of tour.steps"
+          :key="index"
+          :step="step"
+          :previous-step="tour.previousStep"
+          :next-step="tour.nextStep"
+          :stop="tour.stop"
+          :is-first="tour.isFirst"
+          :is-last="tour.isLast"
+          :labels="tour.labels"
+          >
+            <template >
+              <div slot="actions" class="v-step__buttons">
+                <button @click="tour.previousStep" class="btn btn-primary">上一步</button>
+                <button @click="tour.nextStep" class="btn btn-primary">下一步</button>
+              </div>
+            </template>
+            <template v-if="tour.currentStep === 4">
+              <div slot="actions" class="v-step__buttons">
+                <button @click="tour.previousStep" class="btn btn-primary">上一步</button>
+                <button @click="tour.stop" class="btn btn-primary">完成</button>
+              </div>
+            </template>
+          </v-step>
+        </transition>
+      </template>
     </v-tour>
+
   </div>
 </template>
 
@@ -217,30 +248,39 @@
           },
           {
             target: '[data-v-step="2"]',
-            content: 'Try it, you\'ll love it!<br>You can put HTML in the steps and completely customize the DOM to suit your needs.'
+            content: `<h4>项目榜单，提供项目周榜、月榜，展现项目排名、趋势等动态，更全面的透视项目情况。</h4>
+                      <h4>包括总评榜、STO榜、涨幅榜、跌幅榜。</h4>`
           },
           {
             target: '[data-v-step="3"]',
-            content: 'Try it, you\'ll love it!<br>You can put HTML in the steps and completely customize the DOM to suit your needs.'
+            content: `<h4>资讯，重磅新闻、每日快讯、大V动态，实时把握</h4>`
           },
           {
             target: '[data-v-step="4"]',
-            content: 'Try it, you\'ll love it!<br>You can put HTML in the steps and completely customize the DOM to suit your needs.'
+            content: `<h4>新增项目，若您从现有数据未能获取所需项目可进行新增。</h4>
+                      <p>填写项目信息上传白皮书，Bvaluate自动分析评估该项目。</p>`
           },
           {
             target: '[data-v-step="5"]',
-            content: 'Try it, you\'ll love it!<br>You can put HTML in the steps and completely customize the DOM to suit your needs.'
+            content: `<h4>便捷查看关注信息，实时推送您最关注的信息，更好地洞察并控制投资风险。</h4>`
           },
         ],
         myCallbacks: {
-          onPreviousStep: this.myCustomPreviousStepCallback,
-          onNextStep: this.myCustomNextStepCallback
+          onPreviousStep: this.PreviousStepCallback,
+          onNextStep: this.NextStepCallback
         }
       }
     },
     mounted() {
       let that = this;
-      // that.$tours['myTour'].start()
+      let isTour = JSON.parse(localStorage.getItem('isTour'));
+      if (isTour) {
+        if(!isTour.header){
+          that.$tours['myTour'].start();
+        }
+      }else{
+        that.$tours['myTour'].start();
+      }
       that.path = that.$router.history.current.path;
       $(".nav.navbar-nav li a").on('click', function () {
         $('.collapse').removeClass('in');
@@ -294,15 +334,8 @@
       }
     },
     methods: {
-      myCustomPreviousStepCallback (currentStep) {
-        console.log('[Vue Tour] A custom previousStep callback has been called on step ' + (currentStep + 1))
-      },
-      myCustomNextStepCallback (currentStep) {
-        console.log('[Vue Tour] A custom nextStep callback has been called on step ' + (currentStep + 1))
-
-        if (currentStep === 1) {
-          console.log('[Vue Tour] A custom nextStep callback has been called from step 2 to step 3')
-        }
+      NextStepCallback (currentStep) {
+        localStorage.setItem('isTour', JSON.stringify({header: true}));
       },
       // 头部数量
       getTophead() {
