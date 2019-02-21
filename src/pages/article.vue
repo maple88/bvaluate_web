@@ -8,7 +8,7 @@
             <div class="span6">
               <ul class="breadcrumb">
                 <li>
-                  <router-link to="/home" data="首页" name="breadcrumb_home" id="breadcrumb_home">首页</router-link>
+                  <router-link to="/home" data="首页" name="breadcrumb_home" id="breadcrumb_home">{{$t('Home')}}</router-link>
                   <span class="divider"></span>
                 </li>
                 <li>
@@ -34,7 +34,7 @@
                   </router-link>
                   <span class="divider"></span>
                 </li>
-                <li class="active">正文</li>
+                <li class="active">{{$t('Content')}}</li>
               </ul>
             </div>
           </div>
@@ -64,8 +64,8 @@
                     <!-- <span class="publish_time">13:20</span> -->
                   </div>
                   <div class="article_right">
-                    <a href="javascript:;" class="look" name="article_right_more" id="article_right_more" data="查看全文" @click="showArticle = !showArticle">查看原文</a>
-                    <span class="look_count"><i class="fa fa-eye"></i>0人</span>
+                    <a href="javascript:;" class="look" name="article_right_more" id="article_right_more" data="查看全文" @click="showArticle = !showArticle">{{$t('Original article')}}</a>
+                    <span class="look_count"><i class="fa fa-eye"></i>0</span>
                     <!--<span class="share" @click.stop="showAllShare($event)"><i class="fa fa-share-alt"></i></span>-->
                     <div class="followbtn on share_button" @click.stop="shareButton = !shareButton">
                       <i class="fa fa-share-alt"></i>
@@ -125,7 +125,7 @@
                 </div>
                 <div class="article_original">
                   <transition name="fade">
-                    <div class="title" v-if="showArticle">原文</div>
+                    <div class="title" v-if="showArticle">{{$t('Original article')}}</div>
                   </transition>
                   <transition name="fade">
                     <div class="original" v-if="showArticle">
@@ -164,7 +164,7 @@
                       name="article_follow_btn_siteName" id="article_follow_btn_siteName"
                       class="follow_btn" v-if="!follow" data="关注作者"
                       @click="setAuthorFollow(), trackAttention('作者', articleContent.siteName)">
-                      <img src="../assets/follow/icon-follow.png"/>关注
+                      <img src="../assets/follow/icon-follow.png"/>{{$t('Focus')}}
                       <div class="arrow"></div>
                     </button>
                     <button
@@ -172,7 +172,7 @@
                       class="followed_btn" v-if="follow" data="取消关注作者"
                       @click="deleteAuthorFollow(articleContent.siteName)">
                       <div class="arrow"></div>
-                      <img src="../assets/follow/icon-followed.png"/>已关注
+                      <img src="../assets/follow/icon-followed.png"/>{{$t('Followed')}}
                     </button>
                   </div>
                 </div>
@@ -213,7 +213,7 @@
                   <div class="title_icon">
                     <img src="../assets/follow/hot_text.png"/>
                   </div>
-                  <h4>24小时热文</h4>
+                  <h4>{{$t('24 hours hot articles')}}</h4>
                 </div>
                 <div class="hot_content">
                   <ul class="long_ul">
