@@ -61,18 +61,11 @@
                               <ul>
                                 <li
                                   :name="'newsList_media-bottom_userimg_'+index" :id="'newsList_media-bottom_userimg_'+index" 
-                                  v-if="!(news.siteName !== 'NULL' && news.siteName !== null && news.siteName !== '')"
                                   @click="goArticle('/author',{author: news.author,type: 'author'}, $event)" :data="news.author">
                                   <div class="userimg">
                                     <img src="../assets/follow/user_head.png">
                                   </div>
                                   {{news.author}}
-                                </li>
-                                <li v-else 
-                                  :name="'newsList_media-bottom_siteName_'+index" :id="'newsList_media-bottom_siteName_'+index" 
-                                  @click="goArticle('/author',{author: news.siteName,type: 'siteName'}, $event)" 
-                                  :data="news.siteName">
-                                  {{news.siteName}}
                                 </li>
                                 <li>{{news.urlTime}}</li>
                               </ul>

@@ -96,14 +96,14 @@
               <div class="select-input">
                 <div class="layui-form">
                   <select name="registerSelect" lay-filter="registerSelect">
-                    <option value="+86" selected>+86</option>
-                    <option value="+852">+852</option>
-                    <option value="+853">+853</option>
-                    <option value="+81">+81</option>
-                    <option value="+82">+82</option>
-                    <option value="+65">+65</option>
-                    <option value="+886">+886</option>
-                    <option value="+1">+1</option>
+                    <option value="86-" selected>+86</option>
+                    <option value="852-">+852</option>
+                    <option value="853-">+853</option>
+                    <option value="81-">+81</option>
+                    <option value="82-">+82</option>
+                    <option value="65-">+65</option>
+                    <option value="886-">+886</option>
+                    <option value="1-">+1</option>
                   </select>
                 </div>
                 <input type="tel" class="form-control" v-model="registerUser.phoneNumber" :placeholder="$t('phone number')"
@@ -166,14 +166,14 @@
               <div class="select-input">
                 <div class="layui-form">
                   <select name="resetpwdSelect" lay-filter="resetpwdSelect">
-                    <option value="+86" selected>+86</option>
-                    <option value="+852">+852</option>
-                    <option value="+853">+853</option>
-                    <option value="+81">+81</option>
-                    <option value="+82">+82</option>
-                    <option value="+65">+65</option>
-                    <option value="+886">+886</option>
-                    <option value="+1">+1</option>
+                    <option value="86-" selected>+86</option>
+                    <option value="852-">+852</option>
+                    <option value="853-">+853</option>
+                    <option value="81-">+81</option>
+                    <option value="82-">+82</option>
+                    <option value="65-">+65</option>
+                    <option value="886-">+886</option>
+                    <option value="1-">+1</option>
                   </select>
                 </div>
                 <input type="tel" class="form-control" v-model="resetpwdUser.phoneNumber" :placeholder="$t('phone number')"
@@ -266,20 +266,20 @@
           phoneNumber: '',
           password: '',
           confirmpsd: '',
-          prefix:'+86'
+          prefix:'86-'
 
         },
         loginUser: {
           phoneNumber: '',
           password: '',
-          prefix:'+86'
+          prefix:'86-'
         },
         resetpwdUser: {
           code: '',
           phoneNumber: '',
           password: '',
           confirmpsd: '',
-          prefix:'+86'
+          prefix:'86-'
         },
         errorMsg: {
           registerUser: {
@@ -856,12 +856,13 @@
         if (/^[0-9]*$/.test(phone)) {
           let that = this;
           let prefix = this.registerUser.prefix;
+          console.log(prefix);
           let lang = 'en';
-          if(prefix === '+86'){
+          if(prefix === '86-'){
             lang = 'zh'
           }
           console.log(prefix)
-          let url = '/login/code?phoneNumber=' + phone + '&codeType=1002&language=' + lang;
+          let url = '/login/code?phoneNumber=' + prefix + phone + '&codeType=1002&language=' + lang;
           that.$axios.post(url).then(function (res) {
             that.registerShowloading = false;
             if (res.status == 200) {
@@ -901,10 +902,10 @@
           let that = this;
           let prefix = this.resetpwdUser.prefix;
           let lang = 'en';
-          if(prefix === '+86'){
+          if(prefix === '86-'){
             lang = 'zh'
           }
-          let url = '/login/code?phoneNumber=' + phone + '&codeType=1003&language=' + lang;
+          let url = '/login/code?phoneNumber=' + prefix + phone + '&codeType=1003&language=' + lang;
           that.$axios.post(url).then(function (res) {
             that.resetPwdShowloading = false;
             if (res.status == 200) {

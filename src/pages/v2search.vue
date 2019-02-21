@@ -86,7 +86,7 @@
                             <div class="media-bottom">
                               <ul>
                                 <li
-                                  v-if="!(news.siteName !== 'NULL' && news.siteName !== null && news.siteName !== '')"
+                                  v-if="news.dataType === 'WEIBO' || news.dataType === 'TWITTER'" 
                                   :name="'search_media-bottom_author_'+index" :id="'search_media-bottom_author_'+index" 
                                   @click="goArticle('/author',{author: news.author,type: 'author'}, $event)" :data="news.author">
                                   {{news.author}}

@@ -29,16 +29,12 @@
               <ul>
                 <li
                   :name="'collection_media-bottom_author_'+index" :id="'collection_media-bottom_author_'+index"
-                  v-if="!(item.result.siteName !== 'NULL' && item.result.siteName !== null && item.result.siteName !== '')"
                   @click="goArticle('/author',{author: item.result.author,type: 'author', pageTitle:item.result.author}, $event)"
                   :data="item.result.author">
                   <div class="userimg">
                     <img src="../../assets/follow/user_head.png">
                   </div>
                   <span class="author">{{item.result.author}}</span>
-                </li>
-                <li v-else :name="'collection_media-bottom_siteName_'+index" :id="'collection_media-bottom_siteName_'+index" :data="item.result.siteName" @click="goArticle('/author',{author: item.result.siteName,type: 'siteName', pageTitle:item.result.siteName}, $event)">
-                  <span class="author">{{item.result.siteName}}</span>
                 </li>
                 <li>{{item.result.urlDate | dataFormat}}</li>
                 <li data-toggle="modal" data-target="#deleteModal" class="love" @click="deleteCid = item.cid">

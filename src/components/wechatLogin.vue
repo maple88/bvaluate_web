@@ -43,7 +43,7 @@
               // console.log(data.bvaluateUserCode);
               if (data.bvaluateUserCode) {
                 this.showLoading = true;
-                this.$axios.get('http://119.254.68.8:10020/user/passAuth?code=' + data.bvaluateUserCode + '&state=' + Math.random())
+                this.$axios.get('/user/passAuth?code=' + data.bvaluateUserCode + '&state=' + Math.random())
                 .then(res => {
                   if(res.data.phoneNumber){
                     let that = this;
