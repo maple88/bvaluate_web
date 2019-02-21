@@ -2745,6 +2745,9 @@
                   margin: 0 3px 0;
                 }
               }
+              span em{
+                color: red;
+              }
             }
             .media-left{
               min-width: 265px;
@@ -2830,6 +2833,9 @@
               @media ($max-xs) {
                 font-size: 12px;
               }
+              em{
+                color: red;
+              }
             }
             .media-words.TorW{
               -webkit-line-clamp: 5;
@@ -2839,6 +2845,9 @@
               @media ($max-sm) {
                 -webkit-line-clamp: 3;
                 max-height: 75px;
+              }
+              span em{
+                color: red;
               }
               .tips{
                 margin: 0 5px 0;

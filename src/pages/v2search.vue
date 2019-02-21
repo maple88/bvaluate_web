@@ -37,7 +37,7 @@
                             :name="'search_newimg_box_title_'+index" :id="'search_newimg_box_title_'+index" 
                             @click="goArticle('/article',{sid:news.sid}, $event), 
                             trackArticle('搜索页', news.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', search.type, news.sid)">
-                              <img :src="news.titlePicture===''?newsimg:news.titlePicture"/>
+                              <img :src="news.titlePicture===''||news.titlePicture===null?newsimg:news.titlePicture"/>
                               <span class="time" v-if="!news.titlePicture">{{news.urlDate | formatTime}}</span>
                             </div>
                           </div>
@@ -422,7 +422,10 @@
 
       replaceAll(text, FindText, RepText) {
         let regExp = new RegExp(FindText, "g");
-        return text.replace(regExp, RepText);
+        if (text) {
+          return text.replace(regExp, RepText);
+        }
+        return text;
       },
       goProjectByName(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
@@ -545,7 +548,7 @@
           });
         }else{
           this.search.show = true;
-          this.$axios.get('/traditional/search?newsType=' + this.search.type + '&search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
+          this.$axios.get('/traditional/search?newsType=' + this.search.type + '&search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20&highLight=true').then(res => {
             this.showloading = false;
             let allData = res.data.content;
             // for (let i = 0; i < allData.length; i++) {
@@ -563,7 +566,7 @@
       loadMoreNews() {
         this.showloading = true;
         this.search.pageNo++;
-        this.$axios.get('/traditional/search?newsType=' + this.search.type + '&search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
+        this.$axios.get('/traditional/search?newsType=' + this.search.type + '&search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20&highLight=true').then(res => {
           this.showloading = false;
           let allData = res.data.content;
           for (let i = 0; i < allData.length; i++) {

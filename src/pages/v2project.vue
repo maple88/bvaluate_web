@@ -12,7 +12,7 @@
                 <a :href="project.outerOfficial" target="_blank" class="atitle">{{project.project}}</a>
                 <button class="whitepaper" @click="goArticle('/pdfShow', {project: project.project})">{{$t('White paper')}}</button>
               </div>
-              <p class="smtit">(BTT)</p>
+              <p class="smtit" v-show="project.token">({{project.token}})</p>
               <div class="fol">
                 <div class="followbtn on" v-if="!isFollow" @click="setFollow($event)">{{$t('Focus on')}}</div>
                 <div class="followbtn" v-if="isFollow" @click="deleteFollow(project.collected, $event)">{{$t('Followed')}}</div>
@@ -44,7 +44,7 @@
               </div>
             </div>
           </div>
-          <p class="describe">{{project.irAbstract}}</p>
+          <p class="describe">{{project.introduction}}</p>
           <!-- <div class="hangyeTips">
             <p class="title">行业标签</p>
             <ul>
@@ -358,7 +358,7 @@
               </div>
               <!-- 简介 -->
               <div class="tabcontent project-tab-projectInfo" v-show="tabactive === 1">
-                <p class="des" v-if="project.about">{{project.about}}</p>
+                <p class="des" v-if="project.irAbstract">{{project.irAbstract}}</p>
                 <div class="flexbox">
                   <div class="box-row">
                     <div class="box-col" v-if="project.startDate">
@@ -523,7 +523,7 @@
                               <div class="newimg_box" :data="news.title"
                                    :name="'search_newimg_box_title_'+index" :id="'search_newimg_box_title_'+index"
                                    @click="goArticle('/article',{sid:news.sid}, $event)">
-                                <img :src="news.titlePicture===''?newsimg:news.titlePicture"/>
+                                <img :src="news.titlePicture===''||news.titlePicture===null?newsimg:news.titlePicture"/>
                                 <span class="time" v-if="!news.titlePicture">{{news.urlDate | formatTime}}</span>
                               </div>
                             </div>
@@ -824,7 +824,7 @@
         } else if (type === 'WEIBO') {
           this.typeNumber = '290004'
         } else if (type === 'WEIXIN') {
-          this.typeNumber = '290000'
+          this.typeNumber = '290003'
         }
         this.initNewsList(this.project.project, this.typeNumber);
       },

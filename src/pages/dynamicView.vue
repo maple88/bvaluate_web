@@ -45,7 +45,7 @@
 			getData () {
 				this.showloading = true;
 				let uid = localStorage.getItem('apelink_user_uid');
-				let url = '/traditional/bvaluatedetail?sid=' + this.$route.query.sid;
+				let url = '/traditional/detail?sid=' + this.$route.query.sid;
 				let headers = {'uid': uid};
 				this.$axios({
 					method: 'get',
