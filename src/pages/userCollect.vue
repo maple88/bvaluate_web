@@ -77,17 +77,11 @@
                           <div class="media-bottom">
                             <ul>
                               <li
-                                v-if="!(news.result.siteName !== 'NULL' && news.result.siteName !== null && news.result.siteName !== '')"
                                 :name="'search_media-bottom_author_'+index"
                                 :id="'search_media-bottom_author_'+index"
                                 @click="goArticle('/author',{author: news.result.author,type: 'author'}, $event)"
                                 :data="news.result.author">
                                 {{news.result.author}}
-                              </li>
-                              <li v-else :name="'search_media-bottom_siteName_'+index"
-                                  :id="'search_media-bottom_siteName_'+index" :data="news.result.siteName"
-                                  @click="goArticle('/author',{author: news.result.siteName,type: 'siteName'}, $event)">
-                                {{news.result.siteName}}
                               </li>
                               <li>{{news.result.urlTime}}</li>
                             </ul>

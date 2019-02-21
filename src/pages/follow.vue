@@ -235,16 +235,12 @@
                                 <ul>
                                   <li
                                     :name="'follow_wenzhang_author_'+index" :id="'follow_wenzhang_author_'+index" 
-                                    v-if="!(item.result.siteName !== 'NULL' && item.result.siteName !== null && item.result.siteName !== '')"
                                     @click="goArticle('/author',{author: item.result.author,type: 'author'}, $event)"
                                     :data="item.result.author">
                                     <div class="userimg">
                                       <img src="../assets/follow/user_head.png">
                                     </div>
                                     <span class="author">{{item.result.author}}</span>
-                                  </li>
-                                  <li v-else :data="item.result.siteName" :name="'follow_wenzhang_siteName_'+index" :id="'follow_wenzhang_siteName_'+index" @click="goArticle('/author',{author: item.result.siteName,type: 'siteName'}, $event)">
-                                    <span class="author">{{item.result.siteName}}</span>
                                   </li>
                                   <li>{{item.result.urlDate | dataFormat}}</li>
                                   <li data-toggle="modal" data-target="#deleteModal" class="love" @click="deleteFollow(item.cid, 'wenzhang')">
