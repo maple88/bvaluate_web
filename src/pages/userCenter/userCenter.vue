@@ -40,7 +40,7 @@
               投稿<span>{{myNewsList}}</span></li> -->
             <!--<li @click="toggleTab('read'), num = 2" :class="{active: num === 2}">阅读<span>122</span></li>-->
             <li @click="toggleTab('collection'), num = 3" :class="{active: num === 3}">
-              收藏<span>{{newsList}}</span></li>
+              {{$t('Collection')}}<span>{{newsList}}</span></li>
           </ul>
         </div>
       </div>

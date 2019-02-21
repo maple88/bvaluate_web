@@ -84,7 +84,7 @@ export default {
 	'Currency name': 'Currency name',
 	'Transaction amount': 'Transaction amount',
 	'Price': 'Price',
-	'Growth ': 'Growth ',
+	'Growth': 'Growth ',
 	'Decline': 'Decline',
 	'News': 'News',
 	'Twitter': 'Twitter',
@@ -125,7 +125,7 @@ export default {
 	'Old password': 'Old password',
 	'New password': 'New password',
 	'Confirm password': 'Confirm password',
-	'Confirm ': 'Confirm ',
+	'Confirm': 'Confirm ',
 	'Cancel': 'Cancel',
 	'Focus on': 'Focus on',
 	'Share': 'Share',
@@ -214,5 +214,13 @@ export default {
 	'Click to receive': 'Click to receive',
 	'notice': 'notice',
 	'Fold': 'Fold',
-	'Wechat applet': 'Wechat applet'
+	'Wechat applet': 'Wechat applet',
+	'Save': 'Save',
+	'Verification code': 'Verification code',
+	'Male': 'Male',
+	'Female': 'Female',
+	'Click to change': 'Click to change',
+	'Bind phone number': 'Bind phone number',
+	'Bind Email': 'Bind Email',
+	'Modify password': 'Modify password'
 };

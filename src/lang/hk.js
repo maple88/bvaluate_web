@@ -84,7 +84,7 @@ export default {
 	'Currency name': '貨幣名稱',
 	'Transaction amount': '成交額',
 	'Price': '價格',
-	'Growth ': '漲幅',
+	'Growth': '漲幅',
 	'Decline': '跌幅',
 	'News': '新聞',
 	'Twitter': '推文',
@@ -125,7 +125,7 @@ export default {
 	'Old password': '舊的密碼',
 	'New password': '新密碼',
 	'Confirm password': '確認密碼',
-	'Confirm ': '確定',
+	'Confirm': '確定',
 	'Cancel': '取消',
 	'Focus on': '關注',
 	'Share': '分享',
@@ -214,5 +214,13 @@ export default {
 	'Click to receive': '點擊領取',
 	'notice': '通知',
 	'Fold': '收起',
-	'Wechat applet': '小程序'
+	'Wechat applet': '小程序',
+	'Save': '保存',
+	'Verification code': '驗證碼',
+	'Male': '男',
+	'Female': '女',
+	'Click to change': '點擊修改頭像',
+	'Bind phone number': '綁定手機',
+	'Bind Email': '綁定郵箱',
+	'Modify password': '修改密碼'
 };
