@@ -3,7 +3,7 @@
     <v2header/>
     <div class="v2maintainer pd0">
       <!-- content here -->
-      <div class="project-topmain" data-v-step="8">
+      <div class="project-topmain" data-project-step="1">
         <div class="container v2container">
           <div class="projectTop">
             <div class="img-box"><img :src="project.logoSrc"></div>
@@ -646,7 +646,7 @@
       <v2footer/>
     </div>
 
-    <v-tour v-show="$store.state.isTour" name="myTour" :steps="steps" :callbacks="myCallbacks">
+    <v-tour name="projectTour" :steps="steps" :callbacks="myCallbacks">
       <template slot-scope="tour">
         <transition name="fade">
           <v-step
@@ -747,7 +747,7 @@
         indestyMark: 0,
         steps: [
           {
-            target: '[data-v-step="8"]',
+            target: '[data-project-step="1"]',
             content: `<h4>项目信息总览</h4>
                       <p>1、项目评分、声量指数、行业</p>
                       <p>2、项目行情、简介、团队、技术、市场、资讯</p>`
@@ -798,7 +798,7 @@
           isTour.project = true;
           localStorage.setItem('isTour', JSON.stringify(isTour));
         } else {
-          isTour = {}
+          isTour = {};
           isTour.project = true;
           localStorage.setItem('isTour', JSON.stringify(isTour));
         }
