@@ -5,7 +5,7 @@
 			<!-- content here -->
 			<div class="container v2container">
 				<div class="dynamicList-box">
-					<p class="head">公司动态</p>
+					<p class="head">{{$t('Company News')}}</p>
 					<div class="news-list">
 						<div class="item" v-for="(item, index) in list" :key="index">
 							<div class="left" @click="goArticle('/dynamicView',{sid:item.sid})"><img :src="item.logoSrc?item.logoSrc:defaultImg"/></div>

@@ -213,5 +213,6 @@ export default {
 	'Day 7': 'Day 7',
 	'Click to receive': 'Click to receive',
 	'notice': 'notice',
-	'Fold': 'Fold'
+	'Fold': 'Fold',
+	'Wechat applet': 'Wechat applet'
 };
