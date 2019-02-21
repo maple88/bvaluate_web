@@ -21,9 +21,24 @@
           <div class="inputInner" v-show="loginForm">
             <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2-1.png"></div>
-              <input type="tel" class="form-control" v-model="loginUser.phoneNumber" :placeholder="$t('phone number')" data="输入手机号"
-                     @focus="errorMsg.loginUser.phoneNumber = ''"
-                     name="no_content" id="input_login_phoneNumber">
+              <div class="select-input">
+                <div class="layui-form">
+                  <select name="loginSelect" lay-filter="loginSelect">
+                    <option value="+86" selected>+86</option>
+                    <option value="+852">+852</option>
+                    <option value="+853">+853</option>
+                    <option value="+81">+81</option>
+                    <option value="+82">+82</option>
+                    <option value="+65">+65</option>
+                    <option value="+886">+886</option>
+                    <option value="+1">+1</option>
+                  </select>
+                </div>
+                <input type="tel" class="form-control" v-model="loginUser.phoneNumber" :placeholder="$t('phone number')" data="输入手机号"
+                       @focus="errorMsg.loginUser.phoneNumber = ''"
+                       name="no_content" id="input_login_phoneNumber">
+              </div>
+
               <span class="help-block" v-if="errorMsg.loginUser.phoneNumber">
 										{{errorMsg.loginUser.phoneNumber}}
 									</span>
@@ -80,7 +95,7 @@
 
               <div class="select-input">
                 <div class="layui-form">
-                  <select name="selectPlace" lay-filter="selectPlace">
+                  <select name="registerSelect" lay-filter="registerSelect">
                     <option value="+86" selected>+86</option>
                     <option value="+852">+852</option>
                     <option value="+853">+853</option>
@@ -148,12 +163,27 @@
           <div class="inputInner" v-show="resetpwdForm">
             <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2-1.png"></div>
-              <input type="tel" class="form-control" v-model="resetpwdUser.phoneNumber" :placeholder="$t('phone number')"
-                     @focus="errorMsg.resetpwdUser.phoneNumber = ''"
-                     @blur="checkResetPhoneNumber"
-                     data="输入手机号"
-                     name="no_content" id="input_login_phoneNumber3"
-              >
+              <div class="select-input">
+                <div class="layui-form">
+                  <select name="resetpwdSelect" lay-filter="resetpwdSelect">
+                    <option value="+86" selected>+86</option>
+                    <option value="+852">+852</option>
+                    <option value="+853">+853</option>
+                    <option value="+81">+81</option>
+                    <option value="+82">+82</option>
+                    <option value="+65">+65</option>
+                    <option value="+886">+886</option>
+                    <option value="+1">+1</option>
+                  </select>
+                </div>
+                <input type="tel" class="form-control" v-model="resetpwdUser.phoneNumber" :placeholder="$t('phone number')"
+                       @focus="errorMsg.resetpwdUser.phoneNumber = ''"
+                       @blur="checkResetPhoneNumber"
+                       data="输入手机号"
+                       name="no_content" id="input_login_phoneNumber3"x
+                >
+              </div>
+
               <span class="help-block" v-if="errorMsg.resetpwdUser.phoneNumber">
 										{{errorMsg.resetpwdUser.phoneNumber}}
 									</span>
@@ -235,17 +265,21 @@
           code: '',
           phoneNumber: '',
           password: '',
-          confirmpsd: ''
+          confirmpsd: '',
+          prefix:'+86'
+
         },
         loginUser: {
           phoneNumber: '',
-          password: ''
+          password: '',
+          prefix:'+86'
         },
         resetpwdUser: {
           code: '',
           phoneNumber: '',
           password: '',
-          confirmpsd: ''
+          confirmpsd: '',
+          prefix:'+86'
         },
         errorMsg: {
           registerUser: {
@@ -279,7 +313,6 @@
         showTip: false,
         pwdtype: 'password',
         eye: eye,
-        prefix:'+86'
       }
     },
     props: {
@@ -303,8 +336,14 @@
       layui.use('form', function () {
         let form = layui.form;
         form.render('select');
-        form.on('select(selectPlace)', function(data){
-          that.prefix = data.value;
+        form.on('select(registerSelect)', function(data){
+          that.registerUser.prefix = data.value;
+        });
+        form.on('select(resetpwdSelect)', function(data){
+          that.resetpwdUser.prefix = data.value;
+        });
+        form.on('select(loginSelect)', function(data){
+          that.loginUser.prefix = data.value;
         });
       });
     },
@@ -469,7 +508,7 @@
           });
         }
         if (phoneNumber !== null && phoneNumber !== '' && phoneNumber !== undefined) {
-          if (!(/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phoneNumber))) {
+          if (!(/^[0-9]*$/.test(phoneNumber))) {
             pass = false;
             this.errorMsg.registerUser.phoneNumber = '请输入正确格式的手机号码'
             sensors.track("Registerresult", {
@@ -645,7 +684,7 @@
         let code = this.resetpwdUser.code;
         let confirmpsd = this.resetpwdUser.confirmpsd;
         if (phoneNumber !== null && phoneNumber !== '' && phoneNumber !== undefined) {
-          if (!(/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phoneNumber))) {
+          if (!(/^[0-9]*$/.test(phoneNumber))) {
             pass = false;
             this.errorMsg.resetpwdUser.phoneNumber = '请输入正确格式的手机号码'
           }
@@ -727,7 +766,7 @@
       checkPhoneNumber() {
         if (this.registerUser.phoneNumber != null && this.registerUser.phoneNumber !== '' && this.registerUser.phoneNumber !== undefined) {
           let phone = this.registerUser.phoneNumber;
-          if (/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phone)) {
+          if (/^[0-9]*$/.test(phone)) {
             let that = this;
             let url = '/user/phoneCheck?phoneNumber=' + phone;
             that.$axios.post(url).then(function (res) {
@@ -769,7 +808,7 @@
       checkResetPhoneNumber() {
         if (this.resetpwdUser.phoneNumber != null && this.resetpwdUser.phoneNumber !== '' && this.resetpwdUser.phoneNumber !== undefined) {
           let phone = this.resetpwdUser.phoneNumber;
-          if (/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phone)) {
+          if (/^[0-9]*$/.test(phone)) {
             let that = this;
             let url = '/user/phoneCheck?phoneNumber=' + phone;
             that.$axios.post(url).then(function (res) {
@@ -817,9 +856,9 @@
         let phone = this.registerUser.phoneNumber
         this.registerSendBtnText = '';
         this.registerShowloading = true;
-        if (/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phone)) {
+        if (/^[0-9]*$/.test(phone)) {
           let that = this;
-          let prefix = this.prefix;
+          let prefix = this.registerUser.prefix;
           let lang = 'en';
           if(prefix === '+86'){
             lang = 'zh'
@@ -861,9 +900,14 @@
         let phone = this.resetpwdUser.phoneNumber
         this.resetPwdSendBtnText = '';
         this.resetPwdShowloading = true;
-        if (/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phone)) {
+        if (/^[0-9]*$/.test(phone)) {
           let that = this;
-          let url = '/login/code?phoneNumber=' + phone + '&codeType=1003'
+          let prefix = this.resetpwdUser.prefix;
+          let lang = 'en';
+          if(prefix === '+86'){
+            lang = 'zh'
+          }
+          let url = '/login/code?phoneNumber=' + phone + '&codeType=1003&language=' + lang;
           that.$axios.post(url).then(function (res) {
             that.resetPwdShowloading = false;
             if (res.status == 200) {
