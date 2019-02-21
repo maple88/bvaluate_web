@@ -65,7 +65,7 @@
         this.$store.state.invitationTip = false;
       },
       initInvitationInfo() {
-        let url = `/user/getInvitationCode`;
+        let url = `/api/user/getInvitationCode`;
         let uid = localStorage.getItem('apelink_user_uid');
         this.token = localStorage.getItem('apelink_user_token');
         if (!this.token) {

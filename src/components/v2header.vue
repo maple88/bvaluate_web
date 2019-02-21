@@ -295,7 +295,7 @@
       // 头部数量
       getTophead() {
         let that = this;
-        that.$axios.get('/ICO/icoRank?type=周榜&pageNo=0&pageSize=3').then(function (res) {
+        that.$axios.get('/api/ICO/icoRank?type=周榜&pageNo=0&pageSize=3').then(function (res) {
           that.tophead = res.data;
           Bus.$emit('val', res.data.topProject);
         });

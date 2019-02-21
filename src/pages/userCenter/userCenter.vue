@@ -104,7 +104,7 @@
         let that = this
         let token = localStorage.getItem('apelink_user_token')
         let uid = localStorage.getItem('apelink_user_uid')
-        let url = '/traditional/authorRelatedNews?author=' + this.nickName;
+        let url = '/api/traditional/authorRelatedNews?author=' + this.nickName;
         let headers = {'uid': uid, 'Authorization': token};
         that.$axios({
           method: 'get',
@@ -118,7 +118,7 @@
         let that = this
         let token = localStorage.getItem('apelink_user_token')
         let uid = localStorage.getItem('apelink_user_uid')
-        let url = '/individual/list?type=NEWS';
+        let url = '/api/individual/list?type=NEWS';
         let headers = {'uid': uid, 'Authorization': token};
         that.$axios({
           method: 'get',

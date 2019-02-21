@@ -497,14 +497,14 @@
       },
       // 热门行业
       getHotindustry () {
-        this.$axios.get('/ICO/hotFourIndustries')
+        this.$axios.get('/api/ICO/hotFourIndustries')
         .then(res => {
           this.hostIndustries = res.data.slice(0, 4);
         })
       },
       // 国家排行榜
       getGuojiaList () {
-        this.$axios.get('/hotICO/countrylistForApp?pageNo=0&pageSize=10')
+        this.$axios.get('/api/hotICO/countrylistForApp?pageNo=0&pageSize=10')
         .then(res => {
           this.guojiaList = res.data;
         })

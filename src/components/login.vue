@@ -398,7 +398,7 @@
             var layer = layui.layer;
             load = layer.load(2);
           });
-          that.$axios.post('/login', json).then(function (res) {
+          that.$axios.post('/api/login', json).then(function (res) {
             let data = res.data;
             let uid = data.uid;
             let token = data.token;
@@ -411,7 +411,7 @@
             that.$store.state.uid = uid;
             localStorage.setItem('apelink_user_phoneNumber', phoneNumber);
             sensors.setProfile({phone: phoneNumber});
-            let url = '/user/info';
+            let url = '/api/user/info';
             let headers = {'uid': uid, 'Authorization': token};
             console.log(headers);
             that.$axios({
@@ -583,7 +583,7 @@
         }
         if (pass) {
           let that = this;
-          let url = '/user/register';
+          let url = '/api/user/register';
           let json = {
             nickName: nickName,
             code: code,
@@ -607,7 +607,7 @@
               phoneNumber: phoneNumber,
               password: password
             };
-            that.$axios.post('/login', json2).then(function (res) {
+            that.$axios.post('/api/login', json2).then(function (res) {
               let data = res.data;
               let uid = data.uid;
               let token = data.token;
@@ -617,7 +617,7 @@
               localStorage.setItem('apelink_user_uid', uid);
               localStorage.setItem('apelink_user_token', token);
               localStorage.setItem('apelink_user_phoneNumber', phoneNumber);
-              let url = '/user/info';
+              let url = '/api/user/info';
               let headers = {'uid': uid, 'Authorization': token};
               that.$axios({
                 method: 'get',
@@ -722,7 +722,7 @@
           this.errorMsg.resetpwdUser.code = '手机验证码不能为空'
         }
         if (pass) {
-          let url = '/user/retrievePassword?phoneNumber=' + phoneNumber + '&code=' + code + '&password=' + password;
+          let url = '/api/user/retrievePassword?phoneNumber=' + phoneNumber + '&code=' + code + '&password=' + password;
           let that = this
           that.$axios.post(url).then(function (res) {
             if (res.data) {
@@ -765,7 +765,7 @@
           let phone = this.registerUser.phoneNumber;
           if (/^[0-9]*$/.test(phone)) {
             let that = this;
-            let url = '/user/phoneCheck?phoneNumber=' + phone;
+            let url = '/api/user/phoneCheck?phoneNumber=' + phone;
             that.$axios.post(url).then(function (res) {
               if (res.data) {
                 that.errorMsg.registerUser.phoneNumber = '该手机号码已经注册'
@@ -807,7 +807,7 @@
           let phone = this.resetpwdUser.phoneNumber;
           if (/^[0-9]*$/.test(phone)) {
             let that = this;
-            let url = '/user/phoneCheck?phoneNumber=' + phone;
+            let url = '/api/user/phoneCheck?phoneNumber=' + phone;
             that.$axios.post(url).then(function (res) {
               if (!res.data) {
                 that.errorMsg.resetpwdUser.phoneNumber = '该手机号码未被注册，请从新输入'
@@ -824,7 +824,7 @@
         let nickName = this.registerUser.nickName;
         if (this.strLength(nickName) <= 14) {
           let that = this;
-          let url = '/user/nickNameExist?nickName=' + nickName;
+          let url = '/api/user/nickNameExist?nickName=' + nickName;
           that.$axios.post(url).then(function (res) {
             if (res.data) {
               that.errorMsg.registerUser.nickName = '该昵称已被注册'
@@ -862,7 +862,7 @@
             lang = 'zh'
           }
           console.log(prefix)
-          let url = '/login/code?phoneNumber=' + prefix + phone + '&codeType=1002&language=' + lang;
+          let url = '/api/login/code?phoneNumber=' + prefix + phone + '&codeType=1002&language=' + lang;
           that.$axios.post(url).then(function (res) {
             that.registerShowloading = false;
             if (res.status == 200) {
@@ -905,7 +905,7 @@
           if(prefix === '86-'){
             lang = 'zh'
           }
-          let url = '/login/code?phoneNumber=' + prefix + phone + '&codeType=1003&language=' + lang;
+          let url = '/api/login/code?phoneNumber=' + prefix + phone + '&codeType=1003&language=' + lang;
           that.$axios.post(url).then(function (res) {
             that.resetPwdShowloading = false;
             if (res.status == 200) {

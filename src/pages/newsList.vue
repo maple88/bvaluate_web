@@ -359,7 +359,7 @@
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid');
-          let checkurl = '/individual/check?type=INDUSTRY&sidOrName=' + that.industryName;
+          let checkurl = '/api/individual/check?type=INDUSTRY&sidOrName=' + that.industryName;
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'post',
@@ -420,8 +420,8 @@
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid');
-          if (country) {url = '/individual/add?type=COUNTRY&name=' + that.industry;}
-          if (industry) {url = '/individual/add?type=INDUSTRY&name=' + that.industry;}
+          if (country) {url = '/api/individual/add?type=COUNTRY&name=' + that.industry;}
+          if (industry) {url = '/api/individual/add?type=INDUSTRY&name=' + that.industry;}
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'post',
@@ -445,9 +445,9 @@
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid')
           let that = this;
-          let url = '/individual/list?type=INDUSTRY'; 
-          if (c) {url = '/individual/list?type=COUNTRY';}
-          if (i) {url = '/individual/list?type=INDUSTRY';}
+          let url = '/api/individual/list?type=INDUSTRY'; 
+          if (c) {url = '/api/individual/list?type=COUNTRY';}
+          if (i) {url = '/api/individual/list?type=INDUSTRY';}
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'get',
@@ -465,7 +465,7 @@
             }
             if (cid !== '') {
               console.log(cid);
-              let deteleUrl = '/individual/delete?cid=' + cid;
+              let deteleUrl = '/api/individual/delete?cid=' + cid;
               that.$axios({
                 method: 'DELETE',
                 url: deteleUrl,
@@ -487,9 +487,9 @@
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid');
-          let checkurl = '/individual/check?type=INDUSTRY&sidOrName=' + industryName;
+          let checkurl = '/api/individual/check?type=INDUSTRY&sidOrName=' + industryName;
           if (type === 'country') {
-            checkurl = '/individual/check?type=COUNTRY&sidOrName=' + industryName;
+            checkurl = '/api/individual/check?type=COUNTRY&sidOrName=' + industryName;
           }
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
@@ -507,14 +507,14 @@
       },
       getHotnews(industryName) {
         let that = this;
-        that.$axios.get('/traditional/hotNews?industryName=' + industryName + '&pageSize=10').then(function (res) {
+        that.$axios.get('/api/traditional/hotNews?industryName=' + industryName + '&pageSize=10').then(function (res) {
           that.hotNews = res.data.content
         })
       },
       initNewsList(categoryName, search) {
         let that = this;
         that.categoryName = categoryName;
-        let url = '/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + this.pageSize;
+        let url = '/api/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + this.pageSize;
         if (search !== null && search !== '' && search !== undefined) {
           url += '&search=' + search;
         }

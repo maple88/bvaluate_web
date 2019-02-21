@@ -24,9 +24,9 @@ import en from '@/lang/en.js'
 import hk from '@/lang/hk.js'
 
 // 测试分支
-axios.defaults.baseURL = 'http://test.bvaluate.com.cn/api';
+// axios.defaults.baseURL = 'http://test.bvaluate.com.cn';
 // 正式分支
-// axios.defaults.baseURL = 'https://bvaluate.com.cn/api';
+// axios.defaults.baseURL = 'https://bvaluate.com.cn';
 // axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // axios.defaults.withCredentials = true
 // axios.defaults.timeout = 30000;

@@ -83,7 +83,7 @@
         let nickName = localStorage.getItem('apelink_user_nickName');
         let token = localStorage.getItem('apelink_user_token')
         let uid = localStorage.getItem('apelink_user_uid')
-        let url = '/traditional/authorRelatedNews?author=' + nickName + '&pageNo=' + that.pageNo;
+        let url = '/api/traditional/authorRelatedNews?author=' + nickName + '&pageNo=' + that.pageNo;
         let headers = {'uid': uid, 'Authorization': token};
         that.$axios({
           method: 'get',

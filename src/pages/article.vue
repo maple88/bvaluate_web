@@ -480,10 +480,10 @@
           let sid = this.$route.query.sid
           let token = localStorage.getItem('apelink_user_token')
           let uid = localStorage.getItem('apelink_user_uid')
-          let url = '/individual/add?type=NEWS&sid=' + that.articleContent.sid;
+          let url = '/api/individual/add?type=NEWS&sid=' + that.articleContent.sid;
           let headers = {'uid': uid, 'Authorization': token};
           if (sid !== null && sid !== '' && sid !== undefined) {
-            let getDetailUrl = '/traditional/detail?sid=' + sid
+            let getDetailUrl = '/api/traditional/detail?sid=' + sid
             that.$axios({
               method: 'get',
               url: getDetailUrl,
@@ -513,10 +513,10 @@
                 // });
                 let checkAuthorurl = ''
                 if (that.articleContent.author) {
-                  checkAuthorurl = '/individual/check?type=AUTHOR&sidOrName=' + that.articleContent.author;
+                  checkAuthorurl = '/api/individual/check?type=AUTHOR&sidOrName=' + that.articleContent.author;
                 }
                 if (that.articleContent.siteName) {
-                  checkAuthorurl = '/individual/check?type=AUTHOR&sidOrName=' + that.articleContent.siteName;
+                  checkAuthorurl = '/api/individual/check?type=AUTHOR&sidOrName=' + that.articleContent.siteName;
                 }
                 that.$axios({
                   method: 'post',
@@ -536,7 +536,7 @@
             //   that.getNewsForAuthor(that.articleContent.author);
             //   that.industryName = res.data.industryCategory;
             //   if (token !== null && token !== '' && token !== undefined) {
-            //     let checkurl = '/individual/check?type=NEWS&sidOrName=' + that.articleContent.sid;
+            //     let checkurl = '/api/individual/check?type=NEWS&sidOrName=' + that.articleContent.sid;
             //     that.$axios({
             //       method: 'post',
             //       url: checkurl,
@@ -549,7 +549,7 @@
             //         that.isFollow = false
             //       }
             //     });
-            //     let checkAuthorurl = '/individual/check?type=AUTHOR&sidOrName=' + that.articleContent.author;
+            //     let checkAuthorurl = '/api/individual/check?type=AUTHOR&sidOrName=' + that.articleContent.author;
             //     that.$axios({
             //       method: 'post',
             //       url: checkAuthorurl,
@@ -574,7 +574,7 @@
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid');
-          let url = '/individual/delete?cid=' + cid;
+          let url = '/api/individual/delete?cid=' + cid;
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'DELETE',
@@ -595,7 +595,7 @@
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid')
           let that = this;
-          let url = '/individual/list?type=AUTHOR';
+          let url = '/api/individual/list?type=AUTHOR';
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'get',
@@ -613,7 +613,7 @@
             }
             if (cid !== '') {
               console.log(cid);
-              let deteleUrl = '/individual/delete?cid=' + cid;
+              let deteleUrl = '/api/individual/delete?cid=' + cid;
               that.$axios({
                 method: 'DELETE',
                 url: deteleUrl,
@@ -634,7 +634,7 @@
       },
       getHotnewsData() {
         let that = this
-        that.$axios.get('/traditional/hotNews?industryName=' + that.industryName + '&pageSize=10').then(function (res) {
+        that.$axios.get('/api/traditional/hotNews?industryName=' + that.industryName + '&pageSize=10').then(function (res) {
           that.hotNews = res.data.content
         })
       },
@@ -648,7 +648,7 @@
         let token = localStorage.getItem('apelink_user_token')
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid')
-          let url = '/individual/add?type=NEWS&sid=' + that.articleContent.sid;
+          let url = '/api/individual/add?type=NEWS&sid=' + that.articleContent.sid;
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'post',
@@ -669,10 +669,10 @@
           let uid = localStorage.getItem('apelink_user_uid')
           let url = ''
           if (that.articleContent.author) {
-            url = '/individual/add?type=AUTHOR&name=' + that.articleContent.author;
+            url = '/api/individual/add?type=AUTHOR&name=' + that.articleContent.author;
           }
           if (that.articleContent.siteName) {
-            url = '/individual/add?type=AUTHOR&name=' + that.articleContent.siteName;
+            url = '/api/individual/add?type=AUTHOR&name=' + that.articleContent.siteName;
           }
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
@@ -691,7 +691,7 @@
         let author = '';
         (obj.siteName && obj.siteName !== 'NULL') ? author = obj.siteName : author = obj.author;
         let that = this
-        that.$axios.get('/traditional/authorRelatedNews?author=' + author + '&pageSize=5').then(function (res) {
+        that.$axios.get('/api/traditional/authorRelatedNews?author=' + author + '&pageSize=5').then(function (res) {
           that.newsForAuthor = res.data.content;
         })
       },
