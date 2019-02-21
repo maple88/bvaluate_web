@@ -64,7 +64,7 @@
                     <!-- <span class="publish_time">13:20</span> -->
                   </div>
                   <div class="article_right">
-                    <a href="javascript:;" class="look" name="article_right_more" id="article_right_more" data="查看全文" @click="showArticle = !showArticle">{{$t('Original article')}}</a>
+                    <a href="javascript:;" class="look" name="article_right_more" id="article_right_more" data="查看全文" @click="showArticle = !showArticle">{{$t('View original article')}}</a>
                     <span class="look_count"><i class="fa fa-eye"></i>0</span>
                     <!--<span class="share" @click.stop="showAllShare($event)"><i class="fa fa-share-alt"></i></span>-->
                     <div class="followbtn on share_button" @click.stop="shareButton = !shareButton">

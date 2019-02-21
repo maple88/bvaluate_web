@@ -224,6 +224,7 @@ export default {
 	'Bind Email': 'Bind Email',
 	'Modify password': 'Modify password',
 	'Content': 'Content',
+	'View original article': 'View original article',
 	'Original article': 'Original article',
 	'24 hours hot articles': '24 hours hot articles'
 };

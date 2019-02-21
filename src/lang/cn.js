@@ -224,6 +224,7 @@ export default {
 	'Bind Email': '绑定邮箱',
 	'Modify password': '修改密码',
 	'Content': '正文',
-	'Original article': '查看原文',
+	'View original article': '查看原文',
+	'Original article': '原文',
 	'24 hours hot articles': '24小时热文'
 };
