@@ -120,7 +120,7 @@
             <transition name="fade">
               <div class="search-box" ref="innerSearch" v-show="showSearch">
                 <div class="center">
-                  <input type="text" :placeholder="$t('Enter Keywords')" v-model="search" ref="search_input" class="search_input" data="输入搜素内容" name="no_content" id="input_search_input" @keyup.enter="goSearch($event)">
+                  <input type="text" autocomplete="off" :placeholder="$t('Enter Keywords')" v-model="search" ref="search_input" class="search_input" data="输入搜素内容" name="no_content" id="input_search_input" @keyup.enter="goSearch($event)">
                 </div>
                 <div class="right">
                   <button class="search_submit" @click="goSearch($event), trackSearch(searchType, search)" name="no_content" id="search_submit" data="搜索按钮">
@@ -139,7 +139,7 @@
                   </button>
                 </div>
                 <div class="center">
-                  <input type="text" :placeholder="$t('Enter Keywords')" v-model="search" class="search_input" data="输入搜素内容" name="no_content" id="out_search_input" @keyup.enter="goSearch($event)">
+                  <input type="text" autocomplete="off" :placeholder="$t('Enter Keywords')" v-model="search" class="search_input" data="输入搜素内容" name="no_content" id="out_search_input" @keyup.enter="goSearch($event)">
                 </div>
               </div>
               <div class="close-search">{{$t('Cancel')}}</div>
