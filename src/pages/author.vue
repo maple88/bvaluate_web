@@ -224,7 +224,7 @@
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid');
-          let checkurl = '/api/individual/check?type=AUTHOR&sidOrName=' + this.author;
+          let checkurl = '/individual/check?type=AUTHOR&sidOrName=' + this.author;
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'post',
@@ -245,7 +245,7 @@
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid')
           let that = this;
-          let url = '/api/individual/list?type=AUTHOR';
+          let url = '/individual/list?type=AUTHOR';
           let headers = {'uid': uid, 'Authorization': token};
           sensors.quick('trackHeatMap', event.currentTarget);
           that.$axios({
@@ -264,7 +264,7 @@
             }
             if (cid !== '') {
               console.log(cid);
-              let deteleUrl = '/api/individual/delete?cid=' + cid;
+              let deteleUrl = '/individual/delete?cid=' + cid;
               that.$axios({
                 method: 'DELETE',
                 url: deteleUrl,
@@ -286,7 +286,7 @@
         let token = localStorage.getItem('apelink_user_token')
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid')
-          let url = '/api/individual/add?type=AUTHOR&name=' + that.author;
+          let url = '/individual/add?type=AUTHOR&name=' + that.author;
           let headers = {'uid': uid, 'Authorization': token};
           sensors.quick('trackHeatMap', event.currentTarget);
           that.$axios({
@@ -309,7 +309,7 @@
       getNewsForAuthor() {
         let that = this;
         this.showloading = true;
-        that.$axios.get('/api/traditional/authorRelatedNews?author=' + this.author + '&pageSize=' + this.pageSize).then(function (res) {
+        that.$axios.get('/traditional/authorRelatedNews?author=' + this.author + '&pageSize=' + this.pageSize).then(function (res) {
           that.showloading = false;
           that.pageSize += 10;
           that.newsForAuthor = res.data.content;

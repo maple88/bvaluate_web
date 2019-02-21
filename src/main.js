@@ -16,7 +16,18 @@ import '@/styles/main.scss'
 import 'es6-promise/auto'
 import Vuex from 'vuex'
 import sensors from 'sa-sdk-javascript/sensorsdata.min.js'
+import VueI18n from 'vue-i18n'
+import VueTour from 'vue-tour'
+import 'vue-tour/dist/vue-tour.css'
+import cn from '@/lang/cn.js'
+import en from '@/lang/en.js'
+import hk from '@/lang/hk.js'
 
+// axios.defaults.baseURL = 'http://119.254.68.8:10020';
+// axios.defaults.baseURL = 'http://test.bvaluate.com.cn/api';
+axios.defaults.baseURL = 'http://api.bvaluate.com.cn/api';
+// axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// axios.defaults.withCredentials = true
 // axios.defaults.timeout = 30000;
 
 Vue.prototype.$axios = axios;
@@ -26,6 +37,8 @@ Vue.component('v2header', v2header);
 Vue.component('v2footer', v2footer);
 Vue.component('vtips', tip);
 Vue.use(Vuex);
+Vue.use(VueI18n);
+Vue.use(VueTour);
 
 Vue.prototype.$toast = function(msg){
   layui.use('layer', function(){
@@ -127,6 +140,9 @@ layui.use('layer', function(){
   }
 });
 
+let token = localStorage.getItem('apelink_user_token');
+let uid = localStorage.getItem('apelink_user_uid');
+let isTour = localStorage.getItem('isTour');
 
 const store = new Vuex.Store({
   state: {
@@ -139,7 +155,10 @@ const store = new Vuex.Store({
     registerPop: false,
     messagePop: false,
     wechatPop: false,
-    bindPhonePop: false
+    bindPhonePop: false,
+    token: token,
+    uid: uid,
+    isTour: true
   },
   mutations: {
     register(state) {
@@ -149,11 +168,55 @@ const store = new Vuex.Store({
   }
 });
 
+// axios.interceptors.request.use(
+//   config => {
+//     // 每次发送请求之前判断是否存在token，如果存在，则统一在http请求的header都加上token，不用每次请求都手动添加了
+//     // 即使本地存在token，也有可能token是过期的，所以在响应拦截器中要对返回状态进行判断
+//     const token = store.state.token;
+//     const uid = store.state.uid;
+//     // console.log(token);
+//     // console.log(uid);
+//     token && (config.headers.Authorization = token);
+//     uid && (config.headers.uid = uid);
+//     // config.headers = {
+//     //   'Content-Type': 'application/json' // 设置很关键
+//     // }
+//     return config;
+//   },
+//   error => {
+//     return Promise.error(error);
+//   }
+// );
+
+let messages = {
+  cn: cn,
+  en: en,
+  hk: hk
+};
+
+//获取选择语言
+let lang = localStorage.getItem('bvaluate-lang');
+
+let i18n = new VueI18n({
+  //定义默认语言
+  locale: lang || 'cn',
+  messages
+});
+
+
 /* eslint-disable no-new */
+// new Vue({
+//   el: '#app',
+//   router,
+//   store,
+//   i18n,
+//   components: {App},
+//   template: '<App/>'
+// })
+
 new Vue({
-  el: '#app',
   router,
   store,
-  components: {App},
-  template: '<App/>'
-})
+  i18n,
+  render: h => h(App)
+}).$mount('#app')

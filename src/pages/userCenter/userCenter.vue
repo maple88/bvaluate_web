@@ -20,15 +20,15 @@
           <ul class="datalist">
             <li>
               <p>{{candy}}</p>
-              <p>糖果数</p>
+              <p>{{$t('Number of candy')}}</p>
             </li>
             <li>
               <p>0</p>
-              <p>粉丝</p>
+              <p>{{$t('Followers')}}</p>
             </li>
             <li>
-              <p>0人</p>
-              <p>关注</p>
+              <p>0</p>
+              <p>{{$t('Focus')}}</p>
             </li>
           </ul>
         </div>
@@ -104,7 +104,7 @@
         let that = this
         let token = localStorage.getItem('apelink_user_token')
         let uid = localStorage.getItem('apelink_user_uid')
-        let url = '/api/traditional/authorRelatedNews?author=' + this.nickName;
+        let url = '/traditional/authorRelatedNews?author=' + this.nickName;
         let headers = {'uid': uid, 'Authorization': token};
         that.$axios({
           method: 'get',
@@ -118,7 +118,7 @@
         let that = this
         let token = localStorage.getItem('apelink_user_token')
         let uid = localStorage.getItem('apelink_user_uid')
-        let url = '/api/individual/list?type=NEWS';
+        let url = '/individual/list?type=NEWS';
         let headers = {'uid': uid, 'Authorization': token};
         that.$axios({
           method: 'get',

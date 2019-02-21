@@ -437,9 +437,13 @@
 
 .v2header{
   transition: top .3s;
-  &.scroll {
+  &.pinned {top: 0;}
+  &.unpinned {
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, .2);
     top: -36px;
+    @media ($max-sm) {
+      top: -60px;
+    }
     .navbar{
       background: #212831;
       height: 66px;
@@ -455,6 +459,10 @@
     }
     .nav.navbar-nav .header-btn{
       padding: 9px 23px;
+      @media ($min-sm) and ($max-md) {
+        padding: 5px 10px;
+        font-size: 13px;
+      }
     }
     .navbar-brand{
       padding: 12px 0 0 15px;
@@ -467,7 +475,7 @@
     background: #030303;
     overflow: hidden;
     @media ($max-sm) {
-      height: 40px;
+      height: 60px;
     }
     .container{
       height: 100%;
@@ -475,6 +483,9 @@
         height: 100%;
         display: flex;
         justify-content: space-between;
+        @media ($max-sm) {
+          align-items: center;
+        }
       }
     }
     ul{
@@ -482,7 +493,10 @@
       height: 100%;
       align-items: center;
       @media ($max-sm) {
-        // justify-content: center;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        margin: 0;
       }
       li{
         font-size: 14px;
@@ -494,17 +508,17 @@
         @media ($max-sm) {
           margin: 0;
           font-size: 14px;
-          &:nth-child(2){
-            margin: 0 30px;
-          }
+          // &:nth-child(2){
+          //   margin: 0 30px;
+          // }
         }
         @media ($max-xs) {
           font-size: 12px;
-          display: flex;
-          flex-direction: column;
-          &:nth-child(2){
-            margin: 0;
-          }
+          // display: flex;
+          // flex-direction: column;
+          // &:nth-child(2){
+          //   margin: 0;
+          // }
         }
         &:last-child{
           margin: 0;
@@ -530,6 +544,7 @@
       font-size: 14px;
       cursor: pointer;
       margin: 0 0 0 15px;
+      white-space: nowrap;
       @media ($max-xs) {
         font-size: 12px;
         position: absolute;
@@ -549,6 +564,9 @@
       span{
         white-space: nowrap;
       }
+      .rookie{
+        margin: 0 16px 0 0;
+      }
     }
   }
   .navbar{
@@ -562,7 +580,7 @@
       height: 60px;
       .navbar-header{
         height: 60px;
-        background: #212831;
+        // background: #212831;
       }
     }
     &.hasbg{
@@ -575,6 +593,10 @@
     margin: 0 43px 0 0;
     @media ($max-md) {
       margin: 0 30px 0 0;
+    }
+    @media ($min-sm) and ($max-md) {
+      width: 60px;
+      overflow: hidden;
     }
     @media ($max-sm) {
       padding: 8px 0 0 15px;
@@ -605,11 +627,14 @@
       >a{
         position: relative;
         padding: 30px 0;
-        background: transparent;
+        background: transparent !important;
         color: #c8cbce;
         font-size: 16px;
         cursor: pointer;
         transition: .3s;
+        @media ($min-sm) and ($max-md) {
+          font-size: 13px;
+        }
         @media ($max-sm) {
           padding: 8px 0;
           color: #aaa;
@@ -657,18 +682,22 @@
       @media ($max-md) {
         padding: 8px 16px;
       }
+      @media ($min-sm) and ($max-md) {
+        padding: 5px 10px;
+        font-size: 13px;
+      }
       &:hover{
-        background: #fff;
+        background: #fff !important;
         color: #1a1a1a;
       }
       &.blue{
-        background: $mainColor;
+        background: $mainColor !important;
         border-color: $mainColor;
         margin: 0 0 0 10px;
-        &:hover{
-          background: #4363e8;
-          color: #fff;
-        }
+        color: #fff;
+        // &:hover{
+        //   background: #4363e8 !important;
+        // }
       }
     }
     .htips{
@@ -708,6 +737,9 @@
             cursor: pointer;
             img{
               width: 23px;
+              @media ($min-sm) and ($max-md) {
+                width: 18px;
+              }
             }
           }
         }
@@ -801,12 +833,16 @@
     display: flex;
     float: right;
     margin: 20px 25px 0 0;
-    width: 400px;
+    width: 320px;
     background: #d3d4d6;
     border-radius: 5px;
     overflow: hidden;
+    transition: .3s;
     @media ($max-lg) {
       display: none;
+    }
+    @media (max-width: 1329px) {
+      width: 220px;
     }
     .left {
       flex: 0 0 90px;
@@ -1018,6 +1054,50 @@
     border: 0;
     @media ($max-sm) {
       background: #212831;
+    }
+  }
+  .language{
+    margin: 0 0 0 50px !important;
+    @media ($min-sm) and ($max-md) {
+      margin: 0 0 0 55px !important;
+    }
+    @media ($max-sm) {
+      margin: 0 auto !important;
+      width: 110px;
+    }
+    .layui-form-select{
+      .layui-input{
+        width: 50px;
+        background: transparent;
+        color: #fff;
+        border: 0;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding: 0 10px 0 0;
+        overflow: hidden;
+        @media ($min-sm) and ($max-md) {
+          font-size: 13px;
+        }
+        @media ($max-sm) {
+          width: 100%;
+        }
+      }
+      .layui-edge{
+        border-top-color: #fff;
+        right: 0;
+      }
+      dl dd.layui-this{
+        background-color: $mainColor;
+      }
+    }
+    .layui-form-selected dl{
+      left: auto;
+      right: 0;
+      @media ($max-sm) {
+        top: auto;
+        bottom: 100%;
+        margin: 0px;
+      }
     }
   }
 }

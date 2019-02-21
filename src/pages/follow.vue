@@ -7,18 +7,18 @@
           <div class="clearfix">
             <div class="left">
               <ul class="menu_bar">
-                <li @click="tabhide(), getxiangmu()" :class="{active: xiangmu}">项目</li>
-                <li @click="tabhide(), gethangye()" :class="{active: hangye}">行业</li>
-                <li @click="tabhide(), getguojia()" :class="{active: guojia}">国家</li>
-                <li @click="tabhide(), getzuozhe()" :class="{active: zuozhe}">作者</li>
-                <li @click="tabhide(), getwenzhang()" :class="{active: wenzhang}">收藏文章</li>
+                <li @click="tabhide(), getxiangmu()" :class="{active: xiangmu}">{{$t('Project')}}</li>
+                <li @click="tabhide(), gethangye()" :class="{active: hangye}">{{$t('Industry')}}</li>
+                <li @click="tabhide(), getguojia()" :class="{active: guojia}">{{$t('Nation')}}</li>
+                <li @click="tabhide(), getzuozhe()" :class="{active: zuozhe}">{{$t('The author')}}</li>
+                <li @click="tabhide(), getwenzhang()" :class="{active: wenzhang}">{{$t('Collect articles')}}</li>
               </ul>
             </div>
             <div class="center">
               <div class="tab_item" v-if="xiangmu">
                 <div class="item_list_top">
                   <div class="item_list_title">
-                    <h4>推荐</h4>
+                    <h4>{{$t('Recommend')}}</h4>
                   </div>
                   <div class="follow_list serach_follow_list">
                     <div class="project_list_box" v-for="(item, index) in tuijian_xiangmuList" :key="index">
@@ -45,7 +45,7 @@
                             </div>
                             <div class="right">
                               <h4>{{item.totalScore }}</h4>
-                              <p>总分</p>
+                              <p>{{$t('Total score')}}</p>
                             </div>
                           </div>
                           <div class="detail_info">
@@ -58,7 +58,7 @@
                 </div>
                 <div class="item_list_bottom">
                   <div class="item_list_title">
-                    <h4>已关注</h4>
+                    <h4>{{$t('Followed')}}</h4>
                   </div>
                   <div class="follow_list serach_follow_list">
                     <div class="project_list_box" v-for="(item, index) in xiangmuList" :key="index">
@@ -85,7 +85,7 @@
                             </div>
                             <div class="right">
                               <h4>{{item.result.totalScore }}</h4>
-                              <p>总分</p>
+                              <p>{{$t('Total score')}}</p>
                             </div>
                           </div>
                           <div class="detail_info">
@@ -98,7 +98,7 @@
                   <div class="loading_more">
                     <button :disabled="showloading" data="加载更多" value="加载更多" name="xiangmu_loading_more" id="xiangmu_loading_more" @click.stop="getxiangmu()" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
-                      <span v-if="!showloading">加载更多</span>
+                      <span v-if="!showloading">{{$t('Load more')}}</span>
                     </button>
                   </div>
                 </div>
@@ -106,7 +106,7 @@
               <div class="tab_item" v-if="hangye">
                 <div class="item_list_top">
                   <div class="item_list_title">
-                    <h4>推荐</h4>
+                    <h4>{{$t('Recommend')}}</h4>
                   </div>
                   <div class="follow-industry-recommend">
                     <ul>
@@ -119,7 +119,7 @@
                 </div>
                 <div class="item_list_bottom">
                   <div class="item_list_title">
-                    <h4>已关注</h4>
+                    <h4>{{$t('Followed')}}</h4>
                   </div>
                   <div class="follow-industry-recommend">
                     <ul>
@@ -132,7 +132,7 @@
                   <div class="loading_more">
                     <button :disabled="showloading" data="加载更多" value="加载更多" name="hangye_loading_more" id="hangye_loading_more" @click.stop="gethangye()" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
-                      <span v-if="!showloading">加载更多</span>
+                      <span v-if="!showloading">{{$t('Load more')}}</span>
                     </button>
                   </div>
                 </div>
@@ -140,7 +140,7 @@
               <div class="tab_item" v-if="guojia">
                 <div class="item_list_top">
                   <div class="item_list_title">
-                    <h4>推荐</h4>
+                    <h4>{{$t('Recommend')}}</h4>
                   </div>
                   <div class="follow-industry-recommend">
                     <ul>
@@ -153,7 +153,7 @@
                 </div>
                 <div class="item_list_bottom">
                   <div class="item_list_title">
-                    <h4>已关注</h4>
+                    <h4>{{$t('Followed')}}</h4>
                   </div>
                   <div class="follow-industry-recommend">
                     <ul>
@@ -166,7 +166,7 @@
                   <div class="loading_more">
                     <button :disabled="showloading" data="加载更多" value="加载更多" name="guojia_loading_more" id="guojia_loading_more" @click.stop="getguojia()" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
-                      <span v-if="!showloading">加载更多</span>
+                      <span v-if="!showloading">{{$t('Load more')}}</span>
                     </button>
                   </div>
                 </div>
@@ -174,7 +174,7 @@
               <div class="tab_item" v-if="zuozhe">
                 <div class="item_list_top">
                   <div class="item_list_title">
-                    <h4>推荐</h4>
+                    <h4>{{$t('Recommend')}}</h4>
                   </div>
                   <div class="follow-industry-recommend">
                     <ul>
@@ -187,7 +187,7 @@
                 </div>
                 <div class="item_list_bottom">
                   <div class="item_list_title">
-                    <h4>已关注</h4>
+                    <h4>{{$t('Followed')}}</h4>
                   </div>
                   <div class="follow-industry-recommend">
                     <ul>
@@ -200,7 +200,7 @@
                   <div class="loading_more">
                     <button :disabled="showloading" data="加载更多" value="加载更多" name="zuozhe_loading_more" id="zuozhe_loading_more" @click.stop="getzuozhe()" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
-                      <span v-if="!showloading">加载更多</span>
+                      <span v-if="!showloading">{{$t('Load more')}}</span>
                     </button>
                   </div>
                 </div>
@@ -281,7 +281,7 @@
                           <div class="loading_more" v-if="!(showloading === -1)">
                             <button :disabled="showloading" data="加载更多" value="加载更多" name="wenzhang_loading_more" id="wenzhang_loading_more" @click.stop="getwenzhang()">
                               <img v-if="showloading" :src="loading"/>
-                              <span v-if="!showloading">加载更多</span>
+                              <span v-if="!showloading">{{$t('Load more')}}</span>
                             </button>
                           </div>
                         </div>
@@ -411,7 +411,7 @@
         let that = this;
         that.showloading = true;
         // 已关注
-        let url = '/api/individual/list?type=ICO&pageSize=' + that.pageSize;
+        let url = '/individual/list?type=ICO&pageSize=' + that.pageSize;
         let headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
           method: 'get',
@@ -426,7 +426,7 @@
           that.pageSize += 5;
         })
         // 推荐
-        let tuijian_url = '/api/individual/recommend?type=ICO&pageSize=' + that.tuijian_pageSize;
+        let tuijian_url = '/individual/recommend?type=ICO&pageSize=' + that.tuijian_pageSize;
         let tuijian_headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
           method: 'get',
@@ -446,7 +446,7 @@
         let that = this;
         that.showloading = true;
         // 已关注
-        let url = '/api/individual/list?type=INDUSTRY&pageSize=' + that.pageSize;
+        let url = '/individual/list?type=INDUSTRY&pageSize=' + that.pageSize;
         let headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
           method: 'get',
@@ -461,7 +461,7 @@
           that.pageSize += 5;
         })
         // 推荐
-        let tuijian_url = '/api/individual/recommend?type=INDUSTRY&pageSize=' + that.tuijian_pageSize;
+        let tuijian_url = '/individual/recommend?type=INDUSTRY&pageSize=' + that.tuijian_pageSize;
         let tuijian_headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
           method: 'get',
@@ -481,7 +481,7 @@
         let that = this;
         that.showloading = true;
         // 已关注
-        let url = '/api/individual/list?type=COUNTRY&pageSize=' + that.pageSize;
+        let url = '/individual/list?type=COUNTRY&pageSize=' + that.pageSize;
         let headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
           method: 'get',
@@ -496,7 +496,7 @@
           that.pageSize += 5;
         })
         // 推荐
-        let tuijian_url = '/api/individual/recommend?type=COUNTRY&pageSize=' + that.tuijian_pageSize;
+        let tuijian_url = '/individual/recommend?type=COUNTRY&pageSize=' + that.tuijian_pageSize;
         let tuijian_headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
           method: 'get',
@@ -516,7 +516,7 @@
         let that = this;
         that.showloading = true;
         // 已关注
-        let url = '/api/individual/list?type=AUTHOR&pageSize=' + that.pageSize;
+        let url = '/individual/list?type=AUTHOR&pageSize=' + that.pageSize;
         let headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
           method: 'get',
@@ -531,7 +531,7 @@
           that.pageSize += 5;
         })
         // 推荐
-        let tuijian_url = '/api/individual/recommend?type=AUTHOR&pageSize=' + that.tuijian_pageSize;
+        let tuijian_url = '/individual/recommend?type=AUTHOR&pageSize=' + that.tuijian_pageSize;
         let tuijian_headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
           method: 'get',
@@ -550,7 +550,7 @@
         this.wenzhang = true
         let that = this;
         that.showloading = true;
-        let url = '/api/individual/list?type=NEWS&pageSize=' + that.pageSize;
+        let url = '/individual/list?type=NEWS&pageSize=' + that.pageSize;
         let headers = {'uid': that.uid, 'Authorization': that.token};
         that.$axios({
           method: 'get',
@@ -572,10 +572,10 @@
           let url = ''
           let uid = localStorage.getItem('apelink_user_uid');
           let arr = [
-            {name: 'xiangmu', url: '/api/individual/add?type=ICO&sid=', type: 1},
-            {name: 'hangye', url: '/api/individual/add?type=INDUSTRY&name=', type: 0},
-            {name: 'guojia', url: '/api/individual/add?type=COUNTRY&name=', type: 0},
-            {name: 'zuozhe', url: '/api/individual/add?type=AUTHOR&name=', type: 0},
+            {name: 'xiangmu', url: '/individual/add?type=ICO&sid=', type: 1},
+            {name: 'hangye', url: '/individual/add?type=INDUSTRY&name=', type: 0},
+            {name: 'guojia', url: '/individual/add?type=COUNTRY&name=', type: 0},
+            {name: 'zuozhe', url: '/individual/add?type=AUTHOR&name=', type: 0},
           ]
           arr.forEach(function(item, index) {
             if(val == item.name ) {
@@ -624,7 +624,7 @@
           let uid = localStorage.getItem('apelink_user_uid')
           let that = this;
           let headers = {'uid': uid, 'Authorization': token};
-          let deteleUrl = '/api/individual/delete?cid=' + cid;
+          let deteleUrl = '/individual/delete?cid=' + cid;
           that.$axios({
             method: 'DELETE',
             url: deteleUrl,

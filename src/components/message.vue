@@ -8,15 +8,15 @@
         </div>
         <div class="bd">
           <div class="message_title">
-            <h4>消息中心</h4>
+            <h4>{{$t('Message center')}}</h4>
           </div>
           <div class="message_content">
             <div class="message_tab">
               <div class="tab_item" :class="showBox === 0?'active':''" @click="showList()">
-                <h4>全部</h4>
+                <h4>{{$t('All')}}</h4>
               </div>
               <div class="tab_item" :class="showBox === 1?'active':''" @click="showList()">
-                <h4>未读</h4>
+                <h4>{{$t('Unread news')}}</h4>
               </div>
             </div>
             <div class="message_tab_content">
@@ -26,12 +26,12 @@
                     <img :src="item.readFlag?read:unRead" alt="未读">
                   </div>
                   <div class="message_center">
-                    <h4>通知 | {{item.title}}</h4>
+                    <h4>{{$t('notice')}} | {{item.title}}</h4>
                     <p>{{item.createdTime}}</p>
                   </div>
                   <div class="message_right">
                     <!--<div class="copy_a">删除</div>-->
-                    <div class="copy_a" @click="openMessage(item.id,index,item.readFlag)">{{open === index?'收起':'展开'}}<i
+                    <div class="copy_a" @click="openMessage(item.id,index,item.readFlag)">{{open === index?$t('Fold'):$t('Unfold')}}<i
                       class="icon_down"></i>
                     </div>
                   </div>
@@ -98,7 +98,7 @@
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let headers = {'uid': uid, 'Authorization': token};
-          let url = `/api/notify/readUserNotify?notifyId=${notifyId}`;
+          let url = `/notify/readUserNotify?notifyId=${notifyId}`;
           this.$axios({
             method: 'put',
             url: url,
@@ -115,7 +115,7 @@
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let headers = {'uid': uid, 'Authorization': token};
-          let url = '/api/notify/getUserNotify';
+          let url = '/notify/getUserNotify';
           this.$axios({
             method: 'get',
             url: url,
@@ -132,7 +132,7 @@
           let token = localStorage.getItem('apelink_user_token');
           if (token) {
             let headers = {'uid': uid, 'Authorization': token};
-            let url = '/api/notify/getUserNotify?readFlag=unread';
+            let url = '/notify/getUserNotify?readFlag=unread';
             this.$axios({
               method: 'get',
               url: url,

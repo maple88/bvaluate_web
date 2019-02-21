@@ -622,7 +622,7 @@
           if ((boxTop / (boxHeight - offsetHeight) >= 0.95) && finished) {
             finished = false;
             let that = this;
-            that.$axios.get('/api/traditional/news?searchBy=' + that.showProject.project + '&categoryId=290001&pageNo=' + that.newsNo).then(function (res) {
+            that.$axios.get('/traditional/news?searchBy=' + that.showProject.project + '&categoryId=290001&pageNo=' + that.newsNo).then(function (res) {
               that.newsNo++;
               for (let i = 0; i < res.data.content.length; i++) {
                 that.icoNews.content.push(res.data.content[i])
@@ -643,7 +643,7 @@
           if ((boxTop / (boxHeight - offsetHeight) >= 0.90) && finished) {
             finished = false;
             let that = this;
-            that.$axios.get('/api/traditional/news?searchBy=' + that.showProject.project + '&categoryId=290002&pageNo=' + that.tuiwenNo).then(function (res) {
+            that.$axios.get('/traditional/news?searchBy=' + that.showProject.project + '&categoryId=290002&pageNo=' + that.tuiwenNo).then(function (res) {
               that.tuiwenNo++;
               for (let i = 0; i < res.data.content.length; i++) {
                 that.icoNews.tuiwen.push(res.data.content[i])
@@ -664,7 +664,7 @@
           if ((boxTop / (boxHeight - offsetHeight) >= 0.90) && finished) {
             finished = false;
             let that = this;
-            that.$axios.get('/api/traditional/news?searchBy=' + that.showProject.project + '&categoryId=290004&pageNo=' + that.weiboNo).then(function (res) {
+            that.$axios.get('/traditional/news?searchBy=' + that.showProject.project + '&categoryId=290004&pageNo=' + that.weiboNo).then(function (res) {
               that.weiboNo++;
               for (let i = 0; i < res.data.content.length; i++) {
                 that.icoNews.weibo.push(res.data.content[i])
@@ -735,7 +735,7 @@
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid');
           //接口说明再接口文档
-          let url = '/api/individual/add?type=ICO&sid=' + that.showProject.sid;
+          let url = '/individual/add?type=ICO&sid=' + that.showProject.sid;
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'post',
@@ -758,7 +758,7 @@
         // let token = localStorage.getItem('apelink_user_token');
         // if (token) {
         //   let uid = localStorage.getItem('apelink_user_uid');
-        //   let url = '/api/individual/delete?cid=' + cid;
+        //   let url = '/individual/delete?cid=' + cid;
         //   let headers = {'uid': uid, 'Authorization': token};
         //   that.$axios({
         //     method: 'DELETE',
@@ -779,7 +779,7 @@
         let that = this
         let token = localStorage.getItem('apelink_user_token')
         let uid = localStorage.getItem('apelink_user_uid')
-        let checkurl = '/api/individual/check?type=ICO&sidOrName=' + project;
+        let checkurl = '/individual/check?type=ICO&sidOrName=' + project;
         let headers = {'uid': uid, 'Authorization': token};
         //接口文档
         that.$axios({
@@ -798,7 +798,7 @@
       initIcoNews(obj) {
         let ico = obj.project;
         let that = this
-        that.$axios.get('/api/traditional/news?searchBy=' + ico + '&categoryId=290001&pageNo=' + that.newsNo).then(function (res) {
+        that.$axios.get('/traditional/news?searchBy=' + ico + '&categoryId=290001&pageNo=' + that.newsNo).then(function (res) {
           that.newsNo++;
           for (let i = 0; i < res.data.content.length; i++) {
             that.icoNews.content.push(res.data.content[i])
@@ -815,7 +815,7 @@
       inittuiwen(obj) {
         let ico = obj.project;
         let that = this
-        that.$axios.get('/api/traditional/news?searchBy=' + ico + '&categoryId=290002&pageNo=' + that.tuiwenNo).then(function (res) {
+        that.$axios.get('/traditional/news?searchBy=' + ico + '&categoryId=290002&pageNo=' + that.tuiwenNo).then(function (res) {
           that.tuiwenNo++;
           for (let i = 0; i < res.data.content.length; i++) {
             that.icoNews.tuiwen.push(res.data.content[i])
@@ -826,7 +826,7 @@
       initweibo(obj) {
         let ico = obj.project;
         let that = this
-        that.$axios.get('/api/traditional/news?searchBy=' + ico + '&categoryId=290004&pageNo=' + that.weiboNo).then(function (res) {
+        that.$axios.get('/traditional/news?searchBy=' + ico + '&categoryId=290004&pageNo=' + that.weiboNo).then(function (res) {
           that.weiboNo++;
           for (let i = 0; i < res.data.content.length; i++) {
             that.icoNews.weibo.push(res.data.content[i])
@@ -837,7 +837,7 @@
       initHotNews() {
         let categoryName = '首页-新闻列表';
         let that = this
-        that.$axios.get('/api/traditional/list?categoryName=' + categoryName).then(function (res) {
+        that.$axios.get('/traditional/list?categoryName=' + categoryName).then(function (res) {
           if (res.status === 200) {
             let content = res.data.content;
             for (let i = 0; (i < content.length && i < 8); i++) {
@@ -849,7 +849,7 @@
       //初始热门行业
       iniHotIndustries() {
         let that = this
-        that.$axios.get('/api/ICO/hotestIndustries').then(function (res) {
+        that.$axios.get('/ICO/hotestIndustries').then(function (res) {
           // that.hostIndustries = res.data
           let data = res.data
           for (let i = 0; i < data.length; i++) {
@@ -977,9 +977,9 @@
             } else if (Industry.categoryName === '众筹') {
               Industry.bgImage = img54;
             }
-            that.$axios.get('/api/ICO/relatedICO?categoryName=' + Industry.categoryName + '&pageSize=4').then(function (res) {
+            that.$axios.get('/ICO/relatedICO?categoryName=' + Industry.categoryName + '&pageSize=4').then(function (res) {
               Industry.project = res.data;
-              that.$axios.get('/api/traditional/categoryList?categoryName=' + Industry.categoryName + '&pageSize=4').then(function (res) {
+              that.$axios.get('/traditional/categoryList?categoryName=' + Industry.categoryName + '&pageSize=4').then(function (res) {
                 Industry.content = res.data.content;
                 that.hostIndustries.push(Industry);
               })
@@ -1000,7 +1000,7 @@
       getHottestProject() {
         let that = this;
         let uid = localStorage.getItem('apelink_user_uid')
-        let url = '/api/ICO/top5';
+        let url = '/ICO/top5';
         let headers = {'uid': uid};
         that.$axios({
           method: 'get',

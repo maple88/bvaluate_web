@@ -46,21 +46,20 @@ a, a:hover {
 
 // absolute是避免在移动端ios下fixed不能固定的问题
 .header, .v2header{
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   width: 100%;
   z-index: 99;
 }
-
 .maintainer{
-  position: absolute;
+  // position: absolute;
   width: 100%;
   height: 100%;
-  overflow: auto;
+  // overflow: auto;
   padding-top: 170px;
   transition: 0.3s;
-  -webkit-overflow-scrolling: touch;
+  // -webkit-overflow-scrolling: touch;
   @media (max-width: 992px) {
     padding-top: 230px;
   }
@@ -69,15 +68,18 @@ a, a:hover {
   }
 }
 .v2maintainer{
-  position: absolute;
+  // position: absolute;
   width: 100%;
   height: 100%;
-  overflow: auto;
+  // overflow: auto;
   padding-top: 116px;
   transition: 0.3s;
-  -webkit-overflow-scrolling: touch;
+  // -webkit-overflow-scrolling: touch;
   @media ($max-sm) {
     padding-top: 100px;
+  }
+  &.pd0{
+    padding: 0;
   }
 }
 
@@ -94,22 +96,22 @@ a, a:hover {
 }
 
 // PC下的header为fixed
-@media (min-width: 992px) {
-  .header{
-    position: fixed !important;
-  }
-  .maintainer{
-    position: static;
-  }
-}
-@media (min-width: 768px) {
-  .v2header{
-    position: fixed !important;
-  }
-  .v2maintainer{
-    position: static;
-  }
-}
+// @media (min-width: 992px) {
+//   .header{
+//     position: fixed !important;
+//   }
+//   .maintainer{
+//     position: static;
+//   }
+// }
+// @media (min-width: 768px) {
+//   .v2header{
+//     position: fixed !important;
+//   }
+//   .v2maintainer{
+//     position: static;
+//   }
+// }
 
 #backtop{
     position: fixed;
@@ -196,3 +198,10 @@ a, a:hover {
 }
 
 
+.v-step{
+  z-index: 1;
+  text-align: left !important;
+  .v-step__buttons{
+    text-align: right !important;
+  }
+}

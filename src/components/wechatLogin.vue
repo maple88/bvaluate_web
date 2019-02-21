@@ -43,14 +43,14 @@
               // console.log(data.bvaluateUserCode);
               if (data.bvaluateUserCode) {
                 this.showLoading = true;
-                this.$axios.get('https://api.bvaluate.com.cn/user/passAuth?code=' + data.bvaluateUserCode + '&state=' + Math.random())
+                this.$axios.get('http://119.254.68.8:10020/user/passAuth?code=' + data.bvaluateUserCode + '&state=' + Math.random())
                 .then(res => {
                   if(res.data.phoneNumber){
                     let that = this;
                     localStorage.setItem('apelink_user_uid', res.data.uid);
                     localStorage.setItem('apelink_user_token', res.data.token);
                     localStorage.setItem('apelink_user_phoneNumber', phoneNumber);
-                    let url = '/api/user/info';
+                    let url = '/user/info';
                     let headers = {'uid': res.data.uid, 'Authorization': res.data.token};
                     that.$axios({
                       method: 'get',

@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div class="login_fixed v2login" v-if="loginPop">
+    <div class="login_fixed v2login" v-show="loginPop">
       <div class="login_bg" @click="fn2"></div>
       <div class="loginbox">
         <i class="fa fa-arrow-circle-o-left backicon" v-show="resetpwd_head" @click="login()"></i>
@@ -10,27 +10,42 @@
         <div class="hd">
           <div class="loginlogo"><img src="../assets/loginlogo.png"></div>
           <ul v-show="login_register_head">
-            <li :class="{ active : isLogin }" @click="login()">登录</li>
-            <li :class="{ active : isRegister }" @click="register()">注册</li>
+            <li :class="{ active : isLogin }" @click="login()">{{$t('login')}}</li>
+            <li :class="{ active : isRegister }" @click="register()">{{$t('Sign_Submit')}}</li>
           </ul>
           <ul v-show="resetpwd_head">
-            <li class="active">重置密码</li>
+            <li class="active">{{$t('Reset passwords')}}</li>
           </ul>
         </div>
         <div class="bd">
-          <div class="inputInner" v-if="loginForm">
+          <div class="inputInner" v-show="loginForm">
             <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2-1.png"></div>
-              <input type="tel" class="form-control" v-model="loginUser.phoneNumber" placeholder="手机号" data="输入手机号"
-                     @focus="errorMsg.loginUser.phoneNumber = ''"
-                     name="no_content" id="input_login_phoneNumber">
+              <div class="select-input">
+                <div class="layui-form">
+                  <select name="loginSelect" lay-filter="loginSelect">
+                    <option value="+86" selected>+86</option>
+                    <option value="+852">+852</option>
+                    <option value="+853">+853</option>
+                    <option value="+81">+81</option>
+                    <option value="+82">+82</option>
+                    <option value="+65">+65</option>
+                    <option value="+886">+886</option>
+                    <option value="+1">+1</option>
+                  </select>
+                </div>
+                <input type="tel" class="form-control" v-model="loginUser.phoneNumber" :placeholder="$t('phone number')" data="输入手机号"
+                       @focus="errorMsg.loginUser.phoneNumber = ''"
+                       name="no_content" id="input_login_phoneNumber">
+              </div>
+
               <span class="help-block" v-if="errorMsg.loginUser.phoneNumber">
 										{{errorMsg.loginUser.phoneNumber}}
 									</span>
             </div>
             <div class="input-group mg10">
               <div class="input-group-addon"><img src="../assets/login/icon2-2.png"></div>
-              <input :type="pwdtype" class="form-control password" v-model="loginUser.password" placeholder="密码" data="输入密码"
+              <input :type="pwdtype" class="form-control password" v-model="loginUser.password" :placeholder="$t('password')" data="输入密码"
                      @focus="errorMsg.loginUser.password = ''" @keyup.enter="loginSubmit"
                      name="no_content" id="input_login_password">
               <div class="showpwd" @click="changePwdtype"><img :src="eye"></div>
@@ -40,28 +55,28 @@
             </div>
             <div class="other-group">
               <label class="remember">
-                <input type="checkbox" checked data="记住我" name="no_content" id="input_checkbox"> 记住我
+                <input type="checkbox" checked data="记住我" name="no_content" id="input_checkbox"> {{$t('Remember me')}}
               </label>
-              <span @click="resetpwd()">忘记密码</span>
+              <span @click="resetpwd()">{{$t('Forgot password')}}</span>
             </div>
             <div class="input-group submit-group">
-              <button type="button" class="btn ok-btn" data="登录" name="login_ok" id="login_ok" @click="loginSubmit">登录</button>
+              <button type="button" class="btn ok-btn" data="登录" name="login_ok" id="login_ok" @click="loginSubmit">{{$t('login')}}</button>
             </div>
-            <div class="other-login">
+            <!-- <div class="other-login">
               <div class="head">第三方登录</div>
               <ul>
                 <li @click="weChatLogin">
                   <img src="../assets/login/wechat2.png">
                 </li>
-                <!-- <li>
+                <li>
                   <img src="../assets/login/qq.png">
                   <p>QQ</p>
-                </li> -->
+                </li>
               </ul>
-            </div>
+            </div> -->
           </div>
-          <div class="inputInner" v-if="registerForm">
-            <div class="input-group">
+          <div class="inputInner" v-show="registerForm">
+            <!-- <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon1.png"></div>
               <input type="text" class="form-control" v-model="registerUser.nickName"
                      maxlength="14"
@@ -74,22 +89,37 @@
               <span class="help-block" v-if="errorMsg.registerUser.nickName">
 										{{errorMsg.registerUser.nickName}}
 									</span>
-            </div>
+            </div> -->
             <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2-1.png"></div>
-              <input type="tel" class="form-control" v-model="registerUser.phoneNumber" placeholder="手机号"
-                     @focus="errorMsg.registerUser.phoneNumber = ''"
-                     @blur="checkPhoneNumber()"
-                     data="输入手机号"
-                     name="no_content" id="input_login_phoneNumber2"
-              >
+
+              <div class="select-input">
+                <div class="layui-form">
+                  <select name="registerSelect" lay-filter="registerSelect">
+                    <option value="+86" selected>+86</option>
+                    <option value="+852">+852</option>
+                    <option value="+853">+853</option>
+                    <option value="+81">+81</option>
+                    <option value="+82">+82</option>
+                    <option value="+65">+65</option>
+                    <option value="+886">+886</option>
+                    <option value="+1">+1</option>
+                  </select>
+                </div>
+                <input type="tel" class="form-control" v-model="registerUser.phoneNumber" :placeholder="$t('phone number')"
+                       @focus="errorMsg.registerUser.phoneNumber = ''"
+                       @blur="checkPhoneNumber()"
+                       data="输入手机号"
+                       name="no_content" id="input_login_phoneNumber2"
+                >
+              </div>
               <span class="help-block" v-if="errorMsg.registerUser.phoneNumber">
 										{{errorMsg.registerUser.phoneNumber}}
 									</span>
             </div>
             <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2-2.png"></div>
-              <input type="password" class="form-control" v-model="registerUser.password" placeholder="密码"
+              <input type="password" class="form-control" v-model="registerUser.password" :placeholder="$t('password')"
                      @focus="errorMsg.registerUser.password = ''"
                      @blur="checkPassword(true)"
                      data="输入密码"
@@ -99,7 +129,7 @@
 										{{errorMsg.registerUser.password}}
 									</span>
             </div>
-            <div class="input-group">
+            <!-- <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2-2.png"></div>
               <input type="password" class="form-control" v-model="registerUser.confirmpsd" placeholder="确认密码"
                      @focus="errorMsg.registerUser.confirmpsd = ''"
@@ -110,41 +140,57 @@
               <span class="help-block" v-if="errorMsg.registerUser.confirmpsd">
 										{{errorMsg.registerUser.confirmpsd}}
 									</span>
-            </div>
+            </div> -->
             <div class="input-group code">
               <div class="input-group-addon"><img src="../assets/login/icon2-3.png"></div>
-              <input type="text" v-model="registerUser.code" placeholder="输入验证码" data="输入验证码"
+              <input type="text" v-model="registerUser.code" :placeholder="$t('Input verification code')" data="输入验证码"
                      @focus="errorMsg.registerUser.code = ''"
-                     name="no_content" id="input_login_code">
+                     name="no_content" id="input_register_code">
               <span class="help-block" v-if="errorMsg.registerUser.code">
 										{{errorMsg.registerUser.code}}
 									</span>
-              <button class="code-btn" :disabled="registerSendBtn" name="login_code-btn" id="login_code-btn" data="获取验证码" @click.stop="sendCode">
+              <button class="code-btn" :disabled="registerSendBtn" name="login_code-btn" id="login_code-btn"
+                      data="获取验证码" @click.stop="sendCode">
                 <img :src="loading" v-show="registerShowloading"/>
                 {{registerSendBtnText}}
               </button>
             </div>
             <div class="input-group submit-group">
-              <button type="button" class="btn ok-btn" data="注册" name="login_register" id="login_register" @click.stop="registerSubmit()">注册</button>
+              <button type="button" class="btn ok-btn" data="注册" name="login_register" id="login_register" @click.stop="registerSubmit()">{{$t('Sign_Submit')}}</button>
             </div>
             <!-- <p class="register-tips">点击“注册”即表示您同意并愿意接收<br>BVALUATE<span>用户此协议</span>和<span>隐私政策</span></p> -->
           </div>
-          <div class="inputInner" v-if="resetpwdForm">
+          <div class="inputInner" v-show="resetpwdForm">
             <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2-1.png"></div>
-              <input type="tel" class="form-control" v-model="resetpwdUser.phoneNumber" placeholder="手机号"
-                     @focus="errorMsg.resetpwdUser.phoneNumber = ''"
-                     @blur="checkResetPhoneNumber"
-                     data="输入手机号"
-                     name="no_content" id="input_login_phoneNumber3"
-              >
+              <div class="select-input">
+                <div class="layui-form">
+                  <select name="resetpwdSelect" lay-filter="resetpwdSelect">
+                    <option value="+86" selected>+86</option>
+                    <option value="+852">+852</option>
+                    <option value="+853">+853</option>
+                    <option value="+81">+81</option>
+                    <option value="+82">+82</option>
+                    <option value="+65">+65</option>
+                    <option value="+886">+886</option>
+                    <option value="+1">+1</option>
+                  </select>
+                </div>
+                <input type="tel" class="form-control" v-model="resetpwdUser.phoneNumber" :placeholder="$t('phone number')"
+                       @focus="errorMsg.resetpwdUser.phoneNumber = ''"
+                       @blur="checkResetPhoneNumber"
+                       data="输入手机号"
+                       name="no_content" id="input_login_phoneNumber3"x
+                >
+              </div>
+
               <span class="help-block" v-if="errorMsg.resetpwdUser.phoneNumber">
 										{{errorMsg.resetpwdUser.phoneNumber}}
 									</span>
             </div>
             <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2.png"></div>
-              <input type="password" class="form-control" v-model="resetpwdUser.password" placeholder="重置密码"
+              <input type="password" class="form-control" v-model="resetpwdUser.password" :placeholder="$t('Reset passwords')"
                      @focus="errorMsg.resetpwdUser.password = ''"
                      @blur="checkResetPassword(true)"
                      data="输入重置的密码"
@@ -156,7 +202,7 @@
             </div>
             <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2.png"></div>
-              <input type="password" class="form-control" v-model="resetpwdUser.confirmpsd" placeholder="确认密码"
+              <input type="password" class="form-control" v-model="resetpwdUser.confirmpsd" :placeholder="$t('Confirm password')"
                      @focus="errorMsg.resetpwdUser.confirmpsd = ''"
                      @blur="checkResetPassword(false)"
                      data="输入确认的密码"
@@ -168,21 +214,22 @@
             </div>
             <div class="input-group code">
               <div class="input-group-addon"><img src="../assets/login/icon2-3.png"></div>
-              <input type="text" placeholder="输入验证码" v-model="resetpwdUser.code"
+              <input type="text" :placeholder="$t('Input verification code')" v-model="resetpwdUser.code"
                      @focus="errorMsg.resetpwdUser.code = ''"
                      data="输入验证码"
-                     name="no_content" id="input_login_code2"
+                     name="no_content" id="input_resetpwd_code2"
               >
               <span class="help-block" v-if="errorMsg.resetpwdUser.code">
 										{{errorMsg.resetpwdUser.code}}
 									</span>
-              <button class="code-btn" :disabled="resetPwdSendBtn" name="login_code-btn2" id="login_code-btn2" @click.stop="sendresetPwdCode" data="获取验证码">
+              <button class="code-btn" :disabled="resetPwdSendBtn" name="login_code-btn2" id="login_code-btn2"
+                      @click.stop="sendresetPwdCode" data="获取验证码">
                 <img :src="loading" v-show="resetPwdShowloading"/>
                 {{resetPwdSendBtnText}}
               </button>
             </div>
             <div class="input-group submit-group">
-              <button type="button" class="btn ok-btn" name="login_ok2" id="login_ok2" data="重置密码" @click="resetpwdSubmit">重置密码</button>
+              <button type="button" class="btn ok-btn" name="login_ok2" id="login_ok2" data="重置密码" @click="resetpwdSubmit">{{$t('Reset passwords')}}</button>
             </div>
           </div>
         </div>
@@ -218,17 +265,21 @@
           code: '',
           phoneNumber: '',
           password: '',
-          confirmpsd: ''
+          confirmpsd: '',
+          prefix:'+86'
+
         },
         loginUser: {
           phoneNumber: '',
-          password: ''
+          password: '',
+          prefix:'+86'
         },
         resetpwdUser: {
           code: '',
           phoneNumber: '',
           password: '',
-          confirmpsd: ''
+          confirmpsd: '',
+          prefix:'+86'
         },
         errorMsg: {
           registerUser: {
@@ -261,7 +312,7 @@
         tipText: '',
         showTip: false,
         pwdtype: 'password',
-        eye: eye
+        eye: eye,
       }
     },
     props: {
@@ -280,17 +331,33 @@
         return this.$store.state.loginPop;
       }
     },
+    mounted() {
+      let that = this;
+      layui.use('form', function () {
+        let form = layui.form;
+        form.render('select');
+        form.on('select(registerSelect)', function(data){
+          that.registerUser.prefix = data.value;
+        });
+        form.on('select(resetpwdSelect)', function(data){
+          that.resetpwdUser.prefix = data.value;
+        });
+        form.on('select(loginSelect)', function(data){
+          that.loginUser.prefix = data.value;
+        });
+      });
+    },
     methods: {
-      headerInitUser () {
+      headerInitUser() {
         if (this.initUser) {
           this.initUser();
         }
       },
-      changePwdtype () {
+      changePwdtype() {
         if (this.pwdtype === 'password') {
           this.pwdtype = 'text';
           this.eye = openeye;
-        }else{
+        } else {
           this.pwdtype = 'password';
           this.eye = eye;
         }
@@ -327,11 +394,11 @@
             password: password
           };
           let load;
-          layui.use('layer', function(){
+          layui.use('layer', function () {
             var layer = layui.layer;
             load = layer.load(2);
           });
-          that.$axios.post('/api/login', json).then(function (res) {
+          that.$axios.post('/login', json).then(function (res) {
             let data = res.data;
             let uid = data.uid;
             let token = data.token;
@@ -340,10 +407,13 @@
             localStorage.setItem('apelink_user_expirationDate', expirationDate);
             localStorage.setItem('apelink_user_uid', uid);
             localStorage.setItem('apelink_user_token', token);
+            that.$store.state.token = token;
+            that.$store.state.uid = uid;
             localStorage.setItem('apelink_user_phoneNumber', phoneNumber);
             sensors.setProfile({phone: phoneNumber});
-            let url = '/api/user/info';
+            let url = '/user/info';
             let headers = {'uid': uid, 'Authorization': token};
+            console.log(headers);
             that.$axios({
               method: 'get',
               url: url,
@@ -395,6 +465,16 @@
               that.headerInitUser();
               that.$store.state.loginPop = false;
               layer.msg('登录成功');
+              setTimeout(() => {
+                that.showTip = false;
+                that.login();
+                if (res.data.signedIn) {
+                  that.$router.push('/home')
+                } else {
+                  that.$store.state.signInTips = true;
+                  that.$router.push('/home')
+                }
+              }, 1000);
             }).catch(function (res) {
             })
           }).catch((res) => {
@@ -428,7 +508,7 @@
           });
         }
         if (phoneNumber !== null && phoneNumber !== '' && phoneNumber !== undefined) {
-          if (!(/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phoneNumber))) {
+          if (!(/^[0-9]*$/.test(phoneNumber))) {
             pass = false;
             this.errorMsg.registerUser.phoneNumber = '请输入正确格式的手机号码'
             sensors.track("Registerresult", {
@@ -506,7 +586,7 @@
         }
         if (pass) {
           let that = this;
-          let url = '/api/user/register';
+          let url = '/user/register';
           let json = {
             nickName: nickName,
             code: code,
@@ -530,7 +610,7 @@
               phoneNumber: phoneNumber,
               password: password
             };
-            that.$axios.post('/api/login', json2).then(function (res) {
+            that.$axios.post('/login', json2).then(function (res) {
               let data = res.data;
               let uid = data.uid;
               let token = data.token;
@@ -540,7 +620,7 @@
               localStorage.setItem('apelink_user_uid', uid);
               localStorage.setItem('apelink_user_token', token);
               localStorage.setItem('apelink_user_phoneNumber', phoneNumber);
-              let url = '/api/user/info';
+              let url = '/user/info';
               let headers = {'uid': uid, 'Authorization': token};
               that.$axios({
                 method: 'get',
@@ -604,7 +684,7 @@
         let code = this.resetpwdUser.code;
         let confirmpsd = this.resetpwdUser.confirmpsd;
         if (phoneNumber !== null && phoneNumber !== '' && phoneNumber !== undefined) {
-          if (!(/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phoneNumber))) {
+          if (!(/^[0-9]*$/.test(phoneNumber))) {
             pass = false;
             this.errorMsg.resetpwdUser.phoneNumber = '请输入正确格式的手机号码'
           }
@@ -645,7 +725,7 @@
           this.errorMsg.resetpwdUser.code = '手机验证码不能为空'
         }
         if (pass) {
-          let url = '/api/user/retrievePassword?phoneNumber=' + phoneNumber + '&code=' + code + '&password=' + password;
+          let url = '/user/retrievePassword?phoneNumber=' + phoneNumber + '&code=' + code + '&password=' + password;
           let that = this
           that.$axios.post(url).then(function (res) {
             if (res.data) {
@@ -686,9 +766,9 @@
       checkPhoneNumber() {
         if (this.registerUser.phoneNumber != null && this.registerUser.phoneNumber !== '' && this.registerUser.phoneNumber !== undefined) {
           let phone = this.registerUser.phoneNumber;
-          if (/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phone)) {
+          if (/^[0-9]*$/.test(phone)) {
             let that = this;
-            let url = '/api/user/phoneCheck?phoneNumber=' + phone;
+            let url = '/user/phoneCheck?phoneNumber=' + phone;
             that.$axios.post(url).then(function (res) {
               if (res.data) {
                 that.errorMsg.registerUser.phoneNumber = '该手机号码已经注册'
@@ -728,9 +808,9 @@
       checkResetPhoneNumber() {
         if (this.resetpwdUser.phoneNumber != null && this.resetpwdUser.phoneNumber !== '' && this.resetpwdUser.phoneNumber !== undefined) {
           let phone = this.resetpwdUser.phoneNumber;
-          if (/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phone)) {
+          if (/^[0-9]*$/.test(phone)) {
             let that = this;
-            let url = '/api/user/phoneCheck?phoneNumber=' + phone;
+            let url = '/user/phoneCheck?phoneNumber=' + phone;
             that.$axios.post(url).then(function (res) {
               if (!res.data) {
                 that.errorMsg.resetpwdUser.phoneNumber = '该手机号码未被注册，请从新输入'
@@ -747,7 +827,7 @@
         let nickName = this.registerUser.nickName;
         if (this.strLength(nickName) <= 14) {
           let that = this;
-          let url = '/api/user/nickNameExist?nickName=' + nickName;
+          let url = '/user/nickNameExist?nickName=' + nickName;
           that.$axios.post(url).then(function (res) {
             if (res.data) {
               that.errorMsg.registerUser.nickName = '该昵称已被注册'
@@ -776,9 +856,15 @@
         let phone = this.registerUser.phoneNumber
         this.registerSendBtnText = '';
         this.registerShowloading = true;
-        if (/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phone)) {
+        if (/^[0-9]*$/.test(phone)) {
           let that = this;
-          let url = '/api/login/code?phoneNumber=' + phone + '&codeType=1002'
+          let prefix = this.registerUser.prefix;
+          let lang = 'en';
+          if(prefix === '+86'){
+            lang = 'zh'
+          }
+          console.log(prefix)
+          let url = '/login/code?phoneNumber=' + phone + '&codeType=1002&language=' + lang;
           that.$axios.post(url).then(function (res) {
             that.registerShowloading = false;
             if (res.status == 200) {
@@ -814,9 +900,14 @@
         let phone = this.resetpwdUser.phoneNumber
         this.resetPwdSendBtnText = '';
         this.resetPwdShowloading = true;
-        if (/^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(17[0-8])|(18[0-9])|166|198|199|(147))\d{8}$/.test(phone)) {
+        if (/^[0-9]*$/.test(phone)) {
           let that = this;
-          let url = '/api/login/code?phoneNumber=' + phone + '&codeType=1003'
+          let prefix = this.resetpwdUser.prefix;
+          let lang = 'en';
+          if(prefix === '+86'){
+            lang = 'zh'
+          }
+          let url = '/login/code?phoneNumber=' + phone + '&codeType=1003&language=' + lang;
           that.$axios.post(url).then(function (res) {
             that.resetPwdShowloading = false;
             if (res.status == 200) {

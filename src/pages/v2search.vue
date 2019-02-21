@@ -37,7 +37,7 @@
                             :name="'search_newimg_box_title_'+index" :id="'search_newimg_box_title_'+index" 
                             @click="goArticle('/article',{sid:news.sid}, $event), 
                             trackArticle('搜索页', news.title, '搜索页的文章没有项目名称', '搜索页的文章没有项目ID', search.type, news.sid)">
-                              <img :src="news.titlePicture===''?newsimg:news.titlePicture"/>
+                              <img :src="news.titlePicture===''||news.titlePicture===null?newsimg:news.titlePicture"/>
                               <span class="time" v-if="!news.titlePicture">{{news.urlDate | formatTime}}</span>
                             </div>
                           </div>
@@ -312,25 +312,25 @@
     mounted() {
       this.initSearch();
       this.searchKeyWord();
-      this.initRightNews('快讯', this.flashPageSize, res => {
+      this.initRightNews('国家时事', this.flashPageSize, res => {
         this.flashPageSize += 20;
         this.flashList = res;
       });
-      this.initRightNews('国家时事', 10, res => {
-        this.affairList = res;
-      });
+      // this.initRightNews('国家时事', 10, res => {
+      //   this.affairList = res;
+      // });
       this.scrollFlash();
     },
     activated() {
       this.initSearch();
       this.searchKeyWord();
-      this.initRightNews('快讯', this.flashPageSize, res => {
+      this.initRightNews('国家时事', this.flashPageSize, res => {
         this.flashPageSize += 20;
         this.flashList = res;
       });
-      this.initRightNews('国家时事', 10, res => {
-        this.affairList = res;
-      });
+      // this.initRightNews('国家时事', 10, res => {
+      //   this.affairList = res;
+      // });
       this.scrollFlash();
     },
     beforeRouteUpdate(to, from, next) {
@@ -403,7 +403,7 @@
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid');
-          let url = '/api/individual/add?type=ICO&sid=' + project.sid;
+          let url = '/individual/add?type=ICO&sid=' + project.sid;
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'post',
@@ -422,7 +422,10 @@
 
       replaceAll(text, FindText, RepText) {
         let regExp = new RegExp(FindText, "g");
-        return text.replace(regExp, RepText);
+        if (text) {
+          return text.replace(regExp, RepText);
+        }
+        return text;
       },
       goProjectByName(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
@@ -488,7 +491,7 @@
         let that = this;
         that.categoryName = categoryName;
         let thisCallback = callback;
-        let url = '/api/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + pageSize
+        let url = '/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + pageSize
         that.$axios.get(url).then(function (res) {
           thisCallback(res.data.content);
         })
@@ -502,7 +505,7 @@
           let offsetHeight = $this.offsetHeight;
           if ((boxTop / (boxHeight - offsetHeight) >= 0.80) && finished) {
             finished = false;
-            this.initRightNews('快讯', this.flashPageSize, res => {
+            this.initRightNews('国家时事', this.flashPageSize, res => {
               this.flashPageSize += 20;
               this.flashList = res;
               finished = true;
@@ -527,7 +530,7 @@
           this.projectList = [];
           this.search.show = false;
           let uid = localStorage.getItem('apelink_user_uid');
-          this.$axios.get('/api/ICO/search?search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20', {
+          this.$axios.get('/ICO/search?search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20', {
             headers: {uid: uid}
           }).then(res => {
             this.showloading = false;
@@ -545,13 +548,13 @@
           });
         }else{
           this.search.show = true;
-          this.$axios.get('/api/traditional/search?newsType=' + this.search.type + '&search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
+          this.$axios.get('/traditional/search?newsType=' + this.search.type + '&search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20&highLight=true').then(res => {
             this.showloading = false;
             let allData = res.data.content;
-            for (let i = 0; i < allData.length; i++) {
-              allData[i].title = this.replaceAll(allData[i].title, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
-              allData[i].content = this.replaceAll(allData[i].content, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
-            }
+            // for (let i = 0; i < allData.length; i++) {
+            //   allData[i].title = this.replaceAll(allData[i].title, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
+            //   allData[i].content = this.replaceAll(allData[i].content, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
+            // }
             this.newsList = allData;
             if (res.data.content.length <= 0) {
               this.showloading = -1;
@@ -563,7 +566,7 @@
       loadMoreNews() {
         this.showloading = true;
         this.search.pageNo++;
-        this.$axios.get('/api/traditional/search?newsType=' + this.search.type + '&search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
+        this.$axios.get('/traditional/search?newsType=' + this.search.type + '&search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20&highLight=true').then(res => {
           this.showloading = false;
           let allData = res.data.content;
           for (let i = 0; i < allData.length; i++) {
@@ -580,7 +583,7 @@
       loadMoreICO() {
         this.showloading = true;
         this.search.pageNo++;
-        this.$axios.get('/api/ICO/search?search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
+        this.$axios.get('/ICO/search?search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
           this.showloading = false;
           let allData = res.data.content;
           for (let i = 0; i < allData.length; i++) {

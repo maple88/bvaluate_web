@@ -5,18 +5,25 @@ import userCenter from '@/pages/userCenter/userCenter'
 import my from '@/pages/myProfile'
 import follow from '@/pages/follow'
 import news from '@/pages/news'
+import v2news from '@/pages/v2news'
 import v2home from '@/pages/v2home'
 import industry from '@/pages/industry'
 import recommend from '@/pages/recommend'
 import article from '@/pages/article'
-import project from '@/pages/project'
+import v2project from '@/pages/v2project'
 import author from '@/pages/author'
-import list from '@/pages/list'
-import search from '@/pages/search'
+import v2list from '@/pages/v2list'
+import v2search from '@/pages/v2search'
 import newsList from '@/pages/newsList'
 import pdfShow from '@/pages/pdfShow'
 import download from '@/pages/download'
 import wechatCode from '@/pages/wechatCode'
+import about from '@/pages/about'
+import cooperation from '@/pages/cooperation'
+import dynamicList from '@/pages/dynamicList'
+import dynamicView from '@/pages/dynamicView'
+import privacy from '@/pages/privacy'
+import userCollect from '@/pages/userCollect'
 
 Vue.use(Router);
 
@@ -35,7 +42,8 @@ export default new Router({
       name: 'home',
       component: v2home,
       meta: {
-        pageTitle: '首页'
+        pageTitle: '首页',
+        headerNobg: true
       },
     },
     {
@@ -48,9 +56,10 @@ export default new Router({
     {
       path: '/list',
       name: 'list',
-      component: list,
+      component: v2list,
       meta: {
-        pageTitle: '榜单'
+        pageTitle: '榜单',
+        headerNobg: true
       },
     },
     {
@@ -78,7 +87,15 @@ export default new Router({
       path: '/news',
       component: news,
       meta: {
-        pageTitle: '综合'
+        pageTitle: '综合',
+        headerNobg: true
+      },
+    },
+    {
+      path: '/v2news',
+      component: v2news,
+      meta: {
+        pageTitle: '资讯'
       },
     },
     {
@@ -98,9 +115,10 @@ export default new Router({
     },
     {
       path: '/project',
-      component: project,
+      component: v2project,
       meta: {
-        pageTitle: '项目详情页'
+        pageTitle: '项目详情页',
+        headerNobg: true
       }
     },
     {
@@ -112,7 +130,7 @@ export default new Router({
     },
     {
       path: '/search',
-      component: search
+      component: v2search
     },
     {
       path: '/newsList',
@@ -125,6 +143,30 @@ export default new Router({
     {
       path: '/download',
       component: download
+    },
+    {
+      path: '/about',
+      component: about
+    },
+    {
+      path: '/cooperation',
+      component: cooperation
+    },
+    {
+      path: '/dynamicList',
+      component: dynamicList
+    },
+    {
+      path: '/dynamicView',
+      component: dynamicView
+    },
+    {
+      path: '/privacy',
+      component: privacy
+    },
+    {
+      path: '/userCollect',
+      component: userCollect
     }
   ],
   scrollBehavior(to, from, savedPosition) {

@@ -1,25 +1,25 @@
 <template>
 	<div class="page v2home-page">
 		<v2header/>
-		<div class="v2maintainer v2home-v2maintainer">
+		<div class="v2maintainer pd0">
 			<!-- content here -->
 			<div class="banner-search-section">
 				<div class="banner-container">
-					<p class="b1">全球最大的区块链项目自动评估平台</p>
-					<p class="b2">通过去中心化动态数据，以大数据及AI技术为工具，构成项目全息画像，帮助您洞察并控制投资风险</p>
+					<p class="b1">{{$t('Global largest blockchain projects automatic evaluate platform')}}</p>
+					<p class="b2">{{$t('Global decentralized dynamic data  Big data + AI algorithm+knoledge map  Individual project portrait  Investment insight & risk control tool')}}</p>
 					<div class="banner-search-box">
 						<div class="search-box">
 							<div class="center">
-								<input type="text" placeholder="请输入关键词" v-model="search" class="search_input" data="输入搜素内容" name="no_content" id="banner_search_input" @keyup.enter="goSearch($event)">
+								<input type="text" :placeholder="$t('Enter Keywords')" v-model="search" class="search_input" data="输入搜素内容" name="no_content" id="banner_search_input" @keyup.enter="goSearch($event)">
 							</div>
-							<div class="right">
+							<div class="right" >
 								<button class="search_submit" @click="goSearch($event)" name="no_content" id="search_submit" data="搜索按钮">
 									<img src="../assets/search.png" alt="search"/>
 								</button>
 							</div>
 						</div>
 						<ul class="hotsearch">
-							<li>热门搜索：</li>
+							<li>{{$t('Top search')}}：</li>
 							<li><a href="javascript:;" @click="goSearch($event, 'BTC')">BTC</a></li>
 							<li><a href="javascript:;" @click="goSearch($event, 'ETH')">ETH</a></li>
 							<li><a href="javascript:;" @click="goSearch($event, 'EOS')">EOS</a></li>
@@ -47,17 +47,17 @@
 						<div class="box-row">
 							<div class="box-col">
 								<div class="list-header">
-									<span class="tit">总评榜</span>
-									<a href="#" class="more">
-										<div class="word"><div>查看全部</div></div> 
+									<span class="tit">{{$t('Overall list')}}</span>
+									<a href="javascript:;" class="more" @click="goList('总评榜')">
+										<div class="word"><div>{{$t('View all')}}</div></div> 
 										<i class="more-icon"></i>
 									</a>
 								</div>
 								<div class="table-list">
 									<div class="table-header">
-										<div class="left">排名</div>
-										<div class="center">项目名称</div>
-										<div class="right">总评分</div>
+										<div class="left">{{$t('Ranking')}}</div>
+										<div class="center">{{$t('project name')}}</div>
+										<div class="right">{{$t('overall score')}}</div>
 									</div>
 									<div class="table-content">
 										<div class="list_item" slot="scrollList" v-for="(item, index) in zongpingList" :key="index" @click="goArticle('/project',{sid: item.sid}, $event)">
@@ -91,17 +91,17 @@
 							</div>
 							<div class="box-col">
 								<div class="list-header">
-									<span class="tit">STO榜</span>
-									<a href="#" class="more">
-										<div class="word"><div>查看全部</div></div> 
+									<span class="tit">{{$t('STO list')}}</span>
+									<a href="javascript:;" class="more" @click="goList('sto榜')">
+										<div class="word"><div>{{$t('View all')}}</div></div> 
 										<i class="more-icon"></i>
 									</a>
 								</div>
 								<div class="table-list">
 									<div class="table-header">
-										<div class="left">排名</div>
-										<div class="center">项目名称</div>
-										<div class="right">总评分</div>
+										<div class="left">{{$t('Ranking')}}</div>
+										<div class="center">{{$t('project name')}}</div>
+										<div class="right">{{$t('overall score')}}</div>
 									</div>
 									<div class="table-content">
 										<div class="list_item" slot="scrollList" v-for="(item, index) in stoList" :key="index" @click="goArticle('/project',{sid: item.sid}, $event)">
@@ -140,19 +140,22 @@
 			<div class="starproject">
 				<div class="container v2container">
 					<div class="head">
-						<p class="tit">明星项目</p>
-						<a href="#" class="more">
-							<div class="word"><div>查看全部</div></div> 
+						<p class="tit">{{$t('Star project')}}</p>
+						<router-link to="/list" class="more">
+							<div class="word"><div>{{$t('View all')}}</div></div> 
 							<i class="more-icon"></i>
-						</a>
+						</router-link>
 					</div>
 					<div class="flexbox">
 						<div class="box-row">
 							<div class="box-col" v-for="(item, index) in starProject" :key="index">
 								<div class="item">
 									<a href="javascript:;" @click="goArticle('/project',{sid: item.sid}, $event)">
-										<div class="img-box">
-											<img :src="item.logoSrc">
+										<div class="top">
+											<div class="img-box">
+												<img :src="item.logoSrc">
+											</div>
+											<img src="../assets/list/crown.png" class="crown">
 										</div>
 										<p class="tit">{{item.project}}<span>{{item.tokenCoin | formatName}}</span></p>
 										<p class="num">{{item.totalScore}}</p>
@@ -167,20 +170,20 @@
 			<div class="hotindustry">
 				<div class="container v2container">
 					<div class="head">
-						<p class="tit">热门行业</p>
-						<a href="#" class="more">
-							<div class="word"><div>查看全部</div></div> 
+						<p class="tit">{{$t('Hot industry')}}</p>
+						<!-- <a href="#" class="more">
+							<div class="word"><div>{{$t('View all')}}</div></div> 
 							<i class="more-icon"></i>
-						</a>
+						</a> -->
 					</div>
 					<div class="flexbox">
 						<div class="box-row">
 							<div class="box-col" v-for="(item, index) in hostIndustries" :key="index">
 								<div class="item">
-									<p class="tit"><a href="javascript:;" @click="goIndustryByIndustry(item.categoryName, $event)">{{item.categoryName}}</a></p>
-									<p class="num">项目量：{{item.projectNum}}</p>
+									<p class="tit"><a href="javascript:;" @click="goListForIndustry(item.categoryName)">{{item.categoryName}}</a></p>
+									<p class="num">{{$t('Project volume')}}：{{item.projectNum}}</p>
 									<ul class="pro">
-										<li>项目：</li>
+										<li>{{$t('Project')}}：</li>
 										<li v-for="(project, pindex) in item.relatedICODTOs" :key="pindex">
 											<a href="javascript:;" @click="goArticle('/project',{sid:project.sid})">{{project.project}}</a>
 										</li>
@@ -197,15 +200,15 @@
 						<div class="box-row">
 							<div class="box-col heima-col">
 								<div class="list-header">
-									<span class="tit">黑马榜</span>
+									<span class="tit">{{$t('Dark horse list')}}</span>
 								</div>
 								<div class="table-list heima-list">
 									<div class="table-header">
-										<div class="left">排名</div>
-										<div class="center">项目</div>
-										<div class="right1">总评分</div>
-										<div class="right2">总榜排名</div>
-										<div class="right3">排名升降</div>
+										<div class="left">{{$t('Ranking')}}</div>
+										<div class="center">{{$t('Project')}}</div>
+										<div class="right1">{{$t('overall score')}}</div>
+										<div class="right2">{{$t('Overall ranking')}}</div>
+										<div class="right3">{{$t('Ranking fluctuation')}}</div>
 									</div>
 									<div class="table-content">
 										<div class="list_item" slot="scrollList" v-for="(item, index) in heimaList" :key="index" @click="goArticle('/project',{sid: item.sid}, $event)">
@@ -258,16 +261,16 @@
 							</div>
 							<div class="box-col">
 								<div class="list-header">
-									<span class="tit">国家排行榜</span>
+									<span class="tit">{{$t('National rankings')}}</span>
 								</div>
 								<div class="table-list guojia-list">
 									<div class="table-header">
-										<div class="left">排名</div>
-										<div class="center">国家</div>
-										<div class="right">项目量</div>
+										<div class="left">{{$t('Ranking')}}</div>
+										<div class="center">{{$t('Nation')}}</div>
+										<div class="right">{{$t('Project volume')}}</div>
 									</div>
 									<div class="table-content">
-										<div class="list_item" slot="scrollList" v-for="(item, index) in guojiaList" :key="index" @click="goIndustryByCountry(item.countName, $event)">
+										<div class="list_item" slot="scrollList" v-for="(item, index) in guojiaList" :key="index" @click="goListForCountry(item.countName)">
 											<div class="item_left">
 												<div class="ranking_box">
 													<div class="ranking_number" v-if="index>2">
@@ -294,13 +297,13 @@
 							</div>
 							<div class="box-col">
 								<div class="list-header">
-									<span class="tit">媒体声量榜</span>
+									<span class="tit">{{$t('Media volume list')}}</span>
 								</div>
 								<div class="table-list">
 									<div class="table-header">
-										<div class="left">排名</div>
-										<div class="center">项目</div>
-										<div class="right">声量指数</div>
+										<div class="left">{{$t('Ranking')}}</div>
+										<div class="center">{{$t('Project')}}</div>
+										<div class="right">{{$t('Index of the volume')}}</div>
 									</div>
 									<div class="table-content">
 										<div class="list_item" slot="scrollList" v-for="(item, index) in meitiList" :key="index" @click="goArticle('/project',{sid: item.sid}, $event)">
@@ -339,18 +342,20 @@
 			<div class="newsheadlines">
 				<div class="container v2container">
 					<div class="head">
-						<p class="tit">新闻头条</p>
-						<a href="#" class="more">
-							<div class="word"><div>查看全部</div></div> 
+						<p class="tit">{{$t('Headline')}}</p>
+						<router-link to="/v2news" class="more">
+							<div class="word"><div>{{$t('View all')}}</div></div> 
 							<i class="more-icon"></i>
-						</a>
+						</router-link>
 					</div>
 					<div class="flexbox">
 						<div class="box-row">
 							<div class="box-col" v-for="(item, index) in hotNews">
 								<div class="item">
 									<div class="img-box">
-										<a href="javascript:;" @click="goArticle('/article',{sid:item.sid})"><img :src="item.titlePicture"></a>
+										<a href="javascript:;" @click="goArticle('/article',{sid:item.sid})">
+											<img :src="item.titlePicture===''||item.titlePicture===null?newsimg:item.titlePicture">
+										</a>
 									</div>
 									<div class="info">
 										<p class="tit">
@@ -377,11 +382,11 @@
 			<div class="partner">
 				<div class="container v2container">
 					<div class="head">
-						<p class="tit">合作伙伴</p>
+						<p class="tit">{{$t('Cooperative partner')}}</p>
 					</div>
 					<div class="institution">
 						<div class="list-header">
-							<span class="tit">投资机构</span>
+							<span class="tit">{{$t('Institutional Investor')}}</span>
 						</div>
 						<div class="flexbox">
 							<div class="box-row">
@@ -410,7 +415,7 @@
 					</div>
 					<div class="mediabox">
 						<div class="list-header">
-							<span class="tit">战略合作媒体</span>
+							<span class="tit">{{$t('Strategic cooperative media')}}</span>
 						</div>
 						<div class="flexbox">
 							<div class="box-row">
@@ -436,6 +441,7 @@
 
 <script>
 	import Bus from '../bus.js'
+	let newsimg = require('../assets/search/news.png');
 
 	export default {
 		data () {
@@ -450,7 +456,8 @@
 				meitiList: [],
 				starProject: [],
 				hotNews: [],
-				hostIndustries: []
+				hostIndustries: [],
+				newsimg: newsimg
 			}
 		},
 		mounted () {
@@ -468,6 +475,30 @@
 			that.getHotNews();
 		},
 		methods: {
+			goList (val) {
+				this.$router.push({
+					path: '/list',
+					query: {
+						listNameType: val
+					}
+				})
+			},
+			goListForIndustry (val) {
+				this.$router.push({
+					path: '/list',
+					query: {
+						industry: val
+					}
+				})
+			},
+			goListForCountry (val) {
+				this.$router.push({
+					path: '/list',
+					query: {
+						country: val
+					}
+				})
+			},
 			goSearch(event, searchKeyword) {
 				let pageTitle
 				if (this.searchType === '文章') {
@@ -505,49 +536,49 @@
 			},
 			// 热门行业
 			getHotindustry () {
-				this.$axios.get('/api/ICO/hotFourIndustries')
+				this.$axios.get('/ICO/hotFourIndustries')
 				.then(res => {
 					this.hostIndustries = res.data.slice(0, 4);;
 				})
 			},
       // 总评榜
       getZongpingList () {
-      	this.$axios.get('/api/hotICO/listForApp?pageNo=0&pageSize=10')
+      	this.$axios.get('/hotICO/listForApp?pageNo=0&pageSize=10')
       	.then(res => {
       		this.zongpingList = res.data.slice(0, 5);
       	})
       },
       // STO榜单
       getSTOList () {
-      	this.$axios.get('/api/hotICO/stolistForApp?pageNo=0&pageSize=10')
+      	this.$axios.get('/hotICO/stolistForApp?pageNo=0&pageSize=10')
       	.then(res => {
       		this.stoList = res.data.slice(0, 5);
       	})
       },
       // 黑马榜
       getHeimaList () {
-      	this.$axios.get('/api/hotICO/blackHouselistForApp?pageNo=0&pageSize=10')
+      	this.$axios.get('/hotICO/blackHouselistForApp?pageNo=0&pageSize=10')
       	.then(res => {
       		this.heimaList = res.data
       	})
       },
       // 国家排行榜
       getGuojiaList () {
-      	this.$axios.get('/api/hotICO/countrylistForApp?pageNo=0&pageSize=10')
+      	this.$axios.get('/hotICO/countrylistForApp?pageNo=0&pageSize=10')
       	.then(res => {
       		this.guojiaList = res.data
       	})
       },
       // 媒体声量榜
       getMeitiList () {
-      	this.$axios.get('/api/hotICO/medialistForApp?pageNo=0&pageSize=10')
+      	this.$axios.get('/hotICO/medialistForApp?pageNo=0&pageSize=10')
       	.then(res => {
       		this.meitiList = res.data
       	})
       },
       // 明星项目
       getstarProject () {
-      	this.$axios.get('/api/hotICO/startlistForApp')
+      	this.$axios.get('/hotICO/startlistForApp')
       	.then(res => {
       		this.starProject = res.data.slice(0, 4);
       	})
@@ -555,7 +586,7 @@
       // 新闻头条
       getHotNews () {
         let categoryName = '首页-新闻列表';
-        this.$axios.get('/api/traditional/list?pageSize=4&categoryName=' + categoryName)
+        this.$axios.get('/traditional/list?pageSize=4&categoryName=' + categoryName)
         .then(res => {
           this.hotNews = res.data.content;
         })
@@ -563,16 +594,6 @@
       goArticle(url, query, event) {
         let routeData = this.$router.resolve({path: url, query: query});
         window.open(routeData.href, '_blank');
-      },
-      goIndustryByCountry(obj, event) {
-        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
-          if (obj.indexOf(';') > 0) {
-            let arr = obj.split(';')
-            obj = arr[0];
-          }
-        }
-        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj, pageTitle: '国家文章列表'}});
-        window.open(routeData.href);
       },
       //根据项目名称进行跳转到项目页面 主要用于新闻列表中标签跳转
       goProjectByName(obj) {
@@ -597,26 +618,15 @@
         let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj}});
         window.open(routeData.href, '_blank');
       },
-      //根据行业名称进行跳转新闻列表页面 主要用于新闻列表中标签跳转
-      goIndustryByCountry(obj) {
+      goIndustryByCountry(obj, event) {
         if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
           if (obj.indexOf(';') > 0) {
             let arr = obj.split(';')
             obj = arr[0];
           }
         }
-        let routeData = this.$router.resolve({path: '/recommend', query: {country: obj}});
+        let routeData = this.$router.resolve({path: '/newsList', query: {country: obj, pageTitle: '国家文章列表'}});
         window.open(routeData.href, '_blank');
-      },
-      goIndustryByIndustry(obj, event) {
-        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
-          if (obj.indexOf(';') > 0) {
-            let arr = obj.split(';')
-            obj = arr[0];
-          }
-        }
-        let routeData = this.$router.resolve({path: '/newsList', query: {industry: obj, pageTitle: '行业文章列表'}});
-        window.open(routeData.href);
       }
     },
     filters: {

@@ -1,0 +1,54 @@
+#app.language_en{
+    //header
+    .v2header .header-dropdown-menu{
+        width: 110px;
+        margin: 0 -55px 0 0;
+    }
+    .v2home-page .banner-search-section{
+        @media($max-xs){
+            height: 340px;
+        }
+        @media(max-width: 399px){
+            height: 380px;
+        }
+    }
+    .v2home-page .banner-search-section .banner-container{
+        @media($max-xs){
+            margin-top: 50px;
+        }
+        @media(max-width: 399px){
+            margin-top: 70px;
+        }
+    }
+	.v2home-page .banner-search-section .b1{
+        letter-spacing: 0;
+        white-space: normal;
+    }
+    .v2home-page .banner-search-section .b2{
+        white-space: normal;
+    }
+    .v2home-page .billboard{
+        @media($max-md)and($min-sm){
+            margin: -60px 0 60px;
+        }
+        @media($max-xs){
+            margin: -25px 0 15px;
+        }
+    }
+    //invite
+    .login_fixed.invitation_tips .invitation_tips .bd .tips_content{
+        padding-top: 0;
+    }
+    .login_fixed.invitation_tips .invitation_tips .bd .tips_content .invitation_wrapbox{
+        margin: 30px 0 125px;
+    }
+    .login_fixed.invitation_tips .invitation_tips .bd .tips_content .invitation_info{
+        bottom: -90px;
+    }
+
+
+    //footer
+    .v2footer .eweima-row .img-div{
+        text-align: center;
+    }
+}

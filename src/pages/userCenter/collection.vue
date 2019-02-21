@@ -183,7 +183,7 @@
         let token = localStorage.getItem('apelink_user_token');
         let uid = localStorage.getItem('apelink_user_uid');
         that.showloading = true;
-        let url = '/api/individual/list?type=NEWS&pageSize=' + that.pageSize;
+        let url = '/individual/list?type=NEWS&pageSize=' + that.pageSize;
         let headers = {'uid': uid, 'Authorization': token};
         that.$axios({
           method: 'get',
@@ -202,7 +202,7 @@
         let that = this;
         let token = localStorage.getItem('apelink_user_token')
         let uid = localStorage.getItem('apelink_user_uid')
-        let url = '/api/individual/delete?cid=' + cid;
+        let url = '/individual/delete?cid=' + cid;
         let headers = {'uid': uid, 'Authorization': token};
         that.$axios({
           method: 'DELETE',

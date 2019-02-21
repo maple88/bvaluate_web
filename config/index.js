@@ -11,14 +11,14 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api': {
-        target: 'https://api.bvaluate.com.cn',
-        secure: false,
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': '/'
-        },
-      },
+      // '/api': {
+      //   target: 'http://119.254.68.8:10020',
+      //   secure: false,
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     '^/api': '/'
+      //   },
+      // },
       '/wechat': {
         target: 'https://api.weixin.qq.com',
         secure: false,
@@ -62,13 +62,21 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: './',
     proxyTable: {
-      '/api': {
-        target: 'https://api.bvaluate.com.cn',
+      // '/api': {
+      //   target: 'http://119.254.68.8:10020',
+      //   secure: false,
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     '^/api': '/'
+      //   },
+      // },
+      '/wechat': {
+        target: 'https://api.weixin.qq.com',
         secure: false,
         changeOrigin: true,
         pathRewrite: {
-          '^/api': '/'
-        }
+          '^/wechat': '/'
+        },
       }
     },
     /**
