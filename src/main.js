@@ -23,8 +23,8 @@ import cn from '@/lang/cn.js'
 import en from '@/lang/en.js'
 import hk from '@/lang/hk.js'
 
-// axios.defaults.baseURL = 'http://119.254.68.8:10020';
 axios.defaults.baseURL = 'http://test.bvaluate.com.cn/api';
+// axios.defaults.baseURL = 'https://bvaluate.com.cn/api';
 // axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // axios.defaults.withCredentials = true
 // axios.defaults.timeout = 30000;

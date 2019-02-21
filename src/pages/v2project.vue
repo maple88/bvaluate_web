@@ -958,7 +958,7 @@
         }
       },
       getMiddle (project) {
-        this.$axios.get('http://119.254.68.8:10020/tradition/minute/'+ project)
+        this.$axios.get('/tradition/minute/'+ project)
         .then(res => {
           this.completeness = res.data;
           this.indestyMark = res.data.trade[0].mark;

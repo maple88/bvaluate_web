@@ -84,7 +84,7 @@ export default {
 	'Currency name': '貨幣名稱',
 	'Transaction amount': '成交額',
 	'Price': '價格',
-	'Growth ': '漲幅',
+	'Growth': '漲幅',
 	'Decline': '跌幅',
 	'News': '新聞',
 	'Twitter': '推文',

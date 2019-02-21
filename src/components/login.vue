@@ -22,7 +22,7 @@
             <div class="input-group">
               <div class="input-group-addon"><img src="../assets/login/icon2-1.png"></div>
               <div class="select-input">
-                <div class="layui-form">
+                <!-- <div class="layui-form">
                   <select name="loginSelect" lay-filter="loginSelect">
                     <option value="+86" selected>+86</option>
                     <option value="+852">+852</option>
@@ -33,7 +33,7 @@
                     <option value="+886">+886</option>
                     <option value="+1">+1</option>
                   </select>
-                </div>
+                </div> -->
                 <input type="tel" class="form-control" v-model="loginUser.phoneNumber" :placeholder="$t('phone number')" data="输入手机号"
                        @focus="errorMsg.loginUser.phoneNumber = ''"
                        name="no_content" id="input_login_phoneNumber">
@@ -342,9 +342,9 @@
         form.on('select(resetpwdSelect)', function(data){
           that.resetpwdUser.prefix = data.value;
         });
-        form.on('select(loginSelect)', function(data){
-          that.loginUser.prefix = data.value;
-        });
+        // form.on('select(loginSelect)', function(data){
+        //   that.loginUser.prefix = data.value;
+        // });
       });
     },
     methods: {
@@ -468,11 +468,8 @@
               setTimeout(() => {
                 that.showTip = false;
                 that.login();
-                if (res.data.signedIn) {
-                  that.$router.push('/home')
-                } else {
+                if (!res.data.signedIn) {
                   that.$store.state.signInTips = true;
-                  that.$router.push('/home')
                 }
               }, 1000);
             }).catch(function (res) {

@@ -84,7 +84,7 @@ export default {
 	'Currency name': 'Currency name',
 	'Transaction amount': 'Transaction amount',
 	'Price': 'Price',
-	'Growth ': 'Growth ',
+	'Growth': 'Growth',
 	'Decline': 'Decline',
 	'News': 'News',
 	'Twitter': 'Twitter',
