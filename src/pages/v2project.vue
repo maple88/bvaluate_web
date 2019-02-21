@@ -754,20 +754,20 @@
           },
         ],
         myCallbacks: {
-          onNextStep: this.NextStepCallback
+          onStep: this.NextStepCallback
         }
       }
     },
-    activated () {
-      let isTour = JSON.parse(localStorage.getItem('isTour'));
-      if (isTour) {
-        if(!isTour.project){
-          this.$tours['myTour'].start();
-        }
-      }else{
-        this.$tours['myTour'].start();
-      }
-    },
+    // activated () {
+    //   let isTour = JSON.parse(localStorage.getItem('isTour'));
+    //   if (isTour) {
+    //     if(!isTour.project){
+    //       this.$tours['myTour'].start();
+    //     }
+    //   }else{
+    //     this.$tours['myTour'].start();
+    //   }
+    // },
     mounted() {
       new Swiper('.advert-swiper', {
         autoplay: {

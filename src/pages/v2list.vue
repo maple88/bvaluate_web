@@ -209,14 +209,14 @@
     },
     activated () {
       let that = this;
-      let isTour = JSON.parse(localStorage.getItem('isTour'));
-      if (isTour) {
-        if(!isTour.list){
-          that.$tours['myTour'].start();
-        }
-      }else{
-        that.$tours['myTour'].start();
-      }
+      // let isTour = JSON.parse(localStorage.getItem('isTour'));
+      // if (isTour) {
+      //   if(!isTour.list){
+      //     that.$tours['myTour'].start();
+      //   }
+      // }else{
+      //   that.$tours['myTour'].start();
+      // }
       if (that.$route.query.listNameType) {that.listNameType = that.$route.query.listNameType;}
       if (that.$route.query.country) {
         that.country = that.$route.query.country;

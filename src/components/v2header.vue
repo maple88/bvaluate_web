@@ -272,18 +272,18 @@
         }
       }
     },
-    activated () {
-      let isTour = JSON.parse(localStorage.getItem('isTour'));
-      if (isTour) {
-        if(!isTour.header){
-          console.warn('2222222222222222222222222222222222222222222222222222222222222')
-          this.$tours['headerTour'].start();
-        }
-      }else{
-        console.warn('11111111111111111111111111111111111111111111111111111111111111')
-        this.$tours['headerTour'].start();
-      }
-    },
+    // activated () {
+    //   let isTour = JSON.parse(localStorage.getItem('isTour'));
+    //   if (isTour) {
+    //     if(!isTour.header){
+    //       console.warn('2222222222222222222222222222222222222222222222222222222222222')
+    //       this.$tours['headerTour'].start();
+    //     }
+    //   }else{
+    //     console.warn('11111111111111111111111111111111111111111111111111111111111111')
+    //     this.$tours['headerTour'].start();
+    //   }
+    // },
     mounted() {
       let that = this;
       that.path = that.$router.history.current.path;
@@ -308,7 +308,7 @@
         var form = layui.form;
         form.render('select');
         form.on('select(language)', function(data){
-          console.log(data.value);
+          // console.log(data.value);
           if (data.value === '简体') {
             that.$i18n.locale = 'cn';
             localStorage.setItem('bvaluate-lang', 'cn');
