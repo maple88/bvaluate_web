@@ -327,8 +327,8 @@
             ,{field:'technicalanalysis', title: that.$t("Technology"), width: 75, sort: true, templet: '#technicalanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
             ,{field:'teamanalysis', title: that.$t("Team"), width: 75, sort: true, templet: '#teamanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
             ,{field:'fundsupervision', title: that.$t("Fund supervision"), width: 75, sort: true, templet: '#fundsupervision', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'price', title: that.$t("Price"), width: 75, sort: true, templet: '#list-table-price', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'famc', title: that.$t("Current market value"), width: 75, sort: true, templet: '#list-table-famc', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'price', title: that.$t("Price")+'(￥)', width: 75, sort: true, templet: '#list-table-price', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'famc', title: that.$t("Current market value")+'(￥)', width: 75, sort: true, templet: '#list-table-famc', style: 'height:64px; padding: 0; line-height: inherit'}
             ]]
             ,initSort: {
               field: 'rank'
@@ -384,8 +384,8 @@
             ,{field:'technicalanalysis', title: that.$t("Technology"), width: 75, sort: true, templet: '#technicalanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
             ,{field:'teamanalysis', title: that.$t("Team"), width: 75, sort: true, templet: '#teamanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
             ,{field:'fundsupervision', title: that.$t("Fund supervision"), width: 75, sort: true, templet: '#fundsupervision', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'price', title: that.$t("Price"), width: 75, sort: true, templet: '#list-table-price', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'famc', title: that.$t("Current market value"), width: 75, sort: true, templet: '#list-table-famc', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'price', title: that.$t("Price")+'(￥)', width: 75, sort: true, templet: '#list-table-price', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'famc', title: that.$t("Current market value")+'(￥)', width: 75, sort: true, templet: '#list-table-famc', style: 'height:64px; padding: 0; line-height: inherit'}
             ]]
             ,initSort: {
               field: 'rank'
@@ -480,7 +480,7 @@
             ,{field:'name', title: that.$t('Currency name'), fixed: true, style: 'font-weight: bold; font-size: 12px; color: #000;'}
             ,{field:'turnover1day', title: that.$t('Transaction amount')}
             ,{field:'price', title: that.$t("Price")}
-            ,{field:'increase', title: that.$t('Growth'), style: 'color: #ee6560;', templet: '#list-table-increase'}
+            ,{field:'increase', title: that.$t('Decline'), style: 'color: #ee6560;', templet: '#list-table-increase'}
             ]]
             ,initSort: {
               field: 'ranking'
