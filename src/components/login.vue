@@ -468,11 +468,8 @@
               setTimeout(() => {
                 that.showTip = false;
                 that.login();
-                if (res.data.signedIn) {
-                  that.$router.push('/home')
-                } else {
+                if (!res.data.signedIn) {
                   that.$store.state.signInTips = true;
-                  that.$router.push('/home')
                 }
               }, 1000);
             }).catch(function (res) {
