@@ -11,13 +11,13 @@
               <div class="title">
                 <a :href="project.outerOfficial" target="_blank" class="atitle">{{project.project}}</a>
                 <div class="followbtn" v-if="!isFollow" @click="setFollow($event)">
-                  <i class="fa fa-plus wicon"></i> 关注
+                  <i class="fa fa-plus wicon"></i> {{$t('Focus on')}}
                 </div>
                 <div class="followbtn on" v-if="isFollow" @click="deleteFollow(project.collected, $event)">
-                  <i class="fa fa-check wicon"></i> 已关注
+                  <i class="fa fa-check wicon"></i> {{$t('Followed')}}
                 </div>
                 <div class="followbtn share_button" @click.stop="shareButton = !shareButton">
-                  <i class="fa fa-share-alt wicon"></i> 分享
+                  <i class="fa fa-share-alt wicon"></i> {{$t('Share')}}
                   <transition name="fade">
                     <div class="share_box" v-show="shareButton">
                       <div class="share_item" @click.stop="weChatQrCodeShow">

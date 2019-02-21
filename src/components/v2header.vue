@@ -9,6 +9,7 @@
             <li><span>{{$t('Total White papers')}}：</span><span>{{tophead.totalWhitePaper}}</span></li>
           </ul>
           <div class="appdownload">
+            <div class="rookie" @click="isTourShow">{{$t('Feature Tour')}}</div>
             <a href="https://api.bvaluate.com.cn/apk/bvaluate.apk">
               <img src="../assets/tdownload.png">
               <span>{{$t('Download App')}}</span>
@@ -57,7 +58,7 @@
             <ul class="nav navbar-nav">
               <router-link tag="li" to="/home" active-class="active" data-v-step="1"><a data="首页">{{$t('Home')}}</a></router-link>
               <router-link tag="li" to="/list" active-class="active" data-v-step="2"><a data="榜单">{{$t('List')}}</a></router-link>
-              <router-link tag="li" to="/v2news" active-class="active" data-v-step="3"><a data="资讯">{{$t('News')}}</a></router-link>
+              <router-link tag="li" to="/v2news" active-class="active" data-v-step="3"><a data="资讯">{{$t('headerNews')}}</a></router-link>
               <li v-if="token" data-v-step="4"><a href="javascript:;" data="新增项目" @click="analysis()">{{$t('New Projects')}}</a></li>
               <li v-if="!token" data-v-step="4" @click="isLogin('新增项目')"><a data="新增项目">{{$t('New Projects')}}</a></li>
             </ul>
@@ -156,8 +157,40 @@
     <v-wechatLogin></v-wechatLogin>
     <v-bindPhone></v-bindPhone>
 
-    <v-tour name="myTour" :steps="steps" :callbacks="myCallbacks">
+    <!-- <v-tour name="headerTour" :steps="steps" :callbacks="myCallbacks"></v-tour> -->
+    <v-tour v-show="$store.state.isTour" name="headerTour" :steps="steps" :callbacks="myCallbacks">
+      <template slot-scope="tour">
+        <transition name="fade">
+          <v-step
+          v-if="tour.currentStep === index"
+          v-for="(step, index) of tour.steps"
+          :key="index"
+          :step="step"
+          :previous-step="tour.previousStep"
+          :next-step="tour.nextStep"
+          :stop="tour.stop"
+          :is-first="tour.isFirst"
+          :is-last="tour.isLast"
+          :labels="tour.labels"
+          >
+            <template v-if="tour.currentStep !== 4">
+              <div slot="actions" class="v-step__buttons">
+                <button @click="tour.previousStep" class="v-step-button prev">上一步</button>
+                <button @click="tour.nextStep" class="v-step-button">下一步</button>
+              </div>
+            </template>
+            <template v-if="tour.currentStep === 4">
+              <div slot="actions" class="v-step__buttons">
+                <button @click="tour.stop" class="v-step-button nostyle">跳过</button>
+                <button @click="tour.previousStep" class="v-step-button prev">上一步</button>
+                <button @click="tour.stop" class="v-step-button">完成</button>
+              </div>
+            </template>
+          </v-step>
+        </transition>
+      </template>
     </v-tour>
+
   </div>
 </template>
 
@@ -217,30 +250,42 @@
           },
           {
             target: '[data-v-step="2"]',
-            content: 'Try it, you\'ll love it!<br>You can put HTML in the steps and completely customize the DOM to suit your needs.'
+            content: `<h4>项目榜单，提供项目周榜、月榜，展现项目排名、趋势等动态，更全面的透视项目情况。</h4>
+                      <h4>包括总评榜、STO榜、涨幅榜、跌幅榜。</h4>`
           },
           {
             target: '[data-v-step="3"]',
-            content: 'Try it, you\'ll love it!<br>You can put HTML in the steps and completely customize the DOM to suit your needs.'
+            content: `<h4>资讯，重磅新闻、每日快讯、大V动态，实时把握</h4>`
           },
           {
             target: '[data-v-step="4"]',
-            content: 'Try it, you\'ll love it!<br>You can put HTML in the steps and completely customize the DOM to suit your needs.'
+            content: `<h4>新增项目，若您从现有数据未能获取所需项目可进行新增。</h4>
+                      <p>填写项目信息上传白皮书，Bvaluate自动分析评估该项目。</p>`
           },
           {
             target: '[data-v-step="5"]',
-            content: 'Try it, you\'ll love it!<br>You can put HTML in the steps and completely customize the DOM to suit your needs.'
+            content: `<h4>便捷查看关注信息，实时推送您最关注的信息，更好地洞察并控制投资风险。</h4>`
           },
         ],
         myCallbacks: {
-          onPreviousStep: this.myCustomPreviousStepCallback,
-          onNextStep: this.myCustomNextStepCallback
+          onNextStep: this.NextStepCallback
         }
       }
     },
+    // activated () {
+    //   let isTour = JSON.parse(localStorage.getItem('isTour'));
+    //   if (isTour) {
+    //     if(!isTour.header){
+    //       console.warn('2222222222222222222222222222222222222222222222222222222222222')
+    //       this.$tours['headerTour'].start();
+    //     }
+    //   }else{
+    //     console.warn('11111111111111111111111111111111111111111111111111111111111111')
+    //     this.$tours['headerTour'].start();
+    //   }
+    // },
     mounted() {
       let that = this;
-      // that.$tours['myTour'].start()
       that.path = that.$router.history.current.path;
       $(".nav.navbar-nav li a").on('click', function () {
         $('.collapse').removeClass('in');
@@ -263,13 +308,17 @@
         var form = layui.form;
         form.render('select');
         form.on('select(language)', function(data){
-          console.log(data.value);
+          // console.log(data.value);
           if (data.value === '简体') {
             that.$i18n.locale = 'cn';
             localStorage.setItem('bvaluate-lang', 'cn');
           }else if (data.value === 'English') {
             that.$i18n.locale = 'en';
             localStorage.setItem('bvaluate-lang', 'en');
+          }
+          else if (data.value === '繁体') {
+            that.$i18n.locale = 'hk';
+            localStorage.setItem('bvaluate-lang', 'hk');
           }
         });
       });
@@ -294,14 +343,20 @@
       }
     },
     methods: {
-      myCustomPreviousStepCallback (currentStep) {
-        console.log('[Vue Tour] A custom previousStep callback has been called on step ' + (currentStep + 1))
+      isTourShow () {
+        localStorage.removeItem('isTour');
+        this.$tours['headerTour'].start();
+        this.$tours['myTour'].start();
       },
-      myCustomNextStepCallback (currentStep) {
-        console.log('[Vue Tour] A custom nextStep callback has been called on step ' + (currentStep + 1))
-
-        if (currentStep === 1) {
-          console.log('[Vue Tour] A custom nextStep callback has been called from step 2 to step 3')
+      NextStepCallback (currentStep) {
+        let isTour = JSON.parse(localStorage.getItem('isTour'));
+        if(isTour) {
+          isTour.header = true;
+          localStorage.setItem('isTour', JSON.stringify(isTour));
+        } else {
+          isTour = {}
+          isTour.header = true;
+          localStorage.setItem('isTour', JSON.stringify(isTour));
         }
       },
       // 头部数量

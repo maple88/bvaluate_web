@@ -3,21 +3,21 @@
     <v2header/>
     <div class="v2maintainer pd0">
       <!-- content here -->
-      <div class="project-topmain">
+      <div class="project-topmain" data-v-step="8">
         <div class="container v2container">
           <div class="projectTop">
             <div class="img-box"><img :src="project.logoSrc"></div>
             <div class="textRight">
               <div class="tit">
                 <a :href="project.outerOfficial" target="_blank" class="atitle">{{project.project}}</a>
-                <button class="whitepaper" @click="goArticle('/pdfShow', {project: project.project})">白皮书</button>
+                <button class="whitepaper" @click="goArticle('/pdfShow', {project: project.project})">{{$t('White paper')}}</button>
               </div>
               <p class="smtit">(BTT)</p>
               <div class="fol">
-                <div class="followbtn on" v-if="!isFollow" @click="setFollow($event)">关注</div>
-                <div class="followbtn" v-if="isFollow" @click="deleteFollow(project.collected, $event)">已关注</div>
+                <div class="followbtn on" v-if="!isFollow" @click="setFollow($event)">{{$t('Focus on')}}</div>
+                <div class="followbtn" v-if="isFollow" @click="deleteFollow(project.collected, $event)">{{$t('Followed')}}</div>
                 <div class="followbtn share_button" @click.stop="shareButton = !shareButton">
-                  分享
+                  {{$t('Share')}}
                   <transition name="fade">
                     <div class="share_box" v-show="shareButton">
                       <div class="share_item" @click.stop="weChatQrCodeShow">
@@ -98,7 +98,7 @@
             <div class="mainrow">
               <div class="maincol">
                 <div class="item score-item">
-                  <div class="head">评分</div>
+                  <div class="head">{{$t('Score')}}</div>
                   <div class="score-main">
                     <div class="scorel">
                       <div class="scorel-info">
@@ -132,7 +132,7 @@
               </div>
               <div class="maincol">
                 <div class="item industry-item">
-                  <div class="head">行业</div>
+                  <div class="head">{{$t('Industry')}}</div>
                   <div class="industry-tab">
                     <div :class="indestyIndex === index ? 'on' : ''" @click="changeIndesty(item.mark, index)" v-for="(item, index) in completeness.trade">{{item.explain}}</div>
                   </div>
@@ -142,7 +142,7 @@
                         <img src="../assets/project/polygon.png" alt="polygon">
                         <div class="polygon_info" :style="`bottom: ${completenessHandle(indestyMark)}%;`">
                           <div class="data_info">
-                            <p>平均分</p>
+                            <p>{{$t('Average score')}}</p>
                             <h4>{{indestyMark}}/<span>5</span></h4>
                           </div>
                         </div>
@@ -153,13 +153,13 @@
               </div>
               <div class="maincol">
                 <div class="item media-item">
-                  <div class="head">媒体声量</div>
+                  <div class="head">{{$t('Media volume')}}</div>
                   <div class="media-main">
                     <div class="medial">
                       <div class="circle_box">
                         <div class="scorel-info">
                           <h4>{{completeness.media?parseFloat(completeness.media).toFixed(2):'0'}}</h4>
-                          <p>声量指数</p>
+                          <p>{{$t('Index of the volume')}}</p>
                         </div>
                         <img class="circle_img" src="../assets/project/circle.png" alt="circle">
                         <v-circle :completeness="parseFloat(completeness.media) || 0"
@@ -170,9 +170,9 @@
                     <div class="mediar">
                       <div class="computerbox">
                         <p class="wordtop">{{completeness.report || '0'}}篇</p>
-                        <p class="wordbot">近一周</p>
+                        <p class="wordbot">{{$t('Nearly a week')}}</p>
                       </div>
-                      <p class="des">媒体报道量</p>
+                      <p class="des">{{$t('Media coverage')}}</p>
                     </div>
                   </div>
                 </div>
@@ -182,19 +182,19 @@
           <div class="leftmain">
             <div class="tophead">
               <div class="item">
-                <p class="t">价格</p>
+                <p class="t">{{$t('Price')}}</p>
                 <p class="b">{{hotInfo.price}}</p>
               </div>
               <div class="item">
-                <p class="t">市值</p>
+                <p class="t">{{$t('Market value')}}</p>
                 <p class="b">{{hotInfo.markValue | formatDataForMark}}</p>
               </div>
               <div class="item">
-                <p class="t">流通市值</p>
+                <p class="t">{{$t('Current market value')}}</p>
                 <p class="b">{{hotInfo.famc | formatDataForMark}}</p>
               </div>
               <div class="item">
-                <p class="t">大单交易笔数</p>
+                <p class="t">{{$t('Number of large transactions')}}</p>
                 <p class="b" v-show="hotInfo.linkBig">{{hotInfo.linkBig | rounding}}</p>
               </div>
             </div>
@@ -206,7 +206,7 @@
                 <div ref="radar" class="githubLine" :style="{width: '100%', height: '478px', padding: '15px 0'}"></div>
               </div>
               <div class="details">
-                <p class="total">总分：{{hotInfo.totalordercount}} <span>/ 5</span></p>
+                <p class="total">{{$t('Total score')}}：{{hotInfo.totalordercount}} <span>/ 5</span></p>
                 <div class="item">
                   <div class="tit">
                     <img src="../assets/project/pb1.png">
@@ -258,27 +258,27 @@
                 <label for="citem2" ref="scoreButton2">
                   <input type="checkbox" id="citem2">
                   <div class="checkbox"></div>
-                  资金监管
+                  {{$t('Fund supervision')}}
                 </label>
                 <label for="citem3" ref="scoreButton3">
                   <input type="checkbox" id="citem3">
                   <div class="checkbox"></div>
-                  基本面
+                  {{$t('Fundamentals')}}
                 </label>
                 <label for="citem4" ref="scoreButton4">
                   <input type="checkbox" id="citem4">
                   <div class="checkbox"></div>
-                  团队
+                  {{$t('Team')}}
                 </label>
                 <label for="citem5" ref="scoreButton5">
                   <input type="checkbox" id="citem5">
                   <div class="checkbox"></div>
-                  技术
+                  {{$t('Technology')}}
                 </label>
                 <label for="citem6" ref="scoreButton6">
                   <input type="checkbox" id="citem6">
                   <div class="checkbox"></div>
-                  市场
+                  {{$t('Market')}}
                 </label>
               </div>
             </div>
@@ -287,7 +287,7 @@
                 <div class="item" :class="tabactive === index ? 'on' : ''" v-for="(item, index) in tablist" :key="index"
                      @click="tabindex(index)">{{item}}
                 </div>
-                <div class="item" :class="{on:tabactive>4}" @click="tabindex(5)">资讯</div>
+                <div class="item" :class="{on:tabactive>4}" @click="tabindex(5)">{{$t('Information')}}</div>
               </div>
               <!-- 行情 -->
               <div class="tabcontent" v-show="tabactive === 0">
@@ -300,17 +300,17 @@
                     <label for="item1" ref="marketLineButton1">
                       <input type="checkbox" id="item1">
                       <div class="checkbox"></div>
-                      流通笔数
+                      {{$t('Number of circulation')}}
                     </label>
                     <label for="item2" ref="marketLineButton2">
                       <input type="checkbox" id="item2">
                       <div class="checkbox"></div>
-                      流通总额
+                      {{$t('Total amount of circulation')}}
                     </label>
                     <label for="item3" ref="marketLineButton3">
                       <input type="checkbox" id="item3">
                       <div class="checkbox"></div>
-                      流通参与用户量
+                      {{$t('Number of users participating in circulation')}}
                     </label>
                   </div>
                 </div>
@@ -362,39 +362,39 @@
                 <div class="flexbox">
                   <div class="box-row">
                     <div class="box-col" v-if="project.startDate">
-                      <div class="iteml">开始时间</div>
+                      <div class="iteml">{{$t('Start time')}}</div>
                       <div class="itemr">{{project.startDate}}</div>
                     </div>
                     <div class="box-col" v-if="project.outerOfficial">
-                      <div class="iteml">官网地址</div>
+                      <div class="iteml">{{$t('Official website address')}}</div>
                       <div class="itemr"><a target="_blank" :href="project.outerOfficial">{{project.outerOfficial}}</a></div>
                     </div>
                     <!-- </div>
                     <div class="box-row"> -->
                     <div class="box-col" v-if="project.priceICO">
-                      <div class="iteml">发行价格</div>
+                      <div class="iteml">{{$t('Offering price')}}</div>
                       <div class="itemr">{{project.priceICO}}</div>
                     </div>
                     <div class="box-col" v-if="project.country">
-                      <div class="iteml">所属国家</div>
+                      <div class="iteml">{{$t('Country of affiliation')}}</div>
                       <div class="itemr">{{project.country}}</div>
                     </div>
                     <!-- </div>
                     <div class="box-row"> -->
                     <div class="box-col" v-if="project.totalSupply">
-                      <div class="iteml">发行总量</div>
+                      <div class="iteml">{{$t('Total circulation')}}</div>
                       <div class="itemr">{{project.totalSupply}}</div>
                     </div>
                     <div class="box-col">
-                      <div class="iteml">白皮书</div>
+                      <div class="iteml">{{$t('White paper')}}</div>
                       <div class="itemr">
-                        <div class="bps-btn" @click="goArticle('/pdfShow', {project: project.project})">阅读白皮书</div>
+                        <div class="bps-btn" @click="goArticle('/pdfShow', {project: project.project})">{{$t('Read White paper on-line')}}</div>
                       </div>
                     </div>
                     <!-- </div>
                     <div class="box-row"> -->
                     <div class="box-col" v-if="project.tokenPlatform">
-                      <div class="iteml">代币平台</div>
+                      <div class="iteml">{{$t('Token platform')}}</div>
                       <div class="itemr">{{project.tokenPlatform}}</div>
                     </div>
                   </div>
@@ -436,17 +436,17 @@
                   <div class="control_button github_box">
                     <div class="control_item">
                       <button ref="githubLineButton1" :class="githubButton === 0 ?'check':''"
-                              @click="changeGithubButton(0)">更新量
+                              @click="changeGithubButton(0)">{{$t('Quantity of update')}}
                       </button>
                     </div>
                     <div class="control_item">
                       <button ref="githubLineButton2" :class="githubButton === 1 ?'check':''"
-                              @click="changeGithubButton(1)"> 浏览量
+                              @click="changeGithubButton(1)"> {{$t('Page views')}}
                       </button>
                     </div>
                     <div class="control_item">
                       <button ref="githubLineButton3" :class="githubButton === 2 ?'check':''"
-                              @click="changeGithubButton(2)"> 收藏量
+                              @click="changeGithubButton(2)"> {{$t('Quantity of collected projects')}}
                       </button>
                     </div>
                   </div>
@@ -460,7 +460,7 @@
                   <div class="market_box">
                     <div class="line_title">
                       <h4>
-                        媒体宣传力度
+                        {{$t('Media campaign')}}
                       </h4>
                     </div>
                     <div style="position: relative">
@@ -471,7 +471,7 @@
                     </div>
                     <div class="line_title">
                       <h4>
-                        媒体关注
+                        {{$t('Media attention')}}
                       </h4>
                     </div>
                     <div style="position: relative">
@@ -502,16 +502,16 @@
                 <div class="follow_list serach_follow_list">
                   <div class="label_box">
                     <a name="search_label_box_xinwen" id="search_label_box_xinwen" data="新闻" href="javascript:void(0);"
-                       :class="search.type === 'NEWS'?'active':''" @click="changeType('NEWS')">新闻</a>
+                       :class="search.type === 'NEWS'?'active':''" @click="changeType('NEWS')">{{$t('News')}}</a>
                     <a name="search_label_box_Twitter" id="search_label_box_Twitter" data="Twitter"
                        href="javascript:void(0);" :class="search.type === 'TWITTER'?'active':''"
-                       @click="changeType('TWITTER')">推文</a>
+                       @click="changeType('TWITTER')">{{$t('Twitter')}}</a>
                     <a name="search_label_box_weibo" id="search_label_box_weibo" data="微博" href="javascript:void(0);"
                        :class="search.type === 'WEIBO'?'active':''"
-                       @click="changeType('WEIBO')">微博</a>
+                       @click="changeType('WEIBO')">{{$t('Microblog')}}</a>
                     <a name="search_label_box_weixin" id="search_label_box_weixin" data="微信" href="javascript:void(0);"
                        :class="search.type === 'WEIXIN'?'active':''"
-                       @click="changeType('WEIXIN')">微信</a>
+                       @click="changeType('WEIXIN')">{{$t('WeChat')}}</a>
                   </div>
                   <ul>
                     <li>
@@ -601,7 +601,7 @@
                       <button :disabled="showloading" data="加载更多" value="加载更多" name="loading_more" id="loading_more"
                               @click.stop="loadMoreNews" v-if="!(showloading===-1)">
                         <img v-if="showloading" :src="loading"/>
-                        <span v-if="!showloading">加载更多</span>
+                        <span v-if="!showloading">{{$t('Load more')}}</span>
                       </button>
                     </div>
                   </ul>
@@ -627,7 +627,7 @@
               <div class="swiper-button-next"><i class="fa fa-angle-right"></i></div>
             </div>
             <div class="recommendproject">
-              <div class="recommendhead">推荐项目</div>
+              <div class="recommendhead">{{$t('Recommended project')}}</div>
               <div class="recommend-item" v-for="(project, index) in recommendProjects" :key="index">
                 <router-link :to="'/project?sid='+project.sid" target="_blank" :data="project.project">
                   <div class="left"><img :src="project.logoSrc"></div>
@@ -645,6 +645,32 @@
       </div>
       <v2footer/>
     </div>
+
+    <v-tour v-show="$store.state.isTour" name="myTour" :steps="steps" :callbacks="myCallbacks">
+      <template slot-scope="tour">
+        <transition name="fade">
+          <v-step
+          v-if="tour.currentStep === index"
+          v-for="(step, index) of tour.steps"
+          :key="index"
+          :step="step"
+          :previous-step="tour.previousStep"
+          :next-step="tour.nextStep"
+          :stop="tour.stop"
+          :is-first="tour.isFirst"
+          :is-last="tour.isLast"
+          :labels="tour.labels"
+          >
+            <template>
+              <div slot="actions" class="v-step__buttons">
+                <button @click="tour.stop" class="btn btn-primary">完成</button>
+              </div>
+            </template>
+          </v-step>
+        </transition>
+      </template>
+    </v-tour>
+
   </div>
 </template>
 
@@ -718,9 +744,30 @@
         typeNumber: '290001',
         completeness: [],
         indestyIndex: 0,
-        indestyMark: 0
+        indestyMark: 0,
+        steps: [
+          {
+            target: '[data-v-step="8"]',
+            content: `<h4>项目信息总览</h4>
+                      <p>1、项目评分、声量指数、行业</p>
+                      <p>2、项目行情、简介、团队、技术、市场、资讯</p>`
+          },
+        ],
+        myCallbacks: {
+          onStep: this.NextStepCallback
+        }
       }
     },
+    // activated () {
+    //   let isTour = JSON.parse(localStorage.getItem('isTour'));
+    //   if (isTour) {
+    //     if(!isTour.project){
+    //       this.$tours['myTour'].start();
+    //     }
+    //   }else{
+    //     this.$tours['myTour'].start();
+    //   }
+    // },
     mounted() {
       new Swiper('.advert-swiper', {
         autoplay: {
@@ -745,6 +792,17 @@
 
     },
     methods: {
+      NextStepCallback (currentStep) {
+        let isTour = JSON.parse(localStorage.getItem('isTour'));
+        if(isTour) {
+          isTour.project = true;
+          localStorage.setItem('isTour', JSON.stringify(isTour));
+        } else {
+          isTour = {}
+          isTour.project = true;
+          localStorage.setItem('isTour', JSON.stringify(isTour));
+        }
+      },
       changeIndesty(value, index) {
         // console.log(value)
         this.indestyMark = parseFloat(value);

@@ -8,17 +8,17 @@
         </div>
         <div class="bd">
           <div class="tips_title">
-            <h4>邀请有礼</h4>
+            <h4>{{$t('Invited gift')}}</h4>
           </div>
           <div class="tips_content">
             <div class="content_default">
-              <h4>邀请好友注册即送<span>288</span>糖果</h4>
-              <h4>好友邀请其他人还可以获得<span>188</span>糖果</h4>
+              <h4>{{$t('Invite friends to register to get')}}<span>288</span>{{$t('candy for free')}}</h4>
+              <h4>{{$t('Friends invite other people to get more')}}<span>188</span>{{$t('candy')}}</h4>
             </div>
             <div class="invitation_wrapbox">
                 <div class="invitation_info">
-                    <h4>已成功邀请好友<span>{{people}}</span>名</h4>
-                    <h4>累计获得糖果<span>{{sugar}}</span></h4>
+                    <h4>{{$t('have been invited')}}<span>{{people}}</span>{{$t('participants successfully')}}</h4>
+                    <h4>{{$t('Accumulated candy')}}<span>{{sugar}}</span></h4>
                 </div>
                 <div class="erCode_box">
                     <div class="img_box">
@@ -26,8 +26,8 @@
                         <!--<img src="../assets/invitation/test.png" alt="">-->
                     </div>
                     <div class="content_tips">
-                        <p>截图将此二维码</p>
-                        <p>发送给好友注册</p>
+                        <p>{{$t('Screenshot the  two-dimensional code')}}</p>
+                        <p>{{$t('for friend to registered users')}}</p>
                     </div>
                 </div>
             </div>

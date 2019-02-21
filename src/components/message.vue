@@ -8,15 +8,15 @@
         </div>
         <div class="bd">
           <div class="message_title">
-            <h4>消息中心</h4>
+            <h4>{{$t('Message center')}}</h4>
           </div>
           <div class="message_content">
             <div class="message_tab">
               <div class="tab_item" :class="showBox === 0?'active':''" @click="showList()">
-                <h4>全部</h4>
+                <h4>{{$t('All')}}</h4>
               </div>
               <div class="tab_item" :class="showBox === 1?'active':''" @click="showList()">
-                <h4>未读</h4>
+                <h4>{{$t('Unread news')}}</h4>
               </div>
             </div>
             <div class="message_tab_content">
