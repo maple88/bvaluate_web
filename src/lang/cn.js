@@ -33,7 +33,7 @@ export default {
 	'Forgot password': '忘记密码',
 	'Input verification code': '输入验证码',
 	'Send Message': '获取验证码',
-	'Submit': '注册',
+	'Sign_Submit': '注册',
 	'Reset passwords': '重置密码',
 	'Confirm password': '确认密码',
 	'Global largest blockchain projects automatic evaluate platform': '全球最大的区块链项目自动评估平台',

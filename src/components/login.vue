@@ -11,7 +11,7 @@
           <div class="loginlogo"><img src="../assets/loginlogo.png"></div>
           <ul v-show="login_register_head">
             <li :class="{ active : isLogin }" @click="login()">{{$t('login')}}</li>
-            <li :class="{ active : isRegister }" @click="register()">{{$t('Submit')}}</li>
+            <li :class="{ active : isRegister }" @click="register()">{{$t('Sign_Submit')}}</li>
           </ul>
           <ul v-show="resetpwd_head">
             <li class="active">{{$t('Reset passwords')}}</li>
@@ -156,7 +156,7 @@
               </button>
             </div>
             <div class="input-group submit-group">
-              <button type="button" class="btn ok-btn" data="注册" name="login_register" id="login_register" @click.stop="registerSubmit()">{{$t('Submit')}}</button>
+              <button type="button" class="btn ok-btn" data="注册" name="login_register" id="login_register" @click.stop="registerSubmit()">{{$t('Sign_Submit')}}</button>
             </div>
             <!-- <p class="register-tips">点击“注册”即表示您同意并愿意接收<br>BVALUATE<span>用户此协议</span>和<span>隐私政策</span></p> -->
           </div>

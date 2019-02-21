@@ -33,7 +33,7 @@ export default {
 	'Forgot password': '忘記密碼',
 	'Input verification code': '輸入驗證碼',
 	'Send Message': '獲取驗證碼',
-	'Submit': '註冊',
+	'Sign_Submit': '註冊',
 	'Reset passwords': '重置密碼',
 	'Confirm password': '確認密碼',
 	'Global largest blockchain projects automatic evaluate platform': '全球最大的區塊鏈項目自動評估平台',

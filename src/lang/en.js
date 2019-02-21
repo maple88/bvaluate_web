@@ -33,7 +33,7 @@ export default {
 	'Forgot password': 'Forgot password',
 	'Input verification code': 'Input verification code',
 	'Send Message': 'Send Message',
-	'Submit': 'Submit',
+	'Sign_Submit': 'Sign',
 	'Reset passwords': 'Reset passwords',
 	'Confirm password': 'Confirm password',
 	'Global largest blockchain projects automatic evaluate platform': 'Global largest blockchain projects automatic evaluate platform',
