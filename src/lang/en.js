@@ -112,7 +112,7 @@ export default {
 	'Followed': 'Followed',
 	'Number of candy': 'Number of candy',
 	'Followers': 'Followers',
-	'Focus ': 'Focus ',
+	'Focus': 'Focus ',
 	'Collection': 'Collection',
 	'Personal information': 'Personal information',
 	'Gender': 'Gender',
@@ -214,5 +214,16 @@ export default {
 	'Click to receive': 'Click to receive',
 	'notice': 'notice',
 	'Fold': 'Fold',
-	'Wechat applet': 'Wechat applet'
+	'Wechat applet': 'Wechat applet',
+	'Save': 'Save',
+	'Verification code': 'Verification code',
+	'Male': 'Male',
+	'Female': 'Female',
+	'Click to change': 'Click to change',
+	'Bind phone number': 'Bind phone number',
+	'Bind Email': 'Bind Email',
+	'Modify password': 'Modify password',
+	'Content': 'Content',
+	'Original article': 'Original article',
+	'24 hours hot articles': '24 hours hot articles'
 };

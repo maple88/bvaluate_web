@@ -112,7 +112,7 @@ export default {
 	'Followed': '已關注',
 	'Number of candy': '糖果數',
 	'Followers': '粉絲',
-	'Focus ': '關注',
+	'Focus': '關注',
 	'Collection': '收藏',
 	'Personal information': '個人資料',
 	'Gender': '性別',
@@ -222,5 +222,8 @@ export default {
 	'Click to change': '點擊修改頭像',
 	'Bind phone number': '綁定手機',
 	'Bind Email': '綁定郵箱',
-	'Modify password': '修改密碼'
+	'Modify password': '修改密碼',
+	'Content': '正文',
+	'Original article': '查看原文',
+	'24 hours hot articles': '24小時熱文'
 };
