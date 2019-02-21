@@ -9,7 +9,7 @@
             <li><span>{{$t('Total White papers')}}：</span><span>{{tophead.totalWhitePaper}}</span></li>
           </ul>
           <div class="appdownload">
-            <div class="rookie" @click="isTourShow">{{$t('Feature Tour')}}</div>
+            <div class="rookie" v-show="false" @click="isTourShow">{{$t('Feature Tour')}}</div>
             <a href="https://api.bvaluate.com.cn/apk/bvaluate.apk">
               <img src="../assets/tdownload.png">
               <span>{{$t('Download App')}}</span>
@@ -82,13 +82,13 @@
                 </div>
                 <div class="htips icon-htips" @click="invitation">{{$t('gift')}}</div>
                 <ul class="dropdown-menu header-dropdown-menu">
-                  <router-link tag="li" to="/userCenter" active-class="active"><a data="个人中心">{{$t('Personal center')}}</a></router-link>
+                  <router-link tag="li" to="/userCenter" active-class="active"><a data="个人中心">{{$t('My Account')}}</a></router-link>
                   <!-- <li>
                     <a href="javascript:;" data="消息" @click="$store.state.messagePop = true">消息</a>
                   </li> -->
                   <router-link tag="li" to="/my" active-class="active"><a data="设置">{{$t('Set up')}}</a></router-link>
                   <li>
-                    <a href="javascript:;" data="退出" @click="logout()">{{$t('Exit')}}</a>
+                    <a href="javascript:;" data="退出" @click="logout()">{{$t('Log Out')}}</a>
                   </li>
                 </ul>
               </li>

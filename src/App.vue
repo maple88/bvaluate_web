@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="$i18n.locale === 'en'?'langeuage_en':''">
+  <div id="app" :class="$i18n.locale === 'en'?'language_en':''">
     <keep-alive>
       <router-view/>
     </keep-alive>

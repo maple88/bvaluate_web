@@ -26,12 +26,12 @@
                     <img :src="item.readFlag?read:unRead" alt="未读">
                   </div>
                   <div class="message_center">
-                    <h4>通知 | {{item.title}}</h4>
+                    <h4>{{$t('notice')}} | {{item.title}}</h4>
                     <p>{{item.createdTime}}</p>
                   </div>
                   <div class="message_right">
                     <!--<div class="copy_a">删除</div>-->
-                    <div class="copy_a" @click="openMessage(item.id,index,item.readFlag)">{{open === index?'收起':'展开'}}<i
+                    <div class="copy_a" @click="openMessage(item.id,index,item.readFlag)">{{open === index?$t('Fold'):$t('Unfold')}}<i
                       class="icon_down"></i>
                     </div>
                   </div>
