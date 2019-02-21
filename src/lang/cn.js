@@ -179,7 +179,7 @@ export default {
 	'Twitter': '推文',
 	'Microblog': '微博',
 	'WeChat': '微信',
-	'Message center ': '消息中心',
+	'Message center': '消息中心',
 	'All': '全部',
 	'Unread news': '未读',
 	'Unfold': '展开',
@@ -211,5 +211,7 @@ export default {
 	'Day 5': '第五天',
 	'Day 6': '第六天',
 	'Day 7': '第七天',
-	'Click to receive': '点击领取'
+	'Click to receive': '点击领取',
+	'notice': '通知',
+	'Fold': '收起'
 };
