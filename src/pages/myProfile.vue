@@ -96,7 +96,19 @@
             <form class="form-horizontal">
               <div class="form-group">
                 <label class="control-label">{{$t('Phone number')}}</label>
-                <input type="tel" data="输入手机号码" name="no_content" id="input_phone">
+                <div class="layui-form">
+                  <select name="resetSelect" lay-filter="resetSelect">
+                    <option value="+86" selected>+86</option>
+                    <option value="+852">+852</option>
+                    <option value="+853">+853</option>
+                    <option value="+81">+81</option>
+                    <option value="+82">+82</option>
+                    <option value="+65">+65</option>
+                    <option value="+886">+886</option>
+                    <option value="+1">+1</option>
+                  </select>
+                </div>
+                <input type="tel" class="prefix-input" data="输入手机号码" name="no_content" id="input_phone">
               </div>
               <div class="form-group">
                 <label class="control-label">验证码</label>
@@ -239,11 +251,20 @@
         aplinkUser: {},
         loading: loading,
         default_header: default_header,
-        emailCodeError_msg: ''
+        emailCodeError_msg: '',
+        resetPrefix:'+86'
       }
     },
     mounted() {
+      let that = this;
       this.getMyProfile();
+      layui.use('form', function () {
+        let form = layui.form;
+        form.render('select');
+        form.on('select(resetSelect)', function(data){
+          that.resetPrefix = data.value;
+        });
+      });
     },
     methods: {
       // 通用修改按钮
