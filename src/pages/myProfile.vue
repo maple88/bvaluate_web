@@ -9,7 +9,7 @@
                  :style="(user.profileUrl !==null && user.profileUrl !== '' && user.profileUrl !== 'NULL' && user.profileUrl !== undefined)?'background-image: url('+ user.profileUrl +')':'background-image: url('+ default_header +')'">
 
               <div class="edit_bg">
-                <span>点击修改头像</span>
+                <span>{{$t('Click to change')}}</span>
               </div>
               <input name="no_content" id="input_change_headimg" type="file" accept="image/*" multiple="multiple" data="修改头像" @change="changeImg($event)"/>
               <!--<img src="../assets/user/default.png">-->
@@ -36,14 +36,14 @@
               <div class="tb-cell editbox" v-show="!editsexbox.show">
                 <div class="radiobox">
                   <label class="radio-inline">
-                    <input data="男" type="radio" value="2" name="no_content" id="input_sex2" :checked="user.sex == 2" v-model="user.sex"> 男
+                    <input data="男" type="radio" value="2" name="no_content" id="input_sex2" :checked="user.sex == 2" v-model="user.sex"> {{$t('Male')}}
                   </label>
                   <label class="radio-inline">
-                    <input data="女" type="radio" value="3" name="no_content" id="input_sex3" :checked="user.sex == 3" v-model="user.sex"> 女
+                    <input data="女" type="radio" value="3" name="no_content" id="input_sex3" :checked="user.sex == 3" v-model="user.sex"> {{$t('Female')}}
                   </label>
                 </div>
                 <div class="botoperate">
-                  <button type="button" class="btn ok" data="确认修改性别" @click="editSex(editsexbox)">保存</button>
+                  <button type="button" class="btn ok" data="确认修改性别" @click="editSex(editsexbox)">{{$t('Save')}}</button>
                   <button type="button" class="btn" data="取消修改性别" @click="editcancel(editsexbox)">{{$t('Cancel')}}</button>
                 </div>
               </div>
@@ -57,7 +57,7 @@
               <div class="tb-cell editbox" v-show="!editsignbox.show">
                 <textarea v-model="user.synopsis" rows="8" data="输入个人说明"></textarea>
                 <div class="botoperate">
-                  <button type="button" data="确认修改个人说明" class="btn ok" @click="editSynopsis(editsignbox)">保存</button>
+                  <button type="button" data="确认修改个人说明" class="btn ok" @click="editSynopsis(editsignbox)">{{$t('Save')}}</button>
                   <button type="button" data="取消修改个人说明" class="btn" @click="editcancel(editsignbox)">{{$t('Cancel')}}</button>
                 </div>
               </div>
@@ -90,7 +90,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" data="关闭模态框"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">绑定手机</h4>
+            <h4 class="modal-title">{{$t('Bind phone number')}}</h4>
           </div>
           <div class="modal-body phoneModal-body">
             <form class="form-horizontal">
@@ -111,7 +111,7 @@
                 <input type="tel" class="prefix-input" data="输入手机号码" name="no_content" id="input_phone">
               </div>
               <div class="form-group">
-                <label class="control-label">验证码</label>
+                <label class="control-label">{{$t('Verification code')}}</label>
                 <div class="coderow">
                   <input type="text" data="输入验证码" name="no_content" id="input_code_btn">
                   <button type="button" class="btn code-btn" data="获取验证码">{{$t('Send Message')}}</button>
@@ -133,7 +133,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" data="关闭模态框"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">绑定邮箱</h4>
+            <h4 class="modal-title">{{$t('Bind Email')}}</h4>
           </div>
           <div class="modal-body phoneModal-body">
             <form class="form-horizontal">
@@ -145,7 +145,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="control-label">验证码</label>
+                <label class="control-label">{{$t('Verification code')}}</label>
                 <div class="coderow">
                   <input type="text" data="输入验证码" v-model="user.emailCode" @focus="emailCodeError_msg=''" name="no_content" id="input_emailCode">
                   <button type="button" :disabled="sendEmailBtn" class="btn code-btn" data="发送验证邮件" @click="sendEmail">{{$t('Send verification mail')}}
@@ -169,7 +169,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" data="关闭模态框"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">修改密码</h4>
+            <h4 class="modal-title">{{$t('Modify password')}}</h4>
           </div>
           <div class="modal-body phoneModal-body">
             <form class="form-horizontal">
