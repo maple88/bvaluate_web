@@ -634,7 +634,7 @@
       },
       getHotnewsData() {
         let that = this
-        that.$axios.get('/traditional/hotNews?ndustryName=' + that.industryName + '&pageSize=10').then(function (res) {
+        that.$axios.get('/traditional/hotNews?industryName=' + that.industryName + '&pageSize=10').then(function (res) {
           that.hotNews = res.data.content
         })
       },

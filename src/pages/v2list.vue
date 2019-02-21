@@ -17,8 +17,8 @@
           <div class="left">
             <div class="main-table">
               <div class="list-tab">
-                <div class="tabtn" data-v-step="6" :class="listNameType==='总评榜'?'on':''" @click="changeListName('总评榜')">{{$t('Overall list')}}</div>
-                <div class="tabtn" data-v-step="7" :class="listNameType==='sto榜'?'on':''" @click="changeListName('sto榜')">{{$t('STO list')}}</div>
+                <div class="tabtn" data-list-step="1" :class="listNameType==='总评榜'?'on':''" @click="changeListName('总评榜')">{{$t('Overall list')}}</div>
+                <div class="tabtn" data-list-step="2" :class="listNameType==='sto榜'?'on':''" @click="changeListName('sto榜')">{{$t('STO list')}}</div>
               </div>
               <div class="table-filter">
                 <div>
@@ -84,7 +84,7 @@
       <v2footer/>
     </div>
 
-    <v-tour v-show="$store.state.isTour" name="myTour" :steps="steps" :callbacks="myCallbacks">
+    <v-tour  name="listTour" :steps="steps" :callbacks="myCallbacks">
       <template slot-scope="tour">
         <transition name="fade">
           <v-step
@@ -142,12 +142,12 @@
         showLoadMore: false,
         steps: [
           {
-            target: '[data-v-step="6"]',
+            target: '[data-list-step="1"]',
             content: `<h4>总评榜，通过大数据及AI技术，系统根据自动评估模型及算法，对每个项目进行综合评估。</h4>
                       <p>提供项目周榜、月榜。也可通过行业、国家进行筛选项目。</p>`
           },
           {
-            target: '[data-v-step="7"]',
+            target: '[data-list-step="2"]',
             content: `<h4>项目榜单，提供项目周榜、月榜，展现项目排名、趋势等动态，更全面的透视项目情况。</h4>
                       <h4>包括总评榜、STO榜、涨幅榜、跌幅榜。</h4>`
           }
@@ -257,7 +257,7 @@
           isTour.list = true;
           localStorage.setItem('isTour', JSON.stringify(isTour));
         } else {
-          isTour = {}
+          isTour = {};
           isTour.list = true;
           localStorage.setItem('isTour', JSON.stringify(isTour));
         }
@@ -523,7 +523,7 @@
         this.showLoadMore = false;
         layui.use('form', function(){
           var form = layui.form;
-          form.render('select'); 
+          form.render('select');
         });
         if (this.listNameType === '总评榜') {
           this.getMainTable(this.country, this.industry);
@@ -544,7 +544,7 @@
 
           layui.use('form', function(){
             var form = layui.form;
-            form.render('select'); 
+            form.render('select');
           });
         }, 50)
       })
