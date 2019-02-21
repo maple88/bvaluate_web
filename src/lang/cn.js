@@ -213,5 +213,6 @@ export default {
 	'Day 7': '第七天',
 	'Click to receive': '点击领取',
 	'notice': '通知',
-	'Fold': '收起'
+	'Fold': '收起',
+	'Wechat applet': '小程序'
 };

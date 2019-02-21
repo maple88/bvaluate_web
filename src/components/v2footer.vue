@@ -27,7 +27,7 @@
             <div class="box-col">
               <div class="eweima-row">
                 <div class="item">
-                  <p>小程序</p>
+                  <p>{{$t('Wechat applet')}}</p>
                   <div class="img-div"><img src="../assets/feweima3.jpg"></div>
                 </div>
                 <div class="item">
