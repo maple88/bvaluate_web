@@ -238,7 +238,8 @@
         newsimg: newsimg,
         tuiwen: tuiwen,
         weibo: weibo,
-        recommendProjects: []
+        recommendProjects: [],
+        rightNewspageNo: 0
       }
     },
     filters: {
@@ -346,8 +347,8 @@
       this.getRecommendProjects();
       this.initSearch();
       this.searchKeyWord();
-      this.initRightNews('快讯', this.flashPageSize, res => {
-        this.flashPageSize += 20;
+      this.initRightNews('快讯', this.rightNewspageNo, res => {
+        this.rightNewspageNo ++;
         this.flashList = res;
       });
       this.scrollFlash();
@@ -497,11 +498,12 @@
       changSearchClass(name) {
         this.search.class = name;
       },
-      initRightNews(categoryName, pageSize, callback) {
+      initRightNews(categoryName, pageNo, callback) {
         let that = this;
         that.categoryName = categoryName;
         let thisCallback = callback;
-        let url = '/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + pageSize
+        // let url = '/traditional/categoryList?categoryName=' + categoryName + '&pageSize=' + pageSize
+        let url = '/traditional/information?newsType=' + categoryName + '&pageNo=' + pageNo + '&pageSize=20';
         that.$axios.get(url).then(function (res) {
           thisCallback(res.data.content);
         })
@@ -515,9 +517,9 @@
           let offsetHeight = $this.offsetHeight;
           if ((boxTop / (boxHeight - offsetHeight) >= 0.80) && finished) {
             finished = false;
-            this.initRightNews('快讯', this.flashPageSize, res => {
-              this.flashPageSize += 20;
-              this.flashList = res;
+            this.initRightNews('快讯', this.rightNewspageNo, res => {
+              this.rightNewspageNo ++;
+              this.flashList = this.flashList.concat(res);
               finished = true;
             });
           }

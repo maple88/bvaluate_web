@@ -548,10 +548,10 @@
           this.$axios.get('/traditional/search?newsType=' + this.search.type + '&search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
             this.showloading = false;
             let allData = res.data.content;
-            for (let i = 0; i < allData.length; i++) {
-              allData[i].title = this.replaceAll(allData[i].title, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
-              allData[i].content = this.replaceAll(allData[i].content, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
-            }
+            // for (let i = 0; i < allData.length; i++) {
+            //   allData[i].title = this.replaceAll(allData[i].title, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
+            //   allData[i].content = this.replaceAll(allData[i].content, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
+            // }
             this.newsList = allData;
             if (res.data.content.length <= 0) {
               this.showloading = -1;
