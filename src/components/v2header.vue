@@ -41,7 +41,7 @@
                 </li> -->
                 <router-link tag="li" to="/my" active-class="active"><a data="设置">{{$t('Set up')}}</a></router-link>
                 <li>
-                  <a href="javascript:;" data="退出" @click="logout()">{{$t('Log Out')}}</a>
+                  <a href="javascript:;" data="退出" @click="logout()">{{$t('Log out')}}</a>
                 </li>
               </ul>
             </div>
@@ -88,7 +88,7 @@
                   </li> -->
                   <router-link tag="li" to="/my" active-class="active"><a data="设置">{{$t('Set up')}}</a></router-link>
                   <li>
-                    <a href="javascript:;" data="退出" @click="logout()">{{$t('Log Out')}}</a>
+                    <a href="javascript:;" data="退出" @click="logout()">{{$t('Log out')}}</a>
                   </li>
                 </ul>
               </li>
