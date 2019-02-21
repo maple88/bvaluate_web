@@ -256,6 +256,7 @@
             that.$i18n.locale = 'hk';
             localStorage.setItem('bvaluate-lang', 'hk');
           }
+          window.location.reload();
         });
       });
 
