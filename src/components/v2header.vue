@@ -9,7 +9,7 @@
             <li><span>{{$t('Total White papers')}}：</span><span>{{tophead.totalWhitePaper}}</span></li>
           </ul>
           <div class="appdownload">
-            <div class="rookie" @click="isTourShow">{{$t('Feature Tour')}}</div>
+            <div id="rookie" class="rookie" @click="isTourShow">{{$t('Feature Tour')}}</div>
             <a href="https://api.bvaluate.com.cn/apk/bvaluate.apk">
               <img src="../assets/tdownload.png">
               <span>{{$t('Download App')}}</span>
@@ -56,15 +56,15 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <router-link tag="li" to="/home" active-class="active" data-v-step="1"><a data="首页">{{$t('Home')}}</a></router-link>
-              <router-link tag="li" to="/list" active-class="active" data-v-step="2"><a data="榜单">{{$t('List')}}</a></router-link>
-              <router-link tag="li" to="/v2news" active-class="active" data-v-step="3"><a data="资讯">{{$t('headerNews')}}</a></router-link>
-              <li v-if="token" data-v-step="4"><a href="javascript:;" data="新增项目" @click="analysis()">{{$t('New Projects')}}</a></li>
-              <li v-if="!token" data-v-step="4" @click="isLogin('新增项目')"><a data="新增项目">{{$t('New Projects')}}</a></li>
+              <router-link v-intro="steps.content1" tag="li" to="/home" active-class="active"><a data="首页">{{$t('Home')}}</a></router-link>
+              <router-link v-intro="steps.content2" tag="li" to="/list" active-class="active"><a data="榜单">{{$t('List')}}</a></router-link>
+              <router-link v-intro="steps.content3" tag="li" to="/v2news" active-class="active"><a data="资讯">{{$t('headerNews')}}</a></router-link>
+              <li v-show="token"><a href="javascript:;" data="新增项目" @click="analysis()">{{$t('New Projects')}}</a></li>
+              <li v-show="!token" v-intro="steps.content4" @click="isLogin('新增项目')"><a data="新增项目">{{$t('New Projects')}}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <router-link tag="li" to="/follow" active-class="active" v-show="token"><a data="我的关注">{{$t('Attention')}}</a></router-link>
-              <li v-show="!token" @click="isLogin('我的关注')" data-v-step="5"><a data="我的关注">{{$t('Attention')}}</a></li>
+              <li v-show="!token" v-intro="steps.content5" @click="isLogin('我的关注')"><a data="我的关注">{{$t('Attention')}}</a></li>
               <li class="header-token hsearch">
                 <div class="open_search">
                   <img src="../assets/hsearch.png">
@@ -176,6 +176,7 @@
   import Bus from '../bus.js'
 
   let default_header = require('../assets/user/default-header.png');
+  require('intro.js/intro.js');
   export default {
     components: {
       'v-login': login,
@@ -206,6 +207,13 @@
         path: '',
         showSearch: false,
         hasbg: false,
+        steps: {
+          content1: '<p><strong>总评榜</strong>，通过大数据及AI技术，系统根据自动评估模型及算法，对每个项目进行综合评估。</p><p>提供项目周榜、月榜。也可通过行业、国家进行筛选项目。</p>',
+          content2: '<p>项目榜单，提供项目周榜、月榜，展现项目排名、趋势等动态，更全面的透视项目情况。</p><p>包括总评榜、STO榜、涨幅榜、跌幅榜。</p>',
+          content3: '<p>项目榜单，提供项目周榜、月榜，展现项目排名、趋势等动态，更全面的透视项目情况。</p><p>包括总评榜、STO榜、涨幅榜、跌幅榜。</p>',
+          content4: '<p>项目榜单，提供项目周榜、月榜，展现项目排名、趋势等动态，更全面的透视项目情况。</p><p>包括总评榜、STO榜、涨幅榜、跌幅榜。</p>',
+          content5: '<p>项目榜单，提供项目周榜、月榜，展现项目排名、趋势等动态，更全面的透视项目情况。</p><p>包括总评榜、STO榜、涨幅榜、跌幅榜。</p>'
+        }
       }
     },
     mounted() {
@@ -269,16 +277,23 @@
     },
     methods: {
       isTourShow () {
-        let path = this.$route.path;
-        if(path === '/list'){
-          this.$tours['listTour'].start();
-        }else if(path === '/project'){
-          this.$tours['projectTour'].start();
-        }else{
-          console.log(1);
-          this.$tours['headerTour'].start();
-        }
-        // this.$tours['myTour'].start();
+        let that = this;
+        // that.$intro().exit();
+        that.$intro().setOptions({
+          prevLabel: '上一步',
+          nextLabel: '下一步', 
+          doneLabel: '下一页',
+          skipLabel: '跳过',
+          showStepNumbers: false,
+          showBullets: false,
+         }).start().oncomplete(function() {
+          that.$router.push({
+            path: '/list',
+            query: {
+              multipage: true
+            }
+          })
+        });
       },
       // 头部数量
       getTophead() {

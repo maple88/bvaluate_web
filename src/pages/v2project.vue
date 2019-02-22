@@ -3,7 +3,7 @@
     <v2header/>
     <div class="v2maintainer pd0">
       <!-- content here -->
-      <div class="project-topmain" data-project-step="1">
+      <div class="project-topmain">
         <div class="container v2container">
           <div class="projectTop">
             <div class="img-box"><img :src="project.logoSrc"></div>
@@ -645,32 +645,6 @@
       </div>
       <v2footer/>
     </div>
-
-    <v-tour name="projectTour" :steps="steps" :callbacks="myCallbacks">
-      <template slot-scope="tour">
-        <transition name="fade">
-          <v-step
-          v-if="tour.currentStep === index"
-          v-for="(step, index) of tour.steps"
-          :key="index"
-          :step="step"
-          :previous-step="tour.previousStep"
-          :next-step="tour.nextStep"
-          :stop="tour.stop"
-          :is-first="tour.isFirst"
-          :is-last="tour.isLast"
-          :labels="tour.labels"
-          >
-            <template>
-              <div slot="actions" class="v-step__buttons">
-                <button @click="tour.stop" class="btn btn-primary">完成</button>
-              </div>
-            </template>
-          </v-step>
-        </transition>
-      </template>
-    </v-tour>
-
   </div>
 </template>
 
@@ -745,29 +719,27 @@
         completeness: [],
         indestyIndex: 0,
         indestyMark: 0,
-        steps: [
-          {
-            target: '[data-project-step="1"]',
-            content: `<h4>项目信息总览</h4>
-                      <p>1、项目评分、声量指数、行业</p>
-                      <p>2、项目行情、简介、团队、技术、市场、资讯</p>`
-          },
-        ],
-        myCallbacks: {
-          onStep: this.NextStepCallback
+        steps: {
+          content1: '<p><strong>总评榜</strong>，通过大数据及AI技术，系统根据自动评估模型及算法，对每个项目进行综合评估。</p><p>提供项目周榜、月榜。也可通过行业、国家进行筛选项目。</p>'
         }
       }
     },
-    // activated () {
-    //   let isTour = JSON.parse(localStorage.getItem('isTour'));
-    //   if (isTour) {
-    //     if(!isTour.project){
-    //       this.$tours['myTour'].start();
-    //     }
-    //   }else{
-    //     this.$tours['myTour'].start();
-    //   }
-    // },
+    activated () {
+      let that = this;
+      if (that.$route.query.multipage) {
+        that.$intro().setOptions({
+          prevLabel: '上一步',
+          nextLabel: '下一步', 
+          doneLabel: '完成',
+          skipLabel: '跳过',
+          showStepNumbers: false,
+          showBullets: false,
+          steps:[
+            {intro: that.steps.content1}
+          ]
+         }).start();
+      }
+    },
     mounted() {
       new Swiper('.advert-swiper', {
         autoplay: {
@@ -792,17 +764,6 @@
 
     },
     methods: {
-      NextStepCallback (currentStep) {
-        let isTour = JSON.parse(localStorage.getItem('isTour'));
-        if(isTour) {
-          isTour.project = true;
-          localStorage.setItem('isTour', JSON.stringify(isTour));
-        } else {
-          isTour = {};
-          isTour.project = true;
-          localStorage.setItem('isTour', JSON.stringify(isTour));
-        }
-      },
       changeIndesty(value, index) {
         // console.log(value)
         this.indestyMark = parseFloat(value);
@@ -1491,9 +1452,6 @@
         oDate1.setMonth(oDate1.getMonth() - 1);
         let oDate2 = new Date(date2);
         if (oDate1.getTime() > oDate2.getTime()) {
-          console.log(date1);
-          console.log(date2);
-          console.log(oDate1.getFullYear() + '-' + (oDate1.getMonth() + 1) + '-' + oDate1.getDate());
           return (oDate1.getFullYear() + '-' + (((oDate1.getMonth() + 1) > 10) ? (oDate1.getMonth() + 1) : ('0' + (oDate1.getMonth() + 1))) + '-' + ((oDate1.getDate() > 10) ? oDate1.getDate() : '0' + ('0' + oDate1.getDate())));
         } else {
           return date2;
