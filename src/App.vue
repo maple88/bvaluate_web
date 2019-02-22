@@ -42,6 +42,38 @@
 
   export default {
     name: 'App',
+    activated () {
+      
+    },
+    updated(){
+      let isTour = JSON.parse(localStorage.getItem('isTour'));
+      let path = this.$route.path;
+      if (isTour) {
+        if(path === '/list'){
+          if(!isTour.list){
+            this.$tours['listTour'].start();
+          }
+          
+        }else if(path === '/project'){
+           if(!isTour.project){
+            this.$tours['projectTour'].start();
+          }
+        }else{
+          if(!isTour.header){
+          this.$tours['headerTour'].start();
+          }
+        }
+        
+      }else{
+        if(path === '/list'){
+            this.$tours['listTour'].start();
+        }else if(path === '/project'){
+            this.$tours['projectTour'].start();
+        }else{
+          this.$tours['headerTour'].start();
+        }
+      }
+    },
     mounted() {
       let clearTime = setTimeout(() => {
         let token = localStorage.getItem('apelink_user_token');
@@ -82,6 +114,33 @@
         }
         clearTimeout(clearTime);
       }, 800);
+      let isTour = JSON.parse(localStorage.getItem('isTour'));
+      let path = this.$route.path;
+      if (isTour) {
+        if(path === '/list'){
+          if(!isTour.list){
+            this.$tours['listTour'].start();
+          }
+          
+        }else if(path === '/project'){
+           if(!isTour.project){
+            this.$tours['projectTour'].start();
+          }
+        }else{
+          if(!isTour.header){
+          this.$tours['headerTour'].start();
+          }
+        }
+        
+      }else{
+        if(path === '/list'){
+            this.$tours['listTour'].start();
+        }else if(path === '/project'){
+            this.$tours['projectTour'].start();
+        }else{
+          this.$tours['headerTour'].start();
+        }
+      }
     },
     data(){
       return {

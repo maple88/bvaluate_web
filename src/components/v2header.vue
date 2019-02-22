@@ -9,7 +9,7 @@
             <li><span>{{$t('Total White papers')}}：</span><span>{{tophead.totalWhitePaper}}</span></li>
           </ul>
           <div class="appdownload">
-            <div class="rookie" v-show="false" @click="isTourShow">{{$t('Feature Tour')}}</div>
+            <div class="rookie" @click="isTourShow">{{$t('Feature Tour')}}</div>
             <a href="https://api.bvaluate.com.cn/apk/bvaluate.apk">
               <img src="../assets/tdownload.png">
               <span>{{$t('Download App')}}</span>
@@ -208,18 +208,6 @@
         hasbg: false,
       }
     },
-    // activated () {
-    //   let isTour = JSON.parse(localStorage.getItem('isTour'));
-    //   if (isTour) {
-    //     if(!isTour.header){
-    //       console.warn('2222222222222222222222222222222222222222222222222222222222222')
-    //       this.$tours['headerTour'].start();
-    //     }
-    //   }else{
-    //     console.warn('11111111111111111111111111111111111111111111111111111111111111')
-    //     this.$tours['headerTour'].start();
-    //   }
-    // },
     mounted() {
       let that = this;
       that.path = that.$router.history.current.path;
@@ -282,7 +270,6 @@
     methods: {
       isTourShow () {
         let path = this.$route.path;
-        console.log(path);
         if(path === '/list'){
           this.$tours['listTour'].start();
         }else if(path === '/project'){
