@@ -17,8 +17,8 @@
           <div class="left">
             <div class="main-table">
               <div class="list-tab">
-                <div id="listStep1" class="tabtn" :class="listNameType==='总评榜'?'on':''" @click="changeListName('总评榜')">{{$t('Overall list')}}</div>
-                <div id="listStep2" class="tabtn" :class="listNameType==='sto榜'?'on':''" @click="changeListName('sto榜')">{{$t('STO list')}}</div>
+                <div id="listStep1" v-intro-disable-interaction="true" class="tabtn" :class="listNameType==='总评榜'?'on':''" @click="changeListName('总评榜')">{{$t('Overall list')}}</div>
+                <div id="listStep2" v-intro-disable-interaction="true" class="tabtn" :class="listNameType==='sto榜'?'on':''" @click="changeListName('sto榜')">{{$t('STO list')}}</div>
               </div>
               <div class="table-filter">
                 <div>
@@ -108,8 +108,14 @@
         fallloading: false,
         showLoadMore: false,
         steps: {
-          content1: '<p><strong>总评榜</strong>，通过大数据及AI技术，系统根据自动评估模型及算法，对每个项目进行综合评估。</p><p>提供项目周榜、月榜。也可通过行业、国家进行筛选项目。</p>',
-          content2: '<p>项目榜单，提供项目周榜、月榜，展现项目排名、趋势等动态，更全面的透视项目情况。</p><p>包括总评榜、STO榜、涨幅榜、跌幅榜。</p>'
+          content1: `
+            <p class="mgb15"><strong>总评榜</strong>，通过大数据及AI技术，系统根据自动评估模型及算法，对每个项目进行综合评估。</p>
+            <p class="mgb15 sm">提供项目周榜、月榜。也可以通过行业、国家进行筛选项目。</p>
+          `,
+          content2: `
+            <p class="mgb15"><strong>STO榜单</strong>，对已公开发行的STO项目进行综合评估。</p>
+            <p class="mgb15 sm">提供项目周榜、月榜。</p>
+          `
         }
       }
     },
@@ -193,13 +199,18 @@
       }
 
       if (that.$route.query.multipage) {
+        document.getElementById('listStep1').classList.add('on');
+        document.getElementById('listStep2').classList.remove('on');
         that.$intro().setOptions({
           prevLabel: '上一步',
           nextLabel: '下一步', 
-          doneLabel: '下一页',
+          doneLabel: '下个流程',
           skipLabel: '跳过',
           showStepNumbers: false,
           showBullets: false,
+          hidePrev: true,
+          hideNext: true,
+          disableInteraction: true,
           steps:[
             {
               element:'#listStep1',
@@ -218,6 +229,18 @@
               multipage: true
             }
           })
+        }).onchange(function(targetElement) {
+          document.getElementById('listStep1').classList.remove('on');
+          document.getElementById('listStep2').classList.add('on');
+        }).onexit(function() {
+          localStorage.setItem('isTour', true);
+          if (that.listNameType === '总评榜') {
+            document.getElementById('listStep1').classList.add('on');
+            document.getElementById('listStep2').classList.remove('on');
+          }else{
+            document.getElementById('listStep1').classList.remove('on');
+            document.getElementById('listStep2').classList.add('on');
+          }
         });
       }
     },

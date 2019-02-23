@@ -720,7 +720,11 @@
         indestyIndex: 0,
         indestyMark: 0,
         steps: {
-          content1: '<p><strong>总评榜</strong>，通过大数据及AI技术，系统根据自动评估模型及算法，对每个项目进行综合评估。</p><p>提供项目周榜、月榜。也可通过行业、国家进行筛选项目。</p>'
+          content1: `
+            <p class="mgb15"><strong>项目信息总览</strong></p>
+            <p class="sm">1、项目评分、声量指数、行业</p>
+            <p class="mgb15 sm">2、项目行情、简介、团队、技术、市场、资讯</p>
+          `
         }
       }
     },
@@ -734,10 +738,15 @@
           skipLabel: '跳过',
           showStepNumbers: false,
           showBullets: false,
+          hidePrev: true,
+          hideNext: true,
+          disableInteraction: true,
           steps:[
             {intro: that.steps.content1}
           ]
-         }).start();
+         }).start().onexit(function() {
+          localStorage.setItem('isTour', true);
+        });
       }
     },
     mounted() {
