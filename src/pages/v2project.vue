@@ -3,7 +3,7 @@
     <v2header/>
     <div class="v2maintainer pd0">
       <!-- content here -->
-      <div class="project-topmain">
+      <div class="project-topmain" data-project-step="1">
         <div class="container v2container">
           <div class="projectTop">
             <div class="img-box"><img :src="project.logoSrc"></div>
@@ -110,7 +110,7 @@
                     </div>
                     <div class="scorer">
                       <p>
-                        <span>总评榜排名：<i>{{completeness.rank}}</i></span>
+                        <span>{{$t('Ranking of overall list')}}：<i>{{completeness.rank}}</i></span>
                         <span>
                           {{completeness.rankAm | formatRank}}
                           <img src="../assets/up.png" v-if="completeness.rankAm > 0">
@@ -118,7 +118,7 @@
                         </span>
                       </p>
                       <p v-if="completeness.stoRank !== 0">
-                        <span>STO榜排名：<i>{{completeness.stoRank}}</i></span>
+                        <span>{{$t('Ranking of STO list')}}：<i>{{completeness.stoRank}}</i></span>
                         <span>
                           {{completeness.stoRankAm | formatRank}}
                           <img src="../assets/up.png" v-if="completeness.stoRankAm > 0">
@@ -210,7 +210,8 @@
                 <div class="item">
                   <div class="tit">
                     <img src="../assets/project/pb1.png">
-                    <div class="word"><span>资</span><span>金</span><span>监</span><span>管</span></div>
+                    <div class="word" v-if="$i18n.locale === 'cn'"><span>资</span><span>金</span><span>监</span><span>管</span></div>
+                    <div class="word" v-else>{{$t('Fund supervision')}}</div>
                     ： {{hotInfo.fundsupervision}}
                   </div>
                   <p class="des">{{hotInfoTips.fundana}}</p>
@@ -218,7 +219,8 @@
                 <div class="item">
                   <div class="tit">
                     <img src="../assets/project/pb2.png">
-                    <div class="word"><span>基</span><span>本</span><span>面</span></div>
+                    <div class="word" v-if="$i18n.locale === 'cn'"><span>基</span><span>本</span><span>面</span></div>
+                    <div class="word" v-else>{{$t('Fundamentals')}}</div>
                     ： {{hotInfo.fundamentalsanalysis}}
                   </div>
                   <p class="des">{{hotInfoTips.baseana}}</p>
@@ -226,7 +228,8 @@
                 <div class="item">
                   <div class="tit">
                     <img src="../assets/project/pb3.png">
-                    <div class="word"><span>团</span><span>队</span></div>
+                    <div class="word" v-if="$i18n.locale === 'cn'"><span>团</span><span>队</span></div>
+                    <div class="word" v-else>{{$t('Team')}}</div>
                     ： {{hotInfo.teamanalysis}}
                   </div>
                   <p class="des">{{hotInfoTips.teamana}}</p>
@@ -234,7 +237,8 @@
                 <div class="item">
                   <div class="tit">
                     <img src="../assets/project/pb4.png">
-                    <div class="word"><span>技</span><span>术</span></div>
+                    <div class="word" v-if="$i18n.locale === 'cn'"><span>技</span><span>术</span></div>
+                    <div class="word" v-else>{{$t('Technology')}}</div>
                     ： {{hotInfo.technicalanalysis}}
                   </div>
                   <p class="des">{{hotInfoTips.skillana}}</p>
@@ -242,7 +246,8 @@
                 <div class="item">
                   <div class="tit">
                     <img src="../assets/project/pb5.png">
-                    <div class="word"><span>市</span><span>场</span></div>
+                    <div class="word" v-if="$i18n.locale === 'cn'"><span>市</span><span>场</span></div>
+                    <div class="word" v-else>{{$t('Market')}}</div>
                     ： {{hotInfo.marketanalysis}}
                   </div>
                   <p class="des">{{hotInfoTips.markana}}</p>
@@ -317,7 +322,7 @@
                 <div class="hangqing-total">
                   <div class="item">
                     <div class="left">
-                      <p class="i1">昨日流通笔数</p>
+                      <p class="i1">{{$t('Number of circulation yesterday')}}</p>
                       <p class="i2">{{marketInfo.count || '--'}}</p>
                     </div>
                     <div class="right">
@@ -330,7 +335,7 @@
                   </div>
                   <div class="item">
                     <div class="left">
-                      <p class="i1">昨日流通总额</p>
+                      <p class="i1">{{$t('Total amount of circulation yesterday')}}</p>
                       <p class="i2">{{marketInfo.allcount || '--'}}</p>
                     </div>
                     <div class="right">
@@ -343,7 +348,7 @@
                   </div>
                   <div class="item">
                     <div class="left">
-                      <p class="i1">昨日流通参与用户量</p>
+                      <p class="i1">{{$t('Number of users participating in circulation yesterday')}}</p>
                       <p class="i2">{{marketInfo.countUser || '--'}}</p>
                     </div>
                     <div class="right">
@@ -645,6 +650,32 @@
       </div>
       <v2footer/>
     </div>
+
+    <v-tour name="projectTour" :steps="steps" :callbacks="myCallbacks">
+      <template slot-scope="tour">
+        <transition name="fade">
+          <v-step
+          v-if="tour.currentStep === index"
+          v-for="(step, index) of tour.steps"
+          :key="index"
+          :step="step"
+          :previous-step="tour.previousStep"
+          :next-step="tour.nextStep"
+          :stop="tour.stop"
+          :is-first="tour.isFirst"
+          :is-last="tour.isLast"
+          :labels="tour.labels"
+          >
+            <template>
+              <div slot="actions" class="v-step__buttons">
+                <button @click="tour.stop" class="btn btn-primary">完成</button>
+              </div>
+            </template>
+          </v-step>
+        </transition>
+      </template>
+    </v-tour>
+
   </div>
 </template>
 
@@ -670,7 +701,7 @@
     },
     data() {
       return {
-        tablist: ['行情', '简介', '团队', '技术', '市场'],
+        tablist: [this.$t('Market quotation'), this.$t('Brief'), this.$t('Team'), this.$t('Technology'), this.$t('Market')],
         tabinlist: ['新闻', '推文', '微博', '微信'],
         tabactive: 0,
         loading: loading,
@@ -719,36 +750,29 @@
         completeness: [],
         indestyIndex: 0,
         indestyMark: 0,
-        steps: {
-          content1: `
-            <p class="mgb15"><strong>项目信息总览</strong></p>
-            <p class="sm">1、项目评分、声量指数、行业</p>
-            <p class="mgb15 sm">2、项目行情、简介、团队、技术、市场、资讯</p>
-          `
+        steps: [
+          {
+            target: '[data-project-step="1"]',
+            content: `<h4>项目信息总览</h4>
+                      <p>1、项目评分、声量指数、行业</p>
+                      <p>2、项目行情、简介、团队、技术、市场、资讯</p>`
+          },
+        ],
+        myCallbacks: {
+          onStep: this.NextStepCallback
         }
       }
     },
-    activated () {
-      let that = this;
-      if (that.$route.query.multipage) {
-        that.$intro().setOptions({
-          prevLabel: '上一步',
-          nextLabel: '下一步', 
-          doneLabel: '完成',
-          skipLabel: '跳过',
-          showStepNumbers: false,
-          showBullets: false,
-          hidePrev: true,
-          hideNext: true,
-          disableInteraction: true,
-          steps:[
-            {intro: that.steps.content1}
-          ]
-         }).start().onexit(function() {
-          localStorage.setItem('isTour', true);
-        });
-      }
-    },
+    // activated () {
+    //   let isTour = JSON.parse(localStorage.getItem('isTour'));
+    //   if (isTour) {
+    //     if(!isTour.project){
+    //       this.$tours['myTour'].start();
+    //     }
+    //   }else{
+    //     this.$tours['myTour'].start();
+    //   }
+    // },
     mounted() {
       new Swiper('.advert-swiper', {
         autoplay: {
@@ -773,6 +797,17 @@
 
     },
     methods: {
+      NextStepCallback (currentStep) {
+        let isTour = JSON.parse(localStorage.getItem('isTour'));
+        if(isTour) {
+          isTour.project = true;
+          localStorage.setItem('isTour', JSON.stringify(isTour));
+        } else {
+          isTour = {};
+          isTour.project = true;
+          localStorage.setItem('isTour', JSON.stringify(isTour));
+        }
+      },
       changeIndesty(value, index) {
         // console.log(value)
         this.indestyMark = parseFloat(value);
@@ -1177,7 +1212,17 @@
         let teamList = data.map(item => item.teamanalysis);
         let techList = data.map(item => item.technicalanalysis);
         let marketList = data.map(item => item.marketanalysis);
-
+        let str = `{
+                      "${this.$t('Price')}": true, 
+                      "${this.$t('Score')}": true, 
+                      "${this.$t('Fund supervision')}": false, 
+                      "${this.$t('Fundamentals')}": false, 
+                      "${this.$t('Team')}": false, 
+                      "${this.$t('Technology')}": false, 
+                      "${this.$t('Market')}": false
+                    }`;
+        console.log(str)
+        let select1 = JSON.parse(str);
         let scoreLine = echarts.init(this.$refs.scoreChart);
         let scoreLineOption = {
           tooltip: {
@@ -1190,8 +1235,8 @@
             }
           },
           legend: {
-            selected: {'价格': true, '评分': true, '资金监管': false, '基本面': false, '团队': false, '技术': false, '市场': false},
-            data: ['价格', '评分', '资金监管', '基本面', '团队', '技术', '市场'],
+            selected: select1,
+            data: [this.$t('Price'), this.$t('Score'), this.$t('Fund supervision'), '基本面', '团队', '技术', '市场'],
             selectedMode: false
           },
           grid: {
@@ -1219,7 +1264,7 @@
           yAxis: [
             {
               type: 'value',
-              name: '评分',
+              name: this.$t('Score'),
               position: 'right',
               // min: Math.min.apply(null,filter_array(totalScoreList)),
               max: 5, //Math.max.apply(null,filter_array(totalScoreList)),
@@ -1227,7 +1272,7 @@
             },
             {
               type: 'value',
-              name: '价格',
+              name: this.$t('Price'),
               position: 'left',
               // min: Math.min.apply(null,filter_array(price)),
               max: (Math.max.apply(null, filter_array(price)) * 1.5).toFixed(3),
@@ -1235,7 +1280,7 @@
             },
             {
               type: 'value',
-              name: '资金监管',
+              name: this.$t('Fund supervision'),
               position: 'right',
               // min: Math.min.apply(null,filter_array(fundSuperList)),
               max: 5, //Math.max.apply(null,filter_array(fundSuperList)),
@@ -1300,7 +1345,7 @@
           series: [
             {
               // smooth:true,
-              name: '评分',
+              name: this.$t('Score'),
               type: 'line',
               // stack: '总量',
               yAxisIndex: 0,
@@ -1317,7 +1362,7 @@
             },
             {
               smooth:true,
-              name: '价格',
+              name: this.$t('Price'),
               type: 'line',
               // stack: '总量',
               yAxisIndex: 1,
@@ -1334,7 +1379,7 @@
             },
             {
               // smooth:true,
-              name: '资金监管',
+              name: this.$t('Fund supervision'),
               type: 'line',
               // stack: '总量',
               yAxisIndex: 2,
@@ -1461,6 +1506,9 @@
         oDate1.setMonth(oDate1.getMonth() - 1);
         let oDate2 = new Date(date2);
         if (oDate1.getTime() > oDate2.getTime()) {
+          console.log(date1);
+          console.log(date2);
+          console.log(oDate1.getFullYear() + '-' + (oDate1.getMonth() + 1) + '-' + oDate1.getDate());
           return (oDate1.getFullYear() + '-' + (((oDate1.getMonth() + 1) > 10) ? (oDate1.getMonth() + 1) : ('0' + (oDate1.getMonth() + 1))) + '-' + ((oDate1.getDate() > 10) ? oDate1.getDate() : '0' + ('0' + oDate1.getDate())));
         } else {
           return date2;
@@ -1664,13 +1712,13 @@
           legend: {
             data: [
               {
-                name: '今日',
+                name: this.$t('Today'),
                 textStyle: {
                   color: '#F82F4C',
                 }
               },
               {
-                name: '昨日',
+                name: this.$t('Last day'),
                 textStyle: {
                   color: '#0ACEF0'
                 }
@@ -1707,11 +1755,11 @@
               }
             },
             indicator: [
-              {name: '资金监管', max: 0.5, color: '#0ACEF0'},
-              {name: '基本面', max: 1.5, color: '#0ACEF0'},
-              {name: '团队', max: 1.75, color: '#0ACEF0'},
-              {name: '技术', max: 0.5, color: '#0ACEF0'},
-              {name: '市场', max: 0.75, color: '#0ACEF0'},
+              {name: this.$t('Fund supervision'), max: 0.5, color: '#0ACEF0'},
+              {name: this.$t('Fundamentals'), max: 1.5, color: '#0ACEF0'},
+              {name: this.$t('Team'), max: 1.75, color: '#0ACEF0'},
+              {name: this.$t('Technology'), max: 0.5, color: '#0ACEF0'},
+              {name: this.$t('Market'), max: 0.75, color: '#0ACEF0'},
             ]
           },
           series: [{
@@ -1721,7 +1769,7 @@
               {
                 // smooth:true,
                 value: param.data[1],
-                name: '昨日',
+                name: this.$t('Last day'),
                 itemStyle: {
                   color: '#0ACEF0'
                 }
@@ -1729,7 +1777,7 @@
               {
                 // smooth:true,
                 value: param.data[0],
-                name: '今日',
+                name: this.$t('Today'),
                 itemStyle: {
                   color: '#F82F4C'
                 }
@@ -1778,7 +1826,7 @@
             }
           },
           legend: {
-            selected: {'近30天平均值': true, '更新量': commit, '浏览量': watch, '收藏量': star}, //'近30天平均值': true,
+            selected: {'近30天平均值': true, '更新量': commit, '浏览量': watch, '收藏量': star},
             data: ['近30天平均值', '更新量', '浏览量', '收藏量'], //'近30天平均值',
             selectedMode: false,
             x: 'right'
