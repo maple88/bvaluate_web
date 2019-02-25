@@ -1203,7 +1203,6 @@
                       "${this.$t('Technology')}": false, 
                       "${this.$t('Market')}": false
                     }`;
-        console.log(str)
         let select1 = JSON.parse(str);
         let scoreLine = echarts.init(this.$refs.scoreChart);
         let scoreLineOption = {
@@ -1488,9 +1487,6 @@
         oDate1.setMonth(oDate1.getMonth() - 1);
         let oDate2 = new Date(date2);
         if (oDate1.getTime() > oDate2.getTime()) {
-          console.log(date1);
-          console.log(date2);
-          console.log(oDate1.getFullYear() + '-' + (oDate1.getMonth() + 1) + '-' + oDate1.getDate());
           return (oDate1.getFullYear() + '-' + (((oDate1.getMonth() + 1) > 10) ? (oDate1.getMonth() + 1) : ('0' + (oDate1.getMonth() + 1))) + '-' + ((oDate1.getDate() > 10) ? oDate1.getDate() : '0' + ('0' + oDate1.getDate())));
         } else {
           return date2;
