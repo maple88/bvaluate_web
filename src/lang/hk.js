@@ -232,5 +232,8 @@ export default {
 	'View original article': '查看原文',
 	'Original article': '原文',
 	'24 hours hot articles': '24小時熱文',
-	'Policy': '政策'
+	'Policy': '政策',
+	'Pieces': '篇',
+	'Billion': '億',
+	'No search results': '無搜索結果~'
 };
