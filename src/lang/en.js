@@ -232,5 +232,8 @@ export default {
 	'View original article': 'View original article',
 	'Original article': 'Original article',
 	'24 hours hot articles': '24 hours hot articles',
-	'Policy': 'Policy'
+	'Policy': 'Policy',
+	'Pieces': 'Pieces',
+	'Billion': 'Billion',
+	'No search results': 'No search results'
 };

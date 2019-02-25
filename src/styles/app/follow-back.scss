@@ -1167,9 +1167,6 @@
             text-align: right;
             font-size: 12px;
             color: #999999;
-            p span{
-              font-size: 12px !important;
-            }
           }
           .list_item {
             display: flex;
@@ -1906,19 +1903,9 @@
   }
 }
 
-.follow_content.v2article#article {
-  margin-top: 60px;
-  @media ($max-md) {
-    margin-top: 30px;
-  }
-  @media ($max-xs) {
-    margin-top: 15px;
-  }
+.follow_content#article {
+  margin-top: 20px;
   .fish_container {
-    max-width: 1300px;
-    @media ($max-xs) {
-      padding: 0;
-    }
     .row {
       .span6 {
         .breadcrumb {
@@ -1928,54 +1915,29 @@
     }
     .clearfix {
       .center {
-        padding-left: 0;
-        padding-right: 20px;
-        width: 71%;
+        padding-left: 0px;
+        width: 70%;
         margin-bottom: 20px;
-        @media ($max-md) {
-          width: 100%;
-          float: none;
-          padding: 0;
-        }
         .article_box {
           background-color: #ffffff;
-          padding: 25px 42px;
+          padding: 10px 42px;
           .article_title {
             h4 {
               line-height: 1.3;
-              font-size: 20px;
-              color: #1a1a1a;
-              font-weight: bold;
-              margin: 0 0 25px;
-              @media ($max-sm) {
-                font-size: 18px;
-                margin: 0 0 15px;
-              }
+              font-size: 28px;
+              color: #333333;
             }
           }
           .article_tool {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            margin: 0 0 25px;
-            @media ($max-sm) {
-              margin: 0 0 15px;
-              display: block;
-            }
-            .aticon{
-              margin: -2px 3px 0 0;
-            }
             > .article_left {
               padding: 0px;
-              color: #666;
-              font-size: 12px;
-              display: flex;
-              align-items: center;
+              color: #999999;
+              font-size: 16px;
               span {
                 display: inline-block;
-              }
-              a{
-                color: #666;
               }
               .user_name {
                 cursor: pointer;
@@ -1990,10 +1952,10 @@
               color: #999999;
               font-size: 16px;
               .followbtn {
-                font-size: 12px;
-                padding: 2px 0 5px;
-                border-radius: 3px;
-                color: #666;
+                font-size: 16px;
+                padding: 2px 20px 5px;
+                border-radius: 15px;
+                color: #14d214;
                 display: inline-block;
                 vertical-align: middle;
                 cursor: pointer;
@@ -2005,20 +1967,15 @@
                   .share_box {
                     position: absolute;
                     top: calc(100% + 7px);
-                    left: 50%;
+                    left: calc(-50% + -13px);
                     display: flex;
                     background-color: #FFFFFF;
-                    border-radius: 3px;
+                    border-radius: 100px;
                     border: 1px solid #cccccc;
                     width: 140px;
-                    margin-left: -70px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    @media ($max-sm) {
-                      left: auto;
-                      right: 0;
-                    }
                     .arrow {
                       top: auto;
                       left: 50%;
@@ -2032,10 +1989,6 @@
                       width: 0;
                       height: 0;
                       border-style: solid;
-                      @media ($max-sm) {
-                        left: auto;
-                        right: 5px;
-                      }
                       &:after {
                         top: auto;
                         bottom: calc(100% - 11px);
@@ -2069,11 +2022,9 @@
                         left: 0;
                         top: 100%;
                         background-color: #FFFFFF;
-                        border-radius: 3px;
+                        border-radius: 10px;
                         padding: 10px;
-                        margin: 8px 0 0;
                         border: 1px solid #cccccc;
-                        z-index: 2;
                         img {
                           width: 100%;
                         }
@@ -2088,15 +2039,8 @@
               span {
                 display: inline-block;
               }
-              .look, .look_count, .follow {
+              .look, .look_count, .share {
                 padding-right: 15px;
-                font-size: 12px;
-                @media ($max-sm) {
-                  padding-right: 8px;
-                }
-              }
-              .look{
-                color: $mainColor;
               }
               .share, .follow {
                 cursor: pointer;
@@ -2111,13 +2055,6 @@
                 color: #14d214;
               }
               .follow {
-                font-size: 12px;
-                span{
-                  color: $mainColor;
-                  &.on{
-                    color: #666;
-                  }
-                }
                 i {
                   color: #ccc;
                 }
@@ -2130,38 +2067,34 @@
           .label_box {
             display: flex;
             flex-wrap: wrap;
-            margin: 0 0 25px;
-            @media ($max-sm) {
-              margin: 0 0 15px;
-            }
+            padding-top: 10px;
             .label_item {
-              border: 1px solid $mainColor;
-              color: $mainColor;
-              padding: 4px 16px;
-              border-radius: 3px;
-              margin-right: 25px;
-              font-size: 14px;
+              border: 1px solid #999999;
+              color: #999999;
+              padding: 2px 12px;
+              border-radius: 20px;
+              margin-top: 5px;
+              margin-right: 10px;
+              font-size: 10px;
               cursor: pointer;
               transition: all .3s;
-              @media ($max-sm) {
-                padding: 3px 8px;
-                font-size: 12px;
-                margin-right: 10px;
+              &:hover {
+                border-color: $mainColor;
+                color: $mainColor;
               }
             }
           }
           .article_content {
+            padding-top: 30px;
             text-align: center;
+            padding-bottom: 50px;
             p {
               text-indent: 29px;
               text-align: left;
-              font-size: 14px;
+              font-size: 16px;
               line-height: 2;
               margin-bottom: 20px;
-              color: #000;
-              @media ($max-sm) {
-                line-height: 1.8;
-              }
+              color: #666666;
             }
             img {
               max-width: 100%;
@@ -2169,7 +2102,10 @@
             }
           }
           .article_original {
-            padding-top: 25px;
+            padding-top: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-bottom: 80px;
             border-top: 1px solid #f5f5f5;
             > .title {
               font-size: 16px;
@@ -2178,25 +2114,13 @@
             > .original {
               h4 {
                 font-family: "Arial Black";
-                font-size: 20px;
-                color: #1a1a1a;
-                line-height: 1.3;
-                font-weight: bold;
-                margin: 0 0 25px;
-                @media ($max-sm) {
-                  font-size: 18px;
-                  margin: 0 0 15px;
-                }
+                font-size: 22px;
+                line-height: 1.4;
               }
-              p {
+              P {
                 font-family: "Arial Regular";
-                font-size: 14px;
-                line-height: 2;
-                color: #000;
-                margin: 0;
-                @media ($max-sm) {
-                  line-height: 1.8;
-                }
+                font-size: 18px;
+                line-height: 1.5;
               }
             }
           }
@@ -2207,11 +2131,6 @@
         }
       }
       .right {
-        width: 29%;
-        @media ($max-md) {
-          width: 100%;
-          float: none;
-        }
         .author_infor {
           background-color: #ffffff;
           padding-top: 18px;
@@ -2341,7 +2260,7 @@
           }
         }
         .adv_swiper {
-          // margin-top: 20px;
+          margin-top: 20px;
           // height: 247px;
           #right_swiper {
             height: 100%;
@@ -2354,12 +2273,6 @@
                   width: 100%;
                 }
               }
-            }
-            .swiper-pagination-bullet{
-              background: #ababab;
-            }
-            .swiper-pagination-bullet-active{
-              background: #fff;
             }
             .swiper-button-prev {
               background-image: url("../assets/follow/prev.png");
@@ -2377,74 +2290,6 @@
               &.swiper-button-disabled {
                 opacity: 1;
                 background-image: url("../assets/follow/next_o.png");
-              }
-            }
-          }
-        }
-        .right_item{
-          .hot_content{
-            >ul{
-              padding: 20px 0 0;
-              @media ($max-sm) {
-                padding: 15px 0 0;
-              }
-              >li{
-                padding: 0;
-                margin: 0 0 25px;
-                display: flex;
-                cursor: pointer;
-                @media ($max-sm) {
-                  margin: 0 0 15px;
-                }
-                .item_left{
-                  flex: 0 0 125px;
-                  min-width: 125px;
-                  height: 90px;
-                  overflow: hidden;
-                  border-radius: 5px;
-                  margin: 0 8px 0 0;
-                  @media ($min-md) and ($max-lg) {
-                    flex: 0 0 90px;
-                    min-width: 90px;
-                  }
-                  img{
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                  }
-                }
-                .item_info{
-                  flex: 1;
-                  overflow: hidden;
-                }
-              }
-            }
-            .list_item .item_body.noPicture{
-              padding: 0;
-              p{
-                padding: 0;
-                font-size: 14px;
-                color: #1a1a1a;
-                max-height: 40px;
-                margin: 0 0 5px;
-              }
-            }
-            .list_item .item_body h4{
-              font-size: 16px;
-              color: #1a1a1a;
-              margin: 0 0 8px;
-              font-weight: bold;
-              min-height: 20px;
-            }
-            .item_bottom{
-              p{
-                display: flex;
-                justify-content: space-between;
-                margin: 0;
-                span{
-                  font-size: 14px;
-                  color: #3d3c3c;
-                }
               }
             }
           }
@@ -2468,6 +2313,13 @@
           .article_box {
             background-color: #ffffff;
             padding: 10px 15px;
+            .article_title {
+              h4 {
+                line-height: 1.3;
+                font-size: 28px;
+                color: #333333;
+              }
+            }
           }
         }
       }

@@ -523,14 +523,14 @@
         }
         if (password !== null && password !== '' && password !== undefined) {
           if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(this.registerUser.password)) {
-            if (this.registerUser.confirmpsd !== this.registerUser.password) {
-              pass = false;
-              this.errorMsg.registerUser.password = '两次输入不一致'
-              sensors.track("Registerresult", {
-                is_true: false,
-                false_reason: this.errorMsg.registerUser.password
-              });
-            }
+            // if (this.registerUser.confirmpsd !== this.registerUser.password) {
+            //   pass = false;
+            //   this.errorMsg.registerUser.password = '两次输入不一致'
+            //   sensors.track("Registerresult", {
+            //     is_true: false,
+            //     false_reason: this.errorMsg.registerUser.password
+            //   });
+            // }
           } else {
             pass = false;
             this.errorMsg.registerUser.password = '只允许输入6-14个英文大小写和数字'
@@ -549,14 +549,14 @@
         }
         if (confirmpsd !== null && confirmpsd !== '' && confirmpsd !== undefined) {
           if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(this.registerUser.password)) {
-            if (this.registerUser.confirmpsd !== this.registerUser.password) {
-              pass = false;
-              this.errorMsg.registerUser.confirmpsd = '两次输入不一致'
-              sensors.track("Registerresult", {
-                is_true: false,
-                false_reason: this.errorMsg.registerUser.confirmpsd
-              });
-            }
+            // if (this.registerUser.confirmpsd !== this.registerUser.password) {
+            //   pass = false;
+            //   this.errorMsg.registerUser.confirmpsd = '两次输入不一致'
+            //   sensors.track("Registerresult", {
+            //     is_true: false,
+            //     false_reason: this.errorMsg.registerUser.confirmpsd
+            //   });
+            // }
           } else {
             pass = false;
             this.errorMsg.registerUser.confirmpsd = '只允许输入6-14个英文大小写和数字'

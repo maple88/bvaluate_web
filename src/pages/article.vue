@@ -11,19 +11,22 @@
                   <h4>{{articleContent.title}}</h4>
                 </div>
                 <div class="label_box">
-                  <div v-if="articleContent.countryCategory !== 'NULL'" class="label_item"
+                  <div v-if="articleContent.countryCategory !== 'NULL' && articleContent.countryCategory !== null && articleContent.countryCategory !== '' && articleContent.countryCategory !==undefined" 
+                       class="label_item"
                        name="article_label_box_countryCategory" id="article_label_box_countryCategory"
                        @click="goIndustryByCountry(articleContent.countryCategory, $event)"
                        :data="articleContent.countryCategory">
                     {{articleContent.countryCategory | showLable}}
                   </div>
-                  <div v-if="articleContent.industryCategory !== 'NULL'" class="label_item"
+                  <div v-if="articleContent.industryCategory !== 'NULL' && articleContent.industryCategory !== null && articleContent.industryCategory !== '' && articleContent.industryCategory !==undefined"
+                       class="label_item"
                        name="article_label_box_industryCategory" id="article_label_box_industryCategory"
                        @click="goIndustryByIndustry(articleContent.industryCategory, $event)"
                        :data="articleContent.industryCategory">
                     {{articleContent.industryCategory | showLable}}
                   </div>
-                  <div v-if="articleContent.projectCategory !== 'NULL'" class="label_item"
+                  <div v-if="articleContent.projectCategory !== 'NULL' && articleContent.projectCategory !== null && articleContent.projectCategory !== '' && articleContent.projectCategory !==undefined" 
+                       class="label_item"
                        name="article_label_box_projectCategory" id="article_label_box_projectCategory"
                        @click="goProjectByName(articleContent.projectCategory, $event)"
                        :data="articleContent.projectCategory">

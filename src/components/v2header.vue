@@ -59,11 +59,11 @@
               <router-link v-intro-step="1" v-intro="steps.content1" v-intro-disable-interaction="true" tag="li" to="/home" active-class="active"><a data="首页">{{$t('Home')}}</a></router-link>
               <router-link v-intro-step="2" v-intro="steps.content2" v-intro-disable-interaction="true" tag="li" to="/list" active-class="active"><a data="榜单">{{$t('List')}}</a></router-link>
               <router-link v-intro-step="3" v-intro="steps.content3" v-intro-disable-interaction="true" tag="li" to="/v2news" active-class="active"><a data="资讯">{{$t('headerNews')}}</a></router-link>
-              <li v-show="token"><a href="javascript:;" data="新增项目" @click="analysis()">{{$t('New Projects')}}</a></li>
+              <li v-show="token" v-intro-step="4" v-intro="steps.content4"><a href="javascript:;" data="新增项目" @click="analysis()">{{$t('New Projects')}}</a></li>
               <li v-show="!token" v-intro-step="4" v-intro="steps.content4" v-intro-disable-interaction="true" @click="isLogin('新增项目')"><a data="新增项目">{{$t('New Projects')}}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <router-link tag="li" to="/follow" active-class="active" v-show="token"><a data="我的关注">{{$t('Attention')}}</a></router-link>
+              <router-link tag="li" to="/follow" active-class="active" v-show="token" v-intro-step="5" v-intro="steps.content5"><a data="我的关注">{{$t('Attention')}}</a></router-link>
               <li v-show="!token" v-intro-step="5" v-intro="steps.content5" v-intro-disable-interaction="true" @click="isLogin('我的关注')"><a data="我的关注">{{$t('Attention')}}</a></li>
               <li class="header-token hsearch">
                 <div class="open_search">
@@ -260,14 +260,14 @@
         form.on('select(language)', function(data){
           // console.log(data.value);
           if (data.value === '简体') {
-            that.$i18n.locale = 'cn';
+            // that.$i18n.locale = 'cn';
             localStorage.setItem('bvaluate-lang', 'cn');
           }else if (data.value === 'English') {
-            that.$i18n.locale = 'en';
+            // that.$i18n.locale = 'en';
             localStorage.setItem('bvaluate-lang', 'en');
           }
           else if (data.value === '繁体') {
-            that.$i18n.locale = 'hk';
+            // that.$i18n.locale = 'hk';
             localStorage.setItem('bvaluate-lang', 'hk');
           }
           window.location.reload();

@@ -169,7 +169,7 @@
                     </div>
                     <div class="mediar">
                       <div class="computerbox">
-                        <p class="wordtop">{{completeness.report || '0'}}篇</p>
+                        <p class="wordtop">{{completeness.report || '0'}}{{$t('Pieces')}}</p>
                         <p class="wordbot">{{$t('Nearly a week')}}</p>
                       </div>
                       <p class="des">{{$t('Media coverage')}}</p>
@@ -187,11 +187,11 @@
               </div>
               <div class="item">
                 <p class="t">{{$t('Market value')}}</p>
-                <p class="b">{{hotInfo.markValue | formatDataForMark}}</p>
+                <p class="b">{{hotInfo.markValue | formatDataForMark($t('Billion'),$i18n.locale)}}</p>
               </div>
               <div class="item">
                 <p class="t">{{$t('Current market value')}}</p>
-                <p class="b">{{hotInfo.famc | formatDataForMark}}</p>
+                <p class="b">{{hotInfo.famc | formatDataForMark($t('Billion'),$i18n.locale) }}</p>
               </div>
               <div class="item">
                 <p class="t">{{$t('Number of large transactions')}}</p>
@@ -735,26 +735,24 @@
     },
     activated () {
       let that = this;
-      if (!localStorage.getItem('isTour')) {
-        if (that.$route.query.multipage) {
-          that.$intro().setOptions({
-            prevLabel: '上一步',
-            nextLabel: '下一步', 
-            doneLabel: '完成',
-            skipLabel: '跳过',
-            showStepNumbers: false,
-            showBullets: false,
-            hidePrev: true,
-            hideNext: true,
-            disableInteraction: true,
-            steps:[
-              {intro: that.steps.content1}
-            ]
-           }).start().onexit(function() {
-            localStorage.setItem('isTour', true);
-            document.body.style.overflow = 'inherit';
-          });
-        }
+      if (that.$route.query.multipage) {
+        that.$intro().setOptions({
+          prevLabel: '上一步',
+          nextLabel: '下一步', 
+          doneLabel: '完成',
+          skipLabel: '跳过',
+          showStepNumbers: false,
+          showBullets: false,
+          hidePrev: true,
+          hideNext: true,
+          disableInteraction: true,
+          steps:[
+            {intro: that.steps.content1}
+          ]
+         }).start().onexit(function() {
+          localStorage.setItem('isTour', true);
+          document.body.style.overflow = 'inherit';
+        });
       }
     },
     mounted() {
@@ -962,7 +960,7 @@
           that.newsList = that.newsList.concat(res.data.content);
           if (res.data.content.length === 0) {
             that.showloading = -1;
-            that.loadingTip = '无搜索结果~';
+            that.loadingTip = that.$t('No search results');
           } else {
             that.showloading = false;
           }
@@ -1219,7 +1217,7 @@
           },
           legend: {
             selected: select1,
-            data: [this.$t('Price'), this.$t('Score'), this.$t('Fund supervision'), '基本面', '团队', '技术', '市场'],
+            data: [this.$t('Price'), this.$t('Score'), this.$t('Fund supervision'), this.$t('Fundamentals'), this.$t('Team'), this.$t('Technology'), this.$t('Market')],
             selectedMode: false
           },
           grid: {
@@ -1274,7 +1272,7 @@
             },
             {
               type: 'value',
-              name: '基本面',
+              name: this.$t('Fundamentals'),
               position: 'right',
               // min: Math.min.apply(null,filter_array(fundaMentList)),
               max: 5, //Math.max.apply(null,filter_array(fundaMentList)),
@@ -1285,7 +1283,7 @@
             },
             {
               type: 'value',
-              name: '团队',
+              name: this.$t('Team'),
               position: 'right',
               // min: Math.min.apply(null,filter_array(teamList)),
               max: 5, //Math.max.apply(null,filter_array(teamList)),
@@ -1296,7 +1294,7 @@
             },
             {
               type: 'value',
-              name: '技术',
+              name: this.$t('Technology'),
               position: 'right',
               // min: Math.min.apply(null,filter_array(techList)),
               max: 5, //Math.max.apply(null,filter_array(techList)),
@@ -1307,7 +1305,7 @@
             },
             {
               type: 'value',
-              name: '市场',
+              name: this.$t('Market'),
               position: 'right',
               // min: Math.min.apply(null,filter_array(marketList)),
               max: 5, //Math.max.apply(null,filter_array(marketList)),
@@ -1372,7 +1370,7 @@
             },
             {
               // smooth:true,
-              name: '基本面',
+              name: this.$t('Fundamentals'),
               type: 'line',
               // stack: '总量',
               yAxisIndex: 3,
@@ -1382,7 +1380,7 @@
             },
             {
               // smooth:true,
-              name: '团队',
+              name: this.$t('Team'),
               type: 'line',
               // stack: '总量',
               yAxisIndex: 4,
@@ -1392,7 +1390,7 @@
             },
             {
               // smooth:true,
-              name: '技术',
+              name: this.$t('Technology'),
               type: 'line',
               // stack: '总量',
               yAxisIndex: 5,
@@ -1402,7 +1400,7 @@
             },
             {
               // smooth:true,
-              name: '市场',
+              name: this.$t('Market'),
               type: 'line',
               // stack: '总量',
               yAxisIndex: 6,
@@ -1422,10 +1420,10 @@
           let mykey = false;
           let className = $this.classList.toString();
           if (className.indexOf('check') !== -1) {
-            scoreLineOption.legend.selected['资金监管'] = false;
+            scoreLineOption.legend.selected[this.$t('Fund supervision')] = false;
             $this.classList.remove('check');
           } else {
-            scoreLineOption.legend.selected['资金监管'] = true;
+            scoreLineOption.legend.selected[this.$t('Fund supervision')] = true;
             $this.classList.add('check');
           }
           scoreLine.setOption(scoreLineOption);
@@ -1435,10 +1433,10 @@
           let mykey = false;
           let className = $this.classList.toString();
           if (className.indexOf('check') !== -1) {
-            scoreLineOption.legend.selected['基本面'] = false;
+            scoreLineOption.legend.selected[this.$t('Fundamentals')] = false;
             $this.classList.remove('check');
           } else {
-            scoreLineOption.legend.selected['基本面'] = true;
+            scoreLineOption.legend.selected[this.$t('Fundamentals')] = true;
             $this.classList.add('check');
           }
           scoreLine.setOption(scoreLineOption);
@@ -1448,10 +1446,10 @@
           let mykey = false;
           let className = $this.classList.toString();
           if (className.indexOf('check') !== -1) {
-            scoreLineOption.legend.selected['团队'] = false;
+            scoreLineOption.legend.selected[this.$t('Team')] = false;
             $this.classList.remove('check');
           } else {
-            scoreLineOption.legend.selected['团队'] = true;
+            scoreLineOption.legend.selected[this.$t('Team')] = true;
             $this.classList.add('check');
           }
           scoreLine.setOption(scoreLineOption);
@@ -1461,10 +1459,10 @@
           let mykey = false;
           let className = $this.classList.toString();
           if (className.indexOf('check') !== -1) {
-            scoreLineOption.legend.selected['技术'] = false;
+            scoreLineOption.legend.selected[this.$t('Technology')] = false;
             $this.classList.remove('check');
           } else {
-            scoreLineOption.legend.selected['技术'] = true;
+            scoreLineOption.legend.selected[this.$t('Technology')] = true;
             $this.classList.add('check');
           }
           scoreLine.setOption(scoreLineOption);
@@ -1474,10 +1472,10 @@
           let mykey = false;
           let className = $this.classList.toString();
           if (className.indexOf('check') !== -1) {
-            scoreLineOption.legend.selected['市场'] = false;
+            scoreLineOption.legend.selected[this.$t('Market')] = false;
             $this.classList.remove('check');
           } else {
-            scoreLineOption.legend.selected['市场'] = true;
+            scoreLineOption.legend.selected[this.$t('Market')] = true;
             $this.classList.add('check');
           }
           scoreLine.setOption(scoreLineOption);
@@ -1506,6 +1504,13 @@
         let allCountList = data.map(item => item.allcount);
         let countList = data.map(item => item.count);
         let marketLine = echarts.init(this.$refs.marketChart);
+        let str2 = `{
+                    "${this.$t('Price')}": true, 
+                    "${this.$t('Number of circulation')}": false, 
+                    "${this.$t('Total amount of circulation')}": false, 
+                    "${this.$t('Number of users participating in circulation')}": false
+                  }`;
+        let select2 = JSON.parse(str2);
         let marketLineOption = {
           tooltip: {
             trigger: 'axis',
@@ -1517,8 +1522,8 @@
             }
           },
           legend: {
-            selected: {'价格': true, '流通笔数': false, '流通总额': false, '流通参与用户量': false},
-            data: ['价格', '流通笔数', '流通总额', '流通参与用户量'],
+            selected: select2,
+            data: [this.$t('Price'), this.$t('Number of circulation'), this.$t('Total amount of circulation'), this.$t('Number of users participating in circulation')],
             selectedMode: false
           },
           grid: {
@@ -1546,13 +1551,13 @@
           yAxis: [
             {
               type: 'value',
-              name: '价格',
+              name: this.$t('Price'),
               min: Math.min.apply(null, filter_array(totalScoreList)),
               max: Math.max.apply(null, filter_array(totalScoreList)),
             },
             {
               type: 'value',
-              name: '流通笔数',
+              name: this.$t('Number of circulation'),
               position: 'right',
               show: false,
               min: Math.min.apply(null, filter_array(countList)),
@@ -1563,7 +1568,7 @@
             },
             {
               type: 'value',
-              name: '流通总额',
+              name: this.$t('Total amount of circulation'),
               position: 'right',
               show: false,
               min: Math.min.apply(null, filter_array(allCountList)),
@@ -1574,7 +1579,7 @@
             },
             {
               type: 'value',
-              name: '流通参与用户量',
+              name: this.$t('Number of users participating in circulation'),
               show: false,
               position: 'right',
               min: Math.min.apply(null, filter_array(countUserList)),
@@ -1595,7 +1600,7 @@
           series: [
             {
               smooth:true,
-              name: '价格',
+              name: this.$t('Price'),
               type: 'line',
               yAxisIndex: 0,
               // stack: '总量',
@@ -1611,7 +1616,7 @@
               showSymbol: false
             },
             {
-              name: '流通笔数',
+              name: this.$t('Number of circulation'),
               yAxisIndex: 1,
               type: 'line',
               // stack: '总量',
@@ -1620,7 +1625,7 @@
               showSymbol: false
             },
             {
-              name: '流通总额',
+              name: this.$t('Total amount of circulation'),
               type: 'line',
               // stack: '总量',
               yAxisIndex: 2,
@@ -1629,7 +1634,7 @@
               showSymbol: false
             },
             {
-              name: '流通参与用户量',
+              name: this.$t('Number of users participating in circulation'),
               type: 'line',
               yAxisIndex: 3,
               // stack: '总量',
@@ -1649,10 +1654,10 @@
           let mykey = false;
           let className = $this.classList.toString();
           if (className.indexOf('check') !== -1) {
-            marketLineOption.legend.selected['流通笔数'] = false;
+            marketLineOption.legend.selected[this.$t('Number of circulation')] = false;
             $this.classList.remove('check');
           } else {
-            marketLineOption.legend.selected['流通笔数'] = true;
+            marketLineOption.legend.selected[this.$t('Number of circulation')] = true;
             $this.classList.add('check');
           }
           marketLine.setOption(marketLineOption);
@@ -1662,10 +1667,10 @@
           let mykey = false;
           let className = $this.classList.toString();
           if (className.indexOf('check') !== -1) {
-            marketLineOption.legend.selected['流通总额'] = false;
+            marketLineOption.legend.selected[this.$t('Total amount of circulation')] = false;
             $this.classList.remove('check');
           } else {
-            marketLineOption.legend.selected['流通总额'] = true;
+            marketLineOption.legend.selected[this.$t('Total amount of circulation')] = true;
             $this.classList.add('check');
           }
           marketLine.setOption(marketLineOption);
@@ -1675,10 +1680,10 @@
           let mykey = false;
           let className = $this.classList.toString();
           if (className.indexOf('check') !== -1) {
-            marketLineOption.legend.selected['流通参与用户量'] = false;
+            marketLineOption.legend.selected[this.$t('Number of users participating in circulation')] = false;
             $this.classList.remove('check');
           } else {
-            marketLineOption.legend.selected['流通参与用户量'] = true;
+            marketLineOption.legend.selected[this.$t('Number of users participating in circulation')] = true;
             $this.classList.add('check');
           }
           marketLine.setOption(marketLineOption);
@@ -1795,6 +1800,13 @@
         }
 
         let githubLine = echarts.init(this.$refs.githubLine);
+        let str3 = `{
+                    "${this.$t('Average of nearly 30 days')}": true, 
+                    "${this.$t('Quantity of update')}": ${commit}, 
+                    "${this.$t('Page views')}": ${watch}, 
+                    "${this.$t('Quantity of collected projects')}": ${star}
+                  }`;
+        let select3 = JSON.parse(str3);
         let githubLineOption = {
           tooltip: {
             trigger: 'axis',
@@ -1806,8 +1818,9 @@
             }
           },
           legend: {
-            selected: {'近30天平均值': true, '更新量': commit, '浏览量': watch, '收藏量': star},
-            data: ['近30天平均值', '更新量', '浏览量', '收藏量'], //'近30天平均值',
+            selected: select3,
+            // selected: {'近30天平均值': true, '更新量': commit, '浏览量': watch, '收藏量': star},
+            data: [this.$t('Average of nearly 30 days'), this.$t('Quantity of update'), this.$t('Page views'), this.$t('Quantity of collected projects')], //'近30天平均值',
             selectedMode: false,
             x: 'right'
           },
@@ -1840,7 +1853,7 @@
           series: [
             {
               // smooth:true,
-              name: '近30天平均值',
+              name: this.$t('Average of nearly 30 days'),
               type: 'line',
               smooth: false,
               label: {
@@ -1863,7 +1876,7 @@
             },
             {
               // smooth:true,
-              name: '收藏量',
+              name: this.$t('Quantity of collected projects'),
               type: 'line',
               // stack: '总量',
               data: starList,
@@ -1873,7 +1886,7 @@
             },
             {
               // smooth:true,
-              name: '浏览量',
+              name: this.$t('Page views'),
               type: 'line',
               // stack: '总量',
               data: watchList,
@@ -1882,7 +1895,7 @@
             },
             {
               // smooth:true,
-              name: '更新量',
+              name: this.$t('Quantity of update'),
               type: 'line',
               // stack: '总量',
               data: commitList,
@@ -1916,7 +1929,7 @@
             }
           },
           legend: {
-            data: ['报道量'], //'近30天平均值',
+            data: [this.$t('Channel flow')], //'近30天平均值',
             selectedMode: false,
             x: 'right'
           },
@@ -1960,7 +1973,7 @@
             // },
             {
               // smooth:true,
-              name: '报道量',
+              name: this.$t('Channel flow'),
               type: 'line',
               // stack: '总量',
               data: param.allnumList,
@@ -1989,7 +2002,7 @@
             }
           },
           legend: {
-            data: ['网站数'], //'近30天平均值',
+            data: [this.$t('Number of websites')], //'近30天平均值',
             selectedMode: false,
             x: 'right'
           },
@@ -2033,7 +2046,7 @@
             // },
             {
               // smooth:true,
-              name: '网站数',
+              name: this.$t('Number of websites'),
               type: 'line',
               // stack: '总量',
               data: param.sitenameList,
@@ -2300,15 +2313,23 @@
       rounding(val) {
         return parseInt(val);
       },
-      formatDataForMark(val) {
+      formatDataForMark(val,type,lang) {
         if (val) {
           if (val > 100000000) {
             let num = val / 100000000;
-            return `${num.toFixed(2)} 亿`
+            return `${num.toFixed(2)} ${type}`
           } else {
             if (val > 10000) {
-              let num = val / 10000;
-              return `${num.toFixed(2)} 万`
+              // let num = val / 10000;
+              let num = null;
+              if(lang === 'en'){
+                num = val / 1000;
+                return `${num.toFixed(2)} thousand`
+              }else{
+                num = val / 10000;
+                return `${num.toFixed(2)} 万`
+              }
+              
             } else {
               return val;
             }

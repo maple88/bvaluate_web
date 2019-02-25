@@ -24,6 +24,7 @@ import dynamicList from '@/pages/dynamicList'
 import dynamicView from '@/pages/dynamicView'
 import privacy from '@/pages/privacy'
 import userCollect from '@/pages/userCollect'
+import apiview from '@/pages/apiview'
 
 Vue.use(Router);
 
@@ -167,6 +168,10 @@ export default new Router({
     {
       path: '/userCollect',
       component: userCollect
+    },
+    {
+      path: '/api',
+      component: apiview
     }
   ],
   scrollBehavior(to, from, savedPosition) {
