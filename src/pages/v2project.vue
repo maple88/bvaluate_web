@@ -735,24 +735,26 @@
     },
     activated () {
       let that = this;
-      if (that.$route.query.multipage) {
-        that.$intro().setOptions({
-          prevLabel: '上一步',
-          nextLabel: '下一步', 
-          doneLabel: '完成',
-          skipLabel: '跳过',
-          showStepNumbers: false,
-          showBullets: false,
-          hidePrev: true,
-          hideNext: true,
-          disableInteraction: true,
-          steps:[
-            {intro: that.steps.content1}
-          ]
-         }).start().onexit(function() {
-          localStorage.setItem('isTour', true);
-          document.body.style.overflow = 'inherit';
-        });
+      if (!localStorage.getItem('isTour')) {
+        if (that.$route.query.multipage) {
+          that.$intro().setOptions({
+            prevLabel: '上一步',
+            nextLabel: '下一步', 
+            doneLabel: '完成',
+            skipLabel: '跳过',
+            showStepNumbers: false,
+            showBullets: false,
+            hidePrev: true,
+            hideNext: true,
+            disableInteraction: true,
+            steps:[
+              {intro: that.steps.content1}
+            ]
+           }).start().onexit(function() {
+            localStorage.setItem('isTour', true);
+            document.body.style.overflow = 'inherit';
+          });
+        }
       }
     },
     mounted() {

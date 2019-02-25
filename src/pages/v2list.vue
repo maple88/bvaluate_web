@@ -198,51 +198,53 @@
         that.getMainTable(that.country, that.industry);
       }
 
-      if (that.$route.query.multipage) {
-        document.getElementById('listStep1').classList.add('on');
-        document.getElementById('listStep2').classList.remove('on');
-        that.$intro().setOptions({
-          prevLabel: '上一步',
-          nextLabel: '下一步', 
-          doneLabel: '下个流程',
-          skipLabel: '跳过',
-          showStepNumbers: false,
-          showBullets: false,
-          hidePrev: true,
-          hideNext: true,
-          disableInteraction: true,
-          steps:[
-            {
-              element:'#listStep1',
-              intro: that.steps.content1
-            },
-            {
-              element:'#listStep2',
-              intro: that.steps.content2
-            },
-          ]
-         }).start().oncomplete(function() {
-          that.$router.push({
-            path: '/project',
-            query: {
-              sid: '839b623c-6f49-467a-b2db-65c0ad5a50a2',
-              multipage: true
-            }
-          })
-        }).onchange(function(targetElement) {
-          document.getElementById('listStep1').classList.remove('on');
-          document.getElementById('listStep2').classList.add('on');
-        }).onexit(function() {
-          localStorage.setItem('isTour', true);
-          document.body.style.overflow = 'inherit';
-          if (that.listNameType === '总评榜') {
-            document.getElementById('listStep1').classList.add('on');
-            document.getElementById('listStep2').classList.remove('on');
-          }else{
+      if (!localStorage.getItem('isTour')) {
+        if (that.$route.query.multipage) {
+          document.getElementById('listStep1').classList.add('on');
+          document.getElementById('listStep2').classList.remove('on');
+          that.$intro().setOptions({
+            prevLabel: '上一步',
+            nextLabel: '下一步', 
+            doneLabel: '下个流程',
+            skipLabel: '跳过',
+            showStepNumbers: false,
+            showBullets: false,
+            hidePrev: true,
+            hideNext: true,
+            disableInteraction: true,
+            steps:[
+              {
+                element:'#listStep1',
+                intro: that.steps.content1
+              },
+              {
+                element:'#listStep2',
+                intro: that.steps.content2
+              },
+            ]
+           }).start().oncomplete(function() {
+            that.$router.push({
+              path: '/project',
+              query: {
+                sid: '839b623c-6f49-467a-b2db-65c0ad5a50a2',
+                multipage: true
+              }
+            })
+          }).onchange(function(targetElement) {
             document.getElementById('listStep1').classList.remove('on');
             document.getElementById('listStep2').classList.add('on');
-          }
-        });
+          }).onexit(function() {
+            localStorage.setItem('isTour', true);
+            document.body.style.overflow = 'inherit';
+            if (that.listNameType === '总评榜') {
+              document.getElementById('listStep1').classList.add('on');
+              document.getElementById('listStep2').classList.remove('on');
+            }else{
+              document.getElementById('listStep1').classList.remove('on');
+              document.getElementById('listStep2').classList.add('on');
+            }
+          });
+        }
       }
     },
     updated () {
