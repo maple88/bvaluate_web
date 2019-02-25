@@ -205,3 +205,90 @@ a, a:hover {
     text-align: right !important;
   }
 }
+#v2header.introjs-fixParent{
+  position: absolute;
+  // z-index: 9999998 !important;
+}
+.introjs-helperLayer{
+  background-color: transparent !important;
+  border: 1px dashed #ffffff !important;
+}
+.introjs-tooltip{
+  width: 100%;
+  min-width: 500px !important;
+  max-width: 500px !important;
+  padding: 25px 25px 20px !important;
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  .introjs-arrow.top {
+    border-bottom-color:rgba(255, 255, 255, 0.8);
+  }
+  .introjs-arrow.top-right {
+    border-bottom-color:rgba(255, 255, 255, 0.8);
+  }
+  .introjs-arrow.top-middle {
+    border-bottom-color:rgba(255, 255, 255, 0.8);
+  }
+  .introjs-arrow.right {
+    border-left-color:rgba(255, 255, 255, 0.8);
+  }
+  .introjs-arrow.right-bottom {
+    border-left-color:rgba(255, 255, 255, 0.8);
+  }
+  .introjs-arrow.bottom {
+    border-top-color:rgba(255, 255, 255, 0.8);
+  }
+  .introjs-arrow.bottom-right {
+    border-top-color:rgba(255, 255, 255, 0.8);
+  }
+  .introjs-arrow.bottom-middle {
+    border-top-color:rgba(255, 255, 255, 0.8);
+  }
+  .introjs-arrow.left {
+    border-right-color:rgba(255, 255, 255, 0.8);
+  }
+  .introjs-arrow.left-bottom {
+    border-right-color:rgba(255, 255, 255, 0.8);
+  }
+  .introjs-tooltipbuttons{
+    .introjs-button{
+      color: #fff;
+      margin: 10px 5px 0;
+      border-radius: 3px;
+      border: 0;
+      padding: 6px 14px;
+      font-weight: normal;
+      text-shadow: none;
+      outline: none;
+      &:active, &:focus{
+        background-image: none;
+      }
+      &:hover{
+        box-shadow: none;
+      }
+    }
+    .introjs-prevbutton{
+      background: #999;
+    }
+    .introjs-nextbutton{
+      background: $mainColor;
+    }
+    .introjs-skipbutton{
+      background: transparent;
+      color: $mainColor;
+    }
+  }
+  .introjs-tooltiptext{
+    p{
+      font-family: "微软雅黑";
+      font-size: 16px;
+      margin: 0 0 5px;
+      color: #000;
+    }
+    .mgb15{
+      margin: 0 0 20px;
+    }
+    .sm{
+      font-size: 14px;
+    }
+  }
+}

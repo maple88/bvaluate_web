@@ -8,8 +8,10 @@
   <link rel="shortcut icon" href="static/favicon.png" />
   <script type="text/javascript" src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
   <link type="text/css" rel="stylesheet" href="./static/layui/css/layui.css"/>
-  <script type="text/javascript" src="./static/headroom.js"></script>
   <script type="text/javascript" src="./static/layui/layui.js"></script>
+  <script type="text/javascript" src="./static/headroom.js"></script>
+  <!-- <link type="text/css" rel="stylesheet" href="./static/introjs/introjs.css"/> -->
+  <!-- <script type="text/javascript" src="./static/introjs/intro.js"></script> -->
   <script type="text/javascript">
   	var lock = false;
   	var start_time = new Date();
@@ -222,7 +224,7 @@
 </script>
 
 </body>
-
+<!-- headroomjs -->
 <script type="text/javascript">
   var myElement = document.querySelector("#v2header");
   // construct an instance of Headroom, passing the element
@@ -241,4 +243,12 @@
   // initialise
   headroom.init();
 </script>
+<!-- introjs -->
+<!-- <script type="text/javascript">
+  document.getElementById('rookie').onclick = function() {
+    introJs().setOption('doneLabel', 'Next page').start().oncomplete(function() {
+      window.location.reload();
+    });
+  };
+</script> -->
 </html>
