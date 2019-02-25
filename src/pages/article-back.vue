@@ -2,33 +2,47 @@
   <div class="page">
     <v2header/>
     <div class="v2maintainer">
-      <div class="follow_content v2article" id="article">
-        <div class="fish_container container v2container">
+      <div class="follow_content" id="article">
+        <div class="fish_container">
+          <div class="row">
+            <div class="span6">
+              <ul class="breadcrumb">
+                <li>
+                  <router-link to="/home" data="首页" name="breadcrumb_home" id="breadcrumb_home">{{$t('Home')}}</router-link>
+                  <span class="divider"></span>
+                </li>
+                <li>
+                  <router-link to="#">
+                    <span v-if="articleContent.projectCategory !== 'NULL'" class="label_item"
+                          @click="goProjectByName2(articleContent.projectCategory, $event)"
+                          name="article_label_item_projectCategory" id="article_label_item_projectCategory"
+                          :data="articleContent.projectCategory">
+                      {{articleContent.projectCategory | showLable}}
+                    </span>
+                    <span v-else-if="articleContent.countryCategory !== 'NULL'" class="label_item"
+                          @click="goIndustryByCountry2(articleContent.countryCategory, $event)"
+                          name="article_label_item_countryCategory" id="article_label_item_countryCategory"
+                          :data="articleContent.countryCategory">
+                      {{articleContent.countryCategory | showLable}}
+                    </span>
+                    <span v-else="articleContent.industryCategory !== 'NULL'" class="label_item"
+                          @click="goIndustryByIndustry2(articleContent.industryCategory, $event)"
+                          name="article_label_item_industryCategory" id="article_label_item_industryCategory"
+                          :data="articleContent.industryCategory">
+                      {{articleContent.industryCategory | showLable}}
+                    </span>
+                  </router-link>
+                  <span class="divider"></span>
+                </li>
+                <li class="active">{{$t('Content')}}</li>
+              </ul>
+            </div>
+          </div>
           <div class="clearfix">
             <div class="center">
               <div class="article_box">
                 <div class="article_title">
                   <h4>{{articleContent.title}}</h4>
-                </div>
-                <div class="label_box">
-                  <div v-if="articleContent.countryCategory !== 'NULL'" class="label_item"
-                       name="article_label_box_countryCategory" id="article_label_box_countryCategory"
-                       @click="goIndustryByCountry(articleContent.countryCategory, $event)"
-                       :data="articleContent.countryCategory">
-                    {{articleContent.countryCategory | showLable}}
-                  </div>
-                  <div v-if="articleContent.industryCategory !== 'NULL'" class="label_item"
-                       name="article_label_box_industryCategory" id="article_label_box_industryCategory"
-                       @click="goIndustryByIndustry(articleContent.industryCategory, $event)"
-                       :data="articleContent.industryCategory">
-                    {{articleContent.industryCategory | showLable}}
-                  </div>
-                  <div v-if="articleContent.projectCategory !== 'NULL'" class="label_item"
-                       name="article_label_box_projectCategory" id="article_label_box_projectCategory"
-                       @click="goProjectByName(articleContent.projectCategory, $event)"
-                       :data="articleContent.projectCategory">
-                    {{articleContent.projectCategory | showLable}}
-                  </div>
                 </div>
                 <div class="article_tool">
                   <div class="article_left">
@@ -50,20 +64,11 @@
                     <!-- <span class="publish_time">13:20</span> -->
                   </div>
                   <div class="article_right">
-                    <span class="look_count"><img class="aticon" src="../assets/article/eye.png">0人</span>
-                    <a href="javascript:;" class="look" name="article_right_more" id="article_right_more" data="查看全文" @click="showArticle = !showArticle">查看原文</a>
+                    <a href="javascript:;" class="look" name="article_right_more" id="article_right_more" data="查看全文" @click="showArticle = !showArticle">{{$t('View original article')}}</a>
+                    <span class="look_count"><i class="fa fa-eye"></i>0</span>
                     <!--<span class="share" @click.stop="showAllShare($event)"><i class="fa fa-share-alt"></i></span>-->
-                    <span class="follow">
-                      <!-- <i class="fa fa-heart" v-show="!isFollow" @click="setFollow()"></i>
-                      <i class="fa fa-heart followed" v-show="isFollow" @click="deleteFollow(articleContent.collected)"></i> -->
-
-                      <span v-if="!isFollow" @click="setFollow()"><img class="aticon" src="../assets/article/collect.png">收藏</span>
-                      <span class="on" v-if="isFollow" @click="deleteFollow(articleContent.collected)">
-                        <img class="aticon" src="../assets/article/collect-on.png">已收藏
-                      </span>
-                    </span>
                     <div class="followbtn on share_button" @click.stop="shareButton = !shareButton">
-                      <span><img class="aticon" src="../assets/article/share.png">分享</span>
+                      <i class="fa fa-share-alt"></i>
                       <transition name="fade">
                         <div class="share_box" v-show="shareButton">
                           <div class="arrow"></div>
@@ -88,6 +93,31 @@
                         </div>
                       </transition>
                     </div>
+                    <span class="follow">
+                      <i class="fa fa-heart" v-show="!isFollow" @click="setFollow()"></i>
+                      <i class="fa fa-heart followed" v-show="isFollow"
+                         @click="deleteFollow(articleContent.collected)"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="label_box">
+                  <div v-if="articleContent.countryCategory !== 'NULL'" class="label_item"
+                       name="article_label_box_countryCategory" id="article_label_box_countryCategory"
+                       @click="goIndustryByCountry(articleContent.countryCategory, $event)"
+                       :data="articleContent.countryCategory">
+                    {{articleContent.countryCategory | showLable}}
+                  </div>
+                  <div v-if="articleContent.industryCategory !== 'NULL'" class="label_item"
+                       name="article_label_box_industryCategory" id="article_label_box_industryCategory"
+                       @click="goIndustryByIndustry(articleContent.industryCategory, $event)"
+                       :data="articleContent.industryCategory">
+                    {{articleContent.industryCategory | showLable}}
+                  </div>
+                  <div v-if="articleContent.projectCategory !== 'NULL'" class="label_item"
+                       name="article_label_box_projectCategory" id="article_label_box_projectCategory"
+                       @click="goProjectByName(articleContent.projectCategory, $event)"
+                       :data="articleContent.projectCategory">
+                    {{articleContent.projectCategory | showLable}}
                   </div>
                 </div>
                 <div class="article_content">
@@ -95,7 +125,7 @@
                 </div>
                 <div class="article_original">
                   <transition name="fade">
-                    <div class="title" v-if="showArticle">原文</div>
+                    <div class="title" v-if="showArticle">{{$t('Original article')}}</div>
                   </transition>
                   <transition name="fade">
                     <div class="original" v-if="showArticle">
@@ -111,6 +141,55 @@
               </div>
             </div>
             <div class="right">
+              <div class="author_infor">
+                <div class="author_box">
+                  <div class="author_left">
+                    <img src="../assets/follow/apelink.png" alt="">
+                  </div>
+                  <div class="author_right">
+                    <h4 class="user_name"
+                        name="article_user_name2_author" id="article_user_name2_author"
+                        v-if="!(articleContent.siteName !== 'NULL' && articleContent.siteName !== null && articleContent.siteName !== '')"
+                        @click="goArticle('/author',{author: articleContent.author,type: 'author'}, $event)"
+                        :data="articleContent.author">
+                      {{articleContent.author}}
+                    </h4>
+                    <h4 class="user_name" v-else
+                        name="article_user_name2_siteName" id="article_user_name2_siteName"
+                        @click="goArticle('/author',{author: articleContent.siteName,type: 'siteName'}, $event)"
+                        :data="articleContent.siteName">
+                      {{articleContent.siteName}}
+                    </h4>
+                    <button
+                      name="article_follow_btn_siteName" id="article_follow_btn_siteName"
+                      class="follow_btn" v-if="!follow" data="关注作者"
+                      @click="setAuthorFollow(), trackAttention('作者', articleContent.siteName)">
+                      <img src="../assets/follow/icon-follow.png"/>{{$t('Focus')}}
+                      <div class="arrow"></div>
+                    </button>
+                    <button
+                      name="article_followed_btn_siteName" id="article_followed_btn_siteName"
+                      class="followed_btn" v-if="follow" data="取消关注作者"
+                      @click="deleteAuthorFollow(articleContent.siteName)">
+                      <div class="arrow"></div>
+                      <img src="../assets/follow/icon-followed.png"/>{{$t('Followed')}}
+                    </button>
+                  </div>
+                </div>
+                <div class="author_news">
+                  <ul class="news_ul">
+                    <li class="news_li" v-for="(news, index) in newsForAuthor" :key="index">
+                      <p :data="news.title" :name="'article_news_li_title_'+index" :id="'article_news_li_title_'+index"
+                         @click="goArticle('/article',{sid:news.sid}, $event),
+                      trackArticle('文章详情页内作者文章推荐', news.title, '文章详情页内文章没有项目名称', '文章详情页内文章没有项目ID', '作者文章推荐', news.sid)">
+                        {{news.title}}
+                      </p>
+                      <p class="time">{{news.urlDate}}</p>
+                    </li>
+                  </ul>
+                  <p></p>
+                </div>
+              </div>
               <div class="adv_swiper">
                 <div class="swiper-container" id="right_swiper">
                   <div class="swiper-wrapper">
@@ -127,15 +206,14 @@
                   <!-- 如果需要分页器 -->
                   <div class="swiper-button-prev"></div><!--左箭头-->
                   <div class="swiper-button-next"></div><!--右箭头-->
-                  <div class="swiper-pagination"></div>
                 </div>
               </div>
               <div class="right_item margin_top">
                 <div class="hot_title">
-                  <!-- <div class="title_icon">
+                  <div class="title_icon">
                     <img src="../assets/follow/hot_text.png"/>
-                  </div> -->
-                  <h4>相关资讯</h4>
+                  </div>
+                  <h4>{{$t('24 hours hot articles')}}</h4>
                 </div>
                 <div class="hot_content">
                   <ul class="long_ul">
@@ -143,22 +221,17 @@
                         :name="'article_long_ul_li_'+index" :id="'article_long_ul_li_'+index"
                         @click="goArticle('/article',{sid:item.sid}, $event),
                     trackArticle('文章详情页内24小时热文', item.title, '文章详情页内文章没有项目名称', '文章详情页内文章没有项目ID', '24小时热文', item.sid)">
-                      <!-- <div class="item_left" v-if="item.titlePicture">
-                        <img :src="item.titlePicture"/>
-                      </div> -->
-                      <div class="item_left">
-                        <img src="../assets/search/news.png"/>
+                      <div class="list_item">
+                        <div class="item_left" v-if="item.titlePicture">
+                          <img :src="item.titlePicture"/>
+                        </div>
+                        <div class="item_body" :class="item.titlePicture?'':'noPicture'">
+                          <h4>{{item.title}}</h4>
+                          <p>{{item.content}}</p>
+                        </div>
                       </div>
-                      <div class="item_info">
-                        <div class="list_item">
-                          <div class="item_body" :class="item.titlePicture?'':'noPicture'">
-                            <h4>{{item.title}}</h4>
-                            <p>{{item.content}}</p>
-                          </div>
-                        </div>
-                        <div class="item_bottom">
-                          <p><span>{{item.author}}</span><span>{{item.urlDate}}</span></p>
-                        </div>
+                      <div class="item_bottom">
+                        <p>{{item.urlDate}}</p>
                       </div>
                     </li>
                   </ul>
@@ -232,10 +305,6 @@
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
-        },
-        pagination: {                   //分页器
-          el: '.swiper-pagination',
-          clickable :true               //允许点击分页器切换
         }
       })
       this.getDetailData();
@@ -429,7 +498,7 @@
               }
               that.industryName = res.data.industryCategory;
               if (token !== null && token !== '' && token !== undefined) {
-                // let checkurl = '/api/individual/check?type=NEWS&sidOrName=' + that.articleContent.sid;
+                // let checkurl = '/individual/check?type=NEWS&sidOrName=' + that.articleContent.sid;
                 // that.$axios({
                 //   method: 'post',
                 //   url: checkurl,
@@ -462,7 +531,7 @@
                 });
               }
             });
-            // that.$axios.get('/api/traditional/detail?sid=' + sid).then(function (res) {
+            // that.$axios.get('/traditional/detail?sid=' + sid).then(function (res) {
             //   that.articleContent = res.data
             //   that.getNewsForAuthor(that.articleContent.author);
             //   that.industryName = res.data.industryCategory;
@@ -505,7 +574,7 @@
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid');
-          let url = '/individual/delete?cid=' + cid;
+          let url = '/api/individual/delete?cid=' + cid;
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'DELETE',
@@ -565,7 +634,7 @@
       },
       getHotnewsData() {
         let that = this
-        that.$axios.get('/api/traditional/hotNews?ndustryName=' + that.industryName + '&pageSize=10').then(function (res) {
+        that.$axios.get('/api/traditional/hotNews?industryName=' + that.industryName + '&pageSize=10').then(function (res) {
           that.hotNews = res.data.content
         })
       },
