@@ -26,7 +26,7 @@
                     <select name="hot-industry" v-model="industry" lay-filter="hot-industry">
                       <option value="">{{$t('Hot industry')}}</option>
                       <option :value="item.categoryName" v-for="(item, index) in hostIndustries" :key="index">{{item.categoryName}}</option>
-                    </select>
+                    </select> 
                     <select name="hot-country" v-model="country" lay-filter="hot-country">
                       <option value="">{{$t('Hot nation')}}</option>
                       <option :value="item.countName" v-for="(item, index) in guojiaList" :key="index">{{item.countName}}</option>
@@ -309,7 +309,7 @@
             ,cols: [[
             {field: 'rank', title: that.$t("Ranking"), width: 45, fixed: true, templet: '#list-table-ranking', style: 'height:64px; padding: 0; line-height: inherit'}
             ,{field:'project', title: that.$t("Project"), minWidth: 110, fixed: true, templet: '#list-table-project', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'totalScore', title: that.$t("comprehensive evaluation"), width: 75, sort: true, templet: '#list-table-totalScore', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'totalScore', title: that.$t("overall score"), width: 75, sort: true, templet: '#list-table-totalScore', style: 'height:64px; padding: 0; line-height: inherit'}
             ,{field:'amountIncrease', title: that.$t("Ranking fluctuation"), width: 75, sort: true, templet: '#list-table-updown', style: 'height:64px; padding: 0; line-height: inherit'}
             ,{field:'fundamentalsanalysis', title: that.$t("Fundamentals"), width: 75, sort: true, templet: '#fundamentalsanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
             ,{field:'marketanalysis', title: that.$t("Market"), width: 75, sort: true, templet: '#marketanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
@@ -366,7 +366,7 @@
             ,cols: [[
             {field: 'rank', title: that.$t("Ranking"), width: 45, fixed: true, templet: '#list-table-ranking', style: 'height:64px; padding: 0; line-height: inherit'}
             ,{field:'project', title: that.$t("Project"), minWidth: 110, fixed: true, templet: '#list-table-project', style: 'height:64px; padding: 0; line-height: inherit'}
-            ,{field:'totalScore', title: that.$t("comprehensive evaluation"), width: 75, sort: true, templet: '#list-table-totalScore', style: 'height:64px; padding: 0; line-height: inherit'}
+            ,{field:'totalScore', title: that.$t("overall score"), width: 75, sort: true, templet: '#list-table-totalScore', style: 'height:64px; padding: 0; line-height: inherit'}
             ,{field:'amountIncrease', title: that.$t("Ranking fluctuation"), width: 75, sort: true, templet: '#list-table-updown', style: 'height:64px; padding: 0; line-height: inherit'}
             ,{field:'fundamentalsanalysis', title: that.$t("Fundamentals"), width: 75, sort: true, templet: '#fundamentalsanalysis', style: 'height:64px; padding: 0; line-height: inherit'}
             ,{field:'marketanalysis', title: that.$t("Market"), width: 75, sort: true, templet: '#marketanalysis', style: 'height:64px; padding: 0; line-height: inherit'}

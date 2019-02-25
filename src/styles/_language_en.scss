@@ -65,12 +65,17 @@
         text-align: center;
     }
     .v2footer .top .eweima-row .item p{
-        @media($min-md)and($max-lg){
-            min-height: 66px;
-        }
+        // @media($min-md)and($max-lg){
+        //     min-height: 66px;
+        // }
     }
     .v2footer .top .femail span{
         padding-right: 10px;
+    }
+    .v2footer .top .flogodes{
+        @media($min-sm){
+            max-width: 240px;
+        }
     }
 
     //myProfile
@@ -143,6 +148,14 @@
         flex: 0 0 110px;
         @media($max-lg){
             margin-right: 10px;
+        }
+    }
+    //project
+    .project-main .middlemain .media-item .media-main .mediar .computerbox{
+        @media($min-md){
+            width: 100px;
+            height: 84px;
+            background-size: contain;
         }
     }
 }
