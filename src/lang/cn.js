@@ -2,7 +2,7 @@ export default {
 	'Feature Tour': '新手指导',
 	'Cancel': '取消',
 	'Total projects': '项目总量',
-	'Total people of blockchain': '项目相关人员总数',
+	'Project personnel': '项目相关人员总数',
 	'Total White papers': '白皮书收录总数',
 	'Download App': 'APP下载',
 	'Home': '首页',
@@ -226,5 +226,6 @@ export default {
 	'Content': '正文',
 	'View original article': '查看原文',
 	'Original article': '原文',
-	'24 hours hot articles': '24小时热文'
+	'24 hours hot articles': '24小时热文',
+	'Policy': '政策'
 };

@@ -301,11 +301,11 @@
           }
         },
         register_time: 60,
-        registerSendBtnText: '获取验证码',
+        registerSendBtnText: this.$t('Send Message'),
         registerSendBtn: true,
         registerShowloading: false,
         resetPwd_time: 60,
-        resetPwdSendBtnText: '获取验证码',
+        resetPwdSendBtnText: this.$t('Send Message'),
         resetPwdSendBtn: true,
         resetPwdShowloading: false,
         loading: loading,

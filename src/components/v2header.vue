@@ -5,7 +5,7 @@
         <div class="flexbox">
           <ul>
             <li><span style="font-family: PingFangSC-Regular;">{{$t('Total projects')}}：</span><span>{{tophead.totalProject}}</span></li>
-            <li><span style="font-family: '微软雅黑';">{{$t('Total people of blockchain')}}：</span><span>{{tophead.totalRelatedProjectPerson}}</span></li>
+            <li><span style="font-family: '微软雅黑';">{{$t('Project personnel')}}：</span><span>{{tophead.totalRelatedProjectPerson}}</span></li>
             <li><span>{{$t('Total White papers')}}：</span><span>{{tophead.totalWhitePaper}}</span></li>
           </ul>
           <div class="appdownload">
@@ -111,7 +111,7 @@
                 <div class="layui-form">
                   <select name="language" lay-filter="language">
                     <option value="简体" :selected="$i18n.locale === 'cn' ? true : false">简体</option>
-                    <option value="繁体" :selected="$i18n.locale === 'hk' ? true : false">繁体</option>
+                    <option value="繁体" :selected="$i18n.locale === 'hk' ? true : false">繁體</option>
                     <option value="English" :selected="$i18n.locale === 'en' ? true : false">English</option>
                   </select>
                 </div>

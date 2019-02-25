@@ -1,9 +1,9 @@
 export default {
 	'Feature Tour': 'Feature Tour',
 	'Cancel': 'Cancel',
-	'Total projects': 'Total projects',
-	'Total people of blockchain': 'Total people of blockchain',
-	'Total White papers': 'Total White papers',
+	'Total projects': 'Projects',
+	'Project personnel': 'Project personnel',
+	'Total White papers': 'White papers',
 	'Download App': 'Download App',
 	'Home': 'Home',
 	'List': 'List',
@@ -26,7 +26,7 @@ export default {
 	'Privacy policy': 'Privacy policy',
 	'Contact us': 'Contact us',
 	'Download App': 'Download App',
-	'WeChat official account': 'WeChat official account',
+	'WeChat official account': 'Official Accounts',
 	'phone number': 'phone number',
 	'password': 'password',
 	'Remember me': 'Remember me',
@@ -226,5 +226,6 @@ export default {
 	'Content': 'Content',
 	'View original article': 'View original article',
 	'Original article': 'Original article',
-	'24 hours hot articles': '24 hours hot articles'
+	'24 hours hot articles': '24 hours hot articles',
+	'Policy': 'Policy'
 };
