@@ -26,6 +26,7 @@
                   <a name="search_label_box_weixin" id="search_label_box_weixin" data="微信" href="javascript:void(0);" :class="search.type === 'WEIXIN'?'active':''"
                   @click="changeType('WEIXIN')">{{$t('WeChat')}}</a>
                 </div>
+                <!-- 搜索页面 -->
                 <ul v-if="search.show">
                   <li>
                     <div class="list-item">
@@ -110,6 +111,15 @@
                     </button>
                   </div>
                 </ul>
+                <!--搜索数据没有-->
+                <!-- <ul v-else="" class="">
+                  <li>
+                    <img src="../assets/search_2.png" alt="">
+                    <p>暂无此项目</p>
+                    <p>可通过新增项目，获取该项目的分析评估</p>
+                  </li>
+                </ul> -->
+
                 <div v-if="!search.show">
                   <div class="project_list_box" v-for="(project, index) in projectList" :key="index">
                     <div class="project-info">
@@ -142,7 +152,10 @@
                     </div>
                   </div>
                   <div class="loading_more">
-                    <p class="loading_more_tip" v-if="showloading===-1">{{loadingTip}}~</p>
+                    <p class="loading_more_tip" v-if="showloading===-1">
+                      <img class="serch_one" src="../assets/search_2.png" alt="">
+                      {{loadingTip}}~
+                      </p>
                     <button :disabled="showloading" data="加载更多" value="加载更多" name="loading_more" id="loading_more" @click.stop="loadMoreICO" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
                       <span v-if="!showloading">{{$t('Load more')}}</span>
