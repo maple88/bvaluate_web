@@ -303,7 +303,7 @@
     methods: {
       isTourShow () {
         let that = this;
-        // that.$intro().exit();
+        document.body.style.overflow = 'hidden';
         that.$router.push('/home');
         window.scrollTo(0,0);
         document.getElementById('v2header').classList.remove('unpinned');
@@ -327,6 +327,7 @@
             })
           }).onexit(function() {
             localStorage.setItem('isTour', true);
+            document.body.style.overflow = 'inherit';
           });
         })
       },

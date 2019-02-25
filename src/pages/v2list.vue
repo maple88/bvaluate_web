@@ -234,6 +234,7 @@
           document.getElementById('listStep2').classList.add('on');
         }).onexit(function() {
           localStorage.setItem('isTour', true);
+          document.body.style.overflow = 'inherit';
           if (that.listNameType === '总评榜') {
             document.getElementById('listStep1').classList.add('on');
             document.getElementById('listStep2').classList.remove('on');
