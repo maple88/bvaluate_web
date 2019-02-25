@@ -16,6 +16,7 @@
                 <li><router-link to="/dynamicList">{{$t('Company News')}}</router-link></li>
                 <li><router-link to="/cooperation">{{$t('Strategic cooperation')}}</router-link></li>
                 <li><router-link to="/privacy">{{$t('Privacy policy')}}</router-link></li>
+                <li><router-link to="/api">API</router-link></li>
               </ul>
             </div>
             <div class="box-col">
