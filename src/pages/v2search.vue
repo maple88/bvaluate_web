@@ -104,7 +104,7 @@
                     </div>
                   </li>
                   <div class="loading_more">
-                    <p class="loading_more_tip" v-if="showloading===-1">{{loadingTip}}~</p>
+                    <!-- <p class="loading_more_tip" v-if="showloading===-1">{{loadingTip}}~</p> -->
                     <button :disabled="showloading" data="加载更多" value="加载更多" name="loading_more" id="loading_more" @click.stop="loadMoreNews" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
                       <span v-if="!showloading">{{$t('Load more')}}</span>
@@ -152,15 +152,19 @@
                     </div>
                   </div>
                   <div class="loading_more">
-                    <p class="loading_more_tip" v-if="showloading===-1">
-                      <img class="serch_one" src="../assets/search_2.png" alt="">
+                    <!-- <p class="loading_more_tip" v-if="showloading===-1">
                       {{loadingTip}}~
-                      </p>
+                    </p> -->
                     <button :disabled="showloading" data="加载更多" value="加载更多" name="loading_more" id="loading_more" @click.stop="loadMoreICO" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
                       <span v-if="!showloading">{{$t('Load more')}}</span>
                     </button>
                   </div>
+                </div>
+                <div class="search_show" v-if="search.nothing">
+                  <img src="../assets/search_2.png" alt="">
+                  <p>暂无此项目</p>
+                  <p>可通过<span>新增项目</span>，获取该项目的分析评估</p>
                 </div>
               </div>
             </div>
@@ -231,7 +235,8 @@
           type: 'ICO',
           keyword: '',
           pageNo: 0,
-          show: true
+          show: true,
+          nothing: false
         },
         loadingTip: '',
         newsList: [],
@@ -535,11 +540,13 @@
           return false;
         }
         this.showloading = true;
+        this.search.nothing = false;
         this.newsList = [];
         this.search.pageNo = 0;
         // 项目
         if (this.search.type === 'ICO') {
           this.showloading = true;
+          this.search.nothing = false;
           this.projectList = [];
           this.search.show = false;
           let uid = localStorage.getItem('apelink_user_uid');
@@ -548,58 +555,88 @@
           }).then(res => {
             this.showloading = false;
             let allData = res.data.content;
-            for (let i = 0; i < allData.length; i++) {
+            if(allData){
+              for (let i = 0; i < allData.length; i++) {
               allData[i].introduction = this.replaceAll(allData[i].introduction, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
               allData[i].project = this.replaceAll(allData[i].project, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
               allData[i].irAbstract = this.replaceAll(allData[i].irAbstract, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
             }
             this.projectList = res.data.content;
-            if (res.data.content.length <= 0) {
+            if(this.projectList){
+              if (res.data.content.length <= 0) {
               this.showloading = -1;
-              this.loadingTip = '无搜索结果~';
+              // this.loadingTip = '无搜索结果~';
+              this.search.nothing= true;
             }
+            }else {
+              this.showloading = -1;
+              // this.loadingTip = '无搜索结果~';
+              this.search.nothing= false;
+            }
+            
+            }
+            
           });
         }else{
           this.search.show = true;
           this.$axios.get('/api/traditional/search?newsType=' + this.search.type + '&search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20&highLight=true').then(res => {
             this.showloading = false;
+            this.search.nothing =false;
             let allData = res.data.content;
             // for (let i = 0; i < allData.length; i++) {
             //   allData[i].title = this.replaceAll(allData[i].title, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
             //   allData[i].content = this.replaceAll(allData[i].content, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
             // }
             this.newsList = allData;
-            if (res.data.content.length <= 0) {
+            if(this.newsList){
+              if (res.data.content.length <= 0) {
               this.showloading = -1;
-              this.loadingTip = '无搜索结果~';
+              // this.loadingTip = '无搜索结果~';
+              this.search.nothing = true;
             }
+            }else {
+              this.showloading = -1;
+              this.search.nothing = true;
+            }
+            
           });
         }
       },
       loadMoreNews() {
         this.showloading = true;
+        this.search.nothing = false;
         this.search.pageNo++;
         this.$axios.get('/api/traditional/search?newsType=' + this.search.type + '&search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20&highLight=true').then(res => {
           this.showloading = false;
           let allData = res.data.content;
-          for (let i = 0; i < allData.length; i++) {
+          if(allData){
+            // aler(1)
+             for (let i = 0; i < allData.length; i++) {
             allData[i].title = this.replaceAll(allData[i].title, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
             allData[i].content = this.replaceAll(allData[i].content, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
           }
           this.newsList = this.newsList.concat(allData);
           if (res.data.content.length < 20) {
             this.showloading = -1;
-            this.loadingTip = '无更多数据~';
+            // this.loadingTip = '无更多数据~';
+            this.search.nothing = false;
           }
+        }else {
+          this.showloading = -1;
+          this.search.nothing = false;
+        }
+         
         });
       },
       loadMoreICO() {
         this.showloading = true;
+        this.search.nothing = false;
         this.search.pageNo++;
         this.$axios.get('/api/ICO/search?search=' + this.search.keyword + '&pageNo=' + this.search.pageNo + '&pageSize=20').then(res => {
           this.showloading = false;
           let allData = res.data.content;
-          for (let i = 0; i < allData.length; i++) {
+          if(allData){
+             for (let i = 0; i < allData.length; i++) {
             allData[i].introduction = this.replaceAll(allData[i].introduction, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
             allData[i].project = this.replaceAll(allData[i].project, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
             allData[i].irAbstract = this.replaceAll(allData[i].irAbstract, this.search.keyword, '<font color="red">' + this.search.keyword + '</font>');
@@ -607,8 +644,14 @@
           this.projectList = this.projectList.concat(allData);
           if (res.data.content.length < 20) {
             this.showloading = -1;
-            this.loadingTip = '无更多数据~';
+            // this.loadingTip = '无更多数据~';
+            this.search.nothing = false;
           }
+          }else {
+            this.showloading = -1;
+            this.search.nothing = true;
+          }
+         
         });
       }
     }
@@ -617,5 +660,25 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+.search_show {
+  width: 100%;
+  height: 100%;
+  img {
+    display: block;
+    margin: 0 auto ;
+    padding-top: 20px;
+    padding-bottom: 55px;
+  }
+  p {
+    text-align: center;
+    color: #505050;
+    span {
+      color: #424de4;
+    }
+    &:last-child {
+      margin-bottom: 382px;
+    }
+  }
+}
 </style>
 
