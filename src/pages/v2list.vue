@@ -17,8 +17,8 @@
           <div class="left">
             <div class="main-table">
               <div class="list-tab">
-                <div class="tabtn" data-list-step="1" :class="listNameType==='总评榜'?'on':''" @click="changeListName('总评榜')">{{$t('Overall list')}}</div>
-                <div class="tabtn" data-list-step="2" :class="listNameType==='sto榜'?'on':''" @click="changeListName('sto榜')">{{$t('STO list')}}</div>
+                <div id="listStep1" v-intro-disable-interaction="true" class="tabtn" :class="listNameType==='总评榜'?'on':''" @click="changeListName('总评榜')">{{$t('Overall list')}}</div>
+                <div id="listStep2" v-intro-disable-interaction="true" class="tabtn" :class="listNameType==='sto榜'?'on':''" @click="changeListName('sto榜')">{{$t('STO list')}}</div>
               </div>
               <div class="table-filter">
                 <div>
@@ -83,39 +83,6 @@
       </div>
       <v2footer/>
     </div>
-
-    <v-tour  name="listTour" :steps="steps" :callbacks="myCallbacks">
-      <template slot-scope="tour">
-        <transition name="fade">
-          <v-step
-          v-if="tour.currentStep === index"
-          v-for="(step, index) of tour.steps"
-          :key="index"
-          :step="step"
-          :previous-step="tour.previousStep"
-          :next-step="tour.nextStep"
-          :stop="tour.stop"
-          :is-first="tour.isFirst"
-          :is-last="tour.isLast"
-          :labels="tour.labels"
-          >
-            <template v-if="tour.currentStep !== 1">
-              <div slot="actions" class="v-step__buttons">
-                <button @click="tour.previousStep" class="btn btn-primary">上一步</button>
-                <button @click="tour.nextStep" class="btn btn-primary">下一步</button>
-              </div>
-            </template>
-            <template v-if="tour.currentStep === 1">
-              <div slot="actions" class="v-step__buttons">
-                <button @click="tour.previousStep" class="btn btn-primary">上一步</button>
-                <button @click="tour.stop" class="btn btn-primary">完成</button>
-              </div>
-            </template>
-          </v-step>
-        </transition>
-      </template>
-    </v-tour>
-
   </div>
 </template>
 
@@ -140,20 +107,15 @@
         riseloading: false,
         fallloading: false,
         showLoadMore: false,
-        steps: [
-          {
-            target: '[data-list-step="1"]',
-            content: `<h4>总评榜，通过大数据及AI技术，系统根据自动评估模型及算法，对每个项目进行综合评估。</h4>
-                      <p>提供项目周榜、月榜。也可通过行业、国家进行筛选项目。</p>`
-          },
-          {
-            target: '[data-list-step="2"]',
-            content: `<h4>项目榜单，提供项目周榜、月榜，展现项目排名、趋势等动态，更全面的透视项目情况。</h4>
-                      <h4>包括总评榜、STO榜、涨幅榜、跌幅榜。</h4>`
-          }
-        ],
-        myCallbacks: {
-          onNextStep: this.NextStepCallback
+        steps: {
+          content1: `
+            <p class="mgb15"><strong>总评榜</strong>，通过大数据及AI技术，系统根据自动评估模型及算法，对每个项目进行综合评估。</p>
+            <p class="mgb15 sm">提供项目周榜、月榜。也可以通过行业、国家进行筛选项目。</p>
+          `,
+          content2: `
+            <p class="mgb15"><strong>STO榜单</strong>，对已公开发行的STO项目进行综合评估。</p>
+            <p class="mgb15 sm">提供项目周榜、月榜。</p>
+          `
         }
       }
     },
@@ -209,14 +171,6 @@
     },
     activated () {
       let that = this;
-      // let isTour = JSON.parse(localStorage.getItem('isTour'));
-      // if (isTour) {
-      //   if(!isTour.list){
-      //     that.$tours['myTour'].start();
-      //   }
-      // }else{
-      //   that.$tours['myTour'].start();
-      // }
       if (that.$route.query.listNameType) {that.listNameType = that.$route.query.listNameType;}
       if (that.$route.query.country) {
         that.country = that.$route.query.country;
@@ -243,6 +197,52 @@
       }else{
         that.getMainTable(that.country, that.industry);
       }
+
+      if (that.$route.query.multipage) {
+        document.getElementById('listStep1').classList.add('on');
+        document.getElementById('listStep2').classList.remove('on');
+        that.$intro().setOptions({
+          prevLabel: '上一步',
+          nextLabel: '下一步', 
+          doneLabel: '下个流程',
+          skipLabel: '跳过',
+          showStepNumbers: false,
+          showBullets: false,
+          hidePrev: true,
+          hideNext: true,
+          disableInteraction: true,
+          steps:[
+            {
+              element:'#listStep1',
+              intro: that.steps.content1
+            },
+            {
+              element:'#listStep2',
+              intro: that.steps.content2
+            },
+          ]
+         }).start().oncomplete(function() {
+          that.$router.push({
+            path: '/project',
+            query: {
+              sid: '839b623c-6f49-467a-b2db-65c0ad5a50a2',
+              multipage: true
+            }
+          })
+        }).onchange(function(targetElement) {
+          document.getElementById('listStep1').classList.remove('on');
+          document.getElementById('listStep2').classList.add('on');
+        }).onexit(function() {
+          localStorage.setItem('isTour', true);
+          if (that.listNameType === '总评榜') {
+            document.getElementById('listStep1').classList.add('on');
+            document.getElementById('listStep2').classList.remove('on');
+          }else{
+            document.getElementById('listStep1').classList.remove('on');
+            document.getElementById('listStep2').classList.add('on');
+          }
+        });
+      }
     },
     updated () {
       layui.use('form', function(){
@@ -251,17 +251,6 @@
       });
     },
     methods: {
-      NextStepCallback (currentStep) {
-        let isTour = JSON.parse(localStorage.getItem('isTour'));
-        if(isTour) {
-          isTour.list = true;
-          localStorage.setItem('isTour', JSON.stringify(isTour));
-        } else {
-          isTour = {};
-          isTour.list = true;
-          localStorage.setItem('isTour', JSON.stringify(isTour));
-        }
-      },
       getListMore () {
         let token = localStorage.getItem('apelink_user_token');
         if (token) {

@@ -22,6 +22,9 @@ import 'vue-tour/dist/vue-tour.css'
 import cn from '@/lang/cn.js'
 import en from '@/lang/en.js'
 import hk from '@/lang/hk.js'
+import 'intro.js/introjs.css';
+import VueIntro from 'vue-introjs';
+Vue.use(VueIntro);
 
 // 测试分支
 // axios.defaults.baseURL = 'http://test.bvaluate.com.cn';
