@@ -163,7 +163,7 @@
                 </div>
                 <div class="search_show" v-if="search.nothing">
                   <img src="../assets/search_2.png" alt="">
-                  <p>暂无此项目</p>
+                  <p>暂无此项目~</p>
                   <p>可通过<span>新增项目</span>，获取该项目的分析评估</p>
                 </div>
               </div>
