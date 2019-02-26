@@ -303,6 +303,7 @@
     methods: {
       isTourShow () {
         let that = this;
+        let booleanShowSignin = true;
         document.body.style.overflow = 'hidden';
         that.$router.push('/home');
         window.scrollTo(0,0);
@@ -319,6 +320,7 @@
             hideNext: true,
             disableInteraction: true,
            }).start().oncomplete(function() {
+            booleanShowSignin = false;
             that.$router.push({
               path: '/list',
               query: {
@@ -328,6 +330,21 @@
           }).onexit(function() {
             localStorage.setItem('isTour', true);
             document.body.style.overflow = 'inherit';
+            // 没有签到的话再弹出签到
+            let clearTime = setTimeout(() => {
+              let signedIn = sessionStorage.getItem('apelink_user_signedIn');
+              let isCloseSignTip = sessionStorage.getItem('apelink_user_close_sign_tip');
+              if (booleanShowSignin) {
+                if (!signedIn) {
+                  if (that.$route.path !== '/download') {
+                    if (!isCloseSignTip) {
+                      that.$store.state.signInTips = true;
+                    }
+                  }
+                }
+              }
+              clearTimeout(clearTime);
+            }, 500);
           });
         })
       },

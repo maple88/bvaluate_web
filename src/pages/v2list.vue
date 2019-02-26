@@ -199,6 +199,7 @@
       }
 
       if (that.$route.query.multipage) {
+        let booleanShowSignin = true;
         document.getElementById('listStep1').classList.add('on');
         document.getElementById('listStep2').classList.remove('on');
         that.$intro().setOptions({
@@ -222,6 +223,7 @@
             },
           ]
          }).start().oncomplete(function() {
+          booleanShowSignin = false;
           that.$router.push({
             path: '/project',
             query: {
@@ -242,6 +244,21 @@
             document.getElementById('listStep1').classList.remove('on');
             document.getElementById('listStep2').classList.add('on');
           }
+          // 没有签到的话再弹出签到
+          let clearTime = setTimeout(() => {
+            let signedIn = sessionStorage.getItem('apelink_user_signedIn');
+            let isCloseSignTip = sessionStorage.getItem('apelink_user_close_sign_tip');
+            if (booleanShowSignin) {
+              if (!signedIn) {
+                if (that.$route.path !== '/download') {
+                  if (!isCloseSignTip) {
+                    that.$store.state.signInTips = true;
+                  }
+                }
+              }
+            }
+            clearTimeout(clearTime);
+          }, 500);
         });
       }
     },

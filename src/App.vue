@@ -39,10 +39,12 @@
             this.$store.state.sugar = candies;
             localStorage.setItem('apelink_user_signedIn', signedIn);
             if (!signedIn) {
-              if (path !== '/download') {
-                let isCloseSignTip = sessionStorage.getItem('apelink_user_close_sign_tip');
-                if (!isCloseSignTip) {
-                  this.$store.state.signInTips = true;
+              if (localStorage.getItem('isTour')) {
+                if (path !== '/download') {
+                  let isCloseSignTip = sessionStorage.getItem('apelink_user_close_sign_tip');
+                  if (!isCloseSignTip) {
+                    this.$store.state.signInTips = true;
+                  }
                 }
               }
             }
