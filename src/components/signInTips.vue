@@ -7,12 +7,17 @@
           <i class="icon_close"></i>
         </div>
         <div class="bd">
-          <div class="tips_title">
+          <!-- <div class="tips_title">
             <img src="../assets/signIn/title.png" alt="">
+          </div> -->
+          <div class="candy-title">
+            <p>每日签到送糖果</p>
+            <p>连续签满<span class="candy-day">7天</span>送<span class="candy-num">66</span>糖果</p>
+            <p>已连续签到<span>1</span>天</p>
           </div>
           <div class="tips_content">
             <div class="content_default">
-              <div class="sugar_list">
+              <!-- <div class="sugar_list">
                 <div class="sugar_item" :class="checkState(item.state)" v-for="item in initSignInData">
                   <div class="sugar_box">
                     <img v-show="!(item.state===2 || item.state === 3)" src="../assets/signIn/sugar.png" alt="">
@@ -24,6 +29,19 @@
                     <h4>{{item.name}}</h4>
                   </div>
                 </div>
+              </div> -->
+              <div class="candy-list">
+                <ul>
+                  <li v-for="item in initSignInData" :class="checkState(item.state)">
+                    <p class="candyName">{{item.name}}</p>
+                    <div class="sugar" :class="{active:item.state===2 || item.state === 3}">
+                      <img v-show="!(item.state===2 || item.state === 3)" src="../assets/signIn/candy.png" alt="">
+                      <img v-show="(item.state===2 || item.state === 3)" src="../assets/signIn/candy.png" alt="">
+                    </div>
+                    <p v-show="!(item.state===2 || item.state === 3)" class="candyOne">+{{item.sugar}}</p>
+                    <p v-show="(item.state===2 || item.state === 3)" class="candyTwo">+{{item.sugar}}</p>
+                  </li>
+                </ul>
               </div>
             </div>
             <div class="tips_button">
@@ -185,7 +203,111 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
+
+  .content_default{
+   margin: 52px 0;
+  }
+.login_fixed.signIn_tips .signIn_tips .bd .tips_content .tips_button {
+    padding-bottom: 29px;
+    padding-top: 0;
+  }
+.bd {
+  .candy-title {
+    p {
+      
+      text-align: center;
+      margin: 0;
+      &:first-child {
+        padding: 33px 0 28px 0;
+        font-size: 28px;
+        color: #2b57fe;
+        font-weight: bold;
+        box-sizing: border-box;
+      }
+      &:nth-child(2){
+        font-size: 16px;
+        color: #000;
+        .candy-day {
+          color: #2b57fe;
+          padding:0 6px;
+        }
+        .candy-num {
+          font-size: 18px;
+          color: #ec9651;
+          padding: 0 10px;
+        }
+      }
+      &:last-child{
+        font-size: 14px;
+        color: #666;
+      }
+    }
+  }
+  .candy-list {
+    width: 712px;
+    margin: 0 auto;
+    ul {
+      width: 712px;
+      display: flex;
+      li{
+        
+        flex: 1;
+        // justify-content: center;
+        text-align: center;
+        align-items: center;
+        .candyName {
+          color: #737373;
+        }
+        .sugar {
+          width: 60px;
+          height: 60px;
+          margin: 0 auto;
+          background-color: #cacaca;
+          border: 4px solid #eee;
+          border-radius: 50%;
+          &.active {
+            background-color: #6f93ff;
+            border-color: #bec8f3;
+          
+          }
+          img {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            box-sizing: border-box;
+            
+          }
+        }
+        .candyOne {
+          color: #999;
+          margin-top: 10px;
+        }
+         .candyTwo {
+          color: #768cfe;
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+}
+.login_fixed .loginbox {
+  padding: 0;
+}
+.login_fixed.signIn_tips .signIn_tips .bd {
+//  background-image: url();
+  // background-color: #fff;
+  padding: 0;
+}
+.login_fixed.signIn_tips .signIn_tips  {
+     background-image: url("../assets/signIn/qiandao.png");
+    border-radius: 0;
+    background-size: 100% 100%;
+    overflow: hidden;
+    background-attachment: fixed;
+}
+
+
 
 </style>
 

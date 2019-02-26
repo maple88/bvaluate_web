@@ -15,26 +15,26 @@
         <div class="user-main">
           <div class="leftnav">
             <ul>
-              <li class="active">
-                <a href="#">
+              <li @click="index=0" :class="{active:index==0}">
+                <a href="#" >
                   <div class="navicon"><img src="../assets/userCenter/l1.png"><img class="on" src="../assets/userCenter/l1-on.png"></div>
                   我的收藏
                 </a>
               </li>
-              <li>
-                <a href="#">
+              <li @click="index=1" :class="{active:index==1}">
+                <a href="#" >
                   <div class="navicon"><img src="../assets/userCenter/l2.png"><img class="on" src="../assets/userCenter/l2-on.png"></div>
                   我的项目
                 </a>
               </li>
-              <li>
-                <a href="#">
+              <li @click="index=2" :class="{active:index==2}">
+                <a href="#" >
                   <div class="navicon"><img src="../assets/userCenter/l3.png"><img class="on" src="../assets/userCenter/l3-on.png"></div>
                   账户信息
                 </a>
               </li>
-              <li>
-                <a href="#">
+              <li @click="index=3" :class="{active:index==3}">
+                <a href="#" >
                   <div class="navicon"><img src="../assets/userCenter/l4.png"><img class="on" src="../assets/userCenter/l4-on.png"></div>
                   消息通知
                 </a>
@@ -42,7 +42,7 @@
             </ul>
           </div>
           <div class="rightcontent">
-            <div class="follow_list serach_follow_list">
+            <div v-if="index==0" class="follow_list serach_follow_list">
               <ul>
                 <li>
                   <div class="list-item">
@@ -122,6 +122,8 @@
         pageSize: 10,
         loading: loading,
         showloading: true,
+        nothing:false,
+        index:0,
         user: {
           token: '',
           uid: '',
@@ -158,6 +160,11 @@
           headers: headers
         }).then(function (res) {
           that.newsList = res.data.content;
+          if(that.newsList){
+            that.nothing = true
+          }else {
+            that.nothing = false;
+          }
           that.showloading = false;
           if (that.pageSize >= res.data.totalElements) {
             that.showloading = -1
@@ -277,6 +284,24 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss"  scoped>
+.follow-show {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  padding: 36px 0 240px 0;
+  img {
+    display: block;
+    margin: 0 auto;
+    padding-bottom: 26px;
+  }
+  p {
+    font-size: 16px;
+    height: 16px;
+    
+    text-align: center;
+    color: #898989;
+  }
+}
 </style>
 
