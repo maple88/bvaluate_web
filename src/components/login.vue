@@ -487,23 +487,23 @@
         let code = this.registerUser.code;
         let confirmpsd = this.registerUser.confirmpsd;
         let nickName = this.registerUser.nickName;
-        if (nickName !== null && nickName !== '' && nickName !== undefined) {
-          if (this.strLength(nickName) > 14) {
-            pass = false;
-            this.errorMsg.registerUser.nickName = '请输入为14个英文字符或7个汉字'
-            sensors.track("Registerresult", {
-              is_true: false,
-              false_reason: this.errorMsg.registerUser.nickName
-            });
-          }
-        } else {
-          pass = false;
-          this.errorMsg.registerUser.nickName = '昵称不能为空'
-          sensors.track("Registerresult", {
-            is_true: false,
-            false_reason: this.errorMsg.registerUser.nickName
-          });
-        }
+        // if (nickName !== null && nickName !== '' && nickName !== undefined) {
+        //   if (this.strLength(nickName) > 14) {
+        //     pass = false;
+        //     this.errorMsg.registerUser.nickName = '请输入为14个英文字符或7个汉字'
+        //     sensors.track("Registerresult", {
+        //       is_true: false,
+        //       false_reason: this.errorMsg.registerUser.nickName
+        //     });
+        //   }
+        // } else {
+        //   pass = false;
+        //   this.errorMsg.registerUser.nickName = '昵称不能为空'
+        //   sensors.track("Registerresult", {
+        //     is_true: false,
+        //     false_reason: this.errorMsg.registerUser.nickName
+        //   });
+        // }
         if (phoneNumber !== null && phoneNumber !== '' && phoneNumber !== undefined) {
           if (!(/^[0-9]*$/.test(phoneNumber))) {
             pass = false;
@@ -523,14 +523,14 @@
         }
         if (password !== null && password !== '' && password !== undefined) {
           if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(this.registerUser.password)) {
-            if (this.registerUser.confirmpsd !== this.registerUser.password) {
-              pass = false;
-              this.errorMsg.registerUser.password = '两次输入不一致'
-              sensors.track("Registerresult", {
-                is_true: false,
-                false_reason: this.errorMsg.registerUser.password
-              });
-            }
+            // if (this.registerUser.confirmpsd !== this.registerUser.password) {
+            //   pass = false;
+            //   this.errorMsg.registerUser.password = '两次输入不一致'
+            //   sensors.track("Registerresult", {
+            //     is_true: false,
+            //     false_reason: this.errorMsg.registerUser.password
+            //   });
+            // }
           } else {
             pass = false;
             this.errorMsg.registerUser.password = '只允许输入6-14个英文大小写和数字'
@@ -547,32 +547,32 @@
             false_reason: this.errorMsg.registerUser.password
           });
         }
-        if (confirmpsd !== null && confirmpsd !== '' && confirmpsd !== undefined) {
-          if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(this.registerUser.password)) {
-            if (this.registerUser.confirmpsd !== this.registerUser.password) {
-              pass = false;
-              this.errorMsg.registerUser.confirmpsd = '两次输入不一致'
-              sensors.track("Registerresult", {
-                is_true: false,
-                false_reason: this.errorMsg.registerUser.confirmpsd
-              });
-            }
-          } else {
-            pass = false;
-            this.errorMsg.registerUser.confirmpsd = '只允许输入6-14个英文大小写和数字'
-            sensors.track("Registerresult", {
-              is_true: false,
-              false_reason: this.errorMsg.registerUser.confirmpsd
-            });
-          }
-        } else {
-          pass = false;
-          this.errorMsg.registerUser.confirmpsd = '密码不能为空'
-          sensors.track("Registerresult", {
-            is_true: false,
-            false_reason: this.errorMsg.registerUser.confirmpsd
-          });
-        }
+        // if (confirmpsd !== null && confirmpsd !== '' && confirmpsd !== undefined) {
+        //   if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(this.registerUser.password)) {
+        //     if (this.registerUser.confirmpsd !== this.registerUser.password) {
+        //       pass = false;
+        //       this.errorMsg.registerUser.confirmpsd = '两次输入不一致'
+        //       sensors.track("Registerresult", {
+        //         is_true: false,
+        //         false_reason: this.errorMsg.registerUser.confirmpsd
+        //       });
+        //     }
+        //   } else {
+        //     pass = false;
+        //     this.errorMsg.registerUser.confirmpsd = '只允许输入6-14个英文大小写和数字'
+        //     sensors.track("Registerresult", {
+        //       is_true: false,
+        //       false_reason: this.errorMsg.registerUser.confirmpsd
+        //     });
+        //   }
+        // } else {
+        //   pass = false;
+        //   this.errorMsg.registerUser.confirmpsd = '密码不能为空'
+        //   sensors.track("Registerresult", {
+        //     is_true: false,
+        //     false_reason: this.errorMsg.registerUser.confirmpsd
+        //   });
+        // }
         if (!(code !== null && code !== '' && code !== undefined)) {
           pass = false;
           this.errorMsg.registerUser.code = '手机验证码不能为空'

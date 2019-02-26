@@ -20,7 +20,7 @@
             margin-top: 70px;
         }
     }
-	.v2home-page .banner-search-section .b1{
+    .v2home-page .banner-search-section .b1{
         letter-spacing: 0;
         white-space: normal;
     }
@@ -157,5 +157,25 @@
             height: 84px;
             background-size: contain;
         }
+    }
+    .project-projectMainTab .tabcontent .hangqing-total .item{
+        padding: 0 15px;
+    }
+    .project-main .leftmain .bluesection .details .item .tit{
+        flex: 0 0 155px;
+    }
+    .project-main .leftmain .bluesection .details .item .tit .word{
+        width: 85px;
+    }
+    .project-main .leftmain .bluesection .details .item .tit:after{
+        top: 0;
+        bottom: 0;
+        margin: auto;
+    }
+    .project-main .middlemain .media-item .media-main .medial .circle_box .scorel-info p{
+        width: 90px;
+        margin: 2px auto 0;
+        line-height: 14px;
+        text-align: center;
     }
 }
