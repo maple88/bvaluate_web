@@ -161,14 +161,13 @@
                             <div class="media-bottom">
                               <ul>
                                 <li
-                                  v-if="!(news.siteName !== 'NULL' && news.siteName !== null && news.siteName !== '')"
-                                  @click="goArticle('/author',{author: news.author,type: 'author'})">
+                                  v-if="!(news.siteName !== 'NULL' && news.siteName !== null && news.siteName !== '')">
                                   <div class="userimg">
                                     <img src="../assets/follow/user_head.png">
                                   </div>
                                   {{news.author}}
                                 </li>
-                                <li v-else @click="goArticle('/author',{author: news.siteName,type: 'siteName'})">
+                                <li v-else>
                                   {{news.siteName}}
                                 </li>
                                 <li>{{news.urlTime}}</li>

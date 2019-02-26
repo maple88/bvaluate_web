@@ -14,8 +14,7 @@
             <p class="media-words">{{item.result.content}}</p>
             <div class="media-bottom">
               <ul>
-                <li
-                  @click="goArticle('/author',{author: item.result.author,type: 'author'})">
+                <li>
                   <div class="userimg">
                     <img src="../../assets/follow/user_head.png">
                   </div>

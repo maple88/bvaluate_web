@@ -29,7 +29,6 @@
               <ul>
                 <li
                   :name="'collection_media-bottom_author_'+index" :id="'collection_media-bottom_author_'+index"
-                  @click="goArticle('/author',{author: item.result.author,type: 'author', pageTitle:item.result.author}, $event)"
                   :data="item.result.author">
                   <div class="userimg">
                     <img src="../../assets/follow/user_head.png">

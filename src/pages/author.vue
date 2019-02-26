@@ -81,8 +81,7 @@
                         <div class="media-bottom">
                           <ul>
                             <li
-                              :name="'author_media-bottom_author_'+index" :id="'author_media-bottom_author_'+index"
-                              @click="goArticle('/author',{author: news.author,type: 'author'}, $event)" :data="news.author">
+                              :name="'author_media-bottom_author_'+index" :id="'author_media-bottom_author_'+index">
                               <div class="userimg">
                                 <img src="../assets/follow/user_head.png">
                               </div>

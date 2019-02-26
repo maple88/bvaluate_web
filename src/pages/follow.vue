@@ -235,7 +235,6 @@
                                 <ul>
                                   <li
                                     :name="'follow_wenzhang_author_'+index" :id="'follow_wenzhang_author_'+index" 
-                                    @click="goArticle('/author',{author: item.result.author,type: 'author'}, $event)"
                                     :data="item.result.author">
                                     <div class="userimg">
                                       <img src="../assets/follow/user_head.png">

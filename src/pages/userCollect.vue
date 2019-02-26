@@ -79,7 +79,6 @@
                               <li
                                 :name="'search_media-bottom_author_'+index"
                                 :id="'search_media-bottom_author_'+index"
-                                @click="goArticle('/author',{author: news.result.author,type: 'author'}, $event)"
                                 :data="news.result.author">
                                 {{news.result.author}}
                               </li>
