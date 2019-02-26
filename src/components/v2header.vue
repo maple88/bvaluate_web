@@ -312,7 +312,7 @@
           that.$intro().setOptions({
             prevLabel: '上一步',
             nextLabel: '下一步', 
-            doneLabel: '下个流程',
+            doneLabel: '下一步',
             skipLabel: '跳过',
             showStepNumbers: false,
             showBullets: false,
