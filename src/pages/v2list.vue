@@ -244,21 +244,33 @@
             document.getElementById('listStep1').classList.remove('on');
             document.getElementById('listStep2').classList.add('on');
           }
-          // 没有签到的话再弹出签到
+          // 没有签到的话再弹出签到框或者邀请框
           let clearTime = setTimeout(() => {
+            let token = localStorage.getItem('apelink_user_token');
             let signedIn = sessionStorage.getItem('apelink_user_signedIn');
             let isCloseSignTip = sessionStorage.getItem('apelink_user_close_sign_tip');
-            if (booleanShowSignin) {
-              if (!signedIn) {
-                if (that.$route.path !== '/download') {
-                  if (!isCloseSignTip) {
-                    that.$store.state.signInTips = true;
+            let isCloseRegisterTip = sessionStorage.getItem('apelink_user_close_register_tip');
+            if (!token) {
+              if (booleanShowSignin) {
+                if (that.$route.path !== '/login' && that.$route.path !== '/download') {
+                  if (!isCloseRegisterTip) {
+                    that.$store.state.registerTip = true;
+                  }
+                }
+              }
+            }else{
+              if (booleanShowSignin) {
+                if (!signedIn) {
+                  if (that.$route.path !== '/download') {
+                    if (!isCloseSignTip) {
+                      that.$store.state.signInTips = true;
+                    }
                   }
                 }
               }
             }
             clearTimeout(clearTime);
-          }, 500);
+          }, 800);
         });
       }
     },
