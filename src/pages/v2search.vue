@@ -8,7 +8,7 @@
             <div class="center">
               <div class="search-box">
                 <div class="center">
-                  <input type="text" data="输入搜素关键字" placeholder="请输入搜索内容..." v-model="search.keyword" name="no_content" id="input_search_input" class="search_input" @keyup.enter="searchKeyWord">
+                  <input type="text" data="输入搜素关键字" placeholder="请输入搜索内容..." v-model="search.keyword" name="no_content" id="input_searchPage_input" class="search_input" @keyup.enter="searchKeyWord">
                 </div>
                 <div class="right">
                   <button class="search_submit" data="确认搜索" name="search_submit" id="search_submit" @click="searchKeyWord(), trackSearch(search.class, search.keyword)">
@@ -164,7 +164,7 @@
                 <div class="search_show" v-if="search.nothing">
                   <img src="../assets/search_2.png" alt="">
                   <p>暂无此项目</p>
-                  <p>可通过<span>新增项目</span>，获取该项目的分析评估</p>
+                  <p>可通过<span @click="analysis()">新增项目</span>，获取该项目的分析评估</p>
                 </div>
               </div>
             </div>
@@ -360,6 +360,9 @@
       next();
     },
     methods: {
+      analysis() {
+        this.$store.state.analysisPop = true
+      },
       init() {
         this.initSearch();
         this.searchKeyWord();
@@ -673,6 +676,7 @@
     text-align: center;
     color: #505050;
     span {
+      cursor: pointer;
       color: #424de4;
     }
     &:last-child {
