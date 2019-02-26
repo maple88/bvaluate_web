@@ -63,7 +63,7 @@ module.exports = {
     assetsPublicPath: './',
     proxyTable: {
       '/api': {
-        target: 'https://bvaluate.com.cn',
+        target: 'https://bvaluate.com.cn/api',
         secure: false,
         changeOrigin: true,
         pathRewrite: {
