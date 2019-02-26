@@ -756,7 +756,7 @@
           // 没有签到的话再弹出签到框或者邀请框
           let clearTime = setTimeout(() => {
             let token = localStorage.getItem('apelink_user_token');
-            let signedIn = sessionStorage.getItem('apelink_user_signedIn');
+            let signedIn = localStorage.getItem('apelink_user_signedIn');
             let isCloseSignTip = sessionStorage.getItem('apelink_user_close_sign_tip');
             let isCloseRegisterTip = sessionStorage.getItem('apelink_user_close_register_tip');
             if (!token) {
