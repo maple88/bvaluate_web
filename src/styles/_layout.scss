@@ -219,6 +219,30 @@ a, a:hover {
   max-width: 500px !important;
   padding: 25px 25px 20px !important;
   background-color: rgba(255, 255, 255, 0.85) !important;
+  border-radius: 30px !important;
+  margin: 40px 0;
+  &:before{
+    content: url(../assets/leftstar.png);
+    position: absolute;
+    left: -70px;
+    bottom: 0;
+  }
+  &:after{
+    content: "";
+    position: absolute;
+    width: 108%;
+    height: 115%;
+    border: 2px dashed #ddd;
+    border-radius: 30px;
+    top: 0;
+    bottom: 0;
+    left: -4%;
+    right: 0;
+    margin: auto;
+  }
+  .introjs-arrow{
+    border: 0;
+  }
   .introjs-arrow.top {
     border-bottom-color:rgba(255, 255, 255, 0.8);
   }
@@ -250,6 +274,8 @@ a, a:hover {
     border-right-color:rgba(255, 255, 255, 0.8);
   }
   .introjs-tooltipbuttons{
+    position: relative;
+    z-index: 1;
     .introjs-button{
       color: #fff;
       margin: 10px 5px 0;
@@ -283,6 +309,14 @@ a, a:hover {
     }
   }
   .introjs-tooltiptext{
+    position: relative;
+    z-index: 1;
+    &:after{
+      content: url(../assets/rightstar.png);
+      position: absolute;
+      right: -100px;
+      top: -20px;
+    }
     p{
       font-family: "微软雅黑";
       font-size: 16px;

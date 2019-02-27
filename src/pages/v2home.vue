@@ -465,6 +465,7 @@
       Bus.$on('val', (data) => {
         that.topProject = data;
       });
+      
 			that.getHotindustry();
 			that.getZongpingList();
 			that.getSTOList();
