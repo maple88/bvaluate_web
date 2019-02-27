@@ -367,7 +367,7 @@
 										<p class="des">{{item.content}}</p>
 										<div class="line"></div>
 										<div class="itemuser">
-											<a href="javascript:;" @click="goArticle('/author',{author: item.siteName,type: 'siteName'})">
+											<a href="javascript:;">
 												<!-- <div class="userimg"><img src="../assets/logo_brand3.png"></div> -->
 												<span>{{item.siteName}}</span>
 											</a>
@@ -464,7 +464,7 @@
 			var that = this
       Bus.$on('val', (data) => {
         that.topProject = data;
-      })
+      });
 			that.getHotindustry();
 			that.getZongpingList();
 			that.getSTOList();

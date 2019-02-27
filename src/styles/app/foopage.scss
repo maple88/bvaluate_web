@@ -375,14 +375,23 @@
 	}
 }
 .apiview-page{
+	.v2maintainer .container.v2container{
+		padding: 0;
+	}
 	.apiview-box{
+		margin: 60px 0;
 		padding: 40px 60px 60px;
 		background-color: #fff;
 		@media($max-lg){
 			padding: 20px 20px;
+			margin: 30px 0;
 		}
 		@media($max-sm){
-			padding: 40px 10px 10px;
+			margin: 0;
+			padding: 30px 15px 15px;
+		}
+		@media($max-sm){
+			padding: 15px;
 		}
 		.content-box{
 			color: #1a1a1a;
@@ -395,6 +404,9 @@
 				@media($max-lg){
 					margin: 0 0 20px;
 				}
+				@media($max-xs){
+					margin: 0 0 15px;
+				}
 			}
 			.title-desc{
 				font-size: 16px;
@@ -405,16 +417,26 @@
 				@media($max-lg){
 					margin: 10px 0;
 				}
-				a{
-					font-size: 12px;
+				span{
+					font-size: 13px;
 					color: #3555da;
 				}
 			}
 			.section-box{
+				.apitem{
+					margin: 0 0 30px;
+					@media($max-xs){
+						margin: 0 0 15px;
+					}
+					&:last-child{
+						margin: 0;
+					}
+				}
 				.section-title{
 					display: block;
 					font-size: 14px;
 					color: #010101;
+					font-weight: bold;
 				}
 				.section-desc{
 					display: block;
@@ -422,61 +444,111 @@
 					font-size: 12px;
 				}
 				.explain-box{
-					padding: 20px 30px 0;
+					margin: 0 0 15px;
+					padding: 20px 22px 0;
 					border: 1px solid #e0e0e0;
 					overflow: hidden;
-					@media($max-lg){
-						padding: 20px;
+					@media($max-md){
+						padding: 20px 22px 20px;
 					}
-					@media($max-xs){
-						padding: 10px;
+					@media($max-sm){
+						padding: 0;
+						border: 0;
+					}
+					.table-title{
+						display: block;
+						margin: 0 8px 5px;
+						color: #3f3f3f;
+						@media($max-sm){
+							margin: 0 0 5px;
+						}
+					}
+					.table-row{
+						display: flex;
+						@media ($max-md) {
+							flex-wrap: wrap;
+						}
+					}
+					.col5{
+						flex: 0 0 50%;
+						min-width: 50%;
+						padding: 0 8px;
+						@media ($max-md) {
+							flex: 0 0 100%;
+							min-width: 100%;
+							table{
+								table-layout: fixed;
+							}
+							&:last-child table thead{
+								display: none;
+							}
+						}
+						@media($max-sm){
+							padding: 0;
+						}
+					}
+					.col7{
+						flex: 0 0 70%;
+						min-width: 70%;
+						padding: 0 8px;
+						@media ($max-md) {
+							flex: 0 0 100%;
+							min-width: 100%;
+						}
+						@media($max-sm){
+							padding: 0;
+						}
+					}
+					.col8{
+						flex: 0 0 80%;
+						min-width: 80%;
+						padding: 0 8px;
+						@media ($max-md) {
+							flex: 0 0 100%;
+							min-width: 100%;
+						}
+						@media($max-sm){
+							padding: 0;
+						}
 					}
 					.table-box{
-						float: left;
-						padding-right: 10px;
-						margin-bottom: 40px;
+						margin: 0 0 20px;
 						font-size: 12px;
 						line-height: 14px;
 						overflow-x: auto;
 						max-width: 100%;
-						@media($max-lg){
-							margin-bottom: 30px;
-						}
-						@media($max-xs){
-							margin-bottom: 20px;
-						}
-						.table-title{
-							display: block;
-							margin-bottom: 5px;
-							color: #3f3f3f;
+						@media($max-md){
+							margin: 0;
 						}
 						table{
+							width: 100%;
 							border-collapse: collapse;
+							&.layout-fixed{
+								table-layout: fixed;
+							}
 							thead{
 								background-color: #f7f7f7;
 							}
 							th{
-								padding: 5px 50px;
+								padding: 8px 0;
 							}
 							td{
-								padding: 5px 20px;
+								padding: 8px 0;
 							}
 							td,th{
 								font-weight: normal;
 								text-align: center;
 								border: 1px solid #e0e0e0;
-							}
-							@media($max-lg){
-								th{
-									padding: 5px 30px;
+								@media ($max-sm) {
+									word-wrap: break-word;
 								}
 							}
 							@media($max-xs){
 								th{
-									padding: 5px 10px;
+									padding: 6px 0;
 								}
 								td{
-									padding: 5px 10px;
+									padding: 6px 0;
 								}
 							}
 						}
@@ -484,7 +556,6 @@
 					}
 				}
 				.example-box{
-					margin-top: 50px;
 					padding: 30px 50px;
 					border: 1px solid #e0e0e0;
 					font-size: 14px;
@@ -502,7 +573,7 @@
 					.example-content-box{
 						pre{
 							padding: 0;
-							font-size: 14px;
+							font-size: 12px;
 							line-height: 34px;
 							color: #1a1a1a;
 							background-color: #fff;
