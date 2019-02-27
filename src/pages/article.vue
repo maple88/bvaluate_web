@@ -506,7 +506,7 @@
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
           let uid = localStorage.getItem('apelink_user_uid');
-          let url = '/individual/delete?cid=' + cid;
+          let url = '/api/individual/delete?cid=' + cid;
           let headers = {'uid': uid, 'Authorization': token};
           that.$axios({
             method: 'DELETE',
