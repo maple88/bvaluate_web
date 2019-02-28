@@ -11,7 +11,6 @@
   export default {
     name: 'App',
     mounted() {
-      this.$store.state.signInTips = true;
       let clearTime = setTimeout(() => {
         let token = localStorage.getItem('apelink_user_token');
         let path = this.$route.path;
