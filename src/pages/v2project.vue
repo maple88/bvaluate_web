@@ -751,6 +751,14 @@
          }).start().onexit(function() {
           localStorage.setItem('isTour', true);
           document.body.style.overflow = 'inherit';
+          if (that.$route.query.multipage) {
+            that.$router.push({
+              path: that.$route.path,
+              query: {
+                sid: '839b623c-6f49-467a-b2db-65c0ad5a50a2'
+              }
+            })
+          }
           // 没有签到的话再弹出签到框或者邀请框
           let clearTime = setTimeout(() => {
             let token = localStorage.getItem('apelink_user_token');

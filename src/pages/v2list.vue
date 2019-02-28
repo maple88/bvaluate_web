@@ -200,6 +200,7 @@
 
       if (that.$route.query.multipage) {
         let booleanShowSignin = true;
+        that.finish = false;
         document.getElementById('listStep1').classList.add('on');
         document.getElementById('listStep2').classList.remove('on');
         that.$intro().setOptions({
@@ -231,12 +232,20 @@
               multipage: true
             }
           })
+          that.finish = true;
         }).onchange(function(targetElement) {
           document.getElementById('listStep1').classList.remove('on');
           document.getElementById('listStep2').classList.add('on');
         }).onexit(function() {
           localStorage.setItem('isTour', true);
           document.body.style.overflow = 'inherit';
+          if (!that.finish) {
+            if (that.$route.query.multipage) {
+              that.$router.push({
+                path: that.$route.path
+              })
+            }
+          }
           if (that.listNameType === '总评榜') {
             document.getElementById('listStep1').classList.add('on');
             document.getElementById('listStep2').classList.remove('on');
