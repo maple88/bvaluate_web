@@ -235,5 +235,10 @@ export default {
 	'Policy': 'Policy',
 	'Pieces': 'Pieces',
 	'Billion': 'Billion',
-	'No search results': 'No search results'
+	'No search results': 'No search results',
+	'View original': 'View original',
+	'Collection': 'Collection',
+	'Collected': 'Collected',
+	'Share': 'Share',
+	'Relevant News': 'Relevant News'
 };

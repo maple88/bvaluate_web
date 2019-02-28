@@ -52,19 +52,19 @@
                   </div>
                   <div class="article_right">
                     <span class="look_count"><img class="aticon" src="../assets/article/eye.png">0人</span>
-                    <a href="javascript:;" class="look" name="article_right_more" id="article_right_more" data="查看全文" @click="showArticle = !showArticle">查看原文</a>
+                    <a href="javascript:;" class="look" name="article_right_more" id="article_right_more" data="查看全文" @click="showArticle = !showArticle">{{$t('View original')}}</a>
                     <!--<span class="share" @click.stop="showAllShare($event)"><i class="fa fa-share-alt"></i></span>-->
                     <span class="follow">
                       <!-- <i class="fa fa-heart" v-show="!isFollow" @click="setFollow()"></i>
                       <i class="fa fa-heart followed" v-show="isFollow" @click="deleteFollow(articleContent.collected)"></i> -->
 
-                      <span v-if="!isFollow" @click="setFollow()"><img class="aticon" src="../assets/article/collect.png">收藏</span>
+                      <span v-if="!isFollow" @click="setFollow()"><img class="aticon" src="../assets/article/collect.png">{{$t('Collection')}}</span>
                       <span class="on" v-if="isFollow" @click="deleteFollow(articleContent.collected)">
-                        <img class="aticon" src="../assets/article/collect-on.png">已收藏
+                        <img class="aticon" src="../assets/article/collect-on.png">{{$t('Collected')}}
                       </span>
                     </span>
                     <div class="followbtn on share_button" @click.stop="shareButton = !shareButton">
-                      <span><img class="aticon" src="../assets/article/share.png">分享</span>
+                      <span><img class="aticon" src="../assets/article/share.png">{{$t('Share')}}</span>
                       <transition name="fade">
                         <div class="share_box" v-show="shareButton">
                           <div class="arrow"></div>
@@ -136,7 +136,7 @@
                   <!-- <div class="title_icon">
                     <img src="../assets/follow/hot_text.png"/>
                   </div> -->
-                  <h4>相关资讯</h4>
+                  <h4>{{$t('Relevant News')}}</h4>
                 </div>
                 <div class="hot_content">
                   <ul class="long_ul">
@@ -148,17 +148,17 @@
                         <img :src="item.titlePicture"/>
                       </div> -->
                       <div class="item_left">
-                        <img src="../assets/search/news.png"/>
+                        <img :src="(item.titlePicture ? item.titlePicture : defaultImg)"/>
                       </div>
                       <div class="item_info">
                         <div class="list_item">
-                          <div class="item_body" :class="item.titlePicture?'':'noPicture'">
+                          <div class="item_body noPicture">
                             <h4>{{item.title}}</h4>
                             <p>{{item.content}}</p>
                           </div>
                         </div>
                         <div class="item_bottom">
-                          <p><span>{{item.author}}</span><span>{{item.urlDate}}</span></p>
+                          <p><span>{{item.siteName}}</span><span>{{item.urlDate}}</span></p>
                         </div>
                       </div>
                     </li>
@@ -192,6 +192,7 @@
   let img1 = require('../assets/follow/banner01.png');
   let img2 = require('../assets/follow/adv01.png');
   let img3 = require('../assets/media.jpg');
+  let defaultImg = require('../assets/search/news.png');
 
 
   export default {
@@ -209,10 +210,13 @@
         follow: false,
         articleContent: {},
         hotNews: [],
+        hotNews_icoName: '',
+        hotNews_dataType: '',
         industryName: "",
         isFollow: false,
         showArticle: false,
-        newsForAuthor: []
+        newsForAuthor: [],
+        defaultImg: defaultImg
       }
     },
     mounted() {
@@ -240,7 +244,6 @@
         }
       })
       this.getDetailData();
-      this.getHotnewsData();
       let hrefUrl = window.location.href;
       hrefUrl = hrefUrl.split('?')[0];
       hrefUrl = `${hrefUrl}?sid=${this.$route.query.sid}`;
@@ -422,6 +425,9 @@
               headers: headers
             }).then(function (res) {
               that.articleContent = res.data
+              that.hotNews_icoName = that.articleContent.projectCategory.split(';')[0];
+              that.hotNews_dataType = that.articleContent.dataType;
+              that.getHotnewsData(that.hotNews_icoName, that.hotNews_dataType);
               that.getNewsForAuthor(that.articleContent);
               if (that.articleContent.collected) {
                 that.isFollow = true
@@ -518,7 +524,7 @@
             }
           })
         } else {
-          alert('请先登录。')
+          alert('请先登录！')
         }
       },
       deleteAuthorFollow(author) {
@@ -564,9 +570,9 @@
           alert('请先登录。')
         }
       },
-      getHotnewsData() {
-        let that = this
-        that.$axios.get('/api/traditional/hotNews?ndustryName=' + that.industryName + '&pageSize=10').then(function (res) {
+      getHotnewsData(icoName, dataType) {
+        let that = this;
+        that.$axios.get('/api/ICO/icoLatestNews?icoName='+icoName+'&dataType='+dataType).then(function (res) {
           that.hotNews = res.data.content
         })
       },

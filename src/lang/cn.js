@@ -235,5 +235,10 @@ export default {
 	'Policy': '政策',
 	'Pieces': '篇',
 	'Billion': '亿',
-	'No search results': '无搜索结果~'
+	'No search results': '无搜索结果~',
+	'View original': '查看原文',
+	'Collection': '收藏'	,
+	'Collected': '已收藏',
+	'Share': '分享',
+	'Relevant News': '相关资讯'
 };
