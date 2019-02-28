@@ -158,7 +158,7 @@
                     <div class="medial">
                       <div class="circle_box">
                         <div class="scorel-info">
-                          <h4>{{completeness.media?parseFloat(completeness.media).toFixed(2):'0'}}</h4>
+                          <h4>{{completeness.media&&completeness.media!=='0'&&completeness.media!==0?parseFloat(completeness.media).toFixed(2):'0'}}</h4>
                           <p>{{$t('Index of the volume')}}</p>
                         </div>
                         <img class="circle_img" src="../assets/project/circle.png" alt="circle">

@@ -932,6 +932,7 @@
     > .right {
       float: left;
       width: 30%;
+      margin: 0 0 20px;
       .link_box {
         display: flex;
         margin-bottom: 20px;
@@ -1017,6 +1018,27 @@
           }
         }
         .hot_content {
+          .loading{
+            padding: 50px 0;
+            text-align: center;
+            img{
+              width: 80px;
+            }
+          }
+          .nothing{
+            font-size: 12px;
+            color: #666;
+            padding: 15px 0 30px;
+            text-align: center;
+            img{
+              @media ($max-sm) {
+                width: 110px;
+              }
+            }
+            p{
+              margin: 20px 0 0;
+            }
+          }
           & > ul {
             height: 457px;
             overflow-y: auto;

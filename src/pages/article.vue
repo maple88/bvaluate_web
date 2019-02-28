@@ -139,7 +139,7 @@
                   <h4>{{$t('Relevant News')}}</h4>
                 </div>
                 <div class="hot_content">
-                  <ul class="long_ul">
+                  <ul class="long_ul" v-if="hotNews.length !== 0">
                     <li v-for="(item, index) in hotNews" :key="item.sid" :data="item.title"
                         :name="'article_long_ul_li_'+index" :id="'article_long_ul_li_'+index"
                         @click="goArticle('/article',{sid:item.sid}, $event),
@@ -163,6 +163,11 @@
                       </div>
                     </li>
                   </ul>
+                  <div class="nothing" v-if="hotNews_nothing">
+                    <img src="../assets/nothing1.png">
+                    <p>暂无数据</p>
+                  </div>
+                  <div class="loading" v-if="hotNews_loading"><img src="../assets/login/loading.gif"></div>
                 </div>
               </div>
             </div>
@@ -212,6 +217,8 @@
         hotNews: [],
         hotNews_icoName: '',
         hotNews_dataType: '',
+        hotNews_loading: true,
+        hotNews_nothing: false,
         industryName: "",
         isFollow: false,
         showArticle: false,
@@ -425,7 +432,11 @@
               headers: headers
             }).then(function (res) {
               that.articleContent = res.data
-              that.hotNews_icoName = that.articleContent.projectCategory.split(';')[0];
+              if (that.articleContent.projectCategory) {
+                that.hotNews_icoName = that.articleContent.projectCategory.split(';')[0];
+              }else{
+                that.hotNews_icoName = '';
+              }
               that.hotNews_dataType = that.articleContent.dataType;
               that.getHotnewsData(that.hotNews_icoName, that.hotNews_dataType);
               that.getNewsForAuthor(that.articleContent);
@@ -572,8 +583,13 @@
       },
       getHotnewsData(icoName, dataType) {
         let that = this;
-        that.$axios.get('/api/ICO/icoLatestNews?icoName='+icoName+'&dataType='+dataType).then(function (res) {
-          that.hotNews = res.data.content
+        that.$axios.get('/api/ICO/icoLatestNews?icoName='+icoName+'&dataType='+dataType+'&pageSize=10').then(function (res) {
+          that.hotNews_loading = false;
+          if (res.data.totalElements !== 0) {
+            that.hotNews = res.data.content;
+          }else{
+            that.hotNews_nothing = true;
+          }
         })
       },
       goArticle(url, query, event) {
@@ -634,11 +650,11 @@
         })
       },
     },
-    beforeRouteEnter(to, from, next) {
-      next(vm => {
-        vm.getDetailData()
-      })
-    },
+    // beforeRouteEnter(to, from, next) {
+    //   next(vm => {
+    //     vm.getDetailData()
+    //   })
+    // },
     filters: {
       showLable(value) {
         value = value + '';
