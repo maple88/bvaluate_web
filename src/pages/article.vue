@@ -36,13 +36,11 @@
                     <span class="user_name"
                           name="article_user_name_author" id="article_user_name_author"
                           v-if="!(articleContent.siteName !== 'NULL' && articleContent.siteName !== null && articleContent.siteName !== '')"
-                          @click="goArticle('/author',{author: articleContent.author,type: 'author'}, $event)"
                           :data="articleContent.author">
                       {{articleContent.author}}
                     </span>
                     <span class="user_name" v-else
                           name="article_user_name_siteName" id="article_user_name_siteName"
-                          @click="goArticle('/author',{author: articleContent.siteName,type: 'siteName'}, $event)"
                           :data="articleContent.siteName">
                       {{articleContent.siteName}}
                     </span>
@@ -92,7 +90,7 @@
                   </div>
                 </div>
                 <div class="article_content">
-                  <p>{{articleContent.content}}</p>
+                  <p v-html="contentFormat(articleContent.content)"></p>
                 </div>
                 <div class="article_original">
                   <transition name="fade">
@@ -101,7 +99,7 @@
                   <transition name="fade">
                     <div class="original" v-if="showArticle">
                       <h4>{{articleContent.title}}</h4>
-                      <p>{{articleContent.content}}</p>
+                      <p v-html="contentFormat(articleContent.content)"></p>
                     </div>
                   </transition>
                 </div>
@@ -271,6 +269,12 @@
       });
     },
     methods: {
+      contentFormat(val) {
+        if (val != null && val.indexOf("\n") !== -1) {
+          val = val.replace(/\n/g, "</p ><p>");
+        }
+        return `<p>${val}</p >`;
+      },
       weiboQrCodeShow() {
         if (this.weiboQrCode) {
           this.weiboQrCode = false;
