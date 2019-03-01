@@ -35,11 +35,11 @@
                 <img src="../assets/usericon.png">
               </div>
               <ul class="dropdown-menu header-dropdown-menu">
-                <router-link tag="li" to="/userCenter" active-class="active"><a data="个人中心">{{$t('My Account')}}</a></router-link>
-                <!-- <li>
-                  <a href="javascript:;" data="消息" @click="$store.state.messagePop = true">消息</a>
-                </li> -->
-                <router-link tag="li" to="/my" active-class="active"><a data="设置">{{$t('Set up')}}</a></router-link>
+                <li class="userflex">
+                  <div class="left"><span class="username">{{userName}}</span></div>
+                  <div class="right"><p class="candyNum">{{candy}}</p><p>糖果数</p></div>
+                </li>
+                <router-link tag="li" to="/userCollect" active-class="active"><a data="个人中心">{{$t('My Account')}}</a></router-link>
                 <li>
                   <a href="javascript:;" data="退出" @click="logout()">{{$t('Log out')}}</a>
                 </li>
@@ -82,11 +82,12 @@
                 </div>
                 <div class="htips icon-htips" @click="invitation">{{$t('gift')}}</div>
                 <ul class="dropdown-menu header-dropdown-menu">
-                  <router-link tag="li" to="/userCenter" active-class="active"><a data="个人中心">{{$t('My Account')}}</a></router-link>
-                  <!-- <li>
-                    <a href="javascript:;" data="消息" @click="$store.state.messagePop = true">消息</a>
-                  </li> -->
-                  <router-link tag="li" to="/my" active-class="active"><a data="设置">{{$t('Set up')}}</a></router-link>
+                  <!-- <router-link tag="li" to="/my" active-class="active"><a data="设置">{{$t('Set up')}}</a></router-link> -->
+                  <li class="userflex">
+                    <div class="left"><span class="username">{{userName}}</span></div>
+                    <div class="right"><p class="candyNum">{{candy}}</p><p>糖果数</p></div>
+                  </li>
+                  <router-link tag="li" to="/userCollect" active-class="active"><a data="个人中心">{{$t('My Account')}}</a></router-link>
                   <li>
                     <a href="javascript:;" data="退出" @click="logout()">{{$t('Log out')}}</a>
                   </li>
@@ -194,7 +195,8 @@
     data() {
       return {
         tophead: [],
-        candy: 100,
+        userName: '',
+        candy: 0,
         profileUrl: '',
         token: '',
         default_header: default_header,
@@ -517,6 +519,8 @@
       initUser() {
         this.profileUrl = localStorage.getItem('apelink_user_profileUrl');
         this.token = localStorage.getItem('apelink_user_token');
+        this.userName = localStorage.getItem('apelink_user_nickName');
+        this.candy = localStorage.getItem('apelink_user_candies');
         if (this.parantProfileUrl) {
           this.profileUrl = this.parantProfileUrl
         }

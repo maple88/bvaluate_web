@@ -812,19 +812,83 @@
     }
   }
   .header-dropdown-menu{
-    min-width: inherit;
-    width: 80px;
-    top: calc(100% + 8px);
-    left: auto;
-    right: 50%;
-    margin: 0 -40px 0 0;
+    // min-width: inherit;
+    width: 270px;
+    top: calc(100% + 15px);
+    padding: 0 15px;
+    // left: auto;
+    // right: 50%;
+    // margin: 0 -40px 0 0;
+    @media ($max-sm) {
+      width: 240px;
+      top: calc(100% + 5px);
+    }
+    &:before{
+      border: 6px solid transparent;
+      content: "";
+      position: absolute;
+      border-bottom-color: #fff;
+      top: -12px;
+      right: 9px;
+      @media ($max-sm) {
+        right: 12px;
+      }
+    }
+    .userflex{
+      display: flex;
+      align-items: center;
+      // justify-content: center;
+      padding: 20px 0;
+      .left{
+        font-size: 18px;
+        color: #1a1a1a;
+        font-weight: bold;
+        flex: 0 0 63%;
+        text-align: center;
+        padding: 0 15px 0 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        @media ($max-sm) {
+          font-size: 14px;
+        }
+      }
+      .right{
+        p{
+          font-size: 18px;
+          color: #1a1a1a;
+          text-align: center;
+          margin: 0;
+          @media ($max-sm) {
+            font-size: 14px;
+          }
+        }
+        .candyNum{
+          font-weight: bold;
+          color: #fc9526;
+        }
+      }
+    }
     a {
-      padding: 6px;
       text-align: center;
       color: $black;
+      font-size: 16px;
+      padding: 16px 0;
+      @media ($max-sm) {
+        font-size: 14px;
+        padding: 12px 0;
+      }
       &:hover {
-        background: $mainColor;
-        color: #fff;
+        color: $mainColor;
+      }
+    }
+    li{
+      border-bottom: 1px solid #d4d4d4;
+      &:last-child{
+        border: 0;
+        a{
+          font-weight: bold;
+        }
       }
     }
     li.active {
@@ -1044,6 +1108,10 @@
     }
     img{
       width: 20px;
+    }
+    .header-dropdown-menu{
+      left: auto;
+      right: 0;
     }
   }
   .navbar-header-btn{
