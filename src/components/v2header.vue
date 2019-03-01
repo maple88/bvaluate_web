@@ -37,7 +37,7 @@
               <ul class="dropdown-menu header-dropdown-menu">
                 <li class="userflex">
                   <div class="left"><span class="username">{{userName}}</span></div>
-                  <div class="right"><p class="candyNum">{{candy}}</p><p>糖果数</p></div>
+                  <div class="right"><p class="candyNum">{{candy}}</p><p>{{$t('Number of candy')}}</p></div>
                 </li>
                 <router-link tag="li" to="/userCollect" active-class="active"><a data="个人中心">{{$t('My Account')}}</a></router-link>
                 <li>
@@ -85,7 +85,7 @@
                   <!-- <router-link tag="li" to="/my" active-class="active"><a data="设置">{{$t('Set up')}}</a></router-link> -->
                   <li class="userflex">
                     <div class="left"><span class="username">{{userName}}</span></div>
-                    <div class="right"><p class="candyNum">{{candy}}</p><p>糖果数</p></div>
+                    <div class="right"><p class="candyNum">{{candy}}</p><p>{{$t('Number of candy')}}</p></div>
                   </li>
                   <router-link tag="li" to="/userCollect" active-class="active"><a data="个人中心">{{$t('My Account')}}</a></router-link>
                   <li>

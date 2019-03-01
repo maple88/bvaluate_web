@@ -1,8 +1,11 @@
 #app.language_en{
     //header
-    .v2header .header-dropdown-menu{
-        width: 110px;
-        margin: 0 -55px 0 0;
+    // .v2header .header-dropdown-menu{
+    //     width: 110px;
+    //     margin: 0 -55px 0 0;
+    // }
+    .v2header .header-dropdown-menu .userflex .right p:last-child{
+        font-size: 14px;
     }
     .v2home-page .banner-search-section{
         @media($max-xs){

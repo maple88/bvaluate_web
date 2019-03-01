@@ -10,30 +10,30 @@
             <p class="des">{{user.sign}}</p>
             <p class="candy">糖果 <span>{{user.candy}}</span></p>
           </div>
-          <a href="javascript:;" class="signin">签到</a>
+          <a href="javascript:;" class="signin" @click="$store.state.signInTips = true">签到</a>
         </div>
         <div class="user-main">
           <div class="leftnav">
             <ul>
-              <li @click="index=0" :class="{active:index==0}">
+              <li class="active">
                 <a href="#" >
                   <div class="navicon"><img src="../assets/userCenter/l1.png"><img class="on" src="../assets/userCenter/l1-on.png"></div>
                   我的收藏
                 </a>
               </li>
-              <li @click="index=1" :class="{active:index==1}">
+              <li>
                 <a href="#" >
                   <div class="navicon"><img src="../assets/userCenter/l2.png"><img class="on" src="../assets/userCenter/l2-on.png"></div>
                   我的项目
                 </a>
               </li>
-              <li @click="index=2" :class="{active:index==2}">
+              <li>
                 <a href="#" >
                   <div class="navicon"><img src="../assets/userCenter/l3.png"><img class="on" src="../assets/userCenter/l3-on.png"></div>
                   账户信息
                 </a>
               </li>
-              <li @click="index=3" :class="{active:index==3}">
+              <li>
                 <a href="#" >
                   <div class="navicon"><img src="../assets/userCenter/l4.png"><img class="on" src="../assets/userCenter/l4-on.png"></div>
                   消息通知
@@ -42,7 +42,7 @@
             </ul>
           </div>
           <div class="rightcontent">
-            <div v-if="index==0" class="follow_list serach_follow_list">
+            <div class="follow_list serach_follow_list">
               <ul>
                 <li>
                   <div class="list-item">
@@ -79,8 +79,8 @@
                               <li
                                 :name="'search_media-bottom_author_'+index"
                                 :id="'search_media-bottom_author_'+index"
-                                :data="news.result.author">
-                                {{news.result.author}}
+                                :data="news.result.siteName">
+                                {{news.result.siteName}}
                               </li>
                               <li>{{news.result.urlTime}}</li>
                             </ul>
