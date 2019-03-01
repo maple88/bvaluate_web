@@ -240,5 +240,7 @@ export default {
 	'Collection': '收藏'	,
 	'Collected': '已收藏',
 	'Share': '分享',
-	'Relevant News': '相關資訊'
+	'Relevant News': '相關資訊',
+	'Received': '已領取',
+	'Daily sign in to send candy': '每日簽到送糖果'
 };

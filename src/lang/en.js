@@ -240,5 +240,7 @@ export default {
 	'Collection': 'Collection',
 	'Collected': 'Collected',
 	'Share': 'Share',
-	'Relevant News': 'Relevant News'
+	'Relevant News': 'Relevant News',
+	'Received': 'Received',
+	'Daily sign in to send candy': 'Daily sign in to send candy'
 };
