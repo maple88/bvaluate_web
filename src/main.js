@@ -133,7 +133,8 @@ layui.use('layer', function(){
               break;
             // 其他错误，直接抛出错误提示   
             default:
-              console.error(error.response.data.message);
+              layer.msg(error.response.data.message);
+              // console.error(error.response.data.message);
           }
           return Promise.reject(error.response);
         }

@@ -16,28 +16,28 @@
           <div class="leftnav">
             <ul>
               <li class="active">
-                <a href="#" >
+                <router-link to="/userCollect">
                   <div class="navicon"><img src="../assets/userCenter/l1.png"><img class="on" src="../assets/userCenter/l1-on.png"></div>
                   我的收藏
-                </a>
+                </router-link>
               </li>
               <li>
-                <a href="#" >
+                <router-link to="/userProject">
                   <div class="navicon"><img src="../assets/userCenter/l2.png"><img class="on" src="../assets/userCenter/l2-on.png"></div>
                   我的项目
-                </a>
+                </router-link>
               </li>
               <li>
-                <a href="#" >
+                <router-link to="/userInfo">
                   <div class="navicon"><img src="../assets/userCenter/l3.png"><img class="on" src="../assets/userCenter/l3-on.png"></div>
                   账户信息
-                </a>
+                </router-link>
               </li>
               <li>
-                <a href="#" >
+                <router-link to="/userNotice">
                   <div class="navicon"><img src="../assets/userCenter/l4.png"><img class="on" src="../assets/userCenter/l4-on.png"></div>
                   消息通知
-                </a>
+                </router-link>
               </li>
             </ul>
           </div>
@@ -91,7 +91,7 @@
                   </div>
                 </li>
                 <div class="loading_more">
-                  <p class="loading_more_tip" v-if="showloading===-1">{{loadingTip}}~</p>
+                  <p class="loading_more_tip" v-if="showloading===-1">暂无更多数据</p>
                   <button :disabled="showloading" data="加载更多" value="加载更多" name="loading_more" id="loading_more"
                           @click.stop="getFollowList()" v-if="!(showloading===-1)">
                     <img v-if="showloading" :src="loading"/>
