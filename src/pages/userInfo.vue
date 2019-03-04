@@ -5,9 +5,9 @@
       <div class="container v2container">
         <div class="user-banner">
           <div class="info">
-            <div class="userimg"><img :src="user.img"></div>
+            <div class="userimg"><img :src="user.profileUrl"></div>
             <p class="name">{{user.nickName}}</p>
-            <p class="des">{{user.sign}}</p>
+            <p class="des">{{user.synopsis}}</p>
             <p class="candy">糖果 <span>{{user.candy}}</span></p>
           </div>
           <a href="javascript:;" class="signin" @click="$store.state.signInTips = true">签到</a>
@@ -51,24 +51,254 @@
                     <div class="center">
                       <div v-show="!editName" class="nickname">{{user.nickName}}</div>
                       <div v-show="editName" class="editName">
-                        <input type="text" maxlength="8" name="no_content" id="input_nickName" v-model="user.nickName" data="输入新昵称" @keyup.enter="editNickName(editName, $event)">
+                        <input type="text" maxlength="15" name="no_content" id="input_nickName" v-model="user.nickName" data="输入新昵称" @keyup.enter="editUserNickname(editName, $event)">
                       </div>
                     </div>
                     <div class="right">
                       <div v-show="!editName" @click="editName = true" class="editbtn">修改</div>
-                      <div v-show="editName" @click="editNickName(editName, $event)" class="editbtn ok">完成</div>
+                      <div v-show="editName" @click="editUserNickname(editName, $event)" class="editbtn ok">完成</div>
+                    </div>
+                  </div>
+                  <div class="inforow">
+                    <div class="left">性别<span></span></div>
+                    <div class="center">
+                      <div v-show="!editGender" class="nickname">{{user.sex | showSex}}</div>
+                      <div v-show="editGender" class="editName layui-form">
+                        <input lay-filter="gender" data="男" type="radio" value="2" name="no_content" id="input_sex2" v-model="user.sex" title="男">
+                        <input lay-filter="gender" data="女" type="radio" value="3" name="no_content" id="input_sex3" v-model="user.sex" title="女">
+                      </div>
+                    </div>
+                    <div class="right">
+                      <div v-show="!editGender" @click="editGender = true" class="editbtn">修改</div>
+                      <div v-show="editGender" @click="editUserGender()" class="editbtn ok">完成</div>
+                    </div>
+                  </div>
+                  <div class="inforow">
+                    <div class="left">个人说明<span></span></div>
+                    <div class="center">
+                      <div v-show="!editSign" class="nickname">{{user.synopsis}}</div>
+                      <div v-show="editSign" class="editName">
+                        <textarea rows="3" data="输入个人说明" placeholder="请输入个人说明（个人说明在50字内）" v-model="user.synopsis" maxlength="50"></textarea>
+                      </div>
+                    </div>
+                    <div class="right">
+                      <div v-show="!editSign" @click="editSign = true" class="editbtn">修改</div>
+                      <div v-show="editSign" @click="editUserSign()" class="editbtn ok">完成</div>
+                    </div>
+                  </div>
+                  <div class="inforow">
+                    <div class="left">手机号码<span></span></div>
+                    <div class="center">
+                      <div class="nickname">{{user.phoneNumber | formatPhone}}</div>
+                    </div>
+                    <div class="right">
+                      <div class="editbtn" data-toggle="modal" data-target="#phoneModal">修改</div>
+                    </div>
+                  </div>
+                  <div class="inforow">
+                    <div class="left">邮箱<span></span></div>
+                    <div class="center">
+                      <div class="nickname">{{user.email}}</div>
+                    </div>
+                    <div class="right">
+                      <div class="editbtn" data-toggle="modal" data-target="#emailModal">修改</div>
+                    </div>
+                  </div>
+                  <div class="inforow">
+                    <div class="left">密码<span></span></div>
+                    <div class="center">
+                      <div class="nickname" style="font-size: 12px;">●●●●●●</div>
+                    </div>
+                    <div class="right">
+                      <div class="editbtn" data-toggle="modal" data-target="#pwdModal">修改</div>
+                    </div>
+                  </div>
+                  <div class="inforow">
+                    <div class="left">微信<span></span></div>
+                    <div class="center">
+                      <div class="nickname">（未绑定微信）</div>
+                    </div>
+                    <div class="right">
+                      <div class="editbtn" data-toggle="modal">修改</div>
                     </div>
                   </div>
                 </div>
                 <div class="rightimg">
-                  <div class="userimg"><img src="../assets/user/userimg.jpg"></div>
-                  <div class="changeBtn">更换头像</div>
+                  <div class="left">头像<span></span></div>
+                  <div class="userimg" data-toggle="modal" data-target="#userImgModal"><img :src="user.profileUrl"></div>
+                  <div class="changeBtn" data-toggle="modal" data-target="#userImgModal">更换头像</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- 绑定手机模态框 -->
+      <div class="modal fade collection-modal" id="phoneModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" data="关闭模态框"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">{{$t('Bind phone number')}}</h4>
+            </div>
+            <div class="modal-body phoneModal-body">
+              <form class="form-horizontal">
+                <div class="form-group">
+                  <label class="control-label">{{$t('Phone number')}}</label>
+                  <div class="layui-form">
+                    <select name="resetSelect" lay-filter="resetSelect">
+                      <option value="+86" selected>+86</option>
+                      <option value="+852">+852</option>
+                      <option value="+853">+853</option>
+                      <option value="+81">+81</option>
+                      <option value="+82">+82</option>
+                      <option value="+65">+65</option>
+                      <option value="+886">+886</option>
+                      <option value="+1">+1</option>
+                    </select>
+                  </div>
+                  <input type="tel" class="prefix-input" data="输入手机号码" name="no_content" id="input_phone">
+                  <div class="rightTips">请输入正确的手机号码</div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">{{$t('Verification code')}}</label>
+                  <div class="coderow">
+                    <input type="text" data="输入验证码" name="no_content" id="input_code_btn">
+                    <button type="button" class="btn code-btn" data="获取验证码">{{$t('Send Message')}}</button>
+                  </div>
+                  <p class="help-block" v-if="moblieError_show">60s后重新获取</p>
+                  <div class="rightTips">请输入正确的验证码</div>
+                </div>
+                <div class="form-group">
+                  <p class="model-tips"><span>*</span>若该手机号已注册，则系统会合并当前账号与该帐号的关注收藏等内容。初次关联手机号奖励200糖果。</p>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer text-center">
+              <button type="button" class="btn btn-default cancel" data="取消修改手机号码" data-dismiss="modal">{{$t('Cancel')}}</button>
+              <button type="button" class="btn btn-primary ok" data="确认修改手机号码" data-dismiss="modal">{{$t('Confirm')}}</button>
+            </div>
+          </div>
+        </div>
+      </div><!-- /.modal -->
+
+      <!-- 绑定邮箱模态框 -->
+      <div class="modal fade collection-modal" id="emailModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" data="关闭模态框"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">{{$t('Bind Email')}}</h4>
+            </div>
+            <div class="modal-body phoneModal-body">
+              <form class="form-horizontal">
+                <div class="form-group">
+                  <label class="control-label">{{$t('Email')}}</label>
+                  <div class="coderow">
+                    <input type="email" data="输入邮箱" v-model="user.newEmail" @focus="emailError_msg=''" name="no_content" id="input_email">
+                    <div class="btn rightips newStyle"></div>
+                  </div>
+                  <div class="rightTips">{{emailError_msg}}</div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">{{$t('Verification code')}}</label>
+                  <div class="coderow">
+                    <input type="text" data="输入验证码" v-model="user.emailCode" @focus="emailCodeError_msg=''" name="no_content" id="input_emailCode">
+                    <button type="button" :disabled="sendEmailBtn" class="btn code-btn" data="发送验证邮件" @click="sendEmail">{{$t('Send verification mail')}}
+                    </button>
+                  </div>
+                  <p v-show="emailError_show" class="help-block">{{email_time}}s后重新获取</p>
+                  <div class="rightTips">{{emailCodeError_msg}}</div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer text-center">
+              <button type="button" class="btn btn-default cancel" data="取消修改邮箱" data-dismiss="modal">{{$t('Cancel')}}</button>
+              <button type="button" class="btn btn-primary ok" data="确认修改邮箱" @click="editEmail">{{$t('Confirm')}}</button>
+            </div>
+          </div>
+        </div>
+      </div><!-- /.modal -->
+
+      <!-- 修改密码模态框 -->
+      <div class="modal fade collection-modal" id="pwdModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" data="关闭模态框"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">{{$t('Modify password')}}</h4>
+            </div>
+            <div class="modal-body phoneModal-body">
+              <form class="form-horizontal">
+                <div class="form-group">
+                  <label class="control-label">{{$t('Old password')}}</label>
+                  <div class="coderow">
+                    <div class="inputgroup">
+                      <input type="password" data="输入旧密码" v-model="user.oldPassword" @focus="oldPwdError=''" name="no_content" id="input_oldPassword">
+                      <div class="eye" @click="showPassword($event)"></div>
+                    </div>
+                    <div class="btn rightips newStyle">
+                      {{oldPwdError}}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">{{$t('New password')}}</label>
+                  <div class="coderow">
+                    <div class="inputgroup">
+                      <input type="password" data="输入新密码" v-model="user.newPassword" @focus="newPwdError=''" name="no_content" id="input_newPassword">
+                      <div class="eye" @click="showPassword($event)"></div>
+                    </div>
+                    <div class="btn rightips newStyle">{{newPwdError}}</div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">{{$t('Confirm password')}}</label>
+                  <div class="coderow">
+                    <div class="inputgroup">
+                      <input type="password" data="输入确认的新密码" v-model="user.ensurePwd" @focus="ensurePwdError=''" name="no_content" id="input_ensurePwd">
+                      <div class="eye" @click="showPassword($event)"></div>
+                    </div>
+                    <div class="btn rightips newStyle">{{ensurePwdError}}</div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer text-center">
+              <button type="button" class="btn btn-default cancel" data="确认修改密码" data-dismiss="modal">{{$t('Cancel')}}</button>
+              <button type="button" class="btn btn-primary ok" data="确认修改密码" @click="resetPwd()">{{$t('Confirm')}}</button>
+            </div>
+          </div>
+        </div>
+      </div><!-- /.modal -->
+
+      <!-- 修改密码模态框 -->
+      <div class="modal fade collection-modal in" id="userImgModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" data="关闭模态框"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">请选择图片</h4>
+            </div>
+            <div class="modal-body phoneModal-body">
+              <div class="head">
+                图片上传
+                <div class="uploadImgBtn">
+                  点击上传
+                  <input name="no_content" id="input_change_headimg" type="file" accept="image/*" data="修改头像" @change="changeImg($event)"/>
+                </div>
+              </div>
+              <div class="perviewImg">
+                <img v-show="inputUserImg" :src="inputUserImg">
+                <img v-show="showUploadloading" :src="loading" class="loading">
+              </div>
+              <p class="uploadTips">请保证图片在2M以内</p>
+              <div class="text-center"><div class="okupload" @click="changeUserImg">保存修改</div></div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /.modal -->
 
       <v2footer/>
     </div>
@@ -84,10 +314,11 @@
     data() {
       return {
         editName: false,
+        editGender: false,
+        editSign: false,
         user: {
           token: '',
           uid: '',
-          img: '',
           sign: '',
           candy: '',
           nickName: '',
@@ -103,22 +334,54 @@
           sex: '',
           emailCode: ''
         },
+        emailCodeError_msg: '',
+        sendEmailBtn: false,
+        email_time: 60,
+        emailError_show: false,
+        emailError_msg: '',
+        emailCodeError_msg: '',
+        resetPrefix:'+86',
+        ensurePwdError: '',
+        moblieError_show: false,
+        oldPwdError: '',
+        newPwdError: '',
+        inputUserImg: '',
+        loading: loading,
+        showUploadloading: false,
+        imgbase64: '',
       }
     },
     mounted() {
-      this.getLocalStorageUserInfo();
+      let that = this;
+      that.getLocalStorageUserInfo();
       
+      // 获取radio性别
+      layui.use('form', function () {
+        let form = layui.form;
+        form.on('radio(gender)', function(data){
+          that.user.sex = data.value;
+        });
+      });
     },
     methods: {
       getLocalStorageUserInfo () {
-        this.user.token = localStorage.getItem('apelink_user_token');
-        this.user.uid = localStorage.getItem('apelink_user_uid');
-        this.user.img = localStorage.getItem('apelink_user_profileUrl');
-        this.user.nickName = localStorage.getItem('apelink_user_nickName');
-        this.user.sign = localStorage.getItem('apelink_user_synopsis');
-        this.user.candy = localStorage.getItem('apelink_user_candies');
+        let token = localStorage.getItem('apelink_user_token');
+        if (token !== null && token !== '' && token !== undefined) {
+          this.user.token = localStorage.getItem('apelink_user_token');
+          this.user.uid = localStorage.getItem('apelink_user_uid');
+          this.user.nickName = localStorage.getItem('apelink_user_nickName');
+          this.user.candy = localStorage.getItem('apelink_user_candies');
+          this.user.phoneNumber = localStorage.getItem('apelink_user_phoneNumber');
+          this.user.synopsis = localStorage.getItem('apelink_user_synopsis');
+          this.user.profileUrl = localStorage.getItem('apelink_user_profileUrl');
+          this.user.email = localStorage.getItem('apelink_user_email');
+          this.user.sex = localStorage.getItem('apelink_user_sex');
+          this.user.oldSex = localStorage.getItem('apelink_user_sex');
+        } else {
+          this.$router.push('/home')
+        }
       },
-      editNickName(obj, event) {
+      editUserNickname(obj, event) {
         sensors.quick('trackHeatMap', event.currentTarget);
         let json = {
           nickName: this.user.nickName
@@ -133,6 +396,164 @@
             that.editName = false;
           }
         })
+      },
+      editUserGender () {
+        let json = {
+          sex: this.user.sex
+        };
+        let that = this;
+        that.editInfor(json, function (res) {
+          if (res.data) {
+            localStorage.setItem('apelink_user_sex', that.user.sex);
+            that.user.oldSex = that.user.sex;
+            if (that.user.sex == '2') {
+              sensors.setProfile({gender: '男'});
+            }else if (that.user.sex == '3') {
+              sensors.setProfile({gender: '女'});
+            }
+            that.editGender = false;
+          } else {
+            that.editGender = false;
+          }
+        })
+      },
+      editUserSign () {
+        let json = {
+          synopsis: this.user.synopsis
+        };
+        let that = this
+        that.editInfor(json, function (res) {
+          if (res.data) {
+            localStorage.setItem('apelink_user_synopsis', that.user.synopsis);
+            that.editSign = false;
+          } else {
+            that.editSign = false;
+          }
+        })
+      },
+      //提交修改邮件验证
+      editEmail() {
+        let email = this.user.newEmail;
+        let code = this.user.emailCode;
+        let json = {
+          email: email,
+          code: code
+        }
+        this.editInfor(json, function (res) {
+          if (res.data) {
+            localStorage.setItem('apelink_user_email', res.data.email);
+            sensors.setProfile({Email: res.data.email});
+            $('#emailModal').modal('hide')
+          }
+        }, res => {
+          this.emailCodeError_msg = res.response.data.message;
+        })
+      },
+      //发送邮件验证码
+      sendEmail() {
+        let eamil = this.user.newEmail;
+        let myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+        if (!(eamil !== null && eamil !== '' && eamil !== undefined)) {
+          this.emailError_msg = '邮箱不能为空'
+        } else if (!myreg.test(eamil)) {
+          this.emailError_msg = '请输入正确格式的邮箱'
+        } else {
+          let that = this;
+          let token = localStorage.getItem('apelink_user_token');
+          let url = '/api/user/changePasswordCode?receiver=' + eamil;
+          let headers = {'Authorization': token};
+          that.$axios({
+            method: 'post',
+            url: url,
+            headers: headers,
+          }).then(function (res) {
+            that.emailError_show = true;
+            that.sendEmailBtn = true;
+            alert('验证码已发送到邮箱，请注意查收');
+            let clearTime = setInterval(() => {
+              that.email_time--;
+              if (that.email_time <= 0) {
+                that.email_time = 60;
+                that.emailError_show = false;
+                that.sendEmailBtn = false;
+                clearInterval(clearTime);
+              }
+            }, 1000);
+          })
+        }
+      },
+      resetPwd() {
+        let pass = true;
+        let newPassword = this.user.newPassword;
+        let ensurePwd = this.user.ensurePwd;
+        let oldPassword = this.user.oldPassword;
+        if (oldPassword !== null && oldPassword !== '' && oldPassword !== undefined) {
+          if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(newPassword)) {
+          } else {
+            pass = false;
+            this.oldPwdError = '只允许输入6-14个英文大小写和数字'
+          }
+        } else {
+          pass = false;
+          this.oldPwdError = '密码不能为空'
+        }
+        if (newPassword !== null && newPassword !== '' && newPassword !== undefined) {
+          if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(newPassword)) {
+            if (ensurePwd !== newPassword) {
+              pass = false;
+              this.newPwdError = '两次输入不一致'
+            }
+          } else {
+            pass = false;
+            this.newPwdError = '只允许输入6-14个英文大小写和数字'
+          }
+        } else {
+          pass = false;
+          this.newPwdError = '密码不能为空'
+        }
+        if (ensurePwd !== null && ensurePwd !== '' && ensurePwd !== undefined) {
+          if (ensurePwd !== newPassword) {
+            pass = false;
+            this.ensurePwdError = '两次输入不一致'
+          }
+        } else {
+          pass = false;
+          this.ensurePwdError = '密码不能为空'
+        }
+        if (pass) {
+          let that = this;
+          let uid = localStorage.getItem('apelink_user_uid');
+          let token = localStorage.getItem('apelink_user_token');
+          let url = '/api/user/changePassword?newPassword=' + newPassword + '&oldPassword=' + oldPassword;
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'post',
+            url: url,
+            headers: headers
+          }).then(function (res) {
+            if (res.data) {
+              $('#pwdModal').modal('hide');
+              layer.msg('修改成功');
+              that.user.newPassword = '';
+              that.user.ensurePwd = '';
+              that.user.oldPassword = '';
+            }
+          }).catch(function (res) {
+            that.oldPwdError = res.response.data.message
+          })
+        }
+      },
+      showPassword (e) {
+        let showPwd = 'password';
+        let $this = e.target;
+        let className = $this.classList.toString();
+        if (className.indexOf('open') !== -1) {
+          $this.classList.remove('open');
+        }else{
+          $this.classList.add('open');
+          showPwd = 'text';
+        }
+        $this.previousElementSibling.type = showPwd;
       },
       editInfor(json, callback, error) {
         let that = this;
@@ -150,10 +571,98 @@
         }).then(function (res) {
           thatCallback(res)
         })
+      },
+      changeImg(e) {
+        let token = localStorage.getItem('token')
+        let _this = this
+        let imgLimit = 2048
+        let files = e.target.files
+        let image = new Image()
+        _this.showUploadloading = true;
+        console.warn(files);
+        if (files.length > 0) {
+          let dd = 0
+          let timer = setInterval(function () {
+            if (files.item(dd).type !== 'image/png' && files.item(dd).type !== 'image/jpeg' && files.item(dd).type !== 'image/gif') {
+              return false
+            }
+            if (files.item(dd).size > imgLimit * 1024000) {
+              layer.msg('图片过大');
+            } else {
+              image.src = window.URL.createObjectURL(files.item(dd))
+              image.onload = function () {
+                // 默认按比例压缩
+                let w = image.width
+                let h = image.height
+                let scale = w / h
+                w = 200
+                h = w / scale
+                // 默认图片质量为0.7，quality值越小，所绘制出的图像越模糊
+                let quality = 0.7
+                let canvas = document.createElement('canvas')
+                let ctx = canvas.getContext('2d')
+                // 创建属性节点
+                let anw = document.createAttribute('width')
+                anw.nodeValue = w
+                let anh = document.createAttribute('height')
+                anh.nodeValue = h
+                canvas.setAttributeNode(anw)
+                canvas.setAttributeNode(anh)
+                ctx.drawImage(image, 0, 0, w, h)
+                let ext = image.src.substring(image.src.lastIndexOf('.') + 1).toLowerCase()
+                _this.imgbase64 = canvas.toDataURL('image/' + ext, quality);
+                _this.showUploadloading = false;
+                _this.inputUserImg = _this.imgbase64;
+              }
+            }
+            if (dd < files.length - 1) {
+              dd++
+            } else {
+              clearInterval(timer)
+            }
+          }, 1000)
+        }
+      },
+      changeUserImg () {
+        let _this = this
+        let oldUrl = _this.user.profileUrl
+        _this.user.profileUrl = _this.loading
+        if (_this.user.profileUrl !== null || _this.user.profileUrl !== undefined || _this.user.profileUrl !== '') {
+          let json = {
+            profileBase64: _this.imgbase64
+          }
+          _this.editInfor(json, function (res) {
+            $('#userImgModal').modal('hide');
+            layer.msg('修改成功');
+            _this.user.profileUrl = res.data.profileUrl
+            localStorage.setItem('apelink_user_profileUrl', res.data.profileUrl)
+          }, function (res) {
+            _this.user.profileUrl = oldUrl
+          })
+        }
       }
     },
     filters: {
-      
+      showPhone(obj) {
+        let old = obj.substring(3, 8);
+        return obj.replace(old, '******');
+      },
+      showSex(obj) {
+        let str = '未知'
+        if (obj == 2) {
+          str = '男'
+        } else if (obj == 3) {
+          str = '女'
+        }
+        return str
+      },
+      formatPhone(obj) {
+        obj = obj+'';
+        obj = obj.split("").reverse().join("");
+        obj = obj.replace(/\s/g, '').replace(/(\d{4})(?=\d)/g, "$1 ");
+        obj = obj.split("").reverse().join("");
+        return obj;
+      }
     }
   }
 </script>

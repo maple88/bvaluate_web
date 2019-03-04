@@ -1,6 +1,40 @@
 // myProfile 模态框
-.phoneModal-body {
+.model-tips{
+  width: 100%;
+  max-width: 345px;
+  text-align: center;
+  margin: 0 auto;
+  color: #1a1a1a;
+  font-size: 12px;
+  span{
+    vertical-align: middle;
+    font-size: 14px;
+    color: #e8964d;
+    margin: 0 5px 0 0;
+  }
+}
+.rightTips{
+  font-size: 12px;
+  color: #f4923a;
+  padding: 0 0 0 5px;
+  min-width: 88px;
+  @media ($max-xs) {
+    min-width: 80px;
+    position: absolute;
+    top: 100%;
+    padding: 0 0 0 60px;
+  }
+}
+#phoneModal, #emailModal{
+  .modal-title{
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+  }
+}
+.modal-body {
   .form-group {
+    position: relative;
     display: flex;
     align-items: center;
     margin: 0 0 25px;
@@ -9,7 +43,7 @@
     }
   }
   .control-label {
-    min-width: 82px;
+    min-width: 70px;
     font-size: 16px;
     color: $black;
     font-weight: normal;
@@ -46,6 +80,7 @@
     font-size: 16px;
     color: $black;
     padding: 0 10px;
+    -webkit-appearance: none;
     &.prefix-input {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
@@ -77,6 +112,7 @@
       border: 0;
       box-shadow: none;
       cursor: default;
+      color: #f4923a;
       &.newStyle {
         position: absolute;
         top: 100%;
@@ -86,27 +122,37 @@
   }
   .help-block {
     position: absolute;
-    right: 15px;
-    bottom: -15px;
-    color: #e2621b;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    color: #f4923a;
     font-size: 12px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    @media ($max-xs) {
+      top: 100%;
+      bottom: inherit;
+    }
   }
-  @media (max-width: 564px) {
+  @media (max-width: 575px) {
     .control-label {
-      font-size: 15px;
-      min-width: 65px;
+      font-size: 14px;
+      min-width: 50px;
     }
     input {
       height: 40px;
       font-size: 15px;
     }
     .coderow .code-btn {
-      font-size: 15px;
+      font-size: 12px;
       margin-left: 10px;
-      min-width: 105px;
+      min-width: inherit;
+      padding: 0 8px;
     }
     .form-group {
-      margin: 0 0 15px;
+      margin: 0 0 20px;
+      position: relative;
     }
   }
 }
@@ -114,15 +160,34 @@
 .modal-footer.text-left {
   text-align: left;
 }
+.modal-footer.text-center {
+  display: flex;
+  justify-content: space-around;
+}
 
 // userCenter 模态框
 .collection-modal {
   .modal-footer {
     border: 0;
+    padding-top: 0;
+    .cancel, .ok{
+      padding: 9px 25px;
+      font-size: 14px;
+      border: 0;
+    }
+    .ok:hover{
+      background: #2744ad;
+    }
+    .cancel{
+      background: #d3d3d3;
+      &:hover{
+        background: #ccc;
+      }
+    }
   }
   @media (min-width: 768px) {
     .modal-dialog {
-      width: 520px;
+      width: 555px;
     }
   }
 }
@@ -137,5 +202,103 @@
     vertical-align: middle;
     transform: translateY(-3px);
     margin-right: 20px;
+  }
+}
+
+#pwdModal{
+  .form-horizontal{
+    max-width: 400px;
+    margin: auto;
+  }
+}
+
+.inputgroup{
+  position: relative;
+  width: 100%;
+  .eye{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    cursor: pointer;
+    user-select: none;
+    width: 50px;
+    background: url(../assets/user/hide.png) center / 50% no-repeat;
+    &.open{
+      background: url(../assets/user/open.png) center / 50% no-repeat;
+    }
+  }
+}
+
+#userImgModal{
+  .modal-body{
+    .head{
+      font-size: 14px;
+      color: #090909;
+      margin: 0 0 30px;
+      .uploadImgBtn{
+        position: relative;
+        cursor: pointer;
+        user-select: none;
+        font-size: 14px;
+        color: #fff;
+        padding: 9px 24px;
+        border-radius: 5px;
+        background: $mainColor;
+        display: inline-block;
+        margin: 0 0 0 30px;
+        input{
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          cursor: pointer;
+        }
+      }
+    }
+    .perviewImg{
+      position: relative;
+      width: 210px;
+      height: 210px;
+      border: 2px solid #ececec;
+      margin: auto;
+      overflow: hidden;
+      img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .loading{
+        position: absolute;
+        width: 60px;
+        height: auto;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+      }
+    }
+    .uploadTips{
+      text-align: center;
+      margin: 15px 0 35px;
+      color: #f4923a;
+      font-size: 14px;
+    }
+    .okupload{
+      cursor: pointer;
+      user-select: none;
+      font-size: 14px;
+      color: #fff;
+      padding: 9px 24px;
+      border-radius: 5px;
+      background: $mainColor;
+      display: inline-block;
+    }
   }
 }

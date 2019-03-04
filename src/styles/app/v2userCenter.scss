@@ -743,26 +743,47 @@
     padding: 25px 120px 25px 40px;
     background: #fff;
     border-radius: 3px;
+    @media ($max-lg) {
+      padding: 25px;
+    }
+    @media ($max-xs) {
+      padding: 15px;
+    }
     .user-header{
       font-size: 16px;
       color: #1a1a1a;
       border-bottom: 1px solid #d4d4d4;
       padding: 0 0 10px;
       margin: 0 0 50px;
+      @media ($max-lg) {
+        margin: 0 0 30px;
+      }
+      @media ($max-xs) {
+        margin: 0 0 15px;
+      }
     }
     .user-flexbox{
       display: flex;
+      @media ($max-xs) {
+        flex-direction: column-reverse;
+      }
       .leftinfo{
         flex: 1;
         .inforow{
           display: flex;
           align-items: center;
-          min-height: 55px;
-          margin: 0 0 30px;
+          min-height: 60px;
+          @media ($max-xs) {
+            min-height: 30px;
+            margin: 0 0 15px;
+            &:last-child{
+              margin: 0;
+            }
+          }
           .left{
             position: relative;
-            flex: 0 0 60px;
-            min-width: 60px;
+            flex: 0 0 70px;
+            min-width: 70px;
             text-align: justify;
             font-size: 14px;
             color: #1a1a1a;
@@ -798,9 +819,26 @@
                 padding: 4px 0 2px;
                 border: 0;
                 border-bottom: 1px solid #d4d4d4;
-                &.focus{
+                border-radius: 0;
+                &:focus{
                   border-bottom: 1px solid $mainColor;
                 }
+              }
+            }
+            .layui-form-radio{
+              margin: 0 10px 0 0;
+            }
+            .layui-form-radio>i:hover, .layui-form-radioed>i{
+              color: $mainColor;
+            }
+            textarea{
+              width: 100%;
+              resize: none;
+              border: 0;
+              border-bottom: 1px solid #d4d4d4;
+              border-radius: 0;
+              &:focus{
+                border-bottom: 1px solid $mainColor;
               }
             }
           }
@@ -826,11 +864,59 @@
       }
       .rightimg{
         padding: 0 0 0 90px;
+        @media ($max-lg) {
+          padding: 0 0 0 30px;
+        }
+        @media ($max-xs) {
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          justify-content: space-between;
+          position: relative;
+          margin: 0 0 15px;
+        }
+        .left{
+          position: relative;
+          margin: auto;
+          width: 70px;
+          text-align: justify;
+          font-size: 14px;
+          color: #1a1a1a;
+          padding: 0 10px 0 0;
+          margin: 0 10px 0 0;
+          height: 20px;
+          overflow: hidden;
+          display: none;
+          @media ($max-xs) {
+            display: block;
+          }
+          &:after{
+            content: '：';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: -3px;
+            margin: auto;
+            font-size: 14px;
+            color: #1a1a1a;
+          }
+          span{
+            display: inline-block; 
+            padding-left: 100%;
+          }
+        }
         .userimg{
           width: 138px;
           height: 138px;
           overflow: hidden;
           margin: 0 0 25px;
+          cursor: pointer;
+          @media ($max-xs) {
+            margin: 0;
+            width: 60px;
+            height: 60px;
+          }
           img{
             width: 100%;
             height: 100%;
@@ -849,6 +935,9 @@
           border-radius: 4px;
           cursor: pointer;
           user-select: none;
+          @media ($max-xs) {
+            display: none;
+          }
         }
       }
     }
