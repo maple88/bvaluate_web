@@ -5,9 +5,9 @@
       <div class="container v2container">
         <div class="user-banner">
           <div class="info">
-            <div class="userimg"><img :src="user.img"></div>
-            <p class="name">{{user.name}}</p>
-            <p class="des">{{user.sign}}</p>
+            <div class="userimg"><img :src="user.profileUrl"></div>
+            <p class="name">{{user.nickName}}</p>
+            <p class="des">{{user.synopsis}}</p>
             <p class="candy">糖果 <span>{{user.candy}}</span></p>
           </div>
           <a href="javascript:;" class="signin" @click="$store.state.signInTips = true">签到</a>
@@ -139,12 +139,21 @@
     },
     methods: {
       getLocalStorageUserInfo () {
-        this.user.token = localStorage.getItem('apelink_user_token');
-        this.user.uid = localStorage.getItem('apelink_user_uid');
-        this.user.img = localStorage.getItem('apelink_user_profileUrl');
-        this.user.name = localStorage.getItem('apelink_user_nickName');
-        this.user.sign = localStorage.getItem('apelink_user_synopsis');
-        this.user.candy = localStorage.getItem('apelink_user_candies');
+        let token = localStorage.getItem('apelink_user_token');
+        if (token !== null && token !== '' && token !== undefined) {
+          this.user.token = localStorage.getItem('apelink_user_token');
+          this.user.uid = localStorage.getItem('apelink_user_uid');
+          this.user.nickName = localStorage.getItem('apelink_user_nickName');
+          this.user.candy = localStorage.getItem('apelink_user_candies');
+          this.user.phoneNumber = localStorage.getItem('apelink_user_phoneNumber');
+          this.user.synopsis = localStorage.getItem('apelink_user_synopsis');
+          this.user.profileUrl = localStorage.getItem('apelink_user_profileUrl');
+          this.user.email = localStorage.getItem('apelink_user_email');
+          this.user.sex = localStorage.getItem('apelink_user_sex');
+          this.user.oldSex = localStorage.getItem('apelink_user_sex');
+        } else {
+          this.$router.push('/home')
+        }
       },
       getFollowList() {
         let that = this;

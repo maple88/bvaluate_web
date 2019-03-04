@@ -26,7 +26,7 @@ import privacy from '@/pages/privacy'
 import userCollect from '@/pages/userCollect'
 import apiview from '@/pages/apiview'
 import userInfo from '@/pages/userInfo'
-// import userCollect from '@/pages/userCollect'
+import userNotice from '@/pages/userNotice'
 // import userCollect from '@/pages/userCollect'
 
 Vue.use(Router);
@@ -182,6 +182,13 @@ export default new Router({
     {
       path: '/userInfo',
       component: userInfo,
+      meta: {
+        pageTitle: '个人中心'
+      },
+    },
+    {
+      path: '/userNotice',
+      component: userNotice,
       meta: {
         pageTitle: '个人中心'
       },
