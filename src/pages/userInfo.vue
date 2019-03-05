@@ -171,7 +171,7 @@
                   <div class="rightTips">请输入正确的验证码</div>
                 </div>
                 <div class="form-group">
-                  <p class="model-tips"><span>*</span>若该手机号已注册，则系统会合并当前账号与该帐号的关注收藏等内容。初次关联手机号奖励200糖果。</p>
+                  <p class="model-tips"><span>*</span>{{$t('If the mobile number is registered, the system will merge the current account with the account is attention, collection and other content. The first time associated mobile phone number rewards 200 candy.')}}</p>
                 </div>
               </form>
             </div>

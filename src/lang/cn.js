@@ -269,7 +269,7 @@ export default {
 	'Unbound': '未绑定',
 	'Not set': '未设置',
 	'Bind': '已绑定',
-	'* If the mobile number is registered, the system will merge the current account with the account is attention, collection and other content. The first time associated mobile phone number rewards 200 candy.': '*若该手机号已注册，则系统会合并当前账号与该帐号的关注、收藏等内容。初次关联手机号奖励200糖果。',
+	'If the mobile number is registered, the system will merge the current account with the account is attention, collection and other content. The first time associated mobile phone number rewards 200 candy.': '若该手机号已注册，则系统会合并当前账号与该帐号的关注、收藏等内容。初次关联手机号奖励200糖果。',
 	'* If the WeChat has been logged in, the system will merge the current account with the account is attention, collection and other content.': '*若该微信已登录过，则系统会合并当前账号与该帐号的关注、收藏等内容。',
 	'Successful association, reward 200 candy': '关联成功，奖励200糖果',
 	'Know it': '知道啦',

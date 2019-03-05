@@ -269,7 +269,7 @@ export default {
 	'Unbound': 'Unbound',
 	'Not set': 'Not set',
 	'Bind': 'Bind',
-	'* If the mobile number is registered, the system will merge the current account with the account is attention, collection and other content. The first time associated mobile phone number rewards 200 candy.': '* If the mobile number is registered, the system will merge the current account with the account is attention, collection and other content. The first time associated mobile phone number rewards 200 candy.',
+	'If the mobile number is registered, the system will merge the current account with the account is attention, collection and other content. The first time associated mobile phone number rewards 200 candy.': 'If the mobile number is registered, the system will merge the current account with the account is attention, collection and other content. The first time associated mobile phone number rewards 200 candy.',
 	'* If the WeChat has been logged in, the system will merge the current account with the account is attention, collection and other content.': '* If the WeChat has been logged in, the system will merge the current account with the account is attention, collection and other content.',
 	'Successful association, reward 200 candy': 'Successful association, reward 200 candy',
 	'Know it': 'Know it',
