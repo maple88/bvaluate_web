@@ -1,5 +1,5 @@
 <template>
-  <div class="page project userCenter userCollect">
+  <div class="page project userCenter userNotice">
     <v2header/>
     <div class="v2maintainer">
       <div class="container v2container">
@@ -8,9 +8,9 @@
             <div class="userimg"><img :src="user.profileUrl"></div>
             <p class="name">{{user.nickName}}</p>
             <p class="des">{{user.synopsis}}</p>
-            <p class="candy">糖果 <span>{{user.candy}}</span></p>
+            <p class="candy">{{$t('candies')}} <span>{{user.candy}}</span></p>
           </div>
-          <a href="javascript:;" class="signin" @click="$store.state.signInTips = true">签到</a>
+          <a href="javascript:;" class="signin" @click="$store.state.signInTips = true">{{$t('Check in')}}</a>
         </div>
         <div class="user-main">
           <div class="leftnav">
@@ -18,31 +18,44 @@
               <li>
                 <router-link to="/userCollect">
                   <div class="navicon"><img src="../assets/userCenter/l1.png"><img class="on" src="../assets/userCenter/l1-on.png"></div>
-                  我的收藏
+                  {{$t('My collection')}}
                 </router-link>
               </li>
               <li>
-                <router-link to="/userProject">
+                <router-link to="">
                   <div class="navicon"><img src="../assets/userCenter/l2.png"><img class="on" src="../assets/userCenter/l2-on.png"></div>
-                  我的项目
+                  {{$t('My project')}}
                 </router-link>
               </li>
               <li>
                 <router-link to="/userInfo">
                   <div class="navicon"><img src="../assets/userCenter/l3.png"><img class="on" src="../assets/userCenter/l3-on.png"></div>
-                  账户信息
+                  {{$t('Account information')}}
                 </router-link>
               </li>
               <li class="active">
                 <router-link to="/userNotice">
                   <div class="navicon"><img src="../assets/userCenter/l4.png"><img class="on" src="../assets/userCenter/l4-on.png"></div>
-                  消息通知
+                  {{$t('notification')}}
                 </router-link>
               </li>
             </ul>
           </div>
           <div class="rightcontent">
-            
+            <div class="noticeBox">
+              <div class="headtab">
+                <div class="item" :class="showBox === 0?'on':''" @click="showList(0)">{{$t('All')}}</div>
+                <div class="item" :class="showBox === 1?'on':''" @click="showList(1)">{{$t('Unread news')}}</div>
+              </div>
+              <div class="noticeList">
+                <div class="item" v-for="(item, index) in messageList" :key="index">
+                  <div class="left">{{$t('notice')}}</div>
+                  <div class="center">{{item.content}}</div>
+                  <div class="right">{{item.createdTime}}</div>
+                </div>
+                <!-- <div class="loadmore" v-if="showLoadMore" @click="">{{$t('Load more')}}<i class="moreimg"></i></div> -->
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -77,10 +90,18 @@
           sex: '',
           emailCode: ''
         },
+        showLoadMore: true,
+        messageList: [],
+        open: -1,
+        unReadList: [],
+        allList: [],
+        showBox: 0,
       }
     },
     mounted() {
       this.getLocalStorageUserInfo();
+
+      this.initMessage();
     },
     methods: {
       getLocalStorageUserInfo () {
@@ -100,7 +121,51 @@
           this.$router.push('/home')
         }
       },
-      
+      initMessage() {
+        let uid = localStorage.getItem('apelink_user_uid');
+        let token = localStorage.getItem('apelink_user_token');
+        if (token) {
+          let headers = {'uid': uid, 'Authorization': token};
+          let url = '/api/notify/getUserNotify';
+          this.$axios({
+            method: 'get',
+            url: url,
+            headers: headers
+          }).then(res => {
+            this.messageList = res.data;
+            this.allList = res.data;
+          });
+        }
+      },
+      showList(type) {
+        if (type===0) {
+          if(this.showBox !== type){
+            this.showBox = 0;
+            this.initMessage();
+          }
+        } else {
+          if(this.showBox !== type){
+            let uid = localStorage.getItem('apelink_user_uid');
+            let token = localStorage.getItem('apelink_user_token');
+            if (token) {
+              let headers = {'uid': uid, 'Authorization': token};
+              let url = '/api/notify/getUserNotify?readFlag=unread';
+              this.$axios({
+                method: 'get',
+                url: url,
+                headers: headers
+              }).then(res => {
+                this.unReadList = res.data;
+                this.messageList = this.unReadList;
+                this.showBox = 1;
+              }).catch(res => {
+                this.messageList = []
+                this.showBox = 1;
+              });
+            }
+          }
+        }
+      }
     }
   }
 </script>

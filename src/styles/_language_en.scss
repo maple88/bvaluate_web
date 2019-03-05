@@ -181,4 +181,44 @@
         line-height: 14px;
         text-align: center;
     }
+    .userCenter.userInfo .userBox .user-flexbox .rightimg .changeBtn{
+        width: 120px;
+    }
+    .userCenter.userInfo .userBox .user-flexbox .leftinfo .inforow .left{
+        flex: 0 0 80px;
+        min-width: 80px;
+    }
+    .userCenter.userInfo .userBox .user-flexbox .rightimg .left{
+        width: 115px;
+    }
+    .userCenter .user-main .leftnav ul{
+        @media ($max-md) {
+            overflow: auto;
+            justify-content: normal;
+            -webkit-overflow-scrolling:touch;
+            &::-webkit-scrollbar {
+                display: none;
+            }
+        }
+    }
+    .userCenter .user-main .leftnav ul li{
+        @media ($max-md) {
+            flex: 0 0 40%;
+            min-width: 40%;
+            position: relative;
+        }
+    }
+    .userCenter .user-main .leftnav ul li.active{
+        @media ($max-md) {
+            &:after{
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                background: $mainColor;
+                width: 100%;
+                height: 2px;
+            }
+        }
+    }
 }

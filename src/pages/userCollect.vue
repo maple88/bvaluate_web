@@ -8,9 +8,9 @@
             <div class="userimg"><img :src="user.profileUrl"></div>
             <p class="name">{{user.nickName}}</p>
             <p class="des">{{user.synopsis}}</p>
-            <p class="candy">糖果 <span>{{user.candy}}</span></p>
+            <p class="candy">{{$t('candies')}} <span>{{user.candy}}</span></p>
           </div>
-          <a href="javascript:;" class="signin" @click="$store.state.signInTips = true">签到</a>
+          <a href="javascript:;" class="signin" @click="$store.state.signInTips = true">{{$t('Check in')}}</a>
         </div>
         <div class="user-main">
           <div class="leftnav">
@@ -18,25 +18,26 @@
               <li class="active">
                 <router-link to="/userCollect">
                   <div class="navicon"><img src="../assets/userCenter/l1.png"><img class="on" src="../assets/userCenter/l1-on.png"></div>
-                  我的收藏
+                  {{$t('My collection')}}
                 </router-link>
               </li>
               <li>
-                <router-link to="/userProject">
+                <!-- to="/userProject" -->
+                <router-link to="">
                   <div class="navicon"><img src="../assets/userCenter/l2.png"><img class="on" src="../assets/userCenter/l2-on.png"></div>
-                  我的项目
+                  {{$t('My project')}}
                 </router-link>
               </li>
               <li>
                 <router-link to="/userInfo">
                   <div class="navicon"><img src="../assets/userCenter/l3.png"><img class="on" src="../assets/userCenter/l3-on.png"></div>
-                  账户信息
+                  {{$t('Account information')}}
                 </router-link>
               </li>
               <li>
                 <router-link to="/userNotice">
                   <div class="navicon"><img src="../assets/userCenter/l4.png"><img class="on" src="../assets/userCenter/l4-on.png"></div>
-                  消息通知
+                  {{$t('notification')}}
                 </router-link>
               </li>
             </ul>
@@ -95,7 +96,7 @@
                   <button :disabled="showloading" data="加载更多" value="加载更多" name="loading_more" id="loading_more"
                           @click.stop="getFollowList()" v-if="!(showloading===-1)">
                     <img v-if="showloading" :src="loading"/>
-                    <span v-if="!showloading">加载更多</span>
+                    <span v-if="!showloading">{{$t('Load more')}}</span>
                   </button>
                 </div>
               </ul>

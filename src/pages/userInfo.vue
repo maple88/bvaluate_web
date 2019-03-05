@@ -8,9 +8,9 @@
             <div class="userimg"><img :src="user.profileUrl"></div>
             <p class="name">{{user.nickName}}</p>
             <p class="des">{{user.synopsis}}</p>
-            <p class="candy">糖果 <span>{{user.candy}}</span></p>
+            <p class="candy">{{$t('candies')}} <span>{{user.candy}}</span></p>
           </div>
-          <a href="javascript:;" class="signin" @click="$store.state.signInTips = true">签到</a>
+          <a href="javascript:;" class="signin" @click="$store.state.signInTips = true">{{$t('Check in')}}</a>
         </div>
         <div class="user-main">
           <div class="leftnav">
@@ -18,36 +18,36 @@
               <li>
                 <router-link to="/userCollect">
                   <div class="navicon"><img src="../assets/userCenter/l1.png"><img class="on" src="../assets/userCenter/l1-on.png"></div>
-                  我的收藏
+                  {{$t('My collection')}}
                 </router-link>
               </li>
               <li>
-                <router-link to="/userProject">
+                <router-link to="">
                   <div class="navicon"><img src="../assets/userCenter/l2.png"><img class="on" src="../assets/userCenter/l2-on.png"></div>
-                  我的项目
+                  {{$t('My project')}}
                 </router-link>
               </li>
               <li class="active">
                 <router-link to="/userInfo">
                   <div class="navicon"><img src="../assets/userCenter/l3.png"><img class="on" src="../assets/userCenter/l3-on.png"></div>
-                  账户信息
+                  {{$t('Account information')}}
                 </router-link>
               </li>
               <li>
                 <router-link to="/userNotice">
                   <div class="navicon"><img src="../assets/userCenter/l4.png"><img class="on" src="../assets/userCenter/l4-on.png"></div>
-                  消息通知
+                  {{$t('notification')}}
                 </router-link>
               </li>
             </ul>
           </div>
           <div class="rightcontent">
             <div class="userBox">
-              <div class="user-header">账户信息</div>
+              <div class="user-header">{{$t('Account information')}}</div>
               <div class="user-flexbox">
                 <div class="leftinfo">
                   <div class="inforow">
-                    <div class="left">昵称<span></span></div>
+                    <div class="left">{{$t('Nickname')}}<span></span></div>
                     <div class="center">
                       <div v-show="!editName" class="nickname">{{user.nickName}}</div>
                       <div v-show="editName" class="editName">
@@ -55,78 +55,78 @@
                       </div>
                     </div>
                     <div class="right">
-                      <div v-show="!editName" @click="editName = true" class="editbtn">修改</div>
-                      <div v-show="editName" @click="editUserNickname(editName, $event)" class="editbtn ok">完成</div>
+                      <div v-show="!editName" @click="editName = true" class="editbtn">{{$t('modify')}}</div>
+                      <div v-show="editName" @click="editUserNickname(editName, $event)" class="editbtn ok">{{$t('done')}}</div>
                     </div>
                   </div>
                   <div class="inforow">
-                    <div class="left">性别<span></span></div>
+                    <div class="left">{{$t('Gender')}}<span></span></div>
                     <div class="center">
                       <div v-show="!editGender" class="nickname">{{user.sex | showSex}}</div>
                       <div v-show="editGender" class="editName layui-form">
-                        <input lay-filter="gender" data="男" type="radio" value="2" name="no_content" id="input_sex2" v-model="user.sex" title="男">
-                        <input lay-filter="gender" data="女" type="radio" value="3" name="no_content" id="input_sex3" v-model="user.sex" title="女">
+                        <input lay-filter="gender" data="男" type="radio" value="2" name="no_content" id="input_sex2" v-model="user.sex" :title="$t('Male')">
+                        <input lay-filter="gender" data="女" type="radio" value="3" name="no_content" id="input_sex3" v-model="user.sex" :title="$t('Female')">
                       </div>
                     </div>
                     <div class="right">
-                      <div v-show="!editGender" @click="editGender = true" class="editbtn">修改</div>
-                      <div v-show="editGender" @click="editUserGender()" class="editbtn ok">完成</div>
+                      <div v-show="!editGender" @click="editGender = true" class="editbtn">{{$t('modify')}}</div>
+                      <div v-show="editGender" @click="editUserGender()" class="editbtn ok">{{$t('done')}}</div>
                     </div>
                   </div>
                   <div class="inforow">
-                    <div class="left">个人说明<span></span></div>
+                    <div class="left">{{$t('Personal description')}}<span></span></div>
                     <div class="center">
                       <div v-show="!editSign" class="nickname">{{user.synopsis}}</div>
                       <div v-show="editSign" class="editName">
-                        <textarea rows="3" data="输入个人说明" placeholder="请输入个人说明（个人说明在50字内）" v-model="user.synopsis" maxlength="50"></textarea>
+                        <textarea rows="3" data="输入个人说明" :placeholder="$t('Please enter a personal description ( Within 50 words)')" v-model="user.synopsis" maxlength="50"></textarea>
                       </div>
                     </div>
                     <div class="right">
-                      <div v-show="!editSign" @click="editSign = true" class="editbtn">修改</div>
-                      <div v-show="editSign" @click="editUserSign()" class="editbtn ok">完成</div>
+                      <div v-show="!editSign" @click="editSign = true" class="editbtn">{{$t('modify')}}</div>
+                      <div v-show="editSign" @click="editUserSign()" class="editbtn ok">{{$t('done')}}</div>
                     </div>
                   </div>
                   <div class="inforow">
-                    <div class="left">手机号码<span></span></div>
+                    <div class="left">{{$t('Phone number')}}<span></span></div>
                     <div class="center">
                       <div class="nickname">{{user.phoneNumber | formatPhone}}</div>
                     </div>
                     <div class="right">
-                      <div class="editbtn" data-toggle="modal" data-target="#phoneModal">修改</div>
+                      <div class="editbtn" data-toggle="modal" data-target="#phoneModal">{{$t('modify')}}</div>
                     </div>
                   </div>
                   <div class="inforow">
-                    <div class="left">邮箱<span></span></div>
+                    <div class="left">{{$t('Email')}}<span></span></div>
                     <div class="center">
                       <div class="nickname">{{user.email}}</div>
                     </div>
                     <div class="right">
-                      <div class="editbtn" data-toggle="modal" data-target="#emailModal">修改</div>
+                      <div class="editbtn" data-toggle="modal" data-target="#emailModal">{{$t('modify')}}</div>
                     </div>
                   </div>
                   <div class="inforow">
-                    <div class="left">密码<span></span></div>
+                    <div class="left">{{$t('Password')}}<span></span></div>
                     <div class="center">
                       <div class="nickname" style="font-size: 12px;">●●●●●●</div>
                     </div>
                     <div class="right">
-                      <div class="editbtn" data-toggle="modal" data-target="#pwdModal">修改</div>
+                      <div class="editbtn" data-toggle="modal" data-target="#pwdModal">{{$t('modify')}}</div>
                     </div>
                   </div>
                   <div class="inforow">
-                    <div class="left">微信<span></span></div>
+                    <div class="left">{{$t('WeChat')}}<span></span></div>
                     <div class="center">
-                      <div class="nickname">（未绑定微信）</div>
+                      <div class="nickname">（{{$t('Unbound')}}）</div>
                     </div>
                     <div class="right">
-                      <div class="editbtn" data-toggle="modal">修改</div>
+                      <div class="editbtn" data-toggle="modal">{{$t('modify')}}</div>
                     </div>
                   </div>
                 </div>
                 <div class="rightimg">
-                  <div class="left">头像<span></span></div>
+                  <div class="left">{{$t('Click to change')}}<span></span></div>
                   <div class="userimg" data-toggle="modal" data-target="#userImgModal"><img :src="user.profileUrl"></div>
-                  <div class="changeBtn" data-toggle="modal" data-target="#userImgModal">更换头像</div>
+                  <div class="changeBtn" data-toggle="modal" data-target="#userImgModal">{{$t('Change avatar')}}</div>
                 </div>
               </div>
             </div>

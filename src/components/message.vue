@@ -12,10 +12,10 @@
           </div>
           <div class="message_content">
             <div class="message_tab">
-              <div class="tab_item" :class="showBox === 0?'active':''" @click="showList()">
+              <div class="tab_item" :class="showBox === 0?'active':''" @click="showList(0)">
                 <h4>{{$t('All')}}</h4>
               </div>
-              <div class="tab_item" :class="showBox === 1?'active':''" @click="showList()">
+              <div class="tab_item" :class="showBox === 1?'active':''" @click="showList(1)">
                 <h4>{{$t('Unread news')}}</h4>
               </div>
             </div>
@@ -126,29 +126,33 @@
           });
         }
       },
-      showList() {
-        if (this.showBox === 0) {
-          let uid = localStorage.getItem('apelink_user_uid');
-          let token = localStorage.getItem('apelink_user_token');
-          if (token) {
-            let headers = {'uid': uid, 'Authorization': token};
-            let url = '/api/notify/getUserNotify?readFlag=unread';
-            this.$axios({
-              method: 'get',
-              url: url,
-              headers: headers
-            }).then(res => {
-              this.unReadList = res.data;
-              this.messageList = this.unReadList;
-              this.showBox = 1;
-            }).catch(res => {
-              this.messageList = []
-              this.showBox = 1;
-            });
+      showList(type) {
+        if (type===0) {
+          if(this.showBox !== type){
+            this.showBox = 0;
+            this.initMessage();
           }
         } else {
-          this.showBox = 0;
-          this.messageList = this.allList;
+          if(this.showBox !== type){
+            let uid = localStorage.getItem('apelink_user_uid');
+            let token = localStorage.getItem('apelink_user_token');
+            if (token) {
+              let headers = {'uid': uid, 'Authorization': token};
+              let url = '/api/notify/getUserNotify?readFlag=unread';
+              this.$axios({
+                method: 'get',
+                url: url,
+                headers: headers
+              }).then(res => {
+                this.unReadList = res.data;
+                this.messageList = this.unReadList;
+                this.showBox = 1;
+              }).catch(res => {
+                this.messageList = []
+                this.showBox = 1;
+              });
+            }
+          }
         }
       }
     }
