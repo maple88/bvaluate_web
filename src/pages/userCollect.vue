@@ -134,8 +134,10 @@
         }
       }
     },
-    mounted() {
+    activated () {
       this.getLocalStorageUserInfo();
+    },
+    mounted() {
       this.getFollowList();
     },
     methods: {

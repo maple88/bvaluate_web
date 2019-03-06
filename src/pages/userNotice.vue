@@ -98,9 +98,10 @@
         showBox: 0,
       }
     },
-    mounted() {
+    activated () {
       this.getLocalStorageUserInfo();
-
+    },
+    mounted() {
       this.initMessage();
     },
     methods: {

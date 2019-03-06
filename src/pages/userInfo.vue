@@ -89,7 +89,7 @@
                   <div class="inforow">
                     <div class="left">{{$t('Phone number')}}<span></span></div>
                     <div class="center">
-                      <div class="nickname">{{user.phoneNumber | formatPhone}}</div>
+                      <div class="nickname">{{user.phoneNumber | formatPhone($t('Unbound'))}}</div>
                     </div>
                     <div class="right">
                       <div class="editbtn" data-toggle="modal" data-target="#phoneModal">{{$t('modify')}}</div>
@@ -98,7 +98,7 @@
                   <div class="inforow">
                     <div class="left">{{$t('Email')}}<span></span></div>
                     <div class="center">
-                      <div class="nickname">{{user.email}}</div>
+                      <div class="nickname">{{user.email || $t('Unbound')}}</div>
                     </div>
                     <div class="right">
                       <div class="editbtn" data-toggle="modal" data-target="#emailModal">{{$t('modify')}}</div>
@@ -116,7 +116,7 @@
                   <div class="inforow">
                     <div class="left">{{$t('WeChat')}}<span></span></div>
                     <div class="center">
-                      <div class="nickname">（{{$t('Unbound')}}）</div>
+                      <div class="nickname">{{$t('Unbound')}}</div>
                     </div>
                     <div class="right">
                       <div class="editbtn" data-toggle="modal">{{$t('modify')}}</div>
@@ -351,9 +351,11 @@
         imgbase64: '',
       }
     },
+    activated () {
+      this.getLocalStorageUserInfo();
+    },
     mounted() {
       let that = this;
-      that.getLocalStorageUserInfo();
       
       // 获取radio性别
       layui.use('form', function () {
@@ -656,12 +658,16 @@
         }
         return str
       },
-      formatPhone(obj) {
-        obj = obj+'';
-        obj = obj.split("").reverse().join("");
-        obj = obj.replace(/\s/g, '').replace(/(\d{4})(?=\d)/g, "$1 ");
-        obj = obj.split("").reverse().join("");
-        return obj;
+      formatPhone(obj,nullVal) {
+        if (obj) {
+          obj = obj+'';
+          obj = obj.split("").reverse().join("");
+          obj = obj.replace(/\s/g, '').replace(/(\d{4})(?=\d)/g, "$1 ");
+          obj = obj.split("").reverse().join("");
+          return obj;
+        }else{
+          return nullVal;
+        }
       }
     }
   }

@@ -1800,6 +1800,25 @@
   }
   .loginbox .hd {
     margin: 0 0 5px;
+    ul{
+      position: relative;
+      .back{
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        font-size: 16px;
+        color: $mainColor;
+        user-select: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        img{
+          margin: 0 8px 0 0;
+        }
+      }
+    }
     @media ($max-xs) {
       padding: 15px 0 0px;
     }
@@ -1958,6 +1977,42 @@
       height: inherit;
     }
   }
+  .inputInner{
+    .other-group{
+      .wechatLogin{
+        cursor: pointer;
+        user-select: none;
+        font-size: 14px;
+        color: #3f3f3f;
+        img{
+          margin: 0 6px 0 0;
+        }
+      }
+      .no_accounts{
+        span{
+          font-size: 14px;
+        }
+      }
+    }
+    .loginTips{
+      font-size: 12px;
+      color: #3f3f3f;
+      text-align: center;
+      a{
+        color: $mainColor;
+      }
+    }
+    &.passwordLoginForm{
+      .other-group.mgb15{
+        margin: 0 0 15px;
+      }
+    }
+    &.registerForm{
+      .loginTips{
+        margin: 30px 0;
+      }
+    }
+  }
 }
 
 .login_fixed.register_tips.v2register_tips {
@@ -2086,5 +2141,12 @@
   .inputInner input {
     border-left: 2px solid #d2d2d2 !important;
     padding: 0 0 0 10px !important;
+  }
+}
+
+.layui-news-style{
+  dl dd{
+    display: flex;
+    justify-content: space-between;
   }
 }

@@ -155,7 +155,7 @@
     <v-register-tip></v-register-tip>
     <v-invitation-tip></v-invitation-tip>
     <v-signIn-tips></v-signIn-tips>
-    <v-wechatLogin></v-wechatLogin>
+    <v-wechatLogin :initUser="initUser"></v-wechatLogin>
     <v-bindPhone></v-bindPhone>
 
     <!-- <v-tour name="headerTour" :steps="steps" :callbacks="myCallbacks"></v-tour> -->
