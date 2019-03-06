@@ -313,6 +313,28 @@
 					}
 				}
 			}
+			// 没有加载数据样式
+			.notmore {
+				background: #fff;
+				width: 100%;
+				height: 660px;
+				display: flex;
+				justify-content: center;
+				align-items: flex-start;
+				img {
+					margin-top: 60px;
+				}
+				p {
+					padding-top: 34px;
+					font-size: 16px;
+					span {
+						color: #2346f7;
+						font-weight: 700;
+						padding-left: 4px;
+						cursor: pointer;
+					}
+				}
+			}
 			&.main-table-box{
 				.layui-table-box{
 					.layui-table-fixed-l{

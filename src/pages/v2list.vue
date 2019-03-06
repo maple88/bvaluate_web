@@ -50,6 +50,13 @@
                   <img src="../assets/login/loading.gif"/>
                 </div>
                 <div class="loadmore" v-if="showLoadMore" @click="getListMore">{{$t('Load more')}}<i class="moreimg"></i></div>
+                <!-- 没有数据加载样式 -->
+                <div class="notmore" v-if="showNotMore">
+                    <div class="not-box">
+                        <img src="../assets/list/shuju.png" alt="">
+                        <p>暂无数据，请<span @click="aginLoad">重新加载</span></p>
+                    </div>
+                </div>
               </div>
             </div>
           </div>
@@ -89,6 +96,8 @@
 <script>
   import sensors from '../../static/sa-init.js'
   import Swiper from 'swiper';
+import { log } from 'util';
+import { setTimeout, clearTimeout } from 'timers';
 
   let loading = require('../assets/login/loading.gif');
 
@@ -107,6 +116,7 @@
         riseloading: false,
         fallloading: false,
         showLoadMore: false,
+        showNotMore:false,
         steps: {
           content1: `
             <p class="mgb15"><strong>总评榜</strong>，通过大数据及AI技术，系统根据自动评估模型及算法，对每个项目进行综合评估。</p>
@@ -322,6 +332,7 @@
         let that = this;
         that.mainloading = true;
         that.showLoadMore = false;
+        that.showNotMore = false;
         layui.use('table', function(){
           var table = layui.table;
           table.render({
@@ -366,7 +377,13 @@
               none: '暂无相关数据'
             }
             ,done: function(res, curr, count){
+              console.log(res);
+              
               that.mainloading = false;
+              if (res.data.length === 0){
+                that.showNotMore = true;
+                that.showLoadMore = false;
+              }
               if (res.data.length < that.pageSize) {
                 that.showLoadMore = false;
               }else{
@@ -558,6 +575,12 @@
         }else{
           this.getStoTable();
         }
+      },
+      // 重新加载数据
+      aginLoad(){
+        this.country = "";
+        this.industry = "";
+        this.getMainTable(this.country, this.industry);
       }
     },
     beforeRouteEnter (to, from, next) {
