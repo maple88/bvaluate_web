@@ -92,7 +92,17 @@
                   </div>
                 </li>
                 <div class="loading_more">
-                  <p class="loading_more_tip" v-if="showloading===-1">暂无更多数据</p>
+                  <!-- <p class="loading_more_tip" v-if="showloading===-1">暂无更多数据</p> -->
+                  <!-- 没有收藏数据 -->
+                  <div class="notmore" v-if="showloading===-1">
+                    <div class="not-box">
+                        <img src="../assets/user/shoucang.png" alt="">
+                        <div class="box">
+                          <span>您还没有收藏</span>
+                          <span>下次多收藏些哦~</span>
+                        </div>
+                    </div>
+                </div>
                   <button :disabled="showloading" data="加载更多" value="加载更多" name="loading_more" id="loading_more"
                           @click.stop="getFollowList()" v-if="!(showloading===-1)">
                     <img v-if="showloading" :src="loading"/>
