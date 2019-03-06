@@ -80,6 +80,16 @@
                 <div class="hicon" data-toggle="dropdown">
                   <img src="../assets/usericon.png">
                 </div>
+                <div class="notice" v-if="showNotice">
+                  <div class="notice-title">
+                      <div class="item active">全部</div>
+                      <div class="item">未读</div>
+                  </div>
+                  <div class="notice-content">
+                    <div class="whole"></div>
+                    <div class="unread"></div>
+                  </div>
+                </div>
                 <div class="htips icon-htips" @click="invitation">{{$t('gift')}}</div>
                 <ul class="dropdown-menu header-dropdown-menu">
                   <!-- <router-link tag="li" to="/my" active-class="active"><a data="设置">{{$t('Set up')}}</a></router-link> -->
@@ -233,7 +243,8 @@
           content5: `
             <p class="mgb15">便捷查看关注信息，实时推送您最关注的信息，更好地洞察并控制投资风险。</p>
           `
-        }
+        },
+        showNotice:false,
       }
     },
     mounted() {

@@ -42,6 +42,13 @@
                   </p>
                 </div>
               </div>
+              <!-- 无未读消息 -->
+              <div class="notmore" v-if="showMessage">
+                  <div class="not-box">
+                      <img src="../assets/user/message.png" alt="">
+                      <p>暂无消息</p>
+                  </div>
+              </div>
             </div>
           </div>
         </div>

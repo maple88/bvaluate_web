@@ -377,8 +377,6 @@ import { setTimeout, clearTimeout } from 'timers';
               none: '暂无相关数据'
             }
             ,done: function(res, curr, count){
-              console.log(res);
-              
               that.mainloading = false;
               if (res.data.length === 0){
                 that.showNotMore = true;

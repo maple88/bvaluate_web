@@ -54,6 +54,13 @@
                   <div class="right">{{item.createdTime}}</div>
                 </div>
                 <!-- <div class="loadmore" v-if="showLoadMore" @click="">{{$t('Load more')}}<i class="moreimg"></i></div> -->
+                <!-- 无消息 -->
+                <div class="notmore" v-if="showMessage">
+                    <div class="not-box">
+                        <img src="../assets/user/message.png" alt="">
+                        <p>暂无消息</p>
+                    </div>
+                </div>
               </div>
             </div>
           </div>
@@ -96,6 +103,7 @@
         unReadList: [],
         allList: [],
         showBox: 0,
+        showMessage:false,
       }
     },
     mounted() {
@@ -143,6 +151,7 @@
             this.showBox = 0;
             this.initMessage();
           }
+          this.showMessage = false;
         } else {
           if(this.showBox !== type){
             let uid = localStorage.getItem('apelink_user_uid');
@@ -158,6 +167,9 @@
                 this.unReadList = res.data;
                 this.messageList = this.unReadList;
                 this.showBox = 1;
+                if(res.data.length === 0){
+                  this.showMessage = true;
+                }
               }).catch(res => {
                 this.messageList = []
                 this.showBox = 1;
