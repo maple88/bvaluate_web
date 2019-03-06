@@ -108,9 +108,9 @@
     },
     activated () {
       this.getLocalStorageUserInfo();
+      this.initMessage();
     },
     mounted() {
-      this.initMessage();
     },
     methods: {
       getLocalStorageUserInfo () {

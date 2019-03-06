@@ -352,10 +352,8 @@
       }
     },
     activated () {
-      this.getLocalStorageUserInfo();
-    },
-    mounted() {
       let that = this;
+      that.getLocalStorageUserInfo();
       
       // 获取radio性别
       layui.use('form', function () {
@@ -364,6 +362,9 @@
           that.user.sex = data.value;
         });
       });
+    },
+    mounted() {
+      
     },
     methods: {
       getLocalStorageUserInfo () {

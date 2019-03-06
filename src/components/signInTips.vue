@@ -162,26 +162,26 @@
         this.clicked = !this.clicked;
       },
       initSignInTips() {
-        // let uid = localStorage.getItem('apelink_user_uid');
-        // let token = localStorage.getItem('apelink_user_token');
-        // if (!token) {
-        //   return false;
-        // }
-        // let url = '/api/user/info';
-        // let headers = {'uid': uid, 'Authorization': token};
-        // this.$axios({
-        //   method: 'get',
-        //   url: url,
-        //   headers: headers
-        // }).then(res => {
-        //   this.clicked = res.data.signedIn;
-        //   this.signedInNum = parseInt(res.data.signedInNum);
-        //   this.initData(this.clicked, this.signedInNum);
-        // })
+        let uid = localStorage.getItem('apelink_user_uid');
+        let token = localStorage.getItem('apelink_user_token');
+        if (!token) {
+          return false;
+        }
+        let url = '/api/user/info';
+        let headers = {'uid': uid, 'Authorization': token};
+        this.$axios({
+          method: 'get',
+          url: url,
+          headers: headers
+        }).then(res => {
+          this.clicked = res.data.signedIn;
+          this.signedInNum = parseInt(res.data.signedInNum);
+          this.initData(this.clicked, this.signedInNum);
+        })
 
-        this.clicked = localStorage.getItem('apelink_user_signedIn');
-        this.signedInNum = localStorage.getItem('apelink_user_signedInNum');
-        this.initData(this.clicked, this.signedInNum);
+        // this.clicked = localStorage.getItem('apelink_user_signedIn');
+        // this.signedInNum = localStorage.getItem('apelink_user_signedInNum');
+        // this.initData(this.clicked, this.signedInNum);
       },
       signIn() {
         let uid = localStorage.getItem('apelink_user_uid');

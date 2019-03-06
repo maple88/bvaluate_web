@@ -30,7 +30,8 @@
     data() {
       return {
         loading: loading,
-        showLoading: false
+        showLoading: false,
+        lock: true,
       }
     },
     props: {
@@ -41,16 +42,17 @@
     },
     computed: {
       wechatPop() {
-        let lock = true;
         if (this.$store.state.wechatPop) {
+          let isFist = this.$store.state.isFistOpenWeChatPop;
+          console.log(isFist);
           this.wechatCode();
-          window.addEventListener('message', messageEvent => {
-            var data = messageEvent.data;
-            if (data) {
-              // console.log(data.bvaluateUserCode);
-              if (lock) {
+          if(isFist){
+            this.$store.state.isFistOpenWeChatPop = false;
+            window.addEventListener('message', messageEvent => {
+              var data = messageEvent.data;
+              if (data) {
+                // console.log(data.bvaluateUserCode);
                 if (data.bvaluateUserCode) {
-                  lock = false;
                   this.showLoading = true;
                   this.$axios.get('/api/user/passAuth?code=' + data.bvaluateUserCode + '&state=' + Math.random())
                   .then(res => {
@@ -186,8 +188,9 @@
                   })
                 }
               }
-            }
-          }, false);
+            }, false);
+          }
+          
         }
         return this.$store.state.wechatPop;
       },

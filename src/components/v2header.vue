@@ -502,6 +502,7 @@
         localStorage.removeItem('apelink_user_profileUrl');
         localStorage.removeItem('apelink_user_sex');
         localStorage.removeItem('apelink_user_signedIn');
+        localStorage.removeItem('apelink_user_signedInNum');
         localStorage.removeItem('apelink_user_synopsis');
         localStorage.removeItem('apelink_user_token');
         localStorage.removeItem('apelink_user_uid');

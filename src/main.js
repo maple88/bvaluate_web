@@ -161,6 +161,7 @@ const store = new Vuex.Store({
     messagePop: false,
     wechatPop: false,
     bindPhonePop: false,
+    isFistOpenWeChatPop: true,
     token: token,
     uid: uid,
     isTour: true

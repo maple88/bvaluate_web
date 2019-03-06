@@ -146,9 +146,9 @@
     },
     activated () {
       this.getLocalStorageUserInfo();
+      this.getFollowList();
     },
     mounted() {
-      this.getFollowList();
     },
     methods: {
       getLocalStorageUserInfo () {
