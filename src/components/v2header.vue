@@ -71,7 +71,7 @@
                 </div>
               </li>
               <li class="header-token hidden-xs" v-if="token">
-                <div class="hicon" @click="$store.state.messagePop = true">
+                <div class="hicon" @click="showNotice=!showNotice">
                   <img src="../assets/remind.png">
                   <!-- <span class="remind-num">10</span> --><!-- ··· -->
                 </div>
@@ -80,14 +80,41 @@
                 <div class="hicon" data-toggle="dropdown">
                   <img src="../assets/usericon.png">
                 </div>
+                <!--小铃铛消息提示 -->
                 <div class="notice" v-if="showNotice">
                   <div class="notice-title">
-                      <div class="item active">全部</div>
-                      <div class="item">未读</div>
+                      <div :class="showIndex ===0?'active':''" class="item" @click="showList(0)">全部</div>
+                      <div :class="showIndex ===1?'active':''" class="item" @click="showList(1)">未读</div>
                   </div>
                   <div class="notice-content">
-                    <div class="whole"></div>
-                    <div class="unread"></div>
+                    <div class="content-box" v-for="(item, index) in messageList" :key="item.id" :class="open === index?'open':''">
+                      <div class="content-top">
+                          <div class="box-left">
+                            <div class="left">
+                              <img :src="item.readFlag?read:unRead" alt="未读">
+                            </div>
+                            <div class="center">
+                              <h4>{{$t('notice')}} | {{item.title}}</h4>
+                              <p>{{item.createdTime}}</p>
+                            </div>
+                          </div>
+                          <div class="right">
+                            <div class="copy_a" @click="openMessage(item.id,index ,item.readFlag)">{{open ===index?$t('Fold'):$t('Unfold')}}<i class="layui-icon" :class="open === index?' layui-icon-up':'layui-icon-down'"></i></div>
+                          </div>
+                      </div>
+                      <div class="content-bottom" v-if="showContent">
+                        <p>
+                            {{item.content}}
+                        </p>
+                      </div>
+                    </div>
+                    <!-- 无未读消息 -->
+                  <div class="notmore" v-if="showMessage">
+                      <div class="not-box">
+                          <img src="../assets/user/message.png" alt="">
+                          <p>暂无消息</p>
+                      </div>
+                  </div>
                   </div>
                 </div>
                 <div class="htips icon-htips" @click="invitation">{{$t('gift')}}</div>
@@ -185,7 +212,8 @@
   import signInTips from '@/components/signInTips';
   import bindPhone from '@/components/bindPhone';
   import Bus from '../bus.js'
-
+  let read = require('../assets/message/read.png');
+  let unRead = require('../assets/message/unread.png');
   let default_header = require('../assets/user/default-header.png');
   require('intro.js/intro.js');
   export default {
@@ -245,6 +273,13 @@
           `
         },
         showNotice:false,
+        messageList:[],
+        open:-1,
+         read: read,
+        unRead: unRead,
+        showIndex:0,
+        showMessage:false,
+        showContent:false
       }
     },
     mounted() {
@@ -301,6 +336,9 @@
           that.isTourShow();
         }
       }
+    },
+    created(){
+        this.initMessage()
     },
     watch: {
       '$route': function () {
@@ -572,6 +610,95 @@
             this.showSearch = true;
           } else {
             this.showSearch = false;
+          }
+        }
+      },
+      //信息提示
+      initMessage() {
+        let uid = localStorage.getItem('apelink_user_uid');
+        let token = localStorage.getItem('apelink_user_token');
+        if (token) {
+          let headers = {'uid': uid, 'Authorization': token};
+          let url = '/api/notify/getUserNotify';
+          this.$axios({
+            method: 'get',
+            url: url,
+            headers: headers
+          }).then(res => {
+            // console.log(res);
+            if(res.data.length === 0){
+              this.showMessage = true;
+            }else {
+              this.showMessage = false;
+              this.messageList = res.data;
+            }
+          });
+        }
+      },
+      //信息展开
+      openMessage(notifyId,index,readFlag){
+          if(index === this.open){
+            //表示数据收起，同时将数据内容显示出来
+            this.open = -1
+            this.showContent = false;
+          }else {
+            this.open = index;
+            this.showContent = true;
+          }
+          if(!readFlag){
+            this.readMessage(notifyId,readFlag);
+          }
+      },
+      //查看用户是否登录 并查看
+      readMessage(notifyId, index) {
+        let uid = localStorage.getItem('apelink_user_uid');
+        let token = localStorage.getItem('apelink_user_token');
+        if (token) {
+          let headers = {'uid': uid, 'Authorization': token};
+          let url = `/api/notify/readUserNotify?notifyId=${notifyId}`;
+          this.$axios({
+            method: 'put',
+            url: url,
+            headers: headers
+          }).then(res => {
+            if (res.data) {
+              this.messageList[index].readFlag = true;
+            }
+          });
+        }
+      },
+      showList(type){
+        if (type===0) {
+          if(this.showIndex !== type){
+            this.showIndex = 0;
+            this.initMessage();
+          }
+        } else {
+          if(this.showIndex !== type){
+            let uid = localStorage.getItem('apelink_user_uid');
+            let token = localStorage.getItem('apelink_user_token');
+            if (token) {
+              let headers = {'uid': uid, 'Authorization': token};
+              let url = '/api/notify/getUserNotify?readFlag=unread';
+              this.$axios({
+                method: 'get',
+                url: url,
+                headers: headers
+              }).then(res => {
+                this.unReadList = res.data;
+                this.messageList = this.unReadList;
+                this.showIndex = 1;
+                // console.log(res);
+                if(res.data.length === 0){
+                    this.showMessage = true;
+                }else {
+                  this.showMessage = false;
+                }
+              }).catch(res => {
+                this.messageList = []
+                this.showIndex = 1;
+              });
+            }
           }
         }
       }

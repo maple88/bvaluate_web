@@ -94,7 +94,7 @@
                 <div class="loading_more">
                   <!-- <p class="loading_more_tip" v-if="showloading===-1">暂无更多数据</p> -->
                   <!-- 没有收藏数据 -->
-                  <div class="notmore" v-if="showloading===-1">
+                  <div class="notmore" v-if="showCollect">
                     <div class="not-box">
                         <img src="../assets/user/shoucang.png" alt="">
                         <div class="box">
@@ -131,7 +131,7 @@
         newsList: [],
         pageSize: 10,
         loading: loading,
-        showloading: true,
+        showCollect: true,
         nothing:false,
         index:0,
         user: {
@@ -182,9 +182,14 @@
           if(that.newsList){
             that.nothing = true
           }else {
-            that.nothing = false;
+            that.nothing = true;
           }
           that.showloading = false;
+          if(that.newsList.length === 0){
+            that.showCollect = true;
+          }else {
+            that.showCollect = false;
+          }
           if (that.pageSize >= res.data.totalElements) {
             that.showloading = -1
           }
