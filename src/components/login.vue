@@ -54,7 +54,7 @@
             </div>
             <div class="input-group code">
               <div class="input-group-addon"><img src="../assets/login/icon2-3.png"></div>
-              <input type="text" v-model="phoneLoginUser.code" :placeholder="$t('Input verification code')" data="输入验证码"
+              <input type="text" v-model="phoneLoginUser.code" autocomplete="off" :placeholder="$t('Input verification code')" data="输入验证码"
                      @focus="errorMsg.phoneLoginUser.code = ''"
                      name="no_content" id="input_phoneLogin_code">
               <span class="help-block" v-if="errorMsg.phoneLoginUser.code">
@@ -75,7 +75,7 @@
               </div>
               <div class="no_accounts">没有账号 <span @click="register">立即注册</span></div>
             </div>
-            <p class="loginTips">登录注册即视为同意<a href="#">《Bvaluate用户协议和隐私策略》</a></p>
+            <p class="loginTips">登录注册即视为同意<a href="javascript:;" @click="goPrivacy">《Bvaluate用户协议和隐私策略》</a></p>
             <!-- <div class="other-login">
               <div class="head">第三方登录</div>
               <ul>
@@ -125,9 +125,9 @@
               <div class="wechatLogin" @click="weChatLogin">
                 <img src="../assets/login/wechat2.png">微信登录
               </div>
-              <div class="no_accounts">没有账号 <span>立即注册</span></div>
+              <div class="no_accounts">没有账号 <span @click="register">立即注册</span></div>
             </div>
-            <p class="loginTips">登录注册即视为同意<a href="#">《Bvaluate用户协议和隐私策略》</a></p>
+            <p class="loginTips">登录注册即视为同意<a href="javascript:;" @click="goPrivacy">《Bvaluate用户协议和隐私策略》</a></p>
             <!-- <div class="other-login">
               <div class="head">第三方登录</div>
               <ul>
@@ -222,7 +222,7 @@
                 {{registerSendBtnText}}
               </button>
             </div>
-            <p class="loginTips">点击注册即表示您同意 <a href="#">《Bvaluate用户协议和隐私策略》</a></p>
+            <p class="loginTips">点击注册即表示您同意 <a href="javascript:;" @click="goPrivacy">《Bvaluate用户协议和隐私策略》</a></p>
             <div class="input-group submit-group">
               <button type="button" class="btn ok-btn" data="注册" name="login_register" id="login_register" @click.stop="registerSubmit()">{{$t('Sign_Submit')}}</button>
             </div>
@@ -439,6 +439,10 @@
       });
     },
     methods: {
+      goPrivacy () {
+        this.$store.state.loginPop = false;
+        this.$router.push('/privacy');
+      },
       openSelect (e) {
         e.target.parentNode.parentNode.classList.add('layui-form-selected');
       },
@@ -984,15 +988,16 @@
         if (this.phoneLoginUser.phoneNumber != null && this.phoneLoginUser.phoneNumber !== '' && this.phoneLoginUser.phoneNumber !== undefined) {
           let phone = this.phoneLoginUser.phoneNumber;
           if (/^[0-9]*$/.test(phone)) {
-            let that = this;
-            let url = '/api/user/phoneCheck?phoneNumber=' + phone;
-            that.$axios.post(url).then(function (res) {
-              if (!res.data) {
-                that.errorMsg.phoneLoginUser.phoneNumber = '该手机号码未被注册，请重新输入'
-              } else {
-                that.phoneLoginSendBtn = false
-              }
-            })
+            this.phoneLoginSendBtn = false;
+            // let that = this;
+            // let url = '/api/user/phoneCheck?phoneNumber=' + phone;
+            // that.$axios.post(url).then(function (res) {
+            //   if (!res.data) {
+            //     that.errorMsg.phoneLoginUser.phoneNumber = '该手机号码未被注册，请重新输入'
+            //   } else {
+            //     that.phoneLoginSendBtn = false
+            //   }
+            // })
           } else {
             this.errorMsg.phoneLoginUser.phoneNumber = '请输入正确格式的手机号码'
           }

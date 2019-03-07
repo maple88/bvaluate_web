@@ -21,12 +21,12 @@
                   {{$t('My collection')}}
                 </router-link>
               </li>
-              <li>
+              <!-- <li>
                 <router-link to="">
                   <div class="navicon"><img src="../assets/userCenter/l2.png"><img class="on" src="../assets/userCenter/l2-on.png"></div>
                   {{$t('My project')}}
                 </router-link>
-              </li>
+              </li> -->
               <li class="active">
                 <router-link to="/userInfo">
                   <div class="navicon"><img src="../assets/userCenter/l3.png"><img class="on" src="../assets/userCenter/l3-on.png"></div>
@@ -364,7 +364,13 @@
       });
     },
     mounted() {
-      
+       
+    },
+    updated () {
+      layui.use('form', function () {
+        let form = layui.form;
+        form.render('radio'); 
+      });
     },
     methods: {
       getLocalStorageUserInfo () {
