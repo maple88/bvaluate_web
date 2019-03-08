@@ -622,6 +622,7 @@
       },
       //信息提示
       initMessage() {
+        this.showMessage = true;
         let uid = localStorage.getItem('apelink_user_uid');
         let token = localStorage.getItem('apelink_user_token');
         if (token) {

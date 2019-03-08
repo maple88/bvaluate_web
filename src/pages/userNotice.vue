@@ -131,6 +131,7 @@
         }
       },
       initMessage() {
+        this.showMessage = true;
         let uid = localStorage.getItem('apelink_user_uid');
         let token = localStorage.getItem('apelink_user_token');
         if (token) {
@@ -141,8 +142,13 @@
             url: url,
             headers: headers
           }).then(res => {
-            this.messageList = res.data;
-            this.allList = res.data;
+            if(res.data.length === 0){
+              this.showMessage = true;
+            }else {
+              this.showMessage = false;
+              this.messageList = res.data;
+              this.allList = res.data;
+            }
           });
         }
       },
@@ -152,7 +158,6 @@
             this.showBox = 0;
             this.initMessage();
           }
-          this.showMessage = false;
         } else {
           if(this.showBox !== type){
             let uid = localStorage.getItem('apelink_user_uid');

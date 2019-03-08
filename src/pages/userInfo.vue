@@ -107,7 +107,7 @@
                   <div class="inforow">
                     <div class="left">{{$t('Password')}}<span></span></div>
                     <div class="center">
-                      <div class="nickname">{{(passwd=='true')?'●●●●●●':$t('Not set')}}</div>
+                      <div class="nickname">{{(passwd=='true' ||passwd==true)?'●●●●●●':$t('Not set')}}</div>
                     </div>
                     <div class="right">
                       <div class="editbtn" @click="showPwdModel">{{$t('modify')}}</div>
