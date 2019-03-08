@@ -28,3 +28,12 @@
 @import "app/list";
 // 关于我们、公司动态、战略合作、隐私政策、API
 @import "app/foopage";
+
+.fish-popup-mask {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: -1;
+}

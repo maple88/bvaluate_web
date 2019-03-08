@@ -214,6 +214,7 @@
   import signInTips from '@/components/signInTips';
   import bindPhone from '@/components/bindPhone';
   import Bus from '../bus.js'
+  import Popup from '../popup.js'
   let read = require('../assets/message/read.png');
   let unRead = require('../assets/message/unread.png');
   let default_header = require('../assets/user/default-header.png');
@@ -294,7 +295,18 @@
       that.is_header_scroll();
       that.initUser();
       that.getTophead();
-
+      this.$nextTick(() => {
+        let _this = this;
+        this.popupMessage = new Popup({
+            zIndex: 98,
+            onClose() {
+              _this.showNotice = false;
+            }
+        });
+        if (this.showNotice) {
+          this.popupMessage.show();
+        }
+      });
       $(".open_search").on("click", function(){
         $(".out-search-box").collapse('show');
         $(".out-search-box input").focus();
@@ -347,6 +359,15 @@
       '$route': function () {
         this.initUser();
         this.is_header_scroll();
+      },
+      showNotice(val){
+        if(this.popupMessage){
+          if(val){
+            this.popupMessage.show();
+          }else{
+            this.popupMessage.hide();
+          }
+        }
       }
     },
     computed: {
