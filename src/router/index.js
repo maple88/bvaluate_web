@@ -27,6 +27,7 @@ import userCollect from '@/pages/userCollect'
 import apiview from '@/pages/apiview'
 import userInfo from '@/pages/userInfo'
 import userNotice from '@/pages/userNotice'
+import myfollow from '@/pages/myfollow'
 // import userCollect from '@/pages/userCollect'
 
 Vue.use(Router);
@@ -81,8 +82,8 @@ export default new Router({
       },
     },
     {
-      path: '/follow',
-      component: follow,
+      path: '/myfollow',
+      component: myfollow,
       meta: {
         pageTitle: '关注'
       },

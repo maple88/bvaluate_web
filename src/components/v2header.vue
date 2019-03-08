@@ -63,7 +63,7 @@
               <li v-show="!token" v-intro-step="4" v-intro="steps.content4" v-intro-disable-interaction="true" @click="isLogin('新增项目')"><a data="新增项目">{{$t('New Projects')}}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <router-link tag="li" to="/follow" active-class="active" v-show="token" v-intro-step="5" v-intro="steps.content5"><a data="我的关注">{{$t('Attention')}}</a></router-link>
+              <router-link tag="li" to="/myfollow" active-class="active" v-show="token" v-intro-step="5" v-intro="steps.content5"><a data="我的关注">{{$t('Attention')}}</a></router-link>
               <li v-show="!token" v-intro-step="5" v-intro="steps.content5" v-intro-disable-interaction="true" @click="isLogin('我的关注')"><a data="我的关注">{{$t('Attention')}}</a></li>
               <li class="header-token hsearch">
                 <div class="open_search">
