@@ -159,6 +159,7 @@
                       sensors.setProfile({Email: email});
                       localStorage.setItem('apelink_user_sex', sex);
                       localStorage.setItem('apelink_user_unionid', res.data.unionid);
+                      that.$store.state.unionid = res.data.unionid;
                       if (sex === '2') {
                         sensors.setProfile({gender: '男'});
                       } else if (sex === '3') {

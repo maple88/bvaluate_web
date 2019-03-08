@@ -688,7 +688,7 @@
         let files = e.target.files
         let image = new Image()
         _this.showUploadloading = true;
-        console.warn(files);
+        // console.warn(files);
         if (files.length > 0) {
           let dd = 0
           let timer = setInterval(function () {
@@ -779,7 +779,6 @@
     },
     computed: {
       unionid () {
-        console.log(this.$store.state.unionid)
         return this.$store.state.unionid;
       }
     }
