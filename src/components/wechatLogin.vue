@@ -44,7 +44,6 @@
       wechatPop() {
         if (this.$store.state.wechatPop) {
           let isFist = this.$store.state.isFistOpenWeChatPop;
-          console.log(isFist);
           this.wechatCode();
           if(isFist){
             this.$store.state.isFistOpenWeChatPop = false;
@@ -159,6 +158,7 @@
                       localStorage.setItem('apelink_user_email', email);
                       sensors.setProfile({Email: email});
                       localStorage.setItem('apelink_user_sex', sex);
+                      localStorage.setItem('apelink_user_unionid', res.data.unionid);
                       if (sex === '2') {
                         sensors.setProfile({gender: '男'});
                       } else if (sex === '3') {

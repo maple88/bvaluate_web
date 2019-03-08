@@ -2149,8 +2149,11 @@
 }
 
 .layui-news-style{
-  dl dd{
-    display: flex;
-    justify-content: space-between;
+  dl{
+    -webkit-overflow-scrolling: touch;
+    dd{
+      display: flex;
+      justify-content: space-between;
+    }
   }
 }

@@ -116,10 +116,10 @@
                   <div class="inforow">
                     <div class="left">{{$t('WeChat')}}<span></span></div>
                     <div class="center">
-                      <div class="nickname">{{$t('Unbound')}}</div>
+                      <div class="nickname">{{unionid=='null'||unionid==null?$t('Unbound'):$t('Bind')}}</div>
                     </div>
                     <div class="right">
-                      <div class="editbtn" data-toggle="modal">{{$t('modify')}}</div>
+                      <div class="editbtn" data-toggle="modal" @click="$store.state.bindWechatPop = true">{{$t('modify')}}</div>
                     </div>
                   </div>
                 </div>
@@ -147,28 +147,31 @@
                 <div class="form-group">
                   <label class="control-label">{{$t('Phone number')}}</label>
                   <div class="layui-form">
-                    <select name="resetSelect" lay-filter="resetSelect">
-                      <option value="+86" selected>+86</option>
-                      <option value="+852">+852</option>
-                      <option value="+853">+853</option>
-                      <option value="+81">+81</option>
-                      <option value="+82">+82</option>
-                      <option value="+65">+65</option>
-                      <option value="+886">+886</option>
-                      <option value="+1">+1</option>
-                    </select>
+                    <div class="layui-news-style layui-unselect layui-form-select">
+                      <div class="layui-select-title" @click="openSelect($event)">
+                        <input type="text" placeholder="请选择" v-model="bindPhoneNumber.selectPrefix" readonly="" class="layui-input layui-unselect">
+                        <i class="layui-edge"></i>
+                      </div>
+                      <dl class="layui-anim layui-anim-upbit">
+                        <dd :class="bindPhoneNumber.selectPrefix === item.code ?'layui-this':''" v-for="(item, index) in countryCode" :key="index" @click="bindPhoneNumber.selectPrefix = item.code">
+                          <span>{{item.country}}</span><span>{{item.code}}</span>
+                        </dd>
+                      </dl>
+                    </div>
                   </div>
-                  <input type="tel" class="prefix-input" data="输入手机号码" name="no_content" id="input_phone">
-                  <div class="rightTips">请输入正确的手机号码</div>
+                  <input type="tel" class="prefix-input" data="输入手机号码" name="no_content" id="input_phone" v-model="bindPhoneNumber.phoneNumber" 
+                  @focus="errorMsg.bindPhoneNumber.phoneNumber = ''"
+                  @blur="checkPhoneNumber()">
+                  <div class="rightTips">{{errorMsg.bindPhoneNumber.phoneNumber}}</div>
                 </div>
                 <div class="form-group">
                   <label class="control-label">{{$t('Verification code')}}</label>
                   <div class="coderow">
-                    <input type="text" data="输入验证码" name="no_content" id="input_code_btn">
-                    <button type="button" class="btn code-btn" data="获取验证码">{{$t('Send Message')}}</button>
+                    <input type="text" data="输入验证码" name="no_content" id="input_code_btn" v-model="bindPhoneNumber.code">
+                    <button type="button" class="btn code-btn" data="获取验证码" :disabled="bindPhoneNumberSendBtn" @click.stop="sendBindPhoneNumberCode">{{bindPhoneNumberSendBtnText}}</button>
                   </div>
                   <p class="help-block" v-if="moblieError_show">60s后重新获取</p>
-                  <div class="rightTips">请输入正确的验证码</div>
+                  <div class="rightTips">{{errorMsg.bindPhoneNumber.code}}</div>
                 </div>
                 <div class="form-group">
                   <p class="model-tips"><span>*</span>{{$t('If the mobile number is registered, the system will merge the current account with the account is attention, collection and other content. The first time associated mobile phone number rewards 200 candy.')}}</p>
@@ -177,7 +180,7 @@
             </div>
             <div class="modal-footer text-center">
               <button type="button" class="btn btn-default cancel" data="取消修改手机号码" data-dismiss="modal">{{$t('Cancel')}}</button>
-              <button type="button" class="btn btn-primary ok" data="确认修改手机号码" data-dismiss="modal">{{$t('Confirm')}}</button>
+              <button type="button" class="btn btn-primary ok" data="确认修改手机号码" data-dismiss="modal" @click="bindPhone">{{$t('Confirm')}}</button>
             </div>
           </div>
         </div>
@@ -307,6 +310,8 @@
 
 <script>
   import sensors from '../../static/sa-init.js'
+  import code from '../assets/json/prefix.json'
+
   let newsimg = require('../assets/search/news.png');
   let loading = require('../assets/login/loading.gif');
 
@@ -332,7 +337,8 @@
           newEmail: '',
           oldSex: '',
           sex: '',
-          emailCode: ''
+          emailCode: '',
+          unionid: ''
         },
         emailCodeError_msg: '',
         sendEmailBtn: false,
@@ -349,6 +355,22 @@
         loading: loading,
         showUploadloading: false,
         imgbase64: '',
+        bindPhoneNumber: {
+          phoneNumber: '',
+          code: '',
+          selectPrefix: '+86'
+        },
+        errorMsg: {
+          bindPhoneNumber: {
+            phoneNumber: '',
+            code: '',
+          }
+        },
+        bindPhoneNumber_time: 60,
+        bindPhoneNumberSendBtnText: this.$t('Send Message'),
+        bindPhoneNumberSendBtn: true,
+        bindPhoneNumberShowloading: false,
+        countryCode: code
       }
     },
     activated () {
@@ -373,6 +395,83 @@
       });
     },
     methods: {
+      bindPhone () {
+        let that = this;
+        let selectPrefix = this.bindPhoneNumber.selectPrefix;
+        selectPrefix = selectPrefix.replace(/\+/g, '');
+        let phoneNumber = that.bindPhoneNumber.phoneNumber;
+        let code = that.bindPhoneNumber.code;
+        let uid = localStorage.getItem('apelink_user_uid');
+        let token = localStorage.getItem('apelink_user_token');
+        let url = 'api/user/bindPhone?codeType=1002&phoneNumber='+selectPrefix+'-'+phoneNumber+'&code='+code;
+        let headers = {'uid': uid, 'Authorization': token};
+        that.$axios({
+          method: 'post',
+          url: url,
+          headers: headers
+        })
+        .then(function(res){
+          localStorage.setItem('apelink_user_phoneNumber', phoneNumber);
+          that.user.phoneNumber = phoneNumber;
+        })
+      },
+      sendBindPhoneNumberCode () {
+        this.bindPhoneNumberSendBtn = true;
+        let phone = this.bindPhoneNumber.phoneNumber
+        this.bindPhoneNumberSendBtnText = '';
+        this.bindPhoneNumberShowloading = true;
+        if (/^[0-9]*$/.test(phone)) {
+          let that = this;
+          let selectPrefix = this.bindPhoneNumber.selectPrefix;
+          selectPrefix = selectPrefix.replace(/\+/g, '');
+          let lang = 'en';
+          if(selectPrefix === '86'){
+            lang = 'cn'
+          }
+          let url = '/api/login/code?phoneNumber='+selectPrefix+'-'+phone+'&codeType=1002&language=' + lang;
+          that.$axios.post(url).then(function (res) {
+            that.bindPhoneNumberShowloading = false;
+            if (res.status == 200) {
+              if (res.data) {
+                let auth_timetimer = setInterval(() => {
+                  that.bindPhoneNumber_time--
+                  that.bindPhoneNumberSendBtnText = '重新发送(' + that.bindPhoneNumber_time + 's)'
+                  if (that.bindPhoneNumber_time <= 0) {
+                    that.bindPhoneNumber_time = 60
+                    that.bindPhoneNumberSendBtnText = '获取验证码'
+                    that.bindPhoneNumberSendBtn = false
+                    clearInterval(auth_timetimer)
+                  }
+                }, 1000)
+                that.bindPhoneNumber_time--
+                that.bindPhoneNumberSendBtnText = '重新发送(' + that.bindPhoneNumber_time + 's)'
+              }
+            }
+          }).catch(function (res) {
+            that.bindPhoneNumberSendBtn = false;
+            that.bindPhoneNumberShowloading = false;
+            that.bindPhoneNumberSendBtnText = '获取验证码'
+          })
+        } else {
+          this.errorMsg.bindPhoneNumber.phoneNumber = '请输入正确格式的手机号'
+          this.bindPhoneNumberSendBtnText = '获取验证码'
+          this.bindPhoneNumberShowloading = false;
+          this.bindPhoneNumberSendBtn = false;
+        }
+      },
+      openSelect (e) {
+        e.target.parentNode.parentNode.classList.add('layui-form-selected');
+      },
+      checkPhoneNumber() {
+        if (this.bindPhoneNumber.phoneNumber != null && this.bindPhoneNumber.phoneNumber !== '' && this.bindPhoneNumber.phoneNumber !== undefined) {
+          let phone = this.bindPhoneNumber.phoneNumber;
+          if (/^[0-9]*$/.test(phone)) {
+            this.bindPhoneNumberSendBtn = false;
+          } else {
+            this.errorMsg.bindPhoneNumber.phoneNumber = '请输入正确格式的手机号码'
+          }
+        }
+      },
       getLocalStorageUserInfo () {
         let token = localStorage.getItem('apelink_user_token');
         if (token !== null && token !== '' && token !== undefined) {
@@ -386,6 +485,7 @@
           this.user.email = localStorage.getItem('apelink_user_email');
           this.user.sex = localStorage.getItem('apelink_user_sex');
           this.user.oldSex = localStorage.getItem('apelink_user_sex');
+          this.user.unionid = localStorage.getItem('apelink_user_unionid');
         } else {
           this.$router.push('/home')
         }
@@ -675,6 +775,12 @@
         }else{
           return nullVal;
         }
+      }
+    },
+    computed: {
+      unionid () {
+        console.log(this.$store.state.unionid)
+        return this.$store.state.unionid;
       }
     }
   }

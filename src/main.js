@@ -147,6 +147,7 @@ layui.use('layer', function(){
 
 let token = localStorage.getItem('apelink_user_token');
 let uid = localStorage.getItem('apelink_user_uid');
+let unionid = localStorage.getItem('apelink_user_unionid');
 let isTour = localStorage.getItem('isTour');
 
 const store = new Vuex.Store({
@@ -160,8 +161,11 @@ const store = new Vuex.Store({
     registerPop: false,
     messagePop: false,
     wechatPop: false,
+    bindWechatPop: false,
     bindPhonePop: false,
     isFistOpenWeChatPop: true,
+    isFistOpenBindWeChatPop: true,
+    unionid: unionid,
     token: token,
     uid: uid,
     isTour: true
@@ -170,6 +174,9 @@ const store = new Vuex.Store({
     register(state) {
       state.loginPop = true;
       state.registerPop = true;
+    },
+    loginOut(state){
+      state.unionid = null;
     }
   }
 });

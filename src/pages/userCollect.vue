@@ -132,6 +132,7 @@
         pageSize: 10,
         loading: loading,
         showCollect: true,
+        showloading: false,
         nothing:false,
         index:0,
         user: {

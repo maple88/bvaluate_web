@@ -193,6 +193,7 @@
     <v-invitation-tip></v-invitation-tip>
     <v-signIn-tips></v-signIn-tips>
     <v-wechatLogin :initUser="initUser"></v-wechatLogin>
+    <v-bindWechat></v-bindWechat>
     <v-bindPhone></v-bindPhone>
 
     <!-- <v-tour name="headerTour" :steps="steps" :callbacks="myCallbacks"></v-tour> -->
@@ -207,6 +208,7 @@
   import message from '@/components/message';
   import analysis from '@/components/analysis';
   import wechatLogin from '@/components/wechatLogin';
+  import bindWechat from '@/components/bindWechat';
   import registerTip from '@/components/registerTip';
   import invitationTip from '@/components/invitationTip';
   import signInTips from '@/components/signInTips';
@@ -225,7 +227,8 @@
       'v-register-tip': registerTip,
       'v-invitation-tip': invitationTip,
       'v-signIn-tips': signInTips,
-      'v-bindPhone': bindPhone
+      'v-bindPhone': bindPhone,
+      'v-bindWechat': bindWechat
     },
     props: {
       parantProfileUrl: String
@@ -544,6 +547,8 @@
         localStorage.removeItem('apelink_user_synopsis');
         localStorage.removeItem('apelink_user_token');
         localStorage.removeItem('apelink_user_uid');
+        localStorage.removeItem('apelink_user_unionid');
+        that.$store.commit('loginOut');
         sensors.registerPage({
           platform_type: 'web',
           is_login: false,

@@ -557,6 +557,7 @@
               localStorage.setItem('apelink_user_email', email);
               sensors.setProfile({Email: email});
               localStorage.setItem('apelink_user_sex', sex);
+              localStorage.setItem('apelink_user_unionid', res.data.unionid);
               if (sex === '2') {
                 sensors.setProfile({gender: '男'});
               } else if (sex === '3') {
@@ -666,6 +667,7 @@
               localStorage.setItem('apelink_user_email', email);
               sensors.setProfile({Email: email});
               localStorage.setItem('apelink_user_sex', sex);
+              localStorage.setItem('apelink_user_unionid', res.data.unionid);
               if (sex === '2') {
                 sensors.setProfile({gender: '男'});
               } else if (sex === '3') {
@@ -874,6 +876,7 @@
                 localStorage.setItem('apelink_user_email', email);
                 sensors.setProfile({Email: email});
                 localStorage.setItem('apelink_user_sex', sex);
+                localStorage.setItem('apelink_user_unionid', res.data.unionid);
                 if (sex === '2') {
                   sensors.setProfile({gender: '男'});
                 } else if (sex === '3') {
