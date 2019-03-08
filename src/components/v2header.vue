@@ -571,6 +571,7 @@
         localStorage.removeItem('apelink_user_unionid');
         localStorage.removeItem('apelink_user_passwd');
         that.$store.commit('loginOut');
+        that.showNotice = false;
         sensors.registerPage({
           platform_type: 'web',
           is_login: false,

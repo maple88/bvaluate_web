@@ -563,7 +563,9 @@
           this.user.sex = localStorage.getItem('apelink_user_sex');
           this.user.oldSex = localStorage.getItem('apelink_user_sex');
           this.user.unionid = localStorage.getItem('apelink_user_unionid');
-          if (this.user.unionid) {
+          if (this.user.unionid == 'null' || this.user.unionid == null) {
+            this.booleanWechat = true;
+          }else{
             this.booleanWechat = false;
           }
         } else {
@@ -916,7 +918,9 @@
         return this.$store.state.passwd;
       },
       unionid () {
-        if (this.$store.state.unionid) {
+        if (this.$store.state.unionid == 'null' || this.$store.state.unionid == null) {
+          this.booleanWechat = true;
+        }else{
           this.booleanWechat = false;
         }
         return this.$store.state.unionid;

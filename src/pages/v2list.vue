@@ -339,7 +339,7 @@ import { setTimeout, clearTimeout } from 'timers';
             id: 'main-list-table'
             ,elem: '#main-list-table'
             ,method: 'get'
-            ,url:'https://bvaluate.com.cn/api/projectList/list?type='+that.listDateType+'&country='+country+'&industry='+industry
+            ,url:'/api/projectList/list?type='+that.listDateType+'&country='+country+'&industry='+industry
             ,request: {
               pageName: 'pageNo'
               ,limitName: 'pageSize'
@@ -400,7 +400,7 @@ import { setTimeout, clearTimeout } from 'timers';
           table.render({
             elem: '#main-list-table'
             ,method: 'get'
-            ,url:'https://bvaluate.com.cn/api/projectList/stolistForApp?type='+that.listDateType
+            ,url:'/api/projectList/stolistForApp?type='+that.listDateType
             ,request: {
               pageName: 'pageNo'
               ,limitName: 'pageSize'
@@ -456,7 +456,7 @@ import { setTimeout, clearTimeout } from 'timers';
           table.render({
             elem: '#rise-list-table'
             ,method: 'get'
-            ,url:'https://bvaluate.com.cn/api/hotICO/priceList?type=inc'
+            ,url:'/api/hotICO/priceList?type=inc'
             ,request: {
               pageName: 'pageNo'
               ,limitName: 'pageSize'
@@ -501,7 +501,7 @@ import { setTimeout, clearTimeout } from 'timers';
           table.render({
             elem: '#fall-list-table'
             ,method: 'get'
-            ,url:'https://bvaluate.com.cn/api/hotICO/priceList?type=dec'
+            ,url:'/api/hotICO/priceList?type=dec'
             ,request: {
               pageName: 'pageNo'
               ,limitName: 'pageSize'
