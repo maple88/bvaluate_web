@@ -160,6 +160,8 @@
                       localStorage.setItem('apelink_user_sex', sex);
                       localStorage.setItem('apelink_user_unionid', res.data.unionid);
                       that.$store.state.unionid = res.data.unionid;
+                      localStorage.setItem('apelink_user_passwd', res.data.passwd);
+                      that.$store.state.passwd = res.data.passwd;
                       if (sex === '2') {
                         sensors.setProfile({gender: '男'});
                       } else if (sex === '3') {

@@ -275,5 +275,10 @@ export default {
 	'Know it': '知道啦',
 	'notification': '消息通知',
 	'modify': '修改',
-	'done': '完成'
+	'done': '完成',
+	'Please bind your mobile number first': '請先綁定手機號碼',
+	'Unbinding': '去绑定',
+	'After binding the mobile phone number, you can set the password and log in with the password.': '綁定手機號碼後可設置密碼，並可使用密碼登錄',
+	'First bind the mobile phone number to reward': '首次綁定手機號碼獎勵',
+	'200 candy': '200糖果'
 };

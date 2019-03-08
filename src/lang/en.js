@@ -275,5 +275,10 @@ export default {
 	'Know it': 'Know it',
 	'notification': 'notification',
 	'modify': 'modify',
-	'done': 'done'
+	'done': 'done',
+	'Please bind your mobile number first': 'Please bind your mobile number first',
+	'Unbinding': 'Unbinding',
+	'After binding the mobile phone number, you can set the password and log in with the password.': 'After binding the mobile phone number, you can set the password and log in with the password.',
+	'First bind the mobile phone number to reward': 'First bind the mobile phone number to reward',
+	'200 candy': '200 candy'
 };

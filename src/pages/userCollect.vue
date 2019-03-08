@@ -53,7 +53,8 @@
                           <div class="newimg_box" :data="news.result.title"
                                :name="'search_newimg_box_title_'+index" :id="'search_newimg_box_title_'+index"
                                @click="goArticle('/article',{sid:news.result.sid}, $event)">
-                            <img :src="news.result.titlePicture===''?newsimg:news.result.titlePicture"/>
+                            <img v-if="news.result.titlePicture!==''&&news.result.titlePicture!==null&&news.result.titlePicture!=='null'" :src="news.result.titlePicture"/>
+                            <img v-else :src="showimg(news.result.dataType)">
                             <span class="time" v-if="!news.result.titlePicture">{{news.result.urlDate | formatTime}}</span>
                           </div>
                         </div>
@@ -122,12 +123,16 @@
 
 <script>
   let newsimg = require('../assets/search/news.png');
+  let tuiwen = require('../assets/search/twitter.png');
+  let weibo = require('../assets/search/weibo.png');
   let loading = require('../assets/login/loading.gif');
 
   export default {
     data() {
       return {
         newsimg: newsimg,
+        tuiwen: tuiwen,
+        weibo: weibo,
         newsList: [],
         pageSize: 10,
         loading: loading,
@@ -152,6 +157,17 @@
     mounted() {
     },
     methods: {
+      showimg (dataType) {
+        if (dataType === 'TWITTER') {
+          return this.tuiwen;
+        }else if (dataType === 'WEIBO') {
+          return this.weibo;
+        }else if (dataType === 'WEIXIN') {
+          return this.newsimg;
+        }else{
+          return this.newsimg;
+        }
+      },
       getLocalStorageUserInfo () {
         let token = localStorage.getItem('apelink_user_token');
         if (token !== null && token !== '' && token !== undefined) {

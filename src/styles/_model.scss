@@ -205,10 +205,29 @@
   }
 }
 
-#pwdModal{
+#setpwdModal, #pwdModal{
   .form-horizontal{
     max-width: 400px;
     margin: auto;
+  }
+}
+#tobindPhoneModal{
+  .modal-body{
+    padding: 30px 0;
+  }
+  .modal-title{
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+  }
+  .tips{
+    text-align: center;
+    font-size: 16px;
+    color: #090909;
+    span{
+      margin: 0 3px;
+      color: #ec9651;
+    }
   }
 }
 

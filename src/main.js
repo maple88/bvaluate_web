@@ -148,6 +148,7 @@ layui.use('layer', function(){
 let token = localStorage.getItem('apelink_user_token');
 let uid = localStorage.getItem('apelink_user_uid');
 let unionid = localStorage.getItem('apelink_user_unionid');
+let passwd = localStorage.getItem('apelink_user_passwd');
 let isTour = localStorage.getItem('isTour');
 
 const store = new Vuex.Store({
@@ -168,7 +169,8 @@ const store = new Vuex.Store({
     unionid: unionid,
     token: token,
     uid: uid,
-    isTour: true
+    isTour: true,
+    passwd: passwd
   },
   mutations: {
     register(state) {
@@ -177,6 +179,7 @@ const store = new Vuex.Store({
     },
     loginOut(state){
       state.unionid = null;
+      state.passwd = 'false';
     }
   }
 });

@@ -107,10 +107,10 @@
                   <div class="inforow">
                     <div class="left">{{$t('Password')}}<span></span></div>
                     <div class="center">
-                      <div class="nickname" style="font-size: 12px;">●●●●●●</div>
+                      <div class="nickname">{{(passwd=='true')?'●●●●●●':$t('Not set')}}</div>
                     </div>
                     <div class="right">
-                      <div class="editbtn" data-toggle="modal" data-target="#pwdModal">{{$t('modify')}}</div>
+                      <div class="editbtn" @click="showPwdModel">{{$t('modify')}}</div>
                     </div>
                   </div>
                   <div class="inforow">
@@ -119,7 +119,7 @@
                       <div class="nickname">{{unionid=='null'||unionid==null?$t('Unbound'):$t('Bind')}}</div>
                     </div>
                     <div class="right">
-                      <div class="editbtn" data-toggle="modal" @click="$store.state.bindWechatPop = true">{{$t('modify')}}</div>
+                      <div class="editbtn" v-if="booleanWechat" data-toggle="modal" @click="$store.state.bindWechatPop = true">{{$t('modify')}}</div>
                     </div>
                   </div>
                 </div>
@@ -133,6 +133,26 @@
           </div>
         </div>
       </div>
+
+      <!-- 提示绑定手机模态框 -->
+      <div class="modal fade collection-modal" id="tobindPhoneModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" data="关闭模态框"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">{{$t('Please bind your mobile number first')}}</h4>
+            </div>
+            <div class="modal-body phoneModal-body">
+              <p class="tips">{{$t('After binding the mobile phone number, you can set the password and log in with the password.')}}</p>
+              <p class="tips">{{$t('First bind the mobile phone number to reward')}}<span>{{$t('200 candy')}}</span></p>
+            </div>
+            <div class="modal-footer text-center">
+              <button type="button" class="btn btn-default cancel" data="确认修改密码" data-dismiss="modal">{{$t('Cancel')}}</button>
+              <button type="button" class="btn btn-primary ok" data="去绑定手机" @click="openPhoneModel">{{$t('Unbinding')}}</button>
+            </div>
+          </div>
+        </div>
+      </div><!-- /.modal -->
 
       <!-- 绑定手机模态框 -->
       <div class="modal fade collection-modal" id="phoneModal" tabindex="-1" role="dialog">
@@ -276,8 +296,48 @@
         </div>
       </div><!-- /.modal -->
 
-      <!-- 修改密码模态框 -->
-      <div class="modal fade collection-modal in" id="userImgModal" tabindex="-1" role="dialog">
+      <!-- 设置密码模态框 -->
+      <div class="modal fade collection-modal" id="setpwdModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" data="关闭模态框"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">{{$t('Modify password')}}</h4>
+            </div>
+            <div class="modal-body phoneModal-body">
+              <form class="form-horizontal">
+                <div class="form-group">
+                  <label class="control-label">{{$t('New password')}}</label>
+                  <div class="coderow">
+                    <div class="inputgroup">
+                      <input type="password" data="输入新密码" v-model="user.setnewPassword" @focus="setnewPwdError=''" name="no_content" id="input_setnewPassword">
+                      <div class="eye" @click="showPassword($event)"></div>
+                    </div>
+                    <div class="btn rightips newStyle">{{setnewPwdError}}</div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">{{$t('Confirm password')}}</label>
+                  <div class="coderow">
+                    <div class="inputgroup">
+                      <input type="password" data="输入确认的新密码" v-model="user.setensurePwd" @focus="setensurePwdError=''" name="no_content" id="input_setensurePwd">
+                      <div class="eye" @click="showPassword($event)"></div>
+                    </div>
+                    <div class="btn rightips newStyle">{{setensurePwdError}}</div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer text-center">
+              <button type="button" class="btn btn-default cancel" data="确认修改密码" data-dismiss="modal">{{$t('Cancel')}}</button>
+              <button type="button" class="btn btn-primary ok" data="确认修改密码" @click="setPwd()">{{$t('Confirm')}}</button>
+            </div>
+          </div>
+        </div>
+      </div><!-- /.modal -->
+
+      <!-- 修改头像模态框 -->
+      <div class="modal fade collection-modal" id="userImgModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -332,6 +392,8 @@
           oldPassword: '',
           newPassword: '',
           ensurePwd: '',
+          setnewPassword: '',
+          setensurePwd: '',
           profileUrl: '',
           email: '',
           newEmail: '',
@@ -347,10 +409,12 @@
         emailError_msg: '',
         emailCodeError_msg: '',
         resetPrefix:'+86',
-        ensurePwdError: '',
         moblieError_show: false,
         oldPwdError: '',
         newPwdError: '',
+        setnewPwdError: '',
+        ensurePwdError: '',
+        setensurePwdError: '',
         inputUserImg: '',
         loading: loading,
         showUploadloading: false,
@@ -370,7 +434,9 @@
         bindPhoneNumberSendBtnText: this.$t('Send Message'),
         bindPhoneNumberSendBtn: true,
         bindPhoneNumberShowloading: false,
-        countryCode: code
+        countryCode: code,
+        booleanWechat: true,
+        booleanPwd: false
       }
     },
     activated () {
@@ -395,6 +461,17 @@
       });
     },
     methods: {
+      openPhoneModel () {
+        $('#tobindPhoneModal').modal('hide');
+        $('#phoneModal').modal();
+      },
+      showPwdModel () {
+        if (this.user.phoneNumber) {
+          $('#setpwdModal').modal();
+        }else{
+          $('#tobindPhoneModal').modal();
+        }
+      },
       bindPhone () {
         let that = this;
         let selectPrefix = this.bindPhoneNumber.selectPrefix;
@@ -403,7 +480,7 @@
         let code = that.bindPhoneNumber.code;
         let uid = localStorage.getItem('apelink_user_uid');
         let token = localStorage.getItem('apelink_user_token');
-        let url = 'api/user/bindPhone?codeType=1002&phoneNumber='+selectPrefix+'-'+phoneNumber+'&code='+code;
+        let url = '/api/user/bindPhone?codeType=1002&phoneNumber='+selectPrefix+'-'+phoneNumber+'&code='+code;
         let headers = {'uid': uid, 'Authorization': token};
         that.$axios({
           method: 'post',
@@ -486,6 +563,9 @@
           this.user.sex = localStorage.getItem('apelink_user_sex');
           this.user.oldSex = localStorage.getItem('apelink_user_sex');
           this.user.unionid = localStorage.getItem('apelink_user_unionid');
+          if (this.user.unionid) {
+            this.booleanWechat = false;
+          }
         } else {
           this.$router.push('/home')
         }
@@ -641,6 +721,8 @@
             headers: headers
           }).then(function (res) {
             if (res.data) {
+              localStorage.setItem('apelink_user_passwd', true);
+              that.$store.state.passwd = true;
               $('#pwdModal').modal('hide');
               layer.msg('修改成功');
               that.user.newPassword = '';
@@ -649,6 +731,58 @@
             }
           }).catch(function (res) {
             that.oldPwdError = res.response.data.message
+          })
+        }
+      },
+      setPwd() {
+        let pass = true;
+        let setnewPassword = this.user.setnewPassword;
+        let setensurePwd = this.user.setensurePwd;
+        if (setnewPassword !== null && setnewPassword !== '' && setnewPassword !== undefined) {
+          if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(setnewPassword)) {
+            if (setensurePwd !== setnewPassword) {
+              pass = false;
+              this.setnewPwdError = '两次输入不一致'
+            }
+          } else {
+            pass = false;
+            this.setnewPwdError = '只允许输入6-14个英文大小写和数字'
+          }
+        } else {
+          pass = false;
+          this.setnewPwdError = '密码不能为空'
+        }
+        if (setensurePwd !== null && setensurePwd !== '' && setensurePwd !== undefined) {
+          if (setensurePwd !== setnewPassword) {
+            pass = false;
+            this.setensurePwdError = '两次输入不一致'
+          }
+        } else {
+          pass = false;
+          this.setensurePwdError = '密码不能为空'
+        }
+        if (pass) {
+          let that = this;
+          let uid = localStorage.getItem('apelink_user_uid');
+          let token = localStorage.getItem('apelink_user_token');
+          let url = '/api/user/changePassword?newPassword=' + setnewPassword;
+          let headers = {'uid': uid, 'Authorization': token};
+          that.$axios({
+            method: 'post',
+            url: url,
+            headers: headers
+          }).then(function (res) {
+            if (res.data) {
+              localStorage.setItem('apelink_user_passwd', 'true');
+              that.$store.state.passwd = 'true';
+              $('#setpwdModal').modal('hide');
+              layer.msg('修改成功');
+              that.user.setnewPassword = '';
+              that.user.setensurePwd = '';
+              // that.user.oldPassword = '';
+            }
+          }).catch(function (res) {
+            that.setnewPwdError = res.response.data.message
           })
         }
       },
@@ -778,7 +912,13 @@
       }
     },
     computed: {
+      passwd () {
+        return this.$store.state.passwd;
+      },
       unionid () {
+        if (this.$store.state.unionid) {
+          this.booleanWechat = false;
+        }
         return this.$store.state.unionid;
       }
     }
