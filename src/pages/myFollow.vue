@@ -87,8 +87,8 @@
 <script>
 let loading = require("../assets/login/loading.gif");
 let defaultImg = require("../assets/search/news.png");
-import { clearTimeout } from 'timers';
-import { setTimeout } from 'timers';
+import { clearTimeout } from "timers";
+import { setTimeout } from "timers";
 export default {
   data() {
     return {
@@ -100,14 +100,14 @@ export default {
       hotNews_nothing: false,
       hotNews_loading: false,
       defaultImg: defaultImg,
-	  showLogin:false,
+      showLogin: false
     };
   },
   activated() {
     this.getTable();
     this.getNews();
     // this.getFollow();
-	let that = this;
+    let that = this;
     $(document).on("click", ".btn-guan", function() {
       let token = localStorage.getItem("apelink_user_token");
       let uid = localStorage.getItem("apelink_user_uid");
@@ -116,151 +116,142 @@ export default {
         let uid = localStorage.getItem("apelink_user_uid");
         let headers = { uid: uid, Authorization: token };
         let deteleUrl = "/api/individual/delete?cid=" + cid;
-			that.$axios({
-				method: "DELETE",
-				url: deteleUrl,
-				headers: headers
-			})
-			.then(res => {
-				let cancelSu= setTimeout(()=>{
-					alert("取消成功");
-					clearTimeout(cancelSu)
-				},1000)
-				that.getTable();
-				that.mainloading = false;
-      			that.showLoadMore = false;
-			});
-		 } else {
+        that
+          .$axios({
+            method: "DELETE",
+            url: deteleUrl,
+            headers: headers
+          })
+          .then(res => {
+            let cancelSu = setTimeout(() => {
+              alert("取消成功");
+              clearTimeout(cancelSu);
+            }, 1000);
+            that.getTable();
+            that.mainloading = false;
+            that.showLoadMore = false;
+          });
+      } else {
         alert("请先登录。");
       }
     });
   },
   methods: {
     getTable() {
-	  let that = this;
-	  that.showLogin = false;
-	  that.mainloading = true;
+      let that = this;
+      that.showLogin = false;
+      that.mainloading = true;
       that.showLoadMore = false;
       that.showFollow = false;
       let token = localStorage.getItem("apelink_user_token");
       let uid = localStorage.getItem("apelink_user_uid");
-	  if(token){
-		 that.showLogin = false;
-		layui.use("table", function() {
-        var table = layui.table;
-        table.render({
-          elem: "#main-list-table",
-          method: "get",
-          url: "/api/individual/list?type=ICO",
-          headers: {
-            Authorization: token,
-            uid: uid
-          },
-          request: {
-            pageName: "pageNo",
-            limitName: "pageSize"
-          },
-          page: {
-            curr: "0",
-            limit: that.pageSize
-          },
-          parseData: function(res) {
-            return {
-              code: 0,
-              data: res.content
-            };
-          },
-          skin: "nob",
-          size: "sm",
-          cols: [
-            [
-              {
-                field: "rank",
-                title: that.$t("Ranking"),
-                width: 74,
-                fixed: true,
-                templet: "#follow-table-ranking",
-                style: "height:100px;padding:0; line-height: inherit"
-              },
-              {
-                field: "project",
-                title: that.$t("Project"),
-                minWidth: 120,
-                // fixed: true,
-                templet: "#follow-table-project",
-                style: "height:100px;padding:0; line-height: inherit"
-              },
-              {
-                field: "price",
-                title: that.$t("Price") + "(￥)",
-                width: 80,
-                // sort: true,
-                templet: "#follow-table-price",
-                style: "height:100px;padding:0; line-height: inherit"
-              },
-              {
-                field: "famc",
-                title: that.$t("Current market value") + "(￥)",
-                width:80,
-                // sort: true,
-                templet: "#follow-table-famc",
-                style: "height:100px;padding:0; line-height: inherit"
-              },
-              {
-                field: "totalScore ",
-                title: that.$t("overall score"),
-                width: 80,
-                // sort: true,
-                templet: "#follow-table-totalScore",
-                style: "height:100px;padding:0; line-height: inherit"
-			  },
-			  {
-                field: "amountIncrease",
-                title: "",
-                width: 100,
-                // sort: true,
-                toolbar: "#follow-table-updown",
-                style: "height:100px;padding:0; line-height: inherit;"
-              },
-              {
-                field: "start",
-                title: "",
-                width: 100,
-                // sort: true,
-                toolbar: "#barDemo",
-                style: "height:100px;padding:0; line-height: inherit;"
-              }
-            ]
-          ],
-          initSort: {
-            field: "rank",
-            type: "asc"
-          },
-          text: {
-            none: "暂无相关数据"
-          },
-          done: (res, curr, count) => {
-			  
-			    that.mainloading = false
-            if (res.data.length === 0) {
-              that.showFollow = true;
-              that.showLoadMore = false;
+      if (token) {
+        that.showLogin = false;
+        layui.use("table", function() {
+          var table = layui.table;
+          table.render({
+            elem: "#main-list-table",
+            method: "get",
+            url: "/api/individual/list?type=ICO",
+            headers: {
+              Authorization: token,
+              uid: uid
+            },
+            request: {
+              pageName: "pageNo",
+              limitName: "pageSize"
+            },
+            page: {
+              curr: "0",
+              limit: that.pageSize
+            },
+            parseData: function(res) {
+              return {
+                code: 0,
+                data: res.content
+              };
+            },
+            skin: "nob",
+            size: "sm",
+            cols: [
+              [
+                {
+                  field: "rank",
+                  title: that.$t("Ranking"),
+                  width: 74,
+                  fixed: true,
+                  templet: "#follow-table-ranking",
+                  style: "height:100px;padding:0; line-height: inherit"
+                },
+                {
+                  field: "project",
+                  title: that.$t("Project"),
+                  minWidth: 120,
+                  // fixed: true,
+                  templet: "#follow-table-project",
+                  style:
+                    "height:100px;padding:0; line-height: inherit;text-align:left"
+                },
+                {
+                  field: "price",
+                  title: that.$t("Price") + "(￥)",
+                  width: 80,
+                  // sort: true,
+                  templet: "#follow-table-price",
+                  style: "height:100px;padding:0; line-height: inherit"
+                },
+                {
+                  field: "famc",
+                  title: that.$t("Current market value") + "(￥)",
+                  width: 80,
+                  // sort: true,
+                  templet: "#follow-table-famc",
+                  style: "height:100px;padding:0; line-height: inherit"
+                },
+                {
+                  field: "totalScore ",
+                  title: that.$t("overall score"),
+                  width: 80,
+                  // sort: true,
+                  templet: "#follow-table-totalScore",
+                  style: "height:100px;padding:0; line-height: inherit"
+                },
+                {
+                  field: "start",
+                  title: "",
+                  width: 100,
+                  // sort: true,
+                  toolbar: "#barDemo",
+                  style: "height:100px;padding:0; line-height: inherit;"
+                }
+              ]
+            ],
+            initSort: {
+              field: "rank",
+              type: "asc"
+            },
+            text: {
+              none: "暂无相关数据"
+            },
+            done: (res, curr, count) => {
               that.mainloading = false;
-            } else {
-			  that.showLoadMore = false;
-              that.showFollow = false;
-              that.hotNews_nothing = false;
+              if (res.data.length === 0) {
+                that.showFollow = true;
+                that.showLoadMore = false;
+                that.mainloading = false;
+              } else {
+                that.showLoadMore = false;
+                that.showFollow = false;
+                that.hotNews_nothing = false;
+              }
             }
-          }
+          });
         });
-      });
-	  }else {
-		
-		that.showLoadMore = false;
-		that.mainloading = false;
-		that.showLogin = true
-	  }
-     
+      } else {
+        that.showLoadMore = false;
+        that.mainloading = false;
+        that.showLogin = true;
+      }
     },
     goArticle(url, query, event) {
       let routeData = this.$router.resolve({ path: url, query: query });
@@ -302,14 +293,14 @@ export default {
     // 去关注
     tiaozhuan() {
       this.$router.push("/home");
-	},
-	loginBar(){
-		//去登录
-		// this.$router.push("/login")
-		this.$store.state.loginPop = false;
-		this.$store.state.registerPop = false;
-		this.$store.state.loginPop = true;
-	}
+    },
+    loginBar() {
+      //去登录
+      // this.$router.push("/login")
+      this.$store.state.loginPop = false;
+      this.$store.state.registerPop = false;
+      this.$store.state.loginPop = true;
+    }
   }
 };
 </script>

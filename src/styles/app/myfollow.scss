@@ -1,4 +1,4 @@
-@media (max-width: 1250px){
+@media (min-width: 1250px){
     .container {
         width: 1270px;
     }
@@ -8,6 +8,9 @@
         width: 100%;
 
     }
+}
+.fish_container {
+    max-width: 1270px;
 }
 .follow {
     .follow-content {
@@ -29,8 +32,18 @@
                 width: 100%;
                 margin-right: 0px;
             }
-            table {
+            .layui-table-header table {
+                width: 100%;
                 margin-top: 20px;
+                thead {
+                    tr {
+                        th{
+                            &:nth-child(2){
+                                text-align: left;
+                            }
+                        }
+                    }
+                }
             }
             .layui-table-box .layui-table-header thead {
                 width: 100%;

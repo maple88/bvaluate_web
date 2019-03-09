@@ -319,7 +319,15 @@
       }
     }; 
   }}
-  {{ totalScore() }}
+  <!-- {{ totalScore() }} -->
+
+  {{#  if(d.result.totalScore > 0){ }}
+    <div class="list-updown">{{d.result.totalScore}}<img src="./static/images/up.png"></div>
+  {{#  } else if (d.result.totalScore < 0){ }}
+    <div class="list-updown">{{ totalScore() }}<img src="./static/images/down.png"></div>
+  {{#  } else { }}
+    <div class="list-updown">--</div>
+  {{#  }  }}
 
 </script>
 
