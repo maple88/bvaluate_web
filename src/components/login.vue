@@ -460,10 +460,13 @@
           this.eye = eye;
         }
       },
+      
       fn2() {
         this.$store.state.loginPop = false;
         this.$store.state.registerPop = false;
         this.phoneLogin();
+        // 跳转到关注页面
+        this.$router.push("/myfollow")
       },
       weChatLogin() {
         this.$store.state.wechatPop = true;

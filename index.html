@@ -254,7 +254,7 @@
 <!--是否关注 -->
 <script type="text/html" id="barDemo" class="barDemo">
   <div class="barDemo">
-    <a class="btn-guan" data-cid="{{d.cid}}">♥已关注</a>
+    <a class="btn-guan" data-cid="{{d.cid}}">♡ 已关注</a>
   </div>
 </script>
 
@@ -319,8 +319,24 @@
       }
     }; 
   }}
-
   {{ totalScore() }}
+
+</script>
+
+<script type="text/html" id="list-table-updown">
+  {{#  
+    var updown = function(){
+      return new String(d.result.amountIncrease).replace(/-/g, '');
+    }; 
+  }}
+
+  {{#  if(d.result.amountIncrease > 0){ }}
+    <div class="list-updown">{{d.amountIncrease}}<img src="./static/images/up.png"></div>
+  {{#  } else if (d.amountIncrease < 0){ }}
+    <div class="list-updown">{{ updown() }}<img src="./static/images/down.png"></div>
+  {{#  } else { }}
+    <div class="list-updown">--</div>
+  {{#  }  }}
 </script>
 </body>
 <!-- headroomjs -->
