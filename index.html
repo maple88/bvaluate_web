@@ -223,6 +223,129 @@
   {{ increase() }}
 </script>
 
+<!-- 关注：表格项目 -->
+<script type="text/html" id="follow-table-project">
+  {{#  
+    var tokenCoin = function(){
+      if (d.result.tokenCoin === null || d.result.tokenCoin === '') {
+        return '--';
+      }else{
+        return d.result.tokenCoin;
+      }
+    }; 
+  }}
+
+  <div class="list-project-flexbox follow-project-flexbox">
+    <div class="left">
+      <a href="/#/project?sid={{d.result.sid}}" target="_blank">
+        <div class="img-box"><img src="{{d.result.logoSrc}}"></div>
+        {{#  if(d.result.start === '1'){ }}
+        <div class="crown"><img src="./static/images/crown.png"></div>
+        {{#  } }}
+      </a>
+    </div>
+    <div class="info">
+      <p class="tit"><a href="/#/project?sid={{d.result.sid}}" target="_blank">{{d.result.project}} <span>({{d.result.tokenCoin}})</span></a></p>
+      <p class="des">{{ d.result.abstracts }}</p>
+      <p class="asc">{{ d.result.country }}</p>
+    </div>
+  </div>
+</script>
+<!--是否关注 -->
+<script type="text/html" id="barDemo" class="barDemo">
+  <div class="barDemo">
+    <a class="btn-guan" data-cid="{{d.cid}}"><i class="fa fa-heart-o"></i>已关注</a>
+  </div>
+</script>
+
+<!-- 关注排名 -->
+<script type="text/html" id="follow-table-ranking">
+  {{#  if(d.result.rank === 1){ }}
+    <div class="list-ranking"><img src="./static/images/first.png"></div>
+  {{#  } else if (d.result.rank === 2) { }}
+    <div class="list-ranking"><img src="./static/images/second.png"></div>
+  {{#  } else if (d.result.rank === 3) { }}
+    <div class="list-ranking"><img src="./static/images/thire.png"></div>
+  {{#  } else { }}
+    <div class="list-ranking">{{d.result.rank}}</div>
+  {{#  } }}
+</script>
+<!-- 关注流通市值 -->
+<script type="text/html" id="follow-table-famc">
+  {{#  
+    var famc = function(){
+      if (d.result.famc) {
+        if (d.result.famc > 100000000) {
+          let num = d.result.famc / 100000000;
+          return num.toFixed(2)+'亿'
+        } else {
+          if (d.result.famc > 10000) {
+            let num = d.result.famc / 10000;
+            return num.toFixed(2)+'万'
+          } else {
+            return d.result.famc;
+          }
+        }
+      } else {
+        return '--'
+      }
+    }; 
+  }}
+
+  {{ famc() }}
+</script>
+<!-- 关注价格 -->
+<script type="text/html" id="follow-table-price">
+  {{#  
+    var price = function(){
+      if (d.result.price === null) {
+        return '--';
+      }else{
+        return d.result.price;
+      }
+    }; 
+  }}
+
+  {{ price() }}
+</script>
+<!-- 关注总评分 -->
+<script type="text/html" id="follow-table-totalScore">
+  {{#  
+    var totalScore = function(){
+      if (d.result.totalScore === null) {
+        return '--';
+      }else{
+        return d.result.totalScore;
+      }
+    }; 
+  }}
+  <!-- {{ totalScore() }} -->
+
+  {{#  if(d.result.totalScore > 0){ }}
+    <div class="list-updown">{{d.result.totalScore}}<img src="./static/images/up.png"></div>
+  {{#  } else if (d.result.totalScore < 0){ }}
+    <div class="list-updown">{{ totalScore() }}<img src="./static/images/down.png"></div>
+  {{#  } else { }}
+    <div class="list-updown">--</div>
+  {{#  }  }}
+
+</script>
+
+<script type="text/html" id="follow-table-updown">
+  {{#  
+    var updown = function(){
+      return new String(d.result.amountIncrease).replace(/-/g, '');
+    }; 
+  }}
+
+  {{#  if(d.result.amountIncrease > 0){ }}
+    <div class="list-updown">{{d.result.amountIncrease}}<img src="./static/images/up.png"></div>
+  {{#  } else if (d.result.amountIncrease < 0){ }}
+    <div class="list-updown">{{ updown() }}<img src="./static/images/down.png"></div>
+  {{#  } else { }}
+    <div class="list-updown">--</div>
+  {{#  }  }}
+</script>
 </body>
 <!-- headroomjs -->
 <script type="text/javascript">
@@ -242,6 +365,7 @@
   });
   // initialise
   headroom.init();
+
 </script>
 <!-- introjs -->
 <!-- <script type="text/javascript">

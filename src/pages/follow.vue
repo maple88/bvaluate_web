@@ -92,6 +92,13 @@
                             <p>{{item.result.irAbstract }}</p>
                           </div>
                         </div>
+                         <!-- 没有数据加载样式 -->
+                        <div class="notmore" v-if="showNotMore">
+                            <div class="not-box">
+                                <img src="../assets/list/shuju.png" alt="">
+                                <p>暂无数据，请<span @click="aginLoad">重新加载</span></p>
+                            </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -101,6 +108,7 @@
                       <span v-if="!showloading">{{$t('Load more')}}</span>
                     </button>
                   </div>
+                  
                 </div>
               </div>
               <div class="tab_item" v-if="hangye">
@@ -285,6 +293,7 @@
                   </ul>
                 </div>
               </div>
+           
             </div>
           </div>
         </div>
