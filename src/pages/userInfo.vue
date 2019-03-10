@@ -467,7 +467,7 @@
       },
       showPwdModel () {
         if (this.user.phoneNumber) {
-          $('#setpwdModal').modal();
+          $('#pwdModal').modal();
         }else{
           $('#tobindPhoneModal').modal();
         }

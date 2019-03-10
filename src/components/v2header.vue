@@ -109,13 +109,14 @@
                       </div>
                     </div>
                     <!-- 无未读消息 -->
-                  <div class="notmore" v-if="showMessage">
-                      <div class="not-box">
-                          <img src="../assets/user/message.png" alt="">
-                          <p>暂无消息</p>
-                      </div>
+                    <div class="notmore" v-if="showMessage">
+                        <div class="not-box">
+                            <img src="../assets/user/message.png" alt="">
+                            <p>暂无消息</p>
+                        </div>
+                    </div>
                   </div>
-                  </div>
+                  <div class="notice-bottom" @click="goUserNotice">查看全部<img src="../assets/more.png" alt=""></div>
                 </div>
                 <div class="htips icon-htips" @click="invitation">{{$t('gift')}}</div>
                 <ul class="dropdown-menu header-dropdown-menu">
@@ -376,6 +377,9 @@
       }
     },
     methods: {
+      goUserNotice () {
+        this.$router.push('/userNotice');
+      },
       isTourShow () {
         let that = this;
         let booleanShowSignin = true;
