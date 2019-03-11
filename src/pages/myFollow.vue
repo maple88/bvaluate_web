@@ -8,7 +8,7 @@
           <div class="left-box">
             <div class="innerbox">
               <!-- 有数据展示 -->
-  						<table id="main-list-table" lay-filter="main-list-table"></table>
+  						<div v-if="!showLogin"><table id="main-list-table" lay-filter="main-list-table"></table></div>
   						<!-- 数据加载 -->
   						<div class="table-loading" v-if="mainloading">
   							<img src="../assets/login/loading.gif"/>
@@ -153,6 +153,7 @@ export default {
           var table = layui.table;
           table.render({
             elem: "#main-list-table",
+            id: "main-list-table",
             method: "get",
             url: "/api/individual/list?type=ICO",
             headers: {
@@ -253,6 +254,10 @@ export default {
         that.showLoadMore = false;
         that.mainloading = false;
         that.showLogin = true;
+        layui.use("table", function() {
+          var table = layui.table;
+          table.reload('main-list-table');
+        });
       }
     },
     goArticle(url, query, event) {
