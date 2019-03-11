@@ -27,7 +27,7 @@ import userCollect from '@/pages/userCollect'
 import apiview from '@/pages/apiview'
 import userInfo from '@/pages/userInfo'
 import userNotice from '@/pages/userNotice'
-import myfollow from '@/pages/myfollow'
+import myfollow from '@/pages/myFollow'
 // import userCollect from '@/pages/userCollect'
 
 Vue.use(Router);
