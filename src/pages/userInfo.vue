@@ -387,6 +387,7 @@
           sign: '',
           candy: '',
           nickName: '',
+          oldNickName: '',
           synopsis: '',
           phoneNumber: '',
           oldPassword: '',
@@ -555,6 +556,7 @@
           this.user.token = localStorage.getItem('apelink_user_token');
           this.user.uid = localStorage.getItem('apelink_user_uid');
           this.user.nickName = localStorage.getItem('apelink_user_nickName');
+          this.user.oldNickName = localStorage.getItem('apelink_user_nickName');
           this.user.candy = localStorage.getItem('apelink_user_candies');
           this.user.phoneNumber = localStorage.getItem('apelink_user_phoneNumber');
           this.user.synopsis = localStorage.getItem('apelink_user_synopsis');
@@ -574,6 +576,15 @@
       },
       editUserNickname(obj, event) {
         sensors.quick('trackHeatMap', event.currentTarget);
+        if (this.user.nickName == '') {
+          this.user.nickName = this.user.oldNickName;
+          this.editName = false;
+          return false;
+        }
+        if (this.user.nickName == this.user.oldNickName) {
+          this.editName = false;
+          return false;
+        }
         let json = {
           nickName: this.user.nickName
         };
@@ -581,6 +592,7 @@
         that.editInfor(json, function (res) {
           if (res.data) {
             localStorage.setItem('apelink_user_nickName', that.user.nickName);
+            that.user.oldNickName = that.user.nickName;
             sensors.setProfile({nickname: that.user.nickName});
             that.editName = false;
           } else {
