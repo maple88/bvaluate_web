@@ -133,7 +133,6 @@
                     }).then(function (res) {
                       that.aplinkUser = res.data;
                       localStorage.setItem('apelink_user_candies', res.data.candies);
-                      console.warn(res.data.candies);
                       localStorage.setItem('apelink_user_nickName', res.data.nickName);
                       sensors.setProfile({nickname: res.data.nickName});
                       localStorage.setItem('apelink_user_signedIn', res.data.signedIn);

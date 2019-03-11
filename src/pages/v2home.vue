@@ -10,7 +10,7 @@
 					<div class="banner-search-box">
 						<div class="search-box">
 							<div class="center">
-								<input type="text" :placeholder="$t('Enter Keywords')" v-model="search" class="search_input" data="输入搜素内容" name="no_content" id="banner_search_input" @keyup.enter="goSearch($event)">
+								<input type="text" :placeholder="$t('Enter Keywords')" autocomplete="off" v-model="search" class="search_input" data="输入搜素内容" name="no_content" id="banner_search_input" @keyup.enter="goSearch($event)">
 							</div>
 							<div class="right" >
 								<button class="search_submit" @click="goSearch($event)" name="no_content" id="search_submit" data="搜索按钮">
