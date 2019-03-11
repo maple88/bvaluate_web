@@ -143,6 +143,7 @@ export default {
   methods: {
     initUser() {
       this.showLogin = true;
+      this.showFollow = false;
     },
     getTable() {
       let that = this;
