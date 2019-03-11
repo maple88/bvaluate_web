@@ -322,6 +322,7 @@
                             flex: 0 0 126px;
                             min-width: 126px;
                             height: 90px;
+                            cursor: pointer;
                             @media ($max-lg) {
                                 flex: 0 0 100px;
                                 min-width: 100px;
@@ -347,6 +348,11 @@
                                         white-space:nowrap;
                                         margin-top: 0px;
                                         margin-bottom: 5px;
+                                        cursor: pointer;
+                                        transition: .3s;
+                                        &:hover{
+                                            color: $mainColor;
+                                        }
                                         @media ($max-sm) {
                                           font-size: 14px;
                                         }

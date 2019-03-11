@@ -280,5 +280,6 @@ export default {
 	'Unbinding': '去绑定',
 	'After binding the mobile phone number, you can set the password and log in with the password.': '绑定手机号码后可设置密码，并可使用密码登录',
 	'First bind the mobile phone number to reward': '首次绑定手机号码奖励',
-	'200 candy': '200糖果'
+	'200 candy': '200糖果',
+	'Latest News': '最新资讯'
 };

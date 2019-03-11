@@ -42,24 +42,24 @@
 								<!-- <div class="title_icon">
 									<img src="../assets/follow/hot_text.png"/>
 								</div> -->
-								<h4 @click="initUser">{{$t('Relevant News')}}</h4>
+								<h4 @click="initUser">{{$t('Latest News')}}</h4>
 							</div>
 							<div class="item_content">
 								<ul class="item" v-if="newList.length !== 0">
 									<li v-for="(item, index) in newList" :key="item.sid" :data="item.title"
-											:name="'article_long_ul_li_'+index" :id="'article_long_ul_li_'+index"
-											@click="goArticle('/article',{sid:item.sid}, $event),
-									trackArticle('文章详情页内24小时热文', item.title, '文章详情页内文章没有项目名称', '文章详情页内文章没有项目ID', '24小时热文', item.sid)">
+											:name="'article_long_ul_li_'+index" :id="'article_long_ul_li_'+index">
 										<!-- <div class="item_left" v-if="item.titlePicture">
 											<img :src="item.titlePicture"/>
 										</div> -->
-										<div class="item_left">
+										<div class="item_left" @click="goArticle('/article',{sid:item.sid}, $event),
+                  trackArticle('我的关注最新资讯', item.title, '我的关注内文章没有项目名称', '我的关注内文章没有项目ID', '最新资讯', item.sid)">
 											<img :src="(item.titlePicture ? item.titlePicture : defaultImg)"/>
 										</div>
 										<div class="item_info">
 											<div class="list_item">
 												<div class="item_body noPicture">
-													<h4>{{item.title}}</h4>
+													<h4 @click="goArticle('/article',{sid:item.sid}, $event),
+                  trackArticle('我的关注最新资讯', item.title, '我的关注内文章没有项目名称', '我的关注内文章没有项目ID', '最新资讯', item.sid)">{{item.title}}</h4>
 													<p>{{item.content}}</p>
 												</div>
 											</div>
@@ -87,6 +87,7 @@
 
 
 <script>
+import sensors from '../../static/sa-init.js'
 let loading = require("../assets/login/loading.gif");
 let defaultImg = require("../assets/search/news.png");
 import { clearTimeout } from "timers";
