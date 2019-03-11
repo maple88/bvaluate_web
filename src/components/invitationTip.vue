@@ -81,6 +81,8 @@
           this.people = res.data.InvitationPeople;
           this.sugar = res.data.InvitationCandies;
           this.hasQRCode = true;
+          document.getElementById('qrCodeUrl').innerHtml = '';
+          document.getElementById('qrCodeUrl').title = '';
           if (this.qrcode) {
             this.qrcode.makeCode(`http://www.bvaluate.com/#/login?page=register&invite=${data.InvitationCode}`); // 生成另外一个二维码
           } else {
@@ -95,12 +97,11 @@
     },
     computed: {
       invitationTip() {
-        if (!this.hasQRCode) {
-          this.initInvitationInfo();
-        }
         let token = localStorage.getItem('apelink_user_token');
         if (token !== this.token) {
-          this.initInvitationInfo();
+          if (!this.hasQRCode) {
+            this.initInvitationInfo();
+          }
         }
         return this.$store.state.invitationTip
       }
