@@ -1,39 +1,41 @@
 <template>
-	<div class="page follow">
+	<div class="page followPage">
 		<v2header/>
 		<div class="v2maintainer">
                 <!-- content here -->
-            <div class="fish_container container v2contienr">
-                <div class="follow-content">
-                    <div class="left-box">
-                        <!-- 有数据展示 -->
-						<table id="main-list-table" lay-filter="main-list-table"></table>
-						<!-- 数据加载 -->
-						<div class="table-loading" v-if="mainloading">
-							<img src="../assets/login/loading.gif"/>
-						</div>
-						<div class="loadmore" v-if="showLoadMore" @click="getListMore">{{$t('Load more')}}<i class="moreimg"></i></div>
-                         <!-- 没有数据加载样式 -->
-                        <div class="notmore" v-if="showFollow">
-                            <div class="not-box">
-                                <img src="../assets/follow/follow_1.png" alt="">
-                                <p>没有更多关注哦~</p>
-								<div class="follow" @click="tiaozhuan">
-									去关注
-								</div>
-							</div>
-                        </div>
-						<!-- 需要登录才能出来 -->
-						 <div class="notmore" v-if="showLogin">
-                            <div class="not-box">
-                                <img src="../assets/follow/login.no.jpg" alt="">
-                                <p>登录才能使用此功能哦~</p>
-								<div class="follow" @click="loginBar">
-									登录
-								</div>
-							</div>
-                        </div>
-                    </div>
+      <div class="fish_container container v2container">
+        <div class="follow-content">
+          <div class="left-box">
+            <div class="innerbox">
+              <!-- 有数据展示 -->
+  						<table id="main-list-table" lay-filter="main-list-table"></table>
+  						<!-- 数据加载 -->
+  						<div class="table-loading" v-if="mainloading">
+  							<img src="../assets/login/loading.gif"/>
+  						</div>
+  						<div class="loadmore" v-if="showLoadMore" @click="getListMore">{{$t('Load more')}}<i class="moreimg"></i></div>
+              <!-- 没有数据加载样式 -->
+              <div class="notmore" v-if="showFollow">
+                <div class="not-box">
+                  <img src="../assets/follow/follow_1.png" alt="">
+                  <p>没有更多关注哦~</p>
+                  <div class="follow" @click="tiaozhuan">
+                    去关注
+                  </div>
+                </div>
+              </div>
+  						<!-- 需要登录才能出来 -->
+              <div class="notmore" v-if="showLogin">
+                <div class="not-box">
+                  <img src="../assets/follow/login.no.jpg" alt="">
+                  <p>登录才能使用此功能哦~</p>
+                  <div class="follow" @click="loginBar">
+                    登录
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 					<div class="right">
 						<div class="right_item margin_top">
 							<div class="hot_title">
@@ -186,7 +188,7 @@ export default {
                 {
                   field: "project",
                   title: that.$t("Project"),
-                  minWidth: 120,
+                  minWidth: 190,
                   // fixed: true,
                   templet: "#follow-table-project",
                   style:
@@ -286,7 +288,6 @@ export default {
           }&pageNo=0`
         )
         .then(function(res) {
-          console.log(res);
           that.newList = res.data.content;
         });
     },

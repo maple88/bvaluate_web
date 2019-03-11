@@ -465,8 +465,6 @@
         this.$store.state.loginPop = false;
         this.$store.state.registerPop = false;
         this.phoneLogin();
-        // 跳转到关注页面
-        this.$router.push("/myfollow")
       },
       weChatLogin() {
         this.$store.state.wechatPop = true;
@@ -583,6 +581,9 @@
               // window.location.reload();
               that.headerInitUser();
               that.$store.state.loginPop = false;
+              if (that.$route.path === '/myfollow') {
+                window.location.reload();
+              }
               layer.msg('登录成功');
               setTimeout(() => {
                 that.showTip = false;
@@ -696,6 +697,9 @@
               // window.location.reload();
               that.headerInitUser();
               that.$store.state.loginPop = false;
+              if (that.$route.path === '/myfollow') {
+                window.location.reload();
+              }
               layer.msg('登录成功');
               setTimeout(() => {
                 that.showTip = false;
@@ -906,6 +910,9 @@
                 // window.location.reload();
                 that.headerInitUser();
                 that.$store.state.loginPop = false;
+                if (that.$route.path === '/myfollow') {
+                  window.location.reload();
+                }
                 layer.msg('登录成功');
               })
             });

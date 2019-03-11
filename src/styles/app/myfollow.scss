@@ -1,36 +1,64 @@
-@media (min-width: 1250px){
-    .container {
-        width: 1270px;
-    }
-}
-@media (max-width:992px){
-    .container {
-        width: 100%;
+// @media (min-width: 1250px){
+//     .container {
+//         width: 1270px;
+//     }
+// }
+// @media (max-width:992px){
+//     .container {
+//         width: 100%;
 
+//     }
+// }
+.followPage {
+    .fish_container {
+        max-width: inherit;
     }
-}
-.fish_container {
-    max-width: 1270px;
-}
-.follow {
+    .v2maintainer .container.v2container{
+        @media ($max-sm) {
+            padding: 0;
+        }
+    }
     .follow-content {
-        margin-top: 44px;
         display: flex;
         flex-wrap: wrap;
         width: 100%;
         height: 100%;
         justify-content: space-between;
-        @media (min-width:992px)and(max-width:1200px) {
-            width: 100%;
+        margin: 40px 0 30px;
+        position: relative;
+        @media ($max-sm) {
+            margin: 15px 0;
         }
+        &:after{
+            content: "";
+            display: table;
+            clear: both;
+        }
+        // @media (min-width:992px)and(max-width:1200px) {
+        //     width: 100%;
+        // }
         
         .left-box {
-            background: #fff;
+            // background: #fff;
+            position: relative;
             flex: 1;
-             margin-right: 18px;
-            @media (max-width:992px) {
+            // margin-right: 18px;
+            margin: 0 20px 0 0;
+            // float: left;
+            // width: 70%;
+            @media ($max-md) {
+                flex: 0 0 100%;
+                min-width: 100%;
+                margin: 0 0 20px;
+            }
+            .innerbox{
+                background: #fff;
+                position: absolute;
                 width: 100%;
-                margin-right: 0px;
+                height: 100%;
+                @media ($max-md) {
+                    position: relative;
+                }
             }
             .layui-table-header table {
                 width: 100%;
@@ -234,16 +262,21 @@
             }
         }
         .right {
-            @media (max-width:992px) {
+            width: 384px;
+            // float: right;
+            // width: 30%;
+            background: #fff;
+            @media ($max-md) {
                 width: 100%;
             }
-            width: 384px;
-            background: #fff;
             .hot_title {
                 display: flex;
                 flex-direction: row;
                 position: relative;
                 padding-left: 20px;
+                @media ($max-sm) {
+                    padding-left: 15px;
+                }
                 .title_icon {
                   width: 40px;
                   height: 40px;
@@ -261,6 +294,9 @@
                   position: relative;
                   padding-top: 2px;
                   font-size: 18px;
+                  @media ($max-sm) {
+                      font-size: 14px;
+                  }
                   &:after{
                     content: "";
                     position: absolute;
@@ -278,10 +314,18 @@
                         display: flex;
                         justify-content: space-between;
                         padding: 15px 20px;
+                        @media ($max-sm) {
+                            padding: 8px 15px;
+                        }
                         .item_left {
                             flex: 0 0 126px;
                             min-width: 126px;
                             height: 90px;
+                            @media ($max-lg) {
+                                flex: 0 0 100px;
+                                min-width: 100px;
+                                height: 90px;
+                            }
                             img {
                                 width: 100%;
                                 height: 100%;
@@ -302,6 +346,9 @@
                                         white-space:nowrap;
                                         margin-top: 0px;
                                         margin-bottom: 5px;
+                                        @media ($max-sm) {
+                                          font-size: 14px;
+                                        }
                                     }
                                     p{
                                         overflow: hidden;
@@ -318,13 +365,9 @@
                                 p{
                                     display: flex;
                                     align-items: center;
-                                    font-size: 14px;
+                                    font-size: 12px;
+                                    margin: 0;
                                     justify-content: space-between;
-                                    span {
-                                        @media (max-width:992px) {
-                                           font-size: 12px;
-                                        }
-                                    }
                                 }
                             }
                         }
@@ -350,6 +393,9 @@
         width: 100%;
         height: 100%;
         color: #acacac;
+        i{
+            margin: 0 2px 0 0;
+        }
         .fa-heart-o:before {
             content: "\F08A";
             display: block;

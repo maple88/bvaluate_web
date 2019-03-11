@@ -533,9 +533,10 @@
       isLogin(name) {
         if(name === '注册按钮'){
           this.$store.commit('register');
+        }else if(name === '我的关注'){
+          this.$router.push("/myfollow");
         }else{
           this.$store.state.loginPop = true;
-          // this.$router.push("/myfollow")
         }
         if (name === '我的关注') {
           sensors.track("Loginstart", {
