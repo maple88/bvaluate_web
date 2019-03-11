@@ -180,6 +180,8 @@ const store = new Vuex.Store({
     loginOut(state){
       state.unionid = null;
       state.passwd = 'false';
+      state.token = '';
+      state.uid = '';
     }
   }
 });

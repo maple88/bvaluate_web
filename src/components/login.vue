@@ -581,9 +581,9 @@
               // window.location.reload();
               that.headerInitUser();
               that.$store.state.loginPop = false;
-              if (that.$route.path === '/myfollow') {
-                window.location.reload();
-              }
+              // if (that.$route.path === '/myfollow') {
+              //   window.location.reload();
+              // }
               layer.msg('登录成功');
               setTimeout(() => {
                 that.showTip = false;
@@ -697,9 +697,9 @@
               // window.location.reload();
               that.headerInitUser();
               that.$store.state.loginPop = false;
-              if (that.$route.path === '/myfollow') {
-                window.location.reload();
-              }
+              // if (that.$route.path === '/myfollow') {
+              //   window.location.reload();
+              // }
               layer.msg('登录成功');
               setTimeout(() => {
                 that.showTip = false;
@@ -910,9 +910,9 @@
                 // window.location.reload();
                 that.headerInitUser();
                 that.$store.state.loginPop = false;
-                if (that.$route.path === '/myfollow') {
-                  window.location.reload();
-                }
+                // if (that.$route.path === '/myfollow') {
+                //   window.location.reload();
+                // }
                 layer.msg('登录成功');
               })
             });

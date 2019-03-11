@@ -1,5 +1,5 @@
 <template>
-	<div class="page followPage">
+	<div class="page followPage" @click="">
 		<v2header/>
 		<div class="v2maintainer">
                 <!-- content here -->
@@ -8,7 +8,7 @@
           <div class="left-box">
             <div class="innerbox">
               <!-- 有数据展示 -->
-  						<div v-if="!showLogin"><table id="main-list-table" lay-filter="main-list-table"></table></div>
+  						<div v-show="!showLogin"><table id="main-list-table" lay-filter="main-list-table"></table></div>
   						<!-- 数据加载 -->
   						<div class="table-loading" v-if="mainloading">
   							<img src="../assets/login/loading.gif"/>
@@ -42,7 +42,7 @@
 								<!-- <div class="title_icon">
 									<img src="../assets/follow/hot_text.png"/>
 								</div> -->
-								<h4>{{$t('Relevant News')}}</h4>
+								<h4 @click="initUser">{{$t('Relevant News')}}</h4>
 							</div>
 							<div class="item_content">
 								<ul class="item" v-if="newList.length !== 0">
@@ -111,11 +111,12 @@ export default {
     // this.getFollow();
     let that = this;
     $(document).on("click", ".btn-guan", function() {
-      let token = localStorage.getItem("apelink_user_token");
-      let uid = localStorage.getItem("apelink_user_uid");
+      // let token = localStorage.getItem("apelink_user_token");
+      // let uid = localStorage.getItem("apelink_user_uid");
       let cid = $(this).attr("data-cid");
-      if (token) {
-        let uid = localStorage.getItem("apelink_user_uid");
+      if (this.$store.state.token) {
+        // let uid = localStorage.getItem("apelink_user_uid");
+        let uid = this.$store.state.uid;
         let headers = { uid: uid, Authorization: token };
         let deteleUrl = "/api/individual/delete?cid=" + cid;
         that
@@ -139,15 +140,16 @@ export default {
     });
   },
   methods: {
+    initUser() {
+      this.showLogin = true;
+    },
     getTable() {
       let that = this;
       that.showLogin = false;
       that.mainloading = true;
       that.showLoadMore = false;
       that.showFollow = false;
-      let token = localStorage.getItem("apelink_user_token");
-      let uid = localStorage.getItem("apelink_user_uid");
-      if (token) {
+      if (that.$store.state.token) {
         that.showLogin = false;
         layui.use("table", function() {
           var table = layui.table;
@@ -157,8 +159,8 @@ export default {
             method: "get",
             url: "/api/individual/list?type=ICO",
             headers: {
-              Authorization: token,
-              uid: uid
+              Authorization: that.$store.state.token,
+              uid: that.$store.state.uid
             },
             request: {
               pageName: "pageNo",
@@ -254,10 +256,6 @@ export default {
         that.showLoadMore = false;
         that.mainloading = false;
         that.showLogin = true;
-        layui.use("table", function() {
-          var table = layui.table;
-          table.reload('main-list-table');
-        });
       }
     },
     goArticle(url, query, event) {
@@ -306,6 +304,22 @@ export default {
       this.$store.state.loginPop = false;
       this.$store.state.registerPop = false;
       this.$store.state.loginPop = true;
+    }
+  },
+  watch: {
+    booleanLogin(val){
+      if (val) {
+        this.getTable();
+      }else{
+        setTimeout(() => {
+          this.initUser();
+        },1000);
+      }
+    }
+  },
+  computed: {
+    booleanLogin () {
+      return this.$store.state.token;
     }
   }
 };

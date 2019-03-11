@@ -589,7 +589,7 @@
           let load = layer.load(2);
           setTimeout(() => {
             layer.close(load);
-            if (that.path === '/home' || that.path === '/list' || that.path === '/v2news' || that.path === '/project' || that.path === '/article') {
+            if (that.path === '/home' || that.path === '/list' || that.path === '/v2news' || that.path === '/project' || that.path === '/article' || that.path === '/myfollow') {
               // window.location.reload();
               that.initUser();
               layer.msg('用户已退出');
