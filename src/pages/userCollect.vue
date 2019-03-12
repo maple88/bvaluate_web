@@ -64,7 +64,7 @@
                                 :name="'search_tips_projectCategory_'+index"
                                 :id="'search_tips_projectCategory_'+index"
                                 v-if="news.result.projectCategory !==null && news.result.projectCategory !== '' && news.result.projectCategory !==undefined && news.result.projectCategory !=='NULL'"
-                                @click="goProjectByName(news.result.projectCategory, $event), trackProject('搜索页文章的项目标签', news.result.projectCategory, '搜索页文章的项目标签没有项目ID', '搜索页文章的项目标签没有排行榜位置', '搜索页文章的项目标签没有项目总分')"
+                                @click="goProjectByName(news.result.projectCategory, $event), trackProject('个人中心我的收藏的项目标签', news.result.projectCategory, '个人中心我的收藏的文章的项目标签没有项目ID', '个人中心我的收藏的文章的项目标签没有排行榜位置', '个人中心我的收藏的文章的项目标签没有项目总分')"
                                 :data="news.result.projectCategory"
                           >
                             {{news.result.projectCategory | labelFormat}}
@@ -220,6 +220,27 @@
         let routeData = this.$router.resolve({path: url, query: query});
         sensors.quick('trackHeatMap', event.currentTarget);
         window.open(routeData.href, '_blank');
+      },
+      goProjectByName(obj, event) {
+        if (obj !== null && obj !== '' && obj !== undefined && obj !== 'NULL') {
+          if (obj.indexOf(';') > 0) {
+            let arr = obj.split(';')
+            obj = arr[0];
+          }
+        }
+        let routeData = this.$router.resolve({path: '/project', query: {project: obj}});
+        sensors.quick('trackHeatMap', event.currentTarget);
+        window.open(routeData.href, '_blank');
+      },
+      trackProject(entrance, name, project_id, index, score) {
+        sensors.track('Project', {
+          entrance: entrance,
+          name: name,
+          project_id: project_id,
+          rank: index,
+          score: score,
+          attention_count: '接口没有关注量'
+        });
       }
     },
     filters: {
