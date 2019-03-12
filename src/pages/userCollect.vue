@@ -122,6 +122,7 @@
 </template>
 
 <script>
+  import sensors from '../../static/sa-init.js'
   let newsimg = require('../assets/search/news.png');
   let tuiwen = require('../assets/search/twitter.png');
   let weibo = require('../assets/search/weibo.png');
@@ -215,6 +216,11 @@
           that.pageSize += 10;
         })
       },
+      goArticle(url, query, event){
+        let routeData = this.$router.resolve({path: url, query: query});
+        sensors.quick('trackHeatMap', event.currentTarget);
+        window.open(routeData.href, '_blank');
+      }
     },
     filters: {
       formatRank (val) {
