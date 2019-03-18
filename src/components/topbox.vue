@@ -47,8 +47,8 @@
 <style scoped>
   .top-box{
     position: fixed;
-    bottom: 70px;
-    right: 60px;
+    bottom: 10%;
+    right: 4.5%;
     display: flex;
     justify-content: center;
     align-items: center;

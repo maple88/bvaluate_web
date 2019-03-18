@@ -1942,7 +1942,7 @@
       min-width: 118px;
       height: 44px;
       //border: 1px solid $mainColor;
-      background-color:#d2d2d2 ;
+      background-color:$mainColor ;
       //border-radius: 5px;
       font-size: 14px;
       //color: $mainColor;
@@ -1953,7 +1953,10 @@
         background: transparent;
       }
       &:hover {
-        background: $mainColor;
+        background: #d2d2d2;
+      }
+      &:active {
+        background: #d2d2d2;
       }
 
     }

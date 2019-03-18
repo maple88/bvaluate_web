@@ -436,7 +436,6 @@
 			</div>
 			<v2footer/>
 		</div>
-    <topbox></topbox>
 	</div>
 </template>
 

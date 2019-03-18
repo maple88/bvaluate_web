@@ -70,7 +70,7 @@
                   <img src="../assets/hsearch.png">
                 </div>
               </li>
-              <li class="header-token hidden-xs dropbox2" v-if="token">
+              <li class="header-token hidden-xs dropbox2" v-if="token" style="width: 70px;height: 80px;display: flex;align-items: center;justify-content: center">
                 <div class="hicon" @click="showNotice=!showNotice">
                   <img src="../assets/remind.png">
                   <!-- <span class="remind-num">10</span> --><!-- ··· -->
@@ -114,8 +114,8 @@
                   <div class="notice-bottom" @click="goUserNotice">查看全部<img src="../assets/more.png" alt=""></div>
                 </div>
               </li>
-              <li class="header-token hidden-xs dropbox1" v-if="token">
-                <div class="hicon" data-toggle="dropdown">
+              <li class="header-token hidden-xs dropbox1" v-if="token" style="width: 70px;height: 80px;display: flex;align-items: center;justify-content: center;margin: 0">
+                <div class="hicon" >
                   <img src="../assets/usericon.png">
                 </div>
 
@@ -755,12 +755,11 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
   .dropbox1:hover .dropdown-menu {
     display: block;
-    margin-top: 0;
   }
   .dropbox2:hover .notice{
     display: flex!important;
-    margin-top: 0;
   }
 </style>

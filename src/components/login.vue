@@ -27,12 +27,12 @@
         <div class="bd">
           <div class="inputInner phoneLoginForm" v-show="phoneLoginForm">
             <div class="input-group">
-              <div class="input-group-addon"><img src="../assets/login/icon2-1.png"></div>
+              <div class="input-group-addon" :class="phoneLoginUser.phoneNumber?'boderbeblue3':''"><img src="../assets/login/icon2-1.png"></div>
               <div class="select-input">
                 <div class="layui-form">
                   <div class="layui-news-style layui-unselect layui-form-select">
                     <div class="layui-select-title" @click="openSelect($event)">
-                      <input type="text" placeholder="请选择" v-model="phoneLoginUser.selectPrefix" readonly="" class="layui-input layui-unselect">
+                      <input type="text" placeholder="请选择" :class="phoneLoginUser.phoneNumber?'boderbeblue2':''" v-model="phoneLoginUser.selectPrefix" readonly="" class="layui-input layui-unselect">
                       <i class="layui-edge"></i>
                     </div>
                     <dl class="layui-anim layui-anim-upbit">
@@ -42,7 +42,7 @@
                     </dl>
                   </div>
                 </div>
-                <input type="tel" class="form-control" v-model="phoneLoginUser.phoneNumber" :placeholder="$t('phone number')" data="输入手机号"
+                <input type="tel" class="form-control" :class="phoneLoginUser.phoneNumber?'boderbeblue':''" v-model="phoneLoginUser.phoneNumber" :placeholder="$t('phone number')" data="输入手机号"
                        @focus="errorMsg.phoneLoginUser.phoneNumber = ''"
                        @blur="checkLoginPhoneNumber"
                        name="no_content" id="input_login_phoneNumber1">
@@ -53,8 +53,8 @@
                   </span>
             </div>
             <div class="input-group code">
-              <div class="input-group-addon"><img src="../assets/login/icon2-3.png"></div>
-              <input type="text" v-model="phoneLoginUser.code" autocomplete="off" :placeholder="$t('Input verification code')" data="输入验证码"
+              <div class="input-group-addon" :class="phoneLoginUser.code?'boderbeblue3':''"><img src="../assets/login/icon2-3.png"></div>
+              <input type="text" v-model="phoneLoginUser.code" :class="phoneLoginUser.code?'boderbeblue':''" autocomplete="off" :placeholder="$t('Input verification code')" data="输入验证码"
                      @focus="errorMsg.phoneLoginUser.code = ''"
                      name="no_content" id="input_phoneLogin_code">
               <span class="help-block" v-if="errorMsg.phoneLoginUser.code">
@@ -67,7 +67,7 @@
               </button>
             </div>
             <div class="input-group submit-group">
-              <button type="button" class="btn ok-btn" data="登录" name="login_ok" id="login_ok" @click="phoneLoginSubmit">{{$t('login')}}</button>
+              <button type="button" class="btn ok-btn" :class="phoneLoginUser.code&&phoneLoginUser.phoneNumber?'beblue':''" data="登录" name="login_ok" id="login_ok" @click="phoneLoginSubmit">{{$t('login')}}</button>
             </div>
             <div class="other-group">
               <div class="wechatLogin" @click="weChatLogin">
@@ -91,9 +91,9 @@
           </div>
           <div class="inputInner passwordLoginForm" v-show="passwordLoginForm">
             <div class="input-group">
-              <div class="input-group-addon"><img src="../assets/login/icon2-1.png"></div>
+              <div class="input-group-addon" :class="loginUser.phoneNumber?'boderbeblue3':''"><img src="../assets/login/icon2-1.png"></div>
               <div class="select-input">
-                <input type="tel" class="form-control" v-model="loginUser.phoneNumber" :placeholder="$t('phone number')" data="输入手机号"
+                <input type="tel" class="form-control" :class="loginUser.phoneNumber?'boderbeblue':''" v-model="loginUser.phoneNumber" :placeholder="$t('phone number')" data="输入手机号"
                        @focus="errorMsg.loginUser.phoneNumber = ''"
                        name="no_content" id="input_login_phoneNumber2">
               </div>
@@ -103,8 +103,8 @@
 									</span>
             </div>
             <div class="input-group mg10">
-              <div class="input-group-addon"><img src="../assets/login/icon2-2.png"></div>
-              <input :type="pwdtype" class="form-control password" v-model="loginUser.password" :placeholder="$t('password')" data="输入密码"
+              <div class="input-group-addon" :class="loginUser.password?'boderbeblue3':''"><img src="../assets/login/icon2-2.png"></div>
+              <input :type="pwdtype" class="form-control password" :class="loginUser.password?'boderbeblue':''" v-model="loginUser.password" :placeholder="$t('password')" data="输入密码"
                      @focus="errorMsg.loginUser.password = ''" @keyup.enter="loginSubmit"
                      name="no_content" id="input_login_password">
               <div class="showpwd" @click="changePwdtype"><img :src="eye"></div>
@@ -119,7 +119,7 @@
               <span @click="resetpwd()">{{$t('Forgot password')}}</span>
             </div>
             <div class="input-group submit-group">
-              <button type="button" class="btn ok-btn" data="登录" name="login_ok" id="login_ok" @click="loginSubmit">{{$t('login')}}</button>
+              <button type="button" class="btn ok-btn" :class="loginUser.password&&loginUser.phoneNumber?'beblue':''" data="登录" name="login_ok" id="login_ok" @click="loginSubmit">{{$t('login')}}</button>
             </div>
             <div class="other-group">
               <div class="wechatLogin" @click="weChatLogin">
@@ -157,13 +157,13 @@
 									</span>
             </div> -->
             <div class="input-group">
-              <div class="input-group-addon"><img src="../assets/login/icon2-1.png"></div>
+              <div class="input-group-addon" :class="[registerUser.phoneNumber?'boderbeblue3':'',errorMsg.registerUser.phoneNumber?'boderbeyellow3':'',(registerUser.phoneNumber&&!(errorMsg.registerUser.phoneNumber))?'boderbegreen3':'']"><img src="../assets/login/icon2-1.png"></div>
 
               <div class="select-input">
                 <div class="layui-form">
                   <div class="layui-news-style layui-unselect layui-form-select">
                     <div class="layui-select-title" @click="openSelect($event)">
-                      <input type="text" placeholder="请选择" v-model="registerUser.selectPrefix" readonly="" class="layui-input layui-unselect">
+                      <input type="text" placeholder="请选择" :class="[registerUser.phoneNumber?'boderbeblue2':'',errorMsg.registerUser.phoneNumber?'boderbeyellow2':'',(registerUser.phoneNumber&&!(errorMsg.registerUser.phoneNumber))?'boderbegreen2':'']" v-model="registerUser.selectPrefix" readonly="" class="layui-input layui-unselect">
                       <i class="layui-edge"></i>
                     </div>
                     <dl class="layui-anim layui-anim-upbit">
@@ -173,7 +173,7 @@
                     </dl>
                   </div>
                 </div>
-                <input type="tel" class="form-control" v-model="registerUser.phoneNumber" :placeholder="$t('phone number')"
+                <input type="tel" class="form-control" :class="[registerUser.phoneNumber?'boderbeblue':'',errorMsg.registerUser.phoneNumber?'boderbeyellow':'',(registerUser.phoneNumber&&!(errorMsg.registerUser.phoneNumber))?'boderbegreen':'']" v-model="registerUser.phoneNumber" :placeholder="$t('phone number')"
                        @focus="errorMsg.registerUser.phoneNumber = ''"
                        @blur="checkPhoneNumber()"
                        data="输入手机号"
@@ -185,8 +185,8 @@
 									</span>
             </div>
             <div class="input-group">
-              <div class="input-group-addon"><img src="../assets/login/icon2-2.png"></div>
-              <input type="password" class="form-control" v-model="registerUser.password" :placeholder="$t('password')"
+              <div class="input-group-addon" :class="[registerUser.password?'boderbeblue3':'',errorMsg.registerUser.password?'boderbeyellow3':'',(registerUser.password&&!(errorMsg.registerUser.password))?'boderbegreen3':'']"><img src="../assets/login/icon2-2.png"></div>
+              <input type="password" class="form-control" :class="[registerUser.password?'boderbeblue':'',errorMsg.registerUser.password?'boderbeyellow':'',(registerUser.password&&!(errorMsg.registerUser.password))?'boderbegreen':'']"  v-model="registerUser.password" :placeholder="$t('password')"
                      @focus="errorMsg.registerUser.password = ''"
                      @blur="checkPassword(true)"
                      data="输入密码"
@@ -209,14 +209,14 @@
 									</span>
             </div> -->
             <div class="input-group code">
-              <div class="input-group-addon"><img src="../assets/login/icon2-3.png"></div>
-              <input type="text" v-model="registerUser.code" :placeholder="$t('Input verification code')" data="输入验证码"
+              <div class="input-group-addon" :class="registerUser.code?'boderbeblue3':''"><img src="../assets/login/icon2-3.png"></div>
+              <input type="text" v-model="registerUser.code" :class="registerUser.code?'boderbeblue':''" :placeholder="$t('Input verification code')" data="输入验证码"
                      @focus="errorMsg.registerUser.code = ''"
                      name="no_content" id="input_register_code">
               <span class="help-block" v-if="errorMsg.registerUser.code">
 										{{errorMsg.registerUser.code}}
 									</span>
-              <button class="code-btn" :disabled="registerSendBtn" name="login_code-btn" id="login_code-btn"
+              <button class="code-btn"  :disabled="registerSendBtn" name="login_code-btn" id="login_code-btn"
                       data="获取验证码" @click.stop="sendCode">
                 <img :src="loading" v-show="registerShowloading"/>
                 {{registerSendBtnText}}
@@ -224,7 +224,7 @@
             </div>
             <p class="loginTips">点击注册即表示您同意 <a href="javascript:;" @click="goPrivacy">《Bvaluate用户协议和隐私策略》</a></p>
             <div class="input-group submit-group">
-              <button type="button" class="btn ok-btn" data="注册" name="login_register" id="login_register" @click.stop="registerSubmit()">{{$t('Sign_Submit')}}</button>
+              <button type="button" class="btn ok-btn" :class="registerUser.phoneNumber&&registerUser.password&&registerUser.code?'beblue':''" data="注册" name="login_register" id="login_register" @click.stop="registerSubmit()">{{$t('Sign_Submit')}}</button>
             </div>
             <!-- <p class="register-tips">点击“注册”即表示您同意并愿意接收<br>BVALUATE<span>用户此协议</span>和<span>隐私政策</span></p> -->
           </div>
@@ -1308,6 +1308,47 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+  .beblue{
+    background-color: #3555da !important;
+  }
+  .boderbeblue{
+    border: #3555da 1px solid !important;
+    border-left:0 !important;
+  }
+  .boderbeblue2{
+    border: #3555da 1px solid !important;
+    border-left:none !important;
+    border-right: none !important;
+  }
+  .boderbeblue3{
+    border: #3555da 1px solid !important;
+    border-right: none !important;
+  }
+  .boderbeyellow{
+    border: #e8964d 1px solid !important;
+    border-left:0 !important;
+  }
+  .boderbeyellow2{
+    border: #e8964d 1px solid !important;
+    border-left:none !important;
+    border-right: none !important;
+  }
+  .boderbeyellow3{
+    border: #e8964d 1px solid !important;
+    border-right: none !important;
+  }
+  .boderbegreen{
+    border: #74c31f 1px solid !important;
+    border-left:0 !important;
+  }
+  .boderbegreen2{
+    border: #74c31f 1px solid !important;
+    border-left:none !important;
+    border-right: none !important;
+  }
+  .boderbegreen3{
+    border: #74c31f 1px solid !important;
+    border-right: none !important;
+  }
 </style>
 

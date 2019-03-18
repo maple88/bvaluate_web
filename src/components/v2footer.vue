@@ -49,11 +49,17 @@
         <p>Copyright &copy; 2018 - 2019 Bvaluate. All Rights Reserved</p>
       </div>
     </div>
+    <topbox></topbox>
   </div>
 </template>
 
 <script>
-  export default {}
+  import topbox from '../components/topbox'
+  export default {
+    components: {
+      topbox,
+    },
+  }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

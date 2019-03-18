@@ -738,7 +738,7 @@
         margin: 0;
         position: relative;
         &.header-token {
-          margin: 0 0 0 30px;
+          margin: 0 0 0 10px;
         }
         &.hsearch {
           @media ($min-lg) {
@@ -792,8 +792,8 @@
           height: 480px;
           background: #fff;
           position: absolute;
-          left: -317px;
-          top: 47px;
+          left: -290px;
+          top: 80px;
           border-radius: 5px;
           padding: 26px 20px 0;
           box-sizing: border-box;
@@ -922,7 +922,8 @@
           }
         }
         .icon-htips {
-          top: -12px;
+          top: 18px;
+          right: -35px;
           cursor: pointer;
         }
       }
@@ -958,10 +959,10 @@
   .header-dropdown-menu {
     // min-width: inherit;
     width: 270px;
-    top: calc(100% + 15px);
+    top: calc(100% );
     padding: 0 15px;
     // left: auto;
-    // right: 50%;
+     right: 30%;
     // margin: 0 -40px 0 0;
     @media ($max-sm) {
       width: 240px;
