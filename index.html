@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>Bvaluate</title>
+  <link rel="shortcut icon" href="static/favicon.png" />
+  <script type="text/javascript" src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+  <link type="text/css" rel="stylesheet" href="./static/layui/css/layui.css"/>
+  <script type="text/javascript" src="./static/layui/layui.js"></script>
+  <script type="text/javascript" src="./static/headroom.js"></script>
+  <!-- <link type="text/css" rel="stylesheet" href="./static/introjs/introjs.css"/> -->
+  <!-- <script type="text/javascript" src="./static/introjs/intro.js"></script> -->
+  <script type="text/javascript">
+  	var lock = false;
+  	var start_time = new Date();
+  </script>
+</head>
+<body>
+<div id="app"></div>
+<!-- built files will be auto injected -->
+
+<!-- 表格排名 -->
+<script type="text/html" id="list-table-ranking">
+  {{#  if(d.rank === 1){ }}
+    <div class="list-ranking"><img src="./static/images/first.png"></div>
+  {{#  } else if (d.rank === 2) { }}
+    <div class="list-ranking"><img src="./static/images/second.png"></div>
+  {{#  } else if (d.rank === 3) { }}
+    <div class="list-ranking"><img src="./static/images/thire.png"></div>
+  {{#  } else { }}
+    <div class="list-ranking">{{d.rank}}</div>
+  {{#  } }}
+</script>
+<!-- 表格项目 -->
+<script type="text/html" id="list-table-project">
+  {{#  
+    var tokenCoin = function(){
+      if (d.tokenCoin === null || d.tokenCoin === '') {
+        return '--';
+      }else{
+        return d.tokenCoin;
+      }
+    }; 
+  }}
+
+  <div class="list-project-flexbox">
+    <div class="left">
+      <a href="/#/project?sid={{d.sid}}" target="_blank">
+        <div class="img-box"><img src="{{d.logoSrc}}"></div>
+        {{#  if(d.start === '1'){ }}
+        <div class="crown"><img src="./static/images/crown.png"></div>
+        {{#  } }}
+      </a>
+    </div>
+    <div class="info">
+      <p class="tit"><a href="/#/project?sid={{d.sid}}" target="_blank">{{d.project}}</a></p>
+      <p class="des">{{ tokenCoin() }}</p>
+    </div>
+  </div>
+</script>
+<!-- 表格排名升降 -->
+<script type="text/html" id="list-table-updown">
+  {{#  
+    var updown = function(){
+      return new String(d.amountIncrease).replace(/-/g, '');
+    }; 
+  }}
+
+  {{#  if(d.amountIncrease > 0){ }}
+    <div class="list-updown">{{d.amountIncrease}}<img src="./static/images/up.png"></div>
+  {{#  } else if (d.amountIncrease < 0){ }}
+    <div class="list-updown">{{ updown() }}<img src="./static/images/down.png"></div>
+  {{#  } else { }}
+    <div class="list-updown">--</div>
+  {{#  }  }}
+</script>
+<!-- 表格价格 -->
+<script type="text/html" id="list-table-price">
+  {{#  
+    var price = function(){
+      if (d.price === null) {
+        return '--';
+      }else{
+        return d.price;
+      }
+    }; 
+  }}
+
+  {{ price() }}
+</script>
+<!-- 表格流通市值 -->
+<script type="text/html" id="list-table-famc">
+  {{#  
+    var famc = function(){
+      if (d.famc) {
+        if (d.famc > 100000000) {
+          let num = d.famc / 100000000;
+          return num.toFixed(2)+'亿'
+        } else {
+          if (d.famc > 10000) {
+            let num = d.famc / 10000;
+            return num.toFixed(2)+'万'
+          } else {
+            return d.famc;
+          }
+        }
+      } else {
+        return '--'
+      }
+    }; 
+  }}
+
+  {{ famc() }}
+</script>
+<!-- 表格基本面 -->
+<script type="text/html" id="list-table-fundamentalsanalysis">
+  {{#  
+    var fundamentalsanalysis = function(){
+      if (d.fundamentalsanalysis === null) {
+        return '--';
+      }else{
+        return d.fundamentalsanalysis;
+      }
+    }; 
+  }}
+
+  {{ fundamentalsanalysis() }}
+</script>
+<!-- 表格市场 -->
+<script type="text/html" id="list-table-marketanalysis">
+  {{#  
+    var marketanalysis = function(){
+      if (d.marketanalysis === null) {
+        return '--';
+      }else{
+        return d.marketanalysis;
+      }
+    }; 
+  }}
+
+  {{ marketanalysis() }}
+</script>
+<!-- 表格技术 -->
+<script type="text/html" id="list-table-technicalanalysis">
+  {{#  
+    var technicalanalysis = function(){
+      if (d.technicalanalysis === null) {
+        return '--';
+      }else{
+        return d.technicalanalysis;
+      }
+    }; 
+  }}
+
+  {{ technicalanalysis() }}
+</script>
+<!-- 表格团队 -->
+<script type="text/html" id="list-table-teamanalysis">
+  {{#  
+    var teamanalysis = function(){
+      if (d.teamanalysis === null) {
+        return '--';
+      }else{
+        return d.teamanalysis;
+      }
+    }; 
+  }}
+
+  {{ teamanalysis() }}
+</script>
+<!-- 表格资金监管 -->
+<script type="text/html" id="list-table-fundsupervision">
+  {{#  
+    var fundsupervision = function(){
+      if (d.fundsupervision === null) {
+        return '--';
+      }else{
+        return d.fundsupervision;
+      }
+    }; 
+  }}
+
+  {{ fundsupervision() }}
+</script>
+<!-- 表格总评分 -->
+<script type="text/html" id="list-table-totalScore">
+  {{#  
+    var totalScore = function(){
+      if (d.totalScore === null) {
+        return '--';
+      }else{
+        return d.totalScore;
+      }
+    }; 
+  }}
+
+  {{ totalScore() }}
+</script>
+
+<!-- 涨跌表格排名 -->
+<script type="text/html" id="zdlist-table-ranking">
+  {{#  if(d.ranking === '1'){ }}
+    <div class="list-ranking"><img src="./static/images/first.png"></div>
+  {{#  } else if (d.ranking === '2') { }}
+    <div class="list-ranking"><img src="./static/images/second.png"></div>
+  {{#  } else if (d.ranking === '3') { }}
+    <div class="list-ranking"><img src="./static/images/thire.png"></div>
+  {{#  } else { }}
+    <div class="list-ranking">{{d.ranking}}</div>
+  {{#  } }}
+</script>
+<!-- 表格涨跌幅 -->
+<script type="text/html" id="list-table-increase">
+  {{#  
+    var increase = function(){
+    let val = d.increase.replace(/%/g, '');
+      return Math.abs(val) + '%';
+    }; 
+  }}
+
+  {{ increase() }}
+</script>
+
+<!-- 关注：表格项目 -->
+<script type="text/html" id="follow-table-project">
+  {{#  
+    var tokenCoin = function(){
+      if (d.result.tokenCoin === null || d.result.tokenCoin === '') {
+        return '--';
+      }else{
+        return d.result.tokenCoin;
+      }
+    }; 
+  }}
+
+  <div class="list-project-flexbox follow-project-flexbox">
+    <div class="left">
+      <a href="/#/project?sid={{d.result.sid}}" target="_blank">
+        <div class="img-box"><img src="{{d.result.logoSrc}}"></div>
+        {{#  if(d.result.start === '1'){ }}
+        <div class="crown"><img src="./static/images/crown.png"></div>
+        {{#  } }}
+      </a>
+    </div>
+    <div class="info">
+      <p class="tit"><a href="/#/project?sid={{d.result.sid}}" target="_blank">{{d.result.project}} <span>({{d.result.tokenCoin}})</span></a></p>
+      <p class="des">{{ d.result.abstracts }}</p>
+      <p class="asc">{{ d.result.country }}</p>
+    </div>
+  </div>
+</script>
+<!--是否关注 -->
+<script type="text/html" id="barDemo" class="barDemo">
+  <div class="barDemo">
+    <a class="btn-guan" data-cid="{{d.cid}}"><i class="fa fa-heart-o"></i>已关注</a>
+  </div>
+</script>
+
+<!-- 关注排名 -->
+<script type="text/html" id="follow-table-ranking">
+  {{#  if(d.result.rank === 1){ }}
+    <div class="list-ranking"><img src="./static/images/first.png"></div>
+  {{#  } else if (d.result.rank === 2) { }}
+    <div class="list-ranking"><img src="./static/images/second.png"></div>
+  {{#  } else if (d.result.rank === 3) { }}
+    <div class="list-ranking"><img src="./static/images/thire.png"></div>
+  {{#  } else { }}
+    <div class="list-ranking">{{d.result.rank}}</div>
+  {{#  } }}
+</script>
+<!-- 关注流通市值 -->
+<script type="text/html" id="follow-table-famc">
+  {{#  
+    var famc = function(){
+      if (d.result.famc) {
+        if (d.result.famc > 100000000) {
+          let num = d.result.famc / 100000000;
+          return num.toFixed(2)+'亿'
+        } else {
+          if (d.result.famc > 10000) {
+            let num = d.result.famc / 10000;
+            return num.toFixed(2)+'万'
+          } else {
+            return d.result.famc;
+          }
+        }
+      } else {
+        return '--'
+      }
+    }; 
+  }}
+
+  {{ famc() }}
+</script>
+<!-- 关注价格 -->
+<script type="text/html" id="follow-table-price">
+  {{#  
+    var price = function(){
+      if (d.result.price === null) {
+        return '--';
+      }else{
+        return d.result.price;
+      }
+    }; 
+  }}
+
+  {{ price() }}
+</script>
+<!-- 关注总评分 -->
+<script type="text/html" id="follow-table-totalScore">
+  {{#  
+    var totalScore = function(){
+      if (d.result.totalScore === null) {
+        return '--';
+      }else{
+        return d.result.totalScore;
+      }
+    }; 
+  }}
+  <!-- {{ totalScore() }} -->
+
+  {{#  if(d.result.totalScore > 0){ }}
+    <div class="list-updown">{{d.result.totalScore}}<img src="./static/images/up.png"></div>
+  {{#  } else if (d.result.totalScore < 0){ }}
+    <div class="list-updown">{{ totalScore() }}<img src="./static/images/down.png"></div>
+  {{#  } else { }}
+    <div class="list-updown">--</div>
+  {{#  }  }}
+
+</script>
+
+<script type="text/html" id="follow-table-updown">
+  {{#  
+    var updown = function(){
+      return new String(d.result.amountIncrease).replace(/-/g, '');
+    }; 
+  }}
+
+  {{#  if(d.result.amountIncrease > 0){ }}
+    <div class="list-updown">{{d.result.amountIncrease}}<img src="./static/images/up.png"></div>
+  {{#  } else if (d.result.amountIncrease < 0){ }}
+    <div class="list-updown">{{ updown() }}<img src="./static/images/down.png"></div>
+  {{#  } else { }}
+    <div class="list-updown">--</div>
+  {{#  }  }}
+</script>
+</body>
+<!-- headroomjs -->
+<script type="text/javascript">
+  var myElement = document.querySelector("#v2header");
+  // construct an instance of Headroom, passing the element
+  var headroom  = new Headroom(myElement, {
+    // 在元素没有固定之前，垂直方向的偏移量（以px为单位）
+    "offset": 80,
+    // scroll tolerance in px before state changes
+    "tolerance": 5,
+    classes : {
+        // 向上滚动时设置的class
+        pinned : "pinned",
+        // 向下滚动时所设置的class
+        unpinned : "unpinned"
+    }
+  });
+  // initialise
+  headroom.init();
+
+</script>
+<!-- introjs -->
+<!-- <script type="text/javascript">
+  document.getElementById('rookie').onclick = function() {
+    introJs().setOption('doneLabel', 'Next page').start().oncomplete(function() {
+      window.location.reload();
+    });
+  };
+</script> -->
+</html>

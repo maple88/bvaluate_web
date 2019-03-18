@@ -1,0 +1,531 @@
+.footer {
+  margin-top: 40px;
+  background: #000;
+  color: #fff;
+  .top {
+    padding-top: 90px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid $mainColor;
+    .fish_container {
+      .flexbox {
+        display: flex;
+        flex-direction: row;
+        > ul {
+          float: left;
+          width: 23%;
+          &.logo_box {
+            width: 31%;
+          }
+          > li:first-child {
+            font-size: 18px;
+            padding-bottom: 15px;
+            font-weight: bold;
+          }
+          > li.apelink_logo {
+            position: relative;
+            img {
+              position: absolute;
+              top: -50px;
+              left: 20px;
+            }
+          }
+          > li {
+            font-size: 16px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            font-family: "Arial";
+            > a {
+              color: #ffffff;
+              &:hover {
+                color: $mainColor;
+              }
+            }
+            > ul {
+              > li {
+                float: left;
+              }
+            }
+          }
+        }
+        .eweima{
+          width: 30%;
+          p{
+            text-align: center;
+            font-size: 16px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            font-family: Arial;
+          }
+          p:first-child{
+            font-size: 18px;
+            padding-bottom: 15px;
+            font-weight: 700;
+            padding-top: 8px;
+            font-family: Arial;
+            margin: 0;
+          }
+          .img-box{
+            width: 60%;
+            max-width: 170px;
+            margin: 0 auto 5px;
+            img{
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+  .bottom {
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    p {
+      margin: 0;
+    }
+  }
+  .network {
+    li > a > div {
+      width: 40px;
+      height: 40px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      margin-right: 40px;
+      display: inline-block;
+      background-repeat: no-repeat;
+      background-size: 100%;
+      background-position: center;
+      &.icon1 {
+        background-image: url('../assets/footer/f1.png');
+      }
+      &.icon2 {
+        background-image: url('../assets/footer/f2.png');
+      }
+      &.icon3 {
+        background-image: url('../assets/footer/f3.png');
+      }
+      &.icon4 {
+        background-image: url('../assets/footer/f4.png');
+      }
+      &.icon5 {
+        background-image: url('../assets/footer/f5.png');
+      }
+      &.icon6 {
+        background-image: url('../assets/footer/f6.png');
+      }
+      &.icon7 {
+        background-image: url('../assets/footer/f7.png');
+      }
+      &.icon8 {
+        background-image: url('../assets/footer/f8.png');
+      }
+      &.icon9 {
+        background-image: url('../assets/footer/f9.png');
+      }
+      &.icon10 {
+        background-image: url('../assets/footer/f10.png');
+      }
+    }
+    @media (max-width: 768px) {
+      li {
+        min-width: 33.33%;
+      }
+      li > a > div {
+        margin-right: 0;
+      }
+    }
+    @media (max-width: 500px) {
+      li {
+        min-width: 50%;
+      }
+    }
+  }
+  @media (max-width: 992px) {
+    .top .fish_container .flexbox{
+      flex-wrap: wrap;
+    }
+    .top .fish_container .flexbox>ul{
+      flex: 0 0 49%;
+    }
+    .top .fish_container .flexbox>ul>li{
+      text-align: center;
+    }
+    .top .fish_container .flexbox>ul>li.apelink_logo img{
+      position: absolute;
+      top: -50px;
+      left: calc(50% - 24px);
+    }
+    .top .fish_container .flexbox>ul.logo_box ul{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .top .fish_container .flexbox .eweima{
+      width: 100%;
+    }
+  }
+  @media (max-width: 768px) {
+    .top {
+      padding-top: 80px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid $mainColor;
+      .fish_container {
+        .flexbox {
+          flex-wrap: wrap;
+          > ul {
+            flex: 0 0 49%;
+            &.logo_box {
+              width: 50%;
+            }
+            > li {
+              font-size: 14px;
+              padding-top: 5px;
+              padding-bottom: 5px;
+              text-align: center;
+              font-family: "Arial";
+              > a {
+                color: #ffffff;
+                &:hover {
+                  color: $mainColor;
+                }
+              }
+              > ul {
+                > li {
+                  float: left;
+                }
+              }
+              &:first-child {
+                font-size: 16px;
+              }
+            }
+            > li.apelink_logo {
+              position: relative;
+              img {
+                position: absolute;
+                top: -50px;
+                left: calc(50% - 24px);
+              }
+            }
+          }
+        }
+      }
+    }
+    .network li > a > div {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+  }
+}
+
+.footer .top{
+  padding: 80px 0;
+}
+.footer .bottom{
+  padding: 30px 0;
+  font-size: 22px;
+  font-family: "微软雅黑";
+}
+.footerflex{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .fcol{
+    flex: 0 0 25%;
+    min-width: 25%;
+  }
+  .flogo{
+    img{
+      width: 100%;
+    }
+  }
+  .eweima{
+    width: 160px;
+    margin: 0 auto;
+    img{
+      width: 100%;
+      margin: 0 0 10px;
+    }
+    p{
+      font-size: 20px;
+      text-align: center;
+      color: #fff;
+      margin: 0;
+    }
+  }
+  .i1{
+    font-size: 30px;
+    color: #fff;
+    font-family: "微软雅黑";
+    text-align: center;
+    margin: 0 0 10px;
+  }
+  .i2{
+    font-size: 20px;
+    color: #fff;
+    font-family: "微软雅黑";
+    text-align: center;
+    margin: 0;
+  }
+}
+@media (max-width: 1200px) {
+  .footerflex .flogo{
+    width: 300px;
+    margin: 0 auto;
+  }
+}
+@media (max-width: 1100px) {
+  .footerflex .flogo{
+    width: 250px;
+  }
+  .footerflex .eweima{
+    width: 120px;
+    margin: 0 auto;
+  }
+  .footerflex .i1{
+    font-size: 25px;
+  }
+  .footerflex .i2{
+    font-size: 18px;
+  }
+  .footer .bottom{
+    font-size: 18px;
+  }
+}
+@media (max-width: 992px) {
+  .footerflex{
+    flex-wrap: wrap;
+  }
+  .footerflex .fcol{
+    flex: 0 0 50%;
+    min-width: 50%;
+  }
+}
+@media (max-width: 768px) {
+  .footerflex{
+    justify-content: center;
+    flex-direction: column;
+  }
+  .footerflex .eweima{
+    margin: 30px auto;
+    width: 100%;
+    max-width: 150px;
+  }
+  .footerflex .flogo{
+    width: 100%;
+    max-width: 150px;
+  }
+  .footerflex .fcol{
+    // max-width: 150px;
+    flex: inherit;
+    min-width: inherit;
+    width: 100%;
+  }
+  .footer .top{
+    padding: 30px 0;
+  }
+}
+@media (max-width: 576px) {
+  .footer{
+    margin-top: 15px;
+  }
+  .footerflex .eweima p{
+    font-size: 18px;
+  }
+  .footerflex .eweima, .footerflex .flogo{
+    max-width: 130px;
+  }
+  .footerflex .i1{
+    font-size: 16px;
+  }
+  .footer .bottom, .footerflex .i2, .footerflex .eweima p{
+    font-size: 14px;
+  }
+  .footer .top, .footer .bottom{
+    padding: 15px 0;
+  }
+  .footerflex .eweima{
+    margin: 15px auto;
+  }
+}
+
+.v2footer{
+  background: #212831;
+  overflow: hidden;
+  .top{
+    padding: 45px 0 35px;
+    @media ($max-xs) {
+      padding: 15px 0;
+    }
+    .box-row{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      @media ($max-md) {
+        flex-wrap: wrap;
+      }
+      .box-col{
+        @media ($max-md) {
+          flex: 0 0 33.33%;
+          min-width: 33.33%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          margin: 0 0 30px;
+          &:last-child{
+            flex: 0 0 100%;
+            min-width: 100%;
+            margin: 0;
+          }
+        }
+        @media ($max-sm) {
+          flex: 0 0 50%;
+          min-width: 50%;
+          margin: 0;
+          &:last-child{
+            flex: 0 0 50%;
+            min-width: 50%;
+          }
+        }
+        @media ($max-sm) {
+          flex: 0 0 100%;
+          min-width: 100%;
+          &:last-child{
+            flex: 0 0 100%;
+            min-width: 100%;
+          }
+        }
+      }
+    }
+    .flogo{
+      margin: 0 0 30px;
+      @media ($max-sm) {
+        margin: 0 0 15px;
+      }
+    }
+    .eweima-row{
+      display: flex;
+      @media ($max-sm) {
+        padding: 15px 0 0;
+      }
+      .item{
+        margin: 0 16px 0 0;
+        &:last-child{
+          margin: 0;
+        }
+        p{
+          margin: 0 0 8px;
+          font-size: 16px;
+          color: #fff;
+          font-weight: bold;
+          text-align: center;
+          @media ($max-xs) {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+    .flogodes{
+      font-size: 14px;
+      color: #fff;
+      margin: 0;
+      @media ($max-sm) {
+        margin: 0 0 15px;
+        text-align: center;
+      }
+    }
+    .links{
+      @media ($max-sm) {
+        display: flex;
+      }
+      @media ($max-xs) {
+        margin: 0 0 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      li{
+        margin: 0 0 18px;
+        @media ($max-md) {
+          text-align: center;
+        }
+        @media ($max-sm) {
+          margin: 0 20px 0 0;
+        }
+        @media ($max-xs) {
+          margin: 0 20px 0 0;
+        }
+        &:last-child{
+          margin: 0;
+        }
+        a{
+          font-size: 16px;
+          color: #d3d3d3;
+          transition: .3s;
+          @media ($max-sm) {
+            font-size: 13px;
+          }
+          &:hover{
+            color: #fff;
+          }
+        }
+      }
+    }
+    .ftitle{
+      font-size: 16px;
+      color: #fff;
+      font-weight: bold;
+      margin: 0 0 30px;
+      @media ($max-sm) {
+        margin: 0 0 20px;
+      }
+      @media ($max-xs) {
+        font-size: 14px;
+        margin: 0 0 15px;
+      }
+    }
+    .femail{
+      font-size: 18px;
+      color: #d3d3d3;
+      @media ($max-xs) {
+        font-size: 13px;
+      }
+      img{
+        margin: 0 6px 0 0;
+      }
+    }
+  }
+  .bottom{
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-top: 1px solid #5c6a7c;
+    font-size: 14px;
+    color: #fff;
+    font-weight: lighter;
+    p{
+      margin: 0;
+      &:first-child{
+        margin: 0 0 5px;
+      }
+    }
+    a{
+      color: #fff;
+      &:hover{
+        color: $mainColor;
+      }
+    }
+    @media ($max-xs) {
+      height: 60px;
+      font-size: 12px;
+      p{
+        &:first-child{
+          margin: 0 0 3px;
+        }
+      }
+    }
+  }
+}
