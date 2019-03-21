@@ -10,7 +10,7 @@
             <div class="textRight">
               <div class="tit">
                 <a :href="project.outerOfficial" target="_blank" class="atitle">{{project.project}}</a>
-                <button class="whitepaper" @click="goArticle('/pdfShow', {project: project.project})">{{$t('White paper')}}</button>
+                <!--<button class="whitepaper" @click="goArticle('/pdfShow', {project: project.project})">{{$t('White paper')}}</button>-->
               </div>
               <p class="smtit" v-show="project.token">({{project.token}})</p>
               <div class="fol">
@@ -41,6 +41,7 @@
                     </div>
                   </transition>
                 </div>
+                <div class="followbtn " style="margin-left: 15px;background-color: #3555da;color: white" @click="goArticle('/pdfShow', {project: project.project})">{{$t('White paper')}}</div>
               </div>
             </div>
           </div>

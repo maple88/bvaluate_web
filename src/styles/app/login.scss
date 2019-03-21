@@ -2009,6 +2009,9 @@
       .no_accounts{
         span{
           font-size: 14px;
+          &:hover{
+            text-decoration: underline;
+          }
         }
       }
     }
@@ -2018,6 +2021,9 @@
       text-align: center;
       a{
         color: $mainColor;
+        &:hover{
+          text-decoration: underline !important;
+        }
       }
     }
     &.passwordLoginForm{

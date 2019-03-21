@@ -458,7 +458,12 @@
         this.$router.push('/privacy');
       },
       openSelect (e) {
-        e.target.parentNode.parentNode.classList.add('layui-form-selected');
+        if(e.target.parentNode.parentNode.classList.contains('layui-form-selected')){
+          e.target.parentNode.parentNode.classList.remove('layui-form-selected');
+        }else {
+          e.target.parentNode.parentNode.classList.add('layui-form-selected');
+        }
+
       },
       headerInitUser() {
         if (this.initUser) {
