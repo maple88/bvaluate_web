@@ -27,12 +27,12 @@
         <div class="bd">
           <div class="inputInner phoneLoginForm" v-show="phoneLoginForm">
             <div class="input-group">
-              <div class="input-group-addon" :class="phoneLoginUser.phoneNumber?'boderbeblue3':''"><img src="../assets/login/icon2-1.png"></div>
+              <div class="input-group-addon" :class="inputclass6[2]"><img src="../assets/login/icon2-1.png"></div>
               <div class="select-input">
                 <div class="layui-form">
                   <div class="layui-news-style layui-unselect layui-form-select">
                     <div class="layui-select-title" @click="openSelect($event)">
-                      <input type="text" placeholder="请选择" :class="phoneLoginUser.phoneNumber?'boderbeblue2':''" v-model="phoneLoginUser.selectPrefix" readonly="" class="layui-input layui-unselect">
+                      <input type="text" placeholder="请选择" :class="inputclass6[1]" v-model="phoneLoginUser.selectPrefix" readonly="" class="layui-input layui-unselect">
                       <i class="layui-edge"></i>
                     </div>
                     <dl class="layui-anim layui-anim-upbit">
@@ -42,8 +42,8 @@
                     </dl>
                   </div>
                 </div>
-                <input type="tel" class="form-control" :class="phoneLoginUser.phoneNumber?'boderbeblue':''" v-model="phoneLoginUser.phoneNumber" :placeholder="$t('phone number')" data="输入手机号"
-                       @focus="errorMsg.phoneLoginUser.phoneNumber = ''"
+                <input type="tel" class="form-control" :class="inputclass6[0]" v-model="phoneLoginUser.phoneNumber" :placeholder="$t('phone number')" data="输入手机号"
+                       @focus="errorMsg.phoneLoginUser.phoneNumber = '';inputclass6=['boderbeblue','boderbeblue2','boderbeblue3']"
                        @blur="checkLoginPhoneNumber"
                        name="no_content" id="input_login_phoneNumber1">
               </div>
@@ -53,9 +53,10 @@
                   </span>
             </div>
             <div class="input-group code">
-              <div class="input-group-addon" :class="phoneLoginUser.code?'boderbeblue3':''"><img src="../assets/login/icon2-3.png"></div>
-              <input type="text" v-model="phoneLoginUser.code" :class="phoneLoginUser.code?'boderbeblue':''" autocomplete="off" :placeholder="$t('Input verification code')" data="输入验证码"
-                     @focus="errorMsg.phoneLoginUser.code = ''"
+              <div class="input-group-addon" :class="inputclass5[2]"><img src="../assets/login/icon2-3.png"></div>
+              <input type="text" v-model="phoneLoginUser.code" :class="inputclass5[0]" autocomplete="off" :placeholder="$t('Input verification code')" data="输入验证码"
+                     @focus="errorMsg.phoneLoginUser.code = '';inputclass5=['boderbeblue','boderbeblue2','boderbeblue3']"
+                     @blur="inputclass5=''"
                      name="no_content" id="input_phoneLogin_code">
               <span class="help-block" v-if="errorMsg.phoneLoginUser.code">
                     {{errorMsg.phoneLoginUser.code}}
@@ -91,10 +92,11 @@
           </div>
           <div class="inputInner passwordLoginForm" v-show="passwordLoginForm">
             <div class="input-group">
-              <div class="input-group-addon" :class="loginUser.phoneNumber?'boderbeblue3':''"><img src="../assets/login/icon2-1.png"></div>
+              <div class="input-group-addon" :class="inputclass4[2]"><img src="../assets/login/icon2-1.png"></div>
               <div class="select-input">
-                <input type="tel" class="form-control" :class="loginUser.phoneNumber?'boderbeblue':''" v-model="loginUser.phoneNumber" :placeholder="$t('phone number')" data="输入手机号"
-                       @focus="errorMsg.loginUser.phoneNumber = ''"
+                <input type="tel" class="form-control" :class="inputclass4[0]" v-model="loginUser.phoneNumber" :placeholder="$t('phone number')" data="输入手机号"
+                       @focus="errorMsg.loginUser.phoneNumber = '';inputclass4=['boderbeblue','boderbeblue2','boderbeblue3']"
+                       @blur="inputclass4=''"
                        name="no_content" id="input_login_phoneNumber2">
               </div>
 
@@ -103,9 +105,11 @@
 									</span>
             </div>
             <div class="input-group mg10">
-              <div class="input-group-addon" :class="loginUser.password?'boderbeblue3':''"><img src="../assets/login/icon2-2.png"></div>
-              <input :type="pwdtype" class="form-control password" :class="loginUser.password?'boderbeblue':''" v-model="loginUser.password" :placeholder="$t('password')" data="输入密码"
-                     @focus="errorMsg.loginUser.password = ''" @keyup.enter="loginSubmit"
+              <div class="input-group-addon" :class="inputclass3[2]"><img src="../assets/login/icon2-2.png"></div>
+              <input :type="pwdtype" class="form-control password" :class="inputclass3[0]" v-model="loginUser.password" :placeholder="$t('password')" data="输入密码"
+                     @focus="errorMsg.loginUser.password = '';inputclass3=['boderbeblue','boderbeblue2','boderbeblue3']"
+                     @blur="inputclass3=''"
+                     @keyup.enter="loginSubmit"
                      name="no_content" id="input_login_password">
               <div class="showpwd" @click="changePwdtype"><img :src="eye"></div>
               <span class="help-block" v-if="errorMsg.loginUser.password">
@@ -157,13 +161,13 @@
 									</span>
             </div> -->
             <div class="input-group">
-              <div class="input-group-addon" :class="[registerUser.phoneNumber?'boderbeblue3':'',errorMsg.registerUser.phoneNumber?'boderbeyellow3':'',(registerUser.phoneNumber&&!(errorMsg.registerUser.phoneNumber))?'boderbegreen3':'']"><img src="../assets/login/icon2-1.png"></div>
+              <div class="input-group-addon" :class="[inputclass[2],errorMsg.registerUser.phoneNumber?'boderbeyellow3':'']"><img src="../assets/login/icon2-1.png"></div>
 
               <div class="select-input">
                 <div class="layui-form">
                   <div class="layui-news-style layui-unselect layui-form-select">
                     <div class="layui-select-title" @click="openSelect($event)">
-                      <input type="text" placeholder="请选择" :class="[registerUser.phoneNumber?'boderbeblue2':'',errorMsg.registerUser.phoneNumber?'boderbeyellow2':'',(registerUser.phoneNumber&&!(errorMsg.registerUser.phoneNumber))?'boderbegreen2':'']" v-model="registerUser.selectPrefix" readonly="" class="layui-input layui-unselect">
+                      <input type="text" placeholder="请选择"  :class="[inputclass[1],errorMsg.registerUser.phoneNumber?'boderbeyellow2':'']" v-model="registerUser.selectPrefix" readonly="" class="layui-input layui-unselect">
                       <i class="layui-edge"></i>
                     </div>
                     <dl class="layui-anim layui-anim-upbit">
@@ -173,8 +177,8 @@
                     </dl>
                   </div>
                 </div>
-                <input type="tel" class="form-control" :class="[registerUser.phoneNumber?'boderbeblue':'',errorMsg.registerUser.phoneNumber?'boderbeyellow':'',(registerUser.phoneNumber&&!(errorMsg.registerUser.phoneNumber))?'boderbegreen':'']" v-model="registerUser.phoneNumber" :placeholder="$t('phone number')"
-                       @focus="errorMsg.registerUser.phoneNumber = ''"
+                <input type="tel" class="form-control" :class="[inputclass[0],errorMsg.registerUser.phoneNumber?'boderbeyellow':'']" v-model="registerUser.phoneNumber" :placeholder="$t('phone number')"
+                       @focus="errorMsg.registerUser.phoneNumber = '';inputclass=['boderbeblue','boderbeblue2','boderbeblue3']"
                        @blur="checkPhoneNumber()"
                        data="输入手机号"
                        name="no_content" id="input_login_phoneNumber3"
@@ -185,9 +189,9 @@
 									</span>
             </div>
             <div class="input-group">
-              <div class="input-group-addon" :class="[registerUser.password?'boderbeblue3':'',errorMsg.registerUser.password?'boderbeyellow3':'',(registerUser.password&&!(errorMsg.registerUser.password))?'boderbegreen3':'']"><img src="../assets/login/icon2-2.png"></div>
-              <input type="password" class="form-control" :class="[registerUser.password?'boderbeblue':'',errorMsg.registerUser.password?'boderbeyellow':'',(registerUser.password&&!(errorMsg.registerUser.password))?'boderbegreen':'']"  v-model="registerUser.password" :placeholder="$t('password')"
-                     @focus="errorMsg.registerUser.password = ''"
+              <div class="input-group-addon" :class="[inputclass1[2],errorMsg.registerUser.password?'boderbeyellow3':'']"><img src="../assets/login/icon2-2.png"></div>
+              <input type="password" class="form-control" :class="[inputclass1[0],errorMsg.registerUser.password?'boderbeyellow':'']"  v-model="registerUser.password" :placeholder="$t('password')"
+                     @focus="errorMsg.registerUser.password = '';inputclass1=['boderbeblue','boderbeblue2','boderbeblue3']"
                      @blur="checkPassword(true)"
                      data="输入密码"
                      name="no_content" id="input_login_password2"
@@ -209,9 +213,10 @@
 									</span>
             </div> -->
             <div class="input-group code">
-              <div class="input-group-addon" :class="registerUser.code?'boderbeblue3':''"><img src="../assets/login/icon2-3.png"></div>
-              <input type="text" v-model="registerUser.code" :class="registerUser.code?'boderbeblue':''" :placeholder="$t('Input verification code')" data="输入验证码"
-                     @focus="errorMsg.registerUser.code = ''"
+              <div class="input-group-addon" :class="inputclass2[2]"><img src="../assets/login/icon2-3.png"></div>
+              <input type="text" v-model="registerUser.code" :class="inputclass2[0]" :placeholder="$t('Input verification code')" data="输入验证码"
+                     @focus="errorMsg.registerUser.code = '';inputclass2=['boderbeblue','boderbeblue2','boderbeblue3']"
+                     @blur="inputclass2=''"
                      name="no_content" id="input_register_code">
               <span class="help-block" v-if="errorMsg.registerUser.code">
 										{{errorMsg.registerUser.code}}
@@ -316,11 +321,20 @@
 
   let loading = require('../assets/login/loading.gif');
   let bg = require('../assets/login/login_bg.jpg');
-  let eye = require('../assets/login/eye.png');
+  let eye = require('../assets/user/hide.png');
   let openeye = require('../assets/login/eye-on.png');
   export default {
     data() {
       return {
+        inputclass:'',
+        inputclass1:'',
+        inputclass2:'',
+        inputclass3:'',
+        inputclass4:'',
+        inputclass5:'',
+        inputclass6:'',
+        inputclass7:'',
+        inputclass8:'',
         bg: bg,
         visiable: this.value,
         login_head: true,
@@ -983,6 +997,7 @@
         }
       },
       checkPassword(type) {
+        this.inputclass1='';
         if (type) {
           if (this.registerUser.password != null && this.registerUser.password !== '' && this.registerUser.password !== undefined) {
             if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(this.registerUser.password)) {
@@ -1006,6 +1021,7 @@
         }
       },
       checkLoginPhoneNumber() {
+        this.inputclass6=''
         if (this.phoneLoginUser.phoneNumber != null && this.phoneLoginUser.phoneNumber !== '' && this.phoneLoginUser.phoneNumber !== undefined) {
           let phone = this.phoneLoginUser.phoneNumber;
           if (/^[0-9]*$/.test(phone)) {
@@ -1025,6 +1041,7 @@
         }
       },
       checkPhoneNumber() {
+        this.inputclass='';
         if (this.registerUser.phoneNumber != null && this.registerUser.phoneNumber !== '' && this.registerUser.phoneNumber !== undefined) {
           let phone = this.registerUser.phoneNumber;
           if (/^[0-9]*$/.test(phone)) {
