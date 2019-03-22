@@ -5,7 +5,7 @@
 			<!-- content here -->
 			<div class="banner-search-section">
 				<div class="banner-container">
-					<p class="b1">{{$t('Global largest blockchain projects automatic evaluate platform')}}</p>
+					<p class="b1">{{$t('Global blockchain projects automatic evaluate platform')}}</p>
 					<p class="b2">{{$t('Global decentralized dynamic data  Big data + AI algorithm+knoledge map  Individual project portrait  Investment insight & risk control tool')}}</p>
 					<div class="banner-search-box">
 						<div class="search-box">
