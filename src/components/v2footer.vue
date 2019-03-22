@@ -8,7 +8,7 @@
               <div class="flogo">
                 <a href="#"><img src="../assets/logo2.png"></a>
               </div>
-              <p class="flogodes">{{$t('Global largest blockchain projects automatic evaluate platform')}}</p>
+              <p class="flogodes">{{$t('Global blockchain projects automatic evaluate platform')}}</p>
             </div>
             <div class="box-col">
               <ul class="links">
