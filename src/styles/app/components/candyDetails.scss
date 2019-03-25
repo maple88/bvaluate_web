@@ -1,0 +1,27 @@
+#candyDetails{
+    .content-box{
+        position: relative;
+        width: 550px;
+        padding: 20px 40px 40px;
+        background-color: #fff;
+        border-radius: 4px;
+        .close-box{
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            i{
+                display: block;
+                width: 24px;
+                height: 24px;
+                background: #fff url("../assets/invitation/close_icon.png") no-repeat center;
+                background-size: 80%;
+            }
+        }
+        .title{
+            font-size: 20px;
+            color: #010101;
+            font-weight: bold;
+            text-align: center;
+        }
+    }
+}

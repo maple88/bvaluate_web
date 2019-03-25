@@ -28,6 +28,7 @@ import apiview from '@/pages/apiview'
 import userInfo from '@/pages/userInfo'
 import userNotice from '@/pages/userNotice'
 import myfollow from '@/pages/myFollow'
+import candyDetails from '@/pages/testCandy'
 // import userCollect from '@/pages/userCollect'
 
 Vue.use(Router);
@@ -190,6 +191,13 @@ export default new Router({
     {
       path: '/userNotice',
       component: userNotice,
+      meta: {
+        pageTitle: '个人中心'
+      },
+    },
+    {
+      path: '/candyDetails',
+      component: candyDetails,
       meta: {
         pageTitle: '个人中心'
       },
