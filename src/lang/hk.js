@@ -281,5 +281,9 @@ export default {
 	'After binding the mobile phone number, you can set the password and log in with the password.': '綁定手機號碼後可設置密碼，並可使用密碼登錄',
 	'First bind the mobile phone number to reward': '首次綁定手機號碼獎勵',
 	'200 candy': '200糖果',
-	'Latest News': '最新資訊'
+	'Latest News': '最新資訊',
+	//Candy Details
+	'Candy Details': '糖果明細',
+	'Candy Obtain': '糖果獲取',
+	'Candy Expend': '糖果支出'
 };

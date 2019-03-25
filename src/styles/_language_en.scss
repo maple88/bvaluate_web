@@ -221,4 +221,18 @@
             }
         }
     }
+
+    //candy
+    #candyDetails .content-box .title{
+        font-size: 22px;
+    }
+    #candyDetails .content-box .type-sel>span{
+        font-size: 17px;
+    }
+    #candyDetails .content-box .type-sel>span{
+        font-size: 16px;
+    }
+    #candyDetails .content-box .type-sel>span+span{
+        margin-left: 10px;
+    }
 }

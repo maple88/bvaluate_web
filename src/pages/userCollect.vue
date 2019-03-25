@@ -8,7 +8,7 @@
             <div class="userimg"><img :src="user.profileUrl"></div>
             <p class="name">{{user.nickName}}</p>
             <p class="des">{{user.synopsis}}</p>
-            <p class="candy">{{$t('candies')}} <span>{{user.candy}}</span></p>
+            <p class="candy">{{$t('candies')}} <span @click="showDetails">{{user.candy}}</span></p>
           </div>
           <a href="javascript:;" class="signin" @click="$store.state.signInTips = true">{{$t('Check in')}}</a>
         </div>
@@ -117,18 +117,23 @@
       </div>
 
       <v2footer/>
+      <candyDetails v-show="detailsPop" @closeCandyDetails='closeCandyDetails'></candyDetails>
     </div>
   </div>
 </template>
 
 <script>
-  import sensors from '../../static/sa-init.js'
+  import sensors from '../../static/sa-init.js';
+  import candyDetails from '@/components/candyDetails';
   let newsimg = require('../assets/search/news.png');
   let tuiwen = require('../assets/search/twitter.png');
   let weibo = require('../assets/search/weibo.png');
   let loading = require('../assets/login/loading.gif');
 
   export default {
+    components: {
+        candyDetails
+    },
     data() {
       return {
         newsimg: newsimg,
@@ -141,6 +146,7 @@
         showloading: false,
         nothing:false,
         index:0,
+        detailsPop: false,
         user: {
           token: '',
           uid: '',
@@ -241,6 +247,12 @@
           score: score,
           attention_count: '接口没有关注量'
         });
+      },
+      showDetails: function(){
+            this.detailsPop = true;
+        },
+      closeCandyDetails: function(val){
+          this.detailsPop = val;
       }
     },
     filters: {

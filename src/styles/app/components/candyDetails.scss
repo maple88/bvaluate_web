@@ -5,10 +5,14 @@
         padding: 20px 40px 40px;
         background-color: #fff;
         border-radius: 4px;
+        @media($max-sm){
+            width: 100%;
+        }
         .close-box{
             position: absolute;
             right: 10px;
             top: 10px;
+            cursor: pointer;
             i{
                 display: block;
                 width: 24px;
@@ -18,10 +22,68 @@
             }
         }
         .title{
-            font-size: 20px;
+            font-size: 24px;
             color: #010101;
             font-weight: bold;
             text-align: center;
+            @media($max-sm){
+                font-size: 20px;
+            }
+        }
+        .type-sel{
+            margin-top: 20px;
+            border-bottom: 1px solid #d4d4d4;
+            >span{
+                display: inline-block;
+                padding: 8px 10px;
+                font-size: 18px;
+                color: #333;
+                cursor: pointer;
+                &.curItem{
+                    color: rgb(24, 144, 255);
+                }
+                &+span{
+                    margin-left: 20px;
+                }
+                @media($max-sm){
+                    font-size: 16px;
+                }
+            }
+        }
+        .list-box{
+            margin-top: 30px;
+            @media($max-sm){
+                margin-top: 20px;
+            }
+            .candy-list{
+                >li{
+                    position: relative;
+                    padding: 10px 10px 4px 10px;
+                    font-size: 16px;
+                    color: #333;
+                    border-bottom: 1px solid #d4d4d4;
+                    overflow: hidden;
+                    @media($max-sm){
+                        font-size: 14px;
+                    }
+                    .list-left{
+                        padding-right: 60px;
+                        .detail{
+                            display: block;
+                        }
+                        .date{
+                            font-size: 12px;
+                            line-height: 16px;
+                        }
+                    }
+                    .list-right{
+                        position: absolute;
+                        right: 10px;
+                        top: 24px;
+                        color: #4DB770;
+                    }
+                }
+            }
         }
     }
 }
