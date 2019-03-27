@@ -19,7 +19,7 @@ export default {
 	'Log out': 'Log out',
 	'Enter Keywords': 'Enter Keywords',
 	'Top search': 'Top search',
-	'Global largest blockchain projects automatic evaluate platform': 'Global largest blockchain projects automatic evaluate platform',
+	'Global blockchain projects automatic evaluate platform': 'Global blockchain projects automatic evaluate platform',
 	'About Us': 'About Us',
 	'Company News': 'Company News',
 	'Strategic cooperation': 'Strategic cooperation',

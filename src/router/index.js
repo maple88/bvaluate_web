@@ -29,7 +29,6 @@ import userInfo from '@/pages/userInfo'
 import userNotice from '@/pages/userNotice'
 import userProject from '@/pages/userProject'
 import myfollow from '@/pages/myFollow'
-
 // import userCollect from '@/pages/userCollect'
 
 Vue.use(Router);

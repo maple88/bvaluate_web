@@ -8,7 +8,11 @@
               <div class="flogo">
                 <a href="#"><img src="../assets/logo2.png"></a>
               </div>
+<<<<<<< HEAD
               <p class="flogodes">{{$t('Global largest blockchain projects automatic evaluate platform')}}</p>
+=======
+              <p class="flogodes">{{$t('Global blockchain projects automatic evaluate platform')}}</p>
+>>>>>>> 439cfa5950876db38516210e8429a14031593ea1
             </div>
             <div class="box-col">
               <ul class="links">
@@ -49,11 +53,24 @@
         <p>Copyright &copy; 2018 - 2019 Bvaluate. All Rights Reserved</p>
       </div>
     </div>
+<<<<<<< HEAD
+=======
+    <topbox></topbox>
+>>>>>>> 439cfa5950876db38516210e8429a14031593ea1
   </div>
 </template>
 
 <script>
+<<<<<<< HEAD
   export default {}
+=======
+  import topbox from '../components/topbox'
+  export default {
+    components: {
+      topbox,
+    },
+  }
+>>>>>>> 439cfa5950876db38516210e8429a14031593ea1
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

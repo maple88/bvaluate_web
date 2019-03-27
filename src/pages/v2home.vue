@@ -5,7 +5,7 @@
 			<!-- content here -->
 			<div class="banner-search-section">
 				<div class="banner-container">
-					<p class="b1">{{$t('Global largest blockchain projects automatic evaluate platform')}}</p>
+					<p class="b1">{{$t('Global blockchain projects automatic evaluate platform')}}</p>
 					<p class="b2">{{$t('Global decentralized dynamic data  Big data + AI algorithm+knoledge map  Individual project portrait  Investment insight & risk control tool')}}</p>
 					<div class="banner-search-box">
 						<div class="search-box">
@@ -35,7 +35,7 @@
 							<div class="box-col" v-for="(item, index) in topProject" :key="index">
 								<div class="item" :class="'top'+(index+1)">
 									<a href="javascript:;" @click="goArticle('/project',{sid: item.sid}, $event)">
-										<img src="../assets/billboard-logo.png" class="tlogo">
+										<!--<img src="../assets/billboard-logo.png" class="tlogo">-->
 										<div class="img-box"><img :src="item.logoSrc"></div>
 										<p class="tit">{{item.project}}</p>
 									</a>
@@ -179,13 +179,13 @@
 					<div class="flexbox">
 						<div class="box-row">
 							<div class="box-col" v-for="(item, index) in hostIndustries" :key="index">
-								<div class="item">
-									<p class="tit"><a href="javascript:;" @click="goListForIndustry(item.categoryName)">{{item.categoryName}}</a></p>
+								<div class="item" @click="goListForIndustry(item.categoryName)">
+									<p class="tit"><a href="javascript:;" >{{item.categoryName}}</a></p>
 									<p class="num">{{$t('Project volume')}}：{{item.projectNum}}</p>
 									<ul class="pro">
 										<li>{{$t('Project')}}：</li>
 										<li v-for="(project, pindex) in item.relatedICODTOs" :key="pindex">
-											<a href="javascript:;" @click="goArticle('/project',{sid:project.sid})">{{project.project}}</a>
+											<a href="javascript:;" @click.stop="goArticle('/project',{sid:project.sid})">{{project.project}}</a>
 										</li>
 									</ul>
 								</div>
@@ -441,6 +441,7 @@
 
 <script>
 	import Bus from '../bus.js'
+  import topbox from '../components/topbox'
 	let newsimg = require('../assets/search/news.png');
 
 	export default {
@@ -460,6 +461,9 @@
 				newsimg: newsimg
 			}
 		},
+    components: {
+      topbox,
+    },
 		mounted () {
 			var that = this
       Bus.$on('val', (data) => {

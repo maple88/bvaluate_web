@@ -394,5 +394,13 @@
     color: #898989;
   }
 }
+.media-left img:hover{
+  width: 288px !important;
+  height: 190px !important;
+  position: absolute;
+  z-index: 1;
+
+
+}
 </style>
 

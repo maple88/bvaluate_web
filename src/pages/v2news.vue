@@ -98,7 +98,7 @@
                     <p class="loading_more_tip" v-if="showloading===-1">{{loadingTip}}~</p>
                     <button :disabled="showloading" data="加载更多" value="加载更多" name="loading_more" id="loading_more" @click.stop="loadMoreNews" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
-                      <span v-if="!showloading">{{$t('Load more')}}</span>
+                      <span class="loadmore" v-if="!showloading">{{$t('Load more')}}<i class="moreimg"></i></span>
                     </button>
                   </div>
                 </ul>
@@ -137,7 +137,7 @@
                     <p class="loading_more_tip" v-if="showloading===-1">{{loadingTip}}~</p>
                     <button :disabled="showloading" data="加载更多" value="加载更多" name="loading_more" id="loading_more" @click.stop="loadMoreICO" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
-                      <span v-if="!showloading">{{$t('Load more')}}</span>
+                      <span class="loadmore" v-if="!showloading">{{$t('Load more')}}<i class="moreimg"></i></span>
                     </button>
                   </div>
                 </div>
@@ -180,15 +180,17 @@
                 </div>
                 <div class="hot_content">
                   <div class="recommend-item" v-for="(project, index) in recommendProjects" :key="index">
-                    <router-link :to="'/project?sid='+project.sid" target="_blank" :data="project.project">
-                      <div class="left"><img :src="project.logoSrc"></div>
+
+                      <router-link :to="'/project?sid='+project.sid" target="_blank" :data="project.project">
+                        <div class="shade-box"></div>
+                        <div class="left"><img :src="project.logoSrc"></div>
                       <div class="center">
                         <p class="r1">{{project.project}}</p>
                         <p class="r2">{{project.tokenCoin | formatRecommendProjects}}</p>
                         <p class="r3">{{project.introduction}}</p>
                       </div>
                       <div class="right">{{project.totalScore | showTatolCore}}</div>
-                    </router-link>
+                      </router-link>
                   </div>
                 </div>
               </div>
@@ -560,5 +562,27 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+  .media-middle img:hover{
+    width: 288px !important;
+    height: 190px !important;
+    position: absolute;
+    z-index: 1;
+
+
+  }
+  .recommend-item:hover .shade-box{
+    display: block;
+  }
+  .shade-box{
+    display: none;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: rgba(200, 201, 177, 0.1);
+    z-index: 2;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
 </style>
 

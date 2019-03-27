@@ -19,7 +19,7 @@ export default {
 	'Log out': '退出',
 	'Enter Keywords': '请输入关键词',
 	'Top search': '热门搜索',
-	'Global largest blockchain projects automatic evaluate platform': '全球最大的区块链项目自动评估平台',
+	'Global blockchain projects automatic evaluate platform': '全球区块链项目自动评估平台',
 	'About Us': '关于我们',
 	'Company News': '公司动态',
 	'Strategic cooperation': '战略合作',

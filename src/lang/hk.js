@@ -19,7 +19,7 @@ export default {
 	'Log out': '退出',
 	'Enter Keywords': '請輸入關鍵詞',
 	'Top search': '熱門搜索',
-	'Global largest blockchain projects automatic evaluate platform': '全球最大的區塊鏈項目自動評估平台',
+	'Global blockchain projects automatic evaluate platform': '全球區塊鏈項目自動評估平台',
 	'About Us': '關於我們',
 	'Company News': '公司動態',
 	'Strategic cooperation': '戰略合作',

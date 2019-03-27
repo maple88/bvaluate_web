@@ -10,7 +10,7 @@
             <div class="textRight">
               <div class="tit">
                 <a :href="project.outerOfficial" target="_blank" class="atitle">{{project.project}}</a>
-                <button class="whitepaper" @click="goArticle('/pdfShow', {project: project.project})">{{$t('White paper')}}</button>
+                <!--<button class="whitepaper" @click="goArticle('/pdfShow', {project: project.project})">{{$t('White paper')}}</button>-->
               </div>
               <p class="smtit" v-show="project.token">({{project.token}})</p>
               <div class="fol">
@@ -41,6 +41,7 @@
                     </div>
                   </transition>
                 </div>
+                <div class="followbtn " style="margin-left: 15px;background-color: #3555da;color: white" @click="goArticle('/pdfShow', {project: project.project})">{{$t('White paper')}}</div>
               </div>
             </div>
           </div>
@@ -633,6 +634,7 @@
               <div class="recommendhead">{{$t('Recommended project')}}</div>
               <div class="recommend-item" v-for="(project, index) in recommendProjects" :key="index">
                 <router-link :to="'/project?sid='+project.sid" target="_blank" :data="project.project">
+                  <div class="shade-box"></div>
                   <div class="left"><img :src="project.logoSrc"></div>
                   <div class="center">
                     <p class="r1">{{project.project}}</p>
@@ -2378,5 +2380,18 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .recommend-item:hover .shade-box{
+    display: block;
+  }
+  .shade-box{
+    display: none;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: rgba(200, 201, 177, 0.1);
+    z-index: 2;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
 </style>
 

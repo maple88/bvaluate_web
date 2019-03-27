@@ -762,6 +762,7 @@
             <div class="recommendhead">推荐项目</div>
             <div class="recommend-item" v-for="(project, index) in recommendProjects" :key="index">
               <router-link :to="'/project?sid='+project.sid" target="_blank" :data="project.project">
+                <div class="shade-box"></div>
                 <div class="left"><img :src="project.logoSrc"></div>
                 <div class="right">
                   <p class="r1">{{project.project}}</p>
@@ -2361,5 +2362,18 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .recommend-item:hover .shade-box{
+    display: block;
+  }
+  .shade-box{
+    display: none;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: rgba(200, 201, 177, 0.1);
+    z-index: 2;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
 </style>
 

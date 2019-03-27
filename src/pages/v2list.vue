@@ -377,6 +377,16 @@ import { setTimeout, clearTimeout } from 'timers';
               none: '暂无相关数据'
             }
             ,done: function(res, curr, count){
+              table.on('row(main-list-table)', function(obj){
+
+                // console.log(obj.data) //得到当前行数据
+                let url='project?sid='+obj.data.sid;
+                // console.log(url);
+                let routedata=that.$router.resolve(url);
+                window.open(routedata.href, '_blank');
+              });
+
+
               that.mainloading = false;
               if (res.data.length === 0){
                 that.showNotMore = true;

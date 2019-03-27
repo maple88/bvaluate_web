@@ -169,7 +169,7 @@
                   <div class="layui-form">
                     <div class="layui-news-style layui-unselect layui-form-select">
                       <div class="layui-select-title" @click="openSelect($event)">
-                        <input type="text" placeholder="请选择" v-model="bindPhoneNumber.selectPrefix" readonly="" class="layui-input layui-unselect">
+                        <input :class="inputclass.in9" type="text" placeholder="请选择" v-model="bindPhoneNumber.selectPrefix" readonly="" class="layui-input layui-unselect">
                         <i class="layui-edge"></i>
                       </div>
                       <dl class="layui-anim layui-anim-upbit">
@@ -179,15 +179,15 @@
                       </dl>
                     </div>
                   </div>
-                  <input type="tel" class="prefix-input" data="输入手机号码" name="no_content" id="input_phone" v-model="bindPhoneNumber.phoneNumber" 
-                  @focus="errorMsg.bindPhoneNumber.phoneNumber = ''"
+                  <input type="tel" class="prefix-input" data="输入手机号码" :class="inputclass.in9" name="no_content" id="input_phone" v-model="bindPhoneNumber.phoneNumber"
+                  @focus="errorMsg.bindPhoneNumber.phoneNumber = '';inputclass.in9='borderbeblue'"
                   @blur="checkPhoneNumber()">
                   <div class="rightTips">{{errorMsg.bindPhoneNumber.phoneNumber}}</div>
                 </div>
                 <div class="form-group">
                   <label class="control-label">{{$t('Verification code')}}</label>
                   <div class="coderow">
-                    <input type="text" data="输入验证码" name="no_content" id="input_code_btn" v-model="bindPhoneNumber.code">
+                    <input type="text" data="输入验证码" :class="inputclass.in8" @focus="inputclass.in8='borderbeblue'" @blur="inputclass.in8=''" name="no_content" id="input_code_btn" v-model="bindPhoneNumber.code">
                     <button type="button" class="btn code-btn" data="获取验证码" :disabled="bindPhoneNumberSendBtn" @click.stop="sendBindPhoneNumberCode">{{bindPhoneNumberSendBtnText}}</button>
                   </div>
                   <p class="help-block" v-if="moblieError_show">60s后重新获取</p>
@@ -219,7 +219,7 @@
                 <div class="form-group">
                   <label class="control-label">{{$t('Email')}}</label>
                   <div class="coderow">
-                    <input type="email" data="输入邮箱" v-model="user.newEmail" @focus="emailError_msg=''" name="no_content" id="input_email">
+                    <input type="email" data="输入邮箱" v-model="user.newEmail"  :class="inputclass.in7" @focus="emailError_msg='';inputclass.in7='borderbeblue'" @blur="inputclass.in7=''" name="no_content" id="input_email">
                     <div class="btn rightips newStyle"></div>
                   </div>
                   <div class="rightTips">{{emailError_msg}}</div>
@@ -227,7 +227,7 @@
                 <div class="form-group">
                   <label class="control-label">{{$t('Verification code')}}</label>
                   <div class="coderow">
-                    <input type="text" data="输入验证码" v-model="user.emailCode" @focus="emailCodeError_msg=''" name="no_content" id="input_emailCode">
+                    <input type="text" data="输入验证码" :class="inputclass.in6" v-model="user.emailCode" @focus="emailCodeError_msg='';inputclass.in6='borderbeblue'" @blur="inputclass.in6=''" name="no_content" id="input_emailCode">
                     <button type="button" :disabled="sendEmailBtn" class="btn code-btn" data="发送验证邮件" @click="sendEmail">{{$t('Send verification mail')}}
                     </button>
                   </div>
@@ -258,7 +258,7 @@
                   <label class="control-label">{{$t('Old password')}}</label>
                   <div class="coderow">
                     <div class="inputgroup">
-                      <input type="password" data="输入旧密码" v-model="user.oldPassword" @focus="oldPwdError=''" name="no_content" id="input_oldPassword">
+                      <input type="password" data="输入旧密码" v-model="user.oldPassword" :class="inputclass.in5" @focus="oldPwdError='';inputclass.in5='borderbeblue'" @blur="inputclass.in5=''" name="no_content" id="input_oldPassword">
                       <div class="eye" @click="showPassword($event)"></div>
                     </div>
                     <div class="btn rightips newStyle">
@@ -270,7 +270,7 @@
                   <label class="control-label">{{$t('New password')}}</label>
                   <div class="coderow">
                     <div class="inputgroup">
-                      <input type="password" data="输入新密码" v-model="user.newPassword" @focus="newPwdError=''" name="no_content" id="input_newPassword">
+                      <input type="password" data="输入新密码" v-model="user.newPassword" :class="inputclass.in4" @focus="newPwdError='';inputclass.in4='borderbeblue'" @blur="inputclass.in4=''" name="no_content" id="input_newPassword">
                       <div class="eye" @click="showPassword($event)"></div>
                     </div>
                     <div class="btn rightips newStyle">{{newPwdError}}</div>
@@ -280,7 +280,7 @@
                   <label class="control-label">{{$t('Confirm password')}}</label>
                   <div class="coderow">
                     <div class="inputgroup">
-                      <input type="password" data="输入确认的新密码" v-model="user.ensurePwd" @focus="ensurePwdError=''" name="no_content" id="input_ensurePwd">
+                      <input type="password" data="输入确认的新密码" v-model="user.ensurePwd" :class="inputclass.in3" @focus="ensurePwdError='';inputclass.in3='borderbeblue'" @blur="inputclass.in3=''"name="no_content" id="input_ensurePwd">
                       <div class="eye" @click="showPassword($event)"></div>
                     </div>
                     <div class="btn rightips newStyle">{{ensurePwdError}}</div>
@@ -310,7 +310,7 @@
                   <label class="control-label">{{$t('New password')}}</label>
                   <div class="coderow">
                     <div class="inputgroup">
-                      <input type="password" data="输入新密码" v-model="user.setnewPassword" @focus="setnewPwdError=''" name="no_content" id="input_setnewPassword">
+                      <input type="password" data="输入新密码" v-model="user.setnewPassword" :class="inputclass.in2" @focus="setnewPwdError='';inputclass.in2='borderbeblue'" @blur="inputclass.in2=''" name="no_content" id="input_setnewPassword">
                       <div class="eye" @click="showPassword($event)"></div>
                     </div>
                     <div class="btn rightips newStyle">{{setnewPwdError}}</div>
@@ -320,7 +320,7 @@
                   <label class="control-label">{{$t('Confirm password')}}</label>
                   <div class="coderow">
                     <div class="inputgroup">
-                      <input type="password" data="输入确认的新密码" v-model="user.setensurePwd" @focus="setensurePwdError=''" name="no_content" id="input_setensurePwd">
+                      <input type="password" data="输入确认的新密码" v-model="user.setensurePwd" :class="inputclass.in1" @focus="setensurePwdError='';inputclass.in1='borderbeblue'"  @blur="inputclass.in1=''" name="no_content" id="input_setensurePwd">
                       <div class="eye" @click="showPassword($event)"></div>
                     </div>
                     <div class="btn rightips newStyle">{{setensurePwdError}}</div>
@@ -381,6 +381,17 @@
         editName: false,
         editGender: false,
         editSign: false,
+        inputclass:{
+          in1:'',
+          in2:'',
+          in3:'',
+          in4:'',
+          in5:'',
+          in6:'',
+          in7:'',
+          in8:'',
+          in9:'',
+        },
         user: {
           token: '',
           uid: '',
@@ -538,9 +549,14 @@
         }
       },
       openSelect (e) {
-        e.target.parentNode.parentNode.classList.add('layui-form-selected');
+        if(e.target.parentNode.parentNode.classList.contains('layui-form-selected')){
+          e.target.parentNode.parentNode.classList.remove('layui-form-selected');
+        }else {
+          e.target.parentNode.parentNode.classList.add('layui-form-selected');
+        }
       },
       checkPhoneNumber() {
+        this.inputclass.in9='';
         if (this.bindPhoneNumber.phoneNumber != null && this.bindPhoneNumber.phoneNumber !== '' && this.bindPhoneNumber.phoneNumber !== undefined) {
           let phone = this.bindPhoneNumber.phoneNumber;
           if (/^[0-9]*$/.test(phone)) {
@@ -961,5 +977,8 @@
 //     color: #898989;
 //   }
 // }
+  .borderbeblue{
+    border: 1px solid #3555da;
+  }
 </style>
 

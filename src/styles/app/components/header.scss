@@ -738,7 +738,7 @@
         margin: 0;
         position: relative;
         &.header-token {
-          margin: 0 0 0 30px;
+          margin: 0 0 0 10px;
         }
         &.hsearch {
           @media ($min-lg) {
@@ -786,14 +786,14 @@
           }
         }
         .notice {
-          display: flex;
+          display: none;
           flex-direction: column;
           width: 364px;
           height: 480px;
           background: #fff;
           position: absolute;
-          left: -367px;
-          top: 47px;
+          left: -290px;
+          top: 80px;
           border-radius: 5px;
           padding: 26px 20px 0;
           box-sizing: border-box;
@@ -922,7 +922,8 @@
           }
         }
         .icon-htips {
-          top: -12px;
+          top: 18px;
+          right: -35px;
           cursor: pointer;
         }
       }
@@ -958,10 +959,10 @@
   .header-dropdown-menu {
     // min-width: inherit;
     width: 270px;
-    top: calc(100% + 15px);
+    top: calc(100% );
     padding: 0 15px;
     // left: auto;
-    // right: 50%;
+     right: 30%;
     // margin: 0 -40px 0 0;
     @media ($max-sm) {
       width: 240px;
@@ -1087,8 +1088,38 @@
         height: 38px;
         border: 0;
         padding: 0 0 0 16px;
-        background: transparent;
+        background: #63686f;
         font-size: 16px;
+        color: #9ea5a9;
+        @media ($max-sm) {
+          height: 40px;
+          font-size: 14px;
+        }
+        &::-webkit-input-placeholder {
+          color: #9ea5a9;
+        }
+        &::-moz-placeholder {
+          color: #9ea5a9;
+        }
+        &:-moz-placeholder {
+          color: #9ea5a9;
+        }
+        &:-ms-input-placeholder {
+          color: #9ea5a9;
+        }
+      }
+    }
+    .center2 {
+      width: 100%;
+      input {
+        width: 100%;
+        outline: none;
+        height: 38px;
+        border: 0;
+        padding: 0 0 0 16px;
+        background: #ffffff;
+        font-size: 16px;
+        color: #434343;
         @media ($max-sm) {
           height: 40px;
           font-size: 14px;
@@ -1109,7 +1140,7 @@
     }
     .right {
       flex: 0 0 50px;
-      background: transparent;
+      background: #63686f;
       .search_submit {
         height: 38px;
         transition: all 0.3s;
@@ -1119,6 +1150,27 @@
         border: 0;
         @media ($max-sm) {
           height: 40px;
+        }
+        img{
+          color: white;
+        }
+      }
+    }
+    .right2 {
+      flex: 0 0 50px;
+      background: #ffffff;
+      .search_submit {
+        height: 38px;
+        transition: all 0.3s;
+        width: 100%;
+        outline: none;
+        background: transparent;
+        border: 0;
+        @media ($max-sm) {
+          height: 40px;
+        }
+        img{
+          color: white;
         }
       }
     }
