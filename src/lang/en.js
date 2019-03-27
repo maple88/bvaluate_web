@@ -285,5 +285,7 @@ export default {
 	//Candy Details
 	'Candy Details': 'Candy Details',
 	'Candy Obtain': 'Candy Obtain',
-	'Candy Expend': 'Candy Expend'
+	'Candy Expend': 'Candy Expend',
+	'Candy Guide': 'Candy Guide',
+	'Sequence': 'Sequence'
 };

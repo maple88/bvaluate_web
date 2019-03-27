@@ -8,7 +8,7 @@
             <div class="userimg"><img :src="user.profileUrl"></div>
             <p class="name">{{user.nickName}}</p>
             <p class="des">{{user.synopsis}}</p>
-            <p class="candy">{{$t('candies')}} <span @click="showDetails">{{user.candy}}</span></p>
+            <p class="candy">{{$t('candies')}} <span @click="showDetails">{{user.candy}}</span> <i @click="showGuide">赚糖果</i></p>
           </div>
           <a href="javascript:;" class="signin" @click="$store.state.signInTips = true">{{$t('Check in')}}</a>
         </div>
@@ -21,13 +21,12 @@
                   {{$t('My collection')}}
                 </router-link>
               </li>
-              <!-- <li>
-                to="/userProject"
-                <router-link to="">
+              <li>
+                <router-link to="/userProject">
                   <div class="navicon"><img src="../assets/userCenter/l2.png"><img class="on" src="../assets/userCenter/l2-on.png"></div>
                   {{$t('My project')}}
                 </router-link>
-              </li> -->
+              </li>
               <li>
                 <router-link to="/userInfo">
                   <div class="navicon"><img src="../assets/userCenter/l3.png"><img class="on" src="../assets/userCenter/l3-on.png"></div>
@@ -118,6 +117,7 @@
 
       <v2footer/>
       <candyDetails v-show="detailsPop" @closeCandyDetails='closeCandyDetails'></candyDetails>
+      <candyGuide v-show="guidePop" @closeCandyGuide='closeCandyGuide'></candyGuide>
     </div>
   </div>
 </template>
@@ -125,6 +125,7 @@
 <script>
   import sensors from '../../static/sa-init.js';
   import candyDetails from '@/components/candyDetails';
+  import candyGuide from '@/components/candyGuide';
   let newsimg = require('../assets/search/news.png');
   let tuiwen = require('../assets/search/twitter.png');
   let weibo = require('../assets/search/weibo.png');
@@ -132,7 +133,8 @@
 
   export default {
     components: {
-        candyDetails
+        candyDetails,
+        candyGuide
     },
     data() {
       return {
@@ -147,6 +149,7 @@
         nothing:false,
         index:0,
         detailsPop: false,
+        guidePop: false,
         user: {
           token: '',
           uid: '',
@@ -253,6 +256,12 @@
         },
       closeCandyDetails: function(val){
           this.detailsPop = val;
+      },
+      showGuide: function(){
+            this.guidePop = true;
+        },
+      closeCandyGuide: function(val){
+          this.guidePop = val;
       }
     },
     filters: {

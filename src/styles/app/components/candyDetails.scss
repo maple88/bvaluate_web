@@ -87,3 +87,103 @@
         }
     }
 }
+#candyGuide{
+    .content-box{
+        position: relative;
+        width: 550px;
+        padding: 20px 40px 40px;
+        background-color: #fff;
+        border-radius: 4px;
+        @media($max-sm){
+            width: 100%;
+        }
+        .close-box{
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            cursor: pointer;
+            i{
+                display: block;
+                width: 24px;
+                height: 24px;
+                background: #fff url("../assets/invitation/close_icon.png") no-repeat center;
+                background-size: 80%;
+            }
+        }
+        .title{
+            font-size: 24px;
+            color: #010101;
+            font-weight: bold;
+            text-align: center;
+            @media($max-sm){
+                font-size: 20px;
+            }
+        }
+        .list-box{
+            margin-top: 30px;
+            @media($max-sm){
+                margin-top: 20px;
+            }
+            .candy-list{
+                >li{
+                    position: relative;
+                    padding: 10px 10px 4px 10px;
+                    font-size: 16px;
+                    color: #000;
+                    border-bottom: 1px solid #d4d4d4;
+                    overflow: hidden;
+                    @media($max-sm){
+                        font-size: 14px;
+                    }
+                    .list-left{
+                        padding-right: 120px;
+                        @media($max-sm){
+                            padding-right: 100px;
+                        }
+                        .detail{
+                            display: block;
+                            margin-bottom: 4px;
+                            font-size: 14x;
+                            @media($max-sm){
+                                font-size: 12px;
+                            }
+                        }
+                        .amount{
+                            font-size: 18px;
+                            @media($max-sm){
+                                font-size: 16px;
+                            }
+                            b{
+                                font-weight: normal;
+                                color: #ec9651;
+                            }
+                        }
+                    }
+                    .list-right{
+                        position: absolute;
+                        right: 10px;
+                        top: 10px;
+                        color: #fff;
+                        .link-btn{
+                            width: 100px;
+                            height: 36px;
+                            line-height: 36px;
+                            text-align: center;
+                            color: #fff;
+                            font-size: 14px;
+                            background-color: #3555da;
+	                        border-radius: 4px;
+                            cursor: pointer;
+                            @media($max-sm){
+                                width: 80px;
+                                height: 30px;
+                                line-height: 30px;
+                                font-size: 12px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -95,6 +95,19 @@
             font-size: 18px;
           }
         }
+        i{
+          position: relative;
+          top: -10px;
+          display: inline-block;
+          width: 50px;
+          height: 31px;
+          margin-left: 10px;
+          font-style: normal;
+          font-size: 14px;
+          color: #fff;
+          background: url(../assets/userCenter/getcandy.png) center / cover no-repeat;
+          cursor: pointer;
+        }
       }
     }
     .signin{
@@ -1118,6 +1131,44 @@
           transition: .3s;
           background: url(../assets/moredown.png) 0 0 / 100% no-repeat;
         }
+      }
+    }
+  }
+}
+.userCenter.userProject{
+  .projectBox{
+    padding: 10px 40px 10px 10px;
+    background-color: #fff;
+    @media($max-sm){
+      padding: 10px;
+    }
+    .projectTable{
+      width: 100%;
+      text-align: center;
+      color: #000;
+      font-size: 16px;
+      @media($max-sm){
+        font-size: 12px;
+      }
+      th,td{
+        padding: 10px 5px;
+        text-align: center;
+        @media($max-sm){
+          padding: 8px 2px;
+        }
+      }
+      td{
+        word-break: break-all;
+        word-wrap: break-word;
+      }
+      th.projectNameCell{
+        width: 200px;
+        @media($max-sm){
+          width: 110px;
+        }
+      }
+      thead{
+        color: #666;
       }
     }
   }

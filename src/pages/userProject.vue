@@ -1,5 +1,5 @@
 <template>
-  <div class="page project userCenter userNotice">
+  <div class="page project userCenter userProject">
     <v2header/>
     <div class="v2maintainer">
       <div class="container v2container">
@@ -21,7 +21,7 @@
                   {{$t('My collection')}}
                 </router-link>
               </li>
-              <li>
+              <li class="active">
                 <router-link to="/userProject">
                   <div class="navicon"><img src="../assets/userCenter/l2.png"><img class="on" src="../assets/userCenter/l2-on.png"></div>
                   {{$t('My project')}}
@@ -33,7 +33,7 @@
                   {{$t('Account information')}}
                 </router-link>
               </li>
-              <li class="active">
+              <li>
                 <router-link to="/userNotice">
                   <div class="navicon"><img src="../assets/userCenter/l4.png"><img class="on" src="../assets/userCenter/l4-on.png"></div>
                   {{$t('notification')}}
@@ -42,26 +42,27 @@
             </ul>
           </div>
           <div class="rightcontent">
-            <div class="noticeBox">
-              <div class="headtab">
-                <div class="item" :class="showBox === 0?'on':''" @click="showList(0)">{{$t('All')}}</div>
-                <div class="item" :class="showBox === 1?'on':''" @click="showList(1)">{{$t('Unread news')}}</div>
-              </div>
-              <div class="noticeList">
-                <div class="item" v-for="(item, index) in messageList" :key="index">
-                  <div class="left">{{$t('notice')}}</div>
-                  <div class="center">{{item.content}}</div>
-                  <div class="right">{{item.createdTime}}</div>
-                </div>
-                <!-- <div class="loadmore" v-if="showLoadMore" @click="">{{$t('Load more')}}<i class="moreimg"></i></div> -->
-                <!-- 无消息 -->
-                <div class="notmore" v-if="showMessage">
-                    <div class="not-box">
-                        <img src="../assets/user/message.png" alt="">
-                        <p>暂无消息</p>
-                    </div>
-                </div>
-              </div>
+            <div class="projectBox">
+              <table class="projectTable">
+                <thead>
+                  <tr>
+                    <th>{{$t('Sequence')}}</th>
+                    <th class="projectNameCell">{{$t('Project name')}}</th>
+                    <th>{{$t('Submission time')}}</th>
+                    <th>{{$t('Project authority')}}</th>
+                    <th>{{$t('Evaluation status')}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(item,index) in projectList" :key="index">
+                    <td>{{index+1}}</td>
+                    <td>{{item.projectName}}</td>
+                    <td>{{item.submitTime}}</td>
+                    <td>{{item.projectAuthority}}</td>
+                    <td :style="setStatusColor(item.status)" @click="goProject(item.status,item.projectName)">{{item.status}}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -98,17 +99,38 @@
           emailCode: ''
         },
         showLoadMore: true,
-        messageList: [],
-        open: -1,
-        unReadList: [],
-        allList: [],
-        showBox: 0,
-        showMessage:false,
+        projectStatus: {
+          verifying: '审核中',
+          notPassed: '审核未通过',
+          passed: '查看评估结果'
+        },
+        projectList: [
+          {
+            sequence: '1',
+            projectName: 'CKM',
+            submitTime: '2018-12-12',
+            projectAuthority: '公开',
+            status: '审核中'
+          },
+          {
+            sequence: '1',
+            projectName: 'CKM',
+            submitTime: '2018-12-12',
+            projectAuthority: '公开',
+            status: '审核未通过'
+          },
+          {
+            sequence: '1',
+            projectName: 'Loopring',
+            submitTime: '2018-12-12',
+            projectAuthority: '公开',
+            status: '查看评估结果'
+          },
+        ]
       }
     },
     activated () {
       this.getLocalStorageUserInfo();
-      this.initMessage();
     },
     mounted() {
     },
@@ -130,58 +152,23 @@
           this.$router.push('/home')
         }
       },
-      initMessage() {
-        this.showMessage = true;
-        let uid = localStorage.getItem('apelink_user_uid');
-        let token = localStorage.getItem('apelink_user_token');
-        if (token) {
-          let headers = {'uid': uid, 'Authorization': token};
-          let url = '/api/notify/getUserNotify';
-          this.$axios({
-            method: 'get',
-            url: url,
-            headers: headers
-          }).then(res => {
-            if(res.data.length === 0){
-              this.showMessage = true;
-            }else {
-              this.showMessage = false;
-              this.messageList = res.data;
-              this.allList = res.data;
-            }
-          });
+      setStatusColor(status){
+        switch(status){
+          case this.projectStatus.verifying: 
+            return {'color': '#3555da'};
+            break;
+          case this.projectStatus.notPassed: 
+            return {'color': '#e3932c'};
+            break;
+          case this.projectStatus.passed: 
+            return {'color': '#39d052','cursor':'pointer'};
+            break;
         }
       },
-      showList(type) {
-        if (type===0) {
-          if(this.showBox !== type){
-            this.showBox = 0;
-            this.initMessage();
-          }
-        } else {
-          if(this.showBox !== type){
-            let uid = localStorage.getItem('apelink_user_uid');
-            let token = localStorage.getItem('apelink_user_token');
-            if (token) {
-              let headers = {'uid': uid, 'Authorization': token};
-              let url = '/api/notify/getUserNotify?readFlag=unread';
-              this.$axios({
-                method: 'get',
-                url: url,
-                headers: headers
-              }).then(res => {
-                this.unReadList = res.data;
-                this.messageList = this.unReadList;
-                this.showBox = 1;
-                if(res.data.length === 0){
-                  this.showMessage = true;
-                }
-              }).catch(res => {
-                this.messageList = []
-                this.showBox = 1;
-              });
-            }
-          }
+      goProject(status,name){
+        if(status == this.projectStatus.passed){
+          let routeData = this.$router.resolve({path: '/project',query: {project: name}});console.log(routeData)
+          window.open(routeData.href,'_blank');
         }
       }
     }
@@ -190,23 +177,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss"  scoped>
-.follow-show {
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
-  padding: 36px 0 240px 0;
-  img {
-    display: block;
-    margin: 0 auto;
-    padding-bottom: 26px;
-  }
-  p {
-    font-size: 16px;
-    height: 16px;
-    
-    text-align: center;
-    color: #898989;
-  }
-}
+
 </style>
 

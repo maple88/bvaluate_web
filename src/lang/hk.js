@@ -285,5 +285,7 @@ export default {
 	//Candy Details
 	'Candy Details': '糖果明細',
 	'Candy Obtain': '糖果獲取',
-	'Candy Expend': '糖果支出'
+	'Candy Expend': '糖果支出',
+	'Candy Guide': '糖果寶典',
+	'Sequence': '序列'
 };
