@@ -8,11 +8,7 @@
               <div class="flogo">
                 <a href="#"><img src="../assets/logo2.png"></a>
               </div>
-<<<<<<< HEAD
-              <p class="flogodes">{{$t('Global largest blockchain projects automatic evaluate platform')}}</p>
-=======
               <p class="flogodes">{{$t('Global blockchain projects automatic evaluate platform')}}</p>
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
             </div>
             <div class="box-col">
               <ul class="links">
