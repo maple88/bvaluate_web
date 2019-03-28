@@ -181,6 +181,10 @@
                                 font-size: 12px;
                             }
                         }
+                        .link-btn-disabled{
+                            background-color: #bcbcbc;
+                            cursor: not-allowed;
+                        }
                     }
                 }
             }

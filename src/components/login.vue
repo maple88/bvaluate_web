@@ -27,20 +27,12 @@
         <div class="bd">
           <div class="inputInner phoneLoginForm" v-show="phoneLoginForm">
             <div class="input-group">
-<<<<<<< HEAD
-              <div class="input-group-addon"><img src="../assets/login/icon2-1.png"></div>
-=======
               <div class="input-group-addon" :class="inputclass6[2]"><img src="../assets/login/icon2-1.png"></div>
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
               <div class="select-input">
                 <div class="layui-form">
                   <div class="layui-news-style layui-unselect layui-form-select">
                     <div class="layui-select-title" @click="openSelect($event)">
-<<<<<<< HEAD
-                      <input type="text" placeholder="请选择" v-model="phoneLoginUser.selectPrefix" readonly="" class="layui-input layui-unselect">
-=======
                       <input type="text" placeholder="请选择" :class="inputclass6[1]" v-model="phoneLoginUser.selectPrefix" readonly="" class="layui-input layui-unselect">
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
                       <i class="layui-edge"></i>
                     </div>
                     <dl class="layui-anim layui-anim-upbit">
@@ -50,13 +42,8 @@
                     </dl>
                   </div>
                 </div>
-<<<<<<< HEAD
-                <input type="tel" class="form-control" v-model="phoneLoginUser.phoneNumber" :placeholder="$t('phone number')" data="输入手机号"
-                       @focus="errorMsg.phoneLoginUser.phoneNumber = ''"
-=======
                 <input type="tel" class="form-control" :class="inputclass6[0]" v-model="phoneLoginUser.phoneNumber" :placeholder="$t('phone number')" data="输入手机号"
                        @focus="errorMsg.phoneLoginUser.phoneNumber = '';inputclass6=['boderbeblue','boderbeblue2','boderbeblue3']"
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
                        @blur="checkLoginPhoneNumber"
                        name="no_content" id="input_login_phoneNumber1">
               </div>
@@ -66,16 +53,10 @@
                   </span>
             </div>
             <div class="input-group code">
-<<<<<<< HEAD
-              <div class="input-group-addon"><img src="../assets/login/icon2-3.png"></div>
-              <input type="text" v-model="phoneLoginUser.code" autocomplete="off" :placeholder="$t('Input verification code')" data="输入验证码"
-                     @focus="errorMsg.phoneLoginUser.code = ''"
-=======
               <div class="input-group-addon" :class="inputclass5[2]"><img src="../assets/login/icon2-3.png"></div>
               <input type="text" v-model="phoneLoginUser.code" :class="inputclass5[0]" autocomplete="off" :placeholder="$t('Input verification code')" data="输入验证码"
                      @focus="errorMsg.phoneLoginUser.code = '';inputclass5=['boderbeblue','boderbeblue2','boderbeblue3']"
                      @blur="inputclass5=''"
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
                      name="no_content" id="input_phoneLogin_code">
               <span class="help-block" v-if="errorMsg.phoneLoginUser.code">
                     {{errorMsg.phoneLoginUser.code}}
@@ -87,11 +68,7 @@
               </button>
             </div>
             <div class="input-group submit-group">
-<<<<<<< HEAD
-              <button type="button" class="btn ok-btn" data="登录" name="login_ok" id="login_ok" @click="phoneLoginSubmit">{{$t('login')}}</button>
-=======
               <button type="button" class="btn ok-btn" :class="phoneLoginUser.code&&phoneLoginUser.phoneNumber?'beblue':''" data="登录" name="login_ok" id="login_ok" @click="phoneLoginSubmit">{{$t('login')}}</button>
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
             </div>
             <div class="other-group">
               <div class="wechatLogin" @click="weChatLogin">
@@ -115,18 +92,11 @@
           </div>
           <div class="inputInner passwordLoginForm" v-show="passwordLoginForm">
             <div class="input-group">
-<<<<<<< HEAD
-              <div class="input-group-addon"><img src="../assets/login/icon2-1.png"></div>
-              <div class="select-input">
-                <input type="tel" class="form-control" v-model="loginUser.phoneNumber" :placeholder="$t('phone number')" data="输入手机号"
-                       @focus="errorMsg.loginUser.phoneNumber = ''"
-=======
               <div class="input-group-addon" :class="inputclass4[2]"><img src="../assets/login/icon2-1.png"></div>
               <div class="select-input">
                 <input type="tel" class="form-control" :class="inputclass4[0]" v-model="loginUser.phoneNumber" :placeholder="$t('phone number')" data="输入手机号"
                        @focus="errorMsg.loginUser.phoneNumber = '';inputclass4=['boderbeblue','boderbeblue2','boderbeblue3']"
                        @blur="inputclass4=''"
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
                        name="no_content" id="input_login_phoneNumber2">
               </div>
 
@@ -135,17 +105,11 @@
 									</span>
             </div>
             <div class="input-group mg10">
-<<<<<<< HEAD
-              <div class="input-group-addon"><img src="../assets/login/icon2-2.png"></div>
-              <input :type="pwdtype" class="form-control password" v-model="loginUser.password" :placeholder="$t('password')" data="输入密码"
-                     @focus="errorMsg.loginUser.password = ''" @keyup.enter="loginSubmit"
-=======
               <div class="input-group-addon" :class="inputclass3[2]"><img src="../assets/login/icon2-2.png"></div>
               <input :type="pwdtype" class="form-control password" :class="inputclass3[0]" v-model="loginUser.password" :placeholder="$t('password')" data="输入密码"
                      @focus="errorMsg.loginUser.password = '';inputclass3=['boderbeblue','boderbeblue2','boderbeblue3']"
                      @blur="inputclass3=''"
                      @keyup.enter="loginSubmit"
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
                      name="no_content" id="input_login_password">
               <div class="showpwd" @click="changePwdtype"><img :src="eye"></div>
               <span class="help-block" v-if="errorMsg.loginUser.password">
@@ -159,11 +123,7 @@
               <span @click="resetpwd()">{{$t('Forgot password')}}</span>
             </div>
             <div class="input-group submit-group">
-<<<<<<< HEAD
-              <button type="button" class="btn ok-btn" data="登录" name="login_ok" id="login_ok" @click="loginSubmit">{{$t('login')}}</button>
-=======
               <button type="button" class="btn ok-btn" :class="loginUser.password&&loginUser.phoneNumber?'beblue':''" data="登录" name="login_ok" id="login_ok" @click="loginSubmit">{{$t('login')}}</button>
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
             </div>
             <div class="other-group">
               <div class="wechatLogin" @click="weChatLogin">
@@ -201,21 +161,13 @@
 									</span>
             </div> -->
             <div class="input-group">
-<<<<<<< HEAD
-              <div class="input-group-addon"><img src="../assets/login/icon2-1.png"></div>
-=======
               <div class="input-group-addon" :class="[inputclass[2],errorMsg.registerUser.phoneNumber?'boderbeyellow3':'']"><img src="../assets/login/icon2-1.png"></div>
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
 
               <div class="select-input">
                 <div class="layui-form">
                   <div class="layui-news-style layui-unselect layui-form-select">
                     <div class="layui-select-title" @click="openSelect($event)">
-<<<<<<< HEAD
-                      <input type="text" placeholder="请选择" v-model="registerUser.selectPrefix" readonly="" class="layui-input layui-unselect">
-=======
                       <input type="text" placeholder="请选择"  :class="[inputclass[1],errorMsg.registerUser.phoneNumber?'boderbeyellow2':'']" v-model="registerUser.selectPrefix" readonly="" class="layui-input layui-unselect">
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
                       <i class="layui-edge"></i>
                     </div>
                     <dl class="layui-anim layui-anim-upbit">
@@ -225,13 +177,8 @@
                     </dl>
                   </div>
                 </div>
-<<<<<<< HEAD
-                <input type="tel" class="form-control" v-model="registerUser.phoneNumber" :placeholder="$t('phone number')"
-                       @focus="errorMsg.registerUser.phoneNumber = ''"
-=======
                 <input type="tel" class="form-control" :class="[inputclass[0],errorMsg.registerUser.phoneNumber?'boderbeyellow':'']" v-model="registerUser.phoneNumber" :placeholder="$t('phone number')"
                        @focus="errorMsg.registerUser.phoneNumber = '';inputclass=['boderbeblue','boderbeblue2','boderbeblue3']"
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
                        @blur="checkPhoneNumber()"
                        data="输入手机号"
                        name="no_content" id="input_login_phoneNumber3"
@@ -242,15 +189,9 @@
 									</span>
             </div>
             <div class="input-group">
-<<<<<<< HEAD
-              <div class="input-group-addon"><img src="../assets/login/icon2-2.png"></div>
-              <input type="password" class="form-control" v-model="registerUser.password" :placeholder="$t('password')"
-                     @focus="errorMsg.registerUser.password = ''"
-=======
               <div class="input-group-addon" :class="[inputclass1[2],errorMsg.registerUser.password?'boderbeyellow3':'']"><img src="../assets/login/icon2-2.png"></div>
               <input type="password" class="form-control" :class="[inputclass1[0],errorMsg.registerUser.password?'boderbeyellow':'']"  v-model="registerUser.password" :placeholder="$t('password')"
                      @focus="errorMsg.registerUser.password = '';inputclass1=['boderbeblue','boderbeblue2','boderbeblue3']"
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
                      @blur="checkPassword(true)"
                      data="输入密码"
                      name="no_content" id="input_login_password2"
@@ -272,25 +213,15 @@
 									</span>
             </div> -->
             <div class="input-group code">
-<<<<<<< HEAD
-              <div class="input-group-addon"><img src="../assets/login/icon2-3.png"></div>
-              <input type="text" v-model="registerUser.code" :placeholder="$t('Input verification code')" data="输入验证码"
-                     @focus="errorMsg.registerUser.code = ''"
-=======
               <div class="input-group-addon" :class="inputclass2[2]"><img src="../assets/login/icon2-3.png"></div>
               <input type="text" v-model="registerUser.code" :class="inputclass2[0]" :placeholder="$t('Input verification code')" data="输入验证码"
                      @focus="errorMsg.registerUser.code = '';inputclass2=['boderbeblue','boderbeblue2','boderbeblue3']"
                      @blur="inputclass2=''"
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
                      name="no_content" id="input_register_code">
               <span class="help-block" v-if="errorMsg.registerUser.code">
 										{{errorMsg.registerUser.code}}
 									</span>
-<<<<<<< HEAD
-              <button class="code-btn" :disabled="registerSendBtn" name="login_code-btn" id="login_code-btn"
-=======
               <button class="code-btn"  :disabled="registerSendBtn" name="login_code-btn" id="login_code-btn"
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
                       data="获取验证码" @click.stop="sendCode">
                 <img :src="loading" v-show="registerShowloading"/>
                 {{registerSendBtnText}}
@@ -298,11 +229,7 @@
             </div>
             <p class="loginTips">点击注册即表示您同意 <a href="javascript:;" @click="goPrivacy">《Bvaluate用户协议和隐私策略》</a></p>
             <div class="input-group submit-group">
-<<<<<<< HEAD
-              <button type="button" class="btn ok-btn" data="注册" name="login_register" id="login_register" @click.stop="registerSubmit()">{{$t('Sign_Submit')}}</button>
-=======
               <button type="button" class="btn ok-btn" :class="registerUser.phoneNumber&&registerUser.password&&registerUser.code?'beblue':''" data="注册" name="login_register" id="login_register" @click.stop="registerSubmit()">{{$t('Sign_Submit')}}</button>
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
             </div>
             <!-- <p class="register-tips">点击“注册”即表示您同意并愿意接收<br>BVALUATE<span>用户此协议</span>和<span>隐私政策</span></p> -->
           </div>
@@ -394,17 +321,11 @@
 
   let loading = require('../assets/login/loading.gif');
   let bg = require('../assets/login/login_bg.jpg');
-<<<<<<< HEAD
-  let eye = require('../assets/login/eye.png');
-=======
   let eye = require('../assets/user/hide.png');
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
   let openeye = require('../assets/login/eye-on.png');
   export default {
     data() {
       return {
-<<<<<<< HEAD
-=======
         inputclass:'',
         inputclass1:'',
         inputclass2:'',
@@ -414,7 +335,6 @@
         inputclass6:'',
         inputclass7:'',
         inputclass8:'',
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
         bg: bg,
         visiable: this.value,
         login_head: true,
@@ -538,16 +458,12 @@
         this.$router.push('/privacy');
       },
       openSelect (e) {
-<<<<<<< HEAD
-        e.target.parentNode.parentNode.classList.add('layui-form-selected');
-=======
         if(e.target.parentNode.parentNode.classList.contains('layui-form-selected')){
           e.target.parentNode.parentNode.classList.remove('layui-form-selected');
         }else {
           e.target.parentNode.parentNode.classList.add('layui-form-selected');
         }
 
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
       },
       headerInitUser() {
         if (this.initUser) {
@@ -1086,10 +1002,7 @@
         }
       },
       checkPassword(type) {
-<<<<<<< HEAD
-=======
         this.inputclass1='';
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
         if (type) {
           if (this.registerUser.password != null && this.registerUser.password !== '' && this.registerUser.password !== undefined) {
             if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,14}$/.test(this.registerUser.password)) {
@@ -1113,10 +1026,7 @@
         }
       },
       checkLoginPhoneNumber() {
-<<<<<<< HEAD
-=======
         this.inputclass6=''
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
         if (this.phoneLoginUser.phoneNumber != null && this.phoneLoginUser.phoneNumber !== '' && this.phoneLoginUser.phoneNumber !== undefined) {
           let phone = this.phoneLoginUser.phoneNumber;
           if (/^[0-9]*$/.test(phone)) {
@@ -1136,10 +1046,7 @@
         }
       },
       checkPhoneNumber() {
-<<<<<<< HEAD
-=======
         this.inputclass='';
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
         if (this.registerUser.phoneNumber != null && this.registerUser.phoneNumber !== '' && this.registerUser.phoneNumber !== undefined) {
           let phone = this.registerUser.phoneNumber;
           if (/^[0-9]*$/.test(phone)) {
@@ -1423,9 +1330,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-<<<<<<< HEAD
-
-=======
   .beblue{
     background-color: #3555da !important;
   }
@@ -1468,6 +1372,5 @@
     border: #74c31f 1px solid !important;
     border-right: none !important;
   }
->>>>>>> 439cfa5950876db38516210e8429a14031593ea1
 </style>
 

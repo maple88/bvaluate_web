@@ -116,8 +116,9 @@
       </div>
 
       <v2footer/>
-      <candyDetails v-show="detailsPop" @closeCandyDetails='closeCandyDetails'></candyDetails>
-      <candyGuide v-show="guidePop" @closeCandyGuide='closeCandyGuide'></candyGuide>
+      <candyDetails v-if="detailsPop" @closeCandyDetails='closeCandyDetails'></candyDetails>
+      <candyGuide v-if="guidePop" @closeCandyGuide='closeCandyGuide' @showBindPhone='showBindPhone' :firstOpenGuide='firstOpenGuide'></candyGuide>
+      <v2BindPhone v-if="bindPhonePop" @closeBindPhone='closeBindPhone'></v2BindPhone>
     </div>
   </div>
 </template>
@@ -126,6 +127,7 @@
   import sensors from '../../static/sa-init.js';
   import candyDetails from '@/components/candyDetails';
   import candyGuide from '@/components/candyGuide';
+  import v2BindPhone from '@/components/v2BindPhone';
   let newsimg = require('../assets/search/news.png');
   let tuiwen = require('../assets/search/twitter.png');
   let weibo = require('../assets/search/weibo.png');
@@ -134,7 +136,8 @@
   export default {
     components: {
         candyDetails,
-        candyGuide
+        candyGuide,
+        v2BindPhone
     },
     data() {
       return {
@@ -150,6 +153,8 @@
         index:0,
         detailsPop: false,
         guidePop: false,
+        bindPhonePop: false,
+        firstOpenGuide: true,
         user: {
           token: '',
           uid: '',
@@ -223,7 +228,8 @@
             that.showloading = -1
           }
           that.pageSize += 10;
-        })
+        });
+        
       },
       goArticle(url, query, event){
         let routeData = this.$router.resolve({path: url, query: query});
@@ -252,16 +258,23 @@
         });
       },
       showDetails: function(){
-            this.detailsPop = true;
-        },
+        this.detailsPop = true;
+      },
       closeCandyDetails: function(val){
           this.detailsPop = val;
       },
       showGuide: function(){
-            this.guidePop = true;
+          this.guidePop = true;
+          this.firstOpenGuide = false;
         },
       closeCandyGuide: function(val){
           this.guidePop = val;
+      },
+      showBindPhone: function(){
+          this.bindPhonePop = true;
+      },
+      closeBindPhone: function(val){
+          this.bindPhonePop = val;
       }
     },
     filters: {
