@@ -8,7 +8,7 @@
             <div class="userimg"><img :src="user.profileUrl"></div>
             <p class="name">{{user.nickName}}</p>
             <p class="des">{{user.synopsis}}</p>
-            <p class="candy">{{$t('candies')}} <span @click="showDetails">{{user.candy}}</span> <i @click="showGuide">赚糖果</i></p>
+            <p class="candy" @click="showDetails">{{$t('candies')}} <span>{{user.candy}}</span> <i @click="showGuide">赚糖果</i></p>
           </div>
           <a href="javascript:;" class="signin" @click="$store.state.signInTips = true">{{$t('Check in')}}</a>
         </div>

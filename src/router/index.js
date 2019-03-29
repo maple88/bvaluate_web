@@ -29,7 +29,7 @@ import userInfo from '@/pages/userInfo'
 import userNotice from '@/pages/userNotice'
 import userProject from '@/pages/userProject'
 import myfollow from '@/pages/myFollow'
-// import userCollect from '@/pages/userCollect'
+import addPage from '@/pages/addPage'
 
 Vue.use(Router);
 
@@ -200,6 +200,13 @@ export default new Router({
       component: userProject,
       meta: {
         pageTitle: '个人中心'
+      },
+    },
+    {
+      path: '/addPage',
+      component: addPage,
+      meta: {
+        pageTitle: '新增项目'
       },
     }
   ],

@@ -69,6 +69,11 @@
       </div>
 
       <v2footer/>
+
+
+      <candyDetails v-if="detailsPop" @closeCandyDetails='closeCandyDetails'></candyDetails>
+      <candyGuide v-if="guidePop" @closeCandyGuide='closeCandyGuide' @showBindPhone='showBindPhone' :firstOpenGuide='firstOpenGuide'></candyGuide>
+      <v2BindPhone v-if="bindPhonePop" @closeBindPhone='closeBindPhone'></v2BindPhone>
     </div>
   </div>
 </template>
@@ -80,6 +85,7 @@
   export default {
     data() {
       return {
+        detailsPop:true,
         user: {
           token: '',
           uid: '',

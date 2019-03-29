@@ -126,6 +126,7 @@
       fn2() {
         this.$store.state.analysisPop = false;
       },
+      // 检测文件类型的方法
       selectPDF(e) {
         this.fileTips = '';
         this.filename = '';
@@ -157,6 +158,7 @@
           this.uploadBtn = false
         }
       },
+      // 调用上传文件接口的方法
       uploadPDF() {
         let that = this;
         let project = this.project.projectName;

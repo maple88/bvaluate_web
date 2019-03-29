@@ -17,6 +17,7 @@
     "axios": "^0.18.0",
     "bootstrap": "^3.3.7",
     "echarts": "^4.2.0-rc.2",
+    "element-ui": "^2.7.0",
     "es6-promise": "^4.2.5",
     "headroom.js": "^0.9.4",
     "intro.js": "^2.9.3",
