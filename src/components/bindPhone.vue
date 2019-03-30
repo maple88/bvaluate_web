@@ -3,7 +3,7 @@
     <div class="login_fixed v2login bindPhone" v-show="bindPhonePop">
       <div class="loginbox">
         <div class="close_box" @click="fn2">
-          <i class="icon_close"></i>
+          <i class="icon_close2"></i>
         </div>
         <div class="hd">
           <div class="loginlogo"><img src="../assets/loginlogo.png"></div>

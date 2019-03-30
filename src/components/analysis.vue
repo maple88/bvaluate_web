@@ -8,7 +8,7 @@
           <i class="icon_close"></i>
         </div>
         <div class="hd whitePaperTitle">
-          <p>白皮书上传</p>
+          <p>{{$t('Upload of white paper')}}</p>
         </div>
         <div class="bd">
           <div class="from_box">
@@ -16,7 +16,7 @@
               <div class="project_information_from">
                 <div class="input_box">
                   <div class="input_left">
-                    <h4><span>*</span>项目名称：</h4>
+                    <h4><span>*</span>{{$t('Project name')}}：</h4>
                   </div>
                   <div class="input_right">
                     <input type="text" v-model="project.projectName" @focus="project.projectNameErr = ''" name="no_content" id="input_analysis_projectName" />
@@ -27,7 +27,7 @@
                 </div>
                 <div class="input_box">
                   <div class="input_left">
-                    <h4><span>*</span>官网地址：</h4>
+                    <h4><span>*</span>{{$t('Official website address')}}：</h4>
                   </div>
                   <div class="input_right">
                     <input type="text" v-model="project.officialAddress" @focus="project.officialAddressErr = ''" name="no_content" id="input_analysis_officialAddress"/>
@@ -38,7 +38,7 @@
                 </div>
                 <div class="input_box">
                   <div class="input_left">
-                    <h4>通证名称：</h4>
+                    <h4>{{$t('Token name')}}：</h4>
                   </div>
                   <div class="input_right">
                     <input type="text" v-model="project.tokenName" name="no_content" id="input_analysis_tokenName"/>
@@ -46,7 +46,7 @@
                 </div>
               </div>
               <div class="loadUp_box">
-                <p class="uploadtips">注：暂只支持pdf格式文件，文件名称格式为项目名称-版本号-语言.pdf<br>(例如300cubits TEU-02.00.00-cn.pdf)</p>
+                <p class="uploadtips">{{$t('Note: temporary support for PDF files, file name format for project designation - version number - language. PDF')}}<br>{{$t('(For example 300cubits TEU-02.00.00-cn.pdf)')}}</p>
                 <div class="uploadWhitePaper">
                   <div class="filename">
                     <input type="text" data="点击了只读状态的输入框" name="no_content" id="input_analysis_filename" readonly="readonly" v-model="filename">
@@ -58,10 +58,10 @@
                   <div class="rightBtn">
                     <div class="chooseFile">
                       <input type="file" data="选择文件" name="no_content" id="input_analysis_chooseFile" @change="selectPDF($event)">
-                      <button data="选择文件">选择文件</button>
+                      <button data="选择文件">{{$t('Select the file')}}</button>
                     </div>
                     <button class="uploadBtn" data="上传白皮书" name="analysis_uploadBtn" id="analysis_uploadBtn" :class="{ disabled: uploadBtn }" :disabled="uploadBtn" @click="uploadPDF">
-                      上传
+                      {{$t('Upload')}}
                     </button>
                   </div>
                 </div>
@@ -78,8 +78,8 @@
             </div>
             <div class="right_box">
               <div class="reward_box">
-                <p>系统会将验证通过的项目添加至数据库</p>
-                <h4>并赠送上传用户 <span>166</span> 糖果！</h4>
+                <p>{{$t('The system will add the verified project to the database')}}</p>
+                <h4>{{$t('And free upload user')}} <span>166</span>{{$t('candy!')}}</h4>
               </div>
             </div>
           </div>
@@ -126,6 +126,7 @@
       fn2() {
         this.$store.state.analysisPop = false;
       },
+      // 检测文件类型的方法
       selectPDF(e) {
         this.fileTips = '';
         this.filename = '';
@@ -157,6 +158,7 @@
           this.uploadBtn = false
         }
       },
+      // 调用上传文件接口的方法
       uploadPDF() {
         let that = this;
         let project = this.project.projectName;

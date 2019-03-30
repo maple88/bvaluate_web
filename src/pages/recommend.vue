@@ -1,7 +1,7 @@
 <template>
   <div class="page">
-    <vheader/>
-    <div class="maintainer">
+    <v2header/>
+    <div class="v2maintainer">
       <div class="swiper-container" id="top_banner">
         <div class="swiper-wrapper">
           <div class="swiper-slide" :style="'background-image: url('+banner1+')'">
@@ -161,14 +161,13 @@
                             <div class="media-bottom">
                               <ul>
                                 <li
-                                  v-if="!(news.siteName !== 'NULL' && news.siteName !== null && news.siteName !== '')"
-                                  @click="goArticle('/author',{author: news.author,type: 'author'})">
+                                  v-if="!(news.siteName !== 'NULL' && news.siteName !== null && news.siteName !== '')">
                                   <div class="userimg">
                                     <img src="../assets/follow/user_head.png">
                                   </div>
                                   {{news.author}}
                                 </li>
-                                <li v-else @click="goArticle('/author',{author: news.siteName,type: 'siteName'})">
+                                <li v-else>
                                   {{news.siteName}}
                                 </li>
                                 <li>{{news.urlTime}}</li>
@@ -394,7 +393,7 @@
           </div>
         </div>
       </div>
-      <vfooter/>
+      <v2footer/>
       <v-login v-model="isShow" :success="refreshRecommend"></v-login>
     </div>
 

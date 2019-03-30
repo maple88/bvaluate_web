@@ -1,7 +1,7 @@
 <template>
   <div class="page">
-    <vheader/>
-    <div class="maintainer">
+    <v2header/>
+    <div class="v2maintainer">
       <div class="user-center" :style="'background-image: url('+userbg+')'">
         <div class="usertainer author">
           <div class="userimg"><img src="../assets/logo_brand.png"></div>
@@ -11,28 +11,28 @@
             <span class="nickname author">{{author}}</span>
             <button name="author_follow_btn_author" id="author_follow_btn_author" 
             class="follow_btn" v-show="!follow" data="关注作者" @click="setAuthorFollow($event), trackAttention('作者', author)">
-              <img src="../assets/follow/icon-follow.png"/>关注
+              <img src="../assets/follow/icon-follow.png"/>{{$t('Focus')}}
               <div class="arrow"></div>
             </button>
             <button name="author_followed_btn_author" id="author_followed_btn_author" 
             class="followed_btn" v-show="follow" data="取消关注作者" @click="deleteFollow($event)">
               <div class="arrow"></div>
-              <img src="../assets/follow/icon-followed.png"/>已关注
+              <img src="../assets/follow/icon-followed.png"/>{{$t('Followed')}}
             </button>
           </p>
           <p class="sign">后海有树的院子，夏代有工的玉，此时此刻的云，二十来岁的你--可遇不可求的事。</p>
           <ul class="datalist">
             <li>
-              <p>0</p>
-              <p>糖果数</p>
+              <p>{{candy}}</p>
+              <p>{{$t('Number of candy')}}</p>
             </li>
             <li>
               <p>0</p>
-              <p>粉丝</p>
+              <p>{{$t('Followers')}}</p>
             </li>
             <li>
-              <p>0人</p>
-              <p>关注</p>
+              <p>0</p>
+              <p>{{$t('Focus')}}</p>
             </li>
           </ul>
         </div>
@@ -81,16 +81,11 @@
                         <div class="media-bottom">
                           <ul>
                             <li
-                              :name="'author_media-bottom_author_'+index" :id="'author_media-bottom_author_'+index"
-                              v-if="!(news.siteName !== 'NULL' && news.siteName !== null && news.siteName !== '')"
-                              @click="goArticle('/author',{author: news.author,type: 'author'}, $event)" :data="news.author">
+                              :name="'author_media-bottom_author_'+index" :id="'author_media-bottom_author_'+index">
                               <div class="userimg">
                                 <img src="../assets/follow/user_head.png">
                               </div>
                               <span class="author">{{news.author}}</span>
-                            </li>
-                            <li v-else :name="'author_media-bottom_siteName_'+index" :id="'author_media-bottom_siteName_'+index" @click="goArticle('/author',{author: news.siteName,type: 'siteName'}, $event)" :data="news.siteName">
-                              <span class="author">{{news.siteName}}</span>
                             </li>
                             <li>{{news.urlTime}}</li>
                           </ul>
@@ -129,13 +124,13 @@
           <div class="loading_more">
             <button :disabled="showloading" name="loading_more" id="loading_more" data="加载更多" value="加载更多" @click.stop="getNewsForAuthor()">
               <img v-if="showloading" :src="loading"/>
-              <span v-if="!showloading">加载更多</span>
+              <span v-if="!showloading">{{$t('Load more')}}</span>
             </button>
           </div>
         </div>
       </div>
     </div>
-    <vfooter></vfooter>
+    <v2footer/>
   </div>
 </template>
 

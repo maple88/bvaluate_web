@@ -12,12 +12,12 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'https://api.bvaluate.com.cn',
+        target: 'https://bvaluate.com.cn/api',
         secure: false,
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/'
-        }
+        },
       },
       '/wechat': {
         target: 'https://api.weixin.qq.com',
@@ -63,12 +63,20 @@ module.exports = {
     assetsPublicPath: './',
     proxyTable: {
       '/api': {
-        target: 'https://api.bvaluate.com.cn',
+        target: 'https://bvaluate.com.cn/api',
         secure: false,
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/'
-        }
+        },
+      },
+      '/wechat': {
+        target: 'https://api.weixin.qq.com',
+        secure: false,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/wechat': '/'
+        },
       }
     },
     /**

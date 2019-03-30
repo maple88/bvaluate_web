@@ -1,7 +1,7 @@
 <template>
   <div class="page pdfshow" @click="shareButton = false">
-    <vheader/>
-    <div class="maintainer">
+    <v2header/>
+    <div class="v2maintainer">
       <!-- content here -->
         <div class="main-content">
           <div class="top-h">
@@ -48,7 +48,7 @@
           </div>
           <div class="tips-mask" @click="popShow = false"></div>
         </div>
-      <vfooter/>
+      <v2footer/>
     </div>
   </div>
 </template>

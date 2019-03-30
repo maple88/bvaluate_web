@@ -5,7 +5,7 @@
         <div class="col-md-6 col-xs-12 left">
           <p class="p1">welcome！</p>
           <p class="p2">
-            <router-link to="/list" data="进入榜单页">BVALUATE</router-link>
+            <router-link to="/home" data="进入首页">BVALUATE</router-link>
           </p>
           <p class="p3">搜索全球资讯，掌握最新动态</p>
         </div>
@@ -367,10 +367,10 @@
                 that.showTip = false;
                 that.login();
                 if (res.data.signedIn) {
-                  that.$router.push('/list')
+                  that.$router.push('/home')
                 } else {
                   that.$store.state.signInTips = true;
-                  that.$router.push('/list')
+                  that.$router.push('/home')
                 }
               }, 1000);
             }).catch(function (res) {
@@ -603,10 +603,10 @@
                   that.showTip = false;
                   that.login();
                   if (res.data.signedIn) {
-                    that.$router.push('/list')
+                    that.$router.push('/home')
                   } else {
                     that.$store.state.signInTips = true;
-                    that.$router.push('/list')
+                    that.$router.push('/home')
                   }
                 }, 2000);
               }).catch(function (res) {

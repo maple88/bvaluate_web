@@ -14,16 +14,11 @@
             <p class="media-words">{{item.result.content}}</p>
             <div class="media-bottom">
               <ul>
-                <li
-                  v-if="!(item.result.siteName !== 'NULL' && item.result.siteName !== null && item.result.siteName !== '')"
-                  @click="goArticle('/author',{author: item.result.author,type: 'author'})">
+                <li>
                   <div class="userimg">
                     <img src="../../assets/follow/user_head.png">
                   </div>
                   {{item.result.author}}
-                </li>
-                <li v-else @click="goArticle('/author',{author: item.result.siteName,type: 'siteName'})">
-                  {{item.result.siteName}}
                 </li>
                 <li>{{item.result.urlDate | dataFormat}}</li>
                 <li data-toggle="modal" data-target="#deleteModal" class="love" @click="deleteCid = item.cid">

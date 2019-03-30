@@ -84,6 +84,10 @@ module.exports = {
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery"
+    }),
+    new webpack.ProvidePlugin({
+      // other modules
+      introJs: ['intro.js', 'introJs']
     })
   ]
 }

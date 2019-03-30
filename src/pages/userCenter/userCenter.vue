@@ -1,7 +1,7 @@
 <template>
   <div class="page">
-    <vheader/>
-    <div class="maintainer">
+    <v2header/>
+    <div class="v2maintainer">
       <div class="user-center" :style="'background-image: url('+userbg+')'">
         <div class="usertainer">
           <div class="userimg">
@@ -20,15 +20,15 @@
           <ul class="datalist">
             <li>
               <p>{{candy}}</p>
-              <p>糖果数</p>
+              <p>{{$t('Number of candy')}}</p>
             </li>
             <li>
               <p>0</p>
-              <p>粉丝</p>
+              <p>{{$t('Followers')}}</p>
             </li>
             <li>
-              <p>0人</p>
-              <p>关注</p>
+              <p>0</p>
+              <p>{{$t('Focus')}}</p>
             </li>
           </ul>
         </div>
@@ -40,18 +40,19 @@
               投稿<span>{{myNewsList}}</span></li> -->
             <!--<li @click="toggleTab('read'), num = 2" :class="{active: num === 2}">阅读<span>122</span></li>-->
             <li @click="toggleTab('collection'), num = 3" :class="{active: num === 3}">
-              收藏<span>{{newsList}}</span></li>
+              {{$t('Collection')}}<span>{{newsList}}</span></li>
           </ul>
         </div>
       </div>
       <prince v-on:toggleTab="toggleTab" :is="currentTab"></prince>
+
+      <v2footer/>
     </div>
   </div>
 </template>
 
 <script>
   import sensors from '../../../static/sa-init.js'
-  import vheader from '@/components/header.vue';
   import contribute from '@/pages/userCenter/contribute';
   import read from '@/pages/userCenter/read';
   import collection from '@/pages/userCenter/collection';
@@ -62,7 +63,6 @@
 
   export default {
     components: {
-      vheader,
       contribute,
       read,
       collection,

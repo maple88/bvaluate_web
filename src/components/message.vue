@@ -8,15 +8,15 @@
         </div>
         <div class="bd">
           <div class="message_title">
-            <h4>消息中心</h4>
+            <h4>{{$t('Message center')}}</h4>
           </div>
           <div class="message_content">
             <div class="message_tab">
-              <div class="tab_item" :class="showBox === 0?'active':''" @click="showList()">
-                <h4>全部</h4>
+              <div class="tab_item" :class="showBox === 0?'active':''" @click="showList(0)">
+                <h4>{{$t('All')}}</h4>
               </div>
-              <div class="tab_item" :class="showBox === 1?'active':''" @click="showList()">
-                <h4>未读</h4>
+              <div class="tab_item" :class="showBox === 1?'active':''" @click="showList(1)">
+                <h4>{{$t('Unread news')}}</h4>
               </div>
             </div>
             <div class="message_tab_content">
@@ -26,13 +26,13 @@
                     <img :src="item.readFlag?read:unRead" alt="未读">
                   </div>
                   <div class="message_center">
-                    <h4>通知 | {{item.title}}</h4>
+                    <h4>{{$t('notice')}} | {{item.title}}</h4>
                     <p>{{item.createdTime}}</p>
                   </div>
                   <div class="message_right">
                     <!--<div class="copy_a">删除</div>-->
-                    <div class="copy_a" @click="openMessage(item.id,index,item.readFlag)">{{open === index?'收起':'展开'}}<i
-                      class="icon_down"></i>
+                    <div class="copy_a" @click="openMessage(item.id,index,item.readFlag)">{{open === index?$t('Fold'):$t('Unfold')}}<i
+                      class="layui-icon layui-icon-down"></i>
                     </div>
                   </div>
                 </div>
@@ -42,6 +42,7 @@
                   </p>
                 </div>
               </div>
+              
             </div>
           </div>
         </div>
@@ -121,34 +122,40 @@
             url: url,
             headers: headers
           }).then(res => {
+            // console.log(res);
+            
             this.messageList = res.data;
             this.allList = res.data;
           });
         }
       },
-      showList() {
-        if (this.showBox === 0) {
-          let uid = localStorage.getItem('apelink_user_uid');
-          let token = localStorage.getItem('apelink_user_token');
-          if (token) {
-            let headers = {'uid': uid, 'Authorization': token};
-            let url = '/api/notify/getUserNotify?readFlag=unread';
-            this.$axios({
-              method: 'get',
-              url: url,
-              headers: headers
-            }).then(res => {
-              this.unReadList = res.data;
-              this.messageList = this.unReadList;
-              this.showBox = 1;
-            }).catch(res => {
-              this.messageList = []
-              this.showBox = 1;
-            });
+      showList(type) {
+        if (type===0) {
+          if(this.showBox !== type){
+            this.showBox = 0;
+            this.initMessage();
           }
         } else {
-          this.showBox = 0;
-          this.messageList = this.allList;
+          if(this.showBox !== type){
+            let uid = localStorage.getItem('apelink_user_uid');
+            let token = localStorage.getItem('apelink_user_token');
+            if (token) {
+              let headers = {'uid': uid, 'Authorization': token};
+              let url = '/api/notify/getUserNotify?readFlag=unread';
+              this.$axios({
+                method: 'get',
+                url: url,
+                headers: headers
+              }).then(res => {
+                this.unReadList = res.data;
+                this.messageList = this.unReadList;
+                this.showBox = 1;
+              }).catch(res => {
+                this.messageList = []
+                this.showBox = 1;
+              });
+            }
+          }
         }
       }
     }

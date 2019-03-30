@@ -1,0 +1,663 @@
+#addPage {
+  background-color: #f5f5f5;
+
+  .v2footer {
+    width: 100%;
+  }
+
+  // 上传步骤
+  #con {
+    width: 1300px;
+    margin: 150px auto 150px;
+    border-radius: 2px;
+
+    #step {
+      background-color: #fff;
+      min-height: 680px;
+      height: 100%;
+      width: 900px;
+      float: left;
+      padding-bottom: 80px;
+
+      .step_top {
+        width: 758px;
+        margin: 20px auto 0;
+        height: 90px;
+        display: flex;
+        border-bottom: 1px solid #ccc;
+
+        .step_top_01,
+        .step_top_02,
+        .step_top_03 {
+          flex: 1;
+          transition: 0.5s all;
+
+          .step_top_box {
+            width: 85%;
+            height: 25px;
+            background-color: #1e6ddf;
+            padding: 3px;
+            position: relative;
+
+            .step_top_box_num {
+              height: 18px;
+              width: 18px;
+              border-radius: 50%;
+              background-color: #fff;
+              text-align: center;
+              line-height: 20px;
+              color: #1e6ddf;
+              display: inline-block;
+            }
+
+            .step_top_box_stepNum {
+              color: #fff;
+            }
+
+            .step_top_box_content {
+              font-size: 12px;
+              margin: 15px 0 0 20px;
+
+              .step_top_box_content_num {
+                color: #ec984f;
+                font-size: 16px;
+              }
+            }
+
+            .triangle-left {
+              width: 0;
+              height: 0;
+              border-top: 11px solid transparent;
+              border-left: 16px solid #1e6ddf;
+              border-bottom: 14px solid transparent;
+              position: relative;
+              left: 211px;
+              top: -57px;
+            }
+
+            .triangle-left_op {
+              width: 0;
+              height: 0;
+              background-color: #1e6ddf;
+              border-top: 11px solid transparent;
+              border-left: 16px solid #fff;
+              border-bottom: 14px solid transparent;
+              position: absolute;
+              left: -16px;
+              top: 0px;
+            }
+
+            .triangle-left_03 {
+              top: -79px;
+            }
+
+            .bgc_gray {
+              background-color: #eee;
+            }
+          }
+        }
+
+        // 未选中状态的样式
+        .noActive {
+          .step_top_box {
+            background-color: #eee !important;
+          }
+
+          .triangle-left {
+            border-left: 16px solid #eee !important;
+          }
+
+          .triangle-left_op {
+            background-color: #eee !important;
+          }
+
+          .step_top_box_num,
+          .step_top_box_stepNum,
+          .step_top_box_content {
+            color: #666 !important;
+          }
+        }
+      }
+
+      .information {
+        width: 758px;
+        margin: 50px auto 0;
+
+        .information_title {
+          font-size: 16px;
+          font-weight: 900;
+        }
+
+        .information_content {
+          margin: 33px 0 0 15px;
+
+          .information_must {
+            color: #ec984f;
+          }
+
+          .information_must03 {
+            color: #fff;
+          }
+        }
+
+        .information_input {
+          width: 418px;
+          height: 34px;
+          border: 1px solid #ccc;
+        }
+
+        .information_name {
+          margin-left: 20px;
+          color: #ec984f;
+          font-size: 12px;
+        }
+      }
+
+      .upload {
+        width: 758px;
+        margin: 50px auto 0;
+
+        .upload_title {
+          font-size: 16px;
+          font-weight: 900;
+        }
+
+        .upload_box {
+          height: 225px;
+          width: 420px;
+          border: 1px dashed #1e6ddf;
+          border-radius: 10px;
+          margin: 20px 92px;
+          padding: 16px;
+          text-align: center;
+          position: relative;
+
+          .inputFile {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+          }
+
+          .upload_box_img {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto;
+          }
+
+          .upload_box_Tips {
+            color: #3557da;
+            text-align: center;
+            font-size: 16px;
+            line-height: 40px;
+          }
+
+          .upload_box_content {
+            font-size: 12px;
+            margin-top: 10px;
+            text-align: left;
+            margin-left: 77px;
+
+            .upload_box_content_must {
+              color: #ec984f;
+            }
+
+            .upload_box_content_must03 {
+              color: #fff;
+            }
+          }
+        }
+
+        .upload_box_state {
+          width: 420px;
+          margin-top: 30px;
+
+          .upload_box_state_box {
+            margin-left: 92px;
+            margin-top: 15px;
+
+            .upload_box_state_box_img {
+              img {
+                width: 25px;
+                height: 25px;
+              }
+            }
+          }
+
+          .upload_box_state_box_state {
+            width: 400px;
+            height: 4px;
+            border-radius: 2px;
+            background-color: #ececec;
+            margin: 2px 25px;
+
+            .upload_box_state_box_state_success {
+              height: 100%;
+              background-color: #3557da;
+              border-radius: 4px;
+            }
+          }
+        }
+
+        .upload_box_sure {
+          width: 195px;
+          height: 35px;
+          display: flex;
+          justify-content: space-between;
+          margin-left: 92px;
+          margin-top: 36px;
+
+          .upload_box_ok {
+            width: 75px;
+            height: 35px;
+            background-color: #3557da;
+            border-radius: 10px;
+            color: #fff;
+            text-align: center;
+            line-height: 35px;
+          }
+
+          .upload_box_cancel {
+            width: 75px;
+            height: 35px;
+            background-color: #d3d3d3;
+            border-radius: 10px;
+            color: #fff;
+            text-align: center;
+            line-height: 35px;
+          }
+        }
+
+        .upload_box_02 {
+          .upload_box_02_top {
+            margin-left: 30px;
+            margin-top: 15px;
+
+            img {
+              width: 27px;
+              height: 23px;
+            }
+          }
+
+          .upload_box_02_main {
+            width: 730px;
+            height: 210px;
+            border: 1px dashed #3556db;
+            margin-left: 30px;
+            margin-top: 23px;
+            border-radius: 5px;
+            text-align: center;
+            padding: 40px 0;
+
+            .upload_box_02_main_title {
+              font-size: 25px;
+              color: #3556db;
+            }
+
+            .upload_box_02_main_text:first-child {
+              margin-top: 40px;
+            }
+
+            .upload_box_02_main_text {
+              .upload_box_02_main_text_blue {
+                color: #3556db;
+              }
+            }
+          }
+        }
+
+      }
+
+      .jurisdiction {
+        width: 758px;
+        margin: 50px auto 0;
+
+        .jurisdiction_title {
+          font-size: 16px;
+          font-weight: 900;
+        }
+
+        .jurisdiction_main {
+          margin-left: 90px;
+
+          .jurisdiction_main_btn {
+            margin-top: 21px;
+
+            .jurisdiction_main_01 {
+              color: #000;
+            }
+
+            .jurisdiction_main_02 {
+              color: #ec984f;
+            }
+
+            .jurisdiction_main_03 {
+              color: #666;
+              font-size: 12px;
+            }
+
+            // 自定义按钮样式模块
+            input[type="radio"]+label::before {
+              content: " ";
+              display: inline-block;
+              vertical-align: middle;
+              font-size: 18px;
+              width: 20px;
+              height: 20px;
+              margin-right: 4px;
+              border-radius: 50%;
+              border: 1px solid #01cd78;
+              text-indent: 3px;
+              line-height: 1;
+            }
+          }
+        }
+      }
+
+      .sumit {
+        width: 160px;
+        height: 33px;
+        background-color: #3557da;
+        text-align: center;
+        line-height: 33px;
+        color: #fff;
+        border-radius: 10px;
+        margin: 50px auto;
+      }
+    }
+
+    //上传记录通用
+    #record {
+      width: 370px;
+      float: left;
+      padding: 20px 15px;
+      background-color: #fff;
+      margin-left: 30px;
+
+      .record_title {
+        font-size: 18px;
+        font-weight: 900;
+      }
+
+      .record_content {
+        margin-top: 20px;
+        border-bottom: 1px solid #ccc;
+
+        .record_content_title {
+          >ul {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+
+            >li {
+              color: #737373;
+              flex: 1;
+            }
+          }
+        }
+      }
+
+      .record_content_list {
+        margin-top: 40px;
+
+        >ul {
+          display: flex;
+          justify-content: space-between;
+
+          >li {
+            flex: 1;
+            font-size: 12px;
+            text-align: center;
+          }
+        }
+      }
+
+      .addBtn {
+        width: 111px;
+        height: 40px;
+        border-radius: 3px;
+        font-size: 20px;
+        background-color: #3557da;
+        line-height: 40px;
+        text-align: center;
+        color: #fff;
+        margin: 50px auto;
+      }
+    }
+
+    // 推荐项目通用
+    #recommend {
+      height: 590px;
+      width: 370px;
+      float: left;
+      padding: 20px 15px;
+      background-color: #fff;
+      margin: 30px 0 30px 30px;
+
+      .recommend_title {
+        font-size: 18px;
+        font-weight: 900;
+      }
+
+      .recommend_list {
+        ul {
+          li {
+            margin: 20px auto;
+            width: 344px;
+            height: 151px;
+            background: url(../assets/project/recommend-banner1.jpg) center / cover no-repeat;
+            border-radius: 5px;
+            padding: 40px 10px;
+            display: flex;
+            justify-content: space-between;
+
+            .recommend_list_headImg {
+              width: 72px;
+              height: 72px;
+
+              img {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                margin-left: 10px;
+              }
+            }
+
+            .recommend_list_describe {
+              p {
+                margin: 0 0 5px;
+                color: #fff;
+              }
+
+              .recommend_list_describe_name01 {
+                font-size: 16px;
+              }
+
+              .recommend_list_describe_name02 {
+                font-size: 12px;
+              }
+
+              .recommend_list_describe_name03 {
+                font-size: 12px;
+              }
+            }
+
+            .recommend_list_fraction {
+              line-height: 72px;
+              font-size: 16px;
+              color: #fff;
+              width: 50px;
+              font-size: 22px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// 媒体查询适配小屏终端
+// 
+@media screen and (max-width:1200px) {
+  #addPage {
+    width: 100%;
+
+    #con {
+      width: 100%;
+
+      #step {
+        width: 90%;
+        margin-left: 5%;
+      }
+
+      #record {
+        width: 40%;
+        margin-left: 5%;
+        margin-top: 0.6rem;
+      }
+
+      #recommend {
+        width: 40%;
+        margin-left: 10%;
+      }
+    }
+  }
+
+}
+
+@media screen and (max-width:992px) {
+  #addPage {
+    #con {
+      #step {
+        width: 100%;
+        margin-left: 0;
+
+        .information {
+          width: auto;
+          padding: 0 5%;
+        }
+
+        .upload {
+          width: auto;
+          padding: 0 5%;
+        }
+
+        .step_top {
+          width: auto;
+
+          .step_top_01,
+          .step_top_02
+            {
+            .step_top_box {
+              .triangle-left {
+                left: 2.15rem;
+                top: -0.57rem;
+              }
+            }
+          }
+
+          .step_top_03 {
+            .step_top_box {
+              .triangle-left {
+                top: -.79rem;
+                left: 2.15rem;
+              }
+            }
+          }
+        }
+
+        .jurisdiction {
+          padding: 0 5%;
+        }
+      }
+
+      #recommend {
+        .recommend_list ul li {
+          width: auto
+        }
+      }
+    }
+  }
+}
+
+
+@media screen and (max-width:767px) {
+  #addPage {
+    width: 100%;
+
+    #con {
+      margin: 3rem auto 2rem;
+
+      #step {
+        float: none;
+
+        .step_top {
+          height: 2.6rem;
+
+          .step_top_01,
+          .step_top_02,
+          .step_top_03 {
+            .step_top_box {
+              width: 100%;
+
+              .step_top_box_content {
+                margin: 0.4rem 0 0 0;
+              }
+
+              .triangle-left {
+                display: none
+              }
+            }
+          }
+        }
+
+        .information {
+          .information_input {
+            width: 60%;
+          }
+        }
+
+        .upload {
+          .upload_box {
+            width: 90%;
+            margin: 0.4rem auto;
+            height: 5.2rem;
+
+            .upload_box_content {
+              margin-left: 0;
+              margin-top: 0.4rem;
+              text-align: center;
+            }
+          }
+
+          .upload_box_sure {
+            margin-left: 0;
+            margin: 0.72rem auto 0;
+          }
+        }
+
+        .jurisdiction {
+          width: 100%;
+
+          .jurisdiction_main {
+            margin-left: 0;
+          }
+        }
+      }
+
+      #record {
+        width: 90%;
+        float: none;
+      }
+
+      #recommend {
+        width: 90%;
+        margin: 0.6rem auto 0;
+        float: none;
+      }
+    }
+  }
+
+}

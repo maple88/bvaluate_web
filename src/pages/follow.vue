@@ -1,24 +1,24 @@
 <template>
   <div class="page follow_page">
-    <vheader/>
-    <div class="maintainer">
+    <v2header/>
+    <div class="v2maintainer">
       <div class="follow_content">
         <div class="fish_container">
           <div class="clearfix">
             <div class="left">
               <ul class="menu_bar">
-                <li @click="tabhide(), getxiangmu()" :class="{active: xiangmu}">项目</li>
-                <li @click="tabhide(), gethangye()" :class="{active: hangye}">行业</li>
-                <li @click="tabhide(), getguojia()" :class="{active: guojia}">国家</li>
-                <li @click="tabhide(), getzuozhe()" :class="{active: zuozhe}">作者</li>
-                <li @click="tabhide(), getwenzhang()" :class="{active: wenzhang}">收藏文章</li>
+                <li @click="tabhide(), getxiangmu()" :class="{active: xiangmu}">{{$t('Project')}}</li>
+                <li @click="tabhide(), gethangye()" :class="{active: hangye}">{{$t('Industry')}}</li>
+                <li @click="tabhide(), getguojia()" :class="{active: guojia}">{{$t('Nation')}}</li>
+                <li @click="tabhide(), getzuozhe()" :class="{active: zuozhe}">{{$t('The author')}}</li>
+                <li @click="tabhide(), getwenzhang()" :class="{active: wenzhang}">{{$t('Collect articles')}}</li>
               </ul>
             </div>
             <div class="center">
               <div class="tab_item" v-if="xiangmu">
                 <div class="item_list_top">
                   <div class="item_list_title">
-                    <h4>推荐</h4>
+                    <h4>{{$t('Recommend')}}</h4>
                   </div>
                   <div class="follow_list serach_follow_list">
                     <div class="project_list_box" v-for="(item, index) in tuijian_xiangmuList" :key="index">
@@ -45,7 +45,7 @@
                             </div>
                             <div class="right">
                               <h4>{{item.totalScore }}</h4>
-                              <p>总分</p>
+                              <p>{{$t('Total score')}}</p>
                             </div>
                           </div>
                           <div class="detail_info">
@@ -58,7 +58,7 @@
                 </div>
                 <div class="item_list_bottom">
                   <div class="item_list_title">
-                    <h4>已关注</h4>
+                    <h4>{{$t('Followed')}}</h4>
                   </div>
                   <div class="follow_list serach_follow_list">
                     <div class="project_list_box" v-for="(item, index) in xiangmuList" :key="index">
@@ -85,12 +85,19 @@
                             </div>
                             <div class="right">
                               <h4>{{item.result.totalScore }}</h4>
-                              <p>总分</p>
+                              <p>{{$t('Total score')}}</p>
                             </div>
                           </div>
                           <div class="detail_info">
                             <p>{{item.result.irAbstract }}</p>
                           </div>
+                        </div>
+                         <!-- 没有数据加载样式 -->
+                        <div class="notmore" v-if="showNotMore">
+                            <div class="not-box">
+                                <img src="../assets/list/shuju.png" alt="">
+                                <p>暂无数据，请<span @click="aginLoad">重新加载</span></p>
+                            </div>
                         </div>
                       </div>
                     </div>
@@ -98,15 +105,16 @@
                   <div class="loading_more">
                     <button :disabled="showloading" data="加载更多" value="加载更多" name="xiangmu_loading_more" id="xiangmu_loading_more" @click.stop="getxiangmu()" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
-                      <span v-if="!showloading">加载更多</span>
+                      <span v-if="!showloading">{{$t('Load more')}}</span>
                     </button>
                   </div>
+                  
                 </div>
               </div>
               <div class="tab_item" v-if="hangye">
                 <div class="item_list_top">
                   <div class="item_list_title">
-                    <h4>推荐</h4>
+                    <h4>{{$t('Recommend')}}</h4>
                   </div>
                   <div class="follow-industry-recommend">
                     <ul>
@@ -119,7 +127,7 @@
                 </div>
                 <div class="item_list_bottom">
                   <div class="item_list_title">
-                    <h4>已关注</h4>
+                    <h4>{{$t('Followed')}}</h4>
                   </div>
                   <div class="follow-industry-recommend">
                     <ul>
@@ -132,7 +140,7 @@
                   <div class="loading_more">
                     <button :disabled="showloading" data="加载更多" value="加载更多" name="hangye_loading_more" id="hangye_loading_more" @click.stop="gethangye()" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
-                      <span v-if="!showloading">加载更多</span>
+                      <span v-if="!showloading">{{$t('Load more')}}</span>
                     </button>
                   </div>
                 </div>
@@ -140,7 +148,7 @@
               <div class="tab_item" v-if="guojia">
                 <div class="item_list_top">
                   <div class="item_list_title">
-                    <h4>推荐</h4>
+                    <h4>{{$t('Recommend')}}</h4>
                   </div>
                   <div class="follow-industry-recommend">
                     <ul>
@@ -153,7 +161,7 @@
                 </div>
                 <div class="item_list_bottom">
                   <div class="item_list_title">
-                    <h4>已关注</h4>
+                    <h4>{{$t('Followed')}}</h4>
                   </div>
                   <div class="follow-industry-recommend">
                     <ul>
@@ -166,7 +174,7 @@
                   <div class="loading_more">
                     <button :disabled="showloading" data="加载更多" value="加载更多" name="guojia_loading_more" id="guojia_loading_more" @click.stop="getguojia()" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
-                      <span v-if="!showloading">加载更多</span>
+                      <span v-if="!showloading">{{$t('Load more')}}</span>
                     </button>
                   </div>
                 </div>
@@ -174,7 +182,7 @@
               <div class="tab_item" v-if="zuozhe">
                 <div class="item_list_top">
                   <div class="item_list_title">
-                    <h4>推荐</h4>
+                    <h4>{{$t('Recommend')}}</h4>
                   </div>
                   <div class="follow-industry-recommend">
                     <ul>
@@ -187,7 +195,7 @@
                 </div>
                 <div class="item_list_bottom">
                   <div class="item_list_title">
-                    <h4>已关注</h4>
+                    <h4>{{$t('Followed')}}</h4>
                   </div>
                   <div class="follow-industry-recommend">
                     <ul>
@@ -200,7 +208,7 @@
                   <div class="loading_more">
                     <button :disabled="showloading" data="加载更多" value="加载更多" name="zuozhe_loading_more" id="zuozhe_loading_more" @click.stop="getzuozhe()" v-if="!(showloading===-1)">
                       <img v-if="showloading" :src="loading"/>
-                      <span v-if="!showloading">加载更多</span>
+                      <span v-if="!showloading">{{$t('Load more')}}</span>
                     </button>
                   </div>
                 </div>
@@ -235,16 +243,11 @@
                                 <ul>
                                   <li
                                     :name="'follow_wenzhang_author_'+index" :id="'follow_wenzhang_author_'+index" 
-                                    v-if="!(item.result.siteName !== 'NULL' && item.result.siteName !== null && item.result.siteName !== '')"
-                                    @click="goArticle('/author',{author: item.result.author,type: 'author'}, $event)"
                                     :data="item.result.author">
                                     <div class="userimg">
                                       <img src="../assets/follow/user_head.png">
                                     </div>
                                     <span class="author">{{item.result.author}}</span>
-                                  </li>
-                                  <li v-else :data="item.result.siteName" :name="'follow_wenzhang_siteName_'+index" :id="'follow_wenzhang_siteName_'+index" @click="goArticle('/author',{author: item.result.siteName,type: 'siteName'}, $event)">
-                                    <span class="author">{{item.result.siteName}}</span>
                                   </li>
                                   <li>{{item.result.urlDate | dataFormat}}</li>
                                   <li data-toggle="modal" data-target="#deleteModal" class="love" @click="deleteFollow(item.cid, 'wenzhang')">
@@ -281,7 +284,7 @@
                           <div class="loading_more" v-if="!(showloading === -1)">
                             <button :disabled="showloading" data="加载更多" value="加载更多" name="wenzhang_loading_more" id="wenzhang_loading_more" @click.stop="getwenzhang()">
                               <img v-if="showloading" :src="loading"/>
-                              <span v-if="!showloading">加载更多</span>
+                              <span v-if="!showloading">{{$t('Load more')}}</span>
                             </button>
                           </div>
                         </div>
@@ -290,6 +293,7 @@
                   </ul>
                 </div>
               </div>
+           
             </div>
           </div>
         </div>
@@ -297,7 +301,7 @@
       <transition name="fade">
         <vtips :tipText="tipText" v-if="showTip"/>
       </transition>
-      <vfooter/>
+      <v2footer/>
     </div>
 
   </div>
@@ -572,10 +576,10 @@
           let url = ''
           let uid = localStorage.getItem('apelink_user_uid');
           let arr = [
-            {name: 'xiangmu', url: '/api/individual/add?type=ICO&sid=', type: 1},
-            {name: 'hangye', url: '/api/individual/add?type=INDUSTRY&name=', type: 0},
-            {name: 'guojia', url: '/api/individual/add?type=COUNTRY&name=', type: 0},
-            {name: 'zuozhe', url: '/api/individual/add?type=AUTHOR&name=', type: 0},
+            {name: 'xiangmu', url: '/individual/add?type=ICO&sid=', type: 1},
+            {name: 'hangye', url: '/individual/add?type=INDUSTRY&name=', type: 0},
+            {name: 'guojia', url: '/individual/add?type=COUNTRY&name=', type: 0},
+            {name: 'zuozhe', url: '/individual/add?type=AUTHOR&name=', type: 0},
           ]
           arr.forEach(function(item, index) {
             if(val == item.name ) {

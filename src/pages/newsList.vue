@@ -1,7 +1,7 @@
 <template>
   <div class="page search_page">
-    <vheader/>
-    <div class="maintainer">
+    <v2header/>
+    <div class="v2maintainer">
       <div class="label_div" v-if="search.show">
         <div class="fish_container">
           <div class="label_box newsList_page">
@@ -60,19 +60,11 @@
                             <div class="media-bottom">
                               <ul>
                                 <li
-                                  :name="'newsList_media-bottom_userimg_'+index" :id="'newsList_media-bottom_userimg_'+index" 
-                                  v-if="!(news.siteName !== 'NULL' && news.siteName !== null && news.siteName !== '')"
-                                  @click="goArticle('/author',{author: news.author,type: 'author'}, $event)" :data="news.author">
+                                  :name="'newsList_media-bottom_userimg_'+index" :id="'newsList_media-bottom_userimg_'+index" >
                                   <div class="userimg">
                                     <img src="../assets/follow/user_head.png">
                                   </div>
                                   {{news.author}}
-                                </li>
-                                <li v-else 
-                                  :name="'newsList_media-bottom_siteName_'+index" :id="'newsList_media-bottom_siteName_'+index" 
-                                  @click="goArticle('/author',{author: news.siteName,type: 'siteName'}, $event)" 
-                                  :data="news.siteName">
-                                  {{news.siteName}}
                                 </li>
                                 <li>{{news.urlTime}}</li>
                               </ul>
@@ -186,7 +178,7 @@
           </div>
         </div>
       </div>
-      <vfooter/>
+      <v2footer/>
     </div>
 
   </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="page">
-    <vheader :parantProfileUrl="user.profileUrl"/>
-    <div class="maintainer">
+    <v2header :parantProfileUrl="user.profileUrl"/>
+    <div class="v2maintainer">
       <div class="container">
         <div class="myProfile mt20">
           <div class="left">
@@ -9,75 +9,75 @@
                  :style="(user.profileUrl !==null && user.profileUrl !== '' && user.profileUrl !== 'NULL' && user.profileUrl !== undefined)?'background-image: url('+ user.profileUrl +')':'background-image: url('+ default_header +')'">
 
               <div class="edit_bg">
-                <span>点击修改头像</span>
+                <span>{{$t('Click to change')}}</span>
               </div>
               <input name="no_content" id="input_change_headimg" type="file" accept="image/*" multiple="multiple" data="修改头像" @change="changeImg($event)"/>
               <!--<img src="../assets/user/default.png">-->
               <!--<img :src="user.profileUrl">-->
             </div>
-            <p class="usertips">个人资料</p>
+            <p class="usertips">{{$t('Personal information')}}</p>
           </div>
           <div class="right">
             <div class="list-item item-head">
               <div class="showbox" v-show="editnicknamebox.show">
                 <div class="tb-cell nickname">{{user.nickName}}</div>
-                <div class="tb-cell edit" @click="edit(editnicknamebox)"><i class="fa fa-pencil"></i>修改</div>
+                <div class="tb-cell edit" @click="edit(editnicknamebox)"><i class="fa fa-pencil"></i>{{$t('Modify')}}</div>
               </div>
               <div class="tb-cell nicknamedit editbox" v-show="!editnicknamebox.show">
                 <input type="text" maxlength="8" name="no_content" id="input_nickName" v-model="user.nickName" data="输入新昵称" @keyup.enter="editnicknameok(editnicknamebox, $event)">
               </div>
             </div>
             <div class="list-item">
-              <div class="tb-cell leftips">性别：</div>
+              <div class="tb-cell leftips">{{$t('Gender')}}：</div>
               <div class="showbox" v-show="editsexbox.show">
                 <div class="tb-cell center">{{showSex}}</div>
-                <div class="tb-cell edit" @click="edit(editsexbox)"><i class="fa fa-pencil"></i>修改</div>
+                <div class="tb-cell edit" @click="edit(editsexbox)"><i class="fa fa-pencil"></i>{{$t('Modify')}}</div>
               </div>
               <div class="tb-cell editbox" v-show="!editsexbox.show">
                 <div class="radiobox">
                   <label class="radio-inline">
-                    <input data="男" type="radio" value="2" name="no_content" id="input_sex2" :checked="user.sex == 2" v-model="user.sex"> 男
+                    <input data="男" type="radio" value="2" name="no_content" id="input_sex2" :checked="user.sex == 2" v-model="user.sex"> {{$t('Male')}}
                   </label>
                   <label class="radio-inline">
-                    <input data="女" type="radio" value="3" name="no_content" id="input_sex3" :checked="user.sex == 3" v-model="user.sex"> 女
+                    <input data="女" type="radio" value="3" name="no_content" id="input_sex3" :checked="user.sex == 3" v-model="user.sex"> {{$t('Female')}}
                   </label>
                 </div>
                 <div class="botoperate">
-                  <button type="button" class="btn ok" data="确认修改性别" @click="editSex(editsexbox)">保存</button>
-                  <button type="button" class="btn" data="取消修改性别" @click="editcancel(editsexbox)">取消</button>
+                  <button type="button" class="btn ok" data="确认修改性别" @click="editSex(editsexbox)">{{$t('Save')}}</button>
+                  <button type="button" class="btn" data="取消修改性别" @click="editcancel(editsexbox)">{{$t('Cancel')}}</button>
                 </div>
               </div>
             </div>
             <div class="list-item xs-sign">
-              <div class="tb-cell leftips">个人说明：</div>
+              <div class="tb-cell leftips">{{$t('Personal statement')}}：</div>
               <div class="showbox" v-show="editsignbox.show">
                 <div class="tb-cell center" v-html="showSynopsis"></div>
-                <div class="tb-cell edit" @click="edit(editsignbox)"><i class="fa fa-pencil"></i>修改</div>
+                <div class="tb-cell edit" @click="edit(editsignbox)"><i class="fa fa-pencil"></i>{{$t('Modify')}}</div>
               </div>
               <div class="tb-cell editbox" v-show="!editsignbox.show">
                 <textarea v-model="user.synopsis" rows="8" data="输入个人说明"></textarea>
                 <div class="botoperate">
-                  <button type="button" data="确认修改个人说明" class="btn ok" @click="editSynopsis(editsignbox)">保存</button>
-                  <button type="button" data="取消修改个人说明" class="btn" @click="editcancel(editsignbox)">取消</button>
+                  <button type="button" data="确认修改个人说明" class="btn ok" @click="editSynopsis(editsignbox)">{{$t('Save')}}</button>
+                  <button type="button" data="取消修改个人说明" class="btn" @click="editcancel(editsignbox)">{{$t('Cancel')}}</button>
                 </div>
               </div>
             </div>
             <div class="list-item">
-              <div class="tb-cell leftips">手机：</div>
+              <div class="tb-cell leftips">{{$t('Phone number')}}：</div>
               <div class="tb-cell center">{{user.phoneNumber | showPhone}}</div>
-              <div class="tb-cell edit" data-toggle="modal" data-target="#phoneModal"><i class="fa fa-pencil"></i>修改
+              <div class="tb-cell edit" data-toggle="modal" data-target="#phoneModal"><i class="fa fa-pencil"></i>{{$t('Modify')}}
               </div>
             </div>
             <div class="list-item">
-              <div class="tb-cell leftips">邮箱：</div>
+              <div class="tb-cell leftips">{{$t('Email')}}：</div>
               <div class="tb-cell center emailstyle" v-html="showEmail"></div>
-              <div class="tb-cell edit" data-toggle="modal" data-target="#emailModal"><i class="fa fa-pencil"></i>修改
+              <div class="tb-cell edit" data-toggle="modal" data-target="#emailModal"><i class="fa fa-pencil"></i>{{$t('Modify')}}
               </div>
             </div>
             <div class="list-item">
-              <div class="tb-cell leftips">密码：</div>
+              <div class="tb-cell leftips">{{$t('Password')}}：</div>
               <div class="tb-cell center">*******</div>
-              <div class="tb-cell edit" data-toggle="modal" data-target="#pwdModal"><i class="fa fa-pencil"></i>修改</div>
+              <div class="tb-cell edit" data-toggle="modal" data-target="#pwdModal"><i class="fa fa-pencil"></i>{{$t('Modify')}}</div>
             </div>
           </div>
         </div>
@@ -90,26 +90,38 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" data="关闭模态框"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">绑定手机</h4>
+            <h4 class="modal-title">{{$t('Bind phone number')}}</h4>
           </div>
           <div class="modal-body phoneModal-body">
             <form class="form-horizontal">
               <div class="form-group">
-                <label class="control-label">手机号码</label>
-                <input type="tel" data="输入手机号码" name="no_content" id="input_phone">
+                <label class="control-label">{{$t('Phone number')}}</label>
+                <div class="layui-form">
+                  <select name="resetSelect" lay-filter="resetSelect">
+                    <option value="+86" selected>+86</option>
+                    <option value="+852">+852</option>
+                    <option value="+853">+853</option>
+                    <option value="+81">+81</option>
+                    <option value="+82">+82</option>
+                    <option value="+65">+65</option>
+                    <option value="+886">+886</option>
+                    <option value="+1">+1</option>
+                  </select>
+                </div>
+                <input type="tel" class="prefix-input" data="输入手机号码" name="no_content" id="input_phone">
               </div>
               <div class="form-group">
-                <label class="control-label">验证码</label>
+                <label class="control-label">{{$t('Verification code')}}</label>
                 <div class="coderow">
                   <input type="text" data="输入验证码" name="no_content" id="input_code_btn">
-                  <button type="button" class="btn code-btn" data="获取验证码">获取验证码</button>
+                  <button type="button" class="btn code-btn" data="获取验证码">{{$t('Send Message')}}</button>
                 </div>
                 <p class="help-block" v-if="moblieError_show">60s后重新获取</p>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data="确认修改手机号码" data-dismiss="modal">确定</button>
+            <button type="button" class="btn btn-primary" data="确认修改手机号码" data-dismiss="modal">{{$t('Confirm')}}</button>
           </div>
         </div>
       </div>
@@ -121,22 +133,22 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" data="关闭模态框"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">绑定邮箱</h4>
+            <h4 class="modal-title">{{$t('Bind Email')}}</h4>
           </div>
           <div class="modal-body phoneModal-body">
             <form class="form-horizontal">
               <div class="form-group">
-                <label class="control-label">邮箱</label>
+                <label class="control-label">{{$t('Email')}}</label>
                 <div class="coderow">
                   <input type="email" data="输入邮箱" v-model="user.newEmail" @focus="emailError_msg=''" name="no_content" id="input_email">
                   <div type="button" class="btn rightips newStyle text-danger">{{emailError_msg}}</div>
                 </div>
               </div>
               <div class="form-group">
-                <label class="control-label">验证码</label>
+                <label class="control-label">{{$t('Verification code')}}</label>
                 <div class="coderow">
                   <input type="text" data="输入验证码" v-model="user.emailCode" @focus="emailCodeError_msg=''" name="no_content" id="input_emailCode">
-                  <button type="button" :disabled="sendEmailBtn" class="btn code-btn" data="发送验证邮件" @click="sendEmail">发送验证邮件
+                  <button type="button" :disabled="sendEmailBtn" class="btn code-btn" data="发送验证邮件" @click="sendEmail">{{$t('Send verification mail')}}
                   </button>
                   <div type="button" class="btn rightips newStyle text-danger">{{emailCodeError_msg}}</div>
                 </div>
@@ -145,7 +157,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data="确认修改邮箱" @click="editEmail">确定</button>
+            <button type="button" class="btn btn-primary" data="确认修改邮箱" @click="editEmail">{{$t('Confirm')}}</button>
           </div>
         </div>
       </div>
@@ -157,12 +169,12 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" data="关闭模态框"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">修改密码</h4>
+            <h4 class="modal-title">{{$t('Modify password')}}</h4>
           </div>
           <div class="modal-body phoneModal-body">
             <form class="form-horizontal">
               <div class="form-group">
-                <label class="control-label">旧的密码</label>
+                <label class="control-label">{{$t('Old password')}}</label>
                 <div class="coderow">
                   <input type="password" data="输入旧密码" v-model="user.oldPassword" @focus="oldPwdError=''" name="no_content" id="input_oldPassword">
                   <div type=" button" class="btn rightips newStyle  text-danger">
@@ -171,14 +183,14 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="control-label">新密码</label>
+                <label class="control-label">{{$t('New password')}}</label>
                 <div class="coderow">
                   <input type="password" data="输入新密码" v-model="user.newPassword" @focus="newPwdError=''" name="no_content" id="input_newPassword">
                   <div type="button" class="btn rightips newStyle  text-danger">{{newPwdError}}</div>
                 </div>
               </div>
               <div class="form-group">
-                <label class="control-label">确认密码</label>
+                <label class="control-label">{{$t('Confirm password')}}</label>
                 <div class="coderow">
                   <input type="password" data="输入确认的新密码" v-model="user.ensurePwd" @focus="ensurePwdError=''" name="no_content" id="input_ensurePwd">
                   <div type="button" class="btn rightips newStyle  text-danger">{{ensurePwdError}}</div>
@@ -187,12 +199,12 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data="确认修改密码" @click="resetPwd()">确定</button>
+            <button type="button" class="btn btn-primary" data="确认修改密码" @click="resetPwd()">{{$t('Confirm')}}</button>
           </div>
         </div>
       </div>
     </div><!-- /.modal -->
-    <vfooter></vfooter>
+    <v2footer/>
   </div>
 </template>
 
@@ -239,11 +251,20 @@
         aplinkUser: {},
         loading: loading,
         default_header: default_header,
-        emailCodeError_msg: ''
+        emailCodeError_msg: '',
+        resetPrefix:'+86'
       }
     },
     mounted() {
+      let that = this;
       this.getMyProfile();
+      layui.use('form', function () {
+        let form = layui.form;
+        form.render('select');
+        form.on('select(resetSelect)', function(data){
+          that.resetPrefix = data.value;
+        });
+      });
     },
     methods: {
       // 通用修改按钮
@@ -432,7 +453,7 @@
           this.user.sex = sex;
           this.user.oldSex = sex;
         } else {
-          this.$router.push('/login')
+          this.$router.push('/home')
         }
       },
       editInfor(json, callback, error) {

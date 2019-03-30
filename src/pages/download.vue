@@ -5,8 +5,12 @@
         <img src="../assets/download/logo.png" alt="Bvaluate">
       </div>
       <div class="button_box">
-        <button @click="downloading">
+        <button @click="downloading_android">
           <img src="../assets/download/android.png" alt="android"/>
+          下载
+        </button>
+        <button class="ios" @click="downloading_ios">
+          <img src="../assets/download/iphone.png" alt="ios"/>
           下载
         </button>
       </div>
@@ -31,11 +35,18 @@
     mounted() {
     },
     methods: {
-      downloading() {
+      downloading_android() {
         if (this.isWeiXin()) {
           this.showTip = true;
         } else {
           window.location.href = "https://api.bvaluate.com.cn/apk/bvaluate.apk"
+        }
+      },
+      downloading_ios() {
+        if (this.isWeiXin()) {
+          this.showTip = true;
+        } else {
+          window.location.href = "https://api.bvaluate.com.cn/apk/bvaluate_ios.ipa"
         }
       },
       cancelTip() {
@@ -85,6 +96,7 @@
       width: 100%;
       left: 0;
       text-align: center;
+      display: flex;
       > button {
         > img {
           height: 23px;
@@ -104,6 +116,13 @@
         margin: auto;
         background-color: #fff;
         outline: none;
+        &.ios{
+          color: #3e60dc;
+          img{
+            width: 22px;
+            margin-right: 8px;
+          }
+        }
       }
     }
     .tip_box {

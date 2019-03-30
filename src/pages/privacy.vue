@@ -1,9 +1,9 @@
 <template>
-	<div class="page privacy-page">
-		<vheader/>
-		<div class="maintainer">
+	<div class="page about-page">
+		<v2header/>
+		<div class="maintainer v2maintainer">
 			<!-- content here -->
-			<div class="container">
+			<div class="container v2container">
 				<div class="about-box">
 					<h3>用户注册及使用APP隐私协议</h3>
 					<p>在此特别提醒您（用户）在注册成为用户之前，请认真阅读本《用户协议》（以下简称“协议”），确保您充分理解本协议中各条款。请您审慎阅读并选择接受或不接受本协议。您的注册、登录、使用等行为将视为对本协议的接受，并同意接受本协议各项条款的约束。本协议约定北京猿链网络科技有限公司（以下简称“猿链”）与用户之间关于“Bvaluate”App软件服务（以下简称“服务“）的权利义务。“用户”是指注册、登录、使用本服务的个人及项目主体。本协议可由猿链随时更新，更新后的协议条款一旦公布即代替原来的协议条款，恕不再另行通知，用户可在本APP中查阅最新版协议条款。在修改协议条款后，如果用户不接受修改后的条款，请立即停止使用Bvaluate提供的服务，用户继续使用服务将被视为接受修改后的协议。 </p>
@@ -118,7 +118,7 @@
 					<p>邮箱: ru.haiyan@bvaluate.com</p>
 				</div>
 			</div>
-			<vfooter/>
+			<v2footer/>
 		</div>
 
 	</div>

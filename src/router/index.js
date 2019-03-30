@@ -4,20 +4,32 @@ import login from '@/pages/login'
 import userCenter from '@/pages/userCenter/userCenter'
 import my from '@/pages/myProfile'
 import follow from '@/pages/follow'
-import home from '@/pages/home'
+import news from '@/pages/news'
+import v2news from '@/pages/v2news'
+import v2home from '@/pages/v2home'
 import industry from '@/pages/industry'
 import recommend from '@/pages/recommend'
 import article from '@/pages/article'
-import project from '@/pages/project'
-import projectTest from '@/pages/projectTest'
+import v2project from '@/pages/v2project'
 import author from '@/pages/author'
-import list from '@/pages/list'
-import search from '@/pages/search'
+import v2list from '@/pages/v2list'
+import v2search from '@/pages/v2search'
 import newsList from '@/pages/newsList'
 import pdfShow from '@/pages/pdfShow'
 import download from '@/pages/download'
 import wechatCode from '@/pages/wechatCode'
+import about from '@/pages/about'
+import cooperation from '@/pages/cooperation'
+import dynamicList from '@/pages/dynamicList'
+import dynamicView from '@/pages/dynamicView'
 import privacy from '@/pages/privacy'
+import userCollect from '@/pages/userCollect'
+import apiview from '@/pages/apiview'
+import userInfo from '@/pages/userInfo'
+import userNotice from '@/pages/userNotice'
+import userProject from '@/pages/userProject'
+import myfollow from '@/pages/myFollow'
+import addPage from '@/pages/addPage'
 
 Vue.use(Router);
 
@@ -25,17 +37,20 @@ export default new Router({
   linkExactActiveClass: 'active',
   // mode: 'history',
   routes: [
-    {
-      path: '/',
-      redirect: '/list',
-      meta: {
-        pageTitle: '榜单'
-      },
-    },
+    {path: '/', redirect: '/home'},
     {
       path: '/wechatCode',
       name: 'wechatCode',
       component: wechatCode,
+    },
+    {
+      path: '/home',
+      name: 'home',
+      component: v2home,
+      meta: {
+        pageTitle: '首页',
+        headerNobg: true
+      },
     },
     {
       path: '/login',
@@ -46,9 +61,11 @@ export default new Router({
     },
     {
       path: '/list',
-      component: list,
+      name: 'list',
+      component: v2list,
       meta: {
-        pageTitle: '榜单'
+        pageTitle: '榜单',
+        headerNobg: true
       },
     },
     {
@@ -66,17 +83,25 @@ export default new Router({
       },
     },
     {
-      path: '/follow',
-      component: follow,
+      path: '/myfollow',
+      component: myfollow,
       meta: {
         pageTitle: '关注'
       },
     },
     {
-      path: '/index',
-      component: home,
+      path: '/news',
+      component: news,
       meta: {
-        pageTitle: '综合'
+        pageTitle: '综合',
+        headerNobg: true
+      },
+    },
+    {
+      path: '/v2news',
+      component: v2news,
+      meta: {
+        pageTitle: '资讯'
       },
     },
     {
@@ -96,14 +121,11 @@ export default new Router({
     },
     {
       path: '/project',
-      component: project,
+      component: v2project,
       meta: {
-        pageTitle: '项目详情页'
+        pageTitle: '项目详情页',
+        headerNobg: true
       }
-    },
-    {
-      path: '/projectTest',
-      component: projectTest
     },
     {
       path: '/author',
@@ -114,7 +136,7 @@ export default new Router({
     },
     {
       path: '/search',
-      component: search
+      component: v2search
     },
     {
       path: '/newsList',
@@ -129,8 +151,63 @@ export default new Router({
       component: download
     },
     {
+      path: '/about',
+      component: about
+    },
+    {
+      path: '/cooperation',
+      component: cooperation
+    },
+    {
+      path: '/dynamicList',
+      component: dynamicList
+    },
+    {
+      path: '/dynamicView',
+      component: dynamicView
+    },
+    {
       path: '/privacy',
       component: privacy
+    },
+    {
+      path: '/userCollect',
+      component: userCollect,
+      meta: {
+        pageTitle: '个人中心'
+      }
+    },
+    {
+      path: '/api',
+      component: apiview
+    },
+    {
+      path: '/userInfo',
+      component: userInfo,
+      meta: {
+        pageTitle: '个人中心'
+      },
+    },
+    {
+      path: '/userNotice',
+      component: userNotice,
+      meta: {
+        pageTitle: '个人中心'
+      },
+    },
+    {
+      path: '/userProject',
+      component: userProject,
+      meta: {
+        pageTitle: '个人中心'
+      },
+    },
+    {
+      path: '/addPage',
+      component: addPage,
+      meta: {
+        pageTitle: '新增项目'
+      },
     }
   ],
   scrollBehavior(to, from, savedPosition) {
