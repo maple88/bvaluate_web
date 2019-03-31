@@ -60,11 +60,11 @@
               <router-link v-intro-step="2" v-intro="steps.content2" v-intro-disable-interaction="true" tag="li" to="/list" active-class="active"><a data="榜单">{{$t('List')}}</a></router-link>
               <router-link v-intro-step="3" v-intro="steps.content3" v-intro-disable-interaction="true" tag="li" to="/v2news" active-class="active"><a data="资讯">{{$t('headerNews')}}</a></router-link>
               <!-- 原有的弹出框形式的新增项目按钮 -->
-              <li v-show="token" v-intro-step="4" v-intro="steps.content4"><a href="javascript:;" data="新增项目" @click="analysis()">{{$t('New Projects')}}</a></li>
+              <!-- <li v-show="token" v-intro-step="4" v-intro="steps.content4"><a href="javascript:;" data="新增项目" @click="analysis()">{{$t('New Projects')}}</a></li> -->
 
               <!-- 新增的新增项目跳转按钮 -->
-              <!-- <router-link v-intro-step="4" v-intro="steps.content4" v-intro-disable-interaction="true" tag="li" to="/addPage"><a data='新增项目'>新增项目</a></router-link>
-              <li v-show="!token" v-intro-step="4" v-intro="steps.content4" v-intro-disable-interaction="true" @click="isLogin('新增项目')"><a data="新增项目">{{$t('New Projects')}}</a></li> -->
+              <router-link v-intro-step="4" v-intro="steps.content4" v-intro-disable-interaction="true" tag="li" to="/addPage"><a data='新增项目'>新增项目</a></router-link>
+              <!-- <li v-show="!token" v-intro-step="4" v-intro="steps.content4" v-intro-disable-interaction="true" @click="isLogin('新增项目')"><a data="新增项目">{{$t('New Projects')}}</a></li> -->
               
             </ul>
             <ul class="nav navbar-nav navbar-right">
